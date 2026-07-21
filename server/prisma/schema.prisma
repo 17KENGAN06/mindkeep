@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MaterialStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum ReminderStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+  SKIPPED
+}
+
+enum ReminderIntervalType {
+  THREE_DAYS
+  SEVEN_DAYS
+  THIRTY_DAYS
+}
+
+enum NotificationType {
+  REVIEW_DUE
+  REVIEW_OVERDUE
+  SYSTEM
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  timezone     String   @default("Europe/Helsinki")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  categories  Category[]
+  materials   LearningMaterial[]
+  reminders   ReviewReminder[]
+  notifications Notification[]
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  materials LearningMaterial[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model LearningMaterial {
+  id          String         @id @default(cuid())
+  title       String
+  description String         @default("")
+  content     String         @default("")
+  question    String?
+  answer      String?
+  sourceUrl   String?
+  learnedAt   DateTime
+  status      MaterialStatus @default(ACTIVE)
+  categoryId  String?
+  userId      String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      Category?         @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  reminders     ReviewReminder[]
+  notifications Notification[]
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([categoryId])
+  @@index([learnedAt])
+}
+
+model ReviewReminder {
+  id                     String               @id @default(cuid())
+  intervalType           ReminderIntervalType
+  sequenceNumber         Int
+  scheduledAt            DateTime
+  status                 ReminderStatus       @default(PENDING)
+  completedAt            DateTime?
+  notificationCreatedAt  DateTime?
+  materialId             String
+  userId                 String
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  material      LearningMaterial @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification  Notification?
+
+  @@unique([materialId, intervalType])
+  @@index([userId])
+  @@index([scheduledAt])
+  @@index([userId, scheduledAt, status])
+  @@index([status, scheduledAt])
+}
+
+model Notification {
+  id         String           @id @default(cuid())
+  title      String
+  message    String
+  type       NotificationType
+  isRead     Boolean          @default(false)
+  materialId String?
+  reminderId String?          @unique
+  userId     String
+  createdAt  DateTime         @default(now())
+
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material LearningMaterial? @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  reminder ReviewReminder?   @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([userId, isRead])
+  @@index([createdAt])
+}

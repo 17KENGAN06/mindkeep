@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "Learning Reminder",
+    "loading": "Ladataan...",
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "back": "Takaisin",
+    "language": "Kieli",
+    "delete": "Poista",
+    "edit": "Muokkaa"
+  },
+  "nav": {
+    "home": "Etusivu",
+    "login": "Kirjaudu",
+    "register": "Rekisteröidy",
+    "dashboard": "Hallinta",
+    "categories": "Kategoriat",
+    "logout": "Kirjaudu ulos",
+    "materials": "Materiaalit",
+    "review": "Kertaa tänään",
+    "notifications": "Ilmoitukset",
+    "statistics": "Tilastot",
+    "calendar": "Kalenteri"
+  },
+  "home": {
+    "title": "Muista oppimasi",
+    "subtitle": "Lisää opiskelumateriaalia ja saat muistutukset 3, 7 ja 30 päivän jälkeen.",
+    "ctaRegister": "Luo tili",
+    "ctaLogin": "Minulla on jo tili"
+  },
+  "auth": {
+    "loginTitle": "Tervetuloa takaisin",
+    "loginSubtitle": "Kirjaudu jatkaaksesi kertausaikatauluasi.",
+    "registerTitle": "Luo tili",
+    "registerSubtitle": "Vahvista oppimista kiinteillä kertausväleillä.",
+    "name": "Nimi",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "confirmPassword": "Vahvista salasana",
+    "timezone": "Aikavyöhyke",
+    "submitLogin": "Kirjaudu",
+    "submitRegister": "Rekisteröidy",
+    "noAccount": "Ei vielä tiliä?",
+    "hasAccount": "Onko sinulla jo tili?",
+    "passwordHint": "Vähintään 8 merkkiä",
+    "errors": {
+      "required": "Pakollinen kenttä",
+      "email": "Anna kelvollinen sähköposti",
+      "passwordMin": "Salasanan on oltava vähintään 8 merkkiä",
+      "passwordMatch": "Salasanat eivät täsmää",
+      "generic": "Jotain meni pieleen. Yritä uudelleen.",
+      "invalidCredentials": "Virheellinen sähköposti tai salasana",
+      "emailTaken": "Tämä sähköposti on jo rekisteröity",
+      "registerFailed": "Tilin luominen näillä tiedoilla epäonnistui.",
+      "passwordMax": "Salasana saa olla enintään 72 merkkiä"
+    }
+  },
+  "dashboard": {
+    "welcome": "Hei, {{name}}",
+    "subtitle": "Yhteenveto aktiivisista materiaaleista, kertauksista ja viikon edistymisestä.",
+    "timezone": "Aikavyöhyke: {{timezone}}",
+    "stats": {
+      "activeMaterials": "Aktiiviset materiaalit",
+      "todayReminders": "Tänään",
+      "overdueReminders": "Myöhässä",
+      "completedReviews": "Valmiit kertaukset"
+    },
+    "nextReviewTitle": "Seuraava kertaus",
+    "noNextReview": "Ei avoimia kertauksia. Lisää materiaali aloittaaksesi 3 / 7 / 30 -aikataulun.",
+    "goToReview": "Siirry kertauksiin",
+    "activityTitle": "Valmiit kertaukset (7 pv)",
+    "activitySubtitle": "Kuinka monta kertausta valmistui kunakin päivänä aikavyöhykkeelläsi.",
+    "recentTitle": "Äskettäin lisätyt",
+    "viewAllMaterials": "Kaikki materiaalit"
+  },
+  "categories": {
+    "title": "Kategoriat",
+    "subtitle": "Järjestä materiaalit aiheittain. Näet vain omat kategoriasi.",
+    "createTitle": "Uusi kategoria",
+    "editTitle": "Nimeä kategoria uudelleen",
+    "name": "Kategorian nimi",
+    "create": "Lisää",
+    "edit": "Muokkaa",
+    "delete": "Poista",
+    "deleteTitle": "Poistetaanko kategoria?",
+    "deleteDescription": "Kategoria ”{{name}}” poistetaan. Materiaalit säilyvät, mutta menettävät tämän kategorian.",
+    "emptyTitle": "Ei vielä kategorioita",
+    "emptyDescription": "Luo kategorioita, esimerkiksi: englanti, suomi, ohjelmointi, työ.",
+    "materialsCount": "Materiaaleja: {{count}}",
+    "errors": {
+      "required": "Anna kategorian nimi",
+      "nameTaken": "Sinulla on jo kategoria tällä nimellä"
+    }
+  },
+  "materials": {
+    "title": "Materiaalit",
+    "subtitle": "Äskettäin oppimasi asiat kiinteällä 3 / 7 / 30 päivän kertausaikataululla.",
+    "create": "Lisää materiaali",
+    "createTitle": "Uusi materiaali",
+    "createSubtitle": "Muistutukset päiville 3, 7 ja 30 luodaan palvelimella automaattisesti.",
+    "editTitle": "Muokkaa materiaalia",
+    "archive": "Arkistoi",
+    "learnedAt": "Opittu",
+    "nextReview": "Seuraava kertaus",
+    "remindersTitle": "Kertausaikataulu",
+    "remindersSubtitle": "Päivämäärät lasketaan alkuperäisestä oppimispäivästä eivätkä siirry suorituksen jälkeen.",
+    "emptyTitle": "Ei vielä materiaaleja",
+    "emptyDescription": "Lisää aihe, muistiinpano, sana tai kysymys-vastaus aloittaaksesi kertausaikataulun.",
+    "deleteTitle": "Poistetaanko materiaali?",
+    "deleteDescription": "”{{title}}” ja sen muistutukset poistetaan pysyvästi.",
+    "fields": {
+      "title": "Otsikko",
+      "description": "Kuvaus",
+      "content": "Pääteksti",
+      "question": "Kysymys",
+      "answer": "Vastaus",
+      "sourceUrl": "Lähdelinkki",
+      "learnedAt": "Oppimispäivä",
+      "category": "Kategoria",
+      "noCategory": "Ei kategoriaa"
+    },
+    "filters": {
+      "search": "Haku",
+      "category": "Kategoria",
+      "status": "Tila",
+      "allCategories": "Kaikki kategoriat",
+      "allStatuses": "Kaikki tilat"
+    },
+    "status": {
+      "ACTIVE": "Aktiivinen",
+      "ARCHIVED": "Arkistoitu"
+    },
+    "intervals": {
+      "THREE_DAYS": "3 päivän kuluttua",
+      "SEVEN_DAYS": "7 päivän kuluttua",
+      "THIRTY_DAYS": "30 päivän kuluttua"
+    },
+    "reminderStatus": {
+      "PENDING": "Odottaa",
+      "COMPLETED": "Valmis",
+      "OVERDUE": "Myöhässä",
+      "SKIPPED": "Ohitettu"
+    },
+    "errors": {
+      "titleRequired": "Otsikko on pakollinen",
+      "learnedAtRequired": "Oppimispäivä on pakollinen",
+      "url": "Anna kelvollinen URL"
+    }
+  },
+  "review": {
+    "title": "Kertaa tänään",
+    "subtitle": "Kiinteät muistutukset: myöhässä, tänään ja tulossa. Ei SM-2 -arviointia.",
+    "openCount": "Avoimia kertauksia: {{count}}",
+    "overdue": "Myöhässä",
+    "today": "Tänään",
+    "upcoming": "Tulossa",
+    "learnedAt": "Opittu",
+    "sequence": "Kertaus",
+    "scheduledAt": "Ajastettu",
+    "daysOverdue": "Myöhässä (pv)",
+    "openMaterial": "Avaa materiaali",
+    "completed": "Kertattu",
+    "skip": "Ohita",
+    "successCompleted": "Kertaus merkitty valmiiksi. Seuraava kiinteä muistutus pysyy omalla päivällään.",
+    "successSkipped": "Kertaus ohitettu. Seuraava kiinteä muistutus pysyy omalla päivällään.",
+    "emptyOverdueTitle": "Ei myöhässä olevia",
+    "emptyOverdueDescription": "Hienoa — mikään ei ole myöhässä.",
+    "emptyTodayTitle": "Ei mitään tänään",
+    "emptyTodayDescription": "Palaa, kun seuraava kiinteä kertauspäivä koittaa.",
+    "emptyUpcomingTitle": "Ei tulevia kertauksia",
+    "emptyUpcomingDescription": "Lisää materiaaleja luodaksesi 3 / 7 / 30 päivän aikataulun."
+  },
+  "notifications": {
+    "title": "Ilmoitukset",
+    "subtitle": "Sovelluksen sisäiset muistutukset, jotka palvelin luo kertauksen erääntyessä.",
+    "unreadCount": "Lukemattomia: {{count}}",
+    "markAllRead": "Merkitse kaikki luetuiksi",
+    "markRead": "Merkitse luetuksi",
+    "openMaterial": "Avaa materiaali",
+    "unread": "Lukematon",
+    "emptyTitle": "Ei vielä ilmoituksia",
+    "emptyDescription": "Kun kertaus erääntyy, ilmoitus ilmestyy tänne.",
+    "bellLabel": "Ilmoitukset, lukemattomia: {{count}}",
+    "types": {
+      "REVIEW_DUE": "Tänään",
+      "REVIEW_OVERDUE": "Myöhässä",
+      "SYSTEM": "Järjestelmä"
+    }
+  },
+  "statistics": {
+    "title": "Tilastot",
+    "subtitle": "Kertausaktiivisuus ja oppimisaikataulun tunnusluvut."
+  },
+  "calendar": {
+    "title": "Kertauskalenteri",
+    "subtitle": "Katso ajastetut, valmiit ja myöhässä olevat kertaukset päivittäin.",
+    "prevMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi",
+    "dayTitle": "Kertaukset {{date}}",
+    "pickDay": "Valitse päivä",
+    "pickDayDescription": "Napauta päivää nähdäksesi kertaukseen ajastetut materiaalit.",
+    "dayCounts": "Yhteensä {{total}} · myöhässä {{overdue}} · odottaa {{pending}} · valmis {{completed}}",
+    "emptyDayTitle": "Ei kertauksia tänä päivänä",
+    "emptyDayDescription": "Valitse toinen päivä tai lisää uusi materiaali.",
+    "legend": {
+      "overdue": "Myöhässä",
+      "pending": "Odottaa",
+      "completed": "Valmis"
+    }
+  }
+}

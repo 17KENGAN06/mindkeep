@@ -1,0 +1,211 @@
+{
+  "common": {
+    "appName": "Learning Reminder",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "language": "Language",
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "nav": {
+    "home": "Home",
+    "login": "Log in",
+    "register": "Sign up",
+    "dashboard": "Dashboard",
+    "categories": "Categories",
+    "logout": "Log out",
+    "materials": "Materials",
+    "review": "Review today",
+    "notifications": "Notifications",
+    "statistics": "Statistics",
+    "calendar": "Calendar"
+  },
+  "home": {
+    "title": "Remember what you learn",
+    "subtitle": "Add study notes and get fixed reminders after 3, 7, and 30 days.",
+    "ctaRegister": "Create account",
+    "ctaLogin": "I already have an account"
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to continue your review schedule.",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "Start building long-term memory with fixed review intervals.",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "timezone": "Timezone",
+    "submitLogin": "Log in",
+    "submitRegister": "Sign up",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "passwordHint": "At least 8 characters",
+    "errors": {
+      "required": "This field is required",
+      "email": "Enter a valid email",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordMatch": "Passwords do not match",
+      "generic": "Something went wrong. Please try again.",
+      "invalidCredentials": "Invalid email or password",
+      "emailTaken": "This email is already registered",
+      "registerFailed": "Unable to create an account with these details.",
+      "passwordMax": "Password must be at most 72 characters"
+    }
+  },
+  "dashboard": {
+    "welcome": "Hello, {{name}}",
+    "subtitle": "Your overview of active materials, reviews and weekly progress.",
+    "timezone": "Timezone: {{timezone}}",
+    "stats": {
+      "activeMaterials": "Active materials",
+      "todayReminders": "Due today",
+      "overdueReminders": "Overdue",
+      "completedReviews": "Completed reviews"
+    },
+    "nextReviewTitle": "Next review",
+    "noNextReview": "No open reviews right now. Add a material to start the 3 / 7 / 30 schedule.",
+    "goToReview": "Go to review",
+    "activityTitle": "Completed reviews (7 days)",
+    "activitySubtitle": "How many reviews you completed each day in your timezone.",
+    "recentTitle": "Recently added",
+    "viewAllMaterials": "All materials"
+  },
+  "categories": {
+    "title": "Categories",
+    "subtitle": "Organize materials by topic. You only see your own categories.",
+    "createTitle": "New category",
+    "editTitle": "Rename category",
+    "name": "Category name",
+    "create": "Add category",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteTitle": "Delete category?",
+    "deleteDescription": "Category “{{name}}” will be removed. Materials keep their content, but lose this category.",
+    "emptyTitle": "No categories yet",
+    "emptyDescription": "Create categories like English, Finnish, Programming, or Work.",
+    "materialsCount": "{{count}} materials",
+    "errors": {
+      "required": "Enter a category name",
+      "nameTaken": "You already have a category with this name"
+    }
+  },
+  "materials": {
+    "title": "Materials",
+    "subtitle": "Everything you recently learned, with a fixed 3 / 7 / 30 day review plan.",
+    "create": "Add material",
+    "createTitle": "New material",
+    "createSubtitle": "Reminders for day 3, 7 and 30 are created automatically on the server.",
+    "editTitle": "Edit material",
+    "archive": "Archive",
+    "learnedAt": "Learned",
+    "nextReview": "Next review",
+    "remindersTitle": "Review schedule",
+    "remindersSubtitle": "Dates are calculated from the original learning date and do not shift after completion.",
+    "emptyTitle": "No materials yet",
+    "emptyDescription": "Add a topic, note, word or Q&A to start your review schedule.",
+    "deleteTitle": "Delete material?",
+    "deleteDescription": "“{{title}}” and its reminders will be permanently deleted.",
+    "fields": {
+      "title": "Title",
+      "description": "Description",
+      "content": "Main text",
+      "question": "Question",
+      "answer": "Answer",
+      "sourceUrl": "Source URL",
+      "learnedAt": "Learning date",
+      "category": "Category",
+      "noCategory": "No category"
+    },
+    "filters": {
+      "search": "Search",
+      "category": "Category",
+      "status": "Status",
+      "allCategories": "All categories",
+      "allStatuses": "All statuses"
+    },
+    "status": {
+      "ACTIVE": "Active",
+      "ARCHIVED": "Archived"
+    },
+    "intervals": {
+      "THREE_DAYS": "After 3 days",
+      "SEVEN_DAYS": "After 7 days",
+      "THIRTY_DAYS": "After 30 days"
+    },
+    "reminderStatus": {
+      "PENDING": "Pending",
+      "COMPLETED": "Completed",
+      "OVERDUE": "Overdue",
+      "SKIPPED": "Skipped"
+    },
+    "errors": {
+      "titleRequired": "Title is required",
+      "learnedAtRequired": "Learning date is required",
+      "url": "Enter a valid URL"
+    }
+  },
+  "review": {
+    "title": "Review today",
+    "subtitle": "Fixed reminders for overdue, today and upcoming reviews. No SM-2 scoring.",
+    "openCount": "Open reviews: {{count}}",
+    "overdue": "Overdue",
+    "today": "Today",
+    "upcoming": "Upcoming",
+    "learnedAt": "Learned",
+    "sequence": "Review",
+    "scheduledAt": "Scheduled",
+    "daysOverdue": "Days overdue",
+    "openMaterial": "Open material",
+    "completed": "Completed",
+    "skip": "Skip",
+    "successCompleted": "Review marked as completed. The next fixed reminder stays on its date.",
+    "successSkipped": "Review skipped. The next fixed reminder stays on its date.",
+    "emptyOverdueTitle": "No overdue reviews",
+    "emptyOverdueDescription": "Great — nothing is past due.",
+    "emptyTodayTitle": "Nothing for today",
+    "emptyTodayDescription": "Come back when the next fixed review day arrives.",
+    "emptyUpcomingTitle": "No upcoming reviews",
+    "emptyUpcomingDescription": "Add materials to generate a 3 / 7 / 30 day schedule."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "In-app reminders created by the server when reviews become due.",
+    "unreadCount": "Unread: {{count}}",
+    "markAllRead": "Mark all as read",
+    "markRead": "Mark as read",
+    "openMaterial": "Open material",
+    "unread": "Unread",
+    "emptyTitle": "No notifications yet",
+    "emptyDescription": "When a review becomes due, it will appear here.",
+    "bellLabel": "Notifications, unread: {{count}}",
+    "types": {
+      "REVIEW_DUE": "Due today",
+      "REVIEW_OVERDUE": "Overdue",
+      "SYSTEM": "System"
+    }
+  },
+  "statistics": {
+    "title": "Statistics",
+    "subtitle": "Review activity and counts for your learning schedule."
+  },
+  "calendar": {
+    "title": "Review calendar",
+    "subtitle": "See scheduled, completed and overdue reviews by day.",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "dayTitle": "Reviews on {{date}}",
+    "pickDay": "Select a day",
+    "pickDayDescription": "Tap a date to see materials scheduled for review.",
+    "dayCounts": "{{total}} total · {{overdue}} overdue · {{pending}} pending · {{completed}} completed",
+    "emptyDayTitle": "No reviews this day",
+    "emptyDayDescription": "Choose another date or add a new material.",
+    "legend": {
+      "overdue": "Overdue",
+      "pending": "Pending",
+      "completed": "Completed"
+    }
+  }
+}

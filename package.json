@@ -1,0 +1,24 @@
+{
+  "name": "learning-reminder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Spaced learning reminder app with fixed 3/7/30 day intervals",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev:client": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "build": "npm run build -w client && npm run build -w server",
+    "build:client": "npm run build -w client",
+    "build:server": "npm run build -w server",
+    "start:client": "npm run start -w client",
+    "start:server": "npm run start:prod -w server",
+    "lint": "npm run lint -w client && npm run lint -w server",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css}\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

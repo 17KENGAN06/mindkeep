@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Segoe UI', 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --color-brand-50: #eef8f3;
+  --color-brand-100: #d5f0e3;
+  --color-brand-200: #aee1c9;
+  --color-brand-300: #7ccbab;
+  --color-brand-400: #4aaf8b;
+  --color-brand-500: #2f9473;
+  --color-brand-600: #22765c;
+  --color-brand-700: #1d5e4b;
+  --color-brand-800: #1a4b3d;
+  --color-brand-900: #163f34;
+  --color-surface: #f5f7f6;
+  --color-ink: #132019;
+  --color-muted: #5b6b62;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply m-0 min-h-dvh bg-surface font-sans text-ink;
+  }
+
+  #root {
+    @apply min-h-dvh;
+  }
+
+  a {
+    @apply text-brand-700 underline-offset-2 hover:underline;
+  }
+}

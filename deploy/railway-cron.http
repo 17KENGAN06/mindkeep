@@ -1,0 +1,9 @@
+### Railway Cron / external scheduler
+### Schedule: every hour
+### Method: POST
+### URL: https://YOUR-API.up.railway.app/api/internal/cron/reminders
+### Header: x-cron-secret: ${{CRON_SECRET}}
+
+POST https://YOUR-API.up.railway.app/api/internal/cron/reminders
+x-cron-secret: replace-with-CRON_SECRET
+Content-Type: application/json
