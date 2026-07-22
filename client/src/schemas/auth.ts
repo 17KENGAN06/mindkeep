@@ -4,6 +4,7 @@ export function createLoginSchema(t: (key: string) => string) {
   return z.object({
     email: z.email(t('auth.errors.email')),
     password: z.string().min(1, t('auth.errors.required')),
+    website: z.string().optional(),
   });
 }
 
@@ -18,6 +19,7 @@ export function createRegisterSchema(t: (key: string) => string) {
         .min(8, t('auth.errors.passwordMin'))
         .max(72, t('auth.errors.passwordMax')),
       timezone: z.string().min(1),
+      website: z.string().optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: t('auth.errors.passwordMatch'),

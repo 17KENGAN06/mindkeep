@@ -4,9 +4,19 @@ import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { authRateLimit } from '@/middleware/authRateLimit.js';
 import { requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
-import { loginSchema, registerSchema } from '@/validations/auth.schemas.js';
+import {
+  googleLoginSchema,
+  loginSchema,
+  registerSchema,
+} from '@/validations/auth.schemas.js';
 
 export const authRouter = Router();
+
+authRouter.get(
+  '/challenge',
+  authRateLimit,
+  asyncHandler((req, res) => authController.challenge(req, res)),
+);
 
 authRouter.post(
   '/register',
@@ -20,6 +30,13 @@ authRouter.post(
   authRateLimit,
   validate(loginSchema),
   asyncHandler((req, res) => authController.login(req, res)),
+);
+
+authRouter.post(
+  '/google',
+  authRateLimit,
+  validate(googleLoginSchema),
+  asyncHandler((req, res) => authController.googleLogin(req, res)),
 );
 
 authRouter.post('/logout', asyncHandler((req, res) => authController.logout(req, res)));

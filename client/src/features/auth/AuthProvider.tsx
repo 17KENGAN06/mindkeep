@@ -1,8 +1,12 @@
 import { useCallback, useMemo, type ReactNode } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { authApi, type LoginPayload, type RegisterPayload } from '@/api/auth';
+import {
+  authApi,
+  type GoogleLoginPayload,
+  type LoginPayload,
+  type RegisterPayload,
+} from '@/api/auth';
 import { ApiError } from '@/api/client';
-import { Loader } from '@/components/ui/Loader';
 import { AuthContext } from '@/features/auth/auth-context';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -39,6 +43,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
+  const googleLoginMutation = useMutation({
+    mutationFn: authApi.googleLogin,
+    onSuccess: (data) => {
+      queryClient.setQueryData(['auth', 'me'], data.user);
+    },
+  });
+  const googleLoginMutateAsync = googleLoginMutation.mutateAsync;
+
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
@@ -62,6 +74,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [registerMutation],
   );
 
+  const googleLogin = useCallback(
+    async (payload: GoogleLoginPayload) => {
+      const result = await googleLoginMutateAsync(payload);
+      return result.user;
+    },
+    [googleLoginMutateAsync],
+  );
+
   const logout = useCallback(async () => {
     await logoutMutation.mutateAsync();
   }, [logoutMutation]);
@@ -71,14 +91,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user: meQuery.data ?? null,
       isAuthenticated: Boolean(meQuery.data),
       login,
+      googleLogin,
       register,
       logout,
     }),
-    [login, logout, meQuery.data, register],
+    [googleLogin, login, logout, meQuery.data, register],
   );
 
   if (meQuery.isLoading) {
-    return <Loader />;
+    return (
+      <div className="flex min-h-dvh items-center justify-center">
+        <div className="preloader-mark">
+          <div className="h-12 w-12 rounded-2xl border border-brand-500/30 border-t-brand-500" />
+        </div>
+      </div>
+    );
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

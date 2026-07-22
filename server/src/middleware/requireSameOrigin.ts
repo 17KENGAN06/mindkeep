@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { env } from '@/config/env.js';
+import { allowedClientOrigins } from '@/config/env.js';
 import { AppError } from '@/utils/AppError.js';
 
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
@@ -25,13 +25,14 @@ export function requireSameOrigin(req: Request, _res: Response, next: NextFuncti
   }
 
   const origin = req.get('origin');
-  const allowed = normalizeOrigin(env.CLIENT_URL);
 
   if (origin) {
-    if (normalizeOrigin(origin) !== allowed) {
+    const normalized = normalizeOrigin(origin);
+    if (!allowedClientOrigins.includes(normalized)) {
       throw new AppError('Invalid origin', {
         statusCode: 403,
         code: 'CSRF_REJECTED',
+        details: { origin: normalized },
       });
     }
 

@@ -4,7 +4,7 @@ import express from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import { env } from '@/config/env.js';
+import { allowedClientOrigins, env } from '@/config/env.js';
 import { errorHandler } from '@/middleware/errorHandler.js';
 import { notFoundHandler } from '@/middleware/notFoundHandler.js';
 import { requireSameOrigin } from '@/middleware/requireSameOrigin.js';
@@ -17,7 +17,14 @@ app.set('trust proxy', 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: env.CLIENT_URL,
+    origin(origin, callback) {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+      const normalized = origin.replace(/\/$/, '');
+      callback(null, allowedClientOrigins.includes(normalized));
+    },
     credentials: true,
   }),
 );

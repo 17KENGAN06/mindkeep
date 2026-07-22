@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="Mindkeep">
+  <rect width="512" height="512" rx="112" fill="#07110d"/>
+  <circle cx="256" cy="256" r="176" stroke="#2a3f35" stroke-width="14"/>
+  <circle cx="256" cy="256" r="120" stroke="#2a4f3c" stroke-width="10" stroke-dasharray="18 28"/>
+  <path
+    d="M256 112c0 0-96 64-96 176 0 64 41.6 112 96 112s96-48 96-112C352 176 256 112 256 112Z"
+    fill="#8eefb4"
+  />
+  <path d="M256 144v224" stroke="#07110d" stroke-width="16" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="368" cy="160" r="18" fill="#5fc98e"/>
+  <circle cx="400" cy="256" r="18" fill="#8eefb4"/>
+  <circle cx="368" cy="352" r="18" fill="#6fd99a"/>
+</svg>

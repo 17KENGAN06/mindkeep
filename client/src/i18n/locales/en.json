@@ -1,6 +1,6 @@
-﻿{
+{
   "common": {
-    "appName": "Learning Reminder",
+    "appName": "Mindkeep",
     "loading": "Loading...",
     "save": "Save",
     "cancel": "Cancel",
@@ -23,7 +23,8 @@
     "notifications": "Notifications",
     "statistics": "Statistics",
     "calendar": "Calendar",
-    "admin": "Admin"
+    "admin": "Admin",
+    "blog": "Blog"
   },
   "home": {
     "title": "Keep what you learn",
@@ -38,7 +39,7 @@
       "seven": "Second revisit — lock the meaning in",
       "thirty": "Third revisit — move it toward lasting recall"
     },
-    "howTitle": "How Learning Reminder works",
+    "howTitle": "How Mindkeep works",
     "howSubtitle": "Simple flow. No grading. No “I forgot” buttons. Just timely returns to what matters.",
     "stepLabel": "Step {{n}}",
     "steps": {
@@ -72,9 +73,27 @@
       }
     },
     "ctaTitle": "Start your first review cycle today",
-    "ctaSubtitle": "Create an account and add one thing you learned this week."
+    "ctaSubtitle": "Create an account and add one thing you learned this week.",
+    "eyebrow": "3 · 7 · 30 — memory that stays",
+    "apps": {
+      "eyebrow": "Mobile",
+      "title": "Apps for iPhone & Android",
+      "subtitle": "Native Mindkeep apps are in development. The same calm 3 · 7 · 30 rhythm — soon in your pocket.",
+      "badge": "Soon",
+      "note": "Store buttons are previews. Web app is available today on mindkeep.cloud.",
+      "readBlog": "Read learning notes"
+    },
+    "sections": {
+      "hero": "Start",
+      "schedule": "Rhythm",
+      "how": "How",
+      "features": "Craft",
+      "apps": "Apps",
+      "blog": "Blog",
+      "cta": "Begin"
+    }
   },
-    "admin": {
+  "admin": {
     "title": "Admin",
     "subtitle": "Users and platform overview.",
     "usersTitle": "Users",
@@ -115,6 +134,16 @@
     "noAccount": "No account yet?",
     "hasAccount": "Already have an account?",
     "passwordHint": "At least 8 characters",
+    "or": "or",
+    "googleProcessing": "Signing in with Google",
+    "bot": {
+      "humanLabel": "I am not a robot",
+      "humanRequired": "Please confirm you are not a robot",
+      "preparing": "Preparing form protection…",
+      "challengeFailed": "Could not prepare protection. Refresh the page.",
+      "softMode": "Basic protection is active. You can continue.",
+      "rejected": "Request blocked by bot protection. Refresh and try again."
+    },
     "errors": {
       "required": "This field is required",
       "email": "Enter a valid email",
@@ -124,7 +153,14 @@
       "invalidCredentials": "Invalid email or password",
       "emailTaken": "This email is already registered",
       "registerFailed": "Unable to create an account with these details.",
-      "passwordMax": "Password must be at most 72 characters"
+      "passwordMax": "Password must be at most 72 characters",
+      "network": "Cannot reach the server. Check your internet and try again.",
+      "csrf": "Security check rejected this request (origin mismatch). Set CLIENT_URL=https://mindkeep.cloud on the API.",
+      "rateLimited": "Too many attempts. Wait a few minutes and try again.",
+      "validation": "Check the form fields and try again.",
+      "server": "The server is temporarily unavailable. Try again shortly.",
+      "serverOutdated": "The API is not updated yet. Wait for deploy or try again later.",
+      "googleUnavailable": "Google sign-in failed. Please try again."
     }
   },
   "dashboard": {
@@ -278,6 +314,168 @@
       "overdue": "Overdue",
       "pending": "Pending",
       "completed": "Completed"
+    }
+  },
+  "seo": {
+    "titles": {
+      "home": "Mindkeep — keep what you learn",
+      "login": "Sign in · Mindkeep",
+      "register": "Start free · Mindkeep",
+      "dashboard": "Dashboard · Mindkeep",
+      "review": "Review today · Mindkeep",
+      "calendar": "Calendar · Mindkeep",
+      "materials": "Materials · Mindkeep",
+      "categories": "Categories · Mindkeep",
+      "notifications": "Notifications · Mindkeep",
+      "statistics": "Statistics · Mindkeep",
+      "admin": "Admin · Mindkeep",
+      "fallback": "Mindkeep",
+      "blog": "Blog · Mindkeep",
+      "privacy": "Privacy policy · Mindkeep",
+      "notFound": "Page not found · Mindkeep"
+    }
+  },
+  "footer": {
+    "craftedLabel": "Property of",
+    "tagline": "Where memory finds a quiet rhythm — and learning learns to stay.",
+    "about": "Mindkeep helps you return to what you learned after 3, 7, and 30 days — with a clear review calendar and no noise.",
+    "linksLabel": "Navigate",
+    "visitStudio": "Studio site",
+    "privacy": "Privacy",
+    "rights": "All rights reserved. Designed and maintained by the studio.",
+    "ownership": "Mindkeep is the property of <studio />. © {{year}}",
+    "lineCompact": "Mindkeep is the property of WEISEZAHOY © {{year}}"
+  },
+  "notFound": {
+    "eyebrow": "Lost trail",
+    "title": "This page does not exist",
+    "subtitle": "The link may be outdated or mistyped. Head home or browse the blog.",
+    "home": "Back home"
+  },
+  "privacy": {
+    "eyebrow": "Legal",
+    "title": "Privacy policy",
+    "updated": "Updated: July 22, 2026",
+    "intro": "This policy explains what data Mindkeep collects, why we need it, and how we protect it. By using the service, you agree to the practices described below.",
+    "contactLabel": "Data questions:",
+    "sections": [
+      {
+        "title": "1. Who is responsible",
+        "body": [
+          "Mindkeep is operated by WEISEZAHOY studio.",
+          "For personal data requests, contact the email listed on this page."
+        ]
+      },
+      {
+        "title": "2. What we collect",
+        "body": [
+          "Account data: name, email, and a hashed password when you register.",
+          "Learning content: materials, categories, learned dates, and review statuses.",
+          "Technical data: timezone, interface language, and basic server logs needed for security and reliability."
+        ]
+      },
+      {
+        "title": "3. Why we use data",
+        "body": [
+          "To create your account, store materials, and schedule reminders after 3, 7, and 30 days.",
+          "To show calendar, statistics, and in-app notifications.",
+          "To keep the service secure, prevent abuse, and improve reliability."
+        ]
+      },
+      {
+        "title": "4. Storage and security",
+        "body": [
+          "Data is stored on secured servers and transferred over HTTPS where available.",
+          "Passwords are never stored in plain text — we use cryptographic hashing.",
+          "Admin access is limited to authorized operators."
+        ]
+      },
+      {
+        "title": "5. Sharing with third parties",
+        "body": [
+          "We do not sell personal data.",
+          "Hosting and database providers may process data only to run Mindkeep under agreement with the operator."
+        ]
+      },
+      {
+        "title": "6. Your rights",
+        "body": [
+          "You may request access to your data, corrections, or account deletion.",
+          "You can change language, theme, and learning content at any time inside the app."
+        ]
+      },
+      {
+        "title": "7. Cookies and local data",
+        "body": [
+          "Mindkeep may store a session token, language, and theme preference locally in your browser.",
+          "These are used for sign-in and interface comfort, not for advertising tracking."
+        ]
+      },
+      {
+        "title": "8. Policy updates",
+        "body": [
+          "We may update this policy. The current version is always available on this page with the update date."
+        ]
+      }
+    ]
+  },
+  "blog": {
+    "eyebrow": "Journal",
+    "title": "Notes on memory & focus",
+    "subtitle": "Three themes that shape how Mindkeep thinks about learning.",
+    "viewAll": "Open blog",
+    "back": "All articles",
+    "byAuthor": "By {{author}}",
+    "originLabel": "Who shaped this idea",
+    "moreTitle": "Keep reading",
+    "topics": {
+      "spaced-repetition": {
+        "label": "Spaced repetition",
+        "description": "How timed revisits turn fragile memory into lasting recall."
+      },
+      "pomodoro": {
+        "label": "Pomodoro",
+        "description": "Short focused sprints that protect attention while you learn."
+      },
+      "pareto": {
+        "label": "80/20 results",
+        "description": "Find the vital few inputs that move most of your progress."
+      }
+    },
+    "articles": {
+      "spaced-repetition-memory": {
+        "title": "Why revisiting on day 3, 7 and 30 works",
+        "excerpt": "A calm guide to spaced repetition — and why Mindkeep keeps intervals fixed.",
+        "originNote": "Hermann Ebbinghaus mapped the forgetting curve in the 1880s. His work inspired spaced revisits that strengthen memory before it fades.",
+        "body": [
+          "Learning is not a single moment — it is a series of returns. When you meet an idea once, the trace is fragile. When you meet it again at the right distance, the mind rebuilds the path with less effort and more clarity.",
+          "Spaced repetition grew from that insight: schedule reviews before forgetting wins. Classic systems adapt the gap after every answer. Mindkeep chooses a gentler contract — fixed revisits on day 3, day 7 and day 30 from the day you learned something.",
+          "Fixed intervals remove the noise of scoring yourself. You still revisit on purpose. You still protect long-term memory. You simply trust a clear rhythm instead of an ever-shifting algorithm.",
+          "Use this template whenever you write about memory: start with the feeling of forgetting, name the method, credit the originator, then connect it to how Mindkeep behaves in practice."
+        ]
+      },
+      "pomodoro-focus": {
+        "title": "Pomodoro: learn in bright, short windows",
+        "excerpt": "How 25-minute focus blocks help you study without burning out.",
+        "originNote": "Francesco Cirillo created the Pomodoro Technique in the late 1980s, naming it after a tomato-shaped kitchen timer.",
+        "body": [
+          "Deep learning needs attention — and attention loves edges. A short, protected block tells your mind: this window is for one thing only.",
+          "The Pomodoro pattern is simple: focus for about 25 minutes, then rest briefly. After a few cycles, take a longer pause. The point is not perfection. The point is a repeatable cadence that keeps energy available for the next return.",
+          "Pair Pomodoro with Mindkeep: use a focus block to capture what you learned, then let the 3 · 7 · 30 schedule bring you back later. Capture now. Revisit later. Protect both intensity and memory.",
+          "When you draft future articles on focus, keep this shape: problem of distraction → Cirillo’s method → practical pairing with Mindkeep → one gentle invitation to try today."
+        ]
+      },
+      "pareto-learning-results": {
+        "title": "The 80/20 rule in learning",
+        "excerpt": "How Vilfredo Pareto’s insight helps you choose what is worth remembering.",
+        "originNote": "Economist Vilfredo Pareto observed that a minority of causes often drive a majority of outcomes — later popularized as the 80/20 principle.",
+        "body": [
+          "Not every fact deserves the same space in your mind. Some ideas unlock many others. Some only decorate the surface.",
+          "The Pareto principle suggests a useful bias: look for the vital few. In language learning that may be high-frequency words. In coding it may be the patterns you reuse weekly. In work it may be the principles behind your best decisions.",
+          "Mindkeep helps you keep what you chose — not everything you touched. Capture the material that compounds. Review it on a fixed rhythm. Leave the rest outside the schedule so attention stays sharp.",
+          "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
+        ]
+      }
     }
   }
 }
