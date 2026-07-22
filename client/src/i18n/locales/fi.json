@@ -269,6 +269,8 @@
     "openMaterial": "Avaa materiaali",
     "completed": "Kertattu",
     "skip": "Ohita",
+    "processing": "Käsitellään…",
+    "notDue": "Kertaus tulee saataville sille ajastettuna päivänä.",
     "successCompleted": "Kertaus merkitty valmiiksi. Seuraava kiinteä muistutus pysyy omalla päivällään.",
     "successSkipped": "Kertaus ohitettu. Seuraava kiinteä muistutus pysyy omalla päivällään.",
     "emptyOverdueTitle": "Ei myöhässä olevia",

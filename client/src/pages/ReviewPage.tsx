@@ -1,5 +1,6 @@
 ﻿import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ApiError } from '@/api/client';
 import { ReminderCard } from '@/components/reminders/ReminderCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -24,6 +25,7 @@ function ReminderSection({
   onSkip,
   completePending,
   skipPending,
+  canResolve = true,
 }: {
   title: string;
   reminders: Reminder[] | undefined;
@@ -35,6 +37,7 @@ function ReminderSection({
   onSkip: (id: string) => void;
   completePending: boolean;
   skipPending: boolean;
+  canResolve?: boolean;
 }) {
   if (!reminders) return null;
 
@@ -55,6 +58,8 @@ function ReminderSection({
               reminder={reminder}
               isCompleting={completePending && pendingId === reminder.id && action === 'complete'}
               isSkipping={skipPending && pendingId === reminder.id && action === 'skip'}
+              canResolve={canResolve}
+              actionsDisabled={completePending || skipPending}
               onComplete={onComplete}
               onSkip={onSkip}
             />
@@ -90,8 +95,12 @@ export function ReviewPage() {
     try {
       await completeReminder.mutateAsync(id);
       setSuccessMessage(t('review.successCompleted'));
-    } catch {
-      setErrorMessage(t('auth.errors.generic'));
+    } catch (error) {
+      setErrorMessage(
+        error instanceof ApiError && error.code === 'REMINDER_NOT_DUE'
+          ? t('review.notDue')
+          : t('auth.errors.generic'),
+      );
     } finally {
       setPendingId(null);
       setAction(null);
@@ -107,8 +116,12 @@ export function ReviewPage() {
     try {
       await skipReminder.mutateAsync(id);
       setSuccessMessage(t('review.successSkipped'));
-    } catch {
-      setErrorMessage(t('auth.errors.generic'));
+    } catch (error) {
+      setErrorMessage(
+        error instanceof ApiError && error.code === 'REMINDER_NOT_DUE'
+          ? t('review.notDue')
+          : t('auth.errors.generic'),
+      );
     } finally {
       setPendingId(null);
       setAction(null);
@@ -176,6 +189,7 @@ export function ReviewPage() {
         onSkip={(id) => void handleSkip(id)}
         completePending={completeReminder.isPending}
         skipPending={skipReminder.isPending}
+        canResolve={false}
       />
     </div>
   );

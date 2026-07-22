@@ -54,24 +54,24 @@ html[data-theme='dark'] {
 
 html[data-theme='light'] {
   color-scheme: light;
-  --app-surface: #f3faf6;
-  --app-panel: #ffffff;
-  --app-ink: #0d1f18;
-  --app-muted: #4d6759;
-  --app-line: #c9e0d3;
-  --app-accent: #1f8f6a;
-  --app-accent-soft: rgba(31, 143, 106, 0.14);
+  --app-surface: #edf1ee;
+  --app-panel: #f7f9f7;
+  --app-ink: #1c2b24;
+  --app-muted: #5e7067;
+  --app-line: #d2dcd5;
+  --app-accent: #39785e;
+  --app-accent-soft: rgba(57, 120, 94, 0.11);
 
-  --app-brand-50: #e8f8f0;
-  --app-brand-100: #c9efdc;
-  --app-brand-200: #97dfbb;
-  --app-brand-300: #5fc998;
-  --app-brand-400: #36b07c;
-  --app-brand-500: #1f8f6a;
-  --app-brand-600: #177456;
-  --app-brand-700: #145c46;
-  --app-brand-800: #124a3a;
-  --app-brand-900: #0f3c30;
+  --app-brand-50: #e5ebe7;
+  --app-brand-100: #d4e0d9;
+  --app-brand-200: #b4cbbd;
+  --app-brand-300: #8eb29e;
+  --app-brand-400: #63977c;
+  --app-brand-500: #3b8f6a;
+  --app-brand-600: #34785b;
+  --app-brand-700: #2b624c;
+  --app-brand-800: #264f3f;
+  --app-brand-900: #203f34;
 }
 
 @layer base {
@@ -175,19 +175,31 @@ html[data-theme='light'] {
   }
 
   .home-snap {
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-    overscroll-behavior-y: none;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+    overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   .home-snap-section {
-    @apply relative flex h-dvh min-h-dvh max-h-dvh flex-col overflow-hidden;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    height: 100dvh;
-    min-height: 100dvh;
-    max-height: 100dvh;
+    @apply relative flex flex-col overflow-visible;
+  }
+
+  @media (min-width: 768px) {
+    .home-snap {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      overscroll-behavior-y: none;
+    }
+
+    .home-snap-section {
+      @apply h-dvh min-h-dvh max-h-dvh overflow-hidden;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      height: 100dvh;
+      min-height: 100dvh;
+      max-height: 100dvh;
+    }
   }
 
   .home-snap-section .desktop-motion {
@@ -258,6 +270,16 @@ html[data-theme='light'] {
 }
 .home-snap-section.is-inview .snap-reveal.snap-reveal-d6 {
   animation-delay: 540ms !important;
+}
+
+@media (max-width: 767px) {
+  .home-snap-section .snap-reveal,
+  .home-snap-section.is-inview .snap-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    pointer-events: auto !important;
+  }
 }
 
 .home-snap-section.is-inview .desktop-motion-line {

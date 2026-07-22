@@ -269,6 +269,8 @@
     "openMaterial": "Open material",
     "completed": "Completed",
     "skip": "Skip",
+    "processing": "Processing…",
+    "notDue": "This review will become available on its scheduled date.",
     "successCompleted": "Review marked as completed. The next fixed reminder stays on its date.",
     "successSkipped": "Review skipped. The next fixed reminder stays on its date.",
     "emptyOverdueTitle": "No overdue reviews",

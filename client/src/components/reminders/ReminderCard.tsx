@@ -10,6 +10,8 @@ type ReminderCardProps = {
   reminder: Reminder;
   isCompleting?: boolean;
   isSkipping?: boolean;
+  canResolve?: boolean;
+  actionsDisabled?: boolean;
   onComplete: (id: string) => void;
   onSkip: (id: string) => void;
 };
@@ -18,6 +20,8 @@ export function ReminderCard({
   reminder,
   isCompleting = false,
   isSkipping = false,
+  canResolve = true,
+  actionsDisabled = false,
   onComplete,
   onSkip,
 }: ReminderCardProps) {
@@ -75,21 +79,31 @@ export function ReminderCard({
             {t('review.openMaterial')}
           </Button>
         </Link>
-        <Button
-          type="button"
-          isLoading={isCompleting}
-          onClick={() => onComplete(reminder.id)}
-        >
-          {t('review.completed')}
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          isLoading={isSkipping}
-          onClick={() => onSkip(reminder.id)}
-        >
-          {t('review.skip')}
-        </Button>
+        {canResolve ? (
+          <>
+            <Button
+              type="button"
+              isLoading={isCompleting}
+              loadingText={t('review.processing')}
+              disabled={actionsDisabled}
+              onClick={() => onComplete(reminder.id)}
+            >
+              {t('review.completed')}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              isLoading={isSkipping}
+              loadingText={t('review.processing')}
+              disabled={actionsDisabled}
+              onClick={() => onSkip(reminder.id)}
+            >
+              {t('review.skip')}
+            </Button>
+          </>
+        ) : (
+          <p className="flex min-h-11 items-center text-sm text-muted">{t('review.notDue')}</p>
+        )}
       </div>
     </article>
   );

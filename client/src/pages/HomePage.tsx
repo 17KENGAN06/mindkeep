@@ -40,7 +40,7 @@ export function HomePage() {
   ];
 
   return (
-    <div className="relative h-dvh overflow-hidden">
+    <div className="relative min-h-dvh md:h-dvh md:overflow-hidden">
       <SectionNav
         sectionIds={sectionIds}
         labels={labels}
@@ -48,26 +48,9 @@ export function HomePage() {
         onSelect={goToSection}
       />
 
-      <nav
-        className="pointer-events-none fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 gap-2 rounded-full border border-line/80 bg-panel/80 px-3 py-2 backdrop-blur-md md:hidden"
-        aria-label="Sections"
-      >
-        {sectionIds.map((id) => (
-          <button
-            key={id}
-            type="button"
-            className={`pointer-events-auto h-2.5 rounded-full transition-all duration-500 ${
-              activeId === id ? 'w-6 bg-brand-500 shadow-[0_0_12px_rgba(142,239,180,0.55)]' : 'w-2.5 bg-line'
-            }`}
-            aria-label={id}
-            onClick={() => goToSection(id)}
-          />
-        ))}
-      </nav>
-
       <div
         ref={setScroller}
-        className="home-snap h-dvh overflow-x-hidden overflow-y-auto"
+        className="home-snap min-h-dvh overflow-x-hidden md:h-dvh md:overflow-y-auto"
         data-section-snap="true"
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>

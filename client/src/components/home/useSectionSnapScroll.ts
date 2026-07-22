@@ -10,13 +10,26 @@ const LOCK_MS = 900;
  */
 export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | null) {
   const [activeId, setActiveId] = useState(sectionIds[0] ?? '');
+  const [snapEnabled, setSnapEnabled] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches,
+  );
   const indexRef = useRef(0);
   const lockedRef = useRef(false);
   const lockTimerRef = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
   const wheelAcc = useRef(0);
   const idsRef = useRef(sectionIds);
-  idsRef.current = sectionIds;
+
+  useEffect(() => {
+    idsRef.current = sectionIds;
+  }, [sectionIds]);
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)');
+    const update = () => setSnapEnabled(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
 
   const clearLockTimer = () => {
     if (lockTimerRef.current != null) {
@@ -92,7 +105,7 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
   }, [root]);
 
   useEffect(() => {
-    if (!root || sectionIds.length === 0) return;
+    if (!root || sectionIds.length === 0 || !snapEnabled) return;
 
     goToIndex(nearestIndex() || 0, 'auto');
 
@@ -185,7 +198,7 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       root.removeEventListener('scroll', onScroll);
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [root, sectionIds.length, goToIndex, step, nearestIndex]);
+  }, [root, sectionIds.length, snapEnabled, goToIndex, step, nearestIndex]);
 
   return { activeId, goToSection };
 }

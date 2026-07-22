@@ -39,6 +39,17 @@ async function getUserTimezone(userId: string): Promise<string> {
   return user.timezone || 'Europe/Helsinki';
 }
 
+function assertReminderIsDue(scheduledAt: Date, timezone: string): void {
+  const { endUtc } = getDayBoundsInTimeZone(timezone);
+  if (scheduledAt > endUtc) {
+    throw new AppError('This review is not due yet', {
+      statusCode: 400,
+      code: 'REMINDER_NOT_DUE',
+      details: { scheduledAt },
+    });
+  }
+}
+
 function mapReminder<
   T extends {
     scheduledAt: Date;
@@ -234,6 +245,7 @@ export class ReminderService {
     }
 
     const timezone = await getUserTimezone(userId);
+    assertReminderIsDue(reminder.scheduledAt, timezone);
     const updated = await prisma.reviewReminder.update({
       where: { id },
       data: {
@@ -270,6 +282,7 @@ export class ReminderService {
     }
 
     const timezone = await getUserTimezone(userId);
+    assertReminderIsDue(reminder.scheduledAt, timezone);
     const updated = await prisma.reviewReminder.update({
       where: { id },
       data: {
