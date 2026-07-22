@@ -16,6 +16,7 @@
     "build:server": "npm run build -w server",
     "start:client": "npm run start -w client",
     "start:server": "npm run start:prod -w server",
+    "start:prod": "npm run start:prod -w learning-reminder-server",
     "lint": "npm run lint -w client && npm run lint -w server",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css}\""
   },

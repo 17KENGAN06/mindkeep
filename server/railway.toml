@@ -1,6 +1,8 @@
+# When Railway Root Directory = "server"
 [build]
 builder = "NIXPACKS"
 buildCommand = "npm install --include=dev && npm run build"
+watchPatterns = ["**"]
 
 [deploy]
 startCommand = "npm run start:prod"

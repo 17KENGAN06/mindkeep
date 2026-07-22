@@ -9,7 +9,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "prisma generate && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
     "start": "node dist/server.js",
-    "start:prod": "prisma migrate deploy && node dist/server.js",
+    "start:prod": "node ./scripts/start-prod.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prisma:generate": "prisma generate",
