@@ -10,7 +10,7 @@ export function NotificationBell() {
   return (
     <Link
       to="/notifications"
-      className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl text-brand-800 no-underline hover:bg-brand-50"
+      className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-panel text-ink no-underline transition hover:border-brand-400 hover:text-brand-500"
       aria-label={t('notifications.bellLabel', { count: unreadCount })}
     >
       <Bell className="h-5 w-5" />

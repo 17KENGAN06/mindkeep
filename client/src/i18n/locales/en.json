@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "appName": "Learning Reminder",
     "loading": "Loading...",
@@ -7,7 +7,9 @@
     "back": "Back",
     "language": "Language",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "themeLight": "Light theme",
+    "themeDark": "Dark theme"
   },
   "nav": {
     "home": "Home",
@@ -20,13 +22,83 @@
     "review": "Review today",
     "notifications": "Notifications",
     "statistics": "Statistics",
-    "calendar": "Calendar"
+    "calendar": "Calendar",
+    "admin": "Admin"
   },
   "home": {
-    "title": "Remember what you learn",
-    "subtitle": "Add study notes and get fixed reminders after 3, 7, and 30 days.",
-    "ctaRegister": "Create account",
-    "ctaLogin": "I already have an account"
+    "title": "Keep what you learn",
+    "subtitle": "Capture notes, words and rules — then revisit them on a fixed 3, 7 and 30 day rhythm.",
+    "ctaRegister": "Start free",
+    "ctaLogin": "Log in",
+    "scheduleTitle": "A fixed rhythm for long-term memory",
+    "scheduleSubtitle": "Dates are set from the day you learned something. Completing a review never reshuffles the plan.",
+    "daysLabel": "days",
+    "intervals": {
+      "three": "First revisit — strengthen the fresh trace",
+      "seven": "Second revisit — lock the meaning in",
+      "thirty": "Third revisit — move it toward lasting recall"
+    },
+    "howTitle": "How Learning Reminder works",
+    "howSubtitle": "Simple flow. No grading. No “I forgot” buttons. Just timely returns to what matters.",
+    "stepLabel": "Step {{n}}",
+    "steps": {
+      "1": {
+        "title": "Save what you studied",
+        "text": "Add a topic, definition, Q&A or link right after learning."
+      },
+      "2": {
+        "title": "Get three reminders",
+        "text": "The server schedules reviews for day 3, 7 and 30 automatically."
+      },
+      "3": {
+        "title": "Review and mark done",
+        "text": "Open the material, revisit it, press Completed — next dates stay fixed."
+      }
+    },
+    "featuresTitle": "Built for calm consistency",
+    "featuresSubtitle": "Everything you need to return to knowledge without noisy spaced-repetition algorithms.",
+    "features": {
+      "calendar": {
+        "title": "Calendar of reviews",
+        "text": "See upcoming, completed and overdue days in one place."
+      },
+      "materials": {
+        "title": "Your materials, organized",
+        "text": "Categories, search and archive for English, Finnish, code and more."
+      },
+      "focus": {
+        "title": "Focus over scores",
+        "text": "No SM-2, no difficulty ratings — only a clear schedule you can trust."
+      }
+    },
+    "ctaTitle": "Start your first review cycle today",
+    "ctaSubtitle": "Create an account and add one thing you learned this week."
+  },
+    "admin": {
+    "title": "Admin",
+    "subtitle": "Users and platform overview.",
+    "usersTitle": "Users",
+    "empty": "No users yet",
+    "loadError": "Could not load admin data.",
+    "stats": {
+      "users": "Users",
+      "admins": "Admins",
+      "materials": "Materials",
+      "reminders": "Reminders"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "timezone": "Timezone",
+      "materials": "Materials",
+      "reminders": "Reminders",
+      "created": "Created"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "User"
+    }
   },
   "auth": {
     "loginTitle": "Welcome back",

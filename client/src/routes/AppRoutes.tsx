@@ -7,6 +7,7 @@ import { DashboardLayout } from '@/layouts/DashboardLayout';
 import { CalendarPage } from '@/pages/CalendarPage';
 import { CategoriesPage } from '@/pages/CategoriesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { AdminPage } from '@/pages/AdminPage';
 import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MaterialCreatePage } from '@/pages/MaterialCreatePage';
@@ -57,6 +58,7 @@ export function AppRoutes() {
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/statistics" element={<StatisticsPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Route>
       </Route>
 

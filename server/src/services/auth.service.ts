@@ -1,4 +1,5 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, UserRole } from '@prisma/client';
+import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import type { LoginInput, RegisterInput } from '@/validations/auth.schemas.js';
 import { AppError } from '@/utils/AppError.js';
@@ -10,6 +11,7 @@ const publicUserSelect = {
   name: true,
   email: true,
   timezone: true,
+  role: true,
   createdAt: true,
   updatedAt: true,
 } as const;
@@ -23,9 +25,26 @@ export type PublicUser = {
   name: string;
   email: string;
   timezone: string;
+  role: UserRole;
   createdAt: Date;
   updatedAt: Date;
 };
+
+function shouldBeAdmin(email: string): boolean {
+  return env.ADMIN_EMAILS.includes(email.toLowerCase());
+}
+
+async function ensureAdminRole(user: PublicUser): Promise<PublicUser> {
+  if (!shouldBeAdmin(user.email) || user.role === UserRole.ADMIN) {
+    return user;
+  }
+
+  return prisma.user.update({
+    where: { id: user.id },
+    data: { role: UserRole.ADMIN },
+    select: publicUserSelect,
+  });
+}
 
 export class AuthService {
   async register(input: RegisterInput): Promise<{ user: PublicUser; token: string }> {
@@ -33,6 +52,7 @@ export class AuthService {
 
     try {
       const passwordHash = await hashPassword(input.password);
+      const role = shouldBeAdmin(email) ? UserRole.ADMIN : UserRole.USER;
 
       const user = await prisma.user.create({
         data: {
@@ -40,6 +60,7 @@ export class AuthService {
           email,
           passwordHash,
           timezone: input.timezone,
+          role,
         },
         select: publicUserSelect,
       });
@@ -49,9 +70,9 @@ export class AuthService {
       return { user, token };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-        throw new AppError('Unable to create account with these details', {
-          statusCode: 400,
-          code: 'REGISTER_FAILED',
+        throw new AppError('This email is already registered', {
+          statusCode: 409,
+          code: 'EMAIL_TAKEN',
         });
       }
 
@@ -75,14 +96,17 @@ export class AuthService {
       });
     }
 
-    const publicUser: PublicUser = {
+    let publicUser: PublicUser = {
       id: user.id,
       name: user.name,
       email: user.email,
       timezone: user.timezone,
+      role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
+
+    publicUser = await ensureAdminRole(publicUser);
 
     const token = signAccessToken({ sub: user.id, email: user.email });
 
@@ -102,7 +126,7 @@ export class AuthService {
       });
     }
 
-    return user;
+    return ensureAdminRole(user);
   }
 }
 

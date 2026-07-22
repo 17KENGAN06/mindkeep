@@ -21,6 +21,17 @@ const envSchema = z.object({
   EMAIL_FROM: z.string().optional(),
   RESEND_API_KEY: z.string().optional(),
   TELEGRAM_BOT_TOKEN: z.string().optional(),
+  ADMIN_EMAILS: z
+    .string()
+    .optional()
+    .transform((value) =>
+      value
+        ? value
+            .split(',')
+            .map((email) => email.trim().toLowerCase())
+            .filter(Boolean)
+        : [],
+    ),
 });
 
 const parsed = envSchema.safeParse(process.env);

@@ -38,7 +38,11 @@ export function errorHandler(
     return;
   }
 
-  logger.error('Unhandled error', err);
+  logger.error('Unhandled error', {
+    name: err instanceof Error ? err.name : typeof err,
+    message: err instanceof Error ? err.message : String(err),
+    stack: err instanceof Error ? err.stack : undefined,
+  });
 
   res.status(500).json({
     error: {

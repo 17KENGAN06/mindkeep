@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/Badge';
@@ -61,7 +61,7 @@ export function MaterialDetailPage() {
         </div>
       </section>
 
-      <section className="space-y-4 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-brand-100">
+      <section className="space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         {material.category ? (
           <p className="text-sm text-muted">
             {t('materials.fields.category')}: {material.category.name}
@@ -106,7 +106,7 @@ export function MaterialDetailPage() {
         ) : null}
       </section>
 
-      <section className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-brand-100">
+      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <h2 className="text-base font-semibold text-ink">{t('materials.remindersTitle')}</h2>
         <p className="mt-1 text-sm text-muted">{t('materials.remindersSubtitle')}</p>
         <ul className="mt-4 space-y-2">

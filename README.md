@@ -19,7 +19,7 @@ Languages (i18n): **Russian**, **Ukrainian**, **English**, **Finnish**.
 | Frontend | React, TypeScript, Vite, Tailwind CSS, React Router, TanStack Query, React Hook Form, Zod, date-fns, Lucide, i18next |
 | Backend | Node.js, TypeScript, Express, PostgreSQL, Prisma, Zod, JWT (httpOnly cookie), bcrypt |
 | Jobs | Railway Cron → protected HTTP endpoint (`reminderJob`); optional `node-cron` locally |
-| Deploy | Railway (API + Postgres + frontend) |
+| Deploy | Railway (API + Postgres), Hostinger (static frontend) |
 
 ---
 
@@ -203,25 +203,56 @@ See `deploy/railway-cron.http`.
 
 ---
 
-## Railway deploy
+## Deploy: Railway (API) + Hostinger (frontend)
 
-Create three services:
+### A. Railway — Postgres + API
 
-1. **PostgreSQL** plugin → provides `DATABASE_URL`  
-2. **API** — Root Directory: `server`  
-   - Env: `DATABASE_URL`, `JWT_SECRET` (≥32 chars in prod), `CLIENT_URL`, `NODE_ENV=production`, `CRON_SECRET`, `PORT`  
-   - Start: `npm run start:prod` (runs migrations)  
-   - Health: `/api/health`  
-3. **Frontend** — Root Directory: `client`  
-   - Build-time env: `VITE_API_URL=https://your-api.up.railway.app`  
+1. Create a project and add **PostgreSQL**.
+2. Add a service from this GitHub repo with **Root Directory:** `server`.
+3. Set variables:
 
-Then set API `CLIENT_URL` to the frontend public URL and attach hourly Cron to the reminders endpoint.
+| Variable | Value |
+|----------|--------|
+| `DATABASE_URL` | from Postgres (variable reference) |
+| `NODE_ENV` | `production` |
+| `JWT_SECRET` | random string, ≥32 chars |
+| `CRON_SECRET` | random string, ≥16 chars |
+| `CLIENT_URL` | `https://your-hostinger-domain` (no trailing slash) |
+| `ADMIN_EMAILS` | your email (comma-separated if several) |
+| `ENABLE_NODE_CRON` | `false` |
 
-Configs: `server/railway.toml`, `client/railway.toml`, `*/nixpacks.toml`.
+4. Deploy uses `server/railway.toml` → `npm run start:prod` (migrations + API).
+5. Open `https://YOUR-API.up.railway.app/api/health` — expect `"status":"ok"`.
+6. Optional hourly Cron:
 
-Production cookies: `httpOnly` + `Secure` + `SameSite=None` for cross-origin Railway hosts. CSRF is mitigated with Origin checks + `X-Requested-With`.
+```http
+POST https://YOUR-API.up.railway.app/api/internal/cron/reminders
+x-cron-secret: <CRON_SECRET>
+```
+
+### B. Hostinger — static React app
+
+1. On your machine, build the client against the Railway API:
+
+```bash
+cd client
+# PowerShell
+$env:VITE_API_URL="https://YOUR-API.up.railway.app"
+npm run build
+```
+
+2. Upload **contents** of `client/dist/` to Hostinger `public_html` (include `.htaccess` for SPA routes).
+3. Ensure Railway `CLIENT_URL` matches the live Hostinger URL, then redeploy the API.
+
+Configs: `server/railway.toml`, `server/nixpacks.toml`, `client/public/.htaccess`.
+
+Production cookies: `httpOnly` + `Secure` + `SameSite=None` (cross-origin Hostinger ↔ Railway). CSRF: Origin check + `X-Requested-With`.
 
 ---
+
+## Railway-only note (optional)
+
+You can also host the client on Railway (`client/` root). Prefer Hostinger static hosting when that is your chosen frontend host.
 
 ## Security notes
 
@@ -247,6 +278,7 @@ Production cookies: `httpOnly` + `Secure` + `SameSite=None` for cross-origin Rai
 | `ENABLE_NODE_CRON` | server | Optional local hourly job |
 | `EMAIL_FROM`, `RESEND_API_KEY` | server | Future email |
 | `TELEGRAM_BOT_TOKEN` | server | Future Telegram |
+| `ADMIN_EMAILS` | server | Comma-separated admin emails |
 | `VITE_API_URL` | client (build) | API base URL |
 
 ---

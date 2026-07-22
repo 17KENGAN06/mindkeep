@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ActivityChart } from '@/components/statistics/ActivityChart';
 import { Badge } from '@/components/ui/Badge';
@@ -16,7 +16,7 @@ import { formatDate } from '@/utils/date';
 
 function StatCard({ label, value, tone = 'default' }: { label: string; value: number; tone?: 'default' | 'danger' }) {
   return (
-    <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-100">
+    <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
       <p className="text-xs font-medium tracking-wide text-muted uppercase">{label}</p>
       <p className={`mt-2 text-3xl font-semibold ${tone === 'danger' ? 'text-red-700' : 'text-ink'}`}>
         {value}
@@ -75,7 +75,7 @@ export function DashboardPage() {
         <StatCard label={t('dashboard.stats.completedReviews')} value={stats.completedReviews} />
       </section>
 
-      <section className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-brand-100">
+      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <h2 className="text-base font-semibold text-ink">{t('dashboard.nextReviewTitle')}</h2>
         {nextReminder ? (
           <div className="mt-3 space-y-2">
@@ -132,7 +132,7 @@ export function DashboardPage() {
               <li key={material.id}>
                 <Link
                   to={`/materials/${material.id}`}
-                  className="flex items-center justify-between gap-3 rounded-2xl bg-white px-4 py-3 no-underline shadow-sm ring-1 ring-brand-100"
+                  className="flex items-center justify-between gap-3 rounded-2xl bg-panel px-4 py-3 no-underline shadow-sm ring-1 ring-line"
                 >
                   <div>
                     <p className="font-medium text-ink">{material.title}</p>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReminderCard } from '@/components/reminders/ReminderCard';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -127,7 +127,7 @@ export function ReviewPage() {
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('review.title')}</h1>
         <p className="mt-1 text-sm text-muted">{t('review.subtitle')}</p>
-        <p className="mt-2 text-sm font-medium text-brand-800">
+        <p className="mt-2 text-sm font-medium text-brand-500">
           {t('review.openCount', { count: totalOpen })}
         </p>
       </section>

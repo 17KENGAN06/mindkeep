@@ -15,10 +15,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const response = await authApi.me();
         return response.user;
       } catch (error) {
+        // 401 = logged out; network/API/DB issues should not block the UI preview.
         if (error instanceof ApiError && error.status === 401) {
           return null;
         }
-        throw error;
+        return null;
       }
     },
     retry: false,

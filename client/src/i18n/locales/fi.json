@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "appName": "Learning Reminder",
     "loading": "Ladataan...",
@@ -7,7 +7,9 @@
     "back": "Takaisin",
     "language": "Kieli",
     "delete": "Poista",
-    "edit": "Muokkaa"
+    "edit": "Muokkaa",
+    "themeLight": "Vaalea teema",
+    "themeDark": "Tumma teema"
   },
   "nav": {
     "home": "Etusivu",
@@ -20,13 +22,83 @@
     "review": "Kertaa tänään",
     "notifications": "Ilmoitukset",
     "statistics": "Tilastot",
-    "calendar": "Kalenteri"
+    "calendar": "Kalenteri",
+    "admin": "Admin"
   },
   "home": {
-    "title": "Muista oppimasi",
-    "subtitle": "Lisää opiskelumateriaalia ja saat muistutukset 3, 7 ja 30 päivän jälkeen.",
-    "ctaRegister": "Luo tili",
-    "ctaLogin": "Minulla on jo tili"
+    "title": "Pidä oppimasi mielessä",
+    "subtitle": "Tallenna muistiinpanoja, sanoja ja sääntöjä — palaa niihin 3, 7 ja 30 päivän jälkeen.",
+    "ctaRegister": "Aloita ilmaiseksi",
+    "ctaLogin": "Kirjaudu",
+    "scheduleTitle": "Kiinteä rytmi pitkäkestoiseen muistiin",
+    "scheduleSubtitle": "Päivämäärät lasketaan oppimispäivästä. Kertauksen merkitseminen ei siirrä muuta aikataulua.",
+    "daysLabel": "päivää",
+    "intervals": {
+      "three": "Ensimmäinen kertaus — vahvista tuore jälki",
+      "seven": "Toinen kertaus — kiinnitä merkitys",
+      "thirty": "Kolmas kertaus — vie kohti kestävää muistia"
+    },
+    "howTitle": "Näin se toimii",
+    "howSubtitle": "Yksinkertainen kulku. Ei arvostelua. Ei “unohdin”-nappia. Vain ajoissa palaaminen tärkeään.",
+    "stepLabel": "Vaihe {{n}}",
+    "steps": {
+      "1": {
+        "title": "Tallenna oppimasi",
+        "text": "Lisää aihe, määritelmä, kysymys-vastaus tai linkki heti oppimisen jälkeen."
+      },
+      "2": {
+        "title": "Saat kolme muistutusta",
+        "text": "Palvelin ajastaa kertaukset automaattisesti päiville 3, 7 ja 30."
+      },
+      "3": {
+        "title": "Kertaa ja merkitse",
+        "text": "Avaa materiaali, kertaa ja paina Valmis — seuraavat päivät pysyvät ennallaan."
+      }
+    },
+    "featuresTitle": "Rauhalliseen säännöllisyyteen",
+    "featuresSubtitle": "Kaikki tarvittava tietoon palaamiseen ilman meluisia kertausalgoritmeja.",
+    "features": {
+      "calendar": {
+        "title": "Kertauskalenteri",
+        "text": "Tulossa olevat, valmiit ja myöhässä olevat päivät yhdessä näkymässä."
+      },
+      "materials": {
+        "title": "Materiaalit järjestyksessä",
+        "text": "Kategoriat, haku ja arkisto kielille, työlle ja opiskelulle."
+      },
+      "focus": {
+        "title": "Fokus ilman pisteitä",
+        "text": "Ei SM-2:ta eikä vaikeustasoja — vain selkeä aikataulu, johon voi luottaa."
+      }
+    },
+    "ctaTitle": "Aloita ensimmäinen kertausjakso tänään",
+    "ctaSubtitle": "Luo tili ja lisää yksi asia, jonka opit tällä viikolla."
+  },
+    "admin": {
+    "title": "Admin",
+    "subtitle": "Käyttäjät ja alustan yleiskuva.",
+    "usersTitle": "Käyttäjät",
+    "empty": "Ei käyttäjiä vielä",
+    "loadError": "Admin-tietojen lataus epäonnistui.",
+    "stats": {
+      "users": "Käyttäjät",
+      "admins": "Adminit",
+      "materials": "Materiaalit",
+      "reminders": "Muistutukset"
+    },
+    "columns": {
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "role": "Rooli",
+      "timezone": "Aikavyöhyke",
+      "materials": "Materiaalit",
+      "reminders": "Muistutukset",
+      "created": "Luotu"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "Käyttäjä"
+    }
   },
   "auth": {
     "loginTitle": "Tervetuloa takaisin",

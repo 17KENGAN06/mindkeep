@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+﻿import { useTranslation } from 'react-i18next';
 import { ActivityChart } from '@/components/statistics/ActivityChart';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
@@ -27,19 +27,19 @@ export function StatisticsPage() {
       </section>
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-100">
+        <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
           <p className="text-xs text-muted uppercase">{t('dashboard.stats.activeMaterials')}</p>
           <p className="mt-2 text-3xl font-semibold text-ink">{stats.activeMaterials}</p>
         </div>
-        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-100">
+        <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
           <p className="text-xs text-muted uppercase">{t('dashboard.stats.todayReminders')}</p>
           <p className="mt-2 text-3xl font-semibold text-ink">{stats.todayReminders}</p>
         </div>
-        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-100">
+        <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
           <p className="text-xs text-muted uppercase">{t('dashboard.stats.overdueReminders')}</p>
           <p className="mt-2 text-3xl font-semibold text-ink">{stats.overdueReminders}</p>
         </div>
-        <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-100">
+        <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
           <p className="text-xs text-muted uppercase">{t('dashboard.stats.completedReviews')}</p>
           <p className="mt-2 text-3xl font-semibold text-ink">{stats.completedReviews}</p>
         </div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+﻿import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MaterialCard } from '@/components/materials/MaterialCard';
@@ -42,7 +42,7 @@ export function MaterialsPage() {
         </Link>
       </section>
 
-      <section className="grid gap-3 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-brand-100 sm:grid-cols-3">
+      <section className="grid gap-3 rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:grid-cols-3">
         <Input
           label={t('materials.filters.search')}
           value={search}

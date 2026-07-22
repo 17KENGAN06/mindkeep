@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+﻿import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Calendar } from '@/components/Calendar';
@@ -86,7 +86,7 @@ export function CalendarPage() {
             {selectedReminders.map((reminder) => (
               <li
                 key={reminder.id}
-                className="rounded-2xl bg-white px-4 py-3 shadow-sm ring-1 ring-brand-100"
+                className="rounded-2xl bg-panel px-4 py-3 shadow-sm ring-1 ring-line"
               >
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>

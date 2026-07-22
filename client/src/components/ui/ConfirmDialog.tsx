@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button';
+﻿import { Button } from '@/components/ui/Button';
 
 type ConfirmDialogProps = {
   open: boolean;
@@ -29,7 +29,7 @@ export function ConfirmDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
-        className="w-full max-w-md rounded-2xl bg-white p-5 shadow-lg"
+        className="w-full max-w-md rounded-2xl bg-panel p-5 shadow-lg"
       >
         <h2 id="confirm-dialog-title" className="text-lg font-semibold text-ink">
           {title}

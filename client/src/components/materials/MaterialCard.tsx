@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/Badge';
 import type { AppLanguage } from '@/i18n';
@@ -16,7 +16,7 @@ export function MaterialCard({ material }: MaterialCardProps) {
   return (
     <Link
       to={`/materials/${material.id}`}
-      className="block rounded-2xl bg-white px-4 py-4 no-underline shadow-sm ring-1 ring-brand-100 transition hover:ring-brand-300"
+      className="block rounded-2xl bg-panel px-4 py-4 no-underline shadow-sm ring-1 ring-line transition hover:ring-brand-300"
     >
       <div className="flex items-start justify-between gap-3">
         <div>

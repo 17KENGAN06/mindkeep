@@ -13,3 +13,6 @@ client/dist/
 server/dist/
 *.tsbuildinfo
 .prisma/
+*.db
+*.db-journal
+

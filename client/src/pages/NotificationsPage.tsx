@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -38,7 +38,7 @@ export function NotificationsPage() {
         <div>
           <h1 className="text-2xl font-semibold text-ink">{t('notifications.title')}</h1>
           <p className="mt-1 text-sm text-muted">{t('notifications.subtitle')}</p>
-          <p className="mt-2 text-sm font-medium text-brand-800">
+          <p className="mt-2 text-sm font-medium text-brand-500">
             {t('notifications.unreadCount', { count: unreadCount })}
           </p>
         </div>
@@ -63,8 +63,8 @@ export function NotificationsPage() {
           {notifications.map((notification) => (
             <li
               key={notification.id}
-              className={`rounded-2xl p-4 shadow-sm ring-1 ring-brand-100 ${
-                notification.isRead ? 'bg-white' : 'bg-brand-50/70'
+              className={`rounded-2xl p-4 shadow-sm ring-1 ring-line ${
+                notification.isRead ? 'bg-panel' : 'bg-brand-50/70'
               }`}
             >
               <div className="flex flex-wrap items-start justify-between gap-2">

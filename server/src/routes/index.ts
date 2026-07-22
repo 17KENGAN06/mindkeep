@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { adminRouter } from '@/routes/admin.routes.js';
 import { authRouter } from '@/routes/auth.routes.js';
 import { categoryRouter } from '@/routes/category.routes.js';
 import { cronRouter } from '@/routes/cron.routes.js';
@@ -12,6 +13,7 @@ export const apiRouter = Router();
 
 apiRouter.use('/health', healthRouter);
 apiRouter.use('/auth', authRouter);
+apiRouter.use('/admin', adminRouter);
 apiRouter.use('/categories', categoryRouter);
 apiRouter.use('/materials', materialRouter);
 apiRouter.use('/reminders', reminderRouter);

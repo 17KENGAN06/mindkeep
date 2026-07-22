@@ -47,8 +47,8 @@ export function RegisterPage() {
       await registerUser(values);
       void navigate('/dashboard');
     } catch (error) {
-      if (error instanceof ApiError && error.code === 'REGISTER_FAILED') {
-        setFormError(t('auth.errors.registerFailed'));
+      if (error instanceof ApiError && (error.code === 'EMAIL_TAKEN' || error.code === 'REGISTER_FAILED')) {
+        setFormError(t('auth.errors.emailTaken'));
         return;
       }
 

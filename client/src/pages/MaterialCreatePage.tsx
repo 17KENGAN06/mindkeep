@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MaterialForm } from '@/components/materials/MaterialForm';
@@ -25,7 +25,7 @@ export function MaterialCreatePage() {
         </Link>
       </section>
 
-      <section className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-brand-100">
+      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <MaterialForm
           categories={categories}
           submitLabel={t('materials.create')}

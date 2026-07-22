@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+﻿import { useTranslation } from 'react-i18next';
 import type { AppLanguage } from '@/i18n';
 import type { ActivityPoint } from '@/types/statistics';
 import { formatDate } from '@/utils/date';
@@ -13,7 +13,7 @@ export function ActivityChart({ activity }: ActivityChartProps) {
   const max = Math.max(...activity.map((point) => point.count), 1);
 
   return (
-    <div className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-brand-100">
+    <div className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
       <h2 className="text-base font-semibold text-ink">{t('dashboard.activityTitle')}</h2>
       <p className="mt-1 text-sm text-muted">{t('dashboard.activitySubtitle')}</p>
 

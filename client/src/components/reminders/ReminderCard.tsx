@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -25,7 +25,7 @@ export function ReminderCard({
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
 
   return (
-    <article className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-100">
+    <article className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <h3 className="text-base font-semibold text-ink">{reminder.material.title}</h3>

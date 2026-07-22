@@ -18,10 +18,10 @@ if (env.NODE_ENV !== 'production') {
 
 export async function connectDatabase(): Promise<void> {
   await prisma.$connect();
-  logger.info('Connected to PostgreSQL');
+  logger.info('Connected to database');
 }
 
 export async function disconnectDatabase(): Promise<void> {
   await prisma.$disconnect();
-  logger.info('Disconnected from PostgreSQL');
+  logger.info('Disconnected from database');
 }

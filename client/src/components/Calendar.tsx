@@ -1,4 +1,4 @@
-import {
+﻿import {
   addMonths,
   eachDayOfInterval,
   endOfMonth,
@@ -31,10 +31,10 @@ type CalendarProps = {
 
 function dayTone(summary?: CalendarDaySummary): string {
   if (!summary || summary.total === 0) return 'bg-transparent';
-  if (summary.overdue > 0) return 'bg-red-100 text-red-800 ring-red-200';
-  if (summary.pending > 0) return 'bg-amber-100 text-amber-900 ring-amber-200';
-  if (summary.completed > 0) return 'bg-emerald-100 text-emerald-800 ring-emerald-200';
-  return 'bg-brand-50 text-brand-800 ring-brand-100';
+  if (summary.overdue > 0) return 'bg-red-500/20 text-red-500 ring-red-500/35';
+  if (summary.pending > 0) return 'bg-amber-500/20 text-amber-500 ring-amber-500/35';
+  if (summary.completed > 0) return 'bg-emerald-500/20 text-emerald-500 ring-emerald-500/35';
+  return 'bg-brand-50 text-brand-500 ring-line';
 }
 
 export function Calendar({
@@ -63,7 +63,7 @@ export function Calendar({
   const selected = selectedDate ? parseISO(selectedDate) : null;
 
   return (
-    <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-brand-100 sm:p-5">
+    <div className="rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
       <div className="mb-4 flex items-center justify-between gap-2">
         <Button
           type="button"

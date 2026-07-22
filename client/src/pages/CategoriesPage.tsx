@@ -1,4 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+﻿import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -97,7 +97,7 @@ export function CategoriesPage() {
         <p className="mt-1 text-sm text-muted">{t('categories.subtitle')}</p>
       </section>
 
-      <section className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-brand-100">
+      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <h2 className="mb-3 text-sm font-semibold text-ink">
           {editing ? t('categories.editTitle') : t('categories.createTitle')}
         </h2>
@@ -157,7 +157,7 @@ export function CategoriesPage() {
             {categories.map((category) => (
               <li
                 key={category.id}
-                className="flex items-center justify-between gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm ring-1 ring-brand-100"
+                className="flex items-center justify-between gap-3 rounded-2xl bg-panel px-4 py-3 shadow-sm ring-1 ring-line"
               >
                 <div>
                   <p className="font-medium text-ink">{category.name}</p>

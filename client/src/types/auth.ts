@@ -3,6 +3,7 @@ export type User = {
   name: string;
   email: string;
   timezone: string;
+  role: 'USER' | 'ADMIN';
   createdAt: string;
   updatedAt: string;
 };

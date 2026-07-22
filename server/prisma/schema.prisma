@@ -31,18 +31,24 @@ enum NotificationType {
   SYSTEM
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
   id           String   @id @default(cuid())
   name         String
   email        String   @unique
   passwordHash String
   timezone     String   @default("Europe/Helsinki")
+  role         UserRole @default(USER)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  categories  Category[]
-  materials   LearningMaterial[]
-  reminders   ReviewReminder[]
+  categories    Category[]
+  materials     LearningMaterial[]
+  reminders     ReviewReminder[]
   notifications Notification[]
 }
 
