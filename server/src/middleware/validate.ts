@@ -12,7 +12,18 @@ export function validate(schema: ZodType, target: RequestTarget = 'body') {
       return;
     }
 
-    req[target] = parsed.data;
+    if (target === 'query') {
+      // Express 5 exposes req.query as a getter without a setter. Define an
+      // own property so downstream handlers receive the validated values.
+      Object.defineProperty(req, 'query', {
+        value: parsed.data,
+        configurable: true,
+        enumerable: true,
+        writable: true,
+      });
+    } else {
+      req[target] = parsed.data;
+    }
     next();
   };
 }
