@@ -9,6 +9,7 @@ import { CalendarPage } from '@/pages/CalendarPage';
 import { CategoriesPage } from '@/pages/CategoriesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { AdminPage } from '@/pages/AdminPage';
+import { GuidePage } from '@/pages/GuidePage';
 import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { MaterialCreatePage } from '@/pages/MaterialCreatePage';
@@ -38,6 +39,7 @@ export function AppRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/blog/:slug" element={<BlogArticlePage />} />
+      <Route path="/guide" element={<GuidePage />} />
       <Route path="/privacy" element={<PrivacyPolicyPage />} />
 
       <Route

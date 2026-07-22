@@ -15,6 +15,7 @@ const routeTitleKeys: Record<string, string> = {
   '/statistics': 'seo.titles.statistics',
   '/admin': 'seo.titles.admin',
   '/blog': 'seo.titles.blog',
+  '/guide': 'seo.titles.guide',
   '/privacy': 'seo.titles.privacy',
 };
 

@@ -130,6 +130,14 @@ html[data-theme='light'] {
     height: 0;
     display: none;
   }
+
+  .testimonial-track {
+    scrollbar-width: none;
+  }
+
+  .testimonial-track::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer utilities {

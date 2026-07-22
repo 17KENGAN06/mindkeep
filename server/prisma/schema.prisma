@@ -36,6 +36,12 @@ enum UserRole {
   ADMIN
 }
 
+enum UserReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id           String   @id @default(cuid())
   name         String
@@ -51,6 +57,22 @@ model User {
   materials     LearningMaterial[]
   reminders     ReviewReminder[]
   notifications Notification[]
+  review        UserReview?
+}
+
+model UserReview {
+  id        String           @id @default(cuid())
+  rating    Int
+  text      String
+  location  String?
+  status    UserReviewStatus @default(PENDING)
+  userId    String           @unique
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
 }
 
 model Category {

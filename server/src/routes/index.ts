@@ -7,6 +7,7 @@ import { healthRouter } from '@/routes/health.routes.js';
 import { materialRouter } from '@/routes/material.routes.js';
 import { notificationRouter } from '@/routes/notification.routes.js';
 import { reminderRouter } from '@/routes/reminder.routes.js';
+import { reviewRouter } from '@/routes/review.routes.js';
 import { statisticsRouter } from '@/routes/statistics.routes.js';
 
 export const apiRouter = Router();
@@ -17,6 +18,7 @@ apiRouter.use('/admin', adminRouter);
 apiRouter.use('/categories', categoryRouter);
 apiRouter.use('/materials', materialRouter);
 apiRouter.use('/reminders', reminderRouter);
+apiRouter.use('/reviews', reviewRouter);
 apiRouter.use('/notifications', notificationRouter);
 apiRouter.use('/statistics', statisticsRouter);
 apiRouter.use('/internal/cron', cronRouter);

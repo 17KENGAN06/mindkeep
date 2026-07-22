@@ -24,7 +24,8 @@
     "statistics": "Statistics",
     "calendar": "Calendar",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "guide": "How to use"
   },
   "home": {
     "title": "Keep what you learn",
@@ -83,15 +84,99 @@
       "note": "Store buttons are previews. Web app is available today on mindkeep.cloud.",
       "readBlog": "Read learning notes"
     },
+    "testimonials": {
+      "eyebrow": "Voices from the beta",
+      "title": "Tested by our first users",
+      "subtitle": "People from different countries tried Mindkeep before launch and shared their honest impressions.",
+      "beta": "Beta testing participant",
+      "all": "All reviews",
+      "rating": "Rating: {{count}} out of 5",
+      "previous": "Previous reviews",
+      "next": "Next reviews",
+      "communityMember": "Mindkeep user",
+      "loginHint": "You can leave a review after completing 20 reviews.",
+      "progressHint": "You have completed {{count}} of {{required}} reviews. Keep using Mindkeep a little longer and the feedback form will unlock here.",
+      "pending": "Thank you! Your review was sent to the admin and is awaiting moderation.",
+      "approved": "Your review has been approved and published.",
+      "yourRating": "Rating",
+      "yourReview": "Your review",
+      "yourLocation": "City and country (optional)",
+      "submit": "Send for approval",
+      "submitError": "Could not submit your review. Please try again."
+    },
     "sections": {
       "hero": "Start",
-      "schedule": "Rhythm",
-      "how": "How",
-      "features": "Craft",
-      "apps": "Apps",
+      "schedule": "When to review",
+      "how": "How it works",
+      "features": "What you get",
+      "apps": "Mobile apps",
+      "testimonials": "Reviews",
       "blog": "Blog",
-      "cta": "Begin"
+      "cta": "Get started"
     }
+  },
+  "guide": {
+    "eyebrow": "A simple guide",
+    "title": "How to use Mindkeep",
+    "intro": "Save something you want to remember and Mindkeep will tell you when to return to it. No complicated setup — a few minutes is enough.",
+    "stepsTitle": "Get started in six simple steps",
+    "stepLabel": "Step {{number}}",
+    "steps": [
+      {
+        "title": "Create your account",
+        "body": "Sign up with email or continue with Google. Your timezone is detected automatically so review dates stay accurate."
+      },
+      {
+        "title": "Save what you learned",
+        "body": "Press “Add material” and enter a word, rule, note, lesson topic or useful link. It does not need to look perfect."
+      },
+      {
+        "title": "Choose the learning date",
+        "body": "Select the day you learned it. Mindkeep automatically schedules reviews 3, 7 and 30 days later."
+      },
+      {
+        "title": "Come back on the right day",
+        "body": "Open “Review today”. You can see future reviews in advance, but they can only be completed on their scheduled date."
+      },
+      {
+        "title": "Review and mark it done",
+        "body": "Open the material, try to recall the key idea, then press “Completed”. If today does not work, you can skip the review."
+      },
+      {
+        "title": "See your progress",
+        "body": "The calendar shows review dates, categories keep things tidy, and statistics show consistency without grades or pressure."
+      }
+    ],
+    "rulesTitle": "Good to know",
+    "rules": [
+      "The 3 / 7 / 30 schedule starts from the learning date and never shifts after completion.",
+      "Reviews cannot be completed early, keeping your schedule honest and easy to understand.",
+      "If you miss a date, the review becomes overdue and remains available.",
+      "Your materials belong to your account and are not visible to other users."
+    ],
+    "faqTitle": "Common questions",
+    "faq": [
+      {
+        "question": "What can I save?",
+        "answer": "Anything worth revisiting: vocabulary, notes, formulas, rules, work decisions, links, or questions and answers."
+      },
+      {
+        "question": "What if I miss a review day?",
+        "answer": "That is okay. Open the overdue review, recall the material and mark it completed."
+      },
+      {
+        "question": "Can I edit a material later?",
+        "answer": "Yes. You can edit its text, category and link. The learning date locks after a completed or skipped review so the history stays consistent."
+      },
+      {
+        "question": "Do I need to visit every day?",
+        "answer": "No. Come back when a review is due. The calendar shows upcoming dates in advance."
+      }
+    ],
+    "ctaTitle": "Save one thing you learned today",
+    "ctaSubtitle": "That is enough to start your first cycle and see how Mindkeep fits into your routine.",
+    "ctaGuest": "Create an account",
+    "ctaUser": "Add a material"
   },
   "admin": {
     "title": "Admin",
@@ -99,6 +184,15 @@
     "usersTitle": "Users",
     "empty": "No users yet",
     "loadError": "Could not load admin data.",
+    "reviewsTitle": "Review moderation",
+    "reviewsEmpty": "No submitted reviews yet",
+    "approveReview": "Approve",
+    "rejectReview": "Reject",
+    "reviewStatus": {
+      "PENDING": "Awaiting review",
+      "APPROVED": "Published",
+      "REJECTED": "Rejected"
+    },
     "stats": {
       "users": "Users",
       "admins": "Admins",
@@ -333,6 +427,7 @@
       "admin": "Admin · Mindkeep",
       "fallback": "Mindkeep",
       "blog": "Blog · Mindkeep",
+      "guide": "How to use · Mindkeep",
       "privacy": "Privacy policy · Mindkeep",
       "notFound": "Page not found · Mindkeep"
     }

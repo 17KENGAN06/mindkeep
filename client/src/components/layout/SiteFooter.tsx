@@ -18,20 +18,20 @@ export function SiteFooter({ compact = false }: SiteFooterProps) {
       href={STUDIO_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="font-display font-semibold tracking-[0.14em] text-brand-500 no-underline transition hover:text-brand-400"
+      className="font-display ml-1.5 inline-flex font-semibold tracking-[0.14em] text-brand-500 no-underline transition hover:text-brand-400"
     >
       {STUDIO_NAME}
     </a>
   );
 
   return (
-    <footer className="relative w-full border-t border-line pt-12 sm:pt-16">
+    <footer className="relative w-full border-t border-line pt-16 sm:pt-20">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500/55 to-transparent"
       />
 
-      <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-10 sm:px-6 sm:pb-14">
+      <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-16 sm:px-6 sm:pb-20">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
           <div className="max-w-lg">
             <div className="flex items-center gap-2.5">
@@ -54,6 +54,12 @@ export function SiteFooter({ compact = false }: SiteFooterProps) {
                 className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('nav.home')}
+              </Link>
+              <Link
+                to="/guide"
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
+              >
+                {t('nav.guide')}
               </Link>
               <Link
                 to="/blog"

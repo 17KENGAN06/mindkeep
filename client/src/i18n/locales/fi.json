@@ -24,7 +24,8 @@
     "statistics": "Tilastot",
     "calendar": "Kalenteri",
     "admin": "Admin",
-    "blog": "Blogi"
+    "blog": "Blogi",
+    "guide": "Käyttöohje"
   },
   "home": {
     "title": "Pidä oppimasi mielessä",
@@ -83,15 +84,99 @@
       "note": "Kauppapainikkeet ovat esikatselu. Verkkosovellus on jo käytössä osoitteessa mindkeep.cloud.",
       "readBlog": "Lue oppimisesta"
     },
+    "testimonials": {
+      "eyebrow": "Betatestaajien kokemuksia",
+      "title": "Ensimmäisten käyttäjien testaama",
+      "subtitle": "Eri maissa asuvat ihmiset kokeilivat Mindkeepia ennen julkaisua ja kertoivat rehelliset kokemuksensa.",
+      "beta": "Betatestaukseen osallistunut",
+      "all": "Kaikki arviot",
+      "rating": "Arvosana: {{count}} / 5",
+      "previous": "Edelliset arviot",
+      "next": "Seuraavat arviot",
+      "communityMember": "Mindkeep-käyttäjä",
+      "loginHint": "Voit jättää arvion 20 suoritetun kertauksen jälkeen.",
+      "progressHint": "Olet suorittanut {{count}} / {{required}} kertausta. Käytä Mindkeepia vielä hieman, niin palautelomake avautuu tähän.",
+      "pending": "Kiitos! Arviosi lähetettiin ylläpitäjälle ja odottaa tarkistusta.",
+      "approved": "Arviosi on hyväksytty ja julkaistu.",
+      "yourRating": "Arvosana",
+      "yourReview": "Arviosi",
+      "yourLocation": "Kaupunki ja maa (valinnainen)",
+      "submit": "Lähetä tarkistettavaksi",
+      "submitError": "Arvion lähettäminen epäonnistui. Yritä uudelleen."
+    },
     "sections": {
       "hero": "Alku",
-      "schedule": "Rytmi",
-      "how": "Miten",
-      "features": "Ydin",
-      "apps": "Apps",
+      "schedule": "Milloin kerrata",
+      "how": "Näin se toimii",
+      "features": "Mitä saat",
+      "apps": "Mobiilisovellukset",
+      "testimonials": "Arviot",
       "blog": "Blogi",
-      "cta": "Aloita"
+      "cta": "Kokeile"
     }
+  },
+  "guide": {
+    "eyebrow": "Selkeä käyttöohje",
+    "title": "Näin käytät Mindkeepia",
+    "intro": "Tallenna asia, jonka haluat muistaa, ja Mindkeep kertoo, milloin siihen kannattaa palata. Ei monimutkaisia asetuksia — muutama minuutti riittää.",
+    "stepsTitle": "Aloita kuudella helpolla vaiheella",
+    "stepLabel": "Vaihe {{number}}",
+    "steps": [
+      {
+        "title": "Luo tili",
+        "body": "Rekisteröidy sähköpostilla tai jatka Googlella. Aikavyöhykkeesi tunnistetaan automaattisesti, jotta kertauspäivät ovat oikein."
+      },
+      {
+        "title": "Tallenna oppimasi",
+        "body": "Paina ”Lisää materiaali” ja kirjoita sana, sääntö, muistiinpano, oppitunnin aihe tai hyödyllinen linkki. Sen ei tarvitse olla täydellinen."
+      },
+      {
+        "title": "Valitse oppimispäivä",
+        "body": "Valitse päivä, jolloin opit asian. Mindkeep ajastaa kertaukset automaattisesti 3, 7 ja 30 päivän päähän."
+      },
+      {
+        "title": "Palaa oikeana päivänä",
+        "body": "Avaa ”Kertaa tänään”. Tulevat tehtävät näkyvät etukäteen, mutta ne voi merkitä valmiiksi vasta ajastettuna päivänä."
+      },
+      {
+        "title": "Kertaa ja merkitse valmiiksi",
+        "body": "Avaa materiaali, yritä palauttaa tärkein asia mieleen ja paina ”Kertattu”. Jos tänään ei onnistu, voit ohittaa kertauksen."
+      },
+      {
+        "title": "Seuraa edistymistä",
+        "body": "Kalenteri näyttää päivät, kategoriat pitävät asiat järjestyksessä ja tilastot kertovat säännöllisyydestä ilman arvosanoja tai painetta."
+      }
+    ],
+    "rulesTitle": "Hyvä tietää",
+    "rules": [
+      "3 / 7 / 30 -aikataulu alkaa oppimispäivästä eikä siirry kertauksen jälkeen.",
+      "Kertausta ei voi tehdä etukäteen, joten aikataulu pysyy rehellisenä ja selkeänä.",
+      "Jos päivä jää väliin, kertaus merkitään myöhästyneeksi ja pysyy saatavilla.",
+      "Materiaalisi kuuluvat vain omalle tilillesi eivätkä näy muille käyttäjille."
+    ],
+    "faqTitle": "Usein kysyttyä",
+    "faq": [
+      {
+        "question": "Mitä voin tallentaa?",
+        "answer": "Mitä tahansa, johon haluat palata: sanoja, muistiinpanoja, kaavoja, sääntöjä, työssä opittuja asioita, linkkejä tai kysymyksiä ja vastauksia."
+      },
+      {
+        "question": "Mitä jos kertauspäivä jäi väliin?",
+        "answer": "Ei hätää. Avaa myöhästynyt kertaus, palauta materiaali mieleen ja merkitse se valmiiksi."
+      },
+      {
+        "question": "Voinko muokata materiaalia myöhemmin?",
+        "answer": "Kyllä. Tekstiä, kategoriaa ja linkkiä voi muokata. Oppimispäivä lukittuu suoritetun tai ohitetun kertauksen jälkeen, jotta historia säilyy."
+      },
+      {
+        "question": "Pitääkö sovelluksessa käydä joka päivä?",
+        "answer": "Ei. Palaa, kun tälle päivälle on kertauksia. Kalenteri näyttää tulevat päivät etukäteen."
+      }
+    ],
+    "ctaTitle": "Tallenna yksi asia, jonka opit tänään",
+    "ctaSubtitle": "Se riittää ensimmäisen kertausjakson aloittamiseen ja Mindkeepin kokeilemiseen omassa arjessasi.",
+    "ctaGuest": "Luo tili",
+    "ctaUser": "Lisää materiaali"
   },
   "admin": {
     "title": "Admin",
@@ -99,6 +184,15 @@
     "usersTitle": "Käyttäjät",
     "empty": "Ei käyttäjiä vielä",
     "loadError": "Admin-tietojen lataus epäonnistui.",
+    "reviewsTitle": "Arvioiden moderointi",
+    "reviewsEmpty": "Lähetettyjä arvioita ei vielä ole",
+    "approveReview": "Hyväksy",
+    "rejectReview": "Hylkää",
+    "reviewStatus": {
+      "PENDING": "Odottaa tarkistusta",
+      "APPROVED": "Julkaistu",
+      "REJECTED": "Hylätty"
+    },
     "stats": {
       "users": "Käyttäjät",
       "admins": "Adminit",
@@ -333,6 +427,7 @@
       "admin": "Admin · Mindkeep",
       "fallback": "Mindkeep",
       "blog": "Blogi · Mindkeep",
+      "guide": "Käyttöohje · Mindkeep",
       "privacy": "Tietosuojaseloste · Mindkeep",
       "notFound": "Sivua ei löytynyt · Mindkeep"
     }

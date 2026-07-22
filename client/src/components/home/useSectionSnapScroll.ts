@@ -105,6 +105,34 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
   }, [root]);
 
   useEffect(() => {
+    if (!root || sectionIds.length === 0 || snapEnabled) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((entry) => entry.isIntersecting);
+        if (!visible) return;
+        const id = (visible.target as HTMLElement).id;
+        const index = idsRef.current.indexOf(id);
+        if (index < 0) return;
+        indexRef.current = index;
+        setActiveId(id);
+      },
+      {
+        root: null,
+        rootMargin: '-42% 0px -42% 0px',
+        threshold: 0,
+      },
+    );
+
+    idsRef.current.forEach((id) => {
+      const section = root.querySelector(`#${CSS.escape(id)}`);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, [root, sectionIds.length, snapEnabled]);
+
+  useEffect(() => {
     if (!root || sectionIds.length === 0 || !snapEnabled) return;
 
     goToIndex(nearestIndex() || 0, 'auto');

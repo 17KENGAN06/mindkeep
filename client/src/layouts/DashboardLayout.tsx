@@ -62,6 +62,9 @@ export function DashboardLayout() {
             <NavLink to="/statistics" className={linkClass}>
               {t('nav.statistics')}
             </NavLink>
+            <NavLink to="/guide" className={linkClass}>
+              {t('nav.guide')}
+            </NavLink>
             {isAdmin ? (
               <NavLink to="/admin" className={linkClass}>
                 {t('nav.admin')}

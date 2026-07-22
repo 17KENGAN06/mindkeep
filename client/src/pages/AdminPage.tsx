@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
@@ -6,11 +6,13 @@ import { adminApi } from '@/api/admin';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
+import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
 
 export function AdminPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const overviewQuery = useQuery({
     queryKey: ['admin', 'overview'],
@@ -24,20 +26,41 @@ export function AdminPage() {
     enabled: user?.role === 'ADMIN',
   });
 
+  const reviewsQuery = useQuery({
+    queryKey: ['admin', 'reviews'],
+    queryFn: async () => (await adminApi.reviews()).reviews,
+    enabled: user?.role === 'ADMIN',
+  });
+
+  const moderateReview = useMutation({
+    mutationFn: ({
+      id,
+      status,
+    }: {
+      id: string;
+      status: 'APPROVED' | 'REJECTED';
+    }) => adminApi.moderateReview(id, status),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['admin', 'reviews'] });
+      void queryClient.invalidateQueries({ queryKey: ['reviews', 'approved'] });
+    },
+  });
+
   if (user?.role !== 'ADMIN') {
     return <Navigate to="/dashboard" replace />;
   }
 
-  if (overviewQuery.isLoading || usersQuery.isLoading) {
+  if (overviewQuery.isLoading || usersQuery.isLoading || reviewsQuery.isLoading) {
     return <Loader />;
   }
 
-  if (overviewQuery.isError || usersQuery.isError) {
+  if (overviewQuery.isError || usersQuery.isError || reviewsQuery.isError) {
     return <ErrorMessage message={t('admin.loadError')} />;
   }
 
   const overview = overviewQuery.data;
   const users = usersQuery.data ?? [];
+  const reviews = reviewsQuery.data ?? [];
 
   return (
     <div className="space-y-6">
@@ -56,6 +79,58 @@ export function AdminPage() {
           <StatCard label={t('admin.stats.reminders')} value={overview.remindersTotal} />
         </section>
       ) : null}
+
+      <section className="overflow-hidden rounded-3xl border border-line bg-panel">
+        <div className="border-b border-line px-4 py-3">
+          <h2 className="text-sm font-semibold text-ink">{t('admin.reviewsTitle')}</h2>
+        </div>
+        {reviews.length === 0 ? (
+          <div className="p-4">
+            <EmptyState title={t('admin.reviewsEmpty')} />
+          </div>
+        ) : (
+          <div className="divide-y divide-line">
+            {reviews.map((review) => (
+              <article key={review.id} className="p-4">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-ink">{review.user.name}</p>
+                    <p className="text-xs text-muted">{review.user.email}</p>
+                  </div>
+                  <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-700">
+                    {review.rating}★ · {t(`admin.reviewStatus.${review.status}`)}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-ink">{review.text}</p>
+                {review.location ? (
+                  <p className="mt-2 text-xs text-muted">{review.location}</p>
+                ) : null}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      moderateReview.mutate({ id: review.id, status: 'APPROVED' })
+                    }
+                    disabled={review.status === 'APPROVED' || moderateReview.isPending}
+                  >
+                    {t('admin.approveReview')}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() =>
+                      moderateReview.mutate({ id: review.id, status: 'REJECTED' })
+                    }
+                    disabled={review.status === 'REJECTED' || moderateReview.isPending}
+                  >
+                    {t('admin.rejectReview')}
+                  </Button>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
 
       <section className="overflow-hidden rounded-3xl border border-line bg-panel">
         <div className="border-b border-line px-4 py-3">

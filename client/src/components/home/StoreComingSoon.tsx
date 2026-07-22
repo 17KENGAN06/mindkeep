@@ -26,25 +26,29 @@ export function StoreComingSoon({ animated = false }: StoreComingSoonProps) {
       </p>
 
       <div className="mt-7 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-        <div className={`${reveal('snap-reveal-d3 snap-pop')} relative inline-flex justify-center sm:justify-start`}>
+        <div
+          className={`${reveal('snap-reveal-d3 snap-pop')} inline-flex w-full items-center justify-center gap-3 sm:w-auto sm:justify-start`}
+        >
           <img
             src="/badges/app-store.svg"
             alt="Download on the App Store"
             className="h-12 w-auto select-none sm:h-14"
             draggable={false}
           />
-          <span className="pointer-events-none absolute -top-2 -right-2 rounded-full bg-brand-500 px-2 py-0.5 text-[10px] font-bold tracking-wide text-[#07110d] uppercase shadow-sm">
+          <span className="pointer-events-none shrink-0 rounded-full border border-brand-500/30 bg-brand-500 px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-[#07110d] uppercase shadow-sm">
             {t('home.apps.badge')}
           </span>
         </div>
-        <div className={`${reveal('snap-reveal-d4 snap-pop')} relative inline-flex justify-center sm:justify-start`}>
+        <div
+          className={`${reveal('snap-reveal-d4 snap-pop')} inline-flex w-full items-center justify-center gap-3 sm:w-auto sm:justify-start`}
+        >
           <img
             src="/badges/google-play.png"
             alt="Get it on Google Play"
             className="h-16 w-auto select-none sm:h-[4.5rem]"
             draggable={false}
           />
-          <span className="pointer-events-none absolute top-0 right-2 rounded-full bg-brand-500 px-2 py-0.5 text-[10px] font-bold tracking-wide text-[#07110d] uppercase shadow-sm sm:right-4">
+          <span className="pointer-events-none shrink-0 rounded-full border border-brand-500/30 bg-brand-500 px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-[#07110d] uppercase shadow-sm">
             {t('home.apps.badge')}
           </span>
         </div>

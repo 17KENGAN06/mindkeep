@@ -1,4 +1,5 @@
 import { prisma } from '@/config/prisma.js';
+import type { ModerateReviewInput } from '@/validations/admin.schemas.js';
 
 export class AdminService {
   async listUsers() {
@@ -52,6 +53,25 @@ export class AdminService {
       materialsTotal,
       remindersTotal,
     };
+  }
+
+  async listReviews() {
+    return prisma.userReview.findMany({
+      include: {
+        user: { select: { name: true, email: true } },
+      },
+      orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
+    });
+  }
+
+  async moderateReview(id: string, input: ModerateReviewInput) {
+    return prisma.userReview.update({
+      where: { id },
+      data: { status: input.status },
+      include: {
+        user: { select: { name: true, email: true } },
+      },
+    });
   }
 }
 

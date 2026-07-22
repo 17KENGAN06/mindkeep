@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, CalendarDays, Layers3, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUp, CalendarDays, Layers3, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
@@ -8,6 +8,7 @@ import { AnimatedSnapSection } from '@/components/home/AnimatedSnapSection';
 import { SectionNav } from '@/components/home/SectionNav';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
 import { StoreComingSoon } from '@/components/home/StoreComingSoon';
+import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
@@ -20,7 +21,7 @@ const intervals = [
   { key: 'thirty', days: '30' },
 ] as const;
 
-const SECTION_IDS = ['hero', 'schedule', 'how', 'features', 'apps', 'blog', 'cta'] as const;
+const SECTION_IDS = ['hero', 'schedule', 'how', 'features', 'apps', 'testimonials', 'blog', 'cta'] as const;
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -35,6 +36,7 @@ export function HomePage() {
     t('home.sections.how'),
     t('home.sections.features'),
     t('home.sections.apps'),
+    t('home.sections.testimonials'),
     t('home.sections.blog'),
     t('home.sections.cta'),
   ];
@@ -48,6 +50,18 @@ export function HomePage() {
         onSelect={goToSection}
       />
 
+      {activeId !== 'hero' ? (
+        <button
+          type="button"
+          onClick={() => goToSection('hero')}
+          className="fixed right-4 bottom-5 z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border border-line/80 bg-panel/90 text-ink shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-500 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none"
+          aria-label={t('nav.home')}
+          title={t('nav.home')}
+        >
+          <ArrowUp className="h-5 w-5" aria-hidden />
+        </button>
+      ) : null}
+
       <div
         ref={setScroller}
         className="home-snap min-h-dvh overflow-x-hidden md:h-dvh md:overflow-y-auto"
@@ -60,12 +74,14 @@ export function HomePage() {
             <header className="snap-reveal z-10 flex items-center justify-between gap-3">
               <BrandLockup to="/" size="lg" />
               <div className="flex items-center gap-2">
-                <Link
-                  to="/blog"
-                  className="hidden min-h-11 items-center rounded-xl px-3 text-sm font-semibold text-ink no-underline sm:inline-flex"
-                >
-                  {t('nav.blog')}
-                </Link>
+                <nav className="hidden items-center gap-1 lg:flex" aria-label={t('footer.linksLabel')}>
+                  <Link
+                    to="/guide"
+                    className="inline-flex min-h-11 items-center rounded-xl px-2.5 text-xs font-semibold text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
+                  >
+                    {t('nav.guide')}
+                  </Link>
+                </nav>
                 <ThemeToggle />
                 <LanguageSwitcher />
               </div>
@@ -121,10 +137,10 @@ export function HomePage() {
                   </>
                 )}
                 <Link
-                  to="/blog"
+                  to="/guide"
                   className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-line px-4 text-sm font-semibold text-ink no-underline sm:hidden"
                 >
-                  {t('nav.blog')}
+                  {t('nav.guide')}
                 </Link>
               </div>
             </div>
@@ -264,6 +280,20 @@ export function HomePage() {
               className="desktop-motion desktop-motion-line origin-left bottom-24 left-8 h-px w-56 bg-gradient-to-r from-transparent via-brand-500/60 to-transparent"
             />
             <StoreComingSoon animated />
+          </div>
+        </AnimatedSnapSection>
+
+        <AnimatedSnapSection
+          id="testimonials"
+          activeId={activeId}
+          className="border-t border-line/70"
+        >
+          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
+            <div
+              aria-hidden
+              className="desktop-motion desktop-motion-glow top-1/4 right-1/4 h-40 w-40 rounded-full bg-brand-500/12 blur-3xl"
+            />
+            <TestimonialsSection animated />
           </div>
         </AnimatedSnapSection>
 
