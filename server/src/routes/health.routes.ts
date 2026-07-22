@@ -19,18 +19,10 @@ healthRouter.get(
       }
     }
 
-    const isHealthy = database !== 'down';
-
-    if (env.NODE_ENV === 'production') {
-      res.status(isHealthy ? 200 : 503).json({
-        status: isHealthy ? 'ok' : 'degraded',
-        timestamp: new Date().toISOString(),
-      });
-      return;
-    }
-
-    res.status(isHealthy ? 200 : 503).json({
-      status: isHealthy ? 'ok' : 'degraded',
+    // Always 200 for Railway liveness — DB status is informational.
+    // A hard DB outage should not block deploy/restart loops.
+    res.status(200).json({
+      status: database === 'down' ? 'degraded' : 'ok',
       service: 'learning-reminder-api',
       environment: env.NODE_ENV,
       database,

@@ -15,7 +15,7 @@ async function bootstrap(): Promise<void> {
 
   const port = env.PORT;
 
-  app.listen(port, () => {
+  app.listen(port, '0.0.0.0', () => {
     logger.info(`API listening on port ${port}`, {
       env: env.NODE_ENV,
       clientUrl: env.CLIENT_URL,
