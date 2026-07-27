@@ -44,3 +44,34 @@ export type ActivityResponse = {
   timezone: string;
   activity: ActivityPoint[];
 };
+
+export type OverviewResponse = {
+  timezone: string;
+  reviews: DashboardStats;
+  planner: {
+    totalTasks: number;
+    completedOccurrences: number;
+    overdueOccurrences: number;
+    pendingOccurrences: number;
+    completedToday: number;
+    completionRate: number;
+    streak: number;
+  };
+  habits: {
+    activeHabits: number;
+    completedToday: number;
+    totalLogs: number;
+    completionRateToday: number;
+    streak: number;
+  };
+  budget: {
+    currentBalance: number;
+    monthIncome: number;
+    monthExpenses: number;
+    mandatoryPaid: number;
+    mandatoryTotal: number;
+    displayCurrency: 'RUB' | 'USD' | 'EUR' | 'UAH';
+  };
+  nextReminder: DashboardNextReminder;
+  recentMaterials: DashboardRecentMaterial[];
+};

@@ -53,11 +53,22 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  categories    Category[]
-  materials     LearningMaterial[]
-  reminders     ReviewReminder[]
-  notifications Notification[]
-  review        UserReview?
+  categories            Category[]
+  materials             LearningMaterial[]
+  reminders             ReviewReminder[]
+  notifications         Notification[]
+  review                UserReview?
+  taskCategories        TaskCategory[]
+  tasks                 Task[]
+  taskOccurrences       TaskOccurrence[]
+  habits                Habit[]
+  habitLogs             HabitLog[]
+  budgetSettings        BudgetSettings?
+  budgetCategories      BudgetCategory[]
+  budgetOperations      BudgetOperation[]
+  mandatoryPayments     MandatoryPayment[]
+  mandatoryPaymentChecks MandatoryPaymentCheck[]
+  plannedExpenses       PlannedExpense[]
 }
 
 model UserReview {
@@ -158,4 +169,226 @@ model Notification {
   @@index([isRead])
   @@index([userId, isRead])
   @@index([createdAt])
+}
+
+enum TaskRecurrenceType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  CUSTOM_DAYS
+}
+
+enum TaskOccurrenceStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+  CANCELLED
+}
+
+enum BudgetCurrency {
+  RUB
+  USD
+  EUR
+  UAH
+}
+
+enum BudgetOperationType {
+  INCOME
+  EXPENSE
+}
+
+model TaskCategory {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model Task {
+  id             String             @id @default(cuid())
+  title          String
+  recurrenceType TaskRecurrenceType
+  intervalDays   Int?
+  isActive       Boolean            @default(true)
+  categoryId     String?
+  userId         String
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    TaskCategory?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  occurrences TaskOccurrence[]
+
+  @@index([userId])
+  @@index([userId, isActive])
+  @@index([categoryId])
+}
+
+model TaskOccurrence {
+  id          String               @id @default(cuid())
+  dueDate     DateTime
+  status      TaskOccurrenceStatus @default(PENDING)
+  completedAt DateTime?
+  taskId      String
+  userId      String
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([taskId])
+  @@index([userId, dueDate, status])
+  @@index([status, dueDate])
+}
+
+model Habit {
+  id        String   @id @default(cuid())
+  title     String
+  isActive  Boolean  @default(true)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs HabitLog[]
+
+  @@index([userId])
+  @@index([userId, isActive])
+}
+
+model HabitLog {
+  id          String   @id @default(cuid())
+  date        DateTime
+  completed   Boolean  @default(true)
+  habitId     String
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([habitId, date])
+  @@index([userId])
+  @@index([userId, date])
+}
+
+model BudgetSettings {
+  id               String         @id @default(cuid())
+  displayCurrency  BudgetCurrency @default(RUB)
+  openingBalance   Float          @default(0)
+  openingCurrency  BudgetCurrency @default(RUB)
+  userId           String         @unique
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BudgetCategory {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  operations BudgetOperation[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model BudgetOperation {
+  id         String              @id @default(cuid())
+  date       DateTime
+  amount     Float
+  currency   BudgetCurrency      @default(RUB)
+  type       BudgetOperationType
+  comment    String              @default("")
+  categoryId String?
+  userId     String
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category BudgetCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([userId, date])
+  @@index([categoryId])
+}
+
+model MandatoryPayment {
+  id         String         @id @default(cuid())
+  name       String
+  dayOfMonth Int
+  amount     Float
+  currency   BudgetCurrency @default(RUB)
+  isActive   Boolean        @default(true)
+  userId     String
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  user   User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  checks MandatoryPaymentCheck[]
+
+  @@index([userId])
+  @@index([userId, isActive])
+}
+
+model MandatoryPaymentCheck {
+  id        String    @id @default(cuid())
+  year      Int
+  month     Int
+  paid      Boolean   @default(false)
+  paidAt    DateTime?
+  paymentId String
+  userId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  payment MandatoryPayment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  user    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([paymentId, year, month])
+  @@index([userId])
+  @@index([userId, year, month])
+}
+
+model PlannedExpense {
+  id         String         @id @default(cuid())
+  name       String
+  amount     Float
+  currency   BudgetCurrency @default(RUB)
+  targetYear Int
+  targetMonth Int?
+  userId     String
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, targetYear])
+}
+
+model ExchangeRate {
+  id       String         @id @default(cuid())
+  date     DateTime
+  currency BudgetCurrency
+  rateToRub Float
+  createdAt DateTime      @default(now())
+
+  @@unique([date, currency])
+  @@index([date])
 }

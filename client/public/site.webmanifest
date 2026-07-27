@@ -1,7 +1,7 @@
 {
   "name": "Mindkeep",
   "short_name": "Mindkeep",
-  "description": "Keep what you learn — fixed reviews at 3, 7 and 30 days.",
+  "description": "Reviews, planner, habits and budget — calmly in one place.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#07110d",

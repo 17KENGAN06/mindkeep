@@ -16,3 +16,8 @@ statisticsRouter.get(
   '/activity',
   asyncHandler((req, res) => statisticsController.activity(req, res)),
 );
+
+statisticsRouter.get(
+  '/overview',
+  asyncHandler((req, res) => statisticsController.overview(req, res)),
+);

@@ -47,6 +47,15 @@ export function DashboardLayout() {
             <NavLink to="/review" className={linkClass}>
               {t('nav.review')}
             </NavLink>
+            <NavLink to="/planner" className={linkClass}>
+              {t('nav.planner')}
+            </NavLink>
+            <NavLink to="/habits" className={linkClass}>
+              {t('nav.habits')}
+            </NavLink>
+            <NavLink to="/budget" className={linkClass}>
+              {t('nav.budget')}
+            </NavLink>
             <NavLink to="/calendar" className={linkClass}>
               {t('nav.calendar')}
             </NavLink>

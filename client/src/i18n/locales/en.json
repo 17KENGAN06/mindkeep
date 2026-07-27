@@ -25,11 +25,14 @@
     "calendar": "Calendar",
     "admin": "Admin",
     "blog": "Blog",
-    "guide": "How to use"
+    "guide": "How to use",
+    "planner": "Planner",
+    "habits": "Habits",
+    "budget": "Budget"
   },
   "home": {
-    "title": "Keep what you learn",
-    "subtitle": "Capture notes, words and rules — then revisit them on a fixed 3, 7 and 30 day rhythm.",
+    "title": "Keep learning. Keep moving. Keep balance.",
+    "subtitle": "Mindkeep brings spaced reviews, recurring tasks, daily habits and a calm budget tracker into one quiet system.",
     "ctaRegister": "Start free",
     "ctaLogin": "Log in",
     "scheduleTitle": "A fixed rhythm for long-term memory",
@@ -57,8 +60,8 @@
         "text": "Open the material, revisit it, press Completed — next dates stay fixed."
       }
     },
-    "featuresTitle": "Built for calm consistency",
-    "featuresSubtitle": "Everything you need to return to knowledge without noisy spaced-repetition algorithms.",
+    "featuresTitle": "Four calm pillars",
+    "featuresSubtitle": "Use what you need today — memory, tasks, habits or money — without noisy algorithms.",
     "features": {
       "calendar": {
         "title": "Calendar of reviews",
@@ -71,15 +74,31 @@
       "focus": {
         "title": "Focus over scores",
         "text": "No SM-2, no difficulty ratings — only a clear schedule you can trust."
+      },
+      "reviews": {
+        "title": "Spaced reviews",
+        "text": "Fixed 3 · 7 · 30 rhythm for materials you want to remember."
+      },
+      "planner": {
+        "title": "Monthly planner",
+        "text": "Recurring tasks, overdue follow-up and clear filters by day or week."
+      },
+      "habits": {
+        "title": "Daily habits",
+        "text": "Check in every day and watch your streak grow without pressure."
+      },
+      "budget": {
+        "title": "Budget",
+        "text": "Income, expenses and mandatory payments with RUB, USD, EUR and UAH."
       }
     },
-    "ctaTitle": "Start your first review cycle today",
-    "ctaSubtitle": "Create an account and add one thing you learned this week.",
-    "eyebrow": "3 · 7 · 30 — memory that stays",
+    "ctaTitle": "Start building your system today",
+    "ctaSubtitle": "Create an account and pick the first pillar that helps you most.",
+    "eyebrow": "Reviews · Planner · Habits · Budget",
     "apps": {
       "eyebrow": "Mobile",
       "title": "Apps for iPhone & Android",
-      "subtitle": "Native Mindkeep apps are in development. The same calm 3 · 7 · 30 rhythm — soon in your pocket.",
+      "subtitle": "Native Mindkeep apps are in development. The same calm system — soon in your pocket.",
       "badge": "Soon",
       "note": "Store buttons are previews. Web app is available today on mindkeep.cloud.",
       "readBlog": "Read learning notes"
@@ -118,7 +137,7 @@
   "guide": {
     "eyebrow": "A simple guide",
     "title": "How to use Mindkeep",
-    "intro": "Save something you want to remember and Mindkeep will tell you when to return to it. No complicated setup — a few minutes is enough.",
+    "intro": "Mindkeep helps with four calm pillars: spaced reviews (3 / 7 / 30), a recurring planner, daily habits, and a simple budget. Start with the one you need today.",
     "stepsTitle": "Get started in six simple steps",
     "stepLabel": "Step {{number}}",
     "steps": [
@@ -215,9 +234,9 @@
   },
   "auth": {
     "loginTitle": "Welcome back",
-    "loginSubtitle": "Sign in to continue your review schedule.",
+    "loginSubtitle": "Sign in to continue reviews, planner, habits and budget.",
     "registerTitle": "Create your account",
-    "registerSubtitle": "Start building long-term memory with fixed review intervals.",
+    "registerSubtitle": "One calm system for memory, tasks, habits and money.",
     "name": "Name",
     "email": "Email",
     "password": "Password",
@@ -259,7 +278,7 @@
   },
   "dashboard": {
     "welcome": "Hello, {{name}}",
-    "subtitle": "Your overview of active materials, reviews and weekly progress.",
+    "subtitle": "Reviews, planner, habits and budget — your calm daily overview.",
     "timezone": "Timezone: {{timezone}}",
     "stats": {
       "activeMaterials": "Active materials",
@@ -273,7 +292,15 @@
     "activityTitle": "Completed reviews (7 days)",
     "activitySubtitle": "How many reviews you completed each day in your timezone.",
     "recentTitle": "Recently added",
-    "viewAllMaterials": "All materials"
+    "viewAllMaterials": "All materials",
+    "pillars": {
+      "plannerOpen": "Open tasks",
+      "plannerOverdue": "{{count}} overdue",
+      "habitsToday": "Habits done today",
+      "streak": "Streak: {{count}} days",
+      "budgetBalance": "Current balance",
+      "mandatoryPaid": "Mandatory: {{paid}}/{{total}}"
+    }
   },
   "categories": {
     "title": "Categories",
@@ -393,7 +420,13 @@
   },
   "statistics": {
     "title": "Statistics",
-    "subtitle": "Review activity and counts for your learning schedule."
+    "subtitle": "A shared overview across reviews, planner, habits and budget.",
+    "sections": {
+      "reviews": "Reviews",
+      "planner": "Planner",
+      "habits": "Habits",
+      "budget": "Budget"
+    }
   },
   "calendar": {
     "title": "Review calendar",
@@ -414,7 +447,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — keep what you learn",
+      "home": "Mindkeep — reviews, planner, habits and budget",
       "login": "Sign in · Mindkeep",
       "register": "Start free · Mindkeep",
       "dashboard": "Dashboard · Mindkeep",
@@ -429,13 +462,17 @@
       "blog": "Blog · Mindkeep",
       "guide": "How to use · Mindkeep",
       "privacy": "Privacy policy · Mindkeep",
-      "notFound": "Page not found · Mindkeep"
+      "notFound": "Page not found · Mindkeep",
+      "planner": "Planner · Mindkeep",
+      "plannerOverdue": "Unclosed tasks · Mindkeep",
+      "habits": "Habits · Mindkeep",
+      "budget": "Budget · Mindkeep"
     }
   },
   "footer": {
     "craftedLabel": "Property of",
-    "tagline": "Where memory finds a quiet rhythm — and learning learns to stay.",
-    "about": "Mindkeep helps you return to what you learned after 3, 7, and 30 days — with a clear review calendar and no noise.",
+    "tagline": "Where knowledge, habits and money find a quiet rhythm.",
+    "about": "Mindkeep helps you review what you learn, close recurring tasks, build habits and track a simple budget — calmly, in one place.",
     "linksLabel": "Navigate",
     "visitStudio": "Studio site",
     "privacy": "Privacy",
@@ -573,6 +610,130 @@
           "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
         ]
       }
+    }
+  },
+  "planner": {
+    "title": "Planner",
+    "subtitle": "Recurring tasks with filters, overdue follow-up and automatic next dates.",
+    "openOverdue": "Unclosed tasks",
+    "createTitle": "New task",
+    "create": "Add task",
+    "emptyTitle": "No tasks in this filter",
+    "emptyDescription": "Create a recurring task or switch the filter.",
+    "overdueTitle": "Unclosed tasks",
+    "overdueSubtitle": "Missed days stay here until you complete, reschedule or delete them.",
+    "overdueEmptyTitle": "Nothing overdue",
+    "overdueEmptyDescription": "Great — no missed planner tasks.",
+    "daysOverdue": "{{count}} days overdue",
+    "fields": {
+      "title": "Task title",
+      "noCategory": "No category"
+    },
+    "stats": {
+      "total": "Active tasks",
+      "completed": "Completed",
+      "overdue": "Overdue",
+      "streak": "Streak"
+    },
+    "filters": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "week": "Week",
+      "month": "Month",
+      "overdue": "Overdue",
+      "pending": "Open",
+      "completed": "Done",
+      "all": "All"
+    },
+    "recurrence": {
+      "DAILY": "Daily",
+      "WEEKLY": "Weekly",
+      "MONTHLY": "Monthly",
+      "CUSTOM_DAYS": "Every N days"
+    },
+    "weekdays": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "actions": {
+      "complete": "Complete",
+      "reschedule": "Reschedule",
+      "changeRecurrence": "Recurrence",
+      "reschedulePrompt": "New date (YYYY-MM-DD)",
+      "recurrencePrompt": "DAILY / WEEKLY / MONTHLY / CUSTOM_DAYS"
+    }
+  },
+  "habits": {
+    "title": "Habits",
+    "subtitle": "Check in daily and keep a calm streak.",
+    "create": "Add habit",
+    "emptyTitle": "No habits yet",
+    "emptyDescription": "Add one small habit for today.",
+    "fields": {
+      "title": "Habit name"
+    },
+    "stats": {
+      "active": "Active",
+      "today": "Done today",
+      "rate": "Today %",
+      "streak": "Streak"
+    }
+  },
+  "budget": {
+    "title": "Budget",
+    "subtitle": "Monthly operations, mandatory payments and yearly overview.",
+    "monthView": "Month",
+    "yearView": "Year",
+    "currentBalance": "Current balance",
+    "yearOpening": "Balance at year start",
+    "mandatoryTitle": "Mandatory payments",
+    "operationsTitle": "Operations",
+    "plannedTitle": "Planned expenses for {{year}}",
+    "addMandatory": "Add payment",
+    "addOperation": "Add",
+    "addPlanned": "Add plan",
+    "total": "Total",
+    "fxNote": "Converted at CBR rate for {{date}}",
+    "openingHint": "Opening balance (saved on blur)",
+    "fields": {
+      "name": "Name",
+      "amount": "Amount",
+      "date": "Date",
+      "type": "Type",
+      "comment": "Comment",
+      "month": "Month",
+      "openingBalance": "Opening balance"
+    },
+    "types": {
+      "INCOME": "Income",
+      "EXPENSE": "Expense"
+    },
+    "overview": {
+      "opening": "Start of month",
+      "closing": "End of month",
+      "income": "Income",
+      "expenses": "Expenses",
+      "mandatory": "Mandatory",
+      "difference": "Income − expenses"
+    },
+    "months": {
+      "1": "January",
+      "2": "February",
+      "3": "March",
+      "4": "April",
+      "5": "May",
+      "6": "June",
+      "7": "July",
+      "8": "August",
+      "9": "September",
+      "10": "October",
+      "11": "November",
+      "12": "December"
     }
   }
 }

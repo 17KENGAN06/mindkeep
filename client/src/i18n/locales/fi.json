@@ -25,11 +25,14 @@
     "calendar": "Kalenteri",
     "admin": "Admin",
     "blog": "Blogi",
-    "guide": "Käyttöohje"
+    "guide": "Käyttöohje",
+    "planner": "Suunnittelija",
+    "habits": "Tavat",
+    "budget": "Budjetti"
   },
   "home": {
-    "title": "Pidä oppimasi mielessä",
-    "subtitle": "Tallenna muistiinpanoja, sanoja ja sääntöjä — palaa niihin 3, 7 ja 30 päivän jälkeen.",
+    "title": "Keep learning. Keep moving. Keep balance.",
+    "subtitle": "Mindkeep brings spaced reviews, recurring tasks, daily habits and a calm budget tracker into one quiet system.",
     "ctaRegister": "Aloita ilmaiseksi",
     "ctaLogin": "Kirjaudu",
     "scheduleTitle": "Kiinteä rytmi pitkäkestoiseen muistiin",
@@ -57,8 +60,8 @@
         "text": "Avaa materiaali, kertaa ja paina Valmis — seuraavat päivät pysyvät ennallaan."
       }
     },
-    "featuresTitle": "Rauhalliseen säännöllisyyteen",
-    "featuresSubtitle": "Kaikki tarvittava tietoon palaamiseen ilman meluisia kertausalgoritmeja.",
+    "featuresTitle": "Four calm pillars",
+    "featuresSubtitle": "Use what you need today — memory, tasks, habits or money — without noisy algorithms.",
     "features": {
       "calendar": {
         "title": "Kertauskalenteri",
@@ -71,15 +74,31 @@
       "focus": {
         "title": "Fokus ilman pisteitä",
         "text": "Ei SM-2:ta eikä vaikeustasoja — vain selkeä aikataulu, johon voi luottaa."
+      },
+      "reviews": {
+        "title": "Spaced reviews",
+        "text": "Fixed 3 · 7 · 30 rhythm for materials you want to remember."
+      },
+      "planner": {
+        "title": "Monthly planner",
+        "text": "Recurring tasks, overdue follow-up and clear filters by day or week."
+      },
+      "habits": {
+        "title": "Daily habits",
+        "text": "Check in every day and watch your streak grow without pressure."
+      },
+      "budget": {
+        "title": "Budget",
+        "text": "Income, expenses and mandatory payments with RUB, USD, EUR and UAH."
       }
     },
-    "ctaTitle": "Aloita ensimmäinen kertausjakso tänään",
-    "ctaSubtitle": "Luo tili ja lisää yksi asia, jonka opit tällä viikolla.",
-    "eyebrow": "3 · 7 · 30 — muisti joka pysyy",
+    "ctaTitle": "Start building your system today",
+    "ctaSubtitle": "Create an account and pick the first pillar that helps you most.",
+    "eyebrow": "Reviews · Planner · Habits · Budget",
     "apps": {
       "eyebrow": "Mobiili",
       "title": "Sovellukset iPhonelle & Androidille",
-      "subtitle": "Mindkeep-natiivisovellukset ovat kehitteillä. Sama rauhallinen 3 · 7 · 30 -rytmi — pian taskussa.",
+      "subtitle": "Mindkeep-sovellukset ovat kehitteillä. Sama rauhallinen järjestelmä — pian taskussasi.",
       "badge": "Tulossa",
       "note": "Kauppapainikkeet ovat esikatselu. Verkkosovellus on jo käytössä osoitteessa mindkeep.cloud.",
       "readBlog": "Lue oppimisesta"
@@ -118,7 +137,7 @@
   "guide": {
     "eyebrow": "Selkeä käyttöohje",
     "title": "Näin käytät Mindkeepia",
-    "intro": "Tallenna asia, jonka haluat muistaa, ja Mindkeep kertoo, milloin siihen kannattaa palata. Ei monimutkaisia asetuksia — muutama minuutti riittää.",
+    "intro": "Mindkeepissä on neljä rauhallista pilaria: kertaukset 3 / 7 / 30, toistuvat tehtävät, päivittäiset tavat ja yksinkertainen budjetti. Aloita siitä, mitä tarvitset tänään.",
     "stepsTitle": "Aloita kuudella helpolla vaiheella",
     "stepLabel": "Vaihe {{number}}",
     "steps": [
@@ -215,9 +234,9 @@
   },
   "auth": {
     "loginTitle": "Tervetuloa takaisin",
-    "loginSubtitle": "Kirjaudu jatkaaksesi kertausaikatauluasi.",
+    "loginSubtitle": "Kirjaudu jatkaaksesi kertauksia, suunnitelmaa, tapoja ja budjettia.",
     "registerTitle": "Luo tili",
-    "registerSubtitle": "Vahvista oppimista kiinteillä kertausväleillä.",
+    "registerSubtitle": "Rauhallinen järjestelmä muistille, tehtäville, tavoille ja rahalle.",
     "name": "Nimi",
     "email": "Sähköposti",
     "password": "Salasana",
@@ -259,7 +278,7 @@
   },
   "dashboard": {
     "welcome": "Hei, {{name}}",
-    "subtitle": "Yhteenveto aktiivisista materiaaleista, kertauksista ja viikon edistymisestä.",
+    "subtitle": "Kertaukset, suunnitelma, tavat ja budjetti — rauhallinen päivänäkymä.",
     "timezone": "Aikavyöhyke: {{timezone}}",
     "stats": {
       "activeMaterials": "Aktiiviset materiaalit",
@@ -273,7 +292,15 @@
     "activityTitle": "Valmiit kertaukset (7 pv)",
     "activitySubtitle": "Kuinka monta kertausta valmistui kunakin päivänä aikavyöhykkeelläsi.",
     "recentTitle": "Äskettäin lisätyt",
-    "viewAllMaterials": "Kaikki materiaalit"
+    "viewAllMaterials": "Kaikki materiaalit",
+    "pillars": {
+      "plannerOpen": "Avoimet tehtävät",
+      "plannerOverdue": "{{count}} myöhässä",
+      "habitsToday": "Tavat tänään",
+      "streak": "Putki: {{count}} pv",
+      "budgetBalance": "Nykyinen saldo",
+      "mandatoryPaid": "Pakolliset: {{paid}}/{{total}}"
+    }
   },
   "categories": {
     "title": "Kategoriat",
@@ -392,8 +419,14 @@
     }
   },
   "statistics": {
-    "title": "Tilastot",
-    "subtitle": "Kertausaktiivisuus ja oppimisaikataulun tunnusluvut."
+    "title": "Statistics",
+    "subtitle": "A shared overview across reviews, planner, habits and budget.",
+    "sections": {
+      "reviews": "Reviews",
+      "planner": "Planner",
+      "habits": "Habits",
+      "budget": "Budget"
+    }
   },
   "calendar": {
     "title": "Kertauskalenteri",
@@ -414,7 +447,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — pidä oppimasi",
+      "home": "Mindkeep — kertaukset, suunnitelma, tavat ja budjetti",
       "login": "Kirjaudu · Mindkeep",
       "register": "Aloita · Mindkeep",
       "dashboard": "Kojelauta · Mindkeep",
@@ -429,13 +462,17 @@
       "blog": "Blogi · Mindkeep",
       "guide": "Käyttöohje · Mindkeep",
       "privacy": "Tietosuojaseloste · Mindkeep",
-      "notFound": "Sivua ei löytynyt · Mindkeep"
+      "notFound": "Sivua ei löytynyt · Mindkeep",
+      "planner": "Suunnittelija · Mindkeep",
+      "plannerOverdue": "Avoimet tehtävät · Mindkeep",
+      "habits": "Tavat · Mindkeep",
+      "budget": "Budjetti · Mindkeep"
     }
   },
   "footer": {
     "craftedLabel": "Omistaja",
-    "tagline": "Missä muisti löytää hiljaisen rytmin — ja oppiminen oppii jäämään.",
-    "about": "Mindkeep auttaa palaamaan opittuun 3, 7 ja 30 päivän jälkeen — selkeällä kertausaikataululla ilman turhaa hälyä.",
+    "tagline": "Where knowledge, habits and money find a quiet rhythm.",
+    "about": "Mindkeep helps you review what you learn, close recurring tasks, build habits and track a simple budget — calmly, in one place.",
     "linksLabel": "Navigointi",
     "visitStudio": "Studion sivusto",
     "privacy": "Tietosuoja",
@@ -573,6 +610,130 @@
           "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
         ]
       }
+    }
+  },
+  "planner": {
+    "title": "Planner",
+    "subtitle": "Recurring tasks with filters, overdue follow-up and automatic next dates.",
+    "openOverdue": "Unclosed tasks",
+    "createTitle": "New task",
+    "create": "Add task",
+    "emptyTitle": "No tasks in this filter",
+    "emptyDescription": "Create a recurring task or switch the filter.",
+    "overdueTitle": "Unclosed tasks",
+    "overdueSubtitle": "Missed days stay here until you complete, reschedule or delete them.",
+    "overdueEmptyTitle": "Nothing overdue",
+    "overdueEmptyDescription": "Great — no missed planner tasks.",
+    "daysOverdue": "{{count}} days overdue",
+    "fields": {
+      "title": "Task title",
+      "noCategory": "No category"
+    },
+    "stats": {
+      "total": "Active tasks",
+      "completed": "Completed",
+      "overdue": "Overdue",
+      "streak": "Streak"
+    },
+    "filters": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "week": "Week",
+      "month": "Month",
+      "overdue": "Overdue",
+      "pending": "Open",
+      "completed": "Done",
+      "all": "All"
+    },
+    "recurrence": {
+      "DAILY": "Daily",
+      "WEEKLY": "Weekly",
+      "MONTHLY": "Monthly",
+      "CUSTOM_DAYS": "Every N days"
+    },
+    "weekdays": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "actions": {
+      "complete": "Complete",
+      "reschedule": "Reschedule",
+      "changeRecurrence": "Recurrence",
+      "reschedulePrompt": "New date (YYYY-MM-DD)",
+      "recurrencePrompt": "DAILY / WEEKLY / MONTHLY / CUSTOM_DAYS"
+    }
+  },
+  "habits": {
+    "title": "Habits",
+    "subtitle": "Check in daily and keep a calm streak.",
+    "create": "Add habit",
+    "emptyTitle": "No habits yet",
+    "emptyDescription": "Add one small habit for today.",
+    "fields": {
+      "title": "Habit name"
+    },
+    "stats": {
+      "active": "Active",
+      "today": "Done today",
+      "rate": "Today %",
+      "streak": "Streak"
+    }
+  },
+  "budget": {
+    "title": "Budget",
+    "subtitle": "Monthly operations, mandatory payments and yearly overview.",
+    "monthView": "Month",
+    "yearView": "Year",
+    "currentBalance": "Current balance",
+    "yearOpening": "Balance at year start",
+    "mandatoryTitle": "Mandatory payments",
+    "operationsTitle": "Operations",
+    "plannedTitle": "Planned expenses for {{year}}",
+    "addMandatory": "Add payment",
+    "addOperation": "Add",
+    "addPlanned": "Add plan",
+    "total": "Total",
+    "fxNote": "Converted at CBR rate for {{date}}",
+    "openingHint": "Opening balance (saved on blur)",
+    "fields": {
+      "name": "Name",
+      "amount": "Amount",
+      "date": "Date",
+      "type": "Type",
+      "comment": "Comment",
+      "month": "Month",
+      "openingBalance": "Opening balance"
+    },
+    "types": {
+      "INCOME": "Income",
+      "EXPENSE": "Expense"
+    },
+    "overview": {
+      "opening": "Start of month",
+      "closing": "End of month",
+      "income": "Income",
+      "expenses": "Expenses",
+      "mandatory": "Mandatory",
+      "difference": "Income − expenses"
+    },
+    "months": {
+      "1": "January",
+      "2": "February",
+      "3": "March",
+      "4": "April",
+      "5": "May",
+      "6": "June",
+      "7": "July",
+      "8": "August",
+      "9": "September",
+      "10": "October",
+      "11": "November",
+      "12": "December"
     }
   }
 }

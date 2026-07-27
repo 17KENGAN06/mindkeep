@@ -76,15 +76,15 @@ html[data-theme='light'] {
 
 @layer base {
   html {
-    @apply antialiased scroll-smooth;
+    @apply max-w-full overflow-x-clip antialiased scroll-smooth;
   }
 
   body {
-    @apply relative m-0 min-h-dvh overflow-x-hidden bg-surface font-sans text-ink;
+    @apply relative m-0 min-h-dvh w-full max-w-full overflow-x-clip bg-surface font-sans text-ink;
   }
 
   #root {
-    @apply relative z-10 min-h-dvh;
+    @apply relative z-10 min-h-dvh w-full max-w-full overflow-x-clip;
   }
 
   a {
@@ -315,6 +315,10 @@ html[data-theme='light'] {
   .ambient-orb-c,
   .ambient-orb-d,
   .hero-glow,
+  .hero-lens,
+  .hero-orbit,
+  .hero-node,
+  .hero-flare,
   .desktop-motion-line,
   .desktop-motion-glow {
     animation: none !important;
@@ -358,6 +362,52 @@ html[data-theme='light'] {
   }
   50% {
     transform: translate3d(-4%, 3%, 0) scale(1.08);
+  }
+}
+
+@keyframes hero-lens-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-7deg) scale(1);
+  }
+  50% {
+    transform: translate3d(-1.5%, -2%, 0) rotate(-5deg) scale(1.025);
+  }
+}
+
+@keyframes hero-orbit-drift {
+  0%,
+  100% {
+    transform: rotate(-9deg) scale(1);
+    opacity: 0.42;
+  }
+  50% {
+    transform: rotate(-5deg) scale(1.025);
+    opacity: 0.75;
+  }
+}
+
+@keyframes hero-node-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes hero-flare-sweep {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: translateX(-18%) rotate(-10deg) scaleX(0.75);
+  }
+  50% {
+    opacity: 0.62;
+    transform: translateX(12%) rotate(-10deg) scaleX(1.1);
   }
 }
 
@@ -407,6 +457,174 @@ html[data-theme='light'] {
 
 .hero-glow {
   animation: drift 12s ease-in-out infinite;
+}
+
+.hero-visual {
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0;
+  isolation: isolate;
+}
+
+.hero-visual-mesh {
+  background:
+    radial-gradient(circle at 74% 42%, color-mix(in oklab, var(--app-brand-500) 30%, transparent) 0, transparent 31%),
+    radial-gradient(circle at 45% 35%, color-mix(in oklab, var(--app-brand-300) 12%, transparent) 0, transparent 38%),
+    linear-gradient(115deg, transparent 20%, color-mix(in oklab, var(--app-brand-500) 7%, transparent) 58%, transparent 82%);
+  filter: saturate(1.15);
+}
+
+.hero-visual-grid {
+  opacity: 0.16;
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--app-brand-300) 24%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--app-brand-300) 20%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 56% 68% at 72% 45%, black 0, transparent 78%);
+  transform: perspective(600px) rotateX(64deg) scale(1.35) translateY(21%);
+  transform-origin: 70% 50%;
+}
+
+.hero-lens {
+  top: 3%;
+  right: -3%;
+  width: min(72%, 780px);
+  aspect-ratio: 1.45;
+  border: 1px solid color-mix(in oklab, var(--app-brand-300) 34%, transparent);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 43% 44%, color-mix(in oklab, var(--app-brand-400) 17%, transparent), transparent 33%),
+    radial-gradient(circle at 67% 58%, color-mix(in oklab, var(--app-brand-500) 18%, transparent), transparent 47%),
+    linear-gradient(145deg, color-mix(in oklab, var(--app-panel) 62%, transparent), transparent 70%);
+  box-shadow:
+    inset 0 0 80px color-mix(in oklab, var(--app-brand-500) 11%, transparent),
+    0 0 90px color-mix(in oklab, var(--app-brand-500) 10%, transparent);
+  transform: rotate(-7deg);
+  animation: hero-lens-float 11s ease-in-out infinite;
+}
+
+.hero-lens::before,
+.hero-lens::after {
+  position: absolute;
+  content: '';
+  inset: 8%;
+  border: 1px solid color-mix(in oklab, var(--app-brand-400) 22%, transparent);
+  border-radius: inherit;
+}
+
+.hero-lens::after {
+  inset: 17%;
+  border-color: color-mix(in oklab, var(--app-brand-300) 14%, transparent);
+}
+
+.hero-orbit {
+  right: 2%;
+  border: 1px solid color-mix(in oklab, var(--app-brand-400) 30%, transparent);
+  border-radius: 50%;
+  transform: rotate(-9deg);
+  transform-origin: center;
+}
+
+.hero-orbit-a {
+  top: 10%;
+  width: 68%;
+  height: 58%;
+  animation: hero-orbit-drift 15s ease-in-out infinite;
+}
+
+.hero-orbit-b {
+  top: 17%;
+  right: 8%;
+  width: 59%;
+  height: 44%;
+  opacity: 0.7;
+  animation: hero-orbit-drift 19s ease-in-out infinite reverse;
+}
+
+.hero-orbit-c {
+  top: -3%;
+  right: -8%;
+  width: 82%;
+  height: 76%;
+  opacity: 0.4;
+  animation: hero-orbit-drift 23s ease-in-out infinite;
+}
+
+.hero-node {
+  width: 7px;
+  height: 7px;
+  border: 1px solid color-mix(in oklab, var(--app-brand-200) 76%, transparent);
+  border-radius: 999px;
+  background: var(--app-brand-500);
+  box-shadow:
+    0 0 0 5px color-mix(in oklab, var(--app-brand-500) 8%, transparent),
+    0 0 20px color-mix(in oklab, var(--app-brand-400) 70%, transparent);
+  animation: hero-node-pulse 3.6s ease-in-out infinite;
+}
+
+.hero-node-a {
+  top: 18%;
+  right: 18%;
+}
+
+.hero-node-b {
+  top: 57%;
+  right: 8%;
+  animation-delay: -1.2s;
+}
+
+.hero-node-c {
+  top: 68%;
+  right: 42%;
+  animation-delay: -2.4s;
+}
+
+.hero-flare {
+  top: 31%;
+  right: 22%;
+  width: 22%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--app-brand-300), transparent);
+  box-shadow: 0 0 18px var(--app-brand-500);
+  opacity: 0.48;
+  transform: rotate(-10deg);
+  animation: hero-flare-sweep 7s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .hero-visual {
+    inset: 0;
+    border-radius: 0;
+  }
+
+  .hero-lens {
+    top: 12%;
+    right: -58%;
+    width: 125%;
+    opacity: 0.72;
+  }
+
+  .hero-orbit {
+    right: -48%;
+    width: 118%;
+    opacity: 0.42;
+  }
+
+  .hero-orbit-c,
+  .hero-visual-grid,
+  .hero-node-b {
+    display: none;
+  }
+
+  .hero-node-a {
+    top: 16%;
+    right: 8%;
+  }
+
+  .hero-node-c {
+    top: 72%;
+    right: 12%;
+  }
 }
 
 .ambient-orb-a {

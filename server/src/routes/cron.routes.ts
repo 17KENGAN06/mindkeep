@@ -12,3 +12,10 @@ cronRouter.post(
   requireCronSecret,
   asyncHandler((req, res) => cronController.runReminders(req, res)),
 );
+
+cronRouter.post(
+  '/planner-overdue',
+  cronRateLimit,
+  requireCronSecret,
+  asyncHandler((req, res) => cronController.runPlannerOverdue(req, res)),
+);

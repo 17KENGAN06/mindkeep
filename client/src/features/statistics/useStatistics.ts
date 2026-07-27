@@ -14,3 +14,10 @@ export function useActivityStatistics() {
     queryFn: () => statisticsApi.activity(),
   });
 }
+
+export function useOverviewStatistics() {
+  return useQuery({
+    queryKey: ['statistics', 'overview'],
+    queryFn: () => statisticsApi.overview(),
+  });
+}

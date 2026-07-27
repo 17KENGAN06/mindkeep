@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, ArrowUp, CalendarDays, Layers3, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUp, BookOpenCheck, CalendarDays, PiggyBank, Repeat } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
@@ -68,8 +68,20 @@ export function HomePage() {
         data-section-snap="true"
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
+          <div aria-hidden className="hero-visual pointer-events-none absolute inset-0 z-0">
+            <div className="hero-visual-mesh absolute inset-0" />
+            <div className="hero-visual-grid absolute inset-0" />
+            <div className="hero-lens absolute" />
+            <div className="hero-orbit hero-orbit-a absolute" />
+            <div className="hero-orbit hero-orbit-b absolute" />
+            <div className="hero-orbit hero-orbit-c absolute" />
+            <span className="hero-node hero-node-a absolute" />
+            <span className="hero-node hero-node-b absolute" />
+            <span className="hero-node hero-node-c absolute" />
+            <span className="hero-flare absolute" />
+          </div>
           <div
-            className="relative mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-6"
+            className="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-6"
           >
             <header className="snap-reveal z-10 flex items-center justify-between gap-3">
               <BrandLockup to="/" size="lg" />
@@ -88,10 +100,6 @@ export function HomePage() {
             </header>
 
             <div className="relative flex flex-1 flex-col justify-center pb-20 pt-10">
-              <div
-                aria-hidden
-                className="hero-glow pointer-events-none absolute inset-x-[-12%] top-[5%] -z-10 h-[60%] rounded-[45%] bg-[radial-gradient(circle_at_center,var(--app-accent-soft),transparent_70%)]"
-              />
               <div
                 aria-hidden
                 className="desktop-motion desktop-motion-line origin-left top-8 left-0 h-px w-52 bg-gradient-to-r from-brand-500/80 to-transparent"
@@ -239,32 +247,41 @@ export function HomePage() {
             <p className="snap-reveal snap-reveal-d1 snap-reveal-scale mt-4 max-w-2xl text-base text-muted sm:text-lg">
               {t('home.featuresSubtitle')}
             </p>
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               <article className="snap-reveal snap-reveal-d2 snap-reveal-left snap-pop glass-panel rounded-[1.75rem] p-7">
-                <CalendarDays className="h-7 w-7 text-brand-500" />
+                <BookOpenCheck className="h-7 w-7 text-brand-500" />
                 <h3 className="mt-5 text-xl font-semibold text-ink">
-                  {t('home.features.calendar.title')}
+                  {t('home.features.reviews.title')}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                  {t('home.features.calendar.text')}
+                  {t('home.features.reviews.text')}
                 </p>
               </article>
               <article className="snap-reveal snap-reveal-d3 snap-reveal-scale snap-pop glass-panel rounded-[1.75rem] p-7">
-                <Layers3 className="h-7 w-7 text-brand-500" />
+                <CalendarDays className="h-7 w-7 text-brand-500" />
                 <h3 className="mt-5 text-xl font-semibold text-ink">
-                  {t('home.features.materials.title')}
+                  {t('home.features.planner.title')}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                  {t('home.features.materials.text')}
+                  {t('home.features.planner.text')}
+                </p>
+              </article>
+              <article className="snap-reveal snap-reveal-d4 snap-reveal-scale snap-pop glass-panel rounded-[1.75rem] p-7">
+                <Repeat className="h-7 w-7 text-brand-500" />
+                <h3 className="mt-5 text-xl font-semibold text-ink">
+                  {t('home.features.habits.title')}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
+                  {t('home.features.habits.text')}
                 </p>
               </article>
               <article className="snap-reveal snap-reveal-d4 snap-reveal-right snap-pop glass-panel rounded-[1.75rem] p-7">
-                <Sparkles className="h-7 w-7 text-brand-500" />
+                <PiggyBank className="h-7 w-7 text-brand-500" />
                 <h3 className="mt-5 text-xl font-semibold text-ink">
-                  {t('home.features.focus.title')}
+                  {t('home.features.budget.title')}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                  {t('home.features.focus.text')}
+                  {t('home.features.budget.text')}
                 </p>
               </article>
             </div>
@@ -338,7 +355,7 @@ export function HomePage() {
                 )}
               </div>
             </div>
-            <div className="snap-reveal snap-reveal-d3">
+            <div className="snap-reveal snap-reveal-d3 mt-12 sm:mt-16">
               <SiteFooter compact />
             </div>
           </div>

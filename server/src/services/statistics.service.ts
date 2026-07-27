@@ -2,6 +2,9 @@ import { MaterialStatus, ReminderStatus } from '@prisma/client';
 import { eachDayOfInterval, endOfDay, format, startOfDay, subDays } from 'date-fns';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { prisma } from '@/config/prisma.js';
+import { budgetService } from '@/services/budget/budget.service.js';
+import { habitService } from '@/services/habits/habit.service.js';
+import { taskService } from '@/services/planner/task.service.js';
 import { AppError } from '@/utils/AppError.js';
 import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
 
@@ -172,6 +175,25 @@ export class StatisticsService {
     return {
       timezone,
       activity,
+    };
+  }
+
+  async getOverview(userId: string) {
+    const [dashboard, planner, habits, budget] = await Promise.all([
+      this.getDashboard(userId),
+      taskService.getStatistics(userId),
+      habitService.getStatistics(userId),
+      budgetService.getStatistics(userId),
+    ]);
+
+    return {
+      timezone: dashboard.timezone,
+      reviews: dashboard.stats,
+      planner: planner.stats,
+      habits: habits.stats,
+      budget: budget.stats,
+      nextReminder: dashboard.nextReminder,
+      recentMaterials: dashboard.recentMaterials,
     };
   }
 }

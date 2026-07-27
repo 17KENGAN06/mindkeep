@@ -7,13 +7,15 @@ import { reviewsApi } from '@/api/reviews';
 import { Button } from '@/components/ui/Button';
 import { testimonials } from '@/content/testimonials';
 import { useAuth } from '@/features/auth/useAuth';
+import type { AppLanguage } from '@/i18n';
 
 type TestimonialsSectionProps = {
   animated?: boolean;
 };
 
 export function TestimonialsSection({ animated = false }: TestimonialsSectionProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [ratingFilter, setRatingFilter] = useState<'all' | 4 | 5>('all');
@@ -48,7 +50,12 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
     quote: item.text,
     rating: item.rating,
   }));
-  const allTestimonials = [...dynamic, ...testimonials];
+  const localizedTestimonials = testimonials.map((item) => ({
+    ...item,
+    location: item.location[language],
+    quote: item.quote[language],
+  }));
+  const allTestimonials = [...dynamic, ...localizedTestimonials];
   const filtered =
     ratingFilter === 'all'
       ? allTestimonials

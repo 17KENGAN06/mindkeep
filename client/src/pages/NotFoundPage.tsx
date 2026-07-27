@@ -37,14 +37,9 @@ export function NotFoundPage() {
             </p>
           </Reveal>
 
-          <Reveal className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" delayMs={100}>
+          <Reveal className="mt-8 flex w-full justify-center sm:w-auto" delayMs={100}>
             <Link to="/" className="w-full sm:w-auto">
               <Button className="min-w-40">{t('notFound.home')}</Button>
-            </Link>
-            <Link to="/blog" className="w-full sm:w-auto">
-              <Button variant="secondary" className="min-w-40">
-                {t('nav.blog')}
-              </Button>
             </Link>
           </Reveal>
         </div>

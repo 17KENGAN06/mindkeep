@@ -23,6 +23,11 @@ export class StatisticsController {
     const data = await statisticsService.getActivity(requireUserId(req));
     res.status(200).json(data);
   }
+
+  async overview(req: Request, res: Response): Promise<void> {
+    const data = await statisticsService.getOverview(requireUserId(req));
+    res.status(200).json(data);
+  }
 }
 
 export const statisticsController = new StatisticsController();
