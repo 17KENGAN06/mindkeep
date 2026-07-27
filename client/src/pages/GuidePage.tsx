@@ -21,6 +21,7 @@ type GuideFaq = {
 export function GuidePage() {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
+  const pillars = t('guide.pillars', { returnObjects: true }) as GuideStep[];
   const steps = t('guide.steps', { returnObjects: true }) as GuideStep[];
   const rules = t('guide.rules', { returnObjects: true }) as string[];
   const faq = t('guide.faq', { returnObjects: true }) as GuideFaq[];
@@ -45,6 +46,26 @@ export function GuidePage() {
           </h1>
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">{t('guide.intro')}</p>
         </Reveal>
+
+        <section className="mt-12 sm:mt-16">
+          <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
+            {t('guide.pillarsTitle')}
+          </h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {Array.isArray(pillars)
+              ? pillars.map((pillar, index) => (
+                  <Reveal
+                    key={pillar.title}
+                    delayMs={60 + index * 40}
+                    className="glass-panel h-full rounded-2xl p-5 sm:p-6"
+                  >
+                    <h3 className="text-xl font-semibold text-ink">{pillar.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">{pillar.body}</p>
+                  </Reveal>
+                ))
+              : null}
+          </div>
+        </section>
 
         <section className="mt-12 sm:mt-16">
           <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
@@ -108,7 +129,10 @@ export function GuidePage() {
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             {t('guide.ctaSubtitle')}
           </p>
-          <Link to={isAuthenticated ? '/materials/new' : '/register'} className="mt-6 inline-flex no-underline">
+          <Link
+            to={isAuthenticated ? '/dashboard' : '/register'}
+            className="mt-6 inline-flex no-underline"
+          >
             <Button>{t(isAuthenticated ? 'guide.ctaUser' : 'guide.ctaGuest')}</Button>
           </Link>
         </Reveal>

@@ -138,64 +138,84 @@
     "eyebrow": "A simple guide",
     "title": "How to use Mindkeep",
     "intro": "Mindkeep helps with four calm pillars: spaced reviews (3 / 7 / 30), a recurring planner, daily habits, and a simple budget. Start with the one you need today.",
-    "stepsTitle": "Get started in six simple steps",
+    "stepsTitle": "Get started across the four pillars",
     "stepLabel": "Step {{number}}",
     "steps": [
       {
         "title": "Create your account",
-        "body": "Sign up with email or continue with Google. Your timezone is detected automatically so review dates stay accurate."
+        "body": "Sign up with email or Google. Your timezone is detected automatically so dates stay accurate."
       },
       {
         "title": "Save what you learned",
-        "body": "Press “Add material” and enter a word, rule, note, lesson topic or useful link. It does not need to look perfect."
+        "body": "Add a material and Mindkeep schedules fixed reviews for day 3, 7 and 30."
       },
       {
-        "title": "Choose the learning date",
-        "body": "Select the day you learned it. Mindkeep automatically schedules reviews 3, 7 and 30 days later."
+        "title": "Plan recurring tasks",
+        "body": "Open Planner, create a daily/weekly/monthly task, and complete it to roll the next date automatically."
       },
       {
-        "title": "Come back on the right day",
-        "body": "Open “Review today”. You can see future reviews in advance, but they can only be completed on their scheduled date."
+        "title": "Check in on habits",
+        "body": "Add habits and mark them done each day. Your streak grows without pressure."
       },
       {
-        "title": "Review and mark it done",
-        "body": "Open the material, try to recall the key idea, then press “Completed”. If today does not work, you can skip the review."
+        "title": "Track a calm budget",
+        "body": "Log income and expenses, tick mandatory payments, and switch RUB / USD / EUR / UAH at today’s CBR rate."
       },
       {
-        "title": "See your progress",
-        "body": "The calendar shows review dates, categories keep things tidy, and statistics show consistency without grades or pressure."
+        "title": "See the shared picture",
+        "body": "Dashboard and Statistics combine reviews, planner, habits and budget in one overview."
       }
     ],
     "rulesTitle": "Good to know",
     "rules": [
-      "The 3 / 7 / 30 schedule starts from the learning date and never shifts after completion.",
-      "Reviews cannot be completed early, keeping your schedule honest and easy to understand.",
-      "If you miss a date, the review becomes overdue and remains available.",
-      "Your materials belong to your account and are not visible to other users."
+      "The 3 / 7 / 30 review schedule starts from the learning date and never shifts after completion.",
+      "Reviews cannot be completed early. Planner tasks and habits are separate modules.",
+      "Missed planner tasks move to Unclosed until you complete, reschedule or delete them.",
+      "Budget amounts stay in their stored currency; display currency converts at today’s CBR rate.",
+      "Your data belongs to your account and is not visible to other users."
     ],
     "faqTitle": "Common questions",
     "faq": [
       {
-        "question": "What can I save?",
-        "answer": "Anything worth revisiting: vocabulary, notes, formulas, rules, work decisions, links, or questions and answers."
+        "question": "What can I use Mindkeep for?",
+        "answer": "Spaced reviews of materials, recurring tasks, daily habits, and a simple personal budget."
       },
       {
-        "question": "What if I miss a review day?",
-        "answer": "That is okay. Open the overdue review, recall the material and mark it completed."
+        "question": "Do 3 / 7 / 30 intervals apply to planner tasks?",
+        "answer": "No. Those intervals are only for learning materials. Planner uses daily, weekly, monthly or every N days."
       },
       {
-        "question": "Can I edit a material later?",
-        "answer": "Yes. You can edit its text, category and link. The learning date locks after a completed or skipped review so the history stays consistent."
+        "question": "What if I miss a review or a task?",
+        "answer": "Reviews become overdue on the Review page. Planner tasks appear under Unclosed tasks."
       },
       {
         "question": "Do I need to visit every day?",
-        "answer": "No. Come back when a review is due. The calendar shows upcoming dates in advance."
+        "answer": "Only if you want daily habits. Reviews and planner tasks appear when they are due."
       }
     ],
-    "ctaTitle": "Save one thing you learned today",
-    "ctaSubtitle": "That is enough to start your first cycle and see how Mindkeep fits into your routine.",
+    "ctaTitle": "Pick one pillar and start today",
+    "ctaSubtitle": "Add a material, a task, a habit or your first budget operation — one step is enough.",
     "ctaGuest": "Create an account",
-    "ctaUser": "Add a material"
+    "ctaUser": "Open dashboard",
+    "pillarsTitle": "Four pillars",
+    "pillars": [
+      {
+        "title": "Reviews",
+        "body": "Fixed 3 · 7 · 30 rhythm for materials. No SM-2 and no early complete."
+      },
+      {
+        "title": "Planner",
+        "body": "Recurring tasks, filters, unclosed items and a month calendar."
+      },
+      {
+        "title": "Habits",
+        "body": "Daily check-ins with a calm streak and today’s completion rate."
+      },
+      {
+        "title": "Budget",
+        "body": "Month and year views, mandatory payments, and multi-currency display."
+      }
+    ]
   },
   "admin": {
     "title": "Admin",
@@ -504,14 +524,14 @@
         "title": "2. What we collect",
         "body": [
           "Account data: name, email, and a hashed password when you register.",
-          "Learning content: materials, categories, learned dates, and review statuses.",
+          "App content: materials and reviews, planner tasks, habits, budget operations and related categories.",
           "Technical data: timezone, interface language, and basic server logs needed for security and reliability."
         ]
       },
       {
         "title": "3. Why we use data",
         "body": [
-          "To create your account, store materials, and schedule reminders after 3, 7, and 30 days.",
+          "To run your account, schedule 3 / 7 / 30 reviews, store planner/habits/budget data, and show statistics.",
           "To show calendar, statistics, and in-app notifications.",
           "To keep the service secure, prevent abuse, and improve reliability."
         ]
@@ -535,7 +555,7 @@
         "title": "6. Your rights",
         "body": [
           "You may request access to your data, corrections, or account deletion.",
-          "You can change language, theme, and learning content at any time inside the app."
+          "App content: materials and reviews, planner tasks, habits, budget operations and related categories."
         ]
       },
       {
@@ -626,8 +646,7 @@
     "overdueEmptyDescription": "Great — no missed planner tasks.",
     "daysOverdue": "{{count}} days overdue",
     "fields": {
-      "title": "Task title",
-      "noCategory": "No category"
+      "category": "Category"
     },
     "stats": {
       "total": "Active tasks",
@@ -666,7 +685,10 @@
       "changeRecurrence": "Recurrence",
       "reschedulePrompt": "New date (YYYY-MM-DD)",
       "recurrencePrompt": "DAILY / WEEKLY / MONTHLY / CUSTOM_DAYS"
-    }
+    },
+    "listView": "List",
+    "calendarView": "Calendar",
+    "calendarEmpty": "No tasks on this day"
   },
   "habits": {
     "title": "Habits",
@@ -707,7 +729,8 @@
       "type": "Type",
       "comment": "Comment",
       "month": "Month",
-      "openingBalance": "Opening balance"
+      "openingBalance": "Opening balance",
+      "category": "Category"
     },
     "types": {
       "INCOME": "Income",
@@ -734,6 +757,7 @@
       "10": "October",
       "11": "November",
       "12": "December"
-    }
+    },
+    "addCategory": "Add category"
   }
 }

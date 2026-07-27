@@ -2,11 +2,16 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { plannerApi, type CreateTaskPayload } from '@/api/planner';
 import type { PlannerFilter, TaskRecurrenceType } from '@/types/planner';
 
-export function usePlannerOccurrences(filter: PlannerFilter, categoryId?: string) {
+export function usePlannerOccurrences(
+  filter: PlannerFilter,
+  categoryId?: string,
+  year?: number,
+  month?: number,
+) {
   return useQuery({
-    queryKey: ['planner', 'occurrences', filter, categoryId],
+    queryKey: ['planner', 'occurrences', filter, categoryId, year, month],
     queryFn: async () => {
-      const response = await plannerApi.listOccurrences({ filter, categoryId });
+      const response = await plannerApi.listOccurrences({ filter, categoryId, year, month });
       return response;
     },
   });

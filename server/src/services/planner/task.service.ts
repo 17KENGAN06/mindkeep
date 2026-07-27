@@ -204,9 +204,13 @@ export class TaskService {
     const tomorrowStart = fromZonedTime(startOfDay(addDays(zonedNow, 1)), timezone);
     const tomorrowEnd = fromZonedTime(endOfDay(addDays(zonedNow, 1)), timezone);
     const weekEnd = fromZonedTime(endOfWeek(zonedNow, { weekStartsOn: 1 }), timezone);
-    const monthEnd = fromZonedTime(endOfMonth(zonedNow), timezone);
-    const monthStart = fromZonedTime(startOfMonth(zonedNow), timezone);
     const weekStart = fromZonedTime(startOfWeek(zonedNow, { weekStartsOn: 1 }), timezone);
+
+    const focusYear = query.year ?? zonedNow.getFullYear();
+    const focusMonth = query.month ?? zonedNow.getMonth() + 1;
+    const focusLocal = new Date(focusYear, focusMonth - 1, 1);
+    const monthStart = fromZonedTime(startOfMonth(focusLocal), timezone);
+    const monthEnd = fromZonedTime(endOfMonth(focusLocal), timezone);
 
     const where: Prisma.TaskOccurrenceWhereInput = {
       userId,
@@ -228,7 +232,13 @@ export class TaskService {
         break;
       case 'month':
         where.dueDate = { gte: monthStart, lte: monthEnd };
-        where.status = { in: [TaskOccurrenceStatus.PENDING, TaskOccurrenceStatus.OVERDUE] };
+        where.status = {
+          in: [
+            TaskOccurrenceStatus.PENDING,
+            TaskOccurrenceStatus.OVERDUE,
+            TaskOccurrenceStatus.COMPLETED,
+          ],
+        };
         break;
       case 'overdue':
         where.status = TaskOccurrenceStatus.OVERDUE;

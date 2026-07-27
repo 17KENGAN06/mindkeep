@@ -38,6 +38,16 @@ export function useUpdateBudgetSettings() {
   });
 }
 
+export function useCreateBudgetCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (name: string) => budgetApi.createCategory(name),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['budget', 'categories'] });
+    },
+  });
+}
+
 export function useCreateBudgetOperation() {
   const queryClient = useQueryClient();
   return useMutation({

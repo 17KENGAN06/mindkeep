@@ -28,10 +28,17 @@ export const plannerApi = {
     apiClient.patch<{ task: unknown }>(`/api/planner/tasks/${id}`, payload),
   removeTask: (id: string) => apiClient.delete<{ success: boolean }>(`/api/planner/tasks/${id}`),
 
-  listOccurrences: (params: { filter?: PlannerFilter; categoryId?: string } = {}) => {
+  listOccurrences: (params: {
+    filter?: PlannerFilter;
+    categoryId?: string;
+    year?: number;
+    month?: number;
+  } = {}) => {
     const search = new URLSearchParams();
     if (params.filter) search.set('filter', params.filter);
     if (params.categoryId) search.set('categoryId', params.categoryId);
+    if (params.year) search.set('year', String(params.year));
+    if (params.month) search.set('month', String(params.month));
     const query = search.toString();
     return apiClient.get<{ timezone: string; occurrences: TaskOccurrence[] }>(
       `/api/planner/occurrences${query ? `?${query}` : ''}`,

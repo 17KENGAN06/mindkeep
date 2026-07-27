@@ -138,64 +138,84 @@
     "eyebrow": "Selkeä käyttöohje",
     "title": "Näin käytät Mindkeepia",
     "intro": "Mindkeepissä on neljä rauhallista pilaria: kertaukset 3 / 7 / 30, toistuvat tehtävät, päivittäiset tavat ja yksinkertainen budjetti. Aloita siitä, mitä tarvitset tänään.",
-    "stepsTitle": "Aloita kuudella helpolla vaiheella",
+    "stepsTitle": "Aloita neljällä pilarilla",
     "stepLabel": "Vaihe {{number}}",
     "steps": [
       {
-        "title": "Luo tili",
-        "body": "Rekisteröidy sähköpostilla tai jatka Googlella. Aikavyöhykkeesi tunnistetaan automaattisesti, jotta kertauspäivät ovat oikein."
+        "title": "Create your account",
+        "body": "Sign up with email or Google. Your timezone is detected automatically so dates stay accurate."
       },
       {
-        "title": "Tallenna oppimasi",
-        "body": "Paina ”Lisää materiaali” ja kirjoita sana, sääntö, muistiinpano, oppitunnin aihe tai hyödyllinen linkki. Sen ei tarvitse olla täydellinen."
+        "title": "Save what you learned",
+        "body": "Add a material and Mindkeep schedules fixed reviews for day 3, 7 and 30."
       },
       {
-        "title": "Valitse oppimispäivä",
-        "body": "Valitse päivä, jolloin opit asian. Mindkeep ajastaa kertaukset automaattisesti 3, 7 ja 30 päivän päähän."
+        "title": "Plan recurring tasks",
+        "body": "Open Planner, create a daily/weekly/monthly task, and complete it to roll the next date automatically."
       },
       {
-        "title": "Palaa oikeana päivänä",
-        "body": "Avaa ”Kertaa tänään”. Tulevat tehtävät näkyvät etukäteen, mutta ne voi merkitä valmiiksi vasta ajastettuna päivänä."
+        "title": "Check in on habits",
+        "body": "Add habits and mark them done each day. Your streak grows without pressure."
       },
       {
-        "title": "Kertaa ja merkitse valmiiksi",
-        "body": "Avaa materiaali, yritä palauttaa tärkein asia mieleen ja paina ”Kertattu”. Jos tänään ei onnistu, voit ohittaa kertauksen."
+        "title": "Track a calm budget",
+        "body": "Log income and expenses, tick mandatory payments, and switch RUB / USD / EUR / UAH at today’s CBR rate."
       },
       {
-        "title": "Seuraa edistymistä",
-        "body": "Kalenteri näyttää päivät, kategoriat pitävät asiat järjestyksessä ja tilastot kertovat säännöllisyydestä ilman arvosanoja tai painetta."
+        "title": "See the shared picture",
+        "body": "Dashboard and Statistics combine reviews, planner, habits and budget in one overview."
       }
     ],
     "rulesTitle": "Hyvä tietää",
     "rules": [
-      "3 / 7 / 30 -aikataulu alkaa oppimispäivästä eikä siirry kertauksen jälkeen.",
-      "Kertausta ei voi tehdä etukäteen, joten aikataulu pysyy rehellisenä ja selkeänä.",
-      "Jos päivä jää väliin, kertaus merkitään myöhästyneeksi ja pysyy saatavilla.",
-      "Materiaalisi kuuluvat vain omalle tilillesi eivätkä näy muille käyttäjille."
+      "The 3 / 7 / 30 review schedule starts from the learning date and never shifts after completion.",
+      "Reviews cannot be completed early. Planner tasks and habits are separate modules.",
+      "Missed planner tasks move to Unclosed until you complete, reschedule or delete them.",
+      "Budget amounts stay in their stored currency; display currency converts at today’s CBR rate.",
+      "Your data belongs to your account and is not visible to other users."
     ],
     "faqTitle": "Usein kysyttyä",
     "faq": [
       {
-        "question": "Mitä voin tallentaa?",
-        "answer": "Mitä tahansa, johon haluat palata: sanoja, muistiinpanoja, kaavoja, sääntöjä, työssä opittuja asioita, linkkejä tai kysymyksiä ja vastauksia."
+        "question": "What can I use Mindkeep for?",
+        "answer": "Spaced reviews of materials, recurring tasks, daily habits, and a simple personal budget."
       },
       {
-        "question": "Mitä jos kertauspäivä jäi väliin?",
-        "answer": "Ei hätää. Avaa myöhästynyt kertaus, palauta materiaali mieleen ja merkitse se valmiiksi."
+        "question": "Do 3 / 7 / 30 intervals apply to planner tasks?",
+        "answer": "No. Those intervals are only for learning materials. Planner uses daily, weekly, monthly or every N days."
       },
       {
-        "question": "Voinko muokata materiaalia myöhemmin?",
-        "answer": "Kyllä. Tekstiä, kategoriaa ja linkkiä voi muokata. Oppimispäivä lukittuu suoritetun tai ohitetun kertauksen jälkeen, jotta historia säilyy."
+        "question": "What if I miss a review or a task?",
+        "answer": "Reviews become overdue on the Review page. Planner tasks appear under Unclosed tasks."
       },
       {
-        "question": "Pitääkö sovelluksessa käydä joka päivä?",
-        "answer": "Ei. Palaa, kun tälle päivälle on kertauksia. Kalenteri näyttää tulevat päivät etukäteen."
+        "question": "Do I need to visit every day?",
+        "answer": "Only if you want daily habits. Reviews and planner tasks appear when they are due."
       }
     ],
-    "ctaTitle": "Tallenna yksi asia, jonka opit tänään",
-    "ctaSubtitle": "Se riittää ensimmäisen kertausjakson aloittamiseen ja Mindkeepin kokeilemiseen omassa arjessasi.",
+    "ctaTitle": "Valitse yksi pilari ja aloita tänään",
+    "ctaSubtitle": "Add a material, a task, a habit or your first budget operation — one step is enough.",
     "ctaGuest": "Luo tili",
-    "ctaUser": "Lisää materiaali"
+    "ctaUser": "Avaa dashboard",
+    "pillarsTitle": "Neljä pilaria",
+    "pillars": [
+      {
+        "title": "Reviews",
+        "body": "Fixed 3 · 7 · 30 rhythm for materials. No SM-2 and no early complete."
+      },
+      {
+        "title": "Planner",
+        "body": "Recurring tasks, filters, unclosed items and a month calendar."
+      },
+      {
+        "title": "Habits",
+        "body": "Daily check-ins with a calm streak and today’s completion rate."
+      },
+      {
+        "title": "Budget",
+        "body": "Month and year views, mandatory payments, and multi-currency display."
+      }
+    ]
   },
   "admin": {
     "title": "Admin",
@@ -504,7 +524,7 @@
         "title": "2. Mitä keräämme",
         "body": [
           "Tilin tiedot: nimi, sähköposti ja salasanan tiiviste rekisteröityessä.",
-          "Oppimissisältö: materiaalit, kategoriat, oppimispäivämäärät ja kertauksen tilat.",
+          "Sovelluksen sisältö: materiaalit ja kertaukset, suunnittelijan tehtävät, tavat, budjettitoiminnot ja kategoriat.",
           "Tekniset tiedot: aikavyöhyke, käyttöliittymän kieli sekä palvelimen peruslokit turvallisuutta ja vakautta varten."
         ]
       },
@@ -626,8 +646,7 @@
     "overdueEmptyDescription": "Great — no missed planner tasks.",
     "daysOverdue": "{{count}} days overdue",
     "fields": {
-      "title": "Task title",
-      "noCategory": "No category"
+      "category": "Kategoria"
     },
     "stats": {
       "total": "Active tasks",
@@ -666,7 +685,10 @@
       "changeRecurrence": "Recurrence",
       "reschedulePrompt": "New date (YYYY-MM-DD)",
       "recurrencePrompt": "DAILY / WEEKLY / MONTHLY / CUSTOM_DAYS"
-    }
+    },
+    "listView": "Lista",
+    "calendarView": "Kalenteri",
+    "calendarEmpty": "Ei tehtäviä tänä päivänä"
   },
   "habits": {
     "title": "Habits",
@@ -707,7 +729,8 @@
       "type": "Type",
       "comment": "Comment",
       "month": "Month",
-      "openingBalance": "Opening balance"
+      "openingBalance": "Opening balance",
+      "category": "Kategoria"
     },
     "types": {
       "INCOME": "Income",
@@ -734,6 +757,7 @@
       "10": "October",
       "11": "November",
       "12": "December"
-    }
+    },
+    "addCategory": "Lisää kategoria"
   }
 }

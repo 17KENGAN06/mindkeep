@@ -7,8 +7,10 @@ import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
 import {
+  useBudgetCategories,
   useBudgetMonth,
   useBudgetYear,
+  useCreateBudgetCategory,
   useCreateBudgetOperation,
   useCreateMandatory,
   useCreatePlannedExpense,
@@ -47,8 +49,10 @@ export function BudgetPage() {
 
   const monthQuery = useBudgetMonth(year, month);
   const yearQuery = useBudgetYear(year);
+  const categoriesQuery = useBudgetCategories();
   const updateSettings = useUpdateBudgetSettings();
   const createOperation = useCreateBudgetOperation();
+  const createCategory = useCreateBudgetCategory();
   const removeOperation = useRemoveBudgetOperation();
   const createMandatory = useCreateMandatory();
   const toggleMandatory = useToggleMandatory();
@@ -58,6 +62,8 @@ export function BudgetPage() {
   const [opType, setOpType] = useState<BudgetOperationType>('EXPENSE');
   const [comment, setComment] = useState('');
   const [opDate, setOpDate] = useState(todayKey());
+  const [categoryId, setCategoryId] = useState('');
+  const [newCategoryName, setNewCategoryName] = useState('');
   const [mandatoryName, setMandatoryName] = useState('');
   const [mandatoryDay, setMandatoryDay] = useState(1);
   const [mandatoryAmount, setMandatoryAmount] = useState('');
@@ -76,6 +82,7 @@ export function BudgetPage() {
       amount: value,
       type: opType,
       comment,
+      categoryId: categoryId || null,
     });
     setAmount('');
     setComment('');
@@ -282,7 +289,7 @@ export function BudgetPage() {
             <h2 className="text-sm font-semibold text-ink">{t('budget.operationsTitle')}</h2>
             <form
               onSubmit={(e) => void onCreateOperation(e)}
-              className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5 lg:items-end"
+              className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 lg:items-end"
             >
               <Input
                 label={t('budget.fields.date')}
@@ -306,6 +313,16 @@ export function BudgetPage() {
                   { value: 'EXPENSE', label: t('budget.types.EXPENSE') },
                 ]}
               />
+              <Select
+                label={t('budget.fields.category')}
+                value={categoryId}
+                onChange={(e) => setCategoryId(e.target.value)}
+                placeholder={t('planner.fields.noCategory')}
+                options={(categoriesQuery.data ?? []).map((category) => ({
+                  value: category.id,
+                  label: category.name,
+                }))}
+              />
               <Input
                 label={t('budget.fields.comment')}
                 value={comment}
@@ -313,6 +330,27 @@ export function BudgetPage() {
               />
               <Button type="submit">{t('budget.addOperation')}</Button>
             </form>
+            <div className="grid gap-2 sm:grid-cols-[1fr_auto] sm:items-end">
+              <Input
+                label={t('budget.addCategory')}
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+              />
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={!newCategoryName.trim() || createCategory.isPending}
+                onClick={() => {
+                  if (!newCategoryName.trim()) return;
+                  void createCategory.mutateAsync(newCategoryName.trim()).then((result) => {
+                    setCategoryId(result.category.id);
+                    setNewCategoryName('');
+                  });
+                }}
+              >
+                {t('budget.addCategory')}
+              </Button>
+            </div>
             <div className="overflow-x-auto">
               <table className="min-w-full text-left text-sm">
                 <thead className="text-muted">
@@ -320,6 +358,7 @@ export function BudgetPage() {
                     <th className="px-2 py-2 font-medium">{t('budget.fields.date')}</th>
                     <th className="px-2 py-2 font-medium">{t('budget.fields.amount')}</th>
                     <th className="px-2 py-2 font-medium">{t('budget.fields.type')}</th>
+                    <th className="px-2 py-2 font-medium">{t('budget.fields.category')}</th>
                     <th className="px-2 py-2 font-medium">{t('budget.fields.comment')}</th>
                     <th className="px-2 py-2" />
                   </tr>
@@ -338,6 +377,7 @@ export function BudgetPage() {
                       >
                         {t(`budget.types.${op.type}`)}
                       </td>
+                      <td className="px-2 py-2 text-muted">{op.category?.name || '—'}</td>
                       <td className="px-2 py-2 text-muted">{op.comment || '—'}</td>
                       <td className="px-2 py-2">
                         <Button

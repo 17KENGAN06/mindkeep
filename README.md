@@ -1,12 +1,13 @@
-# Learning Reminder
+# Mindkeep
 
-Web app for consolidating recently learned material in long-term memory using a **fixed** review schedule:
+Calm web app for **four pillars**:
 
-- 1st review — **3 days** after the learning date  
-- 2nd review — **7 days** after the learning date  
-- 3rd review — **30 days** after the learning date  
+- **Reviews** — fixed spaced repetition at **3 / 7 / 30** days (no SM-2)
+- **Planner** — recurring tasks, unclosed follow-up, filters and month calendar
+- **Habits** — daily check-ins and streaks
+- **Budget** — income/expenses, mandatory payments, year overview, RUB/USD/EUR/UAH at today’s CBR rate
 
-Intervals are calculated only from the original `learnedAt` date. There is **no SM-2**, no “Remember / Forgot” scoring, and no interval changes after completion.
+Product name in the UI: **Mindkeep**. Repo folder: `learning-reminder`.
 
 Languages (i18n): **Russian**, **Ukrainian**, **English**, **Finnish**.
 
@@ -18,7 +19,7 @@ Languages (i18n): **Russian**, **Ukrainian**, **English**, **Finnish**.
 |-------|----------------|
 | Frontend | React, TypeScript, Vite, Tailwind CSS, React Router, TanStack Query, React Hook Form, Zod, date-fns, Lucide, i18next |
 | Backend | Node.js, TypeScript, Express, PostgreSQL, Prisma, Zod, JWT (httpOnly cookie), bcrypt |
-| Jobs | Railway Cron → protected HTTP endpoint (`reminderJob`); optional `node-cron` locally |
+| Jobs | Railway Cron → protected HTTP endpoints (`reminderJob`, `planner-overdue`); optional `node-cron` locally |
 | Deploy | Railway (API + Postgres), Hostinger (static frontend) |
 
 ---
@@ -38,23 +39,21 @@ learning-reminder/
 
 ## Features (MVP)
 
-- Registration / login / logout (JWT in **httpOnly** cookie)
-- Categories CRUD
-- Learning materials CRUD + archive, search, filters
-- Auto-create 3 reminders (3 / 7 / 30 days) on material create
-- Review today: overdue / today / upcoming, **Completed** / **Skip**
-- In-app notifications + unread bell
-- Hourly server job for due/overdue + notification creation
-- Dashboard + 7-day activity chart + statistics page
-- Review calendar by month
+- Registration / login / logout (JWT in **httpOnly** cookie) + Google sign-in
+- **Reviews:** materials, categories, fixed 3 / 7 / 30 reminders, review today, review calendar
+- **Planner:** recurring tasks, overdue/unclosed, filters, month calendar, task categories
+- **Habits:** daily logs, streak, today %
+- **Budget:** month/year views, operations, mandatory payments, planned expenses, FX display currency
+- Shared dashboard + statistics overview across all pillars
+- In-app notifications for reviews + unread bell
 - Profile timezone (IANA) for “today” / overdue calculations
 - UI in `ru` / `uk` / `en` / `fi`
 
-### Intentionally out of scope
+### Intentionally out of scope (for now)
 
-- Adaptive intervals / SM-2  
-- Email / Telegram / push (hooks prepared in `notificationService` + env vars)  
-- Answer quality ratings  
+- Adaptive intervals / SM-2 for materials  
+- Email / Telegram / push beyond in-app review notifications  
+- Drag-and-drop planner, Google Calendar sync, export/import  
 
 ---
 

@@ -62,6 +62,8 @@ export const listOccurrencesQuerySchema = z.object({
     .optional()
     .default('today'),
   categoryId: z.string().cuid().optional(),
+  year: z.coerce.number().int().min(2000).max(2100).optional(),
+  month: z.coerce.number().int().min(1).max(12).optional(),
 });
 
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
