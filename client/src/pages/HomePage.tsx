@@ -21,7 +21,16 @@ const intervals = [
   { key: 'thirty', days: '30' },
 ] as const;
 
-const SECTION_IDS = ['hero', 'schedule', 'how', 'features', 'apps', 'testimonials', 'blog', 'cta'] as const;
+const SECTION_IDS = [
+  'hero',
+  'schedule',
+  'how',
+  'features',
+  'apps',
+  'testimonials',
+  'blog',
+  'cta',
+] as const;
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -68,13 +77,14 @@ export function HomePage() {
         data-section-snap="true"
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
-          <div
-            className="relative mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-6"
-          >
+          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-6">
             <header className="snap-reveal z-10 flex items-center justify-between gap-3">
               <BrandLockup to="/" size="lg" />
               <div className="flex items-center gap-2">
-                <nav className="hidden items-center gap-1 lg:flex" aria-label={t('footer.linksLabel')}>
+                <nav
+                  className="hidden items-center gap-1 lg:flex"
+                  aria-label={t('footer.linksLabel')}
+                >
                   <Link
                     to="/guide"
                     className="inline-flex min-h-11 items-center rounded-xl px-2.5 text-xs font-semibold text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
@@ -148,9 +158,7 @@ export function HomePage() {
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="schedule" activeId={activeId} className="border-t border-line/70">
-          <div
-            className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16"
-          >
+          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
             <div
               aria-hidden
               className="desktop-motion desktop-motion-glow -top-8 left-1/4 h-40 w-40 rounded-full bg-brand-500/15 blur-3xl"
@@ -189,9 +197,7 @@ export function HomePage() {
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="how" activeId={activeId} className="border-t border-line/70">
-          <div
-            className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16"
-          >
+          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
             <div
               aria-hidden
               className="desktop-motion desktop-motion-line origin-right top-20 right-6 h-px w-48 bg-gradient-to-l from-brand-500/70 to-transparent"
@@ -226,9 +232,7 @@ export function HomePage() {
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="features" activeId={activeId} className="border-t border-line/70">
-          <div
-            className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16"
-          >
+          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
             <div
               aria-hidden
               className="desktop-motion desktop-motion-glow top-10 right-1/4 h-48 w-48 rounded-full bg-brand-500/12 blur-3xl"
@@ -272,9 +276,7 @@ export function HomePage() {
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="apps" activeId={activeId} className="border-t border-line/70">
-          <div
-            className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16"
-          >
+          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
             <div
               aria-hidden
               className="desktop-motion desktop-motion-line origin-left bottom-24 left-8 h-px w-56 bg-gradient-to-r from-transparent via-brand-500/60 to-transparent"
@@ -298,9 +300,7 @@ export function HomePage() {
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="blog" activeId={activeId} className="border-t border-line/70">
-          <div
-            className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16"
-          >
+          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
             <div
               aria-hidden
               className="desktop-motion desktop-motion-glow -bottom-4 left-1/3 h-36 w-36 rounded-full bg-brand-500/14 blur-3xl"
@@ -310,10 +310,8 @@ export function HomePage() {
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="cta" activeId={activeId} className="border-t border-line/70">
-          <div
-            className="mx-auto flex h-full w-full max-w-6xl flex-col justify-between overflow-y-auto px-4 py-6 sm:px-6 sm:py-10"
-          >
-            <div className="flex flex-1 flex-col items-stretch justify-center gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="mx-auto flex h-full w-full max-w-6xl flex-col justify-between overflow-y-auto px-4 py-6 sm:px-6 sm:py-10">
+            <div className="flex flex-1 flex-col items-stretch justify-center gap-6 mb-5 md:mb-10 md:flex-row md:items-end md:justify-between">
               <div className="snap-reveal snap-reveal-left max-w-xl">
                 <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
                   {t('home.ctaTitle')}
