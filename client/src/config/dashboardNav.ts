@@ -39,12 +39,6 @@ export const dashboardNav: DashboardNavEntry[] = [
       },
       {
         type: 'link',
-        id: 'calendar',
-        labelKey: 'nav.calendar',
-        to: '/calendar',
-      },
-      {
-        type: 'link',
         id: 'month-plan',
         labelKey: 'nav.monthPlan',
         to: '/month-plan',
@@ -53,14 +47,20 @@ export const dashboardNav: DashboardNavEntry[] = [
   },
   {
     type: 'group',
-    id: 'learning',
-    labelKey: 'nav.learning',
+    id: 'repetition',
+    labelKey: 'nav.repetition',
     children: [
       {
         type: 'link',
         id: 'review',
         labelKey: 'nav.review',
         to: '/review',
+      },
+      {
+        type: 'link',
+        id: 'calendar',
+        labelKey: 'nav.reviewCalendar',
+        to: '/calendar',
       },
       {
         type: 'link',

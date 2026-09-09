@@ -35,12 +35,17 @@ export function CalendarPage() {
 
   return (
     <div className="space-y-6">
-      <section>
-        <h1 className="text-2xl font-semibold text-ink">{t('calendar.title')}</h1>
-        <p className="mt-1 text-sm text-muted">{t('calendar.subtitle')}</p>
-        <p className="mt-2 text-xs text-muted">
-          {t('dashboard.timezone', { timezone: data.timezone })}
-        </p>
+      <section className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">{t('calendar.title')}</h1>
+          <p className="mt-1 text-sm text-muted">{t('calendar.subtitle')}</p>
+          <p className="mt-2 text-xs text-muted">
+            {t('dashboard.timezone', { timezone: data.timezone })}
+          </p>
+        </div>
+        <Link to="/review">
+          <Button variant="secondary">{t('nav.review')}</Button>
+        </Link>
       </section>
 
       <Calendar

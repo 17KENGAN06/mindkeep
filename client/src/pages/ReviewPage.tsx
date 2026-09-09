@@ -1,7 +1,9 @@
 ﻿import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { ReminderCard } from '@/components/reminders/ReminderCard';
+import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
@@ -137,12 +139,17 @@ export function ReviewPage() {
 
   return (
     <div className="space-y-8">
-      <section>
-        <h1 className="text-2xl font-semibold text-ink">{t('review.title')}</h1>
-        <p className="mt-1 text-sm text-muted">{t('review.subtitle')}</p>
-        <p className="mt-2 text-sm font-medium text-brand-500">
-          {t('review.openCount', { count: totalOpen })}
-        </p>
+      <section className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">{t('review.title')}</h1>
+          <p className="mt-1 text-sm text-muted">{t('review.subtitle')}</p>
+          <p className="mt-2 text-sm font-medium text-brand-500">
+            {t('review.openCount', { count: totalOpen })}
+          </p>
+        </div>
+        <Link to="/calendar">
+          <Button variant="secondary">{t('nav.reviewCalendar')}</Button>
+        </Link>
       </section>
 
       {successMessage ? (
