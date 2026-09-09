@@ -7,10 +7,15 @@ const routeTitleKeys: Record<string, string> = {
   '/login': 'seo.titles.login',
   '/register': 'seo.titles.register',
   '/dashboard': 'seo.titles.dashboard',
+  '/tasks': 'seo.titles.tasks',
   '/review': 'seo.titles.review',
   '/calendar': 'seo.titles.calendar',
+  '/month-plan': 'seo.titles.monthPlan',
   '/materials': 'seo.titles.materials',
   '/categories': 'seo.titles.categories',
+  '/finance': 'seo.titles.budget',
+  '/finance/transactions': 'seo.titles.transactions',
+  '/finance/categories': 'seo.titles.expenseCategories',
   '/notifications': 'seo.titles.notifications',
   '/statistics': 'seo.titles.statistics',
   '/admin': 'seo.titles.admin',
@@ -30,6 +35,8 @@ export function DocumentTitle() {
     if (!key) {
       if (pathname.startsWith('/materials/')) {
         key = 'seo.titles.materials';
+      } else if (pathname.startsWith('/finance/')) {
+        key = 'seo.titles.budget';
       } else if (pathname.startsWith('/blog/')) {
         key = 'seo.titles.blog';
       } else {

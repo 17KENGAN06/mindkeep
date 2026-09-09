@@ -22,10 +22,45 @@
     "review": "Kertaa tänään",
     "notifications": "Ilmoitukset",
     "statistics": "Tilastot",
+    "analytics": "Analytiikka",
     "calendar": "Kalenteri",
     "admin": "Admin",
     "blog": "Blogi",
-    "guide": "Käyttöohje"
+    "guide": "Käyttöohje",
+    "planning": "Suunnittelu",
+    "learning": "Oppiminen",
+    "finance": "Talous",
+    "more": "Lisää",
+    "tasks": "Päivittäiset tehtävät",
+    "monthPlan": "Kuukausisuunnitelma",
+    "budget": "Budjetti",
+    "transactions": "Tapahtumat",
+    "expenseCategories": "Kulujen kategoriat",
+    "openMenu": "Avaa valikko",
+    "closeMenu": "Sulje valikko"
+  },
+  "placeholders": {
+    "comingSoon": "Osio on kehitteillä",
+    "tasks": {
+      "title": "Päivittäiset tehtävät",
+      "description": "Suunnittele päivän tehtävät ja seuraa etenemistä."
+    },
+    "monthPlan": {
+      "title": "Kuukausisuunnitelma",
+      "description": "Kerää tavoitteet ja isot työt kuukausisuunnitelmaan."
+    },
+    "budget": {
+      "title": "Budjetti",
+      "description": "Seuraa budjettia sekä tulojen ja menojen tasapainoa."
+    },
+    "transactions": {
+      "title": "Tapahtumat",
+      "description": "Tarkastele ja merkitse tuloja ja menoja."
+    },
+    "expenseCategories": {
+      "title": "Kulujen kategoriat",
+      "description": "Järjestä kulut selkeisiin kategorioihin."
+    }
   },
   "home": {
     "title": "Pidä oppimasi mielessä",
@@ -434,7 +469,12 @@
       "materials": "Materiaalit · Mindkeep",
       "categories": "Kategoriat · Mindkeep",
       "notifications": "Ilmoitukset · Mindkeep",
-      "statistics": "Tilastot · Mindkeep",
+      "statistics": "Analytiikka · Mindkeep",
+      "tasks": "Päivittäiset tehtävät · Mindkeep",
+      "monthPlan": "Kuukausisuunnitelma · Mindkeep",
+      "budget": "Budjetti · Mindkeep",
+      "transactions": "Tapahtumat · Mindkeep",
+      "expenseCategories": "Kulujen kategoriat · Mindkeep",
       "admin": "Admin · Mindkeep",
       "fallback": "Mindkeep",
       "blog": "Blogi · Mindkeep",

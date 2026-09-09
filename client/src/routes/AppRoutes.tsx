@@ -10,6 +10,9 @@ import { CalendarPage } from '@/pages/CalendarPage';
 import { CategoriesPage } from '@/pages/CategoriesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { AdminPage } from '@/pages/AdminPage';
+import { FinanceBudgetPage } from '@/pages/finance/FinanceBudgetPage';
+import { FinanceCategoriesPage } from '@/pages/finance/FinanceCategoriesPage';
+import { FinanceTransactionsPage } from '@/pages/finance/FinanceTransactionsPage';
 import { GuidePage } from '@/pages/GuidePage';
 import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -17,12 +20,14 @@ import { MaterialCreatePage } from '@/pages/MaterialCreatePage';
 import { MaterialDetailPage } from '@/pages/MaterialDetailPage';
 import { MaterialEditPage } from '@/pages/MaterialEditPage';
 import { MaterialsPage } from '@/pages/MaterialsPage';
+import { MonthPlanPage } from '@/pages/MonthPlanPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { NotificationsPage } from '@/pages/NotificationsPage';
 import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { ReviewPage } from '@/pages/ReviewPage';
 import { StatisticsPage } from '@/pages/StatisticsPage';
+import { TasksPage } from '@/pages/TasksPage';
 
 function PublicOnly({ children }: { children: ReactNode }) {
   const { isAuthenticated, user } = useAuth();
@@ -104,13 +109,18 @@ export function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/review" element={<ReviewPage />} />
+          <Route path="/tasks" element={<TasksPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/month-plan" element={<MonthPlanPage />} />
+          <Route path="/review" element={<ReviewPage />} />
           <Route path="/materials" element={<MaterialsPage />} />
           <Route path="/materials/new" element={<MaterialCreatePage />} />
           <Route path="/materials/:id" element={<MaterialDetailPage />} />
           <Route path="/materials/:id/edit" element={<MaterialEditPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/finance" element={<FinanceBudgetPage />} />
+          <Route path="/finance/transactions" element={<FinanceTransactionsPage />} />
+          <Route path="/finance/categories" element={<FinanceCategoriesPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/admin" element={<AdminPage />} />

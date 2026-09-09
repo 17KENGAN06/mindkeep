@@ -22,10 +22,45 @@
     "review": "Повторити сьогодні",
     "notifications": "Сповіщення",
     "statistics": "Статистика",
+    "analytics": "Аналітика",
     "calendar": "Календар",
     "admin": "Адмін",
     "blog": "Блог",
-    "guide": "Як користуватися"
+    "guide": "Як користуватися",
+    "planning": "Планування",
+    "learning": "Навчання",
+    "finance": "Фінанси",
+    "more": "Ще",
+    "tasks": "Щоденні задачі",
+    "monthPlan": "План на місяць",
+    "budget": "Бюджет",
+    "transactions": "Транзакції",
+    "expenseCategories": "Категорії витрат",
+    "openMenu": "Відкрити меню",
+    "closeMenu": "Закрити меню"
+  },
+  "placeholders": {
+    "comingSoon": "Розділ у розробці",
+    "tasks": {
+      "title": "Щоденні задачі",
+      "description": "Плануйте задачі на день і стежте за виконанням."
+    },
+    "monthPlan": {
+      "title": "План на місяць",
+      "description": "Збирайте цілі та великі справи в помісячний план."
+    },
+    "budget": {
+      "title": "Бюджет",
+      "description": "Слідкуйте за бюджетом і балансом доходів і витрат."
+    },
+    "transactions": {
+      "title": "Транзакції",
+      "description": "Переглядайте та відзначайте доходи й витрати."
+    },
+    "expenseCategories": {
+      "title": "Категорії витрат",
+      "description": "Організуйте витрати за зрозумілими категоріями."
+    }
   },
   "home": {
     "title": "Зберігайте вивчене",
@@ -434,7 +469,12 @@
       "materials": "Матеріали · Mindkeep",
       "categories": "Категорії · Mindkeep",
       "notifications": "Сповіщення · Mindkeep",
-      "statistics": "Статистика · Mindkeep",
+      "statistics": "Аналітика · Mindkeep",
+      "tasks": "Щоденні задачі · Mindkeep",
+      "monthPlan": "План на місяць · Mindkeep",
+      "budget": "Бюджет · Mindkeep",
+      "transactions": "Транзакції · Mindkeep",
+      "expenseCategories": "Категорії витрат · Mindkeep",
       "admin": "Адмін · Mindkeep",
       "fallback": "Mindkeep",
       "blog": "Блог · Mindkeep",

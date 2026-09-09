@@ -22,10 +22,45 @@
     "review": "Повторить сегодня",
     "notifications": "Уведомления",
     "statistics": "Статистика",
+    "analytics": "Аналитика",
     "calendar": "Календарь",
     "admin": "Админ",
     "blog": "Блог",
-    "guide": "Как пользоваться"
+    "guide": "Как пользоваться",
+    "planning": "Планирование",
+    "learning": "Обучение",
+    "finance": "Финансы",
+    "more": "Ещё",
+    "tasks": "Ежедневные задачи",
+    "monthPlan": "План на месяц",
+    "budget": "Бюджет",
+    "transactions": "Транзакции",
+    "expenseCategories": "Категории расходов",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню"
+  },
+  "placeholders": {
+    "comingSoon": "Раздел находится в разработке",
+    "tasks": {
+      "title": "Ежедневные задачи",
+      "description": "Планируйте задачи на день и следите за выполнением."
+    },
+    "monthPlan": {
+      "title": "План на месяц",
+      "description": "Собирайте цели и крупные дела в помесячный план."
+    },
+    "budget": {
+      "title": "Бюджет",
+      "description": "Следите за бюджетом и балансом доходов и расходов."
+    },
+    "transactions": {
+      "title": "Транзакции",
+      "description": "Просматривайте и отмечайте доходы и расходы."
+    },
+    "expenseCategories": {
+      "title": "Категории расходов",
+      "description": "Организуйте расходы по понятным категориям."
+    }
   },
   "home": {
     "title": "Сохраняйте изученное",
@@ -434,7 +469,12 @@
       "materials": "Материалы · Mindkeep",
       "categories": "Категории · Mindkeep",
       "notifications": "Уведомления · Mindkeep",
-      "statistics": "Статистика · Mindkeep",
+      "statistics": "Аналитика · Mindkeep",
+      "tasks": "Ежедневные задачи · Mindkeep",
+      "monthPlan": "План на месяц · Mindkeep",
+      "budget": "Бюджет · Mindkeep",
+      "transactions": "Транзакции · Mindkeep",
+      "expenseCategories": "Категории расходов · Mindkeep",
       "admin": "Админ · Mindkeep",
       "fallback": "Mindkeep",
       "blog": "Блог · Mindkeep",

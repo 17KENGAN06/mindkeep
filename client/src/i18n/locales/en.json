@@ -22,10 +22,45 @@
     "review": "Review today",
     "notifications": "Notifications",
     "statistics": "Statistics",
+    "analytics": "Analytics",
     "calendar": "Calendar",
     "admin": "Admin",
     "blog": "Blog",
-    "guide": "How to use"
+    "guide": "How to use",
+    "planning": "Planning",
+    "learning": "Learning",
+    "finance": "Finance",
+    "more": "More",
+    "tasks": "Daily tasks",
+    "monthPlan": "Month plan",
+    "budget": "Budget",
+    "transactions": "Transactions",
+    "expenseCategories": "Expense categories",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "placeholders": {
+    "comingSoon": "This section is under development",
+    "tasks": {
+      "title": "Daily tasks",
+      "description": "Plan your day and track what gets done."
+    },
+    "monthPlan": {
+      "title": "Month plan",
+      "description": "Collect goals and bigger work into a monthly plan."
+    },
+    "budget": {
+      "title": "Budget",
+      "description": "Keep an eye on your budget and cash flow."
+    },
+    "transactions": {
+      "title": "Transactions",
+      "description": "Review and log income and expenses."
+    },
+    "expenseCategories": {
+      "title": "Expense categories",
+      "description": "Organize spending into clear categories."
+    }
   },
   "home": {
     "title": "Keep what you learn",
@@ -434,7 +469,12 @@
       "materials": "Materials · Mindkeep",
       "categories": "Categories · Mindkeep",
       "notifications": "Notifications · Mindkeep",
-      "statistics": "Statistics · Mindkeep",
+      "statistics": "Analytics · Mindkeep",
+      "tasks": "Daily tasks · Mindkeep",
+      "monthPlan": "Month plan · Mindkeep",
+      "budget": "Budget · Mindkeep",
+      "transactions": "Transactions · Mindkeep",
+      "expenseCategories": "Expense categories · Mindkeep",
       "admin": "Admin · Mindkeep",
       "fallback": "Mindkeep",
       "blog": "Blog · Mindkeep",
