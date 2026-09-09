@@ -42,6 +42,18 @@ enum UserReviewStatus {
   REJECTED
 }
 
+enum BudgetCurrency {
+  RUB
+  USD
+  EUR
+  UAH
+}
+
+enum BudgetOperationType {
+  INCOME
+  EXPENSE
+}
+
 model User {
   id           String   @id @default(cuid())
   name         String
@@ -53,11 +65,14 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  categories    Category[]
-  materials     LearningMaterial[]
-  reminders     ReviewReminder[]
-  notifications Notification[]
-  review        UserReview?
+  categories         Category[]
+  materials          LearningMaterial[]
+  reminders          ReviewReminder[]
+  notifications      Notification[]
+  review             UserReview?
+  budgetSettings     BudgetSettings?
+  budgetCategories   BudgetCategory[]
+  budgetOperations   BudgetOperation[]
 }
 
 model UserReview {
@@ -158,4 +173,61 @@ model Notification {
   @@index([isRead])
   @@index([userId, isRead])
   @@index([createdAt])
+}
+
+model BudgetSettings {
+  id              String         @id @default(cuid())
+  displayCurrency BudgetCurrency @default(EUR)
+  openingBalance  Float          @default(0)
+  openingCurrency BudgetCurrency @default(EUR)
+  userId          String         @unique
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BudgetCategory {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  operations BudgetOperation[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model BudgetOperation {
+  id         String              @id @default(cuid())
+  date       DateTime
+  amount     Float
+  currency   BudgetCurrency      @default(EUR)
+  type       BudgetOperationType
+  comment    String              @default("")
+  categoryId String?
+  userId     String
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+
+  category BudgetCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+  @@index([userId, date])
+  @@index([userId])
+}
+
+model ExchangeRate {
+  id        String         @id @default(cuid())
+  date      DateTime
+  currency  BudgetCurrency
+  rateToRub Float
+  createdAt DateTime       @default(now())
+
+  @@unique([date, currency])
+  @@index([date])
 }
