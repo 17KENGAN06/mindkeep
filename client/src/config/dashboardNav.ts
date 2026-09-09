@@ -104,12 +104,6 @@ export const dashboardNav: DashboardNavEntry[] = [
     ],
   },
   {
-    type: 'link',
-    id: 'analytics',
-    labelKey: 'nav.analytics',
-    to: '/statistics',
-  },
-  {
     type: 'group',
     id: 'more',
     labelKey: 'nav.more',
