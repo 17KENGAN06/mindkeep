@@ -40,6 +40,21 @@ function shouldBeAdmin(email: string): boolean {
   return env.ADMIN_EMAILS.includes(email.toLowerCase());
 }
 
+function isAdminUser(user: Pick<PublicUser, 'email' | 'role'>): boolean {
+  return user.role === UserRole.ADMIN || shouldBeAdmin(user.email);
+}
+
+function assertMaintenanceAccess(user: Pick<PublicUser, 'email' | 'role'>): void {
+  if (!env.MAINTENANCE_MODE || isAdminUser(user)) {
+    return;
+  }
+
+  throw new AppError('Service is under maintenance. Admin access only.', {
+    statusCode: 403,
+    code: 'MAINTENANCE_ADMIN_ONLY',
+  });
+}
+
 async function ensureAdminRole(user: PublicUser): Promise<PublicUser> {
   if (!shouldBeAdmin(user.email) || user.role === UserRole.ADMIN) {
     return user;
@@ -55,6 +70,13 @@ async function ensureAdminRole(user: PublicUser): Promise<PublicUser> {
 export class AuthService {
   async register(input: RegisterInput): Promise<{ user: PublicUser; token: string }> {
     const email = input.email.toLowerCase();
+
+    if (env.MAINTENANCE_MODE && !shouldBeAdmin(email)) {
+      throw new AppError('Service is under maintenance. Admin access only.', {
+        statusCode: 403,
+        code: 'MAINTENANCE_ADMIN_ONLY',
+      });
+    }
 
     try {
       const passwordHash = await hashPassword(input.password);
@@ -113,6 +135,7 @@ export class AuthService {
     };
 
     publicUser = await ensureAdminRole(publicUser);
+    assertMaintenanceAccess(publicUser);
 
     const token = signAccessToken({ sub: user.id, email: user.email });
 
@@ -168,6 +191,13 @@ export class AuthService {
         });
       }
 
+      if (env.MAINTENANCE_MODE && !shouldBeAdmin(email) && !existingUser) {
+        throw new AppError('Service is under maintenance. Admin access only.', {
+          statusCode: 403,
+          code: 'MAINTENANCE_ADMIN_ONLY',
+        });
+      }
+
       const role = shouldBeAdmin(email) ? UserRole.ADMIN : UserRole.USER;
       user = existingUser
         ? await prisma.user.update({
@@ -188,6 +218,7 @@ export class AuthService {
     }
 
     user = await ensureAdminRole(user);
+    assertMaintenanceAccess(user);
     const token = signAccessToken({ sub: user.id, email: user.email });
     return { user, token };
   }

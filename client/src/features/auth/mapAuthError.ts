@@ -24,6 +24,8 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.googleUnavailable');
     case 'BOT_REJECTED':
       return t('auth.bot.rejected');
+    case 'MAINTENANCE_ADMIN_ONLY':
+      return t('auth.errors.maintenanceAdminOnly');
     case 'CSRF_REJECTED':
       return t('auth.errors.csrf');
     case 'RATE_LIMITED':

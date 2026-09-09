@@ -254,8 +254,19 @@
       "validation": "Tarkista lomakkeen tiedot ja yritä uudelleen.",
       "server": "Palvelin on tilapäisesti poissa käytöstä. Yritä hetken kuluttua.",
       "serverOutdated": "API:ta ei ole vielä päivitetty. Odota deployta tai yritä myöhemmin.",
-      "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen."
+      "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen.",
+      "maintenanceAdminOnly": "Tällä hetkellä vain ylläpitäjän kirjautuminen on käytössä."
     }
+  },
+  "maintenance": {
+    "eyebrow": "Huoltokatko",
+    "title": "Projekti on teknisessä tarkastuksessa",
+    "subtitle": "Suoritamme tilapäisesti teknisiä töitä ja parannamme palvelun vakautta. Palaa hetken kuluttua.",
+    "adminLogin": "Ylläpitäjän kirjautuminen",
+    "loginTitle": "Ylläpitäjän kirjautuminen",
+    "loginSubtitle": "Huollon aikana vain ylläpitäjäroolin käyttäjät voivat kirjautua sisään.",
+    "submitLogin": "Kirjaudu ylläpitäjänä",
+    "backHome": "Takaisin huoltonäyttöön"
   },
   "dashboard": {
     "welcome": "Hei, {{name}}",

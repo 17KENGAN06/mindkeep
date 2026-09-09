@@ -4,14 +4,25 @@ type RevealProps = {
   children: ReactNode;
   className?: string;
   delayMs?: number;
+  trigger?: 'viewport' | 'mount';
 };
 
-/** Fade/rise when element enters the viewport (works on any page scroll). */
-export function Reveal({ children, className = '', delayMs = 0 }: RevealProps) {
+/** Fade/rise on mount or when the element enters the viewport. */
+export function Reveal({
+  children,
+  className = '',
+  delayMs = 0,
+  trigger = 'viewport',
+}: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (trigger === 'mount') {
+      const frameId = window.requestAnimationFrame(() => setVisible(true));
+      return () => window.cancelAnimationFrame(frameId);
+    }
+
     const node = ref.current;
     if (!node) return;
 
@@ -27,7 +38,7 @@ export function Reveal({ children, className = '', delayMs = 0 }: RevealProps) {
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
+  }, [trigger]);
 
   return (
     <div

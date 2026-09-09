@@ -254,8 +254,19 @@
       "validation": "Check the form fields and try again.",
       "server": "The server is temporarily unavailable. Try again shortly.",
       "serverOutdated": "The API is not updated yet. Wait for deploy or try again later.",
-      "googleUnavailable": "Google sign-in failed. Please try again."
+      "googleUnavailable": "Google sign-in failed. Please try again.",
+      "maintenanceAdminOnly": "Only administrator sign-in is available right now."
     }
+  },
+  "maintenance": {
+    "eyebrow": "Maintenance",
+    "title": "Project under technical inspection",
+    "subtitle": "We are temporarily performing technical work to improve service stability. Please check back a little later.",
+    "adminLogin": "Administrator sign-in",
+    "loginTitle": "Administrator sign-in",
+    "loginSubtitle": "During maintenance, only users with the administrator role can sign in.",
+    "submitLogin": "Sign in as administrator",
+    "backHome": "Back to maintenance screen"
   },
   "dashboard": {
     "welcome": "Hello, {{name}}",

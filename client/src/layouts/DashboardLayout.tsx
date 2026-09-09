@@ -73,7 +73,7 @@ export function DashboardLayout() {
           </nav>
         </header>
 
-        <Reveal key={location.pathname}>
+        <Reveal key={location.pathname} trigger="mount">
           <Outlet />
         </Reveal>
       </div>

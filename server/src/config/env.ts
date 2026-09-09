@@ -35,6 +35,11 @@ const envSchema = z.object({
             .filter(Boolean)
         : [],
     ),
+  /** When true, only ADMIN users may sign in / use the API. */
+  MAINTENANCE_MODE: z
+    .enum(['true', 'false'])
+    .default('true')
+    .transform((value) => value === 'true'),
 });
 
 const parsed = envSchema.safeParse(process.env);

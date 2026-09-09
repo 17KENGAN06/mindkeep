@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { env } from '@/config/env';
 import { useAuth } from '@/features/auth/useAuth';
 import { AuthLayout } from '@/layouts/AuthLayout';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
@@ -24,7 +25,14 @@ import { ReviewPage } from '@/pages/ReviewPage';
 import { StatisticsPage } from '@/pages/StatisticsPage';
 
 function PublicOnly({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+
+  if (env.maintenanceMode) {
+    if (isAuthenticated && user?.role === 'ADMIN') {
+      return <Navigate to="/dashboard" replace />;
+    }
+    return children;
+  }
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
@@ -33,14 +41,49 @@ function PublicOnly({ children }: { children: ReactNode }) {
   return children;
 }
 
+function MaintenanceHome({ children }: { children: ReactNode }) {
+  if (env.maintenanceMode) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+}
+
 export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/blog" element={<BlogPage />} />
-      <Route path="/blog/:slug" element={<BlogArticlePage />} />
-      <Route path="/guide" element={<GuidePage />} />
-      <Route path="/privacy" element={<PrivacyPolicyPage />} />
+      <Route
+        path="/blog"
+        element={
+          <MaintenanceHome>
+            <BlogPage />
+          </MaintenanceHome>
+        }
+      />
+      <Route
+        path="/blog/:slug"
+        element={
+          <MaintenanceHome>
+            <BlogArticlePage />
+          </MaintenanceHome>
+        }
+      />
+      <Route
+        path="/guide"
+        element={
+          <MaintenanceHome>
+            <GuidePage />
+          </MaintenanceHome>
+        }
+      />
+      <Route
+        path="/privacy"
+        element={
+          <MaintenanceHome>
+            <PrivacyPolicyPage />
+          </MaintenanceHome>
+        }
+      />
 
       <Route
         element={
@@ -50,7 +93,12 @@ export function AppRoutes() {
         }
       >
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/register"
+          element={
+            env.maintenanceMode ? <Navigate to="/" replace /> : <RegisterPage />
+          }
+        />
       </Route>
 
       <Route element={<ProtectedRoute />}>

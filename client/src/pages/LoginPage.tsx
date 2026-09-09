@@ -8,6 +8,7 @@ import { GoogleSignIn } from '@/components/auth/GoogleSignIn';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
+import { env } from '@/config/env';
 import { mapAuthError } from '@/features/auth/mapAuthError';
 import { useAuth } from '@/features/auth/useAuth';
 import { createLoginSchema, type LoginFormValues } from '@/schemas/auth';
@@ -22,6 +23,7 @@ export function LoginPage() {
   const [botError, setBotError] = useState<string | undefined>();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const challengeReady = botToken !== null;
+  const maintenance = env.maintenanceMode;
 
   const {
     register,
@@ -75,8 +77,12 @@ export function LoginPage() {
   return (
     <div className="space-y-5 sm:space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-ink sm:text-2xl">{t('auth.loginTitle')}</h1>
-        <p className="mt-1 text-sm text-muted">{t('auth.loginSubtitle')}</p>
+        <h1 className="text-xl font-semibold text-ink sm:text-2xl">
+          {maintenance ? t('maintenance.loginTitle') : t('auth.loginTitle')}
+        </h1>
+        <p className="mt-1 text-sm text-muted">
+          {maintenance ? t('maintenance.loginSubtitle') : t('auth.loginSubtitle')}
+        </p>
       </div>
 
       <form className="relative space-y-4" onSubmit={onSubmit} noValidate>
@@ -114,7 +120,7 @@ export function LoginPage() {
         <ErrorMessage message={formError ?? undefined} />
 
         <Button type="submit" className="w-full" isLoading={isSubmitting} disabled={!challengeReady}>
-          {t('auth.submitLogin')}
+          {maintenance ? t('maintenance.submitLogin') : t('auth.submitLogin')}
         </Button>
       </form>
 
@@ -124,12 +130,20 @@ export function LoginPage() {
         disabled={isGoogleLoading}
       />
 
-      <p className="text-sm text-muted">
-        {t('auth.noAccount')}{' '}
-        <Link to="/register" className="font-medium text-brand-700">
-          {t('nav.register')}
-        </Link>
-      </p>
+      {maintenance ? (
+        <p className="text-sm text-muted">
+          <Link to="/" className="font-medium text-brand-700">
+            {t('maintenance.backHome')}
+          </Link>
+        </p>
+      ) : (
+        <p className="text-sm text-muted">
+          {t('auth.noAccount')}{' '}
+          <Link to="/register" className="font-medium text-brand-700">
+            {t('nav.register')}
+          </Link>
+        </p>
+      )}
     </div>
   );
 }

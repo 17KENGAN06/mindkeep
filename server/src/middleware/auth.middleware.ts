@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { UserRole } from '@prisma/client';
-import { ACCESS_TOKEN_COOKIE } from '@/config/cookies.js';
+import { ACCESS_TOKEN_COOKIE, getAuthCookieOptions } from '@/config/cookies.js';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
@@ -21,7 +21,7 @@ function isAdminEmail(email: string): boolean {
   return env.ADMIN_EMAILS.includes(email.toLowerCase());
 }
 
-export const requireAuth = asyncHandler(async (req: Request, _res: Response, next: NextFunction) => {
+export const requireAuth = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies?.[ACCESS_TOKEN_COOKIE];
 
   if (!token || typeof token !== 'string') {
@@ -50,6 +50,22 @@ export const requireAuth = asyncHandler(async (req: Request, _res: Response, nex
       where: { id: user.id },
       data: { role: UserRole.ADMIN },
       select: publicUserSelect,
+    });
+  }
+
+  // During maintenance, drop non-admin sessions so the UI stays on the notice screen.
+  if (
+    env.MAINTENANCE_MODE &&
+    user.role !== UserRole.ADMIN &&
+    !isAdminEmail(user.email)
+  ) {
+    res.clearCookie(ACCESS_TOKEN_COOKIE, {
+      ...getAuthCookieOptions(),
+      maxAge: undefined,
+    });
+    throw new AppError('Authentication required', {
+      statusCode: 401,
+      code: 'UNAUTHORIZED',
     });
   }
 

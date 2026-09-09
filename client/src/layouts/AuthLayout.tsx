@@ -19,7 +19,7 @@ export function AuthLayout() {
           </div>
         </header>
 
-        <Reveal key={location.pathname}>
+        <Reveal key={location.pathname} trigger="mount">
           <main className="rounded-3xl border border-line bg-panel/90 p-5 shadow-sm backdrop-blur sm:p-6">
             <Outlet />
           </main>
