@@ -9,7 +9,8 @@
     "delete": "Delete",
     "edit": "Edit",
     "themeLight": "Light theme",
-    "themeDark": "Dark theme"
+    "themeDark": "Dark theme",
+    "theme": "Theme"
   },
   "nav": {
     "home": "Home",
@@ -39,7 +40,9 @@
     "transactions": "Transactions",
     "expenseCategories": "Expense categories",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "settings": "Settings",
+    "menu": "Menu"
   },
   "placeholders": {
     "comingSoon": "This section is under development",
@@ -293,8 +296,13 @@
       "sections": "Landing sections",
       "pages": "Pages",
       "prev": "Previous section",
-      "next": "Next section"
-    }
+      "next": "Next section",
+      "openHint": "Tap · menu",
+      "close": "Close",
+      "closeFull": "Close menu"
+    },
+    "heroLead": "One workspace: daily tasks, 3·7·30 reviews, and a euro budget — without hopping between apps.",
+    "heroBrowse": "Browse sections below"
   },
   "guide": {
     "eyebrow": "Simple guide",

@@ -24,22 +24,19 @@ export function DashboardLayout() {
         <header className="relative z-40">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
-              <BrandLockup to="/dashboard" size="sm" />
+              <BrandLockup to="/dashboard" size="sm" className="min-w-0" />
               <DesktopNav entries={dashboardNav} isAdmin={isAdmin} />
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
               <NotificationBell />
-              <ThemeToggle />
-              <LanguageSwitcher />
-              <Button
-                variant="secondary"
-                type="button"
-                className="hidden min-[1200px]:inline-flex"
-                onClick={() => void logout()}
-              >
-                {t('nav.logout')}
-              </Button>
+              <div className="hidden items-center gap-2 min-[1200px]:flex">
+                <ThemeToggle />
+                <LanguageSwitcher />
+                <Button variant="secondary" type="button" onClick={() => void logout()}>
+                  {t('nav.logout')}
+                </Button>
+              </div>
               <MobileNav
                 entries={dashboardNav}
                 isAdmin={isAdmin}

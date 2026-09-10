@@ -9,7 +9,8 @@
     "delete": "Poista",
     "edit": "Muokkaa",
     "themeLight": "Vaalea teema",
-    "themeDark": "Tumma teema"
+    "themeDark": "Tumma teema",
+    "theme": "Teema"
   },
   "nav": {
     "home": "Etusivu",
@@ -39,7 +40,9 @@
     "transactions": "Tapahtumat",
     "expenseCategories": "Kulujen kategoriat",
     "openMenu": "Avaa valikko",
-    "closeMenu": "Sulje valikko"
+    "closeMenu": "Sulje valikko",
+    "settings": "Asetukset",
+    "menu": "Valikko"
   },
   "placeholders": {
     "comingSoon": "Osio on kehitteillä",
@@ -293,8 +296,13 @@
       "sections": "Etusivun osiot",
       "pages": "Sivut",
       "prev": "Edellinen osio",
-      "next": "Seuraava osio"
-    }
+      "next": "Seuraava osio",
+      "openHint": "Napauta · valikko",
+      "close": "Sulje",
+      "closeFull": "Sulje valikko"
+    },
+    "heroLead": "Yksi työpöytä: päivän tehtävät, 3·7·30-kertaukset ja eurobudjetti — ilman hyppelyä sovellusten välillä.",
+    "heroBrowse": "Selaa osioita alla"
   },
   "guide": {
     "eyebrow": "Yksinkertainen opas",

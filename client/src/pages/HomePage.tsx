@@ -138,7 +138,7 @@ export function HomePage() {
               </div>
             </SnapReveal>
 
-            <div className="relative grid flex-1 items-center gap-10 pb-16 pt-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12 lg:pb-10 lg:pt-6">
+            <div className="relative grid flex-1 items-center gap-8 pb-20 pt-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12 lg:pb-10 lg:pt-6">
               <div
                 aria-hidden
                 className="hero-glow pointer-events-none absolute inset-x-[-12%] top-[5%] -z-10 h-[60%] rounded-[45%] bg-[radial-gradient(circle_at_center,var(--app-accent-soft),transparent_70%)] lg:left-[-8%] lg:w-[70%]"
@@ -152,30 +152,39 @@ export function HomePage() {
                 </SnapReveal>
 
                 <SnapReveal direction="scale" delay={0.16}>
-                  <h1 className="font-display mt-5 max-w-3xl text-4xl leading-[1.02] font-semibold tracking-tight text-ink sm:text-6xl lg:text-[3.6rem] xl:text-7xl">
+                  <h1 className="font-display mt-4 max-w-3xl text-[2.35rem] leading-[1.05] font-semibold tracking-tight text-ink sm:mt-5 sm:text-6xl lg:text-[3.6rem] xl:text-7xl">
                     {t('home.title')}
                   </h1>
                 </SnapReveal>
 
                 <SnapReveal direction="right" delay={0.26}>
-                  <p className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+                  <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
                     {t('home.subtitle')}
                   </p>
                 </SnapReveal>
 
+                <SnapReveal delay={0.32}>
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink/80 sm:text-base">
+                    {t('home.heroLead')}
+                  </p>
+                </SnapReveal>
+
                 <SnapReveal delay={0.36}>
-                  <div className="mt-8 hidden gap-6 border-y border-line/70 py-4 lg:grid lg:grid-cols-3">
+                  <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4 lg:gap-6 lg:border-y lg:border-line/70 lg:py-4">
                     {pillars.map((item) => {
                       const Icon = item.icon;
                       return (
-                        <div key={item.key} className="min-w-0">
+                        <div
+                          key={item.key}
+                          className="min-w-0 rounded-2xl border border-line/70 bg-panel/50 px-3.5 py-3 lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:py-0"
+                        >
                           <div className="flex items-center gap-2 text-brand-500">
                             <Icon className="h-4 w-4 shrink-0" aria-hidden />
                             <p className="truncate text-xs font-semibold tracking-wide uppercase">
                               {t(`home.pillars.${item.key}.title`)}
                             </p>
                           </div>
-                          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted">
+                          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted sm:text-[13px]">
                             {t(`home.heroHighlights.${item.key}`)}
                           </p>
                         </div>
@@ -185,7 +194,7 @@ export function HomePage() {
                 </SnapReveal>
 
                 <SnapReveal delay={0.46}>
-                  <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
+                  <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap">
                     {isAuthenticated ? (
                       <Link to="/dashboard" className="w-full sm:w-auto">
                         <Button className="min-w-44 gap-2">
@@ -210,11 +219,22 @@ export function HomePage() {
                     )}
                     <Link
                       to="/guide"
-                      className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-line px-4 text-sm font-semibold text-ink no-underline sm:hidden"
+                      className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-line px-4 text-sm font-semibold text-ink no-underline sm:w-auto"
                     >
                       {t('nav.guide')}
                     </Link>
                   </div>
+                </SnapReveal>
+
+                <SnapReveal delay={0.52} className="mt-5 lg:hidden">
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-brand-500"
+                    onClick={() => goToSection('pillars')}
+                  >
+                    {t('home.heroBrowse')}
+                    <ArrowRight className="h-4 w-4" aria-hidden />
+                  </button>
                 </SnapReveal>
               </div>
 
