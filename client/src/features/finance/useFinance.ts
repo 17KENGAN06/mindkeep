@@ -25,14 +25,6 @@ export function useUpdateFinanceSettings() {
   });
 }
 
-export function useFinanceRates() {
-  return useQuery({
-    queryKey: [...financeKey, 'rates'],
-    queryFn: () => financeApi.getRates(),
-    staleTime: 30 * 60 * 1000,
-  });
-}
-
 export function useFinanceSummary(params: FinancePeriodParams) {
   return useQuery({
     queryKey: [...financeKey, 'summary', params],

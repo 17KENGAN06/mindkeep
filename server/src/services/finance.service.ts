@@ -1,10 +1,5 @@
 import { BudgetCurrency, BudgetOperationType, Prisma } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
-import {
-  convertAmount,
-  getRateMap,
-  roundMoney,
-} from '@/services/exchangeRate.service.js';
 import type {
   CreateFinanceCategoryInput,
   CreateFinanceOperationInput,
@@ -13,6 +8,17 @@ import type {
   UpdateFinanceSettingsInput,
 } from '@/validations/finance.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+
+const CURRENCY_ORDER: BudgetCurrency[] = [
+  BudgetCurrency.EUR,
+  BudgetCurrency.USD,
+  BudgetCurrency.UAH,
+  BudgetCurrency.RUB,
+];
+
+function roundMoney(value: number): number {
+  return Math.round(value * 100) / 100;
+}
 
 function periodRange(query: FinancePeriodQuery): { from: Date; to: Date } {
   if (query.view === 'year') {
@@ -35,6 +41,32 @@ function parseOperationDate(value: string): Date {
     return new Date(Date.UTC(y!, m! - 1, d!, 12, 0, 0));
   }
   return new Date(value);
+}
+
+function sortCurrencies(currencies: Iterable<BudgetCurrency>): BudgetCurrency[] {
+  return [...currencies].sort(
+    (a, b) => CURRENCY_ORDER.indexOf(a) - CURRENCY_ORDER.indexOf(b),
+  );
+}
+
+type CurrencyBucket = {
+  currency: BudgetCurrency;
+  income: number;
+  expense: number;
+  balance: number;
+};
+
+function emptyBucket(currency: BudgetCurrency): CurrencyBucket {
+  return { currency, income: 0, expense: 0, balance: 0 };
+}
+
+function finalizeBucket(bucket: CurrencyBucket): CurrencyBucket {
+  return {
+    currency: bucket.currency,
+    income: roundMoney(bucket.income),
+    expense: roundMoney(bucket.expense),
+    balance: roundMoney(bucket.income - bucket.expense),
+  };
 }
 
 export class FinanceService {
@@ -62,11 +94,6 @@ export class FinanceService {
         ...(input.openingCurrency ? { openingCurrency: input.openingCurrency } : {}),
       },
     });
-  }
-
-  async getRates() {
-    const { rates, asOf, source } = await getRateMap();
-    return { rates, asOf, source };
   }
 
   listCategories(userId: string) {
@@ -136,7 +163,6 @@ export class FinanceService {
   async listOperations(userId: string, query: FinancePeriodQuery) {
     const { from, to } = periodRange(query);
     const settings = await this.getOrCreateSettings(userId);
-    const { rates, asOf, source } = await getRateMap();
 
     const operations = await prisma.budgetOperation.findMany({
       where: {
@@ -147,18 +173,7 @@ export class FinanceService {
       orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
     });
 
-    return {
-      settings,
-      rates,
-      ratesAsOf: asOf,
-      ratesSource: source,
-      operations: operations.map((op) => ({
-        ...op,
-        amountInDisplay: roundMoney(
-          convertAmount(op.amount, op.currency, settings.displayCurrency, rates),
-        ),
-      })),
-    };
+    return { settings, operations };
   }
 
   async createOperation(userId: string, input: CreateFinanceOperationInput) {
@@ -189,13 +204,7 @@ export class FinanceService {
       include: { category: true },
     });
 
-    const { rates } = await getRateMap();
-    return {
-      ...operation,
-      amountInDisplay: roundMoney(
-        convertAmount(operation.amount, operation.currency, settings.displayCurrency, rates),
-      ),
-    };
+    return operation;
   }
 
   async removeOperation(userId: string, id: string) {
@@ -214,8 +223,6 @@ export class FinanceService {
   async getSummary(userId: string, query: FinancePeriodQuery) {
     const { from, to } = periodRange(query);
     const settings = await this.getOrCreateSettings(userId);
-    const { rates, asOf, source } = await getRateMap();
-    const display = settings.displayCurrency;
 
     const operations = await prisma.budgetOperation.findMany({
       where: {
@@ -226,55 +233,75 @@ export class FinanceService {
       orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
     });
 
-    let income = 0;
-    let expense = 0;
-    const byCategory = new Map<string, { id: string | null; name: string; expense: number }>();
+    const totalsMap = new Map<BudgetCurrency, CurrencyBucket>();
+    const byCategoryMap = new Map<
+      string,
+      {
+        id: string | null;
+        name: string;
+        expenses: Map<BudgetCurrency, number>;
+      }
+    >();
     const byMonth = Array.from({ length: 12 }, (_, index) => ({
       month: index + 1,
-      income: 0,
-      expense: 0,
-      balance: 0,
+      byCurrency: new Map<BudgetCurrency, CurrencyBucket>(),
     }));
 
-    const mapped = operations.map((op) => {
-      const amountInDisplay = roundMoney(convertAmount(op.amount, op.currency, display, rates));
+    for (const op of operations) {
+      const bucket = totalsMap.get(op.currency) ?? emptyBucket(op.currency);
       if (op.type === BudgetOperationType.INCOME) {
-        income += amountInDisplay;
+        bucket.income += op.amount;
       } else {
-        expense += amountInDisplay;
+        bucket.expense += op.amount;
         const key = op.categoryId ?? 'uncategorized';
-        const current = byCategory.get(key) ?? {
+        const category = byCategoryMap.get(key) ?? {
           id: op.categoryId,
           name: op.category?.name ?? '—',
-          expense: 0,
+          expenses: new Map<BudgetCurrency, number>(),
         };
-        current.expense = roundMoney(current.expense + amountInDisplay);
-        byCategory.set(key, current);
+        category.expenses.set(
+          op.currency,
+          roundMoney((category.expenses.get(op.currency) ?? 0) + op.amount),
+        );
+        byCategoryMap.set(key, category);
       }
+      totalsMap.set(op.currency, bucket);
 
       if (query.view === 'year') {
-        const monthIndex = op.date.getUTCMonth();
-        const bucket = byMonth[monthIndex]!;
+        const monthBucket = byMonth[op.date.getUTCMonth()]!;
+        const monthCurrency =
+          monthBucket.byCurrency.get(op.currency) ?? emptyBucket(op.currency);
         if (op.type === BudgetOperationType.INCOME) {
-          bucket.income = roundMoney(bucket.income + amountInDisplay);
+          monthCurrency.income += op.amount;
         } else {
-          bucket.expense = roundMoney(bucket.expense + amountInDisplay);
+          monthCurrency.expense += op.amount;
         }
-        bucket.balance = roundMoney(bucket.income - bucket.expense);
+        monthBucket.byCurrency.set(op.currency, monthCurrency);
       }
+    }
 
-      return { ...op, amountInDisplay };
-    });
-
-    const openingInDisplay = roundMoney(
-      convertAmount(settings.openingBalance, settings.openingCurrency, display, rates),
+    // Include opening currency in totals view only as metadata — not mixed into period ops.
+    const totalsByCurrency = sortCurrencies(totalsMap.keys()).map((currency) =>
+      finalizeBucket(totalsMap.get(currency)!),
     );
+
+    const byCategory = [...byCategoryMap.values()]
+      .map((item) => ({
+        id: item.id,
+        name: item.name,
+        expenses: sortCurrencies(item.expenses.keys()).map((currency) => ({
+          currency,
+          expense: item.expenses.get(currency) ?? 0,
+        })),
+      }))
+      .sort((a, b) => {
+        const sumA = a.expenses.reduce((s, e) => s + e.expense, 0);
+        const sumB = b.expenses.reduce((s, e) => s + e.expense, 0);
+        return sumB - sumA;
+      });
 
     return {
       settings,
-      rates,
-      ratesAsOf: asOf,
-      ratesSource: source,
       period: {
         view: query.view,
         year: query.year,
@@ -282,16 +309,22 @@ export class FinanceService {
         from: from.toISOString(),
         to: to.toISOString(),
       },
-      totals: {
-        income: roundMoney(income),
-        expense: roundMoney(expense),
-        balance: roundMoney(income - expense),
-        openingBalance: openingInDisplay,
-        netWithOpening: roundMoney(openingInDisplay + income - expense),
+      totalsByCurrency,
+      opening: {
+        amount: roundMoney(settings.openingBalance),
+        currency: settings.openingCurrency,
       },
-      byCategory: [...byCategory.values()].sort((a, b) => b.expense - a.expense),
-      byMonth: query.view === 'year' ? byMonth : [],
-      operations: mapped,
+      byCategory,
+      byMonth:
+        query.view === 'year'
+          ? byMonth.map((item) => ({
+              month: item.month,
+              byCurrency: sortCurrencies(item.byCurrency.keys()).map((currency) =>
+                finalizeBucket(item.byCurrency.get(currency)!),
+              ),
+            }))
+          : [],
+      operations,
     };
   }
 }

@@ -5,7 +5,6 @@ import type {
   FinanceOperation,
   FinanceOperationType,
   FinancePeriodParams,
-  FinanceRates,
   FinanceSettings,
   FinanceSummary,
 } from '@/types/finance';
@@ -37,8 +36,6 @@ export const financeApi = {
     openingBalance?: number;
     openingCurrency?: FinanceCurrency;
   }) => apiClient.patch<{ settings: FinanceSettings }>('/api/finance/settings', payload),
-  getRates: () =>
-    apiClient.get<{ rates: FinanceRates; asOf: string; source: string }>('/api/finance/rates'),
   getSummary: (params: FinancePeriodParams) =>
     apiClient.get<FinanceSummary>(`/api/finance/summary?${periodQuery(params)}`),
   listCategories: () => apiClient.get<{ categories: FinanceCategory[] }>('/api/finance/categories'),
@@ -51,9 +48,6 @@ export const financeApi = {
   listOperations: (params: FinancePeriodParams) =>
     apiClient.get<{
       settings: FinanceSettings;
-      rates: FinanceRates;
-      ratesAsOf: string;
-      ratesSource: string;
       operations: FinanceOperation[];
     }>(`/api/finance/operations?${periodQuery(params)}`),
   createOperation: (payload: CreateOperationPayload) =>

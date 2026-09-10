@@ -91,7 +91,6 @@ export function FinanceTransactionsPage() {
 
       <FinanceOperationsList
         operations={operations}
-        displayCurrency={summary.settings.displayCurrency}
         language={language}
         onDelete={(id) => void onDelete(id)}
         deletingId={deletingId}

@@ -28,11 +28,6 @@ financeRouter.patch(
 );
 
 financeRouter.get(
-  '/rates',
-  asyncHandler((req, res) => financeController.getRates(req, res)),
-);
-
-financeRouter.get(
   '/summary',
   validate(financePeriodQuerySchema, 'query'),
   asyncHandler((req, res) => financeController.getSummary(req, res)),

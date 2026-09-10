@@ -33,12 +33,6 @@ export class FinanceController {
     res.status(200).json({ settings });
   }
 
-  async getRates(req: Request, res: Response): Promise<void> {
-    requireUserId(req);
-    const rates = await financeService.getRates();
-    res.status(200).json(rates);
-  }
-
   async listCategories(req: Request, res: Response): Promise<void> {
     const categories = await financeService.listCategories(requireUserId(req));
     res.status(200).json({ categories });

@@ -14,7 +14,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { useAuth } from '@/features/auth/useAuth';
-import { currentPeriodDefaults, formatMoney } from '@/features/finance/financeUtils';
+import { currentPeriodDefaults, formatCurrencyLines, formatMoney, formatSignedMoney, pickFieldByCurrency } from '@/features/finance/financeUtils';
 import { useFinanceSummary } from '@/features/finance/useFinance';
 import {
   useActivityStatistics,
@@ -25,6 +25,7 @@ import {
   useUpdateDailyTask,
 } from '@/features/tasks/useDailyTasks';
 import type { AppLanguage } from '@/i18n';
+import type { FinanceCurrency } from '@/types/finance';
 import type { DailyTask } from '@/types/dailyTask';
 import { formatDate, toDateInputValue } from '@/utils/date';
 
@@ -187,25 +188,56 @@ export function DashboardPage() {
   const reviewsPercent = reviewsPlanned > 0 ? (stats.completedReviews / reviewsPlanned) * 100 : 0;
 
   const finance = financeQuery.data;
-  const currency = finance?.settings.displayCurrency ?? 'EUR';
-  const spentToday = (finance?.operations ?? [])
-    .filter((op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === today)
-    .reduce((sum, op) => sum + op.amountInDisplay, 0);
-  const monthExpense = finance?.totals.expense ?? 0;
-  const monthIncome = finance?.totals.income ?? 0;
-  const opening = finance?.totals.openingBalance ?? 0;
-  const budgetTotal = Math.max(opening + monthIncome, monthExpense, 1);
-  const budgetLeft = Math.max(budgetTotal - monthExpense, 0);
-  const dayOfMonth = new Date().getDate();
-  const softDailyLimit = Math.max(monthExpense / Math.max(dayOfMonth, 1), spentToday, 1);
+  const totalsByCurrency = finance?.totalsByCurrency ?? [];
 
-  const categorySegments = (finance?.byCategory ?? [])
-    .filter((item) => item.expense > 0)
-    .slice(0, 5)
-    .map((item, index) => ({
-      ...item,
-      color: DONUT_COLORS[index % DONUT_COLORS.length]!,
-    }));
+  const spentTodayByCurrency = new Map<FinanceCurrency, number>();
+  for (const op of finance?.operations ?? []) {
+    if (op.type !== 'EXPENSE' || op.date.slice(0, 10) !== today) continue;
+    spentTodayByCurrency.set(
+      op.currency,
+      (spentTodayByCurrency.get(op.currency) ?? 0) + op.amount,
+    );
+  }
+  const spentTodayItems = [...spentTodayByCurrency.entries()].map(([currency, amount]) => ({
+    currency,
+    amount,
+  }));
+  const spentTodayText =
+    spentTodayItems.length > 0
+      ? formatCurrencyLines(spentTodayItems, language)
+      : formatMoney(0, finance?.settings.displayCurrency ?? 'EUR', language);
+
+  const expenseItems = pickFieldByCurrency(totalsByCurrency, 'expense');
+  const incomeItems = pickFieldByCurrency(totalsByCurrency, 'income');
+  const balanceItems = pickFieldByCurrency(totalsByCurrency, 'balance');
+  const budgetLeftText =
+    balanceItems.length > 0
+      ? formatCurrencyLines(balanceItems, language, true)
+      : formatMoney(0, finance?.settings.displayCurrency ?? 'EUR', language);
+
+  // Category chart: only when every expense line shares one currency (no fake %).
+  const categoryRows = (finance?.byCategory ?? [])
+    .flatMap((item) =>
+      item.expenses.map((row) => ({
+        id: item.id,
+        name: item.name,
+        currency: row.currency,
+        expense: row.expense,
+      })),
+    )
+    .filter((item) => item.expense > 0);
+  const categoryCurrencies = new Set(categoryRows.map((item) => item.currency));
+  const singleCategoryCurrency =
+    categoryCurrencies.size === 1 ? [...categoryCurrencies][0]! : null;
+  const categorySegments = singleCategoryCurrency
+    ? categoryRows
+        .filter((item) => item.currency === singleCategoryCurrency)
+        .slice(0, 5)
+        .map((item, index) => ({
+          ...item,
+          color: DONUT_COLORS[index % DONUT_COLORS.length]!,
+        }))
+    : [];
   const categoryTotal = categorySegments.reduce((sum, item) => sum + item.expense, 0);
 
   const weekSeries = weekDays.map((date) => {
@@ -213,9 +245,11 @@ export function DashboardPage() {
     const tasksDone = dayTasks.filter((task) => task.completed).length;
     const tasksPlanned = dayTasks.length;
     const reviewsDone = activityQuery.data.activity.find((point) => point.date === date)?.count ?? 0;
-    const expenses = (finance?.operations ?? [])
-      .filter((op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === date)
-      .reduce((sum, op) => sum + op.amountInDisplay, 0);
+    const dayExpenses = (finance?.operations ?? []).filter(
+      (op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === date,
+    );
+    // Chart height = expense count (amounts in mixed currencies cannot be compared).
+    const expenses = dayExpenses.length;
 
     return { date, tasksDone, tasksPlanned, reviewsDone, expenses };
   });
@@ -272,14 +306,14 @@ export function DashboardPage() {
         <ProgressCard
           icon={<Wallet className="h-5 w-5" aria-hidden />}
           title={t('dashboard.cards.spentToday')}
-          valueText={`${formatMoney(spentToday, currency, language)} / ${formatMoney(softDailyLimit, currency, language)}`}
-          percent={(spentToday / softDailyLimit) * 100}
+          valueText={spentTodayText}
+          percent={spentTodayItems.length > 0 ? 100 : 0}
         />
         <ProgressCard
           icon={<PiggyBank className="h-5 w-5" aria-hidden />}
           title={t('dashboard.cards.budgetLeft')}
-          valueText={`${formatMoney(budgetLeft, currency, language)} / ${formatMoney(budgetTotal, currency, language)}`}
-          percent={(budgetLeft / budgetTotal) * 100}
+          valueText={budgetLeftText}
+          percent={balanceItems.some((item) => item.amount > 0) ? 70 : balanceItems.length ? 30 : 0}
         />
       </section>
 
@@ -471,16 +505,16 @@ export function DashboardPage() {
             </Link>
           </div>
 
-          {!finance || categoryTotal === 0 ? (
+          {!finance || (categoryTotal === 0 && totalsByCurrency.length === 0) ? (
             <p className="mt-8 text-center text-sm text-muted">{t('dashboard.modules.noFinance')}</p>
-          ) : (
+          ) : categorySegments.length > 0 ? (
             <div className="mt-4 flex flex-col items-center gap-5 sm:flex-row sm:items-start">
               <DonutChart
                 segments={categorySegments.map((item) => ({
                   value: item.expense,
                   color: item.color,
                 }))}
-                centerValue={formatMoney(categoryTotal, currency, language)}
+                centerValue={formatMoney(categoryTotal, singleCategoryCurrency!, language)}
                 centerLabel={t('dashboard.spentLabel')}
               />
               <ul className="w-full flex-1 space-y-2">
@@ -488,7 +522,7 @@ export function DashboardPage() {
                   const share = Math.round((item.expense / categoryTotal) * 100);
                   return (
                     <li
-                      key={`${item.id ?? item.name}`}
+                      key={`${item.id ?? item.name}-${item.currency}`}
                       className="flex items-center justify-between gap-3 text-sm"
                     >
                       <span className="inline-flex min-w-0 items-center gap-2 text-ink">
@@ -499,22 +533,45 @@ export function DashboardPage() {
                         <span className="truncate">{item.name}</span>
                       </span>
                       <span className="shrink-0 text-muted">
-                        {formatMoney(item.expense, currency, language)} · {share}%
+                        {formatMoney(item.expense, item.currency, language)} · {share}%
                       </span>
                     </li>
                   );
                 })}
               </ul>
             </div>
+          ) : (
+            <ul className="mt-4 space-y-2">
+              {totalsByCurrency.map((row) => (
+                <li
+                  key={row.currency}
+                  className="flex items-center justify-between gap-3 rounded-2xl bg-brand-50/30 px-3 py-3 text-sm ring-1 ring-line/70"
+                >
+                  <span className="font-medium text-ink">{row.currency}</span>
+                  <span className="text-muted">
+                    {formatSignedMoney(row.balance, row.currency, language)}
+                  </span>
+                </li>
+              ))}
+            </ul>
           )}
-          {finance ? (
+          {finance && (incomeItems.length > 0 || expenseItems.length > 0) ? (
             <div className="mt-4 flex flex-wrap gap-2">
-              <Badge tone="success">
-                {t('finance.totalIncome')}: {formatMoney(monthIncome, currency, language)}
-              </Badge>
-              <Badge tone="danger">
-                {t('finance.totalExpense')}: {formatMoney(monthExpense, currency, language)}
-              </Badge>
+              {incomeItems.length > 0 ? (
+                <Badge tone="success">
+                  {t('finance.totalIncome')}: {formatCurrencyLines(incomeItems, language, true)}
+                </Badge>
+              ) : null}
+              {expenseItems.length > 0 ? (
+                <Badge tone="danger">
+                  {t('finance.totalExpense')}:{' '}
+                  {formatCurrencyLines(
+                    expenseItems.map((item) => ({ ...item, amount: -Math.abs(item.amount) })),
+                    language,
+                    true,
+                  )}
+                </Badge>
+              ) : null}
             </div>
           ) : null}
         </article>

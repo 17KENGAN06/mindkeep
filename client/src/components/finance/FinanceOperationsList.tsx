@@ -1,12 +1,11 @@
 import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { formatMoney } from '@/features/finance/financeUtils';
-import type { FinanceCurrency, FinanceOperation } from '@/types/finance';
+import { formatMoney, formatSignedMoney } from '@/features/finance/financeUtils';
+import type { FinanceOperation } from '@/types/finance';
 import type { AppLanguage } from '@/i18n';
 
 type FinanceOperationsListProps = {
   operations: FinanceOperation[];
-  displayCurrency: FinanceCurrency;
   language: AppLanguage;
   onDelete: (id: string) => void;
   deletingId?: string | null;
@@ -14,7 +13,6 @@ type FinanceOperationsListProps = {
 
 export function FinanceOperationsList({
   operations,
-  displayCurrency,
   language,
   onDelete,
   deletingId,
@@ -33,6 +31,7 @@ export function FinanceOperationsList({
     <ul className="space-y-2">
       {operations.map((operation) => {
         const positive = operation.type === 'INCOME';
+        const signed = positive ? operation.amount : -operation.amount;
         return (
           <li
             key={operation.id}
@@ -57,20 +56,14 @@ export function FinanceOperationsList({
               <p className="mt-2 text-sm text-ink">
                 {operation.comment || t('finance.noComment')}
               </p>
-              <p className="mt-1 text-xs text-muted">
-                {formatMoney(operation.amount, operation.currency, language)}
-                {operation.currency !== displayCurrency
-                  ? ` → ${formatMoney(operation.amountInDisplay, displayCurrency, language)}`
-                  : null}
-              </p>
             </div>
 
             <div className="flex items-center justify-between gap-3 sm:justify-end">
               <p
                 className={`text-base font-semibold ${positive ? 'text-brand-500' : 'text-red-400'}`}
+                title={formatMoney(operation.amount, operation.currency, language)}
               >
-                {positive ? '+' : '−'}
-                {formatMoney(Math.abs(operation.amountInDisplay), displayCurrency, language)}
+                {formatSignedMoney(signed, operation.currency, language)}
               </p>
               <button
                 type="button"
