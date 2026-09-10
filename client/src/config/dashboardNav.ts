@@ -69,12 +69,6 @@ export const dashboardNav: DashboardNavEntry[] = [
         to: '/materials',
         matchPrefixes: ['/materials'],
       },
-      {
-        type: 'link',
-        id: 'categories',
-        labelKey: 'nav.categories',
-        to: '/categories',
-      },
     ],
   },
   {

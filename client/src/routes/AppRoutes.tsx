@@ -7,7 +7,6 @@ import { AuthLayout } from '@/layouts/AuthLayout';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
 import { BlogArticlePage, BlogPage } from '@/pages/BlogPage';
 import { CalendarPage } from '@/pages/CalendarPage';
-import { CategoriesPage } from '@/pages/CategoriesPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { AdminPage } from '@/pages/AdminPage';
 import { FinanceBudgetPage } from '@/pages/finance/FinanceBudgetPage';
@@ -117,7 +116,7 @@ export function AppRoutes() {
           <Route path="/materials/new" element={<MaterialCreatePage />} />
           <Route path="/materials/:id" element={<MaterialDetailPage />} />
           <Route path="/materials/:id/edit" element={<MaterialEditPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/categories" element={<Navigate to="/materials" replace />} />
           <Route path="/finance" element={<FinanceBudgetPage />} />
           <Route path="/finance/transactions" element={<FinanceTransactionsPage />} />
           <Route path="/finance/categories" element={<FinanceCategoriesPage />} />

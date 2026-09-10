@@ -1,6 +1,7 @@
 ﻿import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { CategoriesPanel } from '@/components/materials/CategoriesPanel';
 import { MaterialCard } from '@/components/materials/MaterialCard';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -69,6 +70,8 @@ export function MaterialsPage() {
           ]}
         />
       </section>
+
+      <CategoriesPanel />
 
       {isLoading ? <Loader /> : null}
       {isError ? <ErrorMessage message={t('auth.errors.generic')} /> : null}
