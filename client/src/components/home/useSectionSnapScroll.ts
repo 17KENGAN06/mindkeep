@@ -58,13 +58,24 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       const id = ids[clamped];
       if (!id) return;
 
-      const el = root.querySelector(`#${CSS.escape(id)}`);
+      const el = root.querySelector(`#${CSS.escape(id)}`) as HTMLElement | null;
       if (!el) return;
 
       indexRef.current = clamped;
       setActiveId(id);
       lockBriefly();
-      el.scrollIntoView({ behavior, block: 'start' });
+
+      const desktopSnap =
+        typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches;
+
+      if (desktopSnap) {
+        // Desktop: sections live inside the snap scroller.
+        root.scrollTo({ top: el.offsetTop, behavior });
+      } else {
+        // Mobile: the document scrolls — always align the block to the top of the viewport.
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: Math.max(0, top), behavior });
+      }
     },
     [root, lockBriefly],
   );

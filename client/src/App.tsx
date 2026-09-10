@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { AmbientBackdrop } from '@/components/layout/AmbientBackdrop';
 import { Preloader } from '@/components/layout/Preloader';
+import { ScrollManager } from '@/components/layout/ScrollManager';
 import { DocumentTitle } from '@/components/seo/DocumentTitle';
 import { queryClient } from '@/config/queryClient';
 import { AuthProvider } from '@/features/auth/AuthProvider';
@@ -16,6 +17,7 @@ export default function App() {
           <AmbientBackdrop />
           <Preloader />
           <AuthProvider>
+            <ScrollManager />
             <DocumentTitle />
             <AppRoutes />
           </AuthProvider>
