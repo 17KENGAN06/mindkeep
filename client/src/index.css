@@ -39,6 +39,12 @@ html[data-theme='dark'] {
   --app-line: #2a3f35;
   --app-accent: #8eefb4;
   --app-accent-soft: rgba(142, 239, 180, 0.22);
+  --app-orb-mid: rgba(95, 201, 142, 0.22);
+  --app-orb-bright: rgba(142, 239, 180, 0.16);
+  --app-orb-soft: rgba(142, 239, 180, 0.1);
+  --app-aurora-a: rgba(142, 239, 180, 0.1);
+  --app-aurora-b: rgba(95, 201, 142, 0.16);
+  --app-particle-glow: rgba(142, 239, 180, 0.35);
 
   --app-brand-50: #12241c;
   --app-brand-100: #1a3327;
@@ -54,24 +60,31 @@ html[data-theme='dark'] {
 
 html[data-theme='light'] {
   color-scheme: light;
-  --app-surface: #edf1ee;
-  --app-panel: #f7f9f7;
-  --app-ink: #1c2b24;
-  --app-muted: #5e7067;
-  --app-line: #d2dcd5;
-  --app-accent: #39785e;
-  --app-accent-soft: rgba(57, 120, 94, 0.11);
+  /* Soft sage paper — light, but not near-white glare */
+  --app-surface: #dfe6e2;
+  --app-panel: #e8eeea;
+  --app-ink: #243029;
+  --app-muted: #5a6b63;
+  --app-line: #c2cdc7;
+  --app-accent: #356f58;
+  --app-accent-soft: rgba(53, 111, 88, 0.14);
+  --app-orb-mid: rgba(53, 111, 88, 0.1);
+  --app-orb-bright: rgba(53, 111, 88, 0.07);
+  --app-orb-soft: rgba(53, 111, 88, 0.05);
+  --app-aurora-a: rgba(53, 111, 88, 0.06);
+  --app-aurora-b: rgba(53, 111, 88, 0.09);
+  --app-particle-glow: rgba(53, 111, 88, 0.18);
 
-  --app-brand-50: #e5ebe7;
-  --app-brand-100: #d4e0d9;
-  --app-brand-200: #b4cbbd;
-  --app-brand-300: #8eb29e;
-  --app-brand-400: #63977c;
-  --app-brand-500: #3b8f6a;
-  --app-brand-600: #34785b;
-  --app-brand-700: #2b624c;
-  --app-brand-800: #264f3f;
-  --app-brand-900: #203f34;
+  --app-brand-50: #d3dcd7;
+  --app-brand-100: #c5d0ca;
+  --app-brand-200: #a6b9ae;
+  --app-brand-300: #7d9d8c;
+  --app-brand-400: #548571;
+  --app-brand-500: #356f58;
+  --app-brand-600: #2e5f4b;
+  --app-brand-700: #274e3e;
+  --app-brand-800: #214135;
+  --app-brand-900: #1b352c;
 }
 
 @layer base {
@@ -236,6 +249,23 @@ html[data-theme='light'] {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+html[data-theme='light'] .glass-panel {
+  background-color: color-mix(in oklab, var(--app-panel) 82%, var(--app-surface));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--app-accent) 8%, transparent);
+}
+
+html[data-theme='light'] .ambient-noise {
+  opacity: 0.065;
+}
+
+html[data-theme='light'] .ambient-particles .ambient-particle {
+  opacity: 0.12 !important;
+}
+
+html[data-theme='light'] .ambient-aurora-b {
+  opacity: 0.45;
 }
 
 /* Section enter animations — outside @layer so they always win and replay on is-inview */
@@ -443,8 +473,8 @@ html[data-theme='light'] {
   background: linear-gradient(
     115deg,
     transparent 20%,
-    rgba(142, 239, 180, 0.1) 40%,
-    rgba(95, 201, 142, 0.16) 50%,
+    var(--app-aurora-a) 40%,
+    var(--app-aurora-b) 50%,
     transparent 70%
   );
   filter: blur(40px);
@@ -460,7 +490,7 @@ html[data-theme='light'] {
   animation-name: particle-drift;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
-  box-shadow: 0 0 10px rgba(142, 239, 180, 0.35);
+  box-shadow: 0 0 10px var(--app-particle-glow);
 }
 
 .ambient-particle-0 {
