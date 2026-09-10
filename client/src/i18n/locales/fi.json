@@ -495,7 +495,6 @@
   "materials": {
     "title": "Materiaalit",
     "subtitle": "Äskettäin oppimasi asiat kiinteällä 3 / 7 / 30 päivän kertausaikataululla.",
-    "categoriesHint": "Luo ja muokkaa kategorioita suoraan täällä",
     "create": "Lisää materiaali",
     "createTitle": "Uusi materiaali",
     "createSubtitle": "Muistutukset päiville 3, 7 ja 30 luodaan palvelimella automaattisesti.",

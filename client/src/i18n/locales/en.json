@@ -495,7 +495,6 @@
   "materials": {
     "title": "Materials",
     "subtitle": "Everything you recently learned, with a fixed 3 / 7 / 30 day review plan.",
-    "categoriesHint": "Create and edit categories right here",
     "create": "Add material",
     "createTitle": "New material",
     "createSubtitle": "Reminders for day 3, 7 and 30 are created automatically on the server.",
