@@ -173,60 +173,80 @@
     }
   },
   "home": {
-    "title": "Keep what you learn",
-    "subtitle": "Capture notes, words and rules — then revisit them on a fixed 3, 7 and 30 day rhythm.",
+    "title": "Learn. Act. Steer.",
+    "subtitle": "Mindkeep brings daily tasks, personal finance, and spaced review into one calm workspace.",
     "ctaRegister": "Start free",
     "ctaLogin": "Log in",
-    "scheduleTitle": "A fixed rhythm for long-term memory",
-    "scheduleSubtitle": "Dates are set from the day you learned something. Completing a review never reshuffles the plan.",
-    "daysLabel": "days",
-    "intervals": {
-      "three": "First revisit — strengthen the fresh trace",
-      "seven": "Second revisit — lock the meaning in",
-      "thirty": "Third revisit — move it toward lasting recall"
+    "eyebrow": "Tasks · Review · Finance",
+    "pillarsTitle": "Three pillars of a steady rhythm",
+    "pillarsSubtitle": "Plan the day, lock in what you learn, and keep money visible — without juggling separate apps.",
+    "pillars": {
+      "tasks": {
+        "title": "Daily tasks",
+        "text": "Set goals for the day and month, check them off, and see progress without noise."
+      },
+      "repetition": {
+        "title": "Review at 3 · 7 · 30",
+        "text": "Save materials and revisit them on a fixed schedule so knowledge lasts longer."
+      },
+      "finance": {
+        "title": "Personal finance",
+        "text": "Income and expenses in multiple currencies, categories, and a clear period balance."
+      }
     },
-    "howTitle": "How Mindkeep works",
-    "howSubtitle": "Simple flow. No grading. No “I forgot” buttons. Just timely returns to what matters.",
+    "howTitle": "How it works",
+    "howSubtitle": "One account — three directions. Start small and grow the habit at your own pace.",
     "stepLabel": "Step {{n}}",
     "steps": {
       "1": {
-        "title": "Save what you studied",
-        "text": "Add a topic, definition, Q&A or link right after learning."
+        "title": "Shape the day",
+        "text": "Add tasks for today or a monthly plan — then mark what is done."
       },
       "2": {
-        "title": "Get three reminders",
-        "text": "The server schedules reviews for day 3, 7 and 30 automatically."
+        "title": "Keep what you learn",
+        "text": "Save a material after studying; Mindkeep reminds you at day 3, 7, and 30."
       },
       "3": {
-        "title": "Review and mark done",
-        "text": "Open the material, revisit it, press Completed — next dates stay fixed."
+        "title": "Keep money in view",
+        "text": "Log income or expense in the right currency — totals stay honest and separate."
       }
     },
-    "featuresTitle": "Built for calm consistency",
-    "featuresSubtitle": "Everything you need to return to knowledge without noisy spaced-repetition algorithms.",
+    "rhythmTitle": "A memory rhythm without complex algorithms",
+    "rhythmSubtitle": "For review, intervals are fixed. Dates are counted from the learning day and do not shift when you mark a review done.",
+    "daysLabel": "days",
+    "intervals": {
+      "three": "First review — lock in a fresh trace",
+      "seven": "Second review — keep the meaning",
+      "thirty": "Third review — move toward long-term memory"
+    },
+    "featuresTitle": "Everything you need in one place",
+    "featuresSubtitle": "Mindkeep covers planning, learning, and budget — calmly and predictably.",
     "features": {
+      "planning": {
+        "title": "Day and month planning",
+        "text": "Daily tasks and a monthly view so you see both the near and the horizon."
+      },
+      "memory": {
+        "title": "Materials and review",
+        "text": "Categories, search, archive, and a 3 · 7 · 30 calendar — no grades, no SM-2."
+      },
+      "money": {
+        "title": "Budget without confusion",
+        "text": "Multi-currency operations, expense categories, and month or year summaries."
+      },
       "calendar": {
-        "title": "Calendar of reviews",
-        "text": "See upcoming, completed and overdue days in one place."
-      },
-      "materials": {
-        "title": "Your materials, organized",
-        "text": "Categories, search and archive for English, Finnish, code and more."
-      },
-      "focus": {
-        "title": "Focus over scores",
-        "text": "No SM-2, no difficulty ratings — only a clear schedule you can trust."
+        "title": "Calendars and overview",
+        "text": "Reviews, tasks, and finance gather into clear slices on the dashboard."
       }
     },
-    "ctaTitle": "Start your first review cycle today",
-    "ctaSubtitle": "Create an account and add one thing you learned this week.",
-    "eyebrow": "3 · 7 · 30 — memory that stays",
+    "ctaTitle": "Build your rhythm in Mindkeep",
+    "ctaSubtitle": "Create an account and start with one task, one material, or one budget entry.",
     "apps": {
       "eyebrow": "Mobile",
-      "title": "Apps for iPhone & Android",
-      "subtitle": "Native Mindkeep apps are in development. The same calm 3 · 7 · 30 rhythm — soon in your pocket.",
+      "title": "Apps for iPhone and Android",
+      "subtitle": "Native Mindkeep apps are in the works. The same workspace for tasks, review, and finance — soon in your pocket.",
       "badge": "Soon",
-      "note": "Store buttons are previews. Web app is available today on mindkeep.cloud.",
+      "note": "Store buttons are a preview. The web app is already live at mindkeep.cloud.",
       "readBlog": "Read learning notes"
     },
     "testimonials": {
@@ -251,77 +271,78 @@
     },
     "sections": {
       "hero": "Start",
-      "schedule": "When to review",
+      "pillars": "Capabilities",
       "how": "How it works",
-      "features": "What you get",
-      "apps": "Mobile apps",
+      "rhythm": "3·7·30 rhythm",
+      "features": "Inside",
+      "apps": "Apps",
       "testimonials": "Reviews",
       "blog": "Blog",
-      "cta": "Get started"
+      "cta": "Try it"
     }
   },
   "guide": {
-    "eyebrow": "A simple guide",
+    "eyebrow": "Simple guide",
     "title": "How to use Mindkeep",
-    "intro": "Save something you want to remember and Mindkeep will tell you when to return to it. No complicated setup — a few minutes is enough.",
+    "intro": "Mindkeep is a workspace for tasks, finance, and knowledge review. Start with one area and add the rest when you are ready.",
     "stepsTitle": "Get started in six simple steps",
     "stepLabel": "Step {{number}}",
     "steps": [
       {
-        "title": "Create your account",
-        "body": "Sign up with email or continue with Google. Your timezone is detected automatically so review dates stay accurate."
+        "title": "Create an account",
+        "body": "Sign up with email or Google. Your timezone is detected automatically — important for task and review dates."
+      },
+      {
+        "title": "Open the overview",
+        "body": "The dashboard shows today’s tasks, reviews, and a short finance snapshot."
+      },
+      {
+        "title": "Add tasks",
+        "body": "In Planning, add work for the day or build a month plan — then check items off."
       },
       {
         "title": "Save what you learned",
-        "body": "Press “Add material” and enter a word, rule, note, lesson topic or useful link. It does not need to look perfect."
+        "body": "Add a material after a lesson or practice. Mindkeep schedules reviews for day 3, 7, and 30."
       },
       {
-        "title": "Choose the learning date",
-        "body": "Select the day you learned it. Mindkeep automatically schedules reviews 3, 7 and 30 days later."
+        "title": "Log money movement",
+        "body": "In Budget, record income or expense and the operation currency. Totals stay separate per currency."
       },
       {
-        "title": "Come back on the right day",
-        "body": "Open “Review today”. You can see future reviews in advance, but they can only be completed on their scheduled date."
-      },
-      {
-        "title": "Review and mark it done",
-        "body": "Open the material, try to recall the key idea, then press “Completed”. If today does not work, you can skip the review."
-      },
-      {
-        "title": "See your progress",
-        "body": "The calendar shows review dates, categories keep things tidy, and statistics show consistency without grades or pressure."
+        "title": "Return via calendars",
+        "body": "Task and review calendars show what is due today and what is coming — without pressure or complex setup."
       }
     ],
     "rulesTitle": "Good to know",
     "rules": [
-      "The 3 / 7 / 30 schedule starts from the learning date and never shifts after completion.",
-      "Reviews cannot be completed early, keeping your schedule honest and easy to understand.",
-      "If you miss a date, the review becomes overdue and remains available.",
-      "Your materials belong to your account and are not visible to other users."
+      "Tasks, finance, and review share one account but stay out of each other’s way.",
+      "The 3 / 7 / 30 review schedule is counted from the learning date and does not shift after completion.",
+      "Amounts in different currencies are not converted or merged into one total.",
+      "Your data belongs only to your account and is not visible to other users."
     ],
-    "faqTitle": "Common questions",
+    "faqTitle": "FAQ",
     "faq": [
       {
-        "question": "What can I save?",
-        "answer": "Anything worth revisiting: vocabulary, notes, formulas, rules, work decisions, links, or questions and answers."
+        "question": "Where should I start?",
+        "answer": "With whatever matters now: today’s tasks, a first review material, or an income/expense entry. You can connect the rest later."
       },
       {
-        "question": "What if I miss a review day?",
-        "answer": "That is okay. Open the overdue review, recall the material and mark it completed."
+        "question": "Do I have to use every section?",
+        "answer": "No. You can run only tasks, only review, or only finance — the workspace is built for flexible use."
       },
       {
-        "question": "Can I edit a material later?",
-        "answer": "Yes. You can edit its text, category and link. The learning date locks after a completed or skipped review so the history stays consistent."
+        "question": "What can I add as materials?",
+        "answer": "Words, notes, formulas, rules, work decisions, links, or Q&A — anything you want to revisit."
       },
       {
-        "question": "Do I need to visit every day?",
-        "answer": "No. Come back when a review is due. The calendar shows upcoming dates in advance."
+        "question": "How does multi-currency budget work?",
+        "answer": "Each operation keeps its own currency. The summary shows separate totals, e.g. +1000 USD and −500 EUR, without forced conversion."
       }
     ],
-    "ctaTitle": "Save one thing you learned today",
-    "ctaSubtitle": "That is enough to start your first cycle and see how Mindkeep fits into your routine.",
-    "ctaGuest": "Create an account",
-    "ctaUser": "Add a material"
+    "ctaTitle": "Take the first step today",
+    "ctaSubtitle": "Add a task, a material, or a finance entry — and see how Mindkeep gathers the day in one place.",
+    "ctaGuest": "Create account",
+    "ctaUser": "Open overview"
   },
   "admin": {
     "title": "Admin",
@@ -360,9 +381,9 @@
   },
   "auth": {
     "loginTitle": "Welcome back",
-    "loginSubtitle": "Sign in to continue your review schedule.",
+    "loginSubtitle": "Log in to continue tasks, review, and finance.",
     "registerTitle": "Create your account",
-    "registerSubtitle": "Start building long-term memory with fixed review intervals.",
+    "registerSubtitle": "One workspace for planning, memory, and budget.",
     "name": "Name",
     "email": "Email",
     "password": "Password",
@@ -610,7 +631,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — keep what you learn",
+      "home": "Mindkeep — tasks, review, and finance",
       "login": "Sign in · Mindkeep",
       "register": "Start free · Mindkeep",
       "dashboard": "Overview · Mindkeep",
@@ -635,8 +656,8 @@
   },
   "footer": {
     "craftedLabel": "Property of",
-    "tagline": "Where memory finds a quiet rhythm — and learning learns to stay.",
-    "about": "Mindkeep helps you return to what you learned after 3, 7, and 30 days — with a clear review calendar and no noise.",
+    "tagline": "Where the day finds order — and knowledge and money stay in view.",
+    "about": "Mindkeep brings together daily tasks, personal finance, and knowledge review on a 3 · 7 · 30 rhythm — calmly, without extra noise.",
     "linksLabel": "Navigate",
     "visitStudio": "Studio site",
     "privacy": "Privacy",

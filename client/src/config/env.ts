@@ -5,5 +5,5 @@ export const env = {
   apiUrl,
   googleClientId,
   isDev: import.meta.env.DEV,
-  maintenanceMode: (import.meta.env.VITE_MAINTENANCE_MODE ?? 'true') === 'true',
+  maintenanceMode: (import.meta.env.VITE_MAINTENANCE_MODE ?? 'false') === 'true',
 } as const;

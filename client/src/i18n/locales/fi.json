@@ -173,60 +173,80 @@
     }
   },
   "home": {
-    "title": "Pidä oppimasi mielessä",
-    "subtitle": "Tallenna muistiinpanoja, sanoja ja sääntöjä — palaa niihin 3, 7 ja 30 päivän jälkeen.",
+    "title": "Opi. Toimi. Hallitse.",
+    "subtitle": "Mindkeep kokoaa päivittäiset tehtävät, talouden ja kertauksen yhteen rauhalliseen työtilaan.",
     "ctaRegister": "Aloita ilmaiseksi",
     "ctaLogin": "Kirjaudu",
-    "scheduleTitle": "Kiinteä rytmi pitkäkestoiseen muistiin",
-    "scheduleSubtitle": "Päivämäärät lasketaan oppimispäivästä. Kertauksen merkitseminen ei siirrä muuta aikataulua.",
-    "daysLabel": "päivää",
-    "intervals": {
-      "three": "Ensimmäinen kertaus — vahvista tuore jälki",
-      "seven": "Toinen kertaus — kiinnitä merkitys",
-      "thirty": "Kolmas kertaus — vie kohti kestävää muistia"
+    "eyebrow": "Tehtävät · Kertaus · Talous",
+    "pillarsTitle": "Kolme pilaria tasaiselle rytmille",
+    "pillarsSubtitle": "Suunnittele päivä, kiinnitä opittu ja pidä raha näkyvissä — ilman erillisten sovellusten kaaosta.",
+    "pillars": {
+      "tasks": {
+        "title": "Päivittäiset tehtävät",
+        "text": "Aseta tavoitteita päivälle ja kuukaudelle, merkitse valmiiksi ja näe edistyminen ilman melua."
+      },
+      "repetition": {
+        "title": "Kertaus 3 · 7 · 30",
+        "text": "Tallenna materiaalit ja palaa niihin kiinteällä aikataululla — muisti pysyy pidempään."
+      },
+      "finance": {
+        "title": "Henkilökohtainen talous",
+        "text": "Tulot ja menot eri valuutoissa, kategoriat ja selkeä jakson saldo."
+      }
     },
     "howTitle": "Näin se toimii",
-    "howSubtitle": "Yksinkertainen kulku. Ei arvostelua. Ei “unohdin”-nappia. Vain ajoissa palaaminen tärkeään.",
+    "howSubtitle": "Yksi tili — kolme suuntaa. Aloita pienesti ja kasvata tapaa omaan tahtiin.",
     "stepLabel": "Vaihe {{n}}",
     "steps": {
       "1": {
-        "title": "Tallenna oppimasi",
-        "text": "Lisää aihe, määritelmä, kysymys-vastaus tai linkki heti oppimisen jälkeen."
+        "title": "Kokoa päivä",
+        "text": "Lisää tehtäviä tänään tai kuukausisuunnitelma — ja merkitse valmiit."
       },
       "2": {
-        "title": "Saat kolme muistutusta",
-        "text": "Palvelin ajastaa kertaukset automaattisesti päiville 3, 7 ja 30."
+        "title": "Kiinnitä tieto",
+        "text": "Tallenna materiaali opiskelun jälkeen; Mindkeep muistuttaa päivinä 3, 7 ja 30."
       },
       "3": {
-        "title": "Kertaa ja merkitse",
-        "text": "Avaa materiaali, kertaa ja paina Valmis — seuraavat päivät pysyvät ennallaan."
+        "title": "Pidä raha näkyvissä",
+        "text": "Kirjaa tulo tai meno oikeassa valuutassa — yhteenvedot pysyvät rehellisinä ja erillisinä."
       }
     },
-    "featuresTitle": "Rauhalliseen säännöllisyyteen",
-    "featuresSubtitle": "Kaikki tarvittava tietoon palaamiseen ilman meluisia kertausalgoritmeja.",
+    "rhythmTitle": "Muistin rytmi ilman monimutkaisia algoritmeja",
+    "rhythmSubtitle": "Kertauksessa välit ovat kiinteät. Päivämäärät lasketaan oppimispäivästä eivätkä siirry, kun merkitset kertauksen tehdyksi.",
+    "daysLabel": "päivää",
+    "intervals": {
+      "three": "Ensimmäinen kertaus — kiinnitä tuore jälki",
+      "seven": "Toinen kertaus — pidä merkitys",
+      "thirty": "Kolmas kertaus — kohti pitkäaikaista muistia"
+    },
+    "featuresTitle": "Kaikki tarvittava yhdessä paikassa",
+    "featuresSubtitle": "Mindkeep kattaa suunnittelun, oppimisen ja budjetin — rauhallisesti ja ennakoitavasti.",
     "features": {
+      "planning": {
+        "title": "Päivän ja kuukauden suunnittelu",
+        "text": "Päivittäiset tehtävät ja kuukausinäkymä — sekä lähellä että horisontissa."
+      },
+      "memory": {
+        "title": "Materiaalit ja kertaus",
+        "text": "Kategoriat, haku, arkisto ja 3 · 7 · 30 -kalenteri — ilman arvosanoja tai SM-2:ta."
+      },
+      "money": {
+        "title": "Budjetti ilman sekaannusta",
+        "text": "Monivaluuttaiset tapahtumat, menokategoriat sekä kuukausi- tai vuosiyhteenveto."
+      },
       "calendar": {
-        "title": "Kertauskalenteri",
-        "text": "Tulossa olevat, valmiit ja myöhässä olevat päivät yhdessä näkymässä."
-      },
-      "materials": {
-        "title": "Materiaalit järjestyksessä",
-        "text": "Kategoriat, haku ja arkisto kielille, työlle ja opiskelulle."
-      },
-      "focus": {
-        "title": "Fokus ilman pisteitä",
-        "text": "Ei SM-2:ta eikä vaikeustasoja — vain selkeä aikataulu, johon voi luottaa."
+        "title": "Kalenterit ja yleiskuva",
+        "text": "Kertaukset, tehtävät ja talous kokoontuvat selkeiksi näkymiksi koontinäytöllä."
       }
     },
-    "ctaTitle": "Aloita ensimmäinen kertausjakso tänään",
-    "ctaSubtitle": "Luo tili ja lisää yksi asia, jonka opit tällä viikolla.",
-    "eyebrow": "3 · 7 · 30 — muisti joka pysyy",
+    "ctaTitle": "Kokoa rytmisi Mindkeepissä",
+    "ctaSubtitle": "Luo tili ja aloita yhdellä tehtävällä, yhdellä materiaalilla tai yhdellä budjettimerkinnällä.",
     "apps": {
       "eyebrow": "Mobiili",
-      "title": "Sovellukset iPhonelle & Androidille",
-      "subtitle": "Mindkeep-natiivisovellukset ovat kehitteillä. Sama rauhallinen 3 · 7 · 30 -rytmi — pian taskussa.",
+      "title": "Sovellukset iPhonelle ja Androidille",
+      "subtitle": "Natiivisovellukset ovat työn alla. Sama työtila tehtäville, kertaukselle ja taloudelle — pian taskussa.",
       "badge": "Tulossa",
-      "note": "Kauppapainikkeet ovat esikatselu. Verkkosovellus on jo käytössä osoitteessa mindkeep.cloud.",
+      "note": "Kauppapainikkeet ovat esikatselu. Verkkoversio on jo käytössä osoitteessa mindkeep.cloud.",
       "readBlog": "Lue oppimisesta"
     },
     "testimonials": {
@@ -251,77 +271,78 @@
     },
     "sections": {
       "hero": "Alku",
-      "schedule": "Milloin kerrata",
-      "how": "Näin se toimii",
-      "features": "Mitä saat",
-      "apps": "Mobiilisovellukset",
+      "pillars": "Mahdollisuudet",
+      "how": "Miten toimii",
+      "rhythm": "3·7·30-rytmi",
+      "features": "Sisällä",
+      "apps": "Sovellukset",
       "testimonials": "Arviot",
       "blog": "Blogi",
       "cta": "Kokeile"
     }
   },
   "guide": {
-    "eyebrow": "Selkeä käyttöohje",
-    "title": "Näin käytät Mindkeepia",
-    "intro": "Tallenna asia, jonka haluat muistaa, ja Mindkeep kertoo, milloin siihen kannattaa palata. Ei monimutkaisia asetuksia — muutama minuutti riittää.",
-    "stepsTitle": "Aloita kuudella helpolla vaiheella",
+    "eyebrow": "Yksinkertainen opas",
+    "title": "Näin käytät Mindkeepiä",
+    "intro": "Mindkeep on työtila tehtäville, taloudelle ja tiedon kertaukselle. Aloita yhdestä suunnasta ja lisää loput, kun olet valmis.",
+    "stepsTitle": "Aloita kuudella yksinkertaisella askeleella",
     "stepLabel": "Vaihe {{number}}",
     "steps": [
       {
         "title": "Luo tili",
-        "body": "Rekisteröidy sähköpostilla tai jatka Googlella. Aikavyöhykkeesi tunnistetaan automaattisesti, jotta kertauspäivät ovat oikein."
+        "body": "Rekisteröidy sähköpostilla tai Googlella. Aikavyöhyke tunnistetaan automaattisesti — tärkeää tehtävien ja kertausten päiville."
       },
       {
-        "title": "Tallenna oppimasi",
-        "body": "Paina ”Lisää materiaali” ja kirjoita sana, sääntö, muistiinpano, oppitunnin aihe tai hyödyllinen linkki. Sen ei tarvitse olla täydellinen."
+        "title": "Avaa yleiskuva",
+        "body": "Koontinäyttö näyttää tämän päivän tehtävät, kertaukset ja lyhyen talousyhteenvedon."
       },
       {
-        "title": "Valitse oppimispäivä",
-        "body": "Valitse päivä, jolloin opit asian. Mindkeep ajastaa kertaukset automaattisesti 3, 7 ja 30 päivän päähän."
+        "title": "Lisää tehtäviä",
+        "body": "Suunnittelussa lisää päivän töitä tai kuukausisuunnitelma — ja merkitse valmiit."
       },
       {
-        "title": "Palaa oikeana päivänä",
-        "body": "Avaa ”Kertaa tänään”. Tulevat tehtävät näkyvät etukäteen, mutta ne voi merkitä valmiiksi vasta ajastettuna päivänä."
+        "title": "Tallenna opittu",
+        "body": "Lisää materiaali oppitunnin tai harjoituksen jälkeen. Mindkeep aikatauluttaa kertaukset päiville 3, 7 ja 30."
       },
       {
-        "title": "Kertaa ja merkitse valmiiksi",
-        "body": "Avaa materiaali, yritä palauttaa tärkein asia mieleen ja paina ”Kertattu”. Jos tänään ei onnistu, voit ohittaa kertauksen."
+        "title": "Kirjaa rahaliikenne",
+        "body": "Budjetissa merkitse tulo tai meno ja tapahtuman valuutta. Yhteenvedot pysyvät valuuttakohtaisina."
       },
       {
-        "title": "Seuraa edistymistä",
-        "body": "Kalenteri näyttää päivät, kategoriat pitävät asiat järjestyksessä ja tilastot kertovat säännöllisyydestä ilman arvosanoja tai painetta."
+        "title": "Palaa kalenterien kautta",
+        "body": "Tehtävä- ja kertauskalenterit näyttävät, mitä on tänään ja mitä tulossa — ilman painetta tai monimutkaista asetusta."
       }
     ],
     "rulesTitle": "Hyvä tietää",
     "rules": [
-      "3 / 7 / 30 -aikataulu alkaa oppimispäivästä eikä siirry kertauksen jälkeen.",
-      "Kertausta ei voi tehdä etukäteen, joten aikataulu pysyy rehellisenä ja selkeänä.",
-      "Jos päivä jää väliin, kertaus merkitään myöhästyneeksi ja pysyy saatavilla.",
-      "Materiaalisi kuuluvat vain omalle tilillesi eivätkä näy muille käyttäjille."
+      "Tehtävät, talous ja kertaus jakavat saman tilin, mutta eivät häiritse toisiaan.",
+      "Kertausaikataulu 3 / 7 / 30 lasketaan oppimispäivästä eikä siirry suorituksen jälkeen.",
+      "Eri valuuttoja ei muunneta eikä yhdistetä yhdeksi summaksi.",
+      "Tietosi kuuluvat vain tilillesi eivätkä näy muille käyttäjille."
     ],
-    "faqTitle": "Usein kysyttyä",
+    "faqTitle": "UKK",
     "faq": [
       {
-        "question": "Mitä voin tallentaa?",
-        "answer": "Mitä tahansa, johon haluat palata: sanoja, muistiinpanoja, kaavoja, sääntöjä, työssä opittuja asioita, linkkejä tai kysymyksiä ja vastauksia."
+        "question": "Mistä kannattaa aloittaa?",
+        "answer": "Siitä, mikä nyt on tärkeintä: päivän tehtävät, ensimmäinen kertausmateriaali tai tulo-/menomerkintä. Loput voi yhdistää myöhemmin."
       },
       {
-        "question": "Mitä jos kertauspäivä jäi väliin?",
-        "answer": "Ei hätää. Avaa myöhästynyt kertaus, palauta materiaali mieleen ja merkitse se valmiiksi."
+        "question": "Pitääkö käyttää kaikkia osioita?",
+        "answer": "Ei. Voit käyttää vain tehtäviä, vain kertausta tai vain taloutta — työtila on joustava."
       },
       {
-        "question": "Voinko muokata materiaalia myöhemmin?",
-        "answer": "Kyllä. Tekstiä, kategoriaa ja linkkiä voi muokata. Oppimispäivä lukittuu suoritetun tai ohitetun kertauksen jälkeen, jotta historia säilyy."
+        "question": "Mitä voin lisätä materiaaleiksi?",
+        "answer": "Sanoja, muistiinpanoja, kaavoja, sääntöjä, työratkaisuja, linkkejä tai kysymys-vastauspareja — kaikkea, johon haluat palata."
       },
       {
-        "question": "Pitääkö sovelluksessa käydä joka päivä?",
-        "answer": "Ei. Palaa, kun tälle päivälle on kertauksia. Kalenteri näyttää tulevat päivät etukäteen."
+        "question": "Miten monivaluuttainen budjetti toimii?",
+        "answer": "Jokaisella tapahtumalla on oma valuutta. Yhteenveto näyttää erilliset summat, esim. +1000 USD ja −500 EUR, ilman pakotettua muunnosta."
       }
     ],
-    "ctaTitle": "Tallenna yksi asia, jonka opit tänään",
-    "ctaSubtitle": "Se riittää ensimmäisen kertausjakson aloittamiseen ja Mindkeepin kokeilemiseen omassa arjessasi.",
+    "ctaTitle": "Ota ensimmäinen askel tänään",
+    "ctaSubtitle": "Lisää tehtävä, materiaali tai talousmerkintä — ja näe, miten Mindkeep kokoaa päivän yhteen.",
     "ctaGuest": "Luo tili",
-    "ctaUser": "Lisää materiaali"
+    "ctaUser": "Avaa yleiskuva"
   },
   "admin": {
     "title": "Admin",
@@ -360,9 +381,9 @@
   },
   "auth": {
     "loginTitle": "Tervetuloa takaisin",
-    "loginSubtitle": "Kirjaudu jatkaaksesi kertausaikatauluasi.",
+    "loginSubtitle": "Kirjaudu jatkaaksesi tehtäviä, kertausta ja taloutta.",
     "registerTitle": "Luo tili",
-    "registerSubtitle": "Vahvista oppimista kiinteillä kertausväleillä.",
+    "registerSubtitle": "Yksi työtila suunnittelulle, muistille ja budjetille.",
     "name": "Nimi",
     "email": "Sähköposti",
     "password": "Salasana",
@@ -610,7 +631,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — pidä oppimasi",
+      "home": "Mindkeep — tehtävät, kertaus ja talous",
       "login": "Kirjaudu · Mindkeep",
       "register": "Aloita · Mindkeep",
       "dashboard": "Yhteenveto · Mindkeep",
@@ -635,8 +656,8 @@
   },
   "footer": {
     "craftedLabel": "Omistaja",
-    "tagline": "Missä muisti löytää hiljaisen rytmin — ja oppiminen oppii jäämään.",
-    "about": "Mindkeep auttaa palaamaan opittuun 3, 7 ja 30 päivän jälkeen — selkeällä kertausaikataululla ilman turhaa hälyä.",
+    "tagline": "Missä päivä löytää järjestyksen — ja tieto sekä raha pysyvät näkyvissä.",
+    "about": "Mindkeep yhdistää päivittäiset tehtävät, henkilökohtaisen talouden ja tiedon kertauksen rytmillä 3 · 7 · 30 — rauhallisesti, ilman ylimääräistä melua.",
     "linksLabel": "Navigointi",
     "visitStudio": "Studion sivusto",
     "privacy": "Tietosuoja",

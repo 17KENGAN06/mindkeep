@@ -38,7 +38,7 @@ const envSchema = z.object({
   /** When true, only ADMIN users may sign in / use the API. */
   MAINTENANCE_MODE: z
     .enum(['true', 'false'])
-    .default('true')
+    .default('false')
     .transform((value) => value === 'true'),
 });
 

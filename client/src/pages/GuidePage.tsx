@@ -108,7 +108,7 @@ export function GuidePage() {
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             {t('guide.ctaSubtitle')}
           </p>
-          <Link to={isAuthenticated ? '/materials/new' : '/register'} className="mt-6 inline-flex no-underline">
+          <Link to={isAuthenticated ? '/dashboard' : '/register'} className="mt-6 inline-flex no-underline">
             <Button>{t(isAuthenticated ? 'guide.ctaUser' : 'guide.ctaGuest')}</Button>
           </Link>
         </Reveal>
