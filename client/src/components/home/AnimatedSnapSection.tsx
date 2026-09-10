@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { SectionPlayProvider } from '@/components/home/sectionPlayContext';
 
 type AnimatedSnapSectionProps = {
   id: string;
@@ -8,8 +9,8 @@ type AnimatedSnapSectionProps = {
 };
 
 /**
- * Forces a paint of the hidden state before adding is-inview,
- * so CSS keyframe enter animations always replay on section change.
+ * Forces a paint of the hidden state before adding play,
+ * so enter animations always replay on section change.
  */
 export function AnimatedSnapSection({
   id,
@@ -27,7 +28,7 @@ export function AnimatedSnapSection({
     }
 
     setPlay(false);
-    const timerId = window.setTimeout(() => setPlay(true), 50);
+    const timerId = window.setTimeout(() => setPlay(true), 40);
     return () => window.clearTimeout(timerId);
   }, [active]);
 
@@ -37,7 +38,7 @@ export function AnimatedSnapSection({
       className={`home-snap-section ${play ? 'is-inview' : ''} ${className}`.trim()}
       data-active={active ? 'true' : 'false'}
     >
-      {children}
+      <SectionPlayProvider play={play}>{children}</SectionPlayProvider>
     </section>
   );
 }

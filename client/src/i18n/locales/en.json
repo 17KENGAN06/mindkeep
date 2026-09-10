@@ -271,6 +271,22 @@
       "testimonials": "Reviews",
       "blog": "Blog",
       "cta": "Try it"
+    },
+    "heroHighlights": {
+      "tasks": "Daily plans without mental clutter",
+      "repetition": "Memory on a 3 · 7 · 30 rhythm",
+      "finance": "Euro budget — clear and calm"
+    },
+    "heroVisual": {
+      "tasksTitle": "Tasks today",
+      "tasksItem1": "Review Finnish vocabulary",
+      "tasksItem2": "Close the weekly budget",
+      "reviewTitle": "Review",
+      "reviewQuestion": "How do you say thank you in Finnish?",
+      "reviewHint": "Tap to reveal the answer",
+      "financeTitle": "Finance",
+      "financeLabel": "Period balance",
+      "financeValue": "+€420"
     }
   },
   "guide": {

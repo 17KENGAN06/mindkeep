@@ -271,6 +271,22 @@
       "testimonials": "Отзывы",
       "blog": "Блог",
       "cta": "Попробовать"
+    },
+    "heroHighlights": {
+      "tasks": "Планы на день без хаоса в голове",
+      "repetition": "Память с ритмом 3 · 7 · 30",
+      "finance": "Бюджет в евро — ясно и спокойно"
+    },
+    "heroVisual": {
+      "tasksTitle": "Задачи на сегодня",
+      "tasksItem1": "Повторить финский словарь",
+      "tasksItem2": "Закрыть бюджет за неделю",
+      "reviewTitle": "Повторение",
+      "reviewQuestion": "Как сказать «спасибо» по-фински?",
+      "reviewHint": "Нажмите, чтобы открыть ответ",
+      "financeTitle": "Финансы",
+      "financeLabel": "Баланс периода",
+      "financeValue": "+€420"
     }
   },
   "guide": {

@@ -271,6 +271,22 @@
       "testimonials": "Відгуки",
       "blog": "Блог",
       "cta": "Спробувати"
+    },
+    "heroHighlights": {
+      "tasks": "Плани на день без хаосу в голові",
+      "repetition": "Памʼять із ритмом 3 · 7 · 30",
+      "finance": "Бюджет у євро — ясно й спокійно"
+    },
+    "heroVisual": {
+      "tasksTitle": "Задачі на сьогодні",
+      "tasksItem1": "Повторити фінський словник",
+      "tasksItem2": "Закрити бюджет за тиждень",
+      "reviewTitle": "Повторення",
+      "reviewQuestion": "Як сказати «дякую» фінською?",
+      "reviewHint": "Натисніть, щоб відкрити відповідь",
+      "financeTitle": "Фінанси",
+      "financeLabel": "Баланс періоду",
+      "financeValue": "+€420"
     }
   },
   "guide": {

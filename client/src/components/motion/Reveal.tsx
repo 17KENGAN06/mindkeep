@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 type RevealProps = {
@@ -5,17 +6,27 @@ type RevealProps = {
   className?: string;
   delayMs?: number;
   trigger?: 'viewport' | 'mount';
+  direction?: 'up' | 'left' | 'right' | 'scale';
 };
 
-/** Fade/rise on mount or when the element enters the viewport. */
+const hidden = {
+  up: { opacity: 0, y: 26 },
+  left: { opacity: 0, x: -24 },
+  right: { opacity: 0, x: 24 },
+  scale: { opacity: 0, scale: 0.96, y: 10 },
+} as const;
+
+/** Fade/rise on mount or when the element enters the viewport (Motion). */
 export function Reveal({
   children,
   className = '',
   delayMs = 0,
   trigger = 'viewport',
+  direction = 'up',
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(trigger === 'mount');
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (trigger === 'mount') {
@@ -33,20 +44,34 @@ export function Reveal({
           observer.disconnect();
         }
       },
-      { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.16, rootMargin: '0px 0px -6% 0px' },
     );
 
     observer.observe(node);
     return () => observer.disconnect();
   }, [trigger]);
 
+  if (reduceMotion) {
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    );
+  }
+
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={`reveal-base ${visible ? 'reveal-in' : ''} ${className}`}
-      style={{ transitionDelay: visible ? `${delayMs}ms` : '0ms' }}
+      className={className}
+      initial={hidden[direction]}
+      animate={visible ? { opacity: 1, x: 0, y: 0, scale: 1 } : hidden[direction]}
+      transition={{
+        duration: 0.58,
+        delay: visible ? delayMs / 1000 : 0,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

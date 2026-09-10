@@ -271,6 +271,22 @@
       "testimonials": "Arviot",
       "blog": "Blogi",
       "cta": "Kokeile"
+    },
+    "heroHighlights": {
+      "tasks": "Päivän suunnitelmat ilman kaaosta",
+      "repetition": "Muisti rytmillä 3 · 7 · 30",
+      "finance": "Eurobudjetti — selkeästi ja rauhallisesti"
+    },
+    "heroVisual": {
+      "tasksTitle": "Tehtävät tänään",
+      "tasksItem1": "Kertaa suomen sanasto",
+      "tasksItem2": "Sulje viikon budjetti",
+      "reviewTitle": "Kertaus",
+      "reviewQuestion": "Miten sanotaan kiitos suomeksi?",
+      "reviewHint": "Napauta nähdäksesi vastauksen",
+      "financeTitle": "Talous",
+      "financeLabel": "Jakson saldo",
+      "financeValue": "+€420"
     }
   },
   "guide": {
