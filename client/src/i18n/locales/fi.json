@@ -287,6 +287,13 @@
       "financeTitle": "Talous",
       "financeLabel": "Jakson saldo",
       "financeValue": "+€420"
+    },
+    "mobileNav": {
+      "title": "Sivuston navigointi",
+      "sections": "Etusivun osiot",
+      "pages": "Sivut",
+      "prev": "Edellinen osio",
+      "next": "Seuraava osio"
     }
   },
   "guide": {

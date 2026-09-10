@@ -15,6 +15,7 @@ import { BlogPreview } from '@/components/blog/ArticleCard';
 import { AnimatedSnapSection } from '@/components/home/AnimatedSnapSection';
 import { HeroStage } from '@/components/home/HeroStage';
 import { SectionNav } from '@/components/home/SectionNav';
+import { MobileHomeNav } from '@/components/home/MobileHomeNav';
 import { SnapReveal } from '@/components/home/SnapReveal';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
 import { StoreComingSoon } from '@/components/home/StoreComingSoon';
@@ -83,12 +84,18 @@ export function HomePage() {
         activeId={activeId}
         onSelect={goToSection}
       />
+      <MobileHomeNav
+        sectionIds={sectionIds}
+        labels={labels}
+        activeId={activeId}
+        onSelect={goToSection}
+      />
 
       {activeId !== 'hero' ? (
         <button
           type="button"
           onClick={() => goToSection('hero')}
-          className="fixed right-4 bottom-5 z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border border-line/80 bg-panel/90 text-ink shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-500 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none"
+          className="fixed right-4 bottom-24 z-50 hidden h-11 w-11 items-center justify-center rounded-full border border-line/80 bg-panel/90 text-ink shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-500 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none md:inline-flex md:bottom-5"
           aria-label={t('nav.home')}
           title={t('nav.home')}
         >
@@ -103,9 +110,12 @@ export function HomePage() {
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
           <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-6">
-            <SnapReveal className="z-10 flex items-center justify-between gap-3" delay={0.02}>
-              <BrandLockup to="/" size="lg" />
-              <div className="flex items-center gap-2">
+            <SnapReveal
+              className="z-10 flex items-center justify-between gap-2 sm:gap-3"
+              delay={0.02}
+            >
+              <BrandLockup to="/" size="lg" className="min-w-0 max-w-[55%] sm:max-w-none" />
+              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
                 <nav
                   className="hidden items-center gap-1 lg:flex"
                   aria-label={t('footer.linksLabel')}

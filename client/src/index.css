@@ -187,10 +187,13 @@ html[data-theme='light'] {
     scroll-behavior: auto;
     overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
+    scroll-padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
   }
 
   .home-snap-section {
     @apply relative flex flex-col overflow-visible;
+    /* Keep section content above the mobile bottom nav */
+    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
   }
 
   @media (min-width: 768px) {
@@ -198,6 +201,7 @@ html[data-theme='light'] {
       scroll-snap-type: y mandatory;
       scroll-behavior: smooth;
       overscroll-behavior-y: none;
+      scroll-padding-bottom: 0;
     }
 
     .home-snap-section {
@@ -207,6 +211,7 @@ html[data-theme='light'] {
       height: 100dvh;
       min-height: 100dvh;
       max-height: 100dvh;
+      padding-bottom: 0;
     }
   }
 

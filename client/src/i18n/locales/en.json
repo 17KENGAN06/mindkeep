@@ -287,6 +287,13 @@
       "financeTitle": "Finance",
       "financeLabel": "Period balance",
       "financeValue": "+€420"
+    },
+    "mobileNav": {
+      "title": "Site navigation",
+      "sections": "Landing sections",
+      "pages": "Pages",
+      "prev": "Previous section",
+      "next": "Next section"
     }
   },
   "guide": {
