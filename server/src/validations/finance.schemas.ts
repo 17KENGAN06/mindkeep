@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { BudgetOperationType } from '@prisma/client';
+import { BudgetMoneyKind, BudgetOperationType } from '@prisma/client';
 
 export const financeOperationTypeSchema = z.nativeEnum(BudgetOperationType);
+export const financeMoneyKindSchema = z.nativeEnum(BudgetMoneyKind);
 
 export const updateFinanceSettingsSchema = z.object({
   openingBalance: z.number().finite().optional(),
@@ -34,6 +35,7 @@ export const financePeriodQuerySchema = z
 
 export const createFinanceOperationSchema = z.object({
   type: financeOperationTypeSchema,
+  moneyKind: financeMoneyKindSchema.optional().default(BudgetMoneyKind.ELECTRONIC),
   amount: z.number().positive().max(1_000_000_000),
   date: z.string().datetime({ offset: true }).or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)),
   comment: z.string().trim().max(500).optional().default(''),

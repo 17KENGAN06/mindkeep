@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
+import { Banknote, WalletCards } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { FinanceOperationsList } from '@/components/finance/FinanceOperationsList';
@@ -20,7 +21,7 @@ import {
   useFinanceSummary,
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
-import type { FinanceOperationType, FinanceView } from '@/types/finance';
+import type { FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
 
 function todayInputValue(): string {
   const now = new Date();
@@ -28,6 +29,8 @@ function todayInputValue(): string {
   const day = String(now.getDate()).padStart(2, '0');
   return `${now.getFullYear()}-${month}-${day}`;
 }
+
+type KindFilter = 'ALL' | FinanceMoneyKind;
 
 export function FinanceBudgetPage() {
   const { t, i18n } = useTranslation();
@@ -39,8 +42,10 @@ export function FinanceBudgetPage() {
   const [month, setMonth] = useState(defaults.month);
   const [formError, setFormError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [kindFilter, setKindFilter] = useState<KindFilter>('ALL');
 
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
+  const [moneyKind, setMoneyKind] = useState<FinanceMoneyKind>('ELECTRONIC');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(todayInputValue());
   const [comment, setComment] = useState('');
@@ -55,6 +60,12 @@ export function FinanceBudgetPage() {
   const createOperation = useCreateFinanceOperation();
   const deleteOperation = useDeleteFinanceOperation();
 
+  const filteredOperations = useMemo(() => {
+    const ops = summaryQuery.data?.operations ?? [];
+    if (kindFilter === 'ALL') return ops;
+    return ops.filter((op) => (op.moneyKind ?? 'ELECTRONIC') === kindFilter);
+  }, [summaryQuery.data?.operations, kindFilter]);
+
   if (summaryQuery.isLoading || categoriesQuery.isLoading) {
     return <Loader />;
   }
@@ -65,6 +76,10 @@ export function FinanceBudgetPage() {
 
   const summary = summaryQuery.data;
   const categories = categoriesQuery.data ?? [];
+  const byKind = summary.totalsByKind ?? {
+    CASH: { income: 0, expense: 0, balance: 0 },
+    ELECTRONIC: { income: 0, expense: 0, balance: 0 },
+  };
 
   const onCreate = async (event: FormEvent) => {
     event.preventDefault();
@@ -78,6 +93,7 @@ export function FinanceBudgetPage() {
     try {
       await createOperation.mutateAsync({
         type,
+        moneyKind,
         amount: parsedAmount,
         date,
         comment,
@@ -110,6 +126,23 @@ export function FinanceBudgetPage() {
   const activeMonths = summary.byMonth.filter(
     (item) => item.income !== 0 || item.expense !== 0,
   );
+
+  const wallets = [
+    {
+      key: 'CASH' as const,
+      title: t('finance.moneyKind.cash'),
+      hint: t('finance.wallets.cashHint'),
+      Icon: Banknote,
+      totals: byKind.CASH,
+    },
+    {
+      key: 'ELECTRONIC' as const,
+      title: t('finance.moneyKind.electronic'),
+      hint: t('finance.wallets.electronicHint'),
+      Icon: WalletCards,
+      totals: byKind.ELECTRONIC,
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -173,6 +206,71 @@ export function FinanceBudgetPage() {
         ))}
       </section>
 
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-base font-semibold text-ink">{t('finance.wallets.title')}</h2>
+          <p className="mt-1 text-sm text-muted">{t('finance.wallets.subtitle')}</p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          {wallets.map((wallet) => {
+            const Icon = wallet.Icon;
+            return (
+              <article
+                key={wallet.key}
+                className="relative overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line"
+              >
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -top-10 -right-8 h-28 w-28 rounded-full bg-brand-500/10 blur-2xl"
+                />
+                <div className="relative flex items-start justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2 text-brand-500">
+                      <Icon className="h-5 w-5" aria-hidden />
+                      <h3 className="font-display text-lg font-semibold text-ink">{wallet.title}</h3>
+                    </div>
+                    <p className="mt-1 text-xs text-muted">{wallet.hint}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="rounded-xl bg-brand-50/50 px-2.5 py-1.5 text-xs font-semibold text-brand-500 ring-1 ring-line/70 transition hover:bg-brand-50"
+                    onClick={() => setKindFilter(wallet.key)}
+                  >
+                    {t('finance.wallets.showOps')}
+                  </button>
+                </div>
+                <dl className="relative mt-5 grid grid-cols-3 gap-3">
+                  <div>
+                    <dt className="text-[11px] tracking-wide text-muted uppercase">
+                      {t('finance.income')}
+                    </dt>
+                    <dd className="mt-1 text-sm font-semibold text-brand-500">
+                      {formatSignedMoney(wallet.totals.income, language)}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] tracking-wide text-muted uppercase">
+                      {t('finance.expense')}
+                    </dt>
+                    <dd className="mt-1 text-sm font-semibold text-red-400">
+                      {formatSignedMoney(-wallet.totals.expense, language)}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] tracking-wide text-muted uppercase">
+                      {t('finance.balance')}
+                    </dt>
+                    <dd className="mt-1 text-sm font-semibold text-ink">
+                      {formatSignedMoney(wallet.totals.balance, language)}
+                    </dd>
+                  </div>
+                </dl>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
       {view === 'year' && activeMonths.length > 0 ? (
         <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <h2 className="text-base font-semibold text-ink">{t('finance.yearBreakdown')}</h2>
@@ -205,6 +303,15 @@ export function FinanceBudgetPage() {
             options={[
               { value: 'INCOME', label: t('finance.income') },
               { value: 'EXPENSE', label: t('finance.expense') },
+            ]}
+          />
+          <Select
+            label={t('finance.moneyKind.label')}
+            value={moneyKind}
+            onChange={(event) => setMoneyKind(event.target.value as FinanceMoneyKind)}
+            options={[
+              { value: 'CASH', label: t('finance.moneyKind.cash') },
+              { value: 'ELECTRONIC', label: t('finance.moneyKind.electronic') },
             ]}
           />
           <Input
@@ -248,12 +355,37 @@ export function FinanceBudgetPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-base font-semibold text-ink">{t('finance.operationsTitle')}</h2>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <h2 className="text-base font-semibold text-ink">{t('finance.operationsTitle')}</h2>
+          <div className="flex flex-wrap gap-2">
+            {(
+              [
+                { id: 'ALL' as const, label: t('finance.moneyKind.all') },
+                { id: 'CASH' as const, label: t('finance.moneyKind.cash') },
+                { id: 'ELECTRONIC' as const, label: t('finance.moneyKind.electronic') },
+              ] as const
+            ).map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`rounded-xl px-3 py-2 text-xs font-semibold transition ${
+                  kindFilter === item.id
+                    ? 'bg-brand-500 text-[#07110d]'
+                    : 'bg-panel text-muted ring-1 ring-line hover:text-ink'
+                }`}
+                onClick={() => setKindFilter(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
         <FinanceOperationsList
-          operations={summary.operations}
+          operations={filteredOperations}
           language={language}
           onDelete={(id) => void onDelete(id)}
           deletingId={deletingId}
+          showMoneyKind
         />
       </section>
     </div>

@@ -1,6 +1,7 @@
 import { apiClient } from '@/api/client';
 import type {
   FinanceCategory,
+  FinanceMoneyKind,
   FinanceOperation,
   FinanceOperationType,
   FinancePeriodParams,
@@ -21,6 +22,7 @@ function periodQuery(params: FinancePeriodParams): string {
 
 export type CreateOperationPayload = {
   type: FinanceOperationType;
+  moneyKind?: FinanceMoneyKind;
   amount: number;
   date: string;
   comment?: string;

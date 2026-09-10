@@ -54,6 +54,11 @@ enum BudgetOperationType {
   EXPENSE
 }
 
+enum BudgetMoneyKind {
+  CASH
+  ELECTRONIC
+}
+
 model User {
   id           String   @id @default(cuid())
   name         String
@@ -208,6 +213,7 @@ model BudgetOperation {
   amount     Float
   currency   BudgetCurrency      @default(EUR)
   type       BudgetOperationType
+  moneyKind  BudgetMoneyKind     @default(ELECTRONIC)
   comment    String              @default("")
   categoryId String?
   userId     String
@@ -220,6 +226,7 @@ model BudgetOperation {
   @@index([categoryId])
   @@index([userId, date])
   @@index([userId])
+  @@index([userId, moneyKind])
 }
 
 model ExchangeRate {

@@ -1,4 +1,4 @@
-import { Trash2 } from 'lucide-react';
+import { Banknote, Trash2, WalletCards } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { formatSignedMoney } from '@/features/finance/financeUtils';
 import type { FinanceOperation } from '@/types/finance';
@@ -9,6 +9,7 @@ type FinanceOperationsListProps = {
   language: AppLanguage;
   onDelete: (id: string) => void;
   deletingId?: string | null;
+  showMoneyKind?: boolean;
 };
 
 export function FinanceOperationsList({
@@ -16,6 +17,7 @@ export function FinanceOperationsList({
   language,
   onDelete,
   deletingId,
+  showMoneyKind = false,
 }: FinanceOperationsListProps) {
   const { t } = useTranslation();
 
@@ -32,6 +34,7 @@ export function FinanceOperationsList({
       {operations.map((operation) => {
         const positive = operation.type === 'INCOME';
         const signed = positive ? operation.amount : -operation.amount;
+        const isCash = operation.moneyKind === 'CASH';
         return (
           <li
             key={operation.id}
@@ -46,6 +49,16 @@ export function FinanceOperationsList({
                 >
                   {positive ? t('finance.income') : t('finance.expense')}
                 </span>
+                {showMoneyKind ? (
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-brand-50/60 px-2 py-0.5 text-xs font-medium text-muted ring-1 ring-line/70">
+                    {isCash ? (
+                      <Banknote className="h-3.5 w-3.5" aria-hidden />
+                    ) : (
+                      <WalletCards className="h-3.5 w-3.5" aria-hidden />
+                    )}
+                    {isCash ? t('finance.moneyKind.cash') : t('finance.moneyKind.electronic')}
+                  </span>
+                ) : null}
                 <span className="text-xs text-muted">
                   {new Date(operation.date).toLocaleDateString(language)}
                 </span>

@@ -123,6 +123,19 @@
     "errors": {
       "amount": "Anna kelvollinen summa",
       "categoryTaken": "Tämänniminen kategoria on jo olemassa"
+    },
+    "moneyKind": {
+      "label": "Rahan muoto",
+      "cash": "Käteinen",
+      "electronic": "Sähköinen",
+      "all": "Kaikki"
+    },
+    "wallets": {
+      "title": "Käteinen ja sähköinen",
+      "subtitle": "Jaksojen saldot rahan muodon mukaan — vain tällä budjettisivulla.",
+      "cashHint": "Setelit ja kolikot",
+      "electronicHint": "Kortti, siirto, tili",
+      "showOps": "Näytä tapahtumat"
     }
   },
   "tasks": {

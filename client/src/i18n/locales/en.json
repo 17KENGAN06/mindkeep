@@ -123,6 +123,19 @@
     "errors": {
       "amount": "Enter a valid amount",
       "categoryTaken": "A category with this name already exists"
+    },
+    "moneyKind": {
+      "label": "Money form",
+      "cash": "Cash",
+      "electronic": "Electronic",
+      "all": "All"
+    },
+    "wallets": {
+      "title": "Cash and electronic",
+      "subtitle": "Period balance split by money form — only on this budget page.",
+      "cashHint": "Bills and coins",
+      "electronicHint": "Card, transfer, account",
+      "showOps": "Show operations"
     }
   },
   "tasks": {

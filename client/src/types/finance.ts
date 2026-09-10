@@ -1,5 +1,6 @@
 export type FinanceCurrency = 'EUR';
 export type FinanceOperationType = 'INCOME' | 'EXPENSE';
+export type FinanceMoneyKind = 'CASH' | 'ELECTRONIC';
 export type FinanceView = 'month' | 'year';
 
 export type FinanceSettings = {
@@ -21,12 +22,19 @@ export type FinanceCategory = {
   _count?: { operations: number };
 };
 
+export type FinanceKindTotals = {
+  income: number;
+  expense: number;
+  balance: number;
+};
+
 export type FinanceOperation = {
   id: string;
   date: string;
   amount: number;
   currency: FinanceCurrency | string;
   type: FinanceOperationType;
+  moneyKind: FinanceMoneyKind;
   comment: string;
   categoryId: string | null;
   userId: string;
@@ -51,6 +59,10 @@ export type FinanceSummary = {
     balance: number;
     openingBalance: number;
     netWithOpening: number;
+  };
+  totalsByKind: {
+    CASH: FinanceKindTotals;
+    ELECTRONIC: FinanceKindTotals;
   };
   byCategory: Array<{ id: string | null; name: string; expense: number }>;
   byMonth: Array<{ month: number; income: number; expense: number; balance: number }>;

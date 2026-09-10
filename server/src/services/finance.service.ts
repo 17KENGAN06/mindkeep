@@ -1,4 +1,4 @@
-import { BudgetCurrency, BudgetOperationType, Prisma } from '@prisma/client';
+import { BudgetCurrency, BudgetMoneyKind, BudgetOperationType, Prisma } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
 import type {
   CreateFinanceCategoryInput,
@@ -13,6 +13,10 @@ const DEFAULT_CURRENCY = BudgetCurrency.EUR;
 
 function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
+}
+
+function emptyKindTotals() {
+  return { income: 0, expense: 0, balance: 0 };
 }
 
 function periodRange(query: FinancePeriodQuery): { from: Date; to: Date } {
@@ -164,6 +168,7 @@ export class FinanceService {
       data: {
         userId,
         type: input.type,
+        moneyKind: input.moneyKind ?? BudgetMoneyKind.ELECTRONIC,
         amount: input.amount,
         currency: DEFAULT_CURRENCY,
         date: parseOperationDate(input.date),
@@ -202,6 +207,10 @@ export class FinanceService {
 
     let income = 0;
     let expense = 0;
+    const byKind = {
+      CASH: emptyKindTotals(),
+      ELECTRONIC: emptyKindTotals(),
+    };
     const byCategory = new Map<string, { id: string | null; name: string; expense: number }>();
     const byMonth = Array.from({ length: 12 }, (_, index) => ({
       month: index + 1,
@@ -211,10 +220,13 @@ export class FinanceService {
     }));
 
     for (const op of operations) {
+      const kind = op.moneyKind === BudgetMoneyKind.CASH ? 'CASH' : 'ELECTRONIC';
       if (op.type === BudgetOperationType.INCOME) {
         income += op.amount;
+        byKind[kind].income = roundMoney(byKind[kind].income + op.amount);
       } else {
         expense += op.amount;
+        byKind[kind].expense = roundMoney(byKind[kind].expense + op.amount);
         const key = op.categoryId ?? 'uncategorized';
         const current = byCategory.get(key) ?? {
           id: op.categoryId,
@@ -224,6 +236,8 @@ export class FinanceService {
         current.expense = roundMoney(current.expense + op.amount);
         byCategory.set(key, current);
       }
+
+      byKind[kind].balance = roundMoney(byKind[kind].income - byKind[kind].expense);
 
       if (query.view === 'year') {
         const bucket = byMonth[op.date.getUTCMonth()]!;
@@ -259,6 +273,7 @@ export class FinanceService {
         openingBalance,
         netWithOpening: roundMoney(openingBalance + income - expense),
       },
+      totalsByKind: byKind,
       byCategory: [...byCategory.values()].sort((a, b) => b.expense - a.expense),
       byMonth: query.view === 'year' ? byMonth : [],
       operations,
