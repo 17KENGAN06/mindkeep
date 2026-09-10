@@ -21,8 +21,10 @@ export function MaterialCard({ material }: MaterialCardProps) {
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-base font-semibold text-ink">{material.title}</h2>
-          {material.description ? (
-            <p className="mt-1 line-clamp-2 text-sm text-muted">{material.description}</p>
+          {material.question?.trim() ? (
+            <p className="mt-1 line-clamp-2 text-sm text-muted">{material.question}</p>
+          ) : material.content?.trim() ? (
+            <p className="mt-1 line-clamp-2 text-sm text-muted">{material.content}</p>
           ) : null}
         </div>
         <Badge tone={material.status === 'ARCHIVED' ? 'neutral' : 'success'}>

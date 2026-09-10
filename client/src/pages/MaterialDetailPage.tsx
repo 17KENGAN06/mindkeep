@@ -1,10 +1,12 @@
 ﻿import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { AnswerReveal } from '@/components/materials/AnswerReveal';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { FormattedText } from '@/components/ui/FormattedText';
 import { Loader } from '@/components/ui/Loader';
 import {
   useArchiveMaterial,
@@ -26,6 +28,8 @@ export function MaterialDetailPage() {
 
   if (isLoading) return <Loader />;
   if (isError || !material) return <ErrorMessage message={t('auth.errors.generic')} />;
+
+  const hasFlashcard = Boolean(material.question?.trim() && material.answer?.trim());
 
   return (
     <div className="space-y-6">
@@ -67,30 +71,38 @@ export function MaterialDetailPage() {
             {t('materials.fields.category')}: {material.category.name}
           </p>
         ) : null}
-        {material.description ? (
-          <div>
-            <h2 className="text-sm font-semibold text-ink">{t('materials.fields.description')}</h2>
-            <p className="mt-1 whitespace-pre-wrap text-sm text-muted">{material.description}</p>
-          </div>
+
+        {hasFlashcard ? (
+          <AnswerReveal question={material.question!} answer={material.answer!} />
         ) : null}
-        {material.content ? (
+
+        {material.content?.trim() ? (
           <div>
             <h2 className="text-sm font-semibold text-ink">{t('materials.fields.content')}</h2>
-            <p className="mt-1 whitespace-pre-wrap text-sm text-muted">{material.content}</p>
+            <div className="mt-2">
+              <FormattedText text={material.content} />
+            </div>
           </div>
         ) : null}
-        {material.question ? (
+
+        {!hasFlashcard && material.question?.trim() ? (
           <div>
             <h2 className="text-sm font-semibold text-ink">{t('materials.fields.question')}</h2>
-            <p className="mt-1 whitespace-pre-wrap text-sm text-muted">{material.question}</p>
+            <div className="mt-2">
+              <FormattedText text={material.question} />
+            </div>
           </div>
         ) : null}
-        {material.answer ? (
+
+        {!hasFlashcard && material.answer?.trim() ? (
           <div>
             <h2 className="text-sm font-semibold text-ink">{t('materials.fields.answer')}</h2>
-            <p className="mt-1 whitespace-pre-wrap text-sm text-muted">{material.answer}</p>
+            <div className="mt-2">
+              <FormattedText text={material.answer} />
+            </div>
           </div>
         ) : null}
+
         {material.sourceUrl ? (
           <div>
             <h2 className="text-sm font-semibold text-ink">{t('materials.fields.sourceUrl')}</h2>
@@ -98,7 +110,7 @@ export function MaterialDetailPage() {
               href={material.sourceUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-1 block break-all text-sm"
+              className="mt-1 block break-all text-sm text-brand-500"
             >
               {material.sourceUrl}
             </a>

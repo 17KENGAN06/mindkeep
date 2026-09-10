@@ -528,7 +528,10 @@
       "sourceUrl": "Lähdelinkki",
       "learnedAt": "Oppimispäivä",
       "category": "Kategoria",
-      "noCategory": "Ei kategoriaa"
+      "noCategory": "Ei kategoriaa",
+      "contentHint": "Voit liittää tekstiä ChatGPT:stä ja muista lähteistä — muotoilu säilyy.",
+      "questionHint": "Tämä kysymys näkyy kertauksessa.",
+      "answerHint": "Vastaus avautuu vasta, kun napautat korttia."
     },
     "filters": {
       "search": "Haku",
@@ -556,7 +559,10 @@
       "titleRequired": "Otsikko on pakollinen",
       "learnedAtRequired": "Oppimispäivä on pakollinen",
       "url": "Anna kelvollinen URL"
-    }
+    },
+    "revealAnswer": "Näytä vastaus",
+    "hideAnswer": "Piilota vastaus",
+    "showNotes": "Näytä materiaalin muistiinpanot"
   },
   "review": {
     "title": "Kertaa tänään",

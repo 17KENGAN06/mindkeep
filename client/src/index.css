@@ -628,3 +628,134 @@ html[data-theme='light'] {
   }
 }
 
+.formatted-text {
+  overflow-wrap: anywhere;
+}
+
+.formatted-text > :first-child {
+  margin-top: 0;
+}
+
+.formatted-text > :last-child {
+  margin-bottom: 0;
+}
+
+.formatted-text p {
+  margin: 0.55em 0;
+}
+
+.formatted-text h1,
+.formatted-text h2,
+.formatted-text h3,
+.formatted-text h4 {
+  color: var(--app-ink);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0.9em 0 0.4em;
+}
+
+.formatted-text h1 {
+  font-size: 1.25rem;
+}
+
+.formatted-text h2 {
+  font-size: 1.125rem;
+}
+
+.formatted-text h3,
+.formatted-text h4 {
+  font-size: 1rem;
+}
+
+.formatted-text ul,
+.formatted-text ol {
+  margin: 0.55em 0;
+  padding-left: 1.25rem;
+}
+
+.formatted-text ul {
+  list-style: disc;
+}
+
+.formatted-text ol {
+  list-style: decimal;
+}
+
+.formatted-text li {
+  margin: 0.2em 0;
+}
+
+.formatted-text li::marker {
+  color: var(--app-brand-500);
+}
+
+.formatted-text strong {
+  color: var(--app-ink);
+  font-weight: 650;
+}
+
+.formatted-text em {
+  font-style: italic;
+}
+
+.formatted-text code {
+  border-radius: 0.4rem;
+  background: var(--app-brand-50);
+  color: var(--app-ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+}
+
+.formatted-text pre {
+  margin: 0.75em 0;
+  overflow-x: auto;
+  border-radius: 0.9rem;
+  border: 1px solid var(--app-line);
+  background: var(--app-brand-50);
+  padding: 0.85rem 1rem;
+}
+
+.formatted-text pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.formatted-text blockquote {
+  margin: 0.75em 0;
+  border-left: 3px solid var(--app-brand-500);
+  padding-left: 0.85rem;
+  color: var(--app-muted);
+}
+
+.formatted-text a {
+  color: var(--app-brand-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.formatted-text hr {
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid var(--app-line);
+}
+
+.formatted-text table {
+  width: 100%;
+  margin: 0.75em 0;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.formatted-text th,
+.formatted-text td {
+  border: 1px solid var(--app-line);
+  padding: 0.4rem 0.55rem;
+  text-align: left;
+}
+
+.formatted-text th {
+  background: var(--app-brand-50);
+  color: var(--app-ink);
+}
+

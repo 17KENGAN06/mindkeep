@@ -3,6 +3,9 @@ import type { ReminderIntervalType, ReminderStatus } from '@/types/material';
 export type ReminderMaterial = {
   id: string;
   title: string;
+  content: string;
+  question: string | null;
+  answer: string | null;
   learnedAt: string;
   status: 'ACTIVE' | 'ARCHIVED';
   category: { id: string; name: string } | null;

@@ -11,6 +11,9 @@ const reminderInclude = {
     select: {
       id: true,
       title: true,
+      content: true,
+      question: true,
+      answer: true,
       learnedAt: true,
       status: true,
       category: {

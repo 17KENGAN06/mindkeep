@@ -32,7 +32,6 @@ type MaterialFormProps = {
 function toFormValues(material?: Material): MaterialFormValues {
   return {
     title: material?.title ?? '',
-    description: material?.description ?? '',
     content: material?.content ?? '',
     question: material?.question ?? '',
     answer: material?.answer ?? '',
@@ -64,7 +63,7 @@ export function MaterialForm({
   const submit = handleSubmit(async (values) => {
     await onSubmit({
       title: values.title,
-      description: values.description ?? '',
+      description: '',
       content: values.content ?? '',
       question: values.question?.trim() ? values.question.trim() : null,
       answer: values.answer?.trim() ? values.answer.trim() : null,
@@ -78,22 +77,21 @@ export function MaterialForm({
     <form className="space-y-4" onSubmit={submit} noValidate>
       <Input label={t('materials.fields.title')} error={errors.title?.message} {...register('title')} />
       <Textarea
-        label={t('materials.fields.description')}
-        error={errors.description?.message}
-        {...register('description')}
-      />
-      <Textarea
         label={t('materials.fields.content')}
+        hint={t('materials.fields.contentHint')}
         error={errors.content?.message}
+        rows={8}
         {...register('content')}
       />
       <Textarea
         label={t('materials.fields.question')}
+        hint={t('materials.fields.questionHint')}
         error={errors.question?.message}
         {...register('question')}
       />
       <Textarea
         label={t('materials.fields.answer')}
+        hint={t('materials.fields.answerHint')}
         error={errors.answer?.message}
         {...register('answer')}
       />

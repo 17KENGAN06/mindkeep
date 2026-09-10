@@ -3,7 +3,6 @@ import { z } from 'zod';
 export function createMaterialFormSchema(t: (key: string) => string) {
   return z.object({
     title: z.string().trim().min(1, t('materials.errors.titleRequired')).max(200),
-    description: z.string().trim().max(2000).optional().or(z.literal('')),
     content: z.string().trim().max(20000).optional().or(z.literal('')),
     question: z.string().trim().max(5000).optional().or(z.literal('')),
     answer: z.string().trim().max(5000).optional().or(z.literal('')),

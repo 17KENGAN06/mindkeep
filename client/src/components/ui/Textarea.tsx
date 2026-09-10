@@ -3,9 +3,10 @@ import type { TextareaHTMLAttributes } from 'react';
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label: string;
   error?: string;
+  hint?: string;
 };
 
-export function Textarea({ label, error, id, className = '', ...props }: TextareaProps) {
+export function Textarea({ label, error, hint, id, className = '', ...props }: TextareaProps) {
   const inputId = id ?? props.name;
 
   return (
@@ -17,10 +18,16 @@ export function Textarea({ label, error, id, className = '', ...props }: Textare
           error ? 'border-red-400' : 'border-line'
         } ${className}`}
         aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
         {...props}
       />
+      {hint && !error ? (
+        <span id={`${inputId}-hint`} className="block text-xs text-muted">
+          {hint}
+        </span>
+      ) : null}
       {error ? (
-        <span className="block text-xs text-red-500" role="alert">
+        <span id={`${inputId}-error`} className="block text-xs text-red-500" role="alert">
           {error}
         </span>
       ) : null}

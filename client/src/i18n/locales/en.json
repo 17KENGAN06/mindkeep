@@ -528,7 +528,10 @@
       "sourceUrl": "Source URL",
       "learnedAt": "Learning date",
       "category": "Category",
-      "noCategory": "No category"
+      "noCategory": "No category",
+      "contentHint": "You can paste text from ChatGPT and other sources — formatting will be preserved.",
+      "questionHint": "This question will be shown during review.",
+      "answerHint": "The answer opens only after you tap the reveal card."
     },
     "filters": {
       "search": "Search",
@@ -556,7 +559,10 @@
       "titleRequired": "Title is required",
       "learnedAtRequired": "Learning date is required",
       "url": "Enter a valid URL"
-    }
+    },
+    "revealAnswer": "Show answer",
+    "hideAnswer": "Hide answer",
+    "showNotes": "Show material notes"
   },
   "review": {
     "title": "Review today",
