@@ -66,13 +66,11 @@
   },
   "finance": {
     "budgetTitle": "Budget",
-    "budgetSubtitle": "Track income and expenses in any currency — totals stay separate per currency.",
+    "budgetSubtitle": "Track income and expenses in euros — simple and clear.",
     "transactionsTitle": "Transactions",
     "transactionsSubtitle": "All income and expenses for the selected period.",
     "categoriesTitle": "Expense categories",
     "categoriesSubtitle": "Group expenses by category.",
-    "operationCurrency": "Operation currency",
-    "multiCurrencyHint": "Amounts in different currencies are not converted or added together.",
     "viewMonth": "Month",
     "viewYear": "Year",
     "year": "Year",
@@ -105,12 +103,6 @@
     "operationsCount": "Operations: {{count}}",
     "deleteCategoryTitle": "Delete category?",
     "deleteCategoryDescription": "Category “{{name}}” will be deleted. Operations stay without a category.",
-    "currencies": {
-      "UAH": "Hryvnia (UAH)",
-      "RUB": "Ruble (RUB)",
-      "EUR": "Euro (EUR)",
-      "USD": "US Dollar (USD)"
-    },
     "months": {
       "1": "January",
       "2": "February",
@@ -191,7 +183,7 @@
       },
       "finance": {
         "title": "Personal finance",
-        "text": "Income and expenses in multiple currencies, categories, and a clear period balance."
+        "text": "Income and expenses in euros, categories, and a clear period balance."
       }
     },
     "howTitle": "How it works",
@@ -208,7 +200,7 @@
       },
       "3": {
         "title": "Keep money in view",
-        "text": "Log income or expense in the right currency — totals stay honest and separate."
+        "text": "Log income or expense in euros — the period summary stays honest and clear."
       }
     },
     "rhythmTitle": "A memory rhythm without complex algorithms",
@@ -232,7 +224,7 @@
       },
       "money": {
         "title": "Budget without confusion",
-        "text": "Multi-currency operations, expense categories, and month or year summaries."
+        "text": "Euro operations, expense categories, and month or year summaries."
       },
       "calendar": {
         "title": "Calendars and overview",
@@ -306,7 +298,7 @@
       },
       {
         "title": "Log money movement",
-        "body": "In Budget, record income or expense and the operation currency. Totals stay separate per currency."
+        "body": "In Budget, record income or expense. All amounts are kept in euros."
       },
       {
         "title": "Return via calendars",
@@ -317,7 +309,7 @@
     "rules": [
       "Tasks, finance, and review share one account but stay out of each other’s way.",
       "The 3 / 7 / 30 review schedule is counted from the learning date and does not shift after completion.",
-      "Amounts in different currencies are not converted or merged into one total.",
+      "The budget is kept in euros — no conversion and no extra complexity.",
       "Your data belongs only to your account and is not visible to other users."
     ],
     "faqTitle": "FAQ",
@@ -335,8 +327,8 @@
         "answer": "Words, notes, formulas, rules, work decisions, links, or Q&A — anything you want to revisit."
       },
       {
-        "question": "How does multi-currency budget work?",
-        "answer": "Each operation keeps its own currency. The summary shows separate totals, e.g. +1000 USD and −500 EUR, without forced conversion."
+        "question": "Which currency is the budget in?",
+        "answer": "Mindkeep currently keeps finance in euros. That keeps summaries simple and avoids exchange-rate confusion."
       }
     ],
     "ctaTitle": "Take the first step today",
@@ -657,7 +649,7 @@
   "footer": {
     "craftedLabel": "Property of",
     "tagline": "Where the day finds order — and knowledge and money stay in view.",
-    "about": "Mindkeep brings together daily tasks, personal finance, and knowledge review on a 3 · 7 · 30 rhythm — calmly, without extra noise.",
+    "about": "Mindkeep brings together daily tasks, personal finance in euros, and knowledge review on a 3 · 7 · 30 rhythm — calmly, without extra noise.",
     "linksLabel": "Navigate",
     "visitStudio": "Studio site",
     "privacy": "Privacy",

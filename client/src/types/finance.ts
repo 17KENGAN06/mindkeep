@@ -1,4 +1,4 @@
-export type FinanceCurrency = 'RUB' | 'USD' | 'EUR' | 'UAH';
+export type FinanceCurrency = 'EUR';
 export type FinanceOperationType = 'INCOME' | 'EXPENSE';
 export type FinanceView = 'month' | 'year';
 
@@ -25,7 +25,7 @@ export type FinanceOperation = {
   id: string;
   date: string;
   amount: number;
-  currency: FinanceCurrency;
+  currency: FinanceCurrency | string;
   type: FinanceOperationType;
   comment: string;
   categoryId: string | null;
@@ -35,15 +35,9 @@ export type FinanceOperation = {
   category?: { id: string; name: string } | null;
 };
 
-export type FinanceCurrencyTotals = {
-  currency: FinanceCurrency;
-  income: number;
-  expense: number;
-  balance: number;
-};
-
 export type FinanceSummary = {
   settings: FinanceSettings;
+  currency: FinanceCurrency;
   period: {
     view: FinanceView;
     year: number;
@@ -51,20 +45,15 @@ export type FinanceSummary = {
     from: string;
     to: string;
   };
-  totalsByCurrency: FinanceCurrencyTotals[];
-  opening: {
-    amount: number;
-    currency: FinanceCurrency;
+  totals: {
+    income: number;
+    expense: number;
+    balance: number;
+    openingBalance: number;
+    netWithOpening: number;
   };
-  byCategory: Array<{
-    id: string | null;
-    name: string;
-    expenses: Array<{ currency: FinanceCurrency; expense: number }>;
-  }>;
-  byMonth: Array<{
-    month: number;
-    byCurrency: FinanceCurrencyTotals[];
-  }>;
+  byCategory: Array<{ id: string | null; name: string; expense: number }>;
+  byMonth: Array<{ month: number; income: number; expense: number; balance: number }>;
   operations: FinanceOperation[];
 };
 

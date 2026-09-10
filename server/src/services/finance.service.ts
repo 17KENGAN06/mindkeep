@@ -9,12 +9,7 @@ import type {
 } from '@/validations/finance.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 
-const CURRENCY_ORDER: BudgetCurrency[] = [
-  BudgetCurrency.EUR,
-  BudgetCurrency.USD,
-  BudgetCurrency.UAH,
-  BudgetCurrency.RUB,
-];
+const DEFAULT_CURRENCY = BudgetCurrency.EUR;
 
 function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
@@ -43,32 +38,6 @@ function parseOperationDate(value: string): Date {
   return new Date(value);
 }
 
-function sortCurrencies(currencies: Iterable<BudgetCurrency>): BudgetCurrency[] {
-  return [...currencies].sort(
-    (a, b) => CURRENCY_ORDER.indexOf(a) - CURRENCY_ORDER.indexOf(b),
-  );
-}
-
-type CurrencyBucket = {
-  currency: BudgetCurrency;
-  income: number;
-  expense: number;
-  balance: number;
-};
-
-function emptyBucket(currency: BudgetCurrency): CurrencyBucket {
-  return { currency, income: 0, expense: 0, balance: 0 };
-}
-
-function finalizeBucket(bucket: CurrencyBucket): CurrencyBucket {
-  return {
-    currency: bucket.currency,
-    income: roundMoney(bucket.income),
-    expense: roundMoney(bucket.expense),
-    balance: roundMoney(bucket.income - bucket.expense),
-  };
-}
-
 export class FinanceService {
   async getOrCreateSettings(userId: string) {
     const existing = await prisma.budgetSettings.findUnique({ where: { userId } });
@@ -77,8 +46,8 @@ export class FinanceService {
     return prisma.budgetSettings.create({
       data: {
         userId,
-        displayCurrency: BudgetCurrency.EUR,
-        openingCurrency: BudgetCurrency.EUR,
+        displayCurrency: DEFAULT_CURRENCY,
+        openingCurrency: DEFAULT_CURRENCY,
         openingBalance: 0,
       },
     });
@@ -89,9 +58,9 @@ export class FinanceService {
     return prisma.budgetSettings.update({
       where: { userId },
       data: {
-        displayCurrency: input.displayCurrency,
+        displayCurrency: DEFAULT_CURRENCY,
+        openingCurrency: DEFAULT_CURRENCY,
         ...(input.openingBalance !== undefined ? { openingBalance: input.openingBalance } : {}),
-        ...(input.openingCurrency ? { openingCurrency: input.openingCurrency } : {}),
       },
     });
   }
@@ -177,7 +146,7 @@ export class FinanceService {
   }
 
   async createOperation(userId: string, input: CreateFinanceOperationInput) {
-    const settings = await this.getOrCreateSettings(userId);
+    await this.getOrCreateSettings(userId);
 
     if (input.categoryId) {
       const category = await prisma.budgetCategory.findFirst({
@@ -191,20 +160,18 @@ export class FinanceService {
       }
     }
 
-    const operation = await prisma.budgetOperation.create({
+    return prisma.budgetOperation.create({
       data: {
         userId,
         type: input.type,
         amount: input.amount,
-        currency: input.currency ?? settings.displayCurrency,
+        currency: DEFAULT_CURRENCY,
         date: parseOperationDate(input.date),
         comment: input.comment ?? '',
         categoryId: input.categoryId ?? null,
       },
       include: { category: true },
     });
-
-    return operation;
   }
 
   async removeOperation(userId: string, id: string) {
@@ -233,75 +200,51 @@ export class FinanceService {
       orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
     });
 
-    const totalsMap = new Map<BudgetCurrency, CurrencyBucket>();
-    const byCategoryMap = new Map<
-      string,
-      {
-        id: string | null;
-        name: string;
-        expenses: Map<BudgetCurrency, number>;
-      }
-    >();
+    let income = 0;
+    let expense = 0;
+    const byCategory = new Map<string, { id: string | null; name: string; expense: number }>();
     const byMonth = Array.from({ length: 12 }, (_, index) => ({
       month: index + 1,
-      byCurrency: new Map<BudgetCurrency, CurrencyBucket>(),
+      income: 0,
+      expense: 0,
+      balance: 0,
     }));
 
     for (const op of operations) {
-      const bucket = totalsMap.get(op.currency) ?? emptyBucket(op.currency);
       if (op.type === BudgetOperationType.INCOME) {
-        bucket.income += op.amount;
+        income += op.amount;
       } else {
-        bucket.expense += op.amount;
+        expense += op.amount;
         const key = op.categoryId ?? 'uncategorized';
-        const category = byCategoryMap.get(key) ?? {
+        const current = byCategory.get(key) ?? {
           id: op.categoryId,
           name: op.category?.name ?? '—',
-          expenses: new Map<BudgetCurrency, number>(),
+          expense: 0,
         };
-        category.expenses.set(
-          op.currency,
-          roundMoney((category.expenses.get(op.currency) ?? 0) + op.amount),
-        );
-        byCategoryMap.set(key, category);
+        current.expense = roundMoney(current.expense + op.amount);
+        byCategory.set(key, current);
       }
-      totalsMap.set(op.currency, bucket);
 
       if (query.view === 'year') {
-        const monthBucket = byMonth[op.date.getUTCMonth()]!;
-        const monthCurrency =
-          monthBucket.byCurrency.get(op.currency) ?? emptyBucket(op.currency);
+        const bucket = byMonth[op.date.getUTCMonth()]!;
         if (op.type === BudgetOperationType.INCOME) {
-          monthCurrency.income += op.amount;
+          bucket.income = roundMoney(bucket.income + op.amount);
         } else {
-          monthCurrency.expense += op.amount;
+          bucket.expense = roundMoney(bucket.expense + op.amount);
         }
-        monthBucket.byCurrency.set(op.currency, monthCurrency);
+        bucket.balance = roundMoney(bucket.income - bucket.expense);
       }
     }
 
-    // Include opening currency in totals view only as metadata — not mixed into period ops.
-    const totalsByCurrency = sortCurrencies(totalsMap.keys()).map((currency) =>
-      finalizeBucket(totalsMap.get(currency)!),
-    );
-
-    const byCategory = [...byCategoryMap.values()]
-      .map((item) => ({
-        id: item.id,
-        name: item.name,
-        expenses: sortCurrencies(item.expenses.keys()).map((currency) => ({
-          currency,
-          expense: item.expenses.get(currency) ?? 0,
-        })),
-      }))
-      .sort((a, b) => {
-        const sumA = a.expenses.reduce((s, e) => s + e.expense, 0);
-        const sumB = b.expenses.reduce((s, e) => s + e.expense, 0);
-        return sumB - sumA;
-      });
+    const openingBalance = roundMoney(settings.openingBalance);
 
     return {
-      settings,
+      settings: {
+        ...settings,
+        displayCurrency: DEFAULT_CURRENCY,
+        openingCurrency: DEFAULT_CURRENCY,
+      },
+      currency: DEFAULT_CURRENCY,
       period: {
         view: query.view,
         year: query.year,
@@ -309,21 +252,15 @@ export class FinanceService {
         from: from.toISOString(),
         to: to.toISOString(),
       },
-      totalsByCurrency,
-      opening: {
-        amount: roundMoney(settings.openingBalance),
-        currency: settings.openingCurrency,
+      totals: {
+        income: roundMoney(income),
+        expense: roundMoney(expense),
+        balance: roundMoney(income - expense),
+        openingBalance,
+        netWithOpening: roundMoney(openingBalance + income - expense),
       },
-      byCategory,
-      byMonth:
-        query.view === 'year'
-          ? byMonth.map((item) => ({
-              month: item.month,
-              byCurrency: sortCurrencies(item.byCurrency.keys()).map((currency) =>
-                finalizeBucket(item.byCurrency.get(currency)!),
-              ),
-            }))
-          : [],
+      byCategory: [...byCategory.values()].sort((a, b) => b.expense - a.expense),
+      byMonth: query.view === 'year' ? byMonth : [],
       operations,
     };
   }

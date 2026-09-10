@@ -66,13 +66,11 @@
   },
   "finance": {
     "budgetTitle": "Budjetti",
-    "budgetSubtitle": "Kirjaa tulot ja menot eri valuutoissa — yhteenvedot pysyvät valuuttakohtaisina.",
+    "budgetSubtitle": "Seuraa tuloja ja menoja euroissa — yksinkertaisesti ja selkeästi.",
     "transactionsTitle": "Tapahtumat",
     "transactionsSubtitle": "Kaikki tulot ja menot valitulta jaksolta.",
     "categoriesTitle": "Kulujen kategoriat",
     "categoriesSubtitle": "Ryhmittele kulut kategorioihin.",
-    "operationCurrency": "Tapahtuman valuutta",
-    "multiCurrencyHint": "Eri valuuttoja ei muunneta eikä lasketa yhteen.",
     "viewMonth": "Kuukausi",
     "viewYear": "Vuosi",
     "year": "Vuosi",
@@ -105,12 +103,6 @@
     "operationsCount": "Tapahtumia: {{count}}",
     "deleteCategoryTitle": "Poistetaanko kategoria?",
     "deleteCategoryDescription": "Kategoria “{{name}}” poistetaan. Tapahtumat jäävät ilman kategoriaa.",
-    "currencies": {
-      "UAH": "Hryvnia (UAH)",
-      "RUB": "Rubeli (RUB)",
-      "EUR": "Euro (EUR)",
-      "USD": "Dollari (USD)"
-    },
     "months": {
       "1": "Tammikuu",
       "2": "Helmikuu",
@@ -191,7 +183,7 @@
       },
       "finance": {
         "title": "Henkilökohtainen talous",
-        "text": "Tulot ja menot eri valuutoissa, kategoriat ja selkeä jakson saldo."
+        "text": "Tulot ja menot euroissa, kategoriat ja selkeä jakson saldo."
       }
     },
     "howTitle": "Näin se toimii",
@@ -208,7 +200,7 @@
       },
       "3": {
         "title": "Pidä raha näkyvissä",
-        "text": "Kirjaa tulo tai meno oikeassa valuutassa — yhteenvedot pysyvät rehellisinä ja erillisinä."
+        "text": "Kirjaa tulo tai meno euroissa — jakson yhteenveto pysyy rehellisenä ja selkeänä."
       }
     },
     "rhythmTitle": "Muistin rytmi ilman monimutkaisia algoritmeja",
@@ -232,7 +224,7 @@
       },
       "money": {
         "title": "Budjetti ilman sekaannusta",
-        "text": "Monivaluuttaiset tapahtumat, menokategoriat sekä kuukausi- tai vuosiyhteenveto."
+        "text": "Eurotapahtumat, menokategoriat sekä kuukausi- tai vuosiyhteenveto."
       },
       "calendar": {
         "title": "Kalenterit ja yleiskuva",
@@ -306,7 +298,7 @@
       },
       {
         "title": "Kirjaa rahaliikenne",
-        "body": "Budjetissa merkitse tulo tai meno ja tapahtuman valuutta. Yhteenvedot pysyvät valuuttakohtaisina."
+        "body": "Budjetissa merkitse tulo tai meno. Kaikki summat pidetään euroissa."
       },
       {
         "title": "Palaa kalenterien kautta",
@@ -317,7 +309,7 @@
     "rules": [
       "Tehtävät, talous ja kertaus jakavat saman tilin, mutta eivät häiritse toisiaan.",
       "Kertausaikataulu 3 / 7 / 30 lasketaan oppimispäivästä eikä siirry suorituksen jälkeen.",
-      "Eri valuuttoja ei muunneta eikä yhdistetä yhdeksi summaksi.",
+      "Budjetti pidetään euroissa — ilman muunnoksia ja ylimääräistä monimutkaisuutta.",
       "Tietosi kuuluvat vain tilillesi eivätkä näy muille käyttäjille."
     ],
     "faqTitle": "UKK",
@@ -335,8 +327,8 @@
         "answer": "Sanoja, muistiinpanoja, kaavoja, sääntöjä, työratkaisuja, linkkejä tai kysymys-vastauspareja — kaikkea, johon haluat palata."
       },
       {
-        "question": "Miten monivaluuttainen budjetti toimii?",
-        "answer": "Jokaisella tapahtumalla on oma valuutta. Yhteenveto näyttää erilliset summat, esim. +1000 USD ja −500 EUR, ilman pakotettua muunnosta."
+        "question": "Missä valuutassa budjetti on?",
+        "answer": "Mindkeep pitää talouden tällä hetkellä euroissa. Näin yhteenvedot pysyvät yksinkertaisina ilman kurssihämmennystä."
       }
     ],
     "ctaTitle": "Ota ensimmäinen askel tänään",
@@ -657,7 +649,7 @@
   "footer": {
     "craftedLabel": "Omistaja",
     "tagline": "Missä päivä löytää järjestyksen — ja tieto sekä raha pysyvät näkyvissä.",
-    "about": "Mindkeep yhdistää päivittäiset tehtävät, henkilökohtaisen talouden ja tiedon kertauksen rytmillä 3 · 7 · 30 — rauhallisesti, ilman ylimääräistä melua.",
+    "about": "Mindkeep yhdistää päivittäiset tehtävät, henkilökohtaisen talouden euroissa ja tiedon kertauksen rytmillä 3 · 7 · 30 — rauhallisesti, ilman ylimääräistä melua.",
     "linksLabel": "Navigointi",
     "visitStudio": "Studion sivusto",
     "privacy": "Tietosuoja",

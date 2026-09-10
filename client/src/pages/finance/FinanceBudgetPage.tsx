@@ -10,10 +10,8 @@ import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
 import {
   currentPeriodDefaults,
-  FINANCE_CURRENCIES,
   formatMoney,
   formatSignedMoney,
-  pickFieldByCurrency,
 } from '@/features/finance/financeUtils';
 import {
   useCreateFinanceOperation,
@@ -22,48 +20,13 @@ import {
   useFinanceSummary,
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
-import type { FinanceCurrency, FinanceCurrencyTotals, FinanceOperationType, FinanceView } from '@/types/finance';
+import type { FinanceOperationType, FinanceView } from '@/types/finance';
 
 function todayInputValue(): string {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
   return `${now.getFullYear()}-${month}-${day}`;
-}
-
-function CurrencyAmounts({
-  items,
-  language,
-  tone = 'default',
-  signed = false,
-}: {
-  items: Array<{ amount: number; currency: FinanceCurrency }>;
-  language: AppLanguage;
-  tone?: 'good' | 'bad' | 'default';
-  signed?: boolean;
-}) {
-  const color =
-    tone === 'good' ? 'text-brand-500' : tone === 'bad' ? 'text-red-400' : 'text-ink';
-
-  if (items.length === 0) {
-    return <p className={`mt-2 text-xl font-semibold ${color}`}>—</p>;
-  }
-
-  return (
-    <ul className="mt-2 space-y-1">
-      {items.map((item) => (
-        <li key={item.currency} className={`text-xl font-semibold ${color}`}>
-          {signed
-            ? formatSignedMoney(item.amount, item.currency, language)
-            : formatMoney(item.amount, item.currency, language)}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function monthHasActivity(item: { byCurrency: FinanceCurrencyTotals[] }): boolean {
-  return item.byCurrency.some((row) => row.income !== 0 || row.expense !== 0);
 }
 
 export function FinanceBudgetPage() {
@@ -79,7 +42,6 @@ export function FinanceBudgetPage() {
 
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
   const [amount, setAmount] = useState('');
-  const [currency, setCurrency] = useState<FinanceCurrency>('EUR');
   const [date, setDate] = useState(todayInputValue());
   const [comment, setComment] = useState('');
   const [categoryId, setCategoryId] = useState('');
@@ -103,8 +65,6 @@ export function FinanceBudgetPage() {
 
   const summary = summaryQuery.data;
   const categories = categoriesQuery.data ?? [];
-  const totals = summary.totalsByCurrency;
-  const defaultCurrency = summary.settings.displayCurrency;
 
   const onCreate = async (event: FormEvent) => {
     event.preventDefault();
@@ -119,7 +79,6 @@ export function FinanceBudgetPage() {
       await createOperation.mutateAsync({
         type,
         amount: parsedAmount,
-        currency: currency || defaultCurrency,
         date,
         comment,
         categoryId: categoryId || null,
@@ -148,7 +107,9 @@ export function FinanceBudgetPage() {
     }
   };
 
-  const activeMonths = summary.byMonth.filter(monthHasActivity);
+  const activeMonths = summary.byMonth.filter(
+    (item) => item.income !== 0 || item.expense !== 0,
+  );
 
   return (
     <div className="space-y-6">
@@ -166,43 +127,50 @@ export function FinanceBudgetPage() {
         onMonthChange={setMonth}
       />
 
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
-          <p className="text-xs font-medium tracking-wide text-muted uppercase">
-            {t('finance.totalIncome')}
-          </p>
-          <CurrencyAmounts
-            items={pickFieldByCurrency(totals, 'income')}
-            language={language}
-            tone="good"
-            signed
-          />
-        </div>
-        <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
-          <p className="text-xs font-medium tracking-wide text-muted uppercase">
-            {t('finance.totalExpense')}
-          </p>
-          <CurrencyAmounts
-            items={pickFieldByCurrency(totals, 'expense').map((item) => ({
-              ...item,
-              amount: -Math.abs(item.amount),
-            }))}
-            language={language}
-            tone="bad"
-            signed
-          />
-        </div>
-        <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line sm:col-span-2 lg:col-span-1">
-          <p className="text-xs font-medium tracking-wide text-muted uppercase">
-            {t('finance.balance')}
-          </p>
-          <CurrencyAmounts
-            items={pickFieldByCurrency(totals, 'balance')}
-            language={language}
-            signed
-          />
-          <p className="mt-3 text-xs text-muted">{t('finance.multiCurrencyHint')}</p>
-        </div>
+      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {[
+          {
+            label: t('finance.totalIncome'),
+            value: summary.totals.income,
+            tone: 'good' as const,
+            signed: true,
+          },
+          {
+            label: t('finance.totalExpense'),
+            value: -summary.totals.expense,
+            tone: 'bad' as const,
+            signed: true,
+          },
+          {
+            label: t('finance.balance'),
+            value: summary.totals.balance,
+            tone: 'default' as const,
+            signed: true,
+          },
+          {
+            label: t('finance.netWithOpening'),
+            value: summary.totals.netWithOpening,
+            tone: 'default' as const,
+            signed: true,
+          },
+        ].map((card) => (
+          <div key={card.label} className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
+            <p className="text-xs font-medium tracking-wide text-muted uppercase">{card.label}</p>
+            <p
+              className={`mt-2 text-2xl font-semibold ${
+                card.tone === 'good'
+                  ? 'text-brand-500'
+                  : card.tone === 'bad'
+                    ? 'text-red-400'
+                    : 'text-ink'
+              }`}
+            >
+              {card.signed
+                ? formatSignedMoney(card.value, language)
+                : formatMoney(card.value, language)}
+            </p>
+          </div>
+        ))}
       </section>
 
       {view === 'year' && activeMonths.length > 0 ? (
@@ -212,24 +180,15 @@ export function FinanceBudgetPage() {
             {activeMonths.map((item) => (
               <div key={item.month} className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
                 <p className="text-sm font-medium text-ink">{t(`finance.months.${item.month}`)}</p>
-                <ul className="mt-2 space-y-2">
-                  {item.byCurrency.map((row) => (
-                    <li key={row.currency} className="text-xs text-muted">
-                      <span className="font-medium text-ink">{row.currency}</span>
-                      <span className="mt-0.5 block">
-                        {t('finance.income')}:{' '}
-                        {formatSignedMoney(row.income, row.currency, language)}
-                      </span>
-                      <span className="block">
-                        {t('finance.expense')}:{' '}
-                        {formatSignedMoney(-row.expense, row.currency, language)}
-                      </span>
-                      <span className="mt-0.5 block font-semibold text-ink">
-                        {formatSignedMoney(row.balance, row.currency, language)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="mt-1 text-xs text-muted">
+                  {t('finance.income')}: {formatSignedMoney(item.income, language)}
+                </p>
+                <p className="text-xs text-muted">
+                  {t('finance.expense')}: {formatSignedMoney(-item.expense, language)}
+                </p>
+                <p className="mt-1 text-sm font-semibold text-ink">
+                  {formatSignedMoney(item.balance, language)}
+                </p>
               </div>
             ))}
           </div>
@@ -256,15 +215,6 @@ export function FinanceBudgetPage() {
             value={amount}
             onChange={(event) => setAmount(event.target.value)}
             required
-          />
-          <Select
-            label={t('finance.operationCurrency')}
-            value={currency}
-            onChange={(event) => setCurrency(event.target.value as FinanceCurrency)}
-            options={FINANCE_CURRENCIES.map((code) => ({
-              value: code,
-              label: t(`finance.currencies.${code}`),
-            }))}
           />
           <Input
             label={t('finance.date')}

@@ -1,6 +1,6 @@
 import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { formatMoney, formatSignedMoney } from '@/features/finance/financeUtils';
+import { formatSignedMoney } from '@/features/finance/financeUtils';
 import type { FinanceOperation } from '@/types/finance';
 import type { AppLanguage } from '@/i18n';
 
@@ -61,9 +61,8 @@ export function FinanceOperationsList({
             <div className="flex items-center justify-between gap-3 sm:justify-end">
               <p
                 className={`text-base font-semibold ${positive ? 'text-brand-500' : 'text-red-400'}`}
-                title={formatMoney(operation.amount, operation.currency, language)}
               >
-                {formatSignedMoney(signed, operation.currency, language)}
+                {formatSignedMoney(signed, language)}
               </p>
               <button
                 type="button"

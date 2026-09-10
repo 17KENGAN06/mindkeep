@@ -1,53 +1,24 @@
-import type { FinanceCurrency, FinanceCurrencyTotals, FinanceView } from '@/types/finance';
+import type { FinanceView } from '@/types/finance';
 
-export const FINANCE_CURRENCIES: FinanceCurrency[] = ['UAH', 'RUB', 'EUR', 'USD'];
+export const FINANCE_CURRENCY = 'EUR' as const;
 
-export function formatMoney(amount: number, currency: FinanceCurrency, locale: string): string {
+export function formatMoney(amount: number, locale: string): string {
   try {
     return new Intl.NumberFormat(locale, {
       style: 'currency',
-      currency,
+      currency: FINANCE_CURRENCY,
       maximumFractionDigits: 2,
     }).format(amount);
   } catch {
-    return `${amount.toFixed(2)} ${currency}`;
+    return `${amount.toFixed(2)} EUR`;
   }
 }
 
-/** Signed money for multi-currency ledgers, e.g. +$1,000 / −€500 */
-export function formatSignedMoney(
-  amount: number,
-  currency: FinanceCurrency,
-  locale: string,
-): string {
-  const formatted = formatMoney(Math.abs(amount), currency, locale);
+export function formatSignedMoney(amount: number, locale: string): string {
+  const formatted = formatMoney(Math.abs(amount), locale);
   if (amount > 0) return `+${formatted}`;
   if (amount < 0) return `−${formatted}`;
   return formatted;
-}
-
-export function formatCurrencyLines(
-  items: Array<{ amount: number; currency: FinanceCurrency }>,
-  locale: string,
-  signed = false,
-): string {
-  if (items.length === 0) return formatMoney(0, 'EUR', locale);
-  return items
-    .map((item) =>
-      signed
-        ? formatSignedMoney(item.amount, item.currency, locale)
-        : formatMoney(item.amount, item.currency, locale),
-    )
-    .join(' · ');
-}
-
-export function pickFieldByCurrency(
-  totals: FinanceCurrencyTotals[],
-  field: 'income' | 'expense' | 'balance',
-): Array<{ amount: number; currency: FinanceCurrency }> {
-  return totals
-    .filter((item) => item[field] !== 0)
-    .map((item) => ({ amount: item[field], currency: item.currency }));
 }
 
 export function currentPeriodDefaults(): { year: number; month: number; view: FinanceView } {
