@@ -52,10 +52,10 @@ export function DashboardLayout() {
         <Reveal key={location.pathname} trigger="mount">
           <Outlet />
         </Reveal>
-      </div>
 
-      <div className="mt-8 w-full sm:mt-10">
-        <SiteFooter compact />
+        <div className="mt-auto pt-4">
+          <SiteFooter compact embedded />
+        </div>
       </div>
     </div>
   );

@@ -70,8 +70,8 @@ export function BlogPage() {
             ))}
           </div>
         </section>
+        <SiteFooter embedded />
       </div>
-      <SiteFooter />
     </div>
   );
 }
@@ -158,8 +158,8 @@ export function BlogArticlePage() {
               ))}
           </div>
         </Reveal>
+        <SiteFooter embedded />
       </div>
-      <SiteFooter />
     </div>
   );
 }

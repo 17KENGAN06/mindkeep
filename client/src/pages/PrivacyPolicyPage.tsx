@@ -63,8 +63,8 @@ export function PrivacyPolicyPage() {
             ← {t('nav.home')}
           </Link>
         </Reveal>
+        <SiteFooter embedded />
       </div>
-      <SiteFooter />
     </div>
   );
 }

@@ -374,7 +374,7 @@ export function HomePage() {
               </div>
             </div>
             <div className="snap-reveal snap-reveal-d3">
-              <SiteFooter compact />
+              <SiteFooter compact embedded />
             </div>
           </div>
         </AnimatedSnapSection>

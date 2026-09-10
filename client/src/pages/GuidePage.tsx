@@ -27,7 +27,7 @@ export function GuidePage() {
 
   return (
     <div className="min-h-dvh overflow-x-hidden">
-      <div className="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 sm:py-6">
+      <div className="mx-auto w-full max-w-6xl px-4 py-5 sm:px-6 sm:py-6">
         <header className="flex items-center justify-between gap-3">
           <BrandLockup to="/" size="md" />
           <div className="flex items-center gap-2">
@@ -113,7 +113,9 @@ export function GuidePage() {
           </Link>
         </Reveal>
       </div>
-      <SiteFooter />
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+        <SiteFooter embedded />
+      </div>
     </div>
   );
 }

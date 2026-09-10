@@ -7,9 +7,11 @@ const STUDIO_NAME = 'WEISEZAHOY';
 
 type SiteFooterProps = {
   compact?: boolean;
+  /** Fill parent width — use when footer sits inside the same container as the header. */
+  embedded?: boolean;
 };
 
-export function SiteFooter({ compact = false }: SiteFooterProps) {
+export function SiteFooter({ compact = false, embedded = false }: SiteFooterProps) {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
 
@@ -25,13 +27,25 @@ export function SiteFooter({ compact = false }: SiteFooterProps) {
   );
 
   return (
-    <footer className="relative w-full border-t border-line pt-16 sm:pt-20">
+    <footer
+      className={`relative w-full border-t border-line ${
+        compact ? 'pt-10 sm:pt-12' : 'pt-16 sm:pt-20'
+      }`}
+    >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500/55 to-transparent"
       />
 
-      <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-16 sm:px-6 sm:pb-20">
+      <div
+        className={
+          embedded
+            ? `flex w-full flex-col ${compact ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'}`
+            : `mx-auto flex w-full max-w-[1400px] flex-col px-4 sm:px-6 lg:px-8 ${
+                compact ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'
+              }`
+        }
+      >
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
           <div className="max-w-lg">
             <div className="flex items-center gap-2.5">
