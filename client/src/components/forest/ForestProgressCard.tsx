@@ -83,7 +83,7 @@ export function ForestProgressCard({
   const inViewRef = useRef(true);
   const viewSizeRef = useRef({ w: 420, h: 160 });
   const parallaxRef = useRef({ x: 0, y: 0 });
-  const cameraRef = useRef<ForestCamera>(idleCamera(0, 0, 420, 160));
+  const cameraRef = useRef<ForestCamera>(idleCamera(0, 0, 420, 160, 'preview'));
   const particlesRef = useRef<ForestParticle[]>([]);
   const growRef = useRef({ index: null as number | null, progress: 1 });
   const lastFrameRef = useRef(0);
@@ -127,13 +127,13 @@ export function ForestProgressCard({
       stopAnimRef.current = null;
       const snapshot = deriveForestProgress(total);
       const { w, h } = viewSizeRef.current;
-      cameraRef.current = idleCamera(snapshot.zoneIndex, snapshot.groveIndex, w, h);
+      cameraRef.current = idleCamera(snapshot.zoneIndex, snapshot.groveIndex, w, h, density);
       growRef.current = { index: null, progress: 1 };
       particlesRef.current = [];
       setHud(settledHud(total));
       paint(total);
     },
-    [paint],
+    [density, paint],
   );
 
   const playCompletion = useCallback(
@@ -150,11 +150,11 @@ export function ForestProgressCard({
       const start = performance.now();
       lastFrameRef.current = start;
 
-      const fromCam = idleCamera(fromSnap.zoneIndex, fromSnap.groveIndex, w, h);
-      const toCam = idleCamera(toSnap.zoneIndex, toSnap.groveIndex, w, h);
+      const fromCam = idleCamera(fromSnap.zoneIndex, fromSnap.groveIndex, w, h, density);
+      const toCam = idleCamera(toSnap.zoneIndex, toSnap.groveIndex, w, h, density);
       const overview = zoneDone
-        ? zoneOverviewCamera(fromSnap.zoneIndex, w, h)
-        : groveOverviewCamera(fromSnap.zoneIndex, fromSnap.groveIndex, w, h);
+        ? zoneOverviewCamera(fromSnap.zoneIndex, w, h, density)
+        : groveOverviewCamera(fromSnap.zoneIndex, fromSnap.groveIndex, w, h, density);
 
       const growMs = TREE_GROW_MS;
       const camMs = kind === 'grow' ? 0 : kind === 'zone' ? ZONE_CAM_MS : GROVE_CAM_MS;
@@ -246,7 +246,7 @@ export function ForestProgressCard({
         return true;
       });
     },
-    [paint, settle],
+    [density, paint, settle],
   );
 
   useEffect(() => {
@@ -286,7 +286,7 @@ export function ForestProgressCard({
           const total = prevTotalRef.current ?? totalCompleted;
           const snapshot = deriveForestProgress(total);
           const { w, h } = viewSizeRef.current;
-          cameraRef.current = idleCamera(snapshot.zoneIndex, snapshot.groveIndex, w, h);
+          cameraRef.current = idleCamera(snapshot.zoneIndex, snapshot.groveIndex, w, h, density);
           setHud(settledHud(total));
         }
       },
@@ -294,7 +294,7 @@ export function ForestProgressCard({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [totalCompleted]);
+  }, [density, totalCompleted]);
 
   useEffect(() => {
     const prev = prevTotalRef.current;
@@ -333,7 +333,7 @@ export function ForestProgressCard({
       viewSizeRef.current = { w: width, h: height };
       if (!stopAnimRef.current) {
         const snapshot = deriveForestProgress(totalCompleted);
-        cameraRef.current = idleCamera(snapshot.zoneIndex, snapshot.groveIndex, width, height);
+        cameraRef.current = idleCamera(snapshot.zoneIndex, snapshot.groveIndex, width, height, density);
         paint(totalCompleted);
       }
     },
@@ -359,8 +359,8 @@ export function ForestProgressCard({
       ref={rootRef}
       className={
         compact
-          ? 'overflow-hidden rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line'
-          : 'space-y-4'
+          ? 'overflow-hidden rounded-2xl bg-panel shadow-sm ring-1 ring-line'
+          : 'overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line'
       }
       aria-label={t('forest.title')}
     >
@@ -396,19 +396,17 @@ export function ForestProgressCard({
         </div>
       ) : (
         <>
-          <div className="rounded-2xl bg-panel/80 p-4 shadow-sm ring-1 ring-line sm:p-5">
-            <ForestStats
-              trees={hud.trees}
-              treesToday={completedToday}
-              groveCurrent={hud.groveCurrent}
-              groveSize={TREES_PER_GROVE}
-              remaining={hud.remaining}
-              plusOne={hud.plusOne}
-              exploreHref={exploreHref}
-              variant="banner"
-            />
-          </div>
-          <div className="relative h-[min(420px,58vh)] min-h-[260px] overflow-hidden rounded-3xl bg-panel/80 shadow-sm ring-1 ring-line">
+          <ForestStats
+            trees={hud.trees}
+            treesToday={completedToday}
+            groveCurrent={hud.groveCurrent}
+            groveSize={TREES_PER_GROVE}
+            remaining={hud.remaining}
+            plusOne={hud.plusOne}
+            exploreHref={exploreHref}
+            variant="banner"
+          />
+          <div className="relative mt-4 h-64 overflow-hidden rounded-2xl ring-1 ring-line">
             <ForestCanvas
               ref={canvasRef}
               enableParallax={desktopParallax}

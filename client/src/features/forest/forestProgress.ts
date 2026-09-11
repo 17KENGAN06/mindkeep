@@ -270,9 +270,12 @@ export function idleCamera(
   groveIndex: number,
   viewW: number,
   viewH: number,
+  density: ForestViewDensity = 'preview',
 ): ForestCamera {
   const center = groveCenter(zoneIndex, groveIndex);
-  const zoom = Math.min(viewW / (GROVE_WIDTH * 0.52), viewH / (GROVE_HEIGHT * 0.4));
+  const cropW = density === 'page' ? GROVE_WIDTH * 1.08 : GROVE_WIDTH * 0.78;
+  const cropH = density === 'page' ? GROVE_HEIGHT * 0.82 : GROVE_HEIGHT * 0.58;
+  const zoom = Math.min(viewW / cropW, viewH / cropH);
   return { x: center.x, y: center.y, zoom: Number.isFinite(zoom) && zoom > 0 ? zoom : 1 };
 }
 
@@ -281,18 +284,24 @@ export function groveOverviewCamera(
   groveIndex: number,
   viewW: number,
   viewH: number,
+  density: ForestViewDensity = 'preview',
 ): ForestCamera {
-  const idle = idleCamera(zoneIndex, groveIndex, viewW, viewH);
-  return { ...idle, zoom: idle.zoom * 0.7 };
+  const idle = idleCamera(zoneIndex, groveIndex, viewW, viewH, density);
+  return { ...idle, zoom: idle.zoom * 0.72 };
 }
 
-export function zoneOverviewCamera(zoneIndex: number, viewW: number, viewH: number): ForestCamera {
+export function zoneOverviewCamera(
+  zoneIndex: number,
+  viewW: number,
+  viewH: number,
+  density: ForestViewDensity = 'preview',
+): ForestCamera {
   const current = zoneCenter(zoneIndex);
   const next = groveCenter(zoneIndex + 1, 0);
-  const idle = idleCamera(zoneIndex, 0, viewW, viewH);
+  const idle = idleCamera(zoneIndex, 0, viewW, viewH, density);
   return {
     x: (current.x + next.x) / 2,
     y: current.y,
-    zoom: idle.zoom * 0.36,
+    zoom: idle.zoom * 0.4,
   };
 }
