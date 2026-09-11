@@ -13,6 +13,19 @@ export const dailyTaskPeriodQuerySchema = z
     return value;
   });
 
+export const forestQuerySchema = z
+  .object({
+    year: z.coerce.number().int().min(2000).max(2100).optional(),
+    month: z.coerce.number().int().min(1).max(12).optional(),
+  })
+  .transform((value) => {
+    const now = new Date();
+    return {
+      year: value.year ?? now.getUTCFullYear(),
+      month: value.month ?? now.getUTCMonth() + 1,
+    };
+  });
+
 export const dailyTaskDayQuerySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
 });
@@ -40,5 +53,6 @@ export const dailyTaskIdParamsSchema = z.object({
 });
 
 export type DailyTaskPeriodQuery = z.infer<typeof dailyTaskPeriodQuerySchema>;
+export type ForestQuery = z.infer<typeof forestQuerySchema>;
 export type CreateDailyTaskInput = z.infer<typeof createDailyTaskSchema>;
 export type UpdateDailyTaskInput = z.infer<typeof updateDailyTaskSchema>;

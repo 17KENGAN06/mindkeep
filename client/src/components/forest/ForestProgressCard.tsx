@@ -4,28 +4,22 @@ import { ForestCanvas, type ForestCanvasHandle } from '@/components/forest/Fores
 import { ForestStats } from '@/components/forest/ForestStats';
 import {
   advanceParticles,
-  BANNER_MS,
-  cameraPath,
-  GROVE_CAM_MS,
   isMobileViewport,
   PLUS_ONE_MS,
   prefersReducedMotion,
   spawnGrowParticles,
   startAnimationLoop,
   TREE_GROW_MS,
-  ZONE_CAM_MS,
   type ForestParticle,
 } from '@/features/forest/forestAnimations';
 import {
   deriveForestProgress,
   getForestView,
   getTreeByIndex,
-  groveOverviewCamera,
   idleCamera,
   isGroveComplete,
   isZoneComplete,
   TREES_PER_GROVE,
-  zoneOverviewCamera,
   type ForestCamera,
   type ForestViewDensity,
 } from '@/features/forest/forestProgress';
@@ -39,6 +33,7 @@ type ForestProgressCardProps = {
   completedToday: number;
   layout?: 'compact' | 'expanded';
   exploreHref?: string | null;
+  monthLabel?: string;
 };
 
 type HudState = {
@@ -72,6 +67,7 @@ export function ForestProgressCard({
   completedToday,
   layout = 'compact',
   exploreHref = '/forest',
+  monthLabel,
 }: ForestProgressCardProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -144,7 +140,18 @@ export function ForestProgressCard({
       const toSnap = deriveForestProgress(toTotal);
       const zoneDone = isZoneComplete(toTotal);
       const groveDone = isGroveComplete(toTotal);
-      const kind = zoneDone ? 'zone' : groveDone ? 'grove' : 'grow';
+      const startedNewZone = !zoneDone && fromSnap.zoneIndex !== toSnap.zoneIndex;
+      const startedNewGrove =
+        !groveDone && !startedNewZone && fromSnap.groveIndex !== toSnap.groveIndex;
+      const kind = zoneDone
+        ? 'zone'
+        : groveDone
+          ? 'grove'
+          : startedNewZone
+            ? 'new-zone'
+            : startedNewGrove
+              ? 'new-grove'
+              : 'grow';
       const growingIndex = toTotal - 1;
       const growTree = getTreeByIndex(growingIndex);
       const start = performance.now();
@@ -152,21 +159,15 @@ export function ForestProgressCard({
 
       const fromCam = idleCamera(fromSnap.zoneIndex, fromSnap.groveIndex, w, h, density);
       const toCam = idleCamera(toSnap.zoneIndex, toSnap.groveIndex, w, h, density);
-      const overview = zoneDone
-        ? zoneOverviewCamera(fromSnap.zoneIndex, w, h, density)
-        : groveOverviewCamera(fromSnap.zoneIndex, fromSnap.groveIndex, w, h, density);
+      const needsCam = kind === 'new-grove' || kind === 'new-zone';
 
       const growMs = TREE_GROW_MS;
-      const camMs = kind === 'grow' ? 0 : kind === 'zone' ? ZONE_CAM_MS : GROVE_CAM_MS;
-      const camDelay = growMs;
       const plusUntil = PLUS_ONE_MS;
       const groveBannerFrom = growMs - 60;
       const groveBannerUntil = groveBannerFrom + 560;
-      const newBannerFrom = camDelay + camMs - 160;
-      const newBannerUntil = newBannerFrom + BANNER_MS;
-      const totalMs = kind === 'grow' ? growMs : Math.max(camDelay + camMs, newBannerUntil);
+      const totalMs = growMs + (kind === 'grow' ? 0 : 420);
 
-      cameraRef.current = fromCam;
+      cameraRef.current = needsCam ? toCam : fromCam;
       growRef.current = { index: growingIndex, progress: 0 };
       particlesRef.current = spawnGrowParticles(
         { x: growTree.x, y: growTree.y - 2 },
@@ -198,36 +199,16 @@ export function ForestProgressCard({
           growT < 1 ? { index: growingIndex, progress: growEase } : { index: null, progress: 1 };
 
         particlesRef.current = advanceParticles(particlesRef.current, now, dt);
+        cameraRef.current = needsCam ? toCam : fromCam;
 
-        if (kind === 'grow') {
-          cameraRef.current = fromCam;
-        } else if (elapsed >= camDelay) {
-          const camT = Math.min(1, (elapsed - camDelay) / camMs);
-          cameraRef.current = cameraPath(fromCam, overview, toCam, camT);
-        } else {
-          cameraRef.current = fromCam;
-        }
-
-        let groveCurrent: number;
-        if (kind === 'grow') {
-          groveCurrent =
-            fromSnap.treesInGrove + (toSnap.treesInGrove - fromSnap.treesInGrove) * growEase;
-        } else if (elapsed < growMs) {
-          groveCurrent =
-            fromSnap.treesInGrove + (TREES_PER_GROVE - fromSnap.treesInGrove) * growEase;
-        } else if (elapsed < camDelay + camMs) {
-          groveCurrent = TREES_PER_GROVE;
-        } else {
-          groveCurrent = 0;
-        }
+        const groveCurrent =
+          fromSnap.treesInGrove + (toSnap.treesInGrove - fromSnap.treesInGrove) * growEase;
 
         let banner: ForestBanner = null;
-        if (kind !== 'grow') {
-          if (elapsed >= groveBannerFrom && elapsed < groveBannerUntil) {
-            banner = 'grove-completed';
-          } else if (elapsed >= newBannerFrom && elapsed < newBannerUntil) {
-            banner = kind === 'zone' ? 'new-zone' : 'new-grove';
-          }
+        if (kind !== 'grow' && elapsed >= groveBannerFrom && elapsed < groveBannerUntil) {
+          if (kind === 'new-zone') banner = 'new-zone';
+          else if (kind === 'new-grove') banner = 'new-grove';
+          else banner = 'grove-completed';
         }
 
         setHud({
@@ -367,8 +348,8 @@ export function ForestProgressCard({
       aria-label={t('forest.title')}
     >
       {compact ? (
-        <div className="flex min-h-[232px] flex-col md:h-[176px] md:min-h-0 md:flex-row">
-          <div className="min-w-0 px-4 pt-3 pb-2 md:flex md:w-[32%] md:flex-col md:justify-center md:overflow-hidden md:py-3 md:pr-3 md:pl-4">
+        <div className="flex min-h-0 flex-col md:h-[188px] md:flex-row">
+          <div className="min-w-0 px-4 pt-3 pb-2 md:flex md:w-[34%] md:flex-col md:justify-center md:overflow-hidden md:py-3 md:pr-3 md:pl-4">
             <ForestStats
               trees={hud.trees}
               treesToday={completedToday}
@@ -378,9 +359,10 @@ export function ForestProgressCard({
               plusOne={hud.plusOne}
               exploreHref={exploreHref}
               variant="aside"
+              monthLabel={monthLabel}
             />
           </div>
-          <div className="relative min-h-[148px] flex-1 overflow-hidden border-t border-line/60 md:min-h-0 md:border-t-0 md:border-l md:border-line/60">
+          <div className="relative h-[176px] overflow-hidden border-t border-line/60 md:h-auto md:min-h-0 md:flex-1 md:border-t-0 md:border-l md:border-line/60">
             <ForestCanvas
               ref={canvasRef}
               enableParallax={desktopParallax}
@@ -407,8 +389,9 @@ export function ForestProgressCard({
             plusOne={hud.plusOne}
             exploreHref={exploreHref}
             variant="banner"
+            monthLabel={monthLabel}
           />
-          <div className="relative mt-4 h-64 overflow-hidden border-t border-line/60">
+          <div className="relative mt-4 h-56 overflow-hidden border-t border-line/60 sm:h-64">
             <ForestCanvas
               ref={canvasRef}
               enableParallax={desktopParallax}

@@ -64,7 +64,7 @@ export const ForestCanvas = forwardRef<ForestCanvasHandle, ForestCanvasProps>(
     return (
       <canvas
         ref={canvasRef}
-        className={`block h-full w-full bg-transparent ${className}`}
+        className={`block h-full w-full touch-pan-y bg-transparent ${className}`}
         aria-hidden
         onPointerMove={(event) => {
           if (!enableParallax) return;

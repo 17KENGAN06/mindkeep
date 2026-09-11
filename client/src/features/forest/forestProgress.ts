@@ -19,34 +19,34 @@ export type GroveSlot = {
 
 /**
  * 25 integer cell positions for one grove.
- * Early slots sit near the centre; later ones fill the full width of the card.
+ * Early slots sit near the centre; later ones fill the width without stacking.
  */
 export const GROVE_SLOTS: GroveSlot[] = [
-  { x: 45, y: 16, kind: 'pine', size: 2 },
-  { x: 52, y: 17, kind: 'cedar', size: 1 },
-  { x: 38, y: 17, kind: 'broadleaf', size: 1 },
-  { x: 48, y: 18, kind: 'pine', size: 2 },
-  { x: 31, y: 16, kind: 'cedar', size: 1 },
-  { x: 59, y: 16, kind: 'pine', size: 1 },
-  { x: 42, y: 14, kind: 'broadleaf', size: 1 },
-  { x: 66, y: 17, kind: 'cedar', size: 2 },
-  { x: 24, y: 17, kind: 'pine', size: 1 },
-  { x: 55, y: 14, kind: 'pine', size: 0 },
-  { x: 17, y: 16, kind: 'broadleaf', size: 0 },
-  { x: 73, y: 15, kind: 'cedar', size: 1 },
-  { x: 35, y: 13, kind: 'pine', size: 0 },
-  { x: 62, y: 13, kind: 'broadleaf', size: 0 },
-  { x: 46, y: 12, kind: 'cedar', size: 0 },
-  { x: 10, y: 15, kind: 'pine', size: 1 },
-  { x: 80, y: 16, kind: 'pine', size: 1 },
-  { x: 28, y: 13, kind: 'cedar', size: 0 },
-  { x: 70, y: 13, kind: 'pine', size: 0 },
-  { x: 50, y: 11, kind: 'broadleaf', size: 0 },
-  { x: 84, y: 14, kind: 'cedar', size: 0 },
-  { x: 6, y: 17, kind: 'pine', size: 1 },
-  { x: 76, y: 18, kind: 'cedar', size: 1 },
-  { x: 21, y: 18, kind: 'broadleaf', size: 1 },
-  { x: 40, y: 18, kind: 'pine', size: 1 },
+  { x: 44, y: 18, kind: 'pine', size: 2 },
+  { x: 56, y: 18, kind: 'cedar', size: 1 },
+  { x: 32, y: 18, kind: 'broadleaf', size: 1 },
+  { x: 68, y: 18, kind: 'pine', size: 1 },
+  { x: 20, y: 18, kind: 'cedar', size: 1 },
+  { x: 80, y: 18, kind: 'pine', size: 1 },
+  { x: 8, y: 18, kind: 'cedar', size: 1 },
+  { x: 88, y: 18, kind: 'pine', size: 0 },
+  { x: 40, y: 15, kind: 'cedar', size: 1 },
+  { x: 52, y: 15, kind: 'pine', size: 0 },
+  { x: 28, y: 15, kind: 'broadleaf', size: 0 },
+  { x: 64, y: 15, kind: 'cedar', size: 1 },
+  { x: 16, y: 15, kind: 'pine', size: 0 },
+  { x: 76, y: 15, kind: 'cedar', size: 0 },
+  { x: 46, y: 11, kind: 'pine', size: 0 },
+  { x: 34, y: 11, kind: 'cedar', size: 0 },
+  { x: 58, y: 11, kind: 'broadleaf', size: 0 },
+  { x: 22, y: 11, kind: 'pine', size: 0 },
+  { x: 70, y: 11, kind: 'cedar', size: 0 },
+  { x: 10, y: 11, kind: 'pine', size: 0 },
+  { x: 82, y: 11, kind: 'cedar', size: 0 },
+  { x: 12, y: 16, kind: 'broadleaf', size: 0 },
+  { x: 36, y: 16, kind: 'pine', size: 0 },
+  { x: 60, y: 16, kind: 'cedar', size: 0 },
+  { x: 84, y: 16, kind: 'pine', size: 0 },
 ];
 
 export type ForestSnapshot = {
@@ -96,15 +96,24 @@ export type ForestView = {
   focus: { zoneIndex: number; groveIndex: number };
 };
 
-const PREVIEW_TREE_CAP = 50;
-const PAGE_TREE_CAP = 50;
-
 export function deriveForestProgress(totalCompleted: number): ForestSnapshot {
   const totalTrees = Math.max(0, Math.floor(totalCompleted));
-  const zoneIndex = Math.floor(totalTrees / TREES_PER_ZONE);
-  const treesInZone = totalTrees % TREES_PER_ZONE;
-  const groveIndex = Math.floor(treesInZone / TREES_PER_GROVE);
-  const treesInGrove = treesInZone % TREES_PER_GROVE;
+  let zoneIndex = Math.floor(totalTrees / TREES_PER_ZONE);
+  let treesInZone = totalTrees % TREES_PER_ZONE;
+  let groveIndex = Math.floor(treesInZone / TREES_PER_GROVE);
+  let treesInGrove = treesInZone % TREES_PER_GROVE;
+
+  // 25, 50, 100… belong to the grove just finished, not an empty next one.
+  if (totalTrees > 0 && treesInGrove === 0) {
+    if (groveIndex === 0) {
+      zoneIndex -= 1;
+      groveIndex = GROVES_PER_ZONE - 1;
+      treesInZone = TREES_PER_ZONE;
+    } else {
+      groveIndex -= 1;
+    }
+    treesInGrove = TREES_PER_GROVE;
+  }
 
   return {
     totalTrees,
@@ -113,8 +122,8 @@ export function deriveForestProgress(totalCompleted: number): ForestSnapshot {
     groveIndex,
     treesInGrove,
     groveSize: TREES_PER_GROVE,
-    remainingToGrove: treesInGrove === 0 ? TREES_PER_GROVE : TREES_PER_GROVE - treesInGrove,
-    completedZones: zoneIndex,
+    remainingToGrove: TREES_PER_GROVE - treesInGrove,
+    completedZones: Math.floor(totalTrees / TREES_PER_ZONE),
     completedGroves: Math.floor(totalTrees / TREES_PER_GROVE),
   };
 }
@@ -184,60 +193,16 @@ export function treesInGrove(zoneIndex: number, groveIndex: number, totalTrees: 
   return trees;
 }
 
-function previousGrove(
-  zoneIndex: number,
-  groveIndex: number,
-): { zoneIndex: number; groveIndex: number } | null {
-  if (groveIndex > 0) return { zoneIndex, groveIndex: groveIndex - 1 };
-  if (zoneIndex > 0) return { zoneIndex: zoneIndex - 1, groveIndex: GROVES_PER_ZONE - 1 };
-  return null;
-}
-
-function sampleGrove(zoneIndex: number, groveIndex: number, totalTrees: number, take: number): ForestTree[] {
-  const all = treesInGrove(zoneIndex, groveIndex, totalTrees);
-  if (all.length <= take) return all;
-  const step = all.length / take;
-  const sampled: ForestTree[] = [];
-  for (let i = 0; i < take; i += 1) {
-    sampled.push(all[Math.min(all.length - 1, Math.floor(i * step))]!);
-  }
-  return sampled;
-}
-
 export function getForestView(
   totalCompleted: number,
-  density: ForestViewDensity = 'preview',
+  _density: ForestViewDensity = 'preview',
   ensureIndex?: number | null,
 ): ForestView {
   const snapshot = deriveForestProgress(totalCompleted);
   const focus = { zoneIndex: snapshot.zoneIndex, groveIndex: snapshot.groveIndex };
-  const cap = density === 'page' ? PAGE_TREE_CAP : PREVIEW_TREE_CAP;
+  const trees: ForestTree[] = treesInGrove(focus.zoneIndex, focus.groveIndex, snapshot.totalTrees);
 
-  const current = treesInGrove(focus.zoneIndex, focus.groveIndex, snapshot.totalTrees);
-  const prev = previousGrove(focus.zoneIndex, focus.groveIndex);
-
-  let extras: ForestTree[] = [];
-  if (prev) {
-    extras = treesInGrove(prev.zoneIndex, prev.groveIndex, snapshot.totalTrees);
-  }
-
-  if (density === 'page' && focus.groveIndex >= 2) {
-    extras = [
-      ...sampleGrove(focus.zoneIndex, focus.groveIndex - 2, snapshot.totalTrees, 10),
-      ...extras,
-    ];
-  }
-
-  const seen = new Set<number>();
-  const trees: ForestTree[] = [];
-  for (const tree of [...extras, ...current]) {
-    if (seen.has(tree.index)) continue;
-    seen.add(tree.index);
-    trees.push(tree);
-    if (trees.length >= cap) break;
-  }
-
-  if (ensureIndex != null && ensureIndex >= 0 && !seen.has(ensureIndex)) {
+  if (ensureIndex != null && ensureIndex >= 0 && !trees.some((tree) => tree.index === ensureIndex)) {
     trees.push(getTreeByIndex(ensureIndex));
   }
 

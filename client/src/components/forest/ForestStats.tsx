@@ -11,6 +11,7 @@ type ForestStatsProps = {
   plusOne: boolean;
   exploreHref?: string | null;
   variant?: 'aside' | 'banner';
+  monthLabel?: string;
 };
 
 export function ForestStats({
@@ -22,6 +23,7 @@ export function ForestStats({
   plusOne,
   exploreHref,
   variant = 'aside',
+  monthLabel,
 }: ForestStatsProps) {
   const { t } = useTranslation();
   const progress = groveSize > 0 ? Math.min(100, (groveCurrent / groveSize) * 100) : 0;
@@ -43,6 +45,9 @@ export function ForestStats({
         >
           {t('forest.title')}
         </p>
+        {monthLabel ? (
+          <p className={`text-muted ${compact ? 'mt-0.5 text-[11px]' : 'mt-1 text-xs'}`}>{monthLabel}</p>
+        ) : null}
         <div className="mt-1 flex items-baseline gap-2">
           <Trees className={`shrink-0 text-brand-500 ${compact ? 'h-4 w-4' : 'h-5 w-5'}`} aria-hidden />
           <p className={`font-semibold text-ink ${compact ? 'text-xl' : 'text-2xl'}`}>
@@ -58,11 +63,7 @@ export function ForestStats({
           <p className={`text-brand-500 ${compact ? 'mt-0.5 text-[11px]' : 'mt-1 text-xs'}`}>
             {t('forest.addedToday', { count: treesToday })}
           </p>
-        ) : (
-          <p className={`text-muted ${compact ? 'mt-0.5 text-[11px]' : 'mt-1 text-xs'}`}>
-            {t('forest.addedToday', { count: treesToday })}
-          </p>
-        )}
+        ) : null}
       </div>
 
       <div className={compact ? 'min-w-0' : 'min-w-0 sm:w-72'}>

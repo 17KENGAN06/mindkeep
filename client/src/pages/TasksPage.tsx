@@ -55,7 +55,7 @@ export function TasksPage() {
     year,
     ...(view === 'month' ? { month } : {}),
   });
-  const forestQuery = useForestSummary();
+  const forestQuery = useForestSummary(year, month, view === 'month');
   const createTask = useCreateDailyTask();
   const updateTask = useUpdateDailyTask();
   const deleteTask = useDeleteDailyTask();
@@ -183,13 +183,21 @@ export function TasksPage() {
         ))}
       </section>
 
-      {forestQuery.data ? (
+      {view === 'year' ? (
+        <section className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line md:p-5">
+          <p className="text-sm font-semibold text-ink">{t('forest.yearTitle')}</p>
+          <p className="mt-1 text-sm text-muted">{t('forest.yearHint')}</p>
+        </section>
+      ) : forestQuery.data ? (
         <ForestProgressCard
+          key={`${year}-${month}`}
           totalCompleted={forestQuery.data.totalCompleted}
           completedToday={forestQuery.data.completedToday}
+          exploreHref={`/forest?year=${year}&month=${month}`}
+          monthLabel={`${t(`finance.months.${month}`)} ${year}`}
         />
       ) : (
-        <div className="h-[240px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[176px]" />
+        <div className="h-[240px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[188px]" />
       )}
 
       {view === 'year' ? (

@@ -2,6 +2,7 @@ import { prisma } from '@/config/prisma.js';
 import type {
   CreateDailyTaskInput,
   DailyTaskPeriodQuery,
+  ForestQuery,
   UpdateDailyTaskInput,
 } from '@/validations/dailyTask.schemas.js';
 import { AppError } from '@/utils/AppError.js';
@@ -172,7 +173,7 @@ export class DailyTaskService {
     };
   }
 
-  async getForestSummary(userId: string) {
+  async getForestSummary(userId: string, query: ForestQuery) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: { timezone: true },
@@ -187,21 +188,26 @@ export class DailyTaskService {
 
     const timezone = user.timezone || 'Europe/Helsinki';
     const { startUtc, endUtc } = getDayBoundsInTimeZone(timezone);
+    const { from, to } = periodRange({
+      view: 'month',
+      year: query.year,
+      month: query.month,
+    });
 
+    const monthFilter = { userId, completed: true, date: { gte: from, lt: to } };
     const [totalCompleted, completedToday] = await Promise.all([
-      prisma.dailyTask.count({
-        where: { userId, completed: true },
-      }),
+      prisma.dailyTask.count({ where: monthFilter }),
       prisma.dailyTask.count({
         where: {
-          userId,
-          completed: true,
+          ...monthFilter,
           completedAt: { gte: startUtc, lte: endUtc },
         },
       }),
     ]);
 
     return {
+      year: query.year,
+      month: query.month,
       totalCompleted,
       completedToday,
     };

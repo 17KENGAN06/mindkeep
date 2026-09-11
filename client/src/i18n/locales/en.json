@@ -193,12 +193,16 @@
     "newGrove": "New grove discovered",
     "newZone": "New forest area unlocked",
     "pageTitle": "Your Forest",
-    "pageSubtitle": "Every completed task plants a tree. Groves and forest zones grow from that record — never from tasks still ahead.",
+    "pageSubtitle": "Every completed task in this month plants a tree. Groves and forest zones grow from that record — never from tasks still ahead.",
     "backToTasks": "Back to tasks",
     "rulesTitle": "How the forest grows",
     "ruleTrees": "1 completed task = 1 tree.",
     "ruleGrove": "25 trees complete a grove.",
-    "ruleZone": "100 trees unlock a forest zone."
+    "ruleZone": "100 trees unlock a forest zone.",
+    "ruleMonth": "Each month has its own forest.",
+    "yearTitle": "Forest is a monthly view",
+    "yearHint": "Trees are planted from completed tasks in one month. Switch back to month view to see that month’s forest.",
+    "monthScope": "Only completed tasks from this month plant trees here."
   },
   "home": {
     "title": "Learn. Act. Steer.",

@@ -23,10 +23,11 @@ export function useDailyTasksDay(date: string | null) {
   });
 }
 
-export function useForestSummary() {
+export function useForestSummary(year: number, month: number, enabled = true) {
   return useQuery({
-    queryKey: [...tasksKey, 'forest'],
-    queryFn: () => dailyTasksApi.getForest(),
+    queryKey: [...tasksKey, 'forest', year, month],
+    queryFn: () => dailyTasksApi.getForest(year, month),
+    enabled,
   });
 }
 
