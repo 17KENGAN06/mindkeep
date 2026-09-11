@@ -4,10 +4,12 @@ import { ForestCanvas, type ForestCanvasHandle } from '@/components/forest/Fores
 import { ForestStats } from '@/components/forest/ForestStats';
 import {
   advanceParticles,
+  cameraPulse,
   isMobileViewport,
   PLUS_ONE_MS,
   prefersReducedMotion,
   spawnGrowParticles,
+  spawnMilestoneParticles,
   startAnimationLoop,
   TREE_GROW_MS,
   type ForestParticle,
@@ -16,17 +18,88 @@ import {
   deriveForestProgress,
   getForestView,
   getTreeByIndex,
+  groveCenter,
+  groveNumberInZone,
+  groveOrdinal,
+  grovesFilledInZone,
   idleCamera,
   isGroveComplete,
   isZoneComplete,
+  remainingToZone,
   TREES_PER_GROVE,
   type ForestCamera,
+  type ForestSnapshot,
   type ForestViewDensity,
 } from '@/features/forest/forestProgress';
 import { readForestPalette, type ForestScene } from '@/features/forest/forestRenderer';
 import { useTheme } from '@/features/theme/useTheme';
 
-export type ForestBanner = 'grove-completed' | 'new-grove' | 'new-zone' | null;
+export type ForestBanner =
+  | 'grove-1'
+  | 'grove-2'
+  | 'grove-3'
+  | 'zone'
+  | 'new-grove'
+  | 'new-zone'
+  | null;
+
+type HudState = {
+  trees: number;
+  groveCurrent: number;
+  groveNumber: number;
+  grovesFilled: number;
+  completedZones: number;
+  remaining: number;
+  remainingZone: number;
+  plusOne: boolean;
+  banner: ForestBanner;
+  celebrateGrove: number | null;
+  celebrateZone: boolean;
+};
+
+function hudFromSnapshot(
+  snapshot: ForestSnapshot,
+  extra: Partial<HudState> = {},
+): HudState {
+  return {
+    trees: snapshot.totalTrees,
+    groveCurrent: snapshot.treesInGrove,
+    groveNumber: groveNumberInZone(snapshot),
+    grovesFilled: grovesFilledInZone(snapshot),
+    completedZones: snapshot.completedZones,
+    remaining: snapshot.remainingToGrove,
+    remainingZone: remainingToZone(snapshot),
+    plusOne: false,
+    banner: null,
+    celebrateGrove: null,
+    celebrateZone: false,
+    ...extra,
+  };
+}
+
+function settledHud(totalCompleted: number): HudState {
+  return hudFromSnapshot(deriveForestProgress(totalCompleted));
+}
+
+function milestoneBanner(kind: 'grove' | 'zone' | 'new-grove' | 'new-zone', snapshot: ForestSnapshot): ForestBanner {
+  if (kind === 'zone' || kind === 'new-zone') return kind === 'new-zone' ? 'new-zone' : 'zone';
+  if (kind === 'new-grove') return 'new-grove';
+  const ordinal = groveOrdinal(snapshot.completedGroves);
+  if (ordinal === 1) return 'grove-1';
+  if (ordinal === 2) return 'grove-2';
+  if (ordinal === 3) return 'grove-3';
+  return 'zone';
+}
+
+function bannerCopy(banner: ForestBanner): { title: string; hint: string } | null {
+  if (banner === 'grove-1') return { title: 'forest.groveComplete1', hint: 'forest.groveHint1' };
+  if (banner === 'grove-2') return { title: 'forest.groveComplete2', hint: 'forest.groveHint2' };
+  if (banner === 'grove-3') return { title: 'forest.groveComplete3', hint: 'forest.groveHint3' };
+  if (banner === 'zone') return { title: 'forest.zoneComplete', hint: 'forest.zoneHint' };
+  if (banner === 'new-grove') return { title: 'forest.newGrove', hint: 'forest.newGroveHint' };
+  if (banner === 'new-zone') return { title: 'forest.newZone', hint: 'forest.newZoneHint' };
+  return null;
+}
 
 type ForestProgressCardProps = {
   totalCompleted: number;
@@ -35,32 +108,6 @@ type ForestProgressCardProps = {
   exploreHref?: string | null;
   monthLabel?: string;
 };
-
-type HudState = {
-  trees: number;
-  groveCurrent: number;
-  remaining: number;
-  plusOne: boolean;
-  banner: ForestBanner;
-};
-
-function settledHud(totalCompleted: number): HudState {
-  const snapshot = deriveForestProgress(totalCompleted);
-  return {
-    trees: snapshot.totalTrees,
-    groveCurrent: snapshot.treesInGrove,
-    remaining: snapshot.remainingToGrove,
-    plusOne: false,
-    banner: null,
-  };
-}
-
-function bannerKey(banner: ForestBanner): string | null {
-  if (banner === 'grove-completed') return 'forest.groveCompleted';
-  if (banner === 'new-grove') return 'forest.newGrove';
-  if (banner === 'new-zone') return 'forest.newZone';
-  return null;
-}
 
 export function ForestProgressCard({
   totalCompleted,
@@ -85,6 +132,7 @@ export function ForestProgressCard({
   const lastFrameRef = useRef(0);
   const reduceMotionRef = useRef(false);
   const mobileRef = useRef(false);
+  const bannerTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
 
   const [hud, setHud] = useState<HudState>(() => settledHud(totalCompleted));
   const [desktopParallax, setDesktopParallax] = useState(
@@ -121,6 +169,10 @@ export function ForestProgressCard({
     (total: number) => {
       stopAnimRef.current?.();
       stopAnimRef.current = null;
+      if (bannerTimerRef.current != null) {
+        window.clearTimeout(bannerTimerRef.current);
+        bannerTimerRef.current = null;
+      }
       const snapshot = deriveForestProgress(total);
       const { w, h } = viewSizeRef.current;
       cameraRef.current = idleCamera(snapshot.zoneIndex, snapshot.groveIndex, w, h, density);
@@ -135,6 +187,10 @@ export function ForestProgressCard({
   const playCompletion = useCallback(
     (fromTotal: number, toTotal: number) => {
       stopAnimRef.current?.();
+      if (bannerTimerRef.current != null) {
+        window.clearTimeout(bannerTimerRef.current);
+        bannerTimerRef.current = null;
+      }
       const { w, h } = viewSizeRef.current;
       const fromSnap = deriveForestProgress(fromTotal);
       const toSnap = deriveForestProgress(toTotal);
@@ -160,29 +216,37 @@ export function ForestProgressCard({
       const fromCam = idleCamera(fromSnap.zoneIndex, fromSnap.groveIndex, w, h, density);
       const toCam = idleCamera(toSnap.zoneIndex, toSnap.groveIndex, w, h, density);
       const needsCam = kind === 'new-grove' || kind === 'new-zone';
+      const milestone = kind === 'grove' || kind === 'zone';
+      const quiet = mobileRef.current || reduceMotionRef.current;
 
       const growMs = TREE_GROW_MS;
       const plusUntil = PLUS_ONE_MS;
-      const groveBannerFrom = growMs - 60;
-      const groveBannerUntil = groveBannerFrom + 560;
-      const totalMs = growMs + (kind === 'grow' ? 0 : 420);
+      const extraMs = kind === 'zone' ? 1200 : kind === 'grove' ? 980 : kind === 'new-zone' ? 720 : kind === 'new-grove' ? 560 : 0;
+      const bannerFrom = milestone || needsCam ? growMs * 0.45 : Number.POSITIVE_INFINITY;
+      const totalMs = growMs + extraMs;
 
-      cameraRef.current = needsCam ? toCam : fromCam;
+      const baseCam = needsCam ? toCam : fromCam;
+      cameraRef.current = baseCam;
       growRef.current = { index: growingIndex, progress: 0 };
-      particlesRef.current = spawnGrowParticles(
-        { x: growTree.x, y: growTree.y - 2 },
-        growingIndex,
-        start,
-        mobileRef.current || reduceMotionRef.current ? 2 : 4,
-      );
 
-      setHud({
-        trees: fromTotal,
-        groveCurrent: fromSnap.treesInGrove,
-        remaining: Math.max(0, TREES_PER_GROVE - fromSnap.treesInGrove),
-        plusOne: true,
-        banner: null,
-      });
+      const center = groveCenter(toSnap.zoneIndex, toSnap.groveIndex);
+      particlesRef.current = [
+        ...spawnGrowParticles(
+          { x: growTree.x, y: growTree.y - 2 },
+          growingIndex,
+          start,
+          quiet ? 2 : 4,
+        ),
+        ...(milestone
+          ? spawnMilestoneParticles(center, start, quiet ? 5 : kind === 'zone' ? 16 : 10)
+          : []),
+      ];
+
+      setHud(
+        hudFromSnapshot(fromSnap, {
+          plusOne: true,
+        }),
+      );
 
       stopAnimRef.current = startAnimationLoop((now) => {
         if (!inViewRef.current) {
@@ -199,25 +263,26 @@ export function ForestProgressCard({
           growT < 1 ? { index: growingIndex, progress: growEase } : { index: null, progress: 1 };
 
         particlesRef.current = advanceParticles(particlesRef.current, now, dt);
-        cameraRef.current = needsCam ? toCam : fromCam;
+        cameraRef.current = milestone
+          ? cameraPulse(baseCam, elapsed, totalMs, kind === 'zone' ? 0.11 : 0.07)
+          : baseCam;
 
         const groveCurrent =
           fromSnap.treesInGrove + (toSnap.treesInGrove - fromSnap.treesInGrove) * growEase;
+        const showBanner = kind !== 'grow' && elapsed >= bannerFrom && elapsed < totalMs - 90;
+        const banner = showBanner ? milestoneBanner(kind, toSnap) : null;
 
-        let banner: ForestBanner = null;
-        if (kind !== 'grow' && elapsed >= groveBannerFrom && elapsed < groveBannerUntil) {
-          if (kind === 'new-zone') banner = 'new-zone';
-          else if (kind === 'new-grove') banner = 'new-grove';
-          else banner = 'grove-completed';
-        }
-
-        setHud({
-          trees: Math.round(fromTotal + (toTotal - fromTotal) * growEase),
-          groveCurrent,
-          remaining: Math.max(0, Math.round(TREES_PER_GROVE - groveCurrent)),
-          plusOne: elapsed < plusUntil,
-          banner,
-        });
+        setHud(
+          hudFromSnapshot(toSnap, {
+            trees: Math.round(fromTotal + (toTotal - fromTotal) * growEase),
+            groveCurrent,
+            remaining: Math.max(0, Math.round(TREES_PER_GROVE - groveCurrent)),
+            plusOne: elapsed < plusUntil,
+            banner,
+            celebrateGrove: milestone && showBanner ? groveOrdinal(toSnap.completedGroves) : null,
+            celebrateZone: (kind === 'zone' || kind === 'new-zone') && showBanner,
+          }),
+        );
 
         paint(toTotal, now);
         if (elapsed >= totalMs) {
@@ -296,6 +361,25 @@ export function ForestProgressCard({
     }
 
     settle(totalCompleted);
+    if (inViewRef.current && totalCompleted === prev + 1) {
+      const toSnap = deriveForestProgress(totalCompleted);
+      const zoneDone = isZoneComplete(totalCompleted);
+      const groveDone = isGroveComplete(totalCompleted);
+      if (groveDone || zoneDone) {
+        const banner = milestoneBanner(zoneDone ? 'zone' : 'grove', toSnap);
+        setHud(
+          hudFromSnapshot(toSnap, {
+            banner,
+            celebrateGrove: groveDone ? groveOrdinal(toSnap.completedGroves) : null,
+            celebrateZone: zoneDone,
+          }),
+        );
+        bannerTimerRef.current = window.setTimeout(() => {
+          setHud(settledHud(totalCompleted));
+          bannerTimerRef.current = null;
+        }, 1400);
+      }
+    }
   }, [playCompletion, settle, totalCompleted]);
 
   useEffect(() => {
@@ -306,7 +390,10 @@ export function ForestProgressCard({
   }, [paint, theme, totalCompleted]);
 
   useEffect(() => {
-    return () => stopAnimRef.current?.();
+    return () => {
+      stopAnimRef.current?.();
+      if (bannerTimerRef.current != null) window.clearTimeout(bannerTimerRef.current);
+    };
   }, []);
 
   const onViewSize = useCallback(
@@ -335,7 +422,7 @@ export function ForestProgressCard({
   );
 
   const compact = layout === 'compact';
-  const label = bannerKey(hud.banner);
+  const banner = bannerCopy(hud.banner);
 
   return (
     <section
@@ -348,15 +435,21 @@ export function ForestProgressCard({
       aria-label={t('forest.title')}
     >
       {compact ? (
-        <div className="flex min-h-0 flex-col md:h-[188px] md:flex-row">
-          <div className="min-w-0 px-4 pt-3 pb-2 md:flex md:w-[34%] md:flex-col md:justify-center md:overflow-hidden md:py-3 md:pr-3 md:pl-4">
+        <div className="flex min-h-0 flex-col md:h-[216px] md:flex-row">
+          <div className="min-w-0 px-4 pt-3 pb-2 md:flex md:w-[36%] md:flex-col md:justify-center md:overflow-hidden md:py-3 md:pr-3 md:pl-4">
             <ForestStats
               trees={hud.trees}
               treesToday={completedToday}
               groveCurrent={hud.groveCurrent}
               groveSize={TREES_PER_GROVE}
+              groveNumber={hud.groveNumber}
+              grovesFilled={hud.grovesFilled}
+              completedZones={hud.completedZones}
               remaining={hud.remaining}
+              remainingZone={hud.remainingZone}
               plusOne={hud.plusOne}
+              celebrateGrove={hud.celebrateGrove}
+              celebrateZone={hud.celebrateZone}
               exploreHref={exploreHref}
               variant="aside"
               monthLabel={monthLabel}
@@ -369,11 +462,14 @@ export function ForestProgressCard({
               onViewSize={onViewSize}
               onParallax={onParallax}
             />
-            {label ? (
+            {banner ? (
               <div className="pointer-events-none absolute inset-x-0 top-2.5 flex justify-center px-3">
-                <span className="animate-fade rounded-full bg-panel/85 px-3 py-1 text-[11px] font-semibold tracking-wide text-brand-500 uppercase ring-1 ring-line/80">
-                  {t(label)}
-                </span>
+                <div className="animate-fade max-w-[92%] rounded-2xl bg-panel/90 px-3 py-1.5 text-center shadow-sm ring-1 ring-brand-400/35">
+                  <p className="text-[11px] font-semibold tracking-wide text-brand-500 uppercase">
+                    {t(banner.title)}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-muted">{t(banner.hint)}</p>
+                </div>
               </div>
             ) : null}
           </div>
@@ -385,8 +481,14 @@ export function ForestProgressCard({
             treesToday={completedToday}
             groveCurrent={hud.groveCurrent}
             groveSize={TREES_PER_GROVE}
+            groveNumber={hud.groveNumber}
+            grovesFilled={hud.grovesFilled}
+            completedZones={hud.completedZones}
             remaining={hud.remaining}
+            remainingZone={hud.remainingZone}
             plusOne={hud.plusOne}
+            celebrateGrove={hud.celebrateGrove}
+            celebrateZone={hud.celebrateZone}
             exploreHref={exploreHref}
             variant="banner"
             monthLabel={monthLabel}
@@ -398,11 +500,14 @@ export function ForestProgressCard({
               onViewSize={onViewSize}
               onParallax={onParallax}
             />
-            {label ? (
+            {banner ? (
               <div className="pointer-events-none absolute inset-x-0 top-4 flex justify-center px-3">
-                <span className="animate-fade rounded-full bg-panel/85 px-3 py-1 text-xs font-semibold tracking-wide text-brand-500 uppercase ring-1 ring-line/80">
-                  {t(label)}
-                </span>
+                <div className="animate-fade max-w-md rounded-2xl bg-panel/90 px-4 py-2 text-center shadow-sm ring-1 ring-brand-400/35">
+                  <p className="text-xs font-semibold tracking-wide text-brand-500 uppercase">
+                    {t(banner.title)}
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-muted">{t(banner.hint)}</p>
+                </div>
               </div>
             ) : null}
           </div>

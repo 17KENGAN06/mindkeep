@@ -197,7 +197,7 @@ export function TasksPage() {
           monthLabel={`${t(`finance.months.${month}`)} ${year}`}
         />
       ) : (
-        <div className="h-[240px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[188px]" />
+        <div className="h-[280px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[216px]" />
       )}
 
       {view === 'year' ? (

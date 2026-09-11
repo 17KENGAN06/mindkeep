@@ -14,6 +14,7 @@ export type ForestParticle = {
   born: number;
   life: number;
   size: number;
+  spark?: boolean;
 };
 
 export function clamp01(value: number): number {
@@ -113,6 +114,36 @@ export function spawnGrowParticles(origin: Vec2, treeIndex: number, now: number,
     });
   }
   return particles;
+}
+
+export function spawnMilestoneParticles(
+  origin: Vec2,
+  now: number,
+  count: number,
+  spread = 18,
+): ForestParticle[] {
+  const particles: ForestParticle[] = [];
+  for (let i = 0; i < count; i += 1) {
+    const h = hash01(i * 19 + 4.2);
+    const h2 = hash01(i * 11 + 8.7);
+    const angle = (i / Math.max(1, count)) * Math.PI * 2 + h * 0.4;
+    particles.push({
+      x: origin.x + Math.cos(angle) * spread * 0.15,
+      y: origin.y + Math.sin(angle) * 2 - 2,
+      vx: Math.cos(angle) * (0.008 + h * 0.006),
+      vy: Math.sin(angle) * 0.004 - 0.01 - h2 * 0.006,
+      born: now,
+      life: 720 + h * 420,
+      size: 1,
+      spark: true,
+    });
+  }
+  return particles;
+}
+
+export function cameraPulse(base: ForestCamera, elapsed: number, duration: number, amount = 0.08): ForestCamera {
+  const wave = Math.sin(clamp01(elapsed / Math.max(1, duration)) * Math.PI);
+  return { ...base, zoom: base.zoom * (1 - amount * wave) };
 }
 
 export function advanceParticles(

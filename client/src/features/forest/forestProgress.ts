@@ -136,6 +136,24 @@ export function isZoneComplete(totalCompleted: number): boolean {
   return totalCompleted > 0 && totalCompleted % TREES_PER_ZONE === 0;
 }
 
+export function grovesFilledInZone(snapshot: ForestSnapshot): number {
+  return Math.min(GROVES_PER_ZONE, Math.floor(snapshot.treesInZone / TREES_PER_GROVE));
+}
+
+export function groveNumberInZone(snapshot: ForestSnapshot): number {
+  return snapshot.groveIndex + 1;
+}
+
+export function remainingToZone(snapshot: ForestSnapshot): number {
+  return Math.max(0, TREES_PER_ZONE - snapshot.treesInZone);
+}
+
+/** 1–4 inside the current zone, based on groves completed. */
+export function groveOrdinal(completedGroves: number): 1 | 2 | 3 | 4 {
+  const n = ((Math.max(1, completedGroves) - 1) % GROVES_PER_ZONE) + 1;
+  return n as 1 | 2 | 3 | 4;
+}
+
 export function groveOrigin(zoneIndex: number, groveIndex: number): Vec2 {
   const col = groveIndex % 2;
   const row = Math.floor(groveIndex / 2);

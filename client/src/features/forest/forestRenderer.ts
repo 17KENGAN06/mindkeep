@@ -261,7 +261,7 @@ function drawParticles(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: 
       ctx,
       Math.round(particle.x),
       Math.round(particle.y),
-      scene.palette.brand700,
+      particle.spark ? scene.palette.brand400 : scene.palette.brand700,
       cell,
       scene.camera,
       scene.viewW,

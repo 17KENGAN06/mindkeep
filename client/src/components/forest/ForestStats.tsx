@@ -1,26 +1,105 @@
 import { ArrowRight, Trees } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { GROVES_PER_ZONE } from '@/features/forest/forestProgress';
 
 type ForestStatsProps = {
   trees: number;
   treesToday: number;
   groveCurrent: number;
   groveSize: number;
+  groveNumber: number;
+  grovesFilled: number;
+  completedZones: number;
   remaining: number;
+  remainingZone: number;
   plusOne: boolean;
+  celebrateGrove: number | null;
+  celebrateZone: boolean;
   exploreHref?: string | null;
   variant?: 'aside' | 'banner';
   monthLabel?: string;
 };
+
+function MilestoneTrack({
+  grovesFilled,
+  groveNumber,
+  groveCurrent,
+  groveSize,
+  completedZones,
+  celebrateGrove,
+  celebrateZone,
+  compact,
+}: {
+  grovesFilled: number;
+  groveNumber: number;
+  groveCurrent: number;
+  groveSize: number;
+  completedZones: number;
+  celebrateGrove: number | null;
+  celebrateZone: boolean;
+  compact: boolean;
+}) {
+  const { t } = useTranslation();
+  const pip = compact ? 'h-1.5 w-1.5' : 'h-2 w-2';
+
+  return (
+    <div
+      className="flex items-center gap-1.5"
+      aria-label={t('forest.pathLabel', { grove: groveNumber, zone: completedZones })}
+    >
+      {Array.from({ length: GROVES_PER_ZONE }, (_, index) => {
+        const n = index + 1;
+        const filled = n <= grovesFilled;
+        const current = n === groveNumber && groveCurrent < groveSize;
+        const celebrating = celebrateGrove === n;
+        return (
+          <span
+            key={n}
+            className={`${pip} rounded-full transition ${
+              filled
+                ? 'bg-brand-500'
+                : current
+                  ? 'bg-brand-500/35 ring-1 ring-brand-500/80'
+                  : 'bg-line'
+            } ${celebrating ? 'animate-pulse-soft ring-2 ring-brand-400' : ''}`}
+            title={t('forest.grovePip', { n })}
+          />
+        );
+      })}
+      <span className="mx-0.5 h-3 w-px shrink-0 bg-line/80" aria-hidden />
+      <span
+        className={`inline-block rotate-45 rounded-[1px] ${compact ? 'h-1.5 w-1.5' : 'h-2 w-2'} ${
+          completedZones > 0 || celebrateZone
+            ? 'bg-brand-500'
+            : 'bg-line'
+        } ${celebrateZone ? 'animate-pulse-soft ring-1 ring-brand-400' : ''}`}
+        title={t('forest.zonePip')}
+      />
+      {completedZones > 0 ? (
+        <span className={`font-semibold text-brand-500 ${compact ? 'text-[10px]' : 'text-[11px]'}`}>
+          {t('forest.zonesCount', { count: completedZones })}
+        </span>
+      ) : (
+        <span className={`text-muted ${compact ? 'text-[10px]' : 'text-[11px]'}`}>{t('forest.zonePip')}</span>
+      )}
+    </div>
+  );
+}
 
 export function ForestStats({
   trees,
   treesToday,
   groveCurrent,
   groveSize,
+  groveNumber,
+  grovesFilled,
+  completedZones,
   remaining,
+  remainingZone,
   plusOne,
+  celebrateGrove,
+  celebrateZone,
   exploreHref,
   variant = 'aside',
   monthLabel,
@@ -28,6 +107,20 @@ export function ForestStats({
   const { t } = useTranslation();
   const progress = groveSize > 0 ? Math.min(100, (groveCurrent / groveSize) * 100) : 0;
   const compact = variant === 'aside';
+  const towardZone = groveNumber >= GROVES_PER_ZONE || grovesFilled >= GROVES_PER_ZONE - 1;
+
+  let remainingText: string;
+  if (remainingZone <= 0) {
+    remainingText = t('forest.zoneOpen');
+  } else if (groveCurrent >= groveSize && towardZone) {
+    remainingText = t('forest.remainingZone', { count: remainingZone });
+  } else if (groveCurrent >= groveSize) {
+    remainingText = t('forest.remainingDone');
+  } else if (towardZone) {
+    remainingText = t('forest.remainingZone', { count: remainingZone });
+  } else {
+    remainingText = t('forest.remaining', { count: remaining });
+  }
 
   return (
     <div
@@ -66,17 +159,30 @@ export function ForestStats({
         ) : null}
       </div>
 
-      <div className={compact ? 'min-w-0' : 'min-w-0 sm:w-72'}>
+      <div className={compact ? 'min-w-0' : 'min-w-0 sm:w-80'}>
         <div className="flex items-center justify-between gap-2">
           <p className={`font-medium text-ink ${compact ? 'text-[11px]' : 'text-xs'}`}>
             {t('forest.groveProgress', {
+              grove: groveNumber,
               current: Math.round(groveCurrent),
               total: groveSize,
             })}
           </p>
         </div>
+        <div className={compact ? 'mt-1.5' : 'mt-2'}>
+          <MilestoneTrack
+            grovesFilled={grovesFilled}
+            groveNumber={groveNumber}
+            groveCurrent={groveCurrent}
+            groveSize={groveSize}
+            completedZones={completedZones}
+            celebrateGrove={celebrateGrove}
+            celebrateZone={celebrateZone}
+            compact={compact}
+          />
+        </div>
         <div
-          className={`overflow-hidden rounded-full bg-line/60 ${compact ? 'mt-1 h-1.5' : 'mt-2 h-2'}`}
+          className={`overflow-hidden rounded-full bg-line/60 ${compact ? 'mt-1.5 h-1.5' : 'mt-2 h-2'}`}
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={groveSize}
@@ -84,11 +190,7 @@ export function ForestStats({
         >
           <div className="h-full rounded-full bg-brand-500" style={{ width: `${progress}%` }} />
         </div>
-        <p className={`text-muted ${compact ? 'mt-1 text-[11px]' : 'mt-2 text-xs'}`}>
-          {groveCurrent >= groveSize
-            ? t('forest.remainingDone')
-            : t('forest.remaining', { count: remaining })}
-        </p>
+        <p className={`text-muted ${compact ? 'mt-1 text-[11px]' : 'mt-2 text-xs'}`}>{remainingText}</p>
         {exploreHref ? (
           <Link
             to={exploreHref}

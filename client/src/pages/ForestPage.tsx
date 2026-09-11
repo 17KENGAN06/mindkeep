@@ -85,6 +85,7 @@ export function ForestPage() {
         <ul className="mt-3 space-y-2 text-sm text-muted">
           <li>{t('forest.ruleTrees')}</li>
           <li>{t('forest.ruleGrove')}</li>
+          <li>{t('forest.rulePath')}</li>
           <li>{t('forest.ruleZone')}</li>
           <li>{t('forest.ruleMonth')}</li>
         </ul>
