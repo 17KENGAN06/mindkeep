@@ -27,17 +27,17 @@ export type ForestPalette = {
 
 /**
  * Pixel maps. Characters:
- * `.` empty, `t` trunk, `d` dark canopy, `m` mid, `l` light.
+ * ` ` empty, `t` trunk, `d` dark canopy, `m` mid, `l` light.
  * Later these rows can be replaced by image sprites.
  */
 const SPRITES: Record<TreeKind, string[][]> = {
   pine: [
-    ['  l  ', ' lml ', 'lmmml', 'mmmmm', '  t  ', '  t  '],
-    ['   l   ', '  lml  ', ' lmmml ', 'lmmmmml', ' mmmmm ', '   t   ', '   t   '],
+    ['  l  ', ' lml ', 'lmmml', '  t  '],
+    ['   l   ', '  lml  ', ' lmmml ', 'lmmmmml', '  mmm  ', '   t   ', '   t   '],
     ['    l    ', '   lml   ', '  lmmml  ', ' lmmmmml ', 'lmmmmmmml', '  mmmmm  ', '    t    ', '    t    '],
   ],
   cedar: [
-    [' l ', 'lml', 'mmm', ' t ', ' t '],
+    [' l ', 'lml', 'mmm', ' t '],
     ['  l  ', ' lml ', 'lmmml', ' mmm ', '  t  ', '  t  '],
     ['   l   ', '  lml  ', ' lmmml ', 'lmmmmml', ' mmmmm ', '   t   ', '   t   '],
   ],
@@ -142,10 +142,10 @@ export function sizeForestCanvas(
 }
 
 function cellSize(scene: ForestScene): number {
-  const visW = scene.density === 'page' ? GROVE_WIDTH * 1.35 : GROVE_WIDTH * 1.08;
-  const visH = scene.density === 'page' ? GROVE_HEIGHT * 1.2 : GROVE_HEIGHT * 1.05;
-  const fit = Math.min(scene.viewW / visW, scene.viewH / visH);
-  return Math.max(2, Math.floor(fit * scene.camera.zoom));
+  const padX = scene.density === 'page' ? 4 : 2;
+  const padY = 1;
+  const fit = Math.min(scene.viewW / (GROVE_WIDTH + padX), scene.viewH / (GROVE_HEIGHT + padY));
+  return Math.max(3, Math.floor(fit * scene.camera.zoom));
 }
 
 function fillCell(
@@ -168,7 +168,8 @@ function fillCell(
 
 function ink(palette: ForestPalette, ch: string): string | null {
   if (ch === 't') return palette.brand900;
-  if (ch === 'd' || ch === 'm') return palette.brand800;
+  if (ch === 'd') return palette.brand900;
+  if (ch === 'm') return palette.brand800;
   if (ch === 'l') return palette.brand700;
   return null;
 }
@@ -239,62 +240,14 @@ function drawTree(ctx: CanvasRenderingContext2D, tree: ForestTree, scene: Forest
 
 function drawGround(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: number) {
   const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
-  const ground = scene.palette.brand50;
-  const moss = scene.palette.brand900;
+  const soil = scene.palette.line;
+  const count = scene.density === 'page' ? 28 : 18;
 
-  for (let y = 11; y < GROVE_HEIGHT; y += 1) {
-    for (let x = 2; x < GROVE_WIDTH - 2; x += 1) {
-      const wx = origin.x + x;
-      const wy = origin.y + y;
-      const speck = (x * 3 + y * 7 + scene.focus.groveIndex * 11) % 9 === 0;
-      fillCell(
-        ctx,
-        wx,
-        wy,
-        speck ? moss : ground,
-        cell,
-        scene.camera,
-        scene.viewW,
-        scene.viewH,
-        scene.parallax,
-      );
-    }
-  }
-
-  const ridge = [' l ', 'lml', ' t '];
-  const count = scene.reducedEffects ? 7 : 11;
   for (let i = 0; i < count; i += 1) {
-    drawPixelSprite(
-      ctx,
-      ridge,
-      origin.x + 4 + i * 5,
-      origin.y + 12,
-      cell,
-      scene,
-      1,
-    );
-  }
-}
-
-function drawSilhouettes(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: number) {
-  const color = scene.palette.brand900;
-  for (const mass of scene.silhouettes) {
-    for (let y = 0; y < mass.height; y += 1) {
-      for (let x = 0; x < mass.width; x += 1) {
-        if ((x * 5 + y * 3) % 4 === 0) continue;
-        fillCell(
-          ctx,
-          mass.x + x,
-          mass.y + y,
-          color,
-          cell,
-          scene.camera,
-          scene.viewW,
-          scene.viewH,
-          scene.parallax,
-        );
-      }
-    }
+    const x = origin.x + 3 + ((i * 13) % (GROVE_WIDTH - 6));
+    const y = origin.y + GROVE_HEIGHT - 3 - (i % 2);
+    if ((i * 5) % 3 === 0) continue;
+    fillCell(ctx, x, y, soil, cell, scene.camera, scene.viewW, scene.viewH, scene.parallax);
   }
 }
 
@@ -308,7 +261,7 @@ function drawParticles(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: 
       ctx,
       Math.round(particle.x),
       Math.round(particle.y),
-      scene.palette.brand400,
+      scene.palette.brand700,
       cell,
       scene.camera,
       scene.viewW,
@@ -322,11 +275,9 @@ function drawParticles(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: 
 export function renderForest(ctx: CanvasRenderingContext2D, scene: ForestScene, dpr: number): void {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.imageSmoothingEnabled = false;
-  ctx.fillStyle = scene.palette.panel;
-  ctx.fillRect(0, 0, scene.viewW, scene.viewH);
+  ctx.clearRect(0, 0, scene.viewW, scene.viewH);
 
   const cell = cellSize(scene);
-  drawSilhouettes(ctx, scene, cell);
   drawGround(ctx, scene, cell);
 
   for (const tree of scene.trees) {

@@ -31,7 +31,7 @@ export const ForestCanvas = forwardRef<ForestCanvasHandle, ForestCanvasProps>(
     const paint = (scene: ForestScene) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
-      const ctx = canvas.getContext('2d', { alpha: false });
+      const ctx = canvas.getContext('2d', { alpha: true });
       if (!ctx) return;
       sceneRef.current = scene;
       ctx.imageSmoothingEnabled = false;
@@ -64,7 +64,7 @@ export const ForestCanvas = forwardRef<ForestCanvasHandle, ForestCanvasProps>(
     return (
       <canvas
         ref={canvasRef}
-        className={`block h-full w-full ${className}`}
+        className={`block h-full w-full bg-transparent ${className}`}
         aria-hidden
         onPointerMove={(event) => {
           if (!enableParallax) return;

@@ -2,10 +2,10 @@ export const TREES_PER_GROVE = 25;
 export const TREES_PER_ZONE = 100;
 export const GROVES_PER_ZONE = TREES_PER_ZONE / TREES_PER_GROVE;
 
-/** Grove size in world cells. Everything is drawn as integer tiles. */
-export const GROVE_WIDTH = 56;
-export const GROVE_HEIGHT = 32;
-export const ZONE_GAP = 10;
+/** Wide, shallow grove so the pixel scene fills the card instead of a postage stamp. */
+export const GROVE_WIDTH = 90;
+export const GROVE_HEIGHT = 20;
+export const ZONE_GAP = 8;
 
 export type TreeKind = 'pine' | 'broadleaf' | 'cedar';
 
@@ -19,34 +19,34 @@ export type GroveSlot = {
 
 /**
  * 25 integer cell positions for one grove.
- * First slots sit in the centre so early progress looks composed.
+ * Early slots sit near the centre; later ones fill the full width of the card.
  */
 export const GROVE_SLOTS: GroveSlot[] = [
-  { x: 26, y: 22, kind: 'pine', size: 2 },
-  { x: 32, y: 23, kind: 'cedar', size: 1 },
-  { x: 21, y: 24, kind: 'broadleaf', size: 1 },
-  { x: 29, y: 26, kind: 'pine', size: 2 },
-  { x: 18, y: 21, kind: 'cedar', size: 1 },
-  { x: 36, y: 21, kind: 'pine', size: 1 },
-  { x: 24, y: 19, kind: 'broadleaf', size: 1 },
-  { x: 39, y: 25, kind: 'cedar', size: 2 },
-  { x: 15, y: 25, kind: 'pine', size: 1 },
-  { x: 33, y: 18, kind: 'pine', size: 0 },
-  { x: 12, y: 22, kind: 'broadleaf', size: 0 },
-  { x: 42, y: 20, kind: 'cedar', size: 1 },
-  { x: 23, y: 16, kind: 'pine', size: 0 },
-  { x: 37, y: 16, kind: 'broadleaf', size: 0 },
-  { x: 28, y: 15, kind: 'cedar', size: 0 },
-  { x: 9, y: 19, kind: 'pine', size: 0 },
-  { x: 45, y: 23, kind: 'pine', size: 1 },
-  { x: 17, y: 14, kind: 'cedar', size: 0 },
-  { x: 34, y: 13, kind: 'pine', size: 0 },
-  { x: 25, y: 12, kind: 'broadleaf', size: 0 },
-  { x: 41, y: 15, kind: 'cedar', size: 0 },
-  { x: 13, y: 15, kind: 'pine', size: 0 },
-  { x: 30, y: 28, kind: 'cedar', size: 1 },
-  { x: 47, y: 18, kind: 'broadleaf', size: 0 },
-  { x: 8, y: 24, kind: 'pine', size: 1 },
+  { x: 45, y: 16, kind: 'pine', size: 2 },
+  { x: 52, y: 17, kind: 'cedar', size: 1 },
+  { x: 38, y: 17, kind: 'broadleaf', size: 1 },
+  { x: 48, y: 18, kind: 'pine', size: 2 },
+  { x: 31, y: 16, kind: 'cedar', size: 1 },
+  { x: 59, y: 16, kind: 'pine', size: 1 },
+  { x: 42, y: 14, kind: 'broadleaf', size: 1 },
+  { x: 66, y: 17, kind: 'cedar', size: 2 },
+  { x: 24, y: 17, kind: 'pine', size: 1 },
+  { x: 55, y: 14, kind: 'pine', size: 0 },
+  { x: 17, y: 16, kind: 'broadleaf', size: 0 },
+  { x: 73, y: 15, kind: 'cedar', size: 1 },
+  { x: 35, y: 13, kind: 'pine', size: 0 },
+  { x: 62, y: 13, kind: 'broadleaf', size: 0 },
+  { x: 46, y: 12, kind: 'cedar', size: 0 },
+  { x: 10, y: 15, kind: 'pine', size: 1 },
+  { x: 80, y: 16, kind: 'pine', size: 1 },
+  { x: 28, y: 13, kind: 'cedar', size: 0 },
+  { x: 70, y: 13, kind: 'pine', size: 0 },
+  { x: 50, y: 11, kind: 'broadleaf', size: 0 },
+  { x: 84, y: 14, kind: 'cedar', size: 0 },
+  { x: 6, y: 17, kind: 'pine', size: 1 },
+  { x: 76, y: 18, kind: 'cedar', size: 1 },
+  { x: 21, y: 18, kind: 'broadleaf', size: 1 },
+  { x: 40, y: 18, kind: 'pine', size: 1 },
 ];
 
 export type ForestSnapshot = {
@@ -140,7 +140,7 @@ export function groveCenter(zoneIndex: number, groveIndex: number): Vec2 {
   const origin = groveOrigin(zoneIndex, groveIndex);
   return {
     x: origin.x + Math.floor(GROVE_WIDTH / 2),
-    y: origin.y + 22,
+    y: origin.y + Math.floor(GROVE_HEIGHT / 2) + 2,
   };
 }
 
@@ -243,18 +243,7 @@ export function getForestView(
 
   trees.sort((a, b) => a.y - b.y || a.x - b.x);
 
-  const silhouettes: ForestSilhouette[] = [];
-  if (snapshot.zoneIndex > 0) {
-    const origin = groveOrigin(snapshot.zoneIndex - 1, 0);
-    silhouettes.push({
-      x: origin.x + 8,
-      y: origin.y + 14,
-      width: GROVE_WIDTH * 2 - 10,
-      height: 12,
-    });
-  }
-
-  return { snapshot, trees, silhouettes, focus };
+  return { snapshot, trees, silhouettes: [], focus };
 }
 
 export function idleCamera(

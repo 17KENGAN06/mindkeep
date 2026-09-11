@@ -337,7 +337,7 @@ export function ForestProgressCard({
         paint(totalCompleted);
       }
     },
-    [paint, totalCompleted],
+    [density, paint, totalCompleted],
   );
 
   const onParallax = useCallback(
@@ -368,7 +368,7 @@ export function ForestProgressCard({
     >
       {compact ? (
         <div className="flex min-h-[232px] flex-col md:h-[176px] md:min-h-0 md:flex-row">
-          <div className="min-w-0 px-4 pt-3 pb-2 md:flex md:w-[38%] md:flex-col md:justify-center md:overflow-hidden md:py-3 md:pr-3 md:pl-4">
+          <div className="min-w-0 px-4 pt-3 pb-2 md:flex md:w-[32%] md:flex-col md:justify-center md:overflow-hidden md:py-3 md:pr-3 md:pl-4">
             <ForestStats
               trees={hud.trees}
               treesToday={completedToday}
@@ -380,7 +380,7 @@ export function ForestProgressCard({
               variant="aside"
             />
           </div>
-          <div className="relative min-h-[132px] flex-1 overflow-hidden border-t border-line/70 md:min-h-0 md:border-t-0 md:border-l">
+          <div className="relative min-h-[148px] flex-1 overflow-hidden border-t border-line/60 md:min-h-0 md:border-t-0 md:border-l md:border-line/60">
             <ForestCanvas
               ref={canvasRef}
               enableParallax={desktopParallax}
@@ -408,7 +408,7 @@ export function ForestProgressCard({
             exploreHref={exploreHref}
             variant="banner"
           />
-          <div className="relative mt-4 h-64 overflow-hidden rounded-2xl ring-1 ring-line">
+          <div className="relative mt-4 h-64 overflow-hidden border-t border-line/60">
             <ForestCanvas
               ref={canvasRef}
               enableParallax={desktopParallax}
