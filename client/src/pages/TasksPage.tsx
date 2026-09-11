@@ -189,7 +189,7 @@ export function TasksPage() {
           completedToday={forestQuery.data.completedToday}
         />
       ) : (
-        <div className="h-[240px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[168px]" />
+        <div className="h-[240px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[176px]" />
       )}
 
       {view === 'year' ? (

@@ -365,7 +365,7 @@ export function ForestProgressCard({
       aria-label={t('forest.title')}
     >
       {compact ? (
-        <div className="flex min-h-[232px] flex-col md:h-[168px] md:min-h-0 md:flex-row">
+        <div className="flex min-h-[232px] flex-col md:h-[176px] md:min-h-0 md:flex-row">
           <div className="min-w-0 px-4 pt-3 pb-2 md:flex md:w-[38%] md:flex-col md:justify-center md:overflow-hidden md:py-3 md:pr-3 md:pl-4">
             <ForestStats
               trees={hud.trees}

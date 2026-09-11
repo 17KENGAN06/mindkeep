@@ -31,6 +31,7 @@ export type SpriteDrawContext = {
   scale: number;
   alpha: number;
   palette: ForestPalette;
+  density?: 'preview' | 'page';
 };
 
 /**
@@ -160,91 +161,103 @@ function drawTreeSprite(kind: TreeKind, context: SpriteDrawContext) {
   sprite.draw(context);
 }
 
-function drawPine(context: SpriteDrawContext) {
+function spriteSize(scale: number, density: 'preview' | 'page') {
+  return (density === 'preview' ? 62 : 52) * scale;
+}
+
+function drawPine(context: SpriteDrawContext & { density?: 'preview' | 'page' }) {
   const { ctx, x, y, scale, palette } = context;
-  const s = 26 * scale;
-  ctx.fillStyle = 'rgba(12, 22, 18, 0.28)';
+  const s = spriteSize(scale, context.density ?? 'preview');
+
+  ctx.fillStyle = 'rgba(6, 14, 10, 0.38)';
   ctx.beginPath();
-  ctx.ellipse(x, y + 2, s * 0.28, s * 0.08, 0, 0, Math.PI * 2);
+  ctx.ellipse(x, y + 1.5, s * 0.24, s * 0.07, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = mix(palette.brand900, '#1a140e', 0.35);
-  ctx.fillRect(x - s * 0.05, y - s * 0.22, s * 0.1, s * 0.24);
+  ctx.fillStyle = mix(palette.brand900, '#1a120c', 0.42);
+  ctx.beginPath();
+  ctx.moveTo(x - s * 0.045, y);
+  ctx.lineTo(x - s * 0.028, y - s * 0.3);
+  ctx.lineTo(x + s * 0.028, y - s * 0.3);
+  ctx.lineTo(x + s * 0.05, y);
+  ctx.closePath();
+  ctx.fill();
 
   const layers = [
-    { top: 0.92, w: 0.22, h: 0.28, color: mix(palette.brand800, palette.brand900, 0.25) },
-    { top: 0.72, w: 0.3, h: 0.3, color: palette.brand800 },
-    { top: 0.5, w: 0.36, h: 0.32, color: mix(palette.brand700, palette.brand800, 0.2) },
-    { top: 0.28, w: 0.26, h: 0.28, color: mix(palette.brand700, palette.brand500, 0.15) },
+    { y: 0.28, w: 0.36, h: 0.3, fill: mix(palette.brand900, palette.brand800, 0.25) },
+    { y: 0.46, w: 0.3, h: 0.28, fill: palette.brand800 },
+    { y: 0.62, w: 0.23, h: 0.26, fill: mix(palette.brand800, palette.brand700, 0.45) },
+    { y: 0.78, w: 0.15, h: 0.22, fill: mix(palette.brand700, palette.brand500, 0.18) },
   ];
 
   for (const layer of layers) {
-    ctx.fillStyle = layer.color;
+    ctx.fillStyle = layer.fill;
     ctx.beginPath();
-    ctx.moveTo(x, y - s * layer.top);
-    ctx.lineTo(x + s * layer.w, y - s * (layer.top - layer.h));
-    ctx.lineTo(x - s * layer.w, y - s * (layer.top - layer.h));
-    ctx.closePath();
+    ctx.moveTo(x, y - s * (layer.y + layer.h));
+    ctx.quadraticCurveTo(x + s * layer.w, y - s * layer.y, x, y - s * (layer.y - 0.03));
+    ctx.quadraticCurveTo(x - s * layer.w, y - s * layer.y, x, y - s * (layer.y + layer.h));
     ctx.fill();
   }
 
-  ctx.strokeStyle = `${palette.brand500}33`;
-  ctx.lineWidth = Math.max(0.6, scale * 0.7);
+  ctx.strokeStyle = rgba(palette.brand500, 0.18);
+  ctx.lineWidth = Math.max(0.8, scale * 0.9);
   ctx.beginPath();
-  ctx.moveTo(x - s * 0.08, y - s * 0.55);
-  ctx.lineTo(x + s * 0.1, y - s * 0.7);
+  ctx.moveTo(x + s * 0.02, y - s * 0.78);
+  ctx.quadraticCurveTo(x + s * 0.14, y - s * 0.58, x + s * 0.1, y - s * 0.42);
   ctx.stroke();
 }
 
-function drawBroadleaf(context: SpriteDrawContext) {
+function drawBroadleaf(context: SpriteDrawContext & { density?: 'preview' | 'page' }) {
   const { ctx, x, y, scale, palette } = context;
-  const s = 24 * scale;
-  ctx.fillStyle = 'rgba(12, 22, 18, 0.26)';
+  const s = spriteSize(scale, context.density ?? 'preview') * 0.92;
+
+  ctx.fillStyle = 'rgba(6, 14, 10, 0.34)';
   ctx.beginPath();
-  ctx.ellipse(x, y + 2, s * 0.32, s * 0.09, 0, 0, Math.PI * 2);
+  ctx.ellipse(x, y + 1.5, s * 0.28, s * 0.08, 0, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.fillStyle = mix(palette.brand900, '#24180f', 0.4);
-  ctx.fillRect(x - s * 0.045, y - s * 0.2, s * 0.09, s * 0.22);
+  ctx.fillRect(x - s * 0.04, y - s * 0.22, s * 0.08, s * 0.24);
 
-  ctx.fillStyle = mix(palette.brand800, palette.brand900, 0.15);
+  ctx.fillStyle = mix(palette.brand800, palette.brand900, 0.12);
   ctx.beginPath();
-  ctx.ellipse(x - s * 0.08, y - s * 0.42, s * 0.28, s * 0.24, -0.3, 0, Math.PI * 2);
+  ctx.ellipse(x - s * 0.1, y - s * 0.44, s * 0.3, s * 0.26, -0.28, 0, Math.PI * 2);
   ctx.fill();
   ctx.fillStyle = palette.brand800;
   ctx.beginPath();
-  ctx.ellipse(x + s * 0.1, y - s * 0.46, s * 0.26, s * 0.22, 0.35, 0, Math.PI * 2);
+  ctx.ellipse(x + s * 0.12, y - s * 0.5, s * 0.28, s * 0.24, 0.32, 0, Math.PI * 2);
   ctx.fill();
-  ctx.fillStyle = mix(palette.brand700, palette.brand800, 0.25);
+  ctx.fillStyle = mix(palette.brand700, palette.brand800, 0.3);
   ctx.beginPath();
-  ctx.ellipse(x, y - s * 0.58, s * 0.22, s * 0.2, 0, 0, Math.PI * 2);
+  ctx.ellipse(x, y - s * 0.62, s * 0.24, s * 0.22, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = `${palette.brand500}22`;
+  ctx.fillStyle = rgba(palette.brand500, 0.14);
   ctx.beginPath();
-  ctx.ellipse(x + s * 0.08, y - s * 0.62, s * 0.1, s * 0.08, 0.2, 0, Math.PI * 2);
+  ctx.ellipse(x + s * 0.1, y - s * 0.66, s * 0.1, s * 0.08, 0.2, 0, Math.PI * 2);
   ctx.fill();
 }
 
-function drawCedar(context: SpriteDrawContext) {
+function drawCedar(context: SpriteDrawContext & { density?: 'preview' | 'page' }) {
   const { ctx, x, y, scale, palette } = context;
-  const s = 28 * scale;
-  ctx.fillStyle = 'rgba(12, 22, 18, 0.26)';
+  const s = spriteSize(scale, context.density ?? 'preview') * 1.05;
+
+  ctx.fillStyle = 'rgba(6, 14, 10, 0.34)';
   ctx.beginPath();
-  ctx.ellipse(x, y + 2, s * 0.24, s * 0.07, 0, 0, Math.PI * 2);
+  ctx.ellipse(x, y + 1.5, s * 0.2, s * 0.06, 0, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.fillStyle = mix(palette.brand900, '#1c1610', 0.3);
-  ctx.fillRect(x - s * 0.04, y - s * 0.2, s * 0.08, s * 0.22);
+  ctx.fillRect(x - s * 0.035, y - s * 0.22, s * 0.07, s * 0.24);
 
-  const bands = [0.86, 0.66, 0.46, 0.28];
+  const bands = [0.88, 0.68, 0.5, 0.32];
   bands.forEach((top, index) => {
-    const width = 0.16 + index * 0.05;
-    ctx.fillStyle = index % 2 === 0 ? palette.brand800 : mix(palette.brand700, palette.brand800, 0.3);
+    const width = 0.14 + index * 0.055;
+    ctx.fillStyle = index % 2 === 0 ? palette.brand800 : mix(palette.brand700, palette.brand800, 0.35);
     ctx.beginPath();
     ctx.moveTo(x, y - s * top);
-    ctx.quadraticCurveTo(x + s * width, y - s * (top - 0.18), x, y - s * (top - 0.2));
-    ctx.quadraticCurveTo(x - s * width, y - s * (top - 0.18), x, y - s * top);
+    ctx.quadraticCurveTo(x + s * width, y - s * (top - 0.16), x, y - s * (top - 0.2));
+    ctx.quadraticCurveTo(x - s * width, y - s * (top - 0.16), x, y - s * top);
     ctx.fill();
   });
 }
@@ -279,61 +292,75 @@ function parseColor(input: string): { r: number; g: number; b: number } | null {
 function drawBackdrop(ctx: CanvasRenderingContext2D, scene: ForestScene) {
   const { viewW, viewH, palette } = scene;
   const sky = ctx.createLinearGradient(0, 0, 0, viewH);
-  sky.addColorStop(0, mix(palette.surface, palette.brand700, 0.12));
-  sky.addColorStop(0.45, palette.surface);
-  sky.addColorStop(1, mix(palette.panel, palette.brand900, 0.35));
+  sky.addColorStop(0, mix(palette.surface, palette.brand800, 0.28));
+  sky.addColorStop(0.42, mix(palette.surface, palette.panel, 0.2));
+  sky.addColorStop(1, mix(palette.panel, palette.brand900, 0.55));
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, viewW, viewH);
 
-  const glow = ctx.createRadialGradient(viewW * 0.28, viewH * 0.18, 8, viewW * 0.28, viewH * 0.18, viewW * 0.55);
-  glow.addColorStop(0, `${palette.brand500}18`);
-  glow.addColorStop(1, `${palette.brand500}00`);
+  const glow = ctx.createRadialGradient(
+    viewW * 0.55,
+    viewH * 0.12,
+    6,
+    viewW * 0.55,
+    viewH * 0.12,
+    viewW * 0.62,
+  );
+  glow.addColorStop(0, rgba(palette.brand500, 0.1));
+  glow.addColorStop(1, rgba(palette.brand500, 0));
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, viewW, viewH);
+}
 
-  if (!scene.reducedEffects) {
-    ctx.fillStyle = `${palette.brand500}22`;
-    const dots = scene.density === 'page' ? 8 : 5;
-    for (let i = 0; i < dots; i += 1) {
-      const px = ((i * 97 + 13) % 100) / 100 * viewW;
-      const py = ((i * 53 + 21) % 40) / 100 * viewH;
-      ctx.beginPath();
-      ctx.arc(px, py, i % 2 === 0 ? 1.1 : 0.7, 0, Math.PI * 2);
-      ctx.fill();
-    }
+function drawHorizon(ctx: CanvasRenderingContext2D, scene: ForestScene) {
+  const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
+  const baseY = origin.y + GROVE_HEIGHT * 0.4;
+  const count = scene.reducedEffects ? 9 : 16;
+
+  for (let i = 0; i < count; i += 1) {
+    const tx = origin.x - 20 + i * (GROVE_WIDTH / (count - 1)) + ((i * 13) % 9) - 4;
+    const th = 38 + ((i * 17) % 22);
+    ctx.fillStyle = mix(scene.palette.brand900, scene.palette.surface, 0.18 + (i % 3) * 0.05);
+    ctx.beginPath();
+    ctx.moveTo(tx, baseY + 8);
+    ctx.lineTo(tx + 16, baseY + 8);
+    ctx.lineTo(tx + 8, baseY - th);
+    ctx.closePath();
+    ctx.fill();
   }
+
+  ctx.fillStyle = mix(scene.palette.brand900, scene.palette.panel, 0.35);
+  ctx.beginPath();
+  ctx.ellipse(
+    origin.x + GROVE_WIDTH / 2,
+    origin.y + GROVE_HEIGHT * 0.46,
+    GROVE_WIDTH * 0.48,
+    GROVE_HEIGHT * 0.1,
+    0,
+    0,
+    Math.PI * 2,
+  );
+  ctx.fill();
 }
 
 function drawClearing(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  const groves = new Map<string, { zoneIndex: number; groveIndex: number }>();
-  groves.set(`${scene.focus.zoneIndex}:${scene.focus.groveIndex}`, scene.focus);
-  for (const tree of scene.trees) {
-    groves.set(`${tree.zoneIndex}:${tree.groveIndex}`, {
-      zoneIndex: tree.zoneIndex,
-      groveIndex: tree.groveIndex,
-    });
-  }
+  const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
+  const cx = origin.x + GROVE_WIDTH / 2;
+  const cy = origin.y + GROVE_HEIGHT * 0.74;
 
-  for (const grove of groves.values()) {
-    const origin = groveOrigin(grove.zoneIndex, grove.groveIndex);
-    const cx = origin.x + GROVE_WIDTH / 2;
-    const cy = origin.y + GROVE_HEIGHT * 0.68;
-    const isFocus =
-      grove.zoneIndex === scene.focus.zoneIndex && grove.groveIndex === scene.focus.groveIndex;
+  const moss = ctx.createRadialGradient(cx, cy, 8, cx, cy, GROVE_WIDTH * 0.34);
+  moss.addColorStop(0, mix(scene.palette.brand800, scene.palette.brand700, 0.25));
+  moss.addColorStop(0.55, mix(scene.palette.brand900, scene.palette.panel, 0.2));
+  moss.addColorStop(1, rgba(scene.palette.panel, 0));
+  ctx.fillStyle = moss;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, GROVE_WIDTH * 0.34, GROVE_HEIGHT * 0.16, 0, 0, Math.PI * 2);
+  ctx.fill();
 
-    ctx.fillStyle = mix(scene.palette.brand900, scene.palette.panel, isFocus ? 0.35 : 0.2);
-    ctx.beginPath();
-    ctx.ellipse(cx, cy, GROVE_WIDTH * 0.42, GROVE_HEIGHT * 0.22, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    if (isFocus) {
-      ctx.strokeStyle = `${scene.palette.brand500}18`;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, GROVE_WIDTH * 0.36, GROVE_HEIGHT * 0.16, 0, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-  }
+  ctx.fillStyle = rgba('#06110c', 0.22);
+  ctx.beginPath();
+  ctx.ellipse(cx, cy + 6, GROVE_WIDTH * 0.22, GROVE_HEIGHT * 0.08, 0, 0, Math.PI * 2);
+  ctx.fill();
 }
 
 function drawSilhouettes(ctx: CanvasRenderingContext2D, scene: ForestScene) {
@@ -452,6 +479,7 @@ export function renderForest(ctx: CanvasRenderingContext2D, scene: ForestScene, 
   ctx.save();
   applyCamera(ctx, scene, dpr);
   drawSilhouettes(ctx, scene);
+  drawHorizon(ctx, scene);
   drawClearing(ctx, scene);
   drawRocks(ctx, scene);
   drawMist(ctx, scene);
@@ -468,6 +496,7 @@ export function renderForest(ctx: CanvasRenderingContext2D, scene: ForestScene, 
       scale: look.scale,
       alpha: 1,
       palette: scene.palette,
+      density: scene.density,
     });
     ctx.restore();
   }

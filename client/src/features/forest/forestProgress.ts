@@ -20,31 +20,31 @@ export type GroveSlot = {
  * Reused for every grove; world placement is derived from zone/grove origin.
  */
 export const GROVE_SLOTS: GroveSlot[] = [
-  { x: 0.22, y: 0.28, kind: 'pine', size: 0.82 },
-  { x: 0.4, y: 0.24, kind: 'cedar', size: 0.88 },
-  { x: 0.58, y: 0.3, kind: 'pine', size: 0.78 },
-  { x: 0.74, y: 0.26, kind: 'broadleaf', size: 0.8 },
-  { x: 0.12, y: 0.36, kind: 'cedar', size: 0.86 },
-  { x: 0.3, y: 0.4, kind: 'broadleaf', size: 0.94 },
-  { x: 0.48, y: 0.38, kind: 'pine', size: 0.9 },
-  { x: 0.66, y: 0.42, kind: 'cedar', size: 0.92 },
-  { x: 0.82, y: 0.4, kind: 'pine', size: 0.84 },
-  { x: 0.18, y: 0.5, kind: 'pine', size: 0.96 },
-  { x: 0.38, y: 0.52, kind: 'cedar', size: 1 },
-  { x: 0.54, y: 0.48, kind: 'broadleaf', size: 0.98 },
-  { x: 0.72, y: 0.54, kind: 'pine', size: 1.02 },
-  { x: 0.08, y: 0.58, kind: 'broadleaf', size: 0.9 },
-  { x: 0.26, y: 0.62, kind: 'pine', size: 1.06 },
-  { x: 0.46, y: 0.64, kind: 'cedar', size: 1.08 },
-  { x: 0.62, y: 0.6, kind: 'pine', size: 1.04 },
-  { x: 0.8, y: 0.66, kind: 'broadleaf', size: 0.96 },
-  { x: 0.16, y: 0.72, kind: 'cedar', size: 1 },
-  { x: 0.34, y: 0.74, kind: 'broadleaf', size: 1.1 },
-  { x: 0.52, y: 0.76, kind: 'pine', size: 1.14 },
-  { x: 0.7, y: 0.78, kind: 'cedar', size: 1.08 },
-  { x: 0.88, y: 0.7, kind: 'pine', size: 0.94 },
-  { x: 0.42, y: 0.86, kind: 'cedar', size: 1.16 },
-  { x: 0.6, y: 0.88, kind: 'pine', size: 1.12 },
+  { x: 0.47, y: 0.7, kind: 'pine', size: 1.2 },
+  { x: 0.61, y: 0.74, kind: 'cedar', size: 1.14 },
+  { x: 0.36, y: 0.78, kind: 'broadleaf', size: 1.1 },
+  { x: 0.54, y: 0.84, kind: 'pine', size: 1.26 },
+  { x: 0.3, y: 0.66, kind: 'cedar', size: 1.04 },
+  { x: 0.68, y: 0.67, kind: 'pine', size: 1.08 },
+  { x: 0.43, y: 0.6, kind: 'broadleaf', size: 1 },
+  { x: 0.74, y: 0.8, kind: 'cedar', size: 1.16 },
+  { x: 0.24, y: 0.82, kind: 'pine', size: 1.12 },
+  { x: 0.58, y: 0.57, kind: 'pine', size: 0.98 },
+  { x: 0.18, y: 0.7, kind: 'broadleaf', size: 0.96 },
+  { x: 0.8, y: 0.63, kind: 'cedar', size: 1.02 },
+  { x: 0.4, y: 0.5, kind: 'pine', size: 0.92 },
+  { x: 0.66, y: 0.5, kind: 'broadleaf', size: 0.94 },
+  { x: 0.5, y: 0.46, kind: 'cedar', size: 0.9 },
+  { x: 0.14, y: 0.58, kind: 'pine', size: 0.88 },
+  { x: 0.86, y: 0.72, kind: 'pine', size: 1 },
+  { x: 0.28, y: 0.42, kind: 'cedar', size: 0.84 },
+  { x: 0.62, y: 0.4, kind: 'pine', size: 0.82 },
+  { x: 0.44, y: 0.36, kind: 'broadleaf', size: 0.8 },
+  { x: 0.76, y: 0.46, kind: 'cedar', size: 0.86 },
+  { x: 0.2, y: 0.46, kind: 'pine', size: 0.82 },
+  { x: 0.52, y: 0.9, kind: 'cedar', size: 1.18 },
+  { x: 0.88, y: 0.56, kind: 'broadleaf', size: 0.92 },
+  { x: 0.1, y: 0.76, kind: 'pine', size: 0.94 },
 ];
 
 export type ForestSnapshot = {
@@ -138,7 +138,7 @@ export function groveCenter(zoneIndex: number, groveIndex: number): Vec2 {
   const origin = groveOrigin(zoneIndex, groveIndex);
   return {
     x: origin.x + GROVE_WIDTH / 2,
-    y: origin.y + GROVE_HEIGHT * 0.58,
+    y: origin.y + GROVE_HEIGHT * 0.72,
   };
 }
 
@@ -163,8 +163,8 @@ export function getTreeByIndex(index: number): ForestTree {
   const slot = inZone % TREES_PER_GROVE;
   const def = GROVE_SLOTS[slot]!;
   const origin = groveOrigin(zoneIndex, groveIndex);
-  const jitterX = (hash01(index * 3.17) - 0.5) * 10;
-  const jitterY = (hash01(index * 5.91) - 0.5) * 6;
+  const jitterX = (hash01(index * 3.17) - 0.5) * 5;
+  const jitterY = (hash01(index * 5.91) - 0.5) * 3;
 
   return {
     index,
@@ -272,7 +272,7 @@ export function idleCamera(
   viewH: number,
 ): ForestCamera {
   const center = groveCenter(zoneIndex, groveIndex);
-  const zoom = Math.min(viewW / (GROVE_WIDTH * 0.88), viewH / (GROVE_HEIGHT * 0.8));
+  const zoom = Math.min(viewW / (GROVE_WIDTH * 0.52), viewH / (GROVE_HEIGHT * 0.4));
   return { x: center.x, y: center.y, zoom: Number.isFinite(zoom) && zoom > 0 ? zoom : 1 };
 }
 

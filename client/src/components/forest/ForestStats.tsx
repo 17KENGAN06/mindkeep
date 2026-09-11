@@ -54,9 +54,15 @@ export function ForestStats({
             </span>
           ) : null}
         </div>
-        <p className={`text-muted ${compact ? 'mt-0.5 text-[11px]' : 'mt-1 text-xs'}`}>
-          {t('forest.addedToday', { count: treesToday })}
-        </p>
+        {treesToday > 0 ? (
+          <p className={`text-brand-500 ${compact ? 'mt-0.5 text-[11px]' : 'mt-1 text-xs'}`}>
+            {t('forest.addedToday', { count: treesToday })}
+          </p>
+        ) : (
+          <p className={`text-muted ${compact ? 'mt-0.5 text-[11px]' : 'mt-1 text-xs'}`}>
+            {t('forest.addedToday', { count: treesToday })}
+          </p>
+        )}
       </div>
 
       <div className={compact ? 'min-w-0' : 'min-w-0 sm:w-72'}>
