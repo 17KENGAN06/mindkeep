@@ -685,6 +685,7 @@
     "dayCounts": "{{total}} total · {{overdue}} overdue · {{pending}} pending · {{completed}} completed",
     "emptyDayTitle": "No reviews this day",
     "emptyDayDescription": "Choose another date or add a new material.",
+    "cellAria": "{{day}}, {{count}} items",
     "legend": {
       "overdue": "Overdue",
       "pending": "Pending",

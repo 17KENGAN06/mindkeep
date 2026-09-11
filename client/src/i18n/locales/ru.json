@@ -685,6 +685,7 @@
     "dayCounts": "Всего {{total}} · просрочено {{overdue}} · ожидает {{pending}} · выполнено {{completed}}",
     "emptyDayTitle": "В этот день повторений нет",
     "emptyDayDescription": "Выберите другую дату или добавьте новый материал.",
+    "cellAria": "{{day}}, элементов: {{count}}",
     "legend": {
       "overdue": "Просрочено",
       "pending": "Ожидает",

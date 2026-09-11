@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import type { AppLanguage } from '@/i18n';
 import type { CalendarDaySummary } from '@/types/calendar';
+import { toDateInputValue } from '@/utils/date';
 
 const locales = { en: enUS, ru, uk, fi } as const;
 
@@ -29,12 +30,68 @@ type CalendarProps = {
   onSelectDate: (date: string) => void;
 };
 
-function dayTone(summary?: CalendarDaySummary): string {
-  if (!summary || summary.total === 0) return 'bg-transparent';
-  if (summary.overdue > 0) return 'bg-red-500/20 text-red-500 ring-red-500/35';
-  if (summary.pending > 0) return 'bg-amber-500/20 text-amber-500 ring-amber-500/35';
-  if (summary.completed > 0) return 'bg-emerald-500/20 text-emerald-500 ring-emerald-500/35';
-  return 'bg-brand-50 text-brand-500 ring-line';
+type DayStatus = 'overdue' | 'pending' | 'completed' | 'skipped' | 'none';
+
+const wash: Record<DayStatus, string> = {
+  overdue: 'bg-red-500/[0.09] hover:bg-red-500/[0.14]',
+  pending: 'bg-amber-500/[0.09] hover:bg-amber-500/[0.14]',
+  completed: 'bg-emerald-500/[0.09] hover:bg-emerald-500/[0.14]',
+  skipped: 'bg-brand-50/60 hover:bg-brand-50',
+  none: 'bg-transparent hover:bg-brand-50/50',
+};
+
+const pill: Record<Exclude<DayStatus, 'none'>, string> = {
+  overdue: 'bg-red-500/18 text-red-500 ring-red-500/35',
+  pending: 'bg-amber-500/18 text-amber-500 ring-amber-500/35',
+  completed: 'bg-emerald-500/18 text-emerald-400 ring-emerald-500/35',
+  skipped: 'bg-line/70 text-muted ring-line',
+};
+
+function dayStatus(summary?: CalendarDaySummary): DayStatus {
+  if (!summary || summary.total === 0) return 'none';
+  if (summary.overdue > 0) return 'overdue';
+  if (summary.pending > 0) return 'pending';
+  if (summary.completed > 0) return 'completed';
+  if (summary.skipped > 0) return 'skipped';
+  return 'none';
+}
+
+function StatusMix({ summary }: { summary: CalendarDaySummary }) {
+  const parts = [
+    { key: 'overdue', n: summary.overdue, className: 'bg-red-400' },
+    { key: 'pending', n: summary.pending, className: 'bg-amber-400' },
+    { key: 'completed', n: summary.completed, className: 'bg-emerald-400' },
+  ].filter((part) => part.n > 0);
+
+  if (parts.length < 2) return null;
+
+  return (
+    <span className="flex h-1 w-7 overflow-hidden rounded-full bg-line/50" aria-hidden>
+      {parts.map((part) => (
+        <span
+          key={part.key}
+          className={`h-full min-w-[3px] ${part.className}`}
+          style={{ flexGrow: part.n, flexBasis: 0 }}
+        />
+      ))}
+    </span>
+  );
+}
+
+function CountMark({ summary, dimmed }: { summary: CalendarDaySummary; dimmed: boolean }) {
+  const status = dayStatus(summary);
+  if (status === 'none') return null;
+
+  return (
+    <span className={`mt-auto flex flex-col items-center gap-1 ${dimmed ? 'opacity-50' : ''}`}>
+      <StatusMix summary={summary} />
+      <span
+        className={`inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[10px] font-bold tabular-nums ring-1 sm:h-[1.35rem] sm:min-w-[1.35rem] sm:text-[11px] ${pill[status]}`}
+      >
+        {summary.total}
+      </span>
+    </span>
+  );
 }
 
 export function Calendar({
@@ -48,6 +105,7 @@ export function Calendar({
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const locale = locales[language] ?? enUS;
+  const todayKey = toDateInputValue();
 
   const monthDate = new Date(year, month - 1, 1);
   const gridStart = startOfWeek(startOfMonth(monthDate), { weekStartsOn: 1 });
@@ -106,36 +164,62 @@ export function Calendar({
           const summary = summaryByDate.get(key);
           const inMonth = isSameMonth(day, monthDate);
           const isSelected = selected ? isSameDay(day, selected) : false;
+          const isToday = key === todayKey;
+          const status = dayStatus(summary);
 
           return (
             <button
               key={key}
               type="button"
               onClick={() => onSelectDate(key)}
-              className={`min-h-14 rounded-xl p-1 text-left transition ring-1 ring-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
-                inMonth ? 'text-ink' : 'text-muted/50'
-              } ${dayTone(summary)} ${isSelected ? '!ring-2 !ring-brand-600' : ''}`}
+              aria-current={isToday ? 'date' : undefined}
+              aria-pressed={isSelected}
+              aria-label={
+                summary && summary.total > 0
+                  ? t('calendar.cellAria', {
+                      day: format(day, 'd MMMM', { locale }),
+                      count: summary.total,
+                    })
+                  : format(day, 'd MMMM', { locale })
+              }
+              className={`flex min-h-[4.25rem] flex-col items-center rounded-2xl px-1 py-1.5 transition ring-1 ring-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:min-h-[4.75rem] ${
+                wash[status]
+              } ${inMonth ? '' : 'opacity-55'} ${
+                isSelected ? '!ring-2 !ring-brand-500' : isToday ? 'ring-brand-500/35' : ''
+              }`}
             >
-              <span className="block text-xs font-semibold sm:text-sm">{format(day, 'd')}</span>
+              <span
+                className={`inline-flex h-6 w-6 items-center justify-center text-xs font-semibold tabular-nums sm:h-7 sm:w-7 sm:text-sm ${
+                  isToday
+                    ? 'rounded-full bg-brand-500 font-bold text-surface'
+                    : inMonth
+                      ? 'text-ink'
+                      : 'text-muted'
+                }`}
+              >
+                {format(day, 'd')}
+              </span>
               {summary && summary.total > 0 ? (
-                <span className="mt-1 block text-[10px] font-medium sm:text-xs">
-                  {summary.total}
-                </span>
-              ) : null}
+                <CountMark summary={summary} dimmed={!inMonth} />
+              ) : (
+                <span className="mt-auto h-5" aria-hidden />
+              )}
             </button>
           );
         })}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-3 text-xs text-muted">
-        <span className="inline-flex items-center gap-1">
-          <span className="h-2.5 w-2.5 rounded-full bg-red-400" /> {t('calendar.legend.overdue')}
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-5 min-w-5 rounded-full bg-red-500/18 ring-1 ring-red-500/35" />
+          {t('calendar.legend.overdue')}
         </span>
-        <span className="inline-flex items-center gap-1">
-          <span className="h-2.5 w-2.5 rounded-full bg-amber-400" /> {t('calendar.legend.pending')}
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-5 min-w-5 rounded-full bg-amber-500/18 ring-1 ring-amber-500/35" />
+          {t('calendar.legend.pending')}
         </span>
-        <span className="inline-flex items-center gap-1">
-          <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />{' '}
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-5 min-w-5 rounded-full bg-emerald-500/18 ring-1 ring-emerald-500/35" />
           {t('calendar.legend.completed')}
         </span>
       </div>

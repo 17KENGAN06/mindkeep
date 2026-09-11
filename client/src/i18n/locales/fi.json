@@ -685,6 +685,7 @@
     "dayCounts": "Yhteensä {{total}} · myöhässä {{overdue}} · odottaa {{pending}} · valmis {{completed}}",
     "emptyDayTitle": "Ei kertauksia tänä päivänä",
     "emptyDayDescription": "Valitse toinen päivä tai lisää uusi materiaali.",
+    "cellAria": "{{day}}, {{count}} kohdetta",
     "legend": {
       "overdue": "Myöhässä",
       "pending": "Odottaa",
