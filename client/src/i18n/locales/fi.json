@@ -180,6 +180,26 @@
       "minutes": "Anna aika minuutteina"
     }
   },
+  "forest": {
+    "title": "Metsäsi",
+    "trees": "{{count}} puuta",
+    "addedToday": "+{{count}} tänään",
+    "groveProgress": "Lehto {{current}} / {{total}}",
+    "remaining": "{{count}} seuraavaan lehtoon",
+    "remainingDone": "Lehto valmis",
+    "explore": "Tutki metsää",
+    "plusOne": "+1 puu",
+    "groveCompleted": "Lehto valmis",
+    "newGrove": "Uusi lehto löytyi",
+    "newZone": "Uusi metsäalue avattu",
+    "pageTitle": "Metsäsi",
+    "pageSubtitle": "Jokainen valmis tehtävä istuttaa puun. Lehdot ja metsäalueet kasvavat vain tehdystä työstä — ei tulevista tehtävistä.",
+    "backToTasks": "Takaisin tehtäviin",
+    "rulesTitle": "Miten metsä kasvaa",
+    "ruleTrees": "1 valmis tehtävä = 1 puu.",
+    "ruleGrove": "25 puuta täyttää lehdon.",
+    "ruleZone": "100 puuta avaa metsäalueen."
+  },
   "home": {
     "title": "Opi. Toimi. Hallitse.",
     "subtitle": "Mindkeep kokoaa päivittäiset tehtävät, talouden ja kertauksen yhteen rauhalliseen työtilaan.",
@@ -684,6 +704,7 @@
       "notifications": "Ilmoitukset · Mindkeep",
       "statistics": "Analytiikka · Mindkeep",
       "tasks": "Päivittäiset tehtävät · Mindkeep",
+      "forest": "Metsäsi · Mindkeep",
       "monthPlan": "Kuukausisuunnitelma · Mindkeep",
       "budget": "Budjetti · Mindkeep",
       "transactions": "Tapahtumat · Mindkeep",

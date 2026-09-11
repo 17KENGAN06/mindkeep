@@ -13,6 +13,7 @@ import { AdminPage } from '@/pages/AdminPage';
 import { FinanceBudgetPage } from '@/pages/finance/FinanceBudgetPage';
 import { FinanceCategoriesPage } from '@/pages/finance/FinanceCategoriesPage';
 import { FinanceTransactionsPage } from '@/pages/finance/FinanceTransactionsPage';
+import { ForestPage } from '@/pages/ForestPage';
 import { GuidePage } from '@/pages/GuidePage';
 import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -110,6 +111,7 @@ export function AppRoutes() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/forest" element={<ForestPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/month-plan" element={<MonthPlanPage />} />
           <Route path="/review" element={<ReviewPage />} />

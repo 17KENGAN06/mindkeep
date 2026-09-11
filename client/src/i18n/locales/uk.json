@@ -180,6 +180,26 @@
       "minutes": "Вкажіть час у хвилинах"
     }
   },
+  "forest": {
+    "title": "Ваш ліс",
+    "trees": "{{count}} дерев",
+    "addedToday": "+{{count}} сьогодні",
+    "groveProgress": "Гай {{current}} / {{total}}",
+    "remaining": "{{count}} до наступного гаю",
+    "remainingDone": "Гай завершено",
+    "explore": "Дослідити ліс",
+    "plusOne": "+1 дерево",
+    "groveCompleted": "Гай завершено",
+    "newGrove": "Відкрито новий гай",
+    "newZone": "Відкрито нову лісову зону",
+    "pageTitle": "Ваш ліс",
+    "pageSubtitle": "Кожна виконана задача саджає дерево. Гаї та зони ростуть лише з уже зробленого — не з майбутніх задач.",
+    "backToTasks": "До задач",
+    "rulesTitle": "Як росте ліс",
+    "ruleTrees": "1 виконана задача = 1 дерево.",
+    "ruleGrove": "25 дерев завершують гай.",
+    "ruleZone": "100 дерев відкривають лісову зону."
+  },
   "home": {
     "title": "Вчись. Дій. Керуй.",
     "subtitle": "Mindkeep збирає щоденні задачі, фінанси та повторення знань в одному спокійному кабінеті.",
@@ -684,6 +704,7 @@
       "notifications": "Сповіщення · Mindkeep",
       "statistics": "Аналітика · Mindkeep",
       "tasks": "Щоденні задачі · Mindkeep",
+      "forest": "Ваш ліс · Mindkeep",
       "monthPlan": "План на місяць · Mindkeep",
       "budget": "Бюджет · Mindkeep",
       "transactions": "Транзакції · Mindkeep",

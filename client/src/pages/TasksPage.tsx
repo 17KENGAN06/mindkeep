@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Calendar } from '@/components/Calendar';
+import { ForestProgressCard } from '@/components/forest/ForestProgressCard';
 import { DailyTaskList } from '@/components/tasks/DailyTaskList';
 import { TaskPeriodControls } from '@/components/tasks/TaskPeriodControls';
 import { Button } from '@/components/ui/Button';
@@ -12,6 +13,7 @@ import {
   useCreateDailyTask,
   useDailyTasksPeriod,
   useDeleteDailyTask,
+  useForestSummary,
   useUpdateDailyTask,
 } from '@/features/tasks/useDailyTasks';
 import type { DailyTask, DailyTaskView } from '@/types/dailyTask';
@@ -53,6 +55,7 @@ export function TasksPage() {
     year,
     ...(view === 'month' ? { month } : {}),
   });
+  const forestQuery = useForestSummary();
   const createTask = useCreateDailyTask();
   const updateTask = useUpdateDailyTask();
   const deleteTask = useDeleteDailyTask();
@@ -179,6 +182,15 @@ export function TasksPage() {
           </div>
         ))}
       </section>
+
+      {forestQuery.data ? (
+        <ForestProgressCard
+          totalCompleted={forestQuery.data.totalCompleted}
+          completedToday={forestQuery.data.completedToday}
+        />
+      ) : (
+        <div className="h-[240px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[168px]" />
+      )}
 
       {view === 'year' ? (
         <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">

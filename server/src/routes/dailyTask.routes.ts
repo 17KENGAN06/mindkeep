@@ -27,6 +27,11 @@ dailyTaskRouter.get(
   asyncHandler((req, res) => dailyTaskController.listDay(req, res)),
 );
 
+dailyTaskRouter.get(
+  '/forest',
+  asyncHandler((req, res) => dailyTaskController.forest(req, res)),
+);
+
 dailyTaskRouter.post(
   '/',
   validate(createDailyTaskSchema),

@@ -180,6 +180,26 @@
       "minutes": "Enter time in minutes"
     }
   },
+  "forest": {
+    "title": "Your Forest",
+    "trees": "{{count}} trees",
+    "addedToday": "+{{count}} today",
+    "groveProgress": "Grove {{current}} / {{total}}",
+    "remaining": "{{count}} until next grove",
+    "remainingDone": "Grove complete",
+    "explore": "Explore forest",
+    "plusOne": "+1 tree",
+    "groveCompleted": "Grove completed",
+    "newGrove": "New grove discovered",
+    "newZone": "New forest area unlocked",
+    "pageTitle": "Your Forest",
+    "pageSubtitle": "Every completed task plants a tree. Groves and forest zones grow from that record — never from tasks still ahead.",
+    "backToTasks": "Back to tasks",
+    "rulesTitle": "How the forest grows",
+    "ruleTrees": "1 completed task = 1 tree.",
+    "ruleGrove": "25 trees complete a grove.",
+    "ruleZone": "100 trees unlock a forest zone."
+  },
   "home": {
     "title": "Learn. Act. Steer.",
     "subtitle": "Mindkeep brings daily tasks, personal finance, and spaced review into one calm workspace.",
@@ -684,6 +704,7 @@
       "notifications": "Notifications · Mindkeep",
       "statistics": "Analytics · Mindkeep",
       "tasks": "Daily tasks · Mindkeep",
+      "forest": "Your Forest · Mindkeep",
       "monthPlan": "Month plan · Mindkeep",
       "budget": "Budget · Mindkeep",
       "transactions": "Transactions · Mindkeep",

@@ -23,6 +23,13 @@ export function useDailyTasksDay(date: string | null) {
   });
 }
 
+export function useForestSummary() {
+  return useQuery({
+    queryKey: [...tasksKey, 'forest'],
+    queryFn: () => dailyTasksApi.getForest(),
+  });
+}
+
 export function useCreateDailyTask() {
   const queryClient = useQueryClient();
   return useMutation({

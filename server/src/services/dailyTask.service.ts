@@ -5,6 +5,7 @@ import type {
   UpdateDailyTaskInput,
 } from '@/validations/dailyTask.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
 
 function parseDateOnly(value: string): Date {
   const [y, m, d] = value.split('-').map(Number);
@@ -168,6 +169,41 @@ export class DailyTaskService {
           .filter((task) => task.completed)
           .reduce((sum, task) => sum + task.minutes, 0),
       },
+    };
+  }
+
+  async getForestSummary(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { timezone: true },
+    });
+
+    if (!user) {
+      throw new AppError('User not found', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const timezone = user.timezone || 'Europe/Helsinki';
+    const { startUtc, endUtc } = getDayBoundsInTimeZone(timezone);
+
+    const [totalCompleted, completedToday] = await Promise.all([
+      prisma.dailyTask.count({
+        where: { userId, completed: true },
+      }),
+      prisma.dailyTask.count({
+        where: {
+          userId,
+          completed: true,
+          completedAt: { gte: startUtc, lte: endUtc },
+        },
+      }),
+    ]);
+
+    return {
+      totalCompleted,
+      completedToday,
     };
   }
 

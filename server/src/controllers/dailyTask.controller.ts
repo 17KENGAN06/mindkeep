@@ -32,6 +32,11 @@ export class DailyTaskController {
     res.status(200).json(result);
   }
 
+  async forest(req: Request, res: Response): Promise<void> {
+    const result = await dailyTaskService.getForestSummary(requireUserId(req));
+    res.status(200).json(result);
+  }
+
   async create(req: Request, res: Response): Promise<void> {
     const task = await dailyTaskService.create(
       requireUserId(req),

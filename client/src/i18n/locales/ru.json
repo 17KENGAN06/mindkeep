@@ -180,6 +180,26 @@
       "minutes": "Укажите время в минутах"
     }
   },
+  "forest": {
+    "title": "Ваш лес",
+    "trees": "{{count}} деревьев",
+    "addedToday": "+{{count}} сегодня",
+    "groveProgress": "Роща {{current}} / {{total}}",
+    "remaining": "{{count}} до следующей рощи",
+    "remainingDone": "Роща завершена",
+    "explore": "Исследовать лес",
+    "plusOne": "+1 дерево",
+    "groveCompleted": "Роща завершена",
+    "newGrove": "Открыта новая роща",
+    "newZone": "Открыта новая лесная зона",
+    "pageTitle": "Ваш лес",
+    "pageSubtitle": "Каждая выполненная задача сажает дерево. Рощи и зоны растут только из уже сделанного — не из будущих задач.",
+    "backToTasks": "К задачам",
+    "rulesTitle": "Как растёт лес",
+    "ruleTrees": "1 выполненная задача = 1 дерево.",
+    "ruleGrove": "25 деревьев завершают рощу.",
+    "ruleZone": "100 деревьев открывают лесную зону."
+  },
   "home": {
     "title": "Учись. Действуй. Управляй.",
     "subtitle": "Mindkeep собирает ежедневные задачи, финансы и повторение знаний в одном спокойном кабинете.",
@@ -684,6 +704,7 @@
       "notifications": "Уведомления · Mindkeep",
       "statistics": "Аналитика · Mindkeep",
       "tasks": "Ежедневные задачи · Mindkeep",
+      "forest": "Ваш лес · Mindkeep",
       "monthPlan": "План на месяц · Mindkeep",
       "budget": "Бюджет · Mindkeep",
       "transactions": "Транзакции · Mindkeep",
