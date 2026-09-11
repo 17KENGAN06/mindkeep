@@ -2,9 +2,10 @@ export const TREES_PER_GROVE = 25;
 export const TREES_PER_ZONE = 100;
 export const GROVES_PER_ZONE = TREES_PER_ZONE / TREES_PER_GROVE;
 
-export const GROVE_WIDTH = 400;
-export const GROVE_HEIGHT = 260;
-export const ZONE_GAP = 140;
+/** Grove size in world cells. Everything is drawn as integer tiles. */
+export const GROVE_WIDTH = 56;
+export const GROVE_HEIGHT = 32;
+export const ZONE_GAP = 10;
 
 export type TreeKind = 'pine' | 'broadleaf' | 'cedar';
 
@@ -12,39 +13,40 @@ export type GroveSlot = {
   x: number;
   y: number;
   kind: TreeKind;
+  /** 0 small, 1 medium, 2 tall */
   size: number;
 };
 
 /**
- * 25 predefined local positions for a single grove (normalized 0–1).
- * Reused for every grove; world placement is derived from zone/grove origin.
+ * 25 integer cell positions for one grove.
+ * First slots sit in the centre so early progress looks composed.
  */
 export const GROVE_SLOTS: GroveSlot[] = [
-  { x: 0.47, y: 0.7, kind: 'pine', size: 1.2 },
-  { x: 0.61, y: 0.74, kind: 'cedar', size: 1.14 },
-  { x: 0.36, y: 0.78, kind: 'broadleaf', size: 1.1 },
-  { x: 0.54, y: 0.84, kind: 'pine', size: 1.26 },
-  { x: 0.3, y: 0.66, kind: 'cedar', size: 1.04 },
-  { x: 0.68, y: 0.67, kind: 'pine', size: 1.08 },
-  { x: 0.43, y: 0.6, kind: 'broadleaf', size: 1 },
-  { x: 0.74, y: 0.8, kind: 'cedar', size: 1.16 },
-  { x: 0.24, y: 0.82, kind: 'pine', size: 1.12 },
-  { x: 0.58, y: 0.57, kind: 'pine', size: 0.98 },
-  { x: 0.18, y: 0.7, kind: 'broadleaf', size: 0.96 },
-  { x: 0.8, y: 0.63, kind: 'cedar', size: 1.02 },
-  { x: 0.4, y: 0.5, kind: 'pine', size: 0.92 },
-  { x: 0.66, y: 0.5, kind: 'broadleaf', size: 0.94 },
-  { x: 0.5, y: 0.46, kind: 'cedar', size: 0.9 },
-  { x: 0.14, y: 0.58, kind: 'pine', size: 0.88 },
-  { x: 0.86, y: 0.72, kind: 'pine', size: 1 },
-  { x: 0.28, y: 0.42, kind: 'cedar', size: 0.84 },
-  { x: 0.62, y: 0.4, kind: 'pine', size: 0.82 },
-  { x: 0.44, y: 0.36, kind: 'broadleaf', size: 0.8 },
-  { x: 0.76, y: 0.46, kind: 'cedar', size: 0.86 },
-  { x: 0.2, y: 0.46, kind: 'pine', size: 0.82 },
-  { x: 0.52, y: 0.9, kind: 'cedar', size: 1.18 },
-  { x: 0.88, y: 0.56, kind: 'broadleaf', size: 0.92 },
-  { x: 0.1, y: 0.76, kind: 'pine', size: 0.94 },
+  { x: 26, y: 22, kind: 'pine', size: 2 },
+  { x: 32, y: 23, kind: 'cedar', size: 1 },
+  { x: 21, y: 24, kind: 'broadleaf', size: 1 },
+  { x: 29, y: 26, kind: 'pine', size: 2 },
+  { x: 18, y: 21, kind: 'cedar', size: 1 },
+  { x: 36, y: 21, kind: 'pine', size: 1 },
+  { x: 24, y: 19, kind: 'broadleaf', size: 1 },
+  { x: 39, y: 25, kind: 'cedar', size: 2 },
+  { x: 15, y: 25, kind: 'pine', size: 1 },
+  { x: 33, y: 18, kind: 'pine', size: 0 },
+  { x: 12, y: 22, kind: 'broadleaf', size: 0 },
+  { x: 42, y: 20, kind: 'cedar', size: 1 },
+  { x: 23, y: 16, kind: 'pine', size: 0 },
+  { x: 37, y: 16, kind: 'broadleaf', size: 0 },
+  { x: 28, y: 15, kind: 'cedar', size: 0 },
+  { x: 9, y: 19, kind: 'pine', size: 0 },
+  { x: 45, y: 23, kind: 'pine', size: 1 },
+  { x: 17, y: 14, kind: 'cedar', size: 0 },
+  { x: 34, y: 13, kind: 'pine', size: 0 },
+  { x: 25, y: 12, kind: 'broadleaf', size: 0 },
+  { x: 41, y: 15, kind: 'cedar', size: 0 },
+  { x: 13, y: 15, kind: 'pine', size: 0 },
+  { x: 30, y: 28, kind: 'cedar', size: 1 },
+  { x: 47, y: 18, kind: 'broadleaf', size: 0 },
+  { x: 8, y: 24, kind: 'pine', size: 1 },
 ];
 
 export type ForestSnapshot = {
@@ -137,8 +139,8 @@ export function groveOrigin(zoneIndex: number, groveIndex: number): Vec2 {
 export function groveCenter(zoneIndex: number, groveIndex: number): Vec2 {
   const origin = groveOrigin(zoneIndex, groveIndex);
   return {
-    x: origin.x + GROVE_WIDTH / 2,
-    y: origin.y + GROVE_HEIGHT * 0.72,
+    x: origin.x + Math.floor(GROVE_WIDTH / 2),
+    y: origin.y + 22,
   };
 }
 
@@ -146,14 +148,9 @@ export function zoneCenter(zoneIndex: number): Vec2 {
   const a = groveCenter(zoneIndex, 0);
   const b = groveCenter(zoneIndex, GROVES_PER_ZONE - 1);
   return {
-    x: (a.x + b.x) / 2,
-    y: (a.y + b.y) / 2,
+    x: Math.floor((a.x + b.x) / 2),
+    y: Math.floor((a.y + b.y) / 2),
   };
-}
-
-function hash01(n: number): number {
-  const x = Math.sin(n * 127.1 + 311.7) * 43758.5453123;
-  return x - Math.floor(x);
 }
 
 export function getTreeByIndex(index: number): ForestTree {
@@ -163,18 +160,16 @@ export function getTreeByIndex(index: number): ForestTree {
   const slot = inZone % TREES_PER_GROVE;
   const def = GROVE_SLOTS[slot]!;
   const origin = groveOrigin(zoneIndex, groveIndex);
-  const jitterX = (hash01(index * 3.17) - 0.5) * 5;
-  const jitterY = (hash01(index * 5.91) - 0.5) * 3;
 
   return {
     index,
     zoneIndex,
     groveIndex,
     slot,
-    x: origin.x + def.x * GROVE_WIDTH + jitterX,
-    y: origin.y + def.y * GROVE_HEIGHT + jitterY,
+    x: origin.x + def.x,
+    y: origin.y + def.y,
     kind: def.kind,
-    size: def.size * (0.94 + hash01(index * 1.37) * 0.12),
+    size: def.size,
   };
 }
 
@@ -246,19 +241,16 @@ export function getForestView(
     trees.push(getTreeByIndex(ensureIndex));
   }
 
-  trees.sort((a, b) => a.y - b.y);
+  trees.sort((a, b) => a.y - b.y || a.x - b.x);
 
   const silhouettes: ForestSilhouette[] = [];
-  const maxSilhouettes = density === 'page' ? 2 : 1;
-  for (let i = 1; i <= maxSilhouettes; i += 1) {
-    const zone = snapshot.zoneIndex - i;
-    if (zone < 0) break;
-    const origin = groveOrigin(zone, 0);
+  if (snapshot.zoneIndex > 0) {
+    const origin = groveOrigin(snapshot.zoneIndex - 1, 0);
     silhouettes.push({
-      x: origin.x + GROVE_WIDTH,
-      y: origin.y + GROVE_HEIGHT * 0.55,
-      width: GROVE_WIDTH * 1.85,
-      height: GROVE_HEIGHT * 1.15,
+      x: origin.x + 8,
+      y: origin.y + 14,
+      width: GROVE_WIDTH * 2 - 10,
+      height: 12,
     });
   }
 
@@ -268,15 +260,12 @@ export function getForestView(
 export function idleCamera(
   zoneIndex: number,
   groveIndex: number,
-  viewW: number,
-  viewH: number,
-  density: ForestViewDensity = 'preview',
+  _viewW: number,
+  _viewH: number,
+  _density: ForestViewDensity = 'preview',
 ): ForestCamera {
   const center = groveCenter(zoneIndex, groveIndex);
-  const cropW = density === 'page' ? GROVE_WIDTH * 1.08 : GROVE_WIDTH * 0.78;
-  const cropH = density === 'page' ? GROVE_HEIGHT * 0.82 : GROVE_HEIGHT * 0.58;
-  const zoom = Math.min(viewW / cropW, viewH / cropH);
-  return { x: center.x, y: center.y, zoom: Number.isFinite(zoom) && zoom > 0 ? zoom : 1 };
+  return { x: center.x, y: center.y, zoom: 1 };
 }
 
 export function groveOverviewCamera(
@@ -287,7 +276,7 @@ export function groveOverviewCamera(
   density: ForestViewDensity = 'preview',
 ): ForestCamera {
   const idle = idleCamera(zoneIndex, groveIndex, viewW, viewH, density);
-  return { ...idle, zoom: idle.zoom * 0.72 };
+  return { ...idle, zoom: 0.84 };
 }
 
 export function zoneOverviewCamera(
@@ -296,12 +285,12 @@ export function zoneOverviewCamera(
   viewH: number,
   density: ForestViewDensity = 'preview',
 ): ForestCamera {
-  const current = zoneCenter(zoneIndex);
+  const current = groveCenter(zoneIndex, 3);
   const next = groveCenter(zoneIndex + 1, 0);
   const idle = idleCamera(zoneIndex, 0, viewW, viewH, density);
   return {
-    x: (current.x + next.x) / 2,
-    y: current.y,
-    zoom: idle.zoom * 0.4,
+    x: Math.floor((current.x + next.x) / 2),
+    y: idle.y,
+    zoom: 0.62,
   };
 }

@@ -5,6 +5,7 @@ import {
   type ForestCamera,
   type ForestSilhouette,
   type ForestTree,
+  type ForestViewDensity,
   type TreeKind,
 } from '@/features/forest/forestProgress';
 import type { ForestParticle } from '@/features/forest/forestAnimations';
@@ -24,25 +25,31 @@ export type ForestPalette = {
   brand900: string;
 };
 
-export type SpriteDrawContext = {
-  ctx: CanvasRenderingContext2D;
-  x: number;
-  y: number;
-  scale: number;
-  alpha: number;
-  palette: ForestPalette;
-  density?: 'preview' | 'page';
+/**
+ * Pixel maps. Characters:
+ * `.` empty, `t` trunk, `d` dark canopy, `m` mid, `l` light.
+ * Later these rows can be replaced by image sprites.
+ */
+const SPRITES: Record<TreeKind, string[][]> = {
+  pine: [
+    ['  l  ', ' lml ', 'lmmml', 'mmmmm', '  t  ', '  t  '],
+    ['   l   ', '  lml  ', ' lmmml ', 'lmmmmml', ' mmmmm ', '   t   ', '   t   '],
+    ['    l    ', '   lml   ', '  lmmml  ', ' lmmmmml ', 'lmmmmmmml', '  mmmmm  ', '    t    ', '    t    '],
+  ],
+  cedar: [
+    [' l ', 'lml', 'mmm', ' t ', ' t '],
+    ['  l  ', ' lml ', 'lmmml', ' mmm ', '  t  ', '  t  '],
+    ['   l   ', '  lml  ', ' lmmml ', 'lmmmmml', ' mmmmm ', '   t   ', '   t   '],
+  ],
+  broadleaf: [
+    [' mm ', 'mmmm', ' mm ', ' t  '],
+    ['  mm  ', ' mmmm ', 'mmmmmm', ' mmmm ', '  tt  '],
+    ['  mmm  ', ' mmmmm ', 'mmmmmmm', ' mmmmm ', '  mmm  ', '   tt  '],
+  ],
 };
 
-/**
- * Sprite registry so procedural trees can later be swapped for image assets.
- * Image sprites should use the trunk base as the anchor (x, y).
- */
 export type TreeSprite =
-  | {
-      type: 'procedural';
-      draw: (context: SpriteDrawContext) => void;
-    }
+  | { type: 'pixels'; frames: string[][] }
   | {
       type: 'image';
       image: CanvasImageSource;
@@ -53,9 +60,9 @@ export type TreeSprite =
     };
 
 const treeSprites: Record<TreeKind, TreeSprite> = {
-  pine: { type: 'procedural', draw: drawPine },
-  broadleaf: { type: 'procedural', draw: drawBroadleaf },
-  cedar: { type: 'procedural', draw: drawCedar },
+  pine: { type: 'pixels', frames: SPRITES.pine },
+  broadleaf: { type: 'pixels', frames: SPRITES.broadleaf },
+  cedar: { type: 'pixels', frames: SPRITES.cedar },
 };
 
 export function registerTreeSprite(kind: TreeKind, sprite: TreeSprite): void {
@@ -72,7 +79,7 @@ export type ForestScene = {
   particles: ForestParticle[];
   palette: ForestPalette;
   reducedEffects: boolean;
-  density: 'preview' | 'page';
+  density: ForestViewDensity;
   viewW: number;
   viewH: number;
   now: number;
@@ -134,362 +141,197 @@ export function sizeForestCanvas(
   return { cssW: Math.max(1, rect.width), cssH: Math.max(1, rect.height), dpr };
 }
 
-function applyCamera(ctx: CanvasRenderingContext2D, scene: ForestScene, dpr: number) {
-  const { camera, parallax, viewW, viewH } = scene;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.translate(viewW / 2, viewH / 2);
-  ctx.scale(camera.zoom, camera.zoom);
-  ctx.translate(-camera.x + parallax.x, -camera.y + parallax.y);
+function cellSize(scene: ForestScene): number {
+  const visW = scene.density === 'page' ? GROVE_WIDTH * 1.35 : GROVE_WIDTH * 1.08;
+  const visH = scene.density === 'page' ? GROVE_HEIGHT * 1.2 : GROVE_HEIGHT * 1.05;
+  const fit = Math.min(scene.viewW / visW, scene.viewH / visH);
+  return Math.max(2, Math.floor(fit * scene.camera.zoom));
 }
 
-function drawTreeSprite(kind: TreeKind, context: SpriteDrawContext) {
-  const sprite = treeSprites[kind];
-  if (sprite.type === 'image') {
-    const { ctx, x, y, scale, alpha } = context;
-    ctx.save();
-    ctx.globalAlpha *= alpha;
-    ctx.drawImage(
-      sprite.image,
-      x - sprite.anchorX * scale,
-      y - sprite.anchorY * scale,
-      sprite.width * scale,
-      sprite.height * scale,
-    );
-    ctx.restore();
-    return;
-  }
-  sprite.draw(context);
+function fillCell(
+  ctx: CanvasRenderingContext2D,
+  gx: number,
+  gy: number,
+  color: string,
+  cell: number,
+  camera: ForestCamera,
+  viewW: number,
+  viewH: number,
+  parallax: { x: number; y: number },
+) {
+  const sx = Math.floor((gx - camera.x - parallax.x) * cell + viewW / 2);
+  const sy = Math.floor((gy - camera.y - parallax.y) * cell + viewH / 2);
+  if (sx + cell < 0 || sy + cell < 0 || sx > viewW || sy > viewH) return;
+  ctx.fillStyle = color;
+  ctx.fillRect(sx, sy, cell, cell);
 }
 
-function spriteSize(scale: number, density: 'preview' | 'page') {
-  return (density === 'preview' ? 30 : 26) * scale;
-}
-
-function drawPine(context: SpriteDrawContext & { density?: 'preview' | 'page' }) {
-  const { ctx, x, y, scale, palette } = context;
-  const s = spriteSize(scale, context.density ?? 'preview');
-
-  ctx.fillStyle = 'rgba(6, 14, 10, 0.38)';
-  ctx.beginPath();
-  ctx.ellipse(x, y + 1.5, s * 0.24, s * 0.07, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = mix(palette.brand900, '#1a120c', 0.42);
-  ctx.beginPath();
-  ctx.moveTo(x - s * 0.045, y);
-  ctx.lineTo(x - s * 0.028, y - s * 0.3);
-  ctx.lineTo(x + s * 0.028, y - s * 0.3);
-  ctx.lineTo(x + s * 0.05, y);
-  ctx.closePath();
-  ctx.fill();
-
-  const layers = [
-    { y: 0.28, w: 0.34, h: 0.3, fill: mix(palette.brand900, palette.panel, 0.2) },
-    { y: 0.46, w: 0.28, h: 0.26, fill: mix(palette.brand800, palette.brand900, 0.35) },
-    { y: 0.62, w: 0.21, h: 0.24, fill: palette.brand800 },
-    { y: 0.76, w: 0.14, h: 0.2, fill: mix(palette.brand800, palette.brand700, 0.25) },
-  ];
-
-  for (const layer of layers) {
-    ctx.fillStyle = layer.fill;
-    ctx.beginPath();
-    ctx.moveTo(x, y - s * (layer.y + layer.h));
-    ctx.quadraticCurveTo(x + s * layer.w, y - s * layer.y, x, y - s * (layer.y - 0.03));
-    ctx.quadraticCurveTo(x - s * layer.w, y - s * layer.y, x, y - s * (layer.y + layer.h));
-    ctx.fill();
-  }
-
-  ctx.strokeStyle = rgba(palette.brand400, 0.08);
-  ctx.lineWidth = Math.max(0.6, scale * 0.6);
-  ctx.beginPath();
-  ctx.moveTo(x + s * 0.02, y - s * 0.78);
-  ctx.quadraticCurveTo(x + s * 0.14, y - s * 0.58, x + s * 0.1, y - s * 0.42);
-  ctx.stroke();
-}
-
-function drawBroadleaf(context: SpriteDrawContext & { density?: 'preview' | 'page' }) {
-  const { ctx, x, y, scale, palette } = context;
-  const s = spriteSize(scale, context.density ?? 'preview') * 0.92;
-
-  ctx.fillStyle = 'rgba(6, 14, 10, 0.34)';
-  ctx.beginPath();
-  ctx.ellipse(x, y + 1.5, s * 0.28, s * 0.08, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = mix(palette.brand900, '#24180f', 0.4);
-  ctx.fillRect(x - s * 0.04, y - s * 0.22, s * 0.08, s * 0.24);
-
-  ctx.fillStyle = mix(palette.brand800, palette.brand900, 0.2);
-  ctx.beginPath();
-  ctx.ellipse(x - s * 0.1, y - s * 0.44, s * 0.3, s * 0.26, -0.28, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = mix(palette.brand900, palette.brand800, 0.15);
-  ctx.beginPath();
-  ctx.ellipse(x + s * 0.12, y - s * 0.5, s * 0.28, s * 0.24, 0.32, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = mix(palette.brand800, palette.panel, 0.12);
-  ctx.beginPath();
-  ctx.ellipse(x, y - s * 0.62, s * 0.24, s * 0.22, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = rgba(palette.brand400, 0.08);
-  ctx.beginPath();
-  ctx.ellipse(x + s * 0.1, y - s * 0.66, s * 0.1, s * 0.08, 0.2, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-function drawCedar(context: SpriteDrawContext & { density?: 'preview' | 'page' }) {
-  const { ctx, x, y, scale, palette } = context;
-  const s = spriteSize(scale, context.density ?? 'preview') * 1.05;
-
-  ctx.fillStyle = 'rgba(6, 14, 10, 0.34)';
-  ctx.beginPath();
-  ctx.ellipse(x, y + 1.5, s * 0.2, s * 0.06, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = mix(palette.brand900, '#1c1610', 0.3);
-  ctx.fillRect(x - s * 0.035, y - s * 0.22, s * 0.07, s * 0.24);
-
-  const bands = [0.88, 0.68, 0.5, 0.32];
-  bands.forEach((top, index) => {
-    const width = 0.14 + index * 0.055;
-    ctx.fillStyle = index % 2 === 0 ? mix(palette.brand900, palette.brand800, 0.2) : mix(palette.brand800, palette.panel, 0.15);
-    ctx.beginPath();
-    ctx.moveTo(x, y - s * top);
-    ctx.quadraticCurveTo(x + s * width, y - s * (top - 0.16), x, y - s * (top - 0.2));
-    ctx.quadraticCurveTo(x - s * width, y - s * (top - 0.16), x, y - s * top);
-    ctx.fill();
-  });
-}
-
-function mix(a: string, b: string, t: number): string {
-  const pa = parseColor(a);
-  const pb = parseColor(b);
-  if (!pa || !pb) return a;
-  const r = Math.round(pa.r + (pb.r - pa.r) * t);
-  const g = Math.round(pa.g + (pb.g - pa.g) * t);
-  const bch = Math.round(pa.b + (pb.b - pa.b) * t);
-  return `rgb(${r}, ${g}, ${bch})`;
-}
-
-function parseColor(input: string): { r: number; g: number; b: number } | null {
-  const hex = input.trim();
-  if (hex.startsWith('#') && (hex.length === 7 || hex.length === 4)) {
-    const full =
-      hex.length === 4
-        ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
-        : hex;
-    const n = Number.parseInt(full.slice(1), 16);
-    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
-  }
-  const rgb = hex.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
-  if (rgb) {
-    return { r: Number(rgb[1]), g: Number(rgb[2]), b: Number(rgb[3]) };
-  }
+function ink(palette: ForestPalette, ch: string): string | null {
+  if (ch === 't') return palette.brand900;
+  if (ch === 'd' || ch === 'm') return palette.brand800;
+  if (ch === 'l') return palette.brand700;
   return null;
 }
 
-function drawBackdrop(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  const { viewW, viewH, palette } = scene;
-  const sky = ctx.createLinearGradient(0, 0, 0, viewH);
-  sky.addColorStop(0, mix(palette.panel, palette.surface, 0.18));
-  sky.addColorStop(0.55, palette.panel);
-  sky.addColorStop(1, mix(palette.panel, palette.brand900, 0.22));
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, viewW, viewH);
-}
+function drawPixelSprite(
+  ctx: CanvasRenderingContext2D,
+  rows: string[],
+  originX: number,
+  originY: number,
+  cell: number,
+  scene: ForestScene,
+  grow: number,
+) {
+  const height = rows.length;
+  const width = rows[0]?.length ?? 0;
+  const shown = Math.max(1, Math.ceil(height * grow));
+  const firstRow = height - shown;
+  const left = originX - Math.floor(width / 2);
+  const top = originY - (height - 1);
 
-function drawHorizon(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
-  const baseY = origin.y + GROVE_HEIGHT * 0.4;
-  const count = scene.reducedEffects ? 9 : 16;
-
-  for (let i = 0; i < count; i += 1) {
-    const tx = origin.x - 20 + i * (GROVE_WIDTH / (count - 1)) + ((i * 13) % 9) - 4;
-    const th = 38 + ((i * 17) % 22);
-    ctx.fillStyle = mix(scene.palette.brand900, scene.palette.panel, 0.12 + (i % 3) * 0.04);
-    ctx.beginPath();
-    ctx.moveTo(tx, baseY + 8);
-    ctx.lineTo(tx + 16, baseY + 8);
-    ctx.lineTo(tx + 8, baseY - th);
-    ctx.closePath();
-    ctx.fill();
-  }
-
-  ctx.fillStyle = mix(scene.palette.brand900, scene.palette.panel, 0.35);
-  ctx.beginPath();
-  ctx.ellipse(
-    origin.x + GROVE_WIDTH / 2,
-    origin.y + GROVE_HEIGHT * 0.46,
-    GROVE_WIDTH * 0.48,
-    GROVE_HEIGHT * 0.1,
-    0,
-    0,
-    Math.PI * 2,
-  );
-  ctx.fill();
-}
-
-function drawClearing(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
-  const cx = origin.x + GROVE_WIDTH / 2;
-  const cy = origin.y + GROVE_HEIGHT * 0.74;
-
-  const moss = ctx.createRadialGradient(cx, cy, 8, cx, cy, GROVE_WIDTH * 0.3);
-  moss.addColorStop(0, mix(scene.palette.brand900, scene.palette.panel, 0.18));
-  moss.addColorStop(0.65, mix(scene.palette.panel, scene.palette.brand900, 0.08));
-  moss.addColorStop(1, rgba(scene.palette.panel, 0));
-  ctx.fillStyle = moss;
-  ctx.beginPath();
-  ctx.ellipse(cx, cy, GROVE_WIDTH * 0.3, GROVE_HEIGHT * 0.14, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = rgba('#06110c', 0.12);
-  ctx.beginPath();
-  ctx.ellipse(cx, cy + 4, GROVE_WIDTH * 0.16, GROVE_HEIGHT * 0.06, 0, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-function drawSilhouettes(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  for (const mass of scene.silhouettes) {
-    const gradient = ctx.createRadialGradient(mass.x, mass.y, 8, mass.x, mass.y, mass.width * 0.55);
-    gradient.addColorStop(0, `${scene.palette.brand900}aa`);
-    gradient.addColorStop(0.55, `${scene.palette.brand800}66`);
-    gradient.addColorStop(1, `${scene.palette.brand900}00`);
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.ellipse(mass.x, mass.y, mass.width * 0.5, mass.height * 0.38, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = `${scene.palette.brand900}99`;
-    const count = scene.reducedEffects ? 4 : 7;
-    for (let i = 0; i < count; i += 1) {
-      const ox = mass.x + ((i * 37) % 80 - 40) * (mass.width / 140);
-      const oy = mass.y + ((i * 19) % 24 - 12);
-      ctx.beginPath();
-      ctx.moveTo(ox, oy - 26);
-      ctx.lineTo(ox + 11, oy);
-      ctx.lineTo(ox - 11, oy);
-      ctx.closePath();
-      ctx.fill();
+  for (let row = firstRow; row < height; row += 1) {
+    const line = rows[row] ?? '';
+    for (let col = 0; col < line.length; col += 1) {
+      const color = ink(scene.palette, line[col] ?? ' ');
+      if (!color) continue;
+      fillCell(
+        ctx,
+        left + col,
+        top + row,
+        color,
+        cell,
+        scene.camera,
+        scene.viewW,
+        scene.viewH,
+        scene.parallax,
+      );
     }
   }
 }
 
-function drawMist(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  if (scene.reducedEffects) return;
-  const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
-  const bands = [
-    { y: origin.y + GROVE_HEIGHT * 0.42, h: 16, alpha: 0.04 },
-    { y: origin.y + GROVE_HEIGHT * 0.7, h: 18, alpha: 0.03 },
-  ];
-  for (const band of bands) {
-    const gradient = ctx.createLinearGradient(origin.x, band.y, origin.x + GROVE_WIDTH, band.y);
-    gradient.addColorStop(0, `rgba(180, 220, 200, 0)`);
-    gradient.addColorStop(0.5, `rgba(180, 220, 200, ${band.alpha})`);
-    gradient.addColorStop(1, `rgba(180, 220, 200, 0)`);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(origin.x, band.y, GROVE_WIDTH, band.h);
-  }
-}
+function drawTree(ctx: CanvasRenderingContext2D, tree: ForestTree, scene: ForestScene, cell: number) {
+  const grow = scene.growingIndex === tree.index ? Math.max(0.15, scene.growProgress) : 1;
+  if (grow <= 0.01) return;
 
-function drawRocks(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  if (scene.reducedEffects) return;
-  const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
-  ctx.fillStyle = mix(scene.palette.line, scene.palette.brand900, 0.4);
-  const rocks = [
-    { x: 0.2, y: 0.78, w: 10, h: 5 },
-    { x: 0.78, y: 0.82, w: 8, h: 4 },
-  ];
-  for (const rock of rocks) {
-    ctx.beginPath();
-    ctx.ellipse(origin.x + rock.x * GROVE_WIDTH, origin.y + rock.y * GROVE_HEIGHT, rock.w, rock.h, 0.1, 0, Math.PI * 2);
-    ctx.fill();
+  const sprite = treeSprites[tree.kind];
+  if (sprite.type === 'image') {
+    const sx = Math.floor((tree.x - scene.camera.x - scene.parallax.x) * cell + scene.viewW / 2);
+    const sy = Math.floor((tree.y - scene.camera.y - scene.parallax.y) * cell + scene.viewH / 2);
+    ctx.imageSmoothingEnabled = false;
+    ctx.globalAlpha = grow;
+    ctx.drawImage(
+      sprite.image,
+      sx - sprite.anchorX,
+      sy - sprite.anchorY,
+      sprite.width,
+      sprite.height,
+    );
+    ctx.globalAlpha = 1;
+    return;
   }
-}
 
-function treeAppearance(tree: ForestTree, scene: ForestScene): { scale: number; alpha: number; y: number } {
-  if (scene.growingIndex !== tree.index) {
-    return { scale: tree.size, alpha: 1, y: tree.y };
-  }
-  const t = scene.growProgress;
-  const grow = 1 - (1 - t) ** 3;
-  return {
-    scale: tree.size * grow,
-    alpha: Math.min(1, t * 1.35),
-    y: tree.y + (1 - grow) * 10,
-  };
-}
-
-function drawParticles(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  if (scene.particles.length === 0) return;
-  ctx.fillStyle = scene.palette.brand400;
-  for (const particle of scene.particles) {
-    const t = (scene.now - particle.born) / particle.life;
-    if (t <= 0 || t >= 1) continue;
-    ctx.globalAlpha = (1 - t) * 0.55;
-    ctx.beginPath();
-    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
+  const frames = sprite.frames;
+  const frame = frames[Math.max(0, Math.min(frames.length - 1, Math.round(tree.size)))] ?? frames[0]!;
+  ctx.globalAlpha = Math.min(1, grow * 1.2);
+  drawPixelSprite(ctx, frame, tree.x, tree.y, cell, scene, grow);
   ctx.globalAlpha = 1;
 }
 
-function rgba(color: string, alpha: number): string {
-  const parsed = parseColor(color);
-  if (!parsed) return `rgba(0, 0, 0, ${alpha})`;
-  return `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${alpha})`;
+function drawGround(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: number) {
+  const origin = groveOrigin(scene.focus.zoneIndex, scene.focus.groveIndex);
+  const ground = scene.palette.brand50;
+  const moss = scene.palette.brand900;
+
+  for (let y = 11; y < GROVE_HEIGHT; y += 1) {
+    for (let x = 2; x < GROVE_WIDTH - 2; x += 1) {
+      const wx = origin.x + x;
+      const wy = origin.y + y;
+      const speck = (x * 3 + y * 7 + scene.focus.groveIndex * 11) % 9 === 0;
+      fillCell(
+        ctx,
+        wx,
+        wy,
+        speck ? moss : ground,
+        cell,
+        scene.camera,
+        scene.viewW,
+        scene.viewH,
+        scene.parallax,
+      );
+    }
+  }
+
+  const ridge = [' l ', 'lml', ' t '];
+  const count = scene.reducedEffects ? 7 : 11;
+  for (let i = 0; i < count; i += 1) {
+    drawPixelSprite(
+      ctx,
+      ridge,
+      origin.x + 4 + i * 5,
+      origin.y + 12,
+      cell,
+      scene,
+      1,
+    );
+  }
 }
 
-function drawVignette(ctx: CanvasRenderingContext2D, scene: ForestScene) {
-  const { viewW, viewH, palette } = scene;
-  const vignette = ctx.createRadialGradient(
-    viewW / 2,
-    viewH / 2,
-    Math.min(viewW, viewH) * 0.25,
-    viewW / 2,
-    viewH / 2,
-    Math.max(viewW, viewH) * 0.72,
-  );
-  vignette.addColorStop(0, rgba(palette.panel, 0));
-  vignette.addColorStop(1, rgba(palette.panel, 0.22));
-  ctx.fillStyle = vignette;
-  ctx.fillRect(0, 0, viewW, viewH);
+function drawSilhouettes(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: number) {
+  const color = scene.palette.brand900;
+  for (const mass of scene.silhouettes) {
+    for (let y = 0; y < mass.height; y += 1) {
+      for (let x = 0; x < mass.width; x += 1) {
+        if ((x * 5 + y * 3) % 4 === 0) continue;
+        fillCell(
+          ctx,
+          mass.x + x,
+          mass.y + y,
+          color,
+          cell,
+          scene.camera,
+          scene.viewW,
+          scene.viewH,
+          scene.parallax,
+        );
+      }
+    }
+  }
+}
+
+function drawParticles(ctx: CanvasRenderingContext2D, scene: ForestScene, cell: number) {
+  if (scene.particles.length === 0) return;
+  for (const particle of scene.particles) {
+    const t = (scene.now - particle.born) / particle.life;
+    if (t <= 0 || t >= 1) continue;
+    ctx.globalAlpha = (1 - t) * 0.7;
+    fillCell(
+      ctx,
+      Math.round(particle.x),
+      Math.round(particle.y),
+      scene.palette.brand400,
+      cell,
+      scene.camera,
+      scene.viewW,
+      scene.viewH,
+      scene.parallax,
+    );
+    ctx.globalAlpha = 1;
+  }
 }
 
 export function renderForest(ctx: CanvasRenderingContext2D, scene: ForestScene, dpr: number): void {
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = scene.palette.panel;
+  ctx.fillRect(0, 0, scene.viewW, scene.viewH);
 
-  drawBackdrop(ctx, scene);
-
-  ctx.save();
-  applyCamera(ctx, scene, dpr);
-  drawSilhouettes(ctx, scene);
-  drawHorizon(ctx, scene);
-  drawClearing(ctx, scene);
-  drawRocks(ctx, scene);
-  drawMist(ctx, scene);
+  const cell = cellSize(scene);
+  drawSilhouettes(ctx, scene, cell);
+  drawGround(ctx, scene, cell);
 
   for (const tree of scene.trees) {
-    const look = treeAppearance(tree, scene);
-    if (look.alpha <= 0.01 || look.scale <= 0.01) continue;
-    ctx.save();
-    ctx.globalAlpha = look.alpha;
-    drawTreeSprite(tree.kind, {
-      ctx,
-      x: tree.x,
-      y: look.y,
-      scale: look.scale,
-      alpha: 1,
-      palette: scene.palette,
-      density: scene.density,
-    });
-    ctx.restore();
+    drawTree(ctx, tree, scene, cell);
   }
 
-  drawParticles(ctx, scene);
-  ctx.restore();
-
-  drawVignette(ctx, scene);
+  drawParticles(ctx, scene, cell);
 }

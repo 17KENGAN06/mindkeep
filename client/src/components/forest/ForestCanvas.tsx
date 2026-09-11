@@ -34,6 +34,7 @@ export const ForestCanvas = forwardRef<ForestCanvasHandle, ForestCanvasProps>(
       const ctx = canvas.getContext('2d', { alpha: false });
       if (!ctx) return;
       sceneRef.current = scene;
+      ctx.imageSmoothingEnabled = false;
       renderForest(ctx, scene, dprRef.current);
     };
 
@@ -71,7 +72,7 @@ export const ForestCanvas = forwardRef<ForestCanvasHandle, ForestCanvasProps>(
           if (rect.width < 1 || rect.height < 1) return;
           const nx = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
           const ny = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-          onParallaxRef.current(nx * 5, ny * 3.5);
+          onParallaxRef.current(nx * 0.6, ny * 0.4);
         }}
         onPointerLeave={() => {
           if (!enableParallax) return;

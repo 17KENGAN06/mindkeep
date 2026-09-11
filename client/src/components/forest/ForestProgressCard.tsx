@@ -169,10 +169,10 @@ export function ForestProgressCard({
       cameraRef.current = fromCam;
       growRef.current = { index: growingIndex, progress: 0 };
       particlesRef.current = spawnGrowParticles(
-        { x: growTree.x, y: growTree.y - 18 },
+        { x: growTree.x, y: growTree.y - 2 },
         growingIndex,
         start,
-        mobileRef.current || reduceMotionRef.current ? 2 : 5,
+        mobileRef.current || reduceMotionRef.current ? 2 : 4,
       );
 
       setHud({
@@ -342,8 +342,10 @@ export function ForestProgressCard({
 
   const onParallax = useCallback(
     (x: number, y: number) => {
-      const zoom = cameraRef.current.zoom || 1;
-      parallaxRef.current = { x: x / zoom, y: y / zoom };
+      parallaxRef.current = {
+        x: Math.max(-1, Math.min(1, x)),
+        y: Math.max(-1, Math.min(1, y)),
+      };
       if (!stopAnimRef.current) {
         paint(totalCompleted);
       }

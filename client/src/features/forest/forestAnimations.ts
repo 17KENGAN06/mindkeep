@@ -103,13 +103,13 @@ export function spawnGrowParticles(origin: Vec2, treeIndex: number, now: number,
     const h = hash01(treeIndex * 13 + i * 7);
     const h2 = hash01(treeIndex * 29 + i * 3);
     particles.push({
-      x: origin.x + (h - 0.5) * 18,
-      y: origin.y - 12 - h2 * 22,
-      vx: (h - 0.5) * 0.028,
-      vy: -0.018 - h2 * 0.02,
+      x: origin.x + (h - 0.5) * 2,
+      y: origin.y - 1 - h2 * 2,
+      vx: (h - 0.5) * 0.004,
+      vy: -0.006 - h2 * 0.004,
       born: now,
       life: 520 + h * 280,
-      size: 1.2 + h2 * 1.6,
+      size: 1,
     });
   }
   return particles;
