@@ -12,6 +12,7 @@ const routeTitleKeys: Record<string, string> = {
   '/review': 'seo.titles.review',
   '/calendar': 'seo.titles.calendar',
   '/month-plan': 'seo.titles.monthPlan',
+  '/notes': 'seo.titles.notes',
   '/materials': 'seo.titles.materials',
   '/categories': 'seo.titles.categories',
   '/finance': 'seo.titles.budget',
@@ -36,6 +37,8 @@ export function DocumentTitle() {
     if (!key) {
       if (pathname.startsWith('/materials/')) {
         key = 'seo.titles.materials';
+      } else if (pathname.startsWith('/notes/')) {
+        key = 'seo.titles.notes';
       } else if (pathname.startsWith('/finance/')) {
         key = 'seo.titles.budget';
       } else if (pathname.startsWith('/blog/')) {

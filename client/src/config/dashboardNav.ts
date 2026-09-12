@@ -43,6 +43,13 @@ export const dashboardNav: DashboardNavEntry[] = [
         labelKey: 'nav.monthPlan',
         to: '/month-plan',
       },
+      {
+        type: 'link',
+        id: 'notes',
+        labelKey: 'nav.notes',
+        to: '/notes',
+        matchPrefixes: ['/notes'],
+      },
     ],
   },
   {

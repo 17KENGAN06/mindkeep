@@ -79,6 +79,7 @@ model User {
   budgetCategories   BudgetCategory[]
   budgetOperations   BudgetOperation[]
   dailyTasks         DailyTask[]
+  notes              Note[]
 }
 
 model UserReview {
@@ -238,6 +239,21 @@ model ExchangeRate {
 
   @@unique([date, currency])
   @@index([date])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  sourceUrl String?
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, createdAt])
 }
 
 model DailyTask {

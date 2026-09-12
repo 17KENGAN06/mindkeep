@@ -36,6 +36,7 @@
     "more": "More",
     "tasks": "Daily tasks",
     "monthPlan": "Month plan",
+    "notes": "Notes",
     "budget": "Budget",
     "transactions": "Transactions",
     "expenseCategories": "Expense categories",
@@ -220,6 +221,49 @@
     "yearTitle": "Forest is a monthly view",
     "yearHint": "Trees are planted from completed tasks in one month. Switch back to month view to see that month’s forest.",
     "monthScope": "Only completed tasks from this month plant trees here."
+  },
+  "notes": {
+    "title": "Notes",
+    "subtitle": "Keep ideas, lessons and things worth remembering.",
+    "create": "+ New note",
+    "createFirst": "Create your first note",
+    "createTitle": "New note",
+    "createSubtitle": "Save a thought, excerpt or lesson before it slips away.",
+    "editTitle": "Edit note",
+    "save": "Save note",
+    "saveChanges": "Save changes",
+    "backToNotes": "Back to notes",
+    "search": "Search",
+    "searchPlaceholder": "Search notes...",
+    "sortLabel": "Sort",
+    "sortNewest": "Newest",
+    "sortOldest": "Oldest",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "Save ideas, lessons and things you want to come back to.",
+    "emptySearchTitle": "No notes found",
+    "emptySearchDescription": "Try a different search or create a new note.",
+    "source": "Source",
+    "notFound": "This note was not found.",
+    "deleteTitle": "Delete this note?",
+    "deleteDescription": "This action cannot be undone.",
+    "fields": {
+      "title": "Title",
+      "content": "Note",
+      "sourceUrl": "Source link",
+      "sourceHint": "Optional. Leave empty if there is no link."
+    },
+    "placeholders": {
+      "title": "Give your note a title...",
+      "content": "Write something worth remembering...",
+      "sourceUrl": "https://..."
+    },
+    "errors": {
+      "titleRequired": "Add a title",
+      "titleMax": "Title is too long",
+      "contentRequired": "Write a note",
+      "contentMax": "Note is too long",
+      "url": "Enter a valid http or https link"
+    }
   },
   "home": {
     "title": "Learn. Act. Steer.",
@@ -727,6 +771,7 @@
       "statistics": "Analytics · Mindkeep",
       "tasks": "Daily tasks · Mindkeep",
       "forest": "Your Forest · Mindkeep",
+      "notes": "Notes · Mindkeep",
       "monthPlan": "Month plan · Mindkeep",
       "budget": "Budget · Mindkeep",
       "transactions": "Transactions · Mindkeep",

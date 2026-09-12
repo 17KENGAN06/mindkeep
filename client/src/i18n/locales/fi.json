@@ -36,6 +36,7 @@
     "more": "Lisää",
     "tasks": "Päivittäiset tehtävät",
     "monthPlan": "Kuukausisuunnitelma",
+    "notes": "Muistiinpanot",
     "budget": "Budjetti",
     "transactions": "Tapahtumat",
     "expenseCategories": "Kulujen kategoriat",
@@ -220,6 +221,49 @@
     "yearTitle": "Metsä lasketaan kuukausittain",
     "yearHint": "Puut istutetaan vain valitun kuukauden valmiista tehtävistä. Palaa kuukausinäkymään nähdäksesi sen kuukauden metsän.",
     "monthScope": "Tässä kasvavat vain tämän kuukauden valmiit tehtävät."
+  },
+  "notes": {
+    "title": "Muistiinpanot",
+    "subtitle": "Tallenna ideat, opit ja asiat, joihin haluat palata.",
+    "create": "+ Uusi muistiinpano",
+    "createFirst": "Luo ensimmäinen muistiinpano",
+    "createTitle": "Uusi muistiinpano",
+    "createSubtitle": "Kirjaa ajatus, ote tai oppi ennen kuin se unohtuu.",
+    "editTitle": "Muokkaa muistiinpanoa",
+    "save": "Tallenna muistiinpano",
+    "saveChanges": "Tallenna muutokset",
+    "backToNotes": "Takaisin muistiinpanoihin",
+    "search": "Haku",
+    "searchPlaceholder": "Hae muistiinpanoja...",
+    "sortLabel": "Järjestys",
+    "sortNewest": "Uusimmat",
+    "sortOldest": "Vanhimmat",
+    "emptyTitle": "Ei vielä mitään",
+    "emptyDescription": "Tallenna ideat, opit ja asiat, joihin haluat palata.",
+    "emptySearchTitle": "Ei tuloksia",
+    "emptySearchDescription": "Kokeile toista hakua tai luo uusi muistiinpano.",
+    "source": "Lähde",
+    "notFound": "Muistiinpanoa ei löytynyt.",
+    "deleteTitle": "Poistetaanko tämä muistiinpano?",
+    "deleteDescription": "Toimintoa ei voi perua.",
+    "fields": {
+      "title": "Otsikko",
+      "content": "Muistiinpano",
+      "sourceUrl": "Lähdelinkki",
+      "sourceHint": "Valinnainen. Voit tallentaa ilman linkkiä."
+    },
+    "placeholders": {
+      "title": "Anna muistiinpanolle otsikko...",
+      "content": "Kirjoita jotain, joka kannattaa muistaa...",
+      "sourceUrl": "https://..."
+    },
+    "errors": {
+      "titleRequired": "Lisää otsikko",
+      "titleMax": "Otsikko on liian pitkä",
+      "contentRequired": "Kirjoita muistiinpano",
+      "contentMax": "Muistiinpano on liian pitkä",
+      "url": "Anna kelvollinen http- tai https-linkki"
+    }
   },
   "home": {
     "title": "Opi. Toimi. Hallitse.",
@@ -727,6 +771,7 @@
       "statistics": "Analytiikka · Mindkeep",
       "tasks": "Päivittäiset tehtävät · Mindkeep",
       "forest": "Metsäsi · Mindkeep",
+      "notes": "Muistiinpanot · Mindkeep",
       "monthPlan": "Kuukausisuunnitelma · Mindkeep",
       "budget": "Budjetti · Mindkeep",
       "transactions": "Tapahtumat · Mindkeep",

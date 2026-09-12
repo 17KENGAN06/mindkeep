@@ -22,6 +22,10 @@ import { MaterialDetailPage } from '@/pages/MaterialDetailPage';
 import { MaterialEditPage } from '@/pages/MaterialEditPage';
 import { MaterialsPage } from '@/pages/MaterialsPage';
 import { MonthPlanPage } from '@/pages/MonthPlanPage';
+import { NoteCreatePage } from '@/pages/NoteCreatePage';
+import { NoteDetailPage } from '@/pages/NoteDetailPage';
+import { NoteEditPage } from '@/pages/NoteEditPage';
+import { NotesPage } from '@/pages/NotesPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { NotificationsPage } from '@/pages/NotificationsPage';
 import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage';
@@ -114,6 +118,10 @@ export function AppRoutes() {
           <Route path="/forest" element={<ForestPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/month-plan" element={<MonthPlanPage />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/notes/new" element={<NoteCreatePage />} />
+          <Route path="/notes/:id" element={<NoteDetailPage />} />
+          <Route path="/notes/:id/edit" element={<NoteEditPage />} />
           <Route path="/review" element={<ReviewPage />} />
           <Route path="/materials" element={<MaterialsPage />} />
           <Route path="/materials/new" element={<MaterialCreatePage />} />
