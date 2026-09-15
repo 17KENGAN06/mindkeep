@@ -32,6 +32,22 @@ authRouter.post(
   asyncHandler((req, res) => authController.login(req, res)),
 );
 
+authRouter.get(
+  '/google/start',
+  authRateLimit,
+  asyncHandler((req, res) => authController.googleStart(req, res)),
+);
+
+authRouter.get('/google/callback', (req, res) => {
+  authController.googleCallback(req, res);
+});
+
+authRouter.get(
+  '/google/finish',
+  authRateLimit,
+  asyncHandler((req, res) => authController.googleFinish(req, res)),
+);
+
 authRouter.post(
   '/google',
   authRateLimit,
