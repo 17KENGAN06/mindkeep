@@ -5,12 +5,14 @@
   "description": "Spaced learning reminder app with fixed 3/7/30 day intervals",
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "mobile"
   ],
   "scripts": {
     "dev": "concurrently -n server,client -c blue,green \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "npm run dev -w client",
     "dev:server": "npm run dev -w server",
+    "dev:mobile": "npm run start -w mindkeep-mobile",
     "build": "npm run build -w client && npm run build -w server",
     "build:client": "npm run build -w client",
     "build:server": "npm run build -w server",

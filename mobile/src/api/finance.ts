@@ -1,0 +1,45 @@
+import { apiClient } from './client';
+import type {
+  FinanceCategory,
+  FinanceMoneyKind,
+  FinanceOperation,
+  FinanceOperationType,
+  FinancePeriodParams,
+  FinanceSettings,
+  FinanceSummary,
+} from '../types/finance';
+
+function periodQuery(params: FinancePeriodParams): string {
+  const search = new URLSearchParams({
+    view: params.view,
+    year: String(params.year),
+  });
+  if (params.view === 'month' && params.month) {
+    search.set('month', String(params.month));
+  }
+  return search.toString();
+}
+
+export type CreateOperationPayload = {
+  type: FinanceOperationType;
+  moneyKind?: FinanceMoneyKind;
+  amount: number;
+  date: string;
+  comment?: string;
+  categoryId?: string | null;
+};
+
+export const financeApi = {
+  getSettings: () => apiClient.get<{ settings: FinanceSettings }>('/api/finance/settings'),
+  updateSettings: (payload: { openingBalance?: number }) =>
+    apiClient.patch<{ settings: FinanceSettings }>('/api/finance/settings', payload),
+  getSummary: (params: FinancePeriodParams) =>
+    apiClient.get<FinanceSummary>(`/api/finance/summary?${periodQuery(params)}`),
+  listCategories: () => apiClient.get<{ categories: FinanceCategory[] }>('/api/finance/categories'),
+  createCategory: (payload: { name: string }) =>
+    apiClient.post<{ category: FinanceCategory }>('/api/finance/categories', payload),
+  createOperation: (payload: CreateOperationPayload) =>
+    apiClient.post<{ operation: FinanceOperation }>('/api/finance/operations', payload),
+  removeOperation: (id: string) =>
+    apiClient.delete<{ success: boolean }>(`/api/finance/operations/${id}`),
+};

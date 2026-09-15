@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "MindKeep",
+    "slug": "mindkeep",
+    "scheme": "mindkeep",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#07110d"
+    },
+    "userInterfaceStyle": "dark",
+    "extra": {
+      "privacyPolicyUrl": "https://mindkeep.cloud/privacy"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "cloud.mindkeep.app",
+      "infoPlist": {
+        "CFBundleDisplayName": "MindKeep",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#07110d",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-localization"
+    ]
+  }
+}
