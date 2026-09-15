@@ -14,7 +14,6 @@ export const authRouter = Router();
 
 authRouter.get(
   '/challenge',
-  authRateLimit,
   asyncHandler((req, res) => authController.challenge(req, res)),
 );
 

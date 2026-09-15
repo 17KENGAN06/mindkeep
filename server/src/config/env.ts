@@ -86,6 +86,18 @@ export const allowedClientOrigins = [
   ),
 ];
 
+export function isAllowedBrowserOrigin(origin: string): boolean {
+  const normalized = normalizeOrigin(origin);
+  if (allowedClientOrigins.includes(normalized)) return true;
+  if (parsed.data.NODE_ENV === 'production') return false;
+  try {
+    const host = new URL(normalized).hostname;
+    return host === 'localhost' || host === '127.0.0.1';
+  } catch {
+    return false;
+  }
+}
+
 export const env = {
   ...parsed.data,
   CLIENT_URL: baseClientUrl,

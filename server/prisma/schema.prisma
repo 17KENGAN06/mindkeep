@@ -80,6 +80,9 @@ model User {
   budgetOperations   BudgetOperation[]
   dailyTasks         DailyTask[]
   notes              Note[]
+  nutritionSettings  NutritionSettings?
+  meals              Meal[]
+  waterDays          WaterDay[]
 }
 
 model UserReview {
@@ -274,4 +277,43 @@ model DailyTask {
   @@index([userId])
   @@index([userId, date])
   @@index([userId, completed, date])
+}
+
+model NutritionSettings {
+  id           String   @id @default(cuid())
+  calorieGoal  Int      @default(2000)
+  waterGoal    Int      @default(8)
+  userId       String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Meal {
+  id        String   @id @default(cuid())
+  title     String
+  calories  Int
+  date      DateTime
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model WaterDay {
+  id        String   @id @default(cuid())
+  glasses   Int      @default(0)
+  date      DateTime
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId, date])
 }

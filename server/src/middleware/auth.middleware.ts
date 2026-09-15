@@ -5,6 +5,7 @@ import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { AppError } from '@/utils/AppError.js';
+import { getAccessTokenFromRequest } from '@/utils/accessToken.js';
 import { verifyAccessToken } from '@/utils/jwt.js';
 
 const publicUserSelect = {
@@ -22,9 +23,9 @@ function isAdminEmail(email: string): boolean {
 }
 
 export const requireAuth = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies?.[ACCESS_TOKEN_COOKIE];
+  const token = getAccessTokenFromRequest(req);
 
-  if (!token || typeof token !== 'string') {
+  if (!token) {
     throw new AppError('Authentication required', {
       statusCode: 401,
       code: 'UNAUTHORIZED',

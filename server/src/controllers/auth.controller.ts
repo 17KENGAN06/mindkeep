@@ -20,7 +20,7 @@ export class AuthController {
     const { user, token } = await authService.register(input);
 
     res.cookie(ACCESS_TOKEN_COOKIE, token, getAuthCookieOptions());
-    res.status(201).json({ user });
+    res.status(201).json({ user, token });
   }
 
   async login(req: Request, res: Response): Promise<void> {
@@ -29,7 +29,7 @@ export class AuthController {
     const { user, token } = await authService.login(input);
 
     res.cookie(ACCESS_TOKEN_COOKIE, token, getAuthCookieOptions());
-    res.status(200).json({ user });
+    res.status(200).json({ user, token });
   }
 
   async googleLogin(req: Request, res: Response): Promise<void> {
@@ -37,7 +37,7 @@ export class AuthController {
     const { user, token } = await authService.googleLogin(input);
 
     res.cookie(ACCESS_TOKEN_COOKIE, token, getAuthCookieOptions());
-    res.status(200).json({ user });
+    res.status(200).json({ user, token });
   }
 
   async logout(_req: Request, res: Response): Promise<void> {
