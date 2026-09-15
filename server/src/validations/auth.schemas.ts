@@ -38,6 +38,25 @@ export const googleLoginSchema = z.object({
   timezone: z.string().trim().min(1).max(100).default('Europe/Helsinki'),
 });
 
+function isIanaTimeZone(value: string): boolean {
+  try {
+    Intl.DateTimeFormat('en-US', { timeZone: value }).format(new Date());
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export const updateMeSchema = z.object({
+  timezone: z
+    .string()
+    .trim()
+    .min(1)
+    .max(100)
+    .refine(isIanaTimeZone, 'Invalid timezone'),
+});
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
+export type UpdateMeInput = z.infer<typeof updateMeSchema>;

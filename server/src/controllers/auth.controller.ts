@@ -7,6 +7,7 @@ import type {
   GoogleLoginInput,
   LoginInput,
   RegisterInput,
+  UpdateMeInput,
 } from '@/validations/auth.schemas.js';
 
 export class AuthController {
@@ -57,6 +58,18 @@ export class AuthController {
     }
 
     const user = await authService.me(req.user.id);
+    res.status(200).json({ user });
+  }
+
+  async updateMe(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const user = await authService.updateMe(req.user.id, req.body as UpdateMeInput);
     res.status(200).json({ user });
   }
 }

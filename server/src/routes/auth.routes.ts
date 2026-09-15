@@ -8,6 +8,7 @@ import {
   googleLoginSchema,
   loginSchema,
   registerSchema,
+  updateMeSchema,
 } from '@/validations/auth.schemas.js';
 
 export const authRouter = Router();
@@ -41,3 +42,10 @@ authRouter.post(
 authRouter.post('/logout', asyncHandler((req, res) => authController.logout(req, res)));
 
 authRouter.get('/me', requireAuth, asyncHandler((req, res) => authController.me(req, res)));
+
+authRouter.patch(
+  '/me',
+  requireAuth,
+  validate(updateMeSchema),
+  asyncHandler((req, res) => authController.updateMe(req, res)),
+);

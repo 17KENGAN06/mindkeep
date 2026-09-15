@@ -238,6 +238,15 @@ export class AuthService {
 
     return ensureAdminRole(user);
   }
+
+  async updateMe(userId: string, input: { timezone: string }): Promise<PublicUser> {
+    await this.me(userId);
+    return prisma.user.update({
+      where: { id: userId },
+      data: { timezone: input.timezone },
+      select: publicUserSelect,
+    });
+  }
 }
 
 export const authService = new AuthService();
