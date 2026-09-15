@@ -49,6 +49,8 @@ if (!parsed.success) {
   process.exit(1);
 }
 
+const envConfig = parsed.data;
+
 function normalizeOrigin(value: string): string {
   return value.trim().replace(/\/$/, '');
 }
@@ -68,15 +70,15 @@ function withWwwTwin(origin: string): string[] {
   }
 }
 
-const baseClientUrl = normalizeOrigin(parsed.data.CLIENT_URL);
-const extraFromEnv = (parsed.data.CLIENT_URLS ?? '')
+const baseClientUrl = normalizeOrigin(envConfig.CLIENT_URL);
+const extraFromEnv = (envConfig.CLIENT_URLS ?? '')
   .split(',')
   .map((item) => normalizeOrigin(item))
   .filter(Boolean);
 
 /** Known production frontends — keeps auth working if CLIENT_URL was left on localhost. */
 const knownFrontends =
-  parsed.data.NODE_ENV === 'production'
+  envConfig.NODE_ENV === 'production'
     ? ['https://mindkeep.cloud', 'https://www.mindkeep.cloud']
     : [];
 
@@ -89,7 +91,7 @@ export const allowedClientOrigins = [
 export function isAllowedBrowserOrigin(origin: string): boolean {
   const normalized = normalizeOrigin(origin);
   if (allowedClientOrigins.includes(normalized)) return true;
-  if (parsed.data.NODE_ENV === 'production') return false;
+  if (envConfig.NODE_ENV === 'production') return false;
   try {
     const host = new URL(normalized).hostname;
     return host === 'localhost' || host === '127.0.0.1';
@@ -99,7 +101,7 @@ export function isAllowedBrowserOrigin(origin: string): boolean {
 }
 
 export const env = {
-  ...parsed.data,
+  ...envConfig,
   CLIENT_URL: baseClientUrl,
   allowedClientOrigins,
 };
