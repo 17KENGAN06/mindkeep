@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { materialsApi } from '../../api/materials';
-import type { MaterialPayload, MaterialsQuery } from '../../types/material';
+import type { MaterialPayload, MaterialStatus, MaterialsQuery } from '../../types/material';
 
 export function useMaterials(params: MaterialsQuery = {}) {
   return useQuery({
@@ -30,6 +30,26 @@ export function useCreateMaterial() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['materials'] });
       void queryClient.invalidateQueries({ queryKey: ['reminders'] });
+      void queryClient.invalidateQueries({ queryKey: ['statistics'] });
+    },
+  });
+}
+
+export function useUpdateMaterial() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: string;
+      payload: Partial<MaterialPayload> & { status?: MaterialStatus };
+    }) => materialsApi.update(id, payload),
+    onSuccess: (_data, variables) => {
+      void queryClient.invalidateQueries({ queryKey: ['materials'] });
+      void queryClient.invalidateQueries({ queryKey: ['materials', variables.id] });
+      void queryClient.invalidateQueries({ queryKey: ['reminders'] });
+      void queryClient.invalidateQueries({ queryKey: ['statistics'] });
     },
   });
 }

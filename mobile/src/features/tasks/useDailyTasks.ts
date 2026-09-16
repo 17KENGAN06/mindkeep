@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { dailyTasksApi } from '../../api/dailyTasks';
-import type { CreateDailyTaskPayload } from '../../types/dailyTask';
+import type { CreateDailyTaskPayload, UpdateDailyTaskPayload } from '../../types/dailyTask';
 
 const tasksKey = ['tasks'] as const;
 
@@ -15,10 +15,25 @@ export function useTasksPeriod(year: number, month: number) {
   });
 }
 
+export function useTasksYear(year: number) {
+  return useQuery({
+    queryKey: [...tasksKey, 'year', year],
+    queryFn: () => dailyTasksApi.getYear(year),
+  });
+}
+
 export function useTodayTasks(date: string) {
   return useQuery({
     queryKey: [...tasksKey, 'day', date],
     queryFn: () => dailyTasksApi.getDay(date),
+  });
+}
+
+export function useForestSummary(year: number, month: number, enabled = true) {
+  return useQuery({
+    queryKey: [...tasksKey, 'forest', year, month],
+    queryFn: () => dailyTasksApi.getForest(year, month),
+    enabled,
   });
 }
 
@@ -27,6 +42,20 @@ export function useToggleTask(date?: string) {
   return useMutation({
     mutationFn: ({ id, completed }: { id: string; completed: boolean }) =>
       dailyTasksApi.update(id, { completed }),
+    onSuccess: () => {
+      void invalidateTasks(queryClient);
+      if (date) {
+        void queryClient.invalidateQueries({ queryKey: [...tasksKey, 'day', date] });
+      }
+    },
+  });
+}
+
+export function useUpdateTask(date?: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: UpdateDailyTaskPayload }) =>
+      dailyTasksApi.update(id, payload),
     onSuccess: () => {
       void invalidateTasks(queryClient);
       if (date) {

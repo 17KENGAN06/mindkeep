@@ -7,7 +7,9 @@ import { AuthLayout } from '@/layouts/AuthLayout';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
 import { BlogArticlePage, BlogPage } from '@/pages/BlogPage';
 import { CalendarPage } from '@/pages/CalendarPage';
+import { CaloriesPage } from '@/pages/CaloriesPage';
 import { CategoriesPage } from '@/pages/CategoriesPage';
+import { ContactPage } from '@/pages/ContactPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { AdminPage } from '@/pages/AdminPage';
 import { FinanceBudgetPage } from '@/pages/finance/FinanceBudgetPage';
@@ -35,7 +37,11 @@ import { StatisticsPage } from '@/pages/StatisticsPage';
 import { TasksPage } from '@/pages/TasksPage';
 
 function PublicOnly({ children }: { children: ReactNode }) {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, isReady, user } = useAuth();
+
+  if (!isReady) {
+    return children;
+  }
 
   if (env.maintenanceMode) {
     if (isAuthenticated && user?.role === 'ADMIN') {
@@ -94,6 +100,7 @@ export function AppRoutes() {
           </MaintenanceHome>
         }
       />
+      <Route path="/contact" element={<ContactPage />} />
 
       <Route
         element={
@@ -118,6 +125,8 @@ export function AppRoutes() {
           <Route path="/forest" element={<ForestPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/month-plan" element={<MonthPlanPage />} />
+          <Route path="/nutrition" element={<CaloriesPage />} />
+          <Route path="/calories" element={<Navigate to="/nutrition" replace />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/notes/new" element={<NoteCreatePage />} />
           <Route path="/notes/:id" element={<NoteDetailPage />} />

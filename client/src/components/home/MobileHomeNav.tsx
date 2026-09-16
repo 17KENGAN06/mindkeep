@@ -171,6 +171,13 @@ export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: Mobile
               >
                 {t('nav.blog')}
               </Link>
+              <Link
+                to="/contact"
+                className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-50/40 px-3 text-sm font-semibold text-ink no-underline ring-1 ring-line/70"
+                onClick={close}
+              >
+                {t('nav.contact')}
+              </Link>
               {isAuthenticated ? (
                 <Link
                   to="/dashboard"

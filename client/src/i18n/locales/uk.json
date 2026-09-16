@@ -29,12 +29,15 @@
     "admin": "Адмін",
     "blog": "Блог",
     "guide": "Як користуватися",
+    "contact": "Контакти",
     "planning": "Планування",
     "learning": "Навчання",
     "repetition": "Повторення",
     "finance": "Фінанси",
     "more": "Ще",
     "tasks": "Щоденні задачі",
+    "calories": "Харчування",
+    "nutrition": "Харчування",
     "monthPlan": "План на місяць",
     "notes": "Нотатки",
     "budget": "Бюджет",
@@ -555,6 +558,40 @@
     "submitLogin": "Увійти як адміністратор",
     "backHome": "На екран техогляду"
   },
+  "calories": {
+    "title": "Харчування",
+    "subtitle": "Калорії рахуються лише з прийомів їжі. Вода — тільки склянки, без калорійності.",
+    "caloriesTitle": "Калорії",
+    "calorieGoal": "Норма калорій на день",
+    "waterGoal": "Склянок на день",
+    "glasses": "склянок",
+    "waterHint": "Позначайте склянки. До калорій вода не входить.",
+    "waterProgress": "Склянки за день",
+    "saveGoals": "Зберегти норми",
+    "statEaten": "Зʼїдено",
+    "statGoal": "Норма",
+    "statLeft": "Залишилось",
+    "statOver": "Понад норму",
+    "statWater": "Вода",
+    "dayTitle": "{{date}}",
+    "progress": "Калорії за день",
+    "kcal": "ккал",
+    "overeating": "Перебір",
+    "addMeal": "Додати прийом їжі",
+    "mealTitle": "Прийом їжі",
+    "mealPlaceholder": "Обід, перекус...",
+    "mealCalories": "ккал",
+    "saveMeal": "Додати",
+    "emptyMeals": "За цей день ще немає прийомів їжі.",
+    "waterTitle": "Вода",
+    "errors": {
+      "title": "Назвіть прийом їжі",
+      "calories": "Вкажіть калорії",
+      "calorieGoal": "Норма не менше 500 ккал",
+      "waterGoal": "Потрібна хоча б 1 склянка",
+      "unavailable": "API харчування недоступне. Потрібен деплой API з таблицями калорій і води."
+    }
+  },
   "dashboard": {
     "welcome": "Привіт, {{name}}",
     "subtitle": "Зведення за задачами, повтореннями та фінансами — все важливе на одному екрані.",
@@ -570,11 +607,16 @@
       "reviews": "Повторення",
       "spentToday": "Витрачено сьогодні",
       "budgetLeft": "Залишилось у бюджеті",
+      "caloriesToday": "Калорії сьогодні",
+      "waterToday": "Вода сьогодні",
       "of": "{{done}} з {{total}} виконано",
       "ofPlanned": "{{done}} з {{total}} заплановано"
     },
     "upcomingTasks": "Найближчі задачі",
     "allTasks": "Усі задачі",
+    "fuelTitle": "Харчування",
+    "allFuel": "Відкрити харчування",
+    "noMealsToday": "Сьогодні ще немає прийомів їжі.",
     "weekTitle": "Виконано за тиждень",
     "weekTabs": {
       "tasks": "Задачі",
@@ -772,6 +814,7 @@
       "tasks": "Щоденні задачі · Mindkeep",
       "forest": "Ваш ліс · Mindkeep",
       "notes": "Нотатки · Mindkeep",
+      "calories": "Харчування · Mindkeep",
       "monthPlan": "План на місяць · Mindkeep",
       "budget": "Бюджет · Mindkeep",
       "transactions": "Транзакції · Mindkeep",
@@ -781,6 +824,7 @@
       "blog": "Блог · Mindkeep",
       "guide": "Як користуватися · Mindkeep",
       "privacy": "Політика конфіденційності · Mindkeep",
+      "contact": "Контакти · Mindkeep",
       "notFound": "Сторінку не знайдено · Mindkeep"
     }
   },
@@ -794,6 +838,45 @@
     "rights": "Усі права захищено. Продукт створено й підтримується студією.",
     "ownership": "Mindkeep є власністю <studio />. © {{year}}",
     "lineCompact": "Mindkeep є власністю WEISEZAHOY © {{year}}"
+  },
+  "contact": {
+    "eyebrow": "Студія",
+    "title": "Контакти",
+    "intro": "Оберіть тему — лист піде в потрібну скриньку. Можна написати й напряму.",
+    "partnershipTitle": "Співпраця",
+    "partnershipBody": "Партнерства, преса та спільні проєкти зі студією.",
+    "supportTitle": "Баги та запитання",
+    "supportBody": "Якщо щось зламалося, незрозуміло або потрібна відповідь людини.",
+    "fields": {
+      "topic": "Про що повідомлення?",
+      "name": "Імʼя",
+      "email": "Email",
+      "message": "Повідомлення"
+    },
+    "placeholders": {
+      "topic": "Оберіть тему",
+      "message": "Напишіть кілька рядків, щоб ми могли допомогти."
+    },
+    "topics": {
+      "partnership": "Співпраця",
+      "bug": "Знайшов помилку",
+      "question": "Є запитання"
+    },
+    "destination": "Це повідомлення піде на {{email}}",
+    "send": "Надіслати",
+    "successTitle": "Повідомлення надіслано",
+    "successBody": "Дякуємо. Відповімо на вказаний email.",
+    "errors": {
+      "topicRequired": "Оберіть тему",
+      "nameRequired": "Вкажіть імʼя",
+      "nameMax": "Імʼя занадто довге",
+      "email": "Введіть коректний email",
+      "messageMin": "Напишіть хоча б коротке повідомлення",
+      "messageMax": "Повідомлення занадто довге",
+      "validation": "Перевірте форму й спробуйте знову",
+      "generic": "Не вдалося надіслати повідомлення",
+      "unavailable": "Форма тимчасово недоступна. Напишіть напряму на адресу вище."
+    }
   },
   "notFound": {
     "eyebrow": "Загублений слід",

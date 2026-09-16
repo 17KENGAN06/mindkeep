@@ -38,6 +38,10 @@ export const financeApi = {
   listCategories: () => apiClient.get<{ categories: FinanceCategory[] }>('/api/finance/categories'),
   createCategory: (payload: { name: string }) =>
     apiClient.post<{ category: FinanceCategory }>('/api/finance/categories', payload),
+  updateCategory: (id: string, payload: { name: string }) =>
+    apiClient.patch<{ category: FinanceCategory }>(`/api/finance/categories/${id}`, payload),
+  removeCategory: (id: string) =>
+    apiClient.delete<{ success: boolean }>(`/api/finance/categories/${id}`),
   createOperation: (payload: CreateOperationPayload) =>
     apiClient.post<{ operation: FinanceOperation }>('/api/finance/operations', payload),
   removeOperation: (id: string) =>

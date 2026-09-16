@@ -14,8 +14,8 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { AppButton } from '../../components/ui';
 import { useCreateNote, useNote, useUpdateNote } from '../../features/notes/useNotes';
+import { useTheme } from '../../features/theme/useTheme';
 import type { MoreStackParamList } from '../../navigation/types';
-import { colors } from '../../theme';
 
 const MAX_TITLE = 200;
 const MAX_CONTENT = 50000;
@@ -31,6 +31,7 @@ function isHttpUrl(value: string): boolean {
 
 export function NoteEditorScreen() {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
   const route = useRoute();
   const id = route.name === 'NoteEdit' ? (route.params as { id: string }).id : undefined;
@@ -96,7 +97,7 @@ export function NoteEditorScreen() {
 
   if (isEdit && noteQuery.isLoading && !noteQuery.data) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
         <ActivityIndicator color={colors.brand} size="large" />
       </View>
     );
@@ -104,32 +105,42 @@ export function NoteEditorScreen() {
 
   if (isEdit && (noteQuery.isError || !noteQuery.data)) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.error}>{t('notes.notFound')}</Text>
+      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
+        <Text style={{ color: colors.danger }}>{t('notes.notFound')}</Text>
       </View>
     );
   }
 
   return (
-    <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView
+      style={[styles.root, { backgroundColor: colors.bg }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <Text style={styles.subtitle}>
+        <Text style={[styles.subtitle, { color: colors.muted }]}>
           {isEdit ? t('notes.editTitle') : t('notes.createSubtitle')}
         </Text>
 
-        <Text style={styles.label}>{t('notes.fields.title')}</Text>
+        <Text style={[styles.label, { color: colors.muted }]}>{t('notes.fields.title')}</Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
           value={title}
           onChangeText={setTitle}
           placeholder={t('notes.placeholders.title')}
           placeholderTextColor={colors.muted}
         />
 
-        <Text style={styles.label}>{t('notes.fields.content')}</Text>
+        <Text style={[styles.label, { color: colors.muted }]}>{t('notes.fields.content')}</Text>
         <TextInput
           multiline
-          style={[styles.input, styles.area]}
+          style={[
+            styles.input,
+            styles.area,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
           value={content}
           onChangeText={setContent}
           placeholder={t('notes.placeholders.content')}
@@ -137,19 +148,22 @@ export function NoteEditorScreen() {
           textAlignVertical="top"
         />
 
-        <Text style={styles.label}>{t('notes.fields.sourceUrl')}</Text>
-        <Text style={styles.hint}>{t('notes.fields.sourceHint')}</Text>
+        <Text style={[styles.label, { color: colors.muted }]}>{t('notes.fields.sourceUrl')}</Text>
+        <Text style={[styles.hint, { color: colors.muted }]}>{t('notes.fields.sourceHint')}</Text>
         <TextInput
           autoCapitalize="none"
           keyboardType="url"
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
           value={sourceUrl}
           onChangeText={setSourceUrl}
           placeholder={t('notes.placeholders.sourceUrl')}
           placeholderTextColor={colors.muted}
         />
 
-        {error ? <Text style={styles.error}>{error}</Text> : null}
+        {error ? <Text style={{ color: colors.danger }}>{error}</Text> : null}
 
         <AppButton
           label={isEdit ? t('notes.saveChanges') : t('notes.save')}
@@ -162,23 +176,19 @@ export function NoteEditorScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { backgroundColor: colors.bg, flex: 1 },
-  centered: { alignItems: 'center', backgroundColor: colors.bg, flex: 1, justifyContent: 'center' },
+  root: { flex: 1 },
+  centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 10, padding: 20, paddingBottom: 40 },
-  subtitle: { color: colors.muted, fontSize: 14 },
-  label: { color: colors.muted, fontSize: 13, fontWeight: '600', marginTop: 4 },
-  hint: { color: colors.muted, fontSize: 12 },
+  subtitle: { fontSize: 14 },
+  label: { fontSize: 13, fontWeight: '600', marginTop: 4 },
+  hint: { fontSize: 12 },
   input: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 12,
     borderWidth: 1,
-    color: colors.ink,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
   area: { minHeight: 180 },
-  error: { color: colors.danger },
 });

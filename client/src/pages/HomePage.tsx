@@ -132,6 +132,12 @@ export function HomePage() {
                   >
                     {t('nav.blog')}
                   </Link>
+                  <Link
+                    to="/contact"
+                    className="inline-flex min-h-11 items-center rounded-xl px-2.5 text-xs font-semibold text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
+                  >
+                    {t('nav.contact')}
+                  </Link>
                 </nav>
                 <ThemeToggle />
                 <LanguageSwitcher />

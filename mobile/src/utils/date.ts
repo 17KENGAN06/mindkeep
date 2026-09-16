@@ -14,6 +14,21 @@ export function todayDateKey(value = new Date()): string {
   return `${year}-${month}-${day}`;
 }
 
+export function isoToDateKey(value: string): string {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return todayDateKey();
+  return todayDateKey(date);
+}
+
+export function lastNDateKeys(count: number, from = new Date()): string[] {
+  return Array.from({ length: count }, (_, index) => {
+    const day = new Date(from);
+    day.setDate(from.getDate() - (count - 1 - index));
+    return todayDateKey(day);
+  });
+}
+
 export function dateKey(value: Date): string {
   return todayDateKey(value);
 }

@@ -5,6 +5,7 @@ import type { User } from '@/types/auth';
 export type AuthContextValue = {
   user: User | null;
   isAuthenticated: boolean;
+  isReady: boolean;
   login: (payload: LoginPayload) => Promise<User>;
   googleLogin: (payload: GoogleLoginPayload) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<User>;

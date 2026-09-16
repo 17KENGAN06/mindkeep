@@ -29,12 +29,15 @@
     "admin": "Admin",
     "blog": "Blog",
     "guide": "How to use",
+    "contact": "Contact",
     "planning": "Planning",
     "learning": "Learning",
     "repetition": "Review",
     "finance": "Finance",
     "more": "More",
     "tasks": "Daily tasks",
+    "calories": "Nutrition",
+    "nutrition": "Nutrition",
     "monthPlan": "Month plan",
     "notes": "Notes",
     "budget": "Budget",
@@ -555,6 +558,40 @@
     "submitLogin": "Sign in as administrator",
     "backHome": "Back to maintenance screen"
   },
+  "calories": {
+    "title": "Nutrition",
+    "subtitle": "Calories come from meals only. Water is glasses, with no calorie count.",
+    "caloriesTitle": "Calories",
+    "calorieGoal": "Daily calorie goal",
+    "waterGoal": "Glasses per day",
+    "glasses": "glasses",
+    "waterHint": "Tap glasses to track water. It is not added to calories.",
+    "waterProgress": "Glasses today",
+    "saveGoals": "Save goals",
+    "statEaten": "Eaten",
+    "statGoal": "Goal",
+    "statLeft": "Left",
+    "statOver": "Over",
+    "statWater": "Water",
+    "dayTitle": "{{date}}",
+    "progress": "Calories today",
+    "kcal": "kcal",
+    "overeating": "Overeating",
+    "addMeal": "Add a meal",
+    "mealTitle": "Meal",
+    "mealPlaceholder": "Lunch, snack...",
+    "mealCalories": "kcal",
+    "saveMeal": "Add",
+    "emptyMeals": "No meals logged for this day yet.",
+    "waterTitle": "Water",
+    "errors": {
+      "title": "Give the meal a name",
+      "calories": "Enter calories",
+      "calorieGoal": "Goal should be at least 500 kcal",
+      "waterGoal": "Set at least 1 glass",
+      "unavailable": "Nutrition API is not available yet. Deploy the API with calorie and water tables."
+    }
+  },
   "dashboard": {
     "welcome": "Hello, {{name}}",
     "subtitle": "A single overview of tasks, reviews and finances — everything that matters today.",
@@ -570,11 +607,16 @@
       "reviews": "Reviews",
       "spentToday": "Spent today",
       "budgetLeft": "Left in budget",
+      "caloriesToday": "Calories today",
+      "waterToday": "Water today",
       "of": "{{done}} of {{total}} done",
       "ofPlanned": "{{done}} of {{total}} planned"
     },
     "upcomingTasks": "Upcoming tasks",
     "allTasks": "All tasks",
+    "fuelTitle": "Nutrition",
+    "allFuel": "Open nutrition",
+    "noMealsToday": "No meals logged today.",
     "weekTitle": "Completed this week",
     "weekTabs": {
       "tasks": "Tasks",
@@ -772,6 +814,7 @@
       "tasks": "Daily tasks · Mindkeep",
       "forest": "Your Forest · Mindkeep",
       "notes": "Notes · Mindkeep",
+      "calories": "Nutrition · Mindkeep",
       "monthPlan": "Month plan · Mindkeep",
       "budget": "Budget · Mindkeep",
       "transactions": "Transactions · Mindkeep",
@@ -781,6 +824,7 @@
       "blog": "Blog · Mindkeep",
       "guide": "How to use · Mindkeep",
       "privacy": "Privacy policy · Mindkeep",
+      "contact": "Contact · Mindkeep",
       "notFound": "Page not found · Mindkeep"
     }
   },
@@ -794,6 +838,45 @@
     "rights": "All rights reserved. Designed and maintained by the studio.",
     "ownership": "Mindkeep is the property of <studio />. © {{year}}",
     "lineCompact": "Mindkeep is the property of WEISEZAHOY © {{year}}"
+  },
+  "contact": {
+    "eyebrow": "Studio",
+    "title": "Contact",
+    "intro": "Choose a topic and the message goes to the right inbox. You can also write us directly.",
+    "partnershipTitle": "Partnership",
+    "partnershipBody": "Collaborations, press and studio work.",
+    "supportTitle": "Bugs and questions",
+    "supportBody": "Something broken, unclear, or you just need a human answer.",
+    "fields": {
+      "topic": "What is this about?",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message"
+    },
+    "placeholders": {
+      "topic": "Choose a topic",
+      "message": "Write a few lines so we can help."
+    },
+    "topics": {
+      "partnership": "Partnership / collaboration",
+      "bug": "I found a bug",
+      "question": "I have a question"
+    },
+    "destination": "This message will be sent to {{email}}",
+    "send": "Send message",
+    "successTitle": "Message sent",
+    "successBody": "Thank you. We’ll reply to the email you left.",
+    "errors": {
+      "topicRequired": "Choose a topic",
+      "nameRequired": "Add your name",
+      "nameMax": "Name is too long",
+      "email": "Enter a valid email",
+      "messageMin": "Write at least a short message",
+      "messageMax": "Message is too long",
+      "validation": "Check the form and try again",
+      "generic": "Could not send the message",
+      "unavailable": "The form is temporarily unavailable. Write us directly at the address above."
+    }
   },
   "notFound": {
     "eyebrow": "Lost trail",

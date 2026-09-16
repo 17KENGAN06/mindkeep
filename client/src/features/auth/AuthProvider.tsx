@@ -6,7 +6,6 @@ import {
   type LoginPayload,
   type RegisterPayload,
 } from '@/api/auth';
-import { ApiError } from '@/api/client';
 import { AuthContext } from '@/features/auth/auth-context';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -18,15 +17,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const response = await authApi.me();
         return response.user;
-      } catch (error) {
-        // 401 = logged out; network/API/DB issues should not block the UI preview.
-        if (error instanceof ApiError && error.status === 401) {
-          return null;
-        }
+      } catch {
         return null;
       }
     },
     retry: false,
+    staleTime: 60_000,
   });
 
   const loginMutation = useMutation({
@@ -90,23 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       user: meQuery.data ?? null,
       isAuthenticated: Boolean(meQuery.data),
+      isReady: !meQuery.isPending,
       login,
       googleLogin,
       register,
       logout,
     }),
-    [googleLogin, login, logout, meQuery.data, register],
+    [googleLogin, login, logout, meQuery.data, meQuery.isPending, register],
   );
-
-  if (meQuery.isLoading) {
-    return (
-      <div className="flex min-h-dvh items-center justify-center">
-        <div className="preloader-mark">
-          <div className="h-12 w-12 rounded-2xl border border-brand-500/30 border-t-brand-500" />
-        </div>
-      </div>
-    );
-  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

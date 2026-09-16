@@ -88,6 +88,12 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
                 {t('nav.login')}
               </Link>
               <Link
+                to="/contact"
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
+              >
+                {t('nav.contact')}
+              </Link>
+              <Link
                 to="/privacy"
                 className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >

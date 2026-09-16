@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useSectionPlay } from '@/components/home/sectionPlayContext';
 
 type SnapRevealProps = {
@@ -28,19 +28,29 @@ export function SnapReveal({
 }: SnapRevealProps) {
   const play = useSectionPlay();
   const reduceMotion = useReducedMotion();
+  const [stayVisible, setStayVisible] = useState(false);
+
+  useEffect(() => {
+    if (!play) return;
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      setStayVisible(true);
+    }
+  }, [play]);
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;
   }
 
+  const show = play || stayVisible;
+
   return (
     <motion.div
       className={className}
       initial={hiddenByDirection[direction]}
-      animate={play ? visible : hiddenByDirection[direction]}
+      animate={show ? visible : hiddenByDirection[direction]}
       transition={{
         duration: 0.62,
-        delay: play ? delay : 0,
+        delay: show && play ? delay : 0,
         ease: [0.22, 1, 0.36, 1],
       }}
     >

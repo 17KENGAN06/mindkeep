@@ -9,11 +9,14 @@ import {
   Text,
   TextInput,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '../../components/LanguageSwitcher';
+import { GoogleSignInButton } from '../../components/GoogleSignInButton';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
 import { detectDeviceTimezone } from '../../config/timezones';
-import { colors } from '../../theme';
+import { useTheme } from '../../features/theme/useTheme';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -23,6 +26,7 @@ type RegisterScreenProps = {
 
 export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const { register } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -71,103 +75,122 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
   };
 
   return (
+    <SafeAreaView style={[styles.root, { backgroundColor: colors.bg }]}>
     <KeyboardAvoidingView
-      style={styles.root}
+      style={styles.flex}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <Text style={styles.brand}>{t('common.appName')}</Text>
-        <Text style={styles.title}>{t('auth.registerTitle')}</Text>
-        <Text style={styles.subtitle}>{t('auth.registerSubtitle')}</Text>
+        <LanguageSwitcher />
+        <Text style={[styles.brand, { color: colors.brand }]}>{t('common.appName')}</Text>
+        <Text style={[styles.title, { color: colors.ink }]}>{t('auth.registerTitle')}</Text>
+        <Text style={[styles.subtitle, { color: colors.muted }]}>{t('auth.registerSubtitle')}</Text>
 
-        <Text style={styles.label}>{t('auth.name')}</Text>
-        <TextInput autoComplete="name" style={styles.input} value={name} onChangeText={setName} />
+        <Text style={[styles.label, { color: colors.muted }]}>{t('auth.name')}</Text>
+        <TextInput
+          autoComplete="name"
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
+          value={name}
+          onChangeText={setName}
+        />
 
-        <Text style={styles.label}>{t('auth.email')}</Text>
+        <Text style={[styles.label, { color: colors.muted }]}>{t('auth.email')}</Text>
         <TextInput
           autoCapitalize="none"
           autoComplete="email"
           keyboardType="email-address"
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
           value={email}
           onChangeText={setEmail}
         />
 
-        <Text style={styles.label}>{t('auth.password')}</Text>
+        <Text style={[styles.label, { color: colors.muted }]}>{t('auth.password')}</Text>
         <TextInput
           autoComplete="new-password"
           secureTextEntry
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
           value={password}
           onChangeText={setPassword}
         />
-        <Text style={styles.hint}>{t('auth.passwordHint')}</Text>
+        <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.passwordHint')}</Text>
 
-        <Text style={styles.label}>{t('auth.confirmPassword')}</Text>
+        <Text style={[styles.label, { color: colors.muted }]}>{t('auth.confirmPassword')}</Text>
         <TextInput
           autoComplete="new-password"
           secureTextEntry
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
           value={confirmPassword}
           onChangeText={setConfirmPassword}
         />
-        <Text style={styles.hint}>
+        <Text style={[styles.hint, { color: colors.muted }]}>
           {t('auth.timezoneDetected', { timezone: detectDeviceTimezone() })}
         </Text>
 
-        {error ? <Text style={styles.error}>{error}</Text> : null}
+        {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
 
         <Pressable
           accessibilityRole="button"
           disabled={busy}
           onPress={() => void onSubmit()}
-          style={[styles.button, busy && styles.buttonDisabled]}
+          style={[styles.button, { backgroundColor: colors.brand }, busy && styles.buttonDisabled]}
         >
           {busy ? (
-            <ActivityIndicator color="#07110d" />
+            <ActivityIndicator color={colors.onBrand} />
           ) : (
-            <Text style={styles.buttonText}>{t('auth.submitRegister')}</Text>
+            <Text style={[styles.buttonText, { color: colors.onBrand }]}>{t('auth.submitRegister')}</Text>
           )}
         </Pressable>
 
+        <GoogleSignInButton disabled={busy} onError={setError} />
+
         <Pressable onPress={onGoLogin} style={styles.linkWrap}>
-          <Text style={styles.link}>
+          <Text style={[styles.link, { color: colors.brand }]}>
             {t('auth.hasAccount')} {t('auth.submitLogin')}
           </Text>
         </Pressable>
       </ScrollView>
     </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
+  root: { flex: 1 },
+  flex: { flex: 1 },
   content: { flexGrow: 1, justifyContent: 'center', padding: 24, paddingVertical: 48 },
-  brand: { color: colors.brand, fontSize: 14, fontWeight: '600', marginBottom: 12 },
-  title: { color: colors.ink, fontSize: 28, fontWeight: '700' },
-  subtitle: { color: colors.muted, fontSize: 15, marginTop: 8, marginBottom: 28 },
-  label: { color: colors.muted, fontSize: 13, marginBottom: 6 },
-  hint: { color: colors.muted, fontSize: 12, marginTop: -8, marginBottom: 16 },
+  brand: { fontSize: 14, fontWeight: '600', marginBottom: 12, marginTop: 20 },
+  title: { fontSize: 28, fontWeight: '700' },
+  subtitle: { fontSize: 15, marginTop: 8, marginBottom: 28 },
+  label: { fontSize: 13, marginBottom: 6 },
+  hint: { fontSize: 12, marginTop: -8, marginBottom: 16 },
   input: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 14,
     borderWidth: 1,
-    color: colors.ink,
     fontSize: 16,
     marginBottom: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  error: { color: colors.danger, marginBottom: 16 },
+  error: { marginBottom: 16 },
   button: {
     alignItems: 'center',
-    backgroundColor: colors.brand,
     borderRadius: 14,
     paddingVertical: 14,
   },
   buttonDisabled: { opacity: 0.7 },
-  buttonText: { color: '#07110d', fontSize: 16, fontWeight: '700' },
+  buttonText: { fontSize: 16, fontWeight: '700' },
   linkWrap: { marginTop: 20, alignItems: 'center' },
-  link: { color: colors.brand, fontSize: 14 },
+  link: { fontSize: 14 },
 });

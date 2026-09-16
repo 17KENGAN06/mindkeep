@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,14 +15,15 @@ import { useTranslation } from 'react-i18next';
 import { AppButton, Badge } from '../../components/ui';
 import { useCategories } from '../../features/categories/useCategories';
 import { useMaterials } from '../../features/materials/useMaterials';
+import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
-import { colors } from '../../theme';
 import type { MaterialStatus } from '../../types/material';
 import { formatDate } from '../../utils/date';
 
 export function MaterialsScreen() {
   const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();
   const [search, setSearch] = useState('');
@@ -43,14 +45,27 @@ export function MaterialsScreen() {
   const materials = materialsQuery.data ?? [];
 
   return (
-    <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-      <Text style={styles.subtitle}>{t('materials.subtitle')}</Text>
+    <ScrollView
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+      refreshControl={
+        <RefreshControl
+          refreshing={materialsQuery.isRefetching && !materialsQuery.isLoading}
+          onRefresh={() => void materialsQuery.refetch()}
+          tintColor={colors.brand}
+        />
+      }
+    >
+      <Text style={[styles.subtitle, { color: colors.muted }]}>{t('materials.subtitle')}</Text>
       <AppButton label={t('materials.create')} onPress={() => navigation.navigate('MaterialCreate')} />
 
       <TextInput
         placeholder={t('materials.filters.search')}
         placeholderTextColor={colors.muted}
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+        ]}
         value={search}
         onChangeText={setSearch}
       />
@@ -90,34 +105,36 @@ export function MaterialsScreen() {
       </View>
 
       {materialsQuery.isLoading ? <ActivityIndicator color={colors.brand} /> : null}
-      {materialsQuery.isError ? <Text style={styles.error}>{t('auth.errors.generic')}</Text> : null}
+      {materialsQuery.isError ? (
+        <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
+      ) : null}
       {!materialsQuery.isLoading && !materialsQuery.isError && materials.length === 0 ? (
-        <Text style={styles.empty}>{t('materials.emptyDescription')}</Text>
+        <Text style={[styles.empty, { color: colors.muted }]}>{t('materials.emptyDescription')}</Text>
       ) : null}
 
       {materials.map((material) => (
         <Pressable
           key={material.id}
           onPress={() => navigation.navigate('MaterialDetail', { id: material.id })}
-          style={styles.card}
+          style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
         >
           <View style={styles.cardHead}>
-            <Text style={styles.cardTitle}>{material.title}</Text>
+            <Text style={[styles.cardTitle, { color: colors.ink }]}>{material.title}</Text>
             <Badge
               tone={material.status === 'ARCHIVED' ? 'neutral' : 'brand'}
               label={t(`materials.status.${material.status}`)}
             />
           </View>
           {material.question?.trim() || material.content?.trim() ? (
-            <Text style={styles.preview} numberOfLines={2}>
+            <Text style={[styles.preview, { color: colors.muted }]} numberOfLines={2}>
               {material.question?.trim() || material.content}
             </Text>
           ) : null}
-          <Text style={styles.meta}>
+          <Text style={[styles.meta, { color: colors.muted }]}>
             {material.category?.name ?? t('materials.fields.noCategory')} · {t('materials.learnedAt')}:{' '}
             {formatDate(material.learnedAt, language)}
           </Text>
-          <Text style={styles.meta}>
+          <Text style={[styles.meta, { color: colors.muted }]}>
             {t('materials.nextReview')}: {material.nextReviewAt ? formatDate(material.nextReviewAt, language) : '—'}
           </Text>
         </Pressable>
@@ -135,49 +152,53 @@ function FilterChip({
   active: boolean;
   onPress: () => void;
 }) {
+  const { colors } = useTheme();
   return (
-    <Pressable onPress={onPress} style={[styles.chip, active && styles.chipActive]}>
-      <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+    <Pressable
+      onPress={onPress}
+      style={[
+        styles.chip,
+        { backgroundColor: colors.panel, borderColor: colors.line },
+        active && { backgroundColor: colors.brand, borderColor: colors.brand },
+      ]}
+    >
+      <Text
+        style={[
+          { color: colors.ink, fontSize: 13, fontWeight: '600' },
+          active && { color: colors.onBrand },
+        ]}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { color: colors.muted, fontSize: 14 },
+  subtitle: { fontSize: 14 },
   input: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 14,
     borderWidth: 1,
-    color: colors.ink,
     fontSize: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   chip: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 999,
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  chipActive: { backgroundColor: colors.brand, borderColor: colors.brand },
-  chipText: { color: colors.ink, fontSize: 13, fontWeight: '600' },
-  chipTextActive: { color: '#07110d' },
-  error: { color: colors.danger },
-  empty: { color: colors.muted, fontSize: 14 },
+  empty: { fontSize: 14 },
   card: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     padding: 14,
   },
   cardHead: { flexDirection: 'row', gap: 8, justifyContent: 'space-between' },
-  cardTitle: { color: colors.ink, flex: 1, fontSize: 16, fontWeight: '700' },
-  preview: { color: colors.muted, fontSize: 14, marginTop: 8 },
-  meta: { color: colors.muted, fontSize: 12, marginTop: 6 },
+  cardTitle: { flex: 1, fontSize: 16, fontWeight: '700' },
+  preview: { fontSize: 14, marginTop: 8 },
+  meta: { fontSize: 12, marginTop: 6 },
 });

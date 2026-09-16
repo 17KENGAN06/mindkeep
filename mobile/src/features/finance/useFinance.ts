@@ -34,6 +34,28 @@ export function useCreateFinanceCategory() {
     mutationFn: (payload: { name: string }) => financeApi.createCategory(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [...financeKey, 'categories'] });
+      void queryClient.invalidateQueries({ queryKey: financeKey });
+    },
+  });
+}
+
+export function useUpdateFinanceCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) =>
+      financeApi.updateCategory(id, { name }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: financeKey });
+    },
+  });
+}
+
+export function useDeleteFinanceCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => financeApi.removeCategory(id),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: financeKey });
     },
   });
 }

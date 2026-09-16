@@ -21,8 +21,8 @@ import {
   useTodayReminders,
   useUpcomingReminders,
 } from '../../features/reminders/useReminders';
+import { useTheme } from '../../features/theme/useTheme';
 import type { ReviewStackParamList } from '../../navigation/types';
-import { colors } from '../../theme';
 import type { Reminder } from '../../types/reminder';
 
 function ReminderSection({
@@ -52,17 +52,18 @@ function ReminderSection({
   onSkip: (id: string) => void;
   onOpenMaterial: (id: string) => void;
 }) {
+  const { colors } = useTheme();
   if (!reminders) return null;
 
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>
-        {title} <Text style={styles.count}>({reminders.length})</Text>
+      <Text style={[styles.sectionTitle, { color: colors.ink }]}>
+        {title} <Text style={[styles.count, { color: colors.muted }]}>({reminders.length})</Text>
       </Text>
       {reminders.length === 0 ? (
-        <View style={styles.empty}>
-          <Text style={styles.emptyTitle}>{emptyTitle}</Text>
-          <Text style={styles.emptyBody}>{emptyDescription}</Text>
+        <View style={[styles.empty, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+          <Text style={[styles.emptyTitle, { color: colors.ink }]}>{emptyTitle}</Text>
+          <Text style={[styles.emptyBody, { color: colors.muted }]}>{emptyDescription}</Text>
         </View>
       ) : (
         reminders.map((reminder) => (
@@ -85,6 +86,7 @@ function ReminderSection({
 
 export function ReviewInboxScreen() {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();
   const overdueQuery = useOverdueReminders();
   const todayQuery = useTodayReminders();
@@ -138,7 +140,7 @@ export function ReviewInboxScreen() {
 
   if (loading && !overdueQuery.data && !todayQuery.data) {
     return (
-      <SafeAreaView style={styles.safe}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -147,34 +149,48 @@ export function ReviewInboxScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['top']}>
       <ScrollView
         contentContainerStyle={styles.content}
         refreshControl={
           <RefreshControl refreshing={refreshing && !loading} onRefresh={onRefresh} tintColor={colors.brand} />
         }
       >
-        <Text style={styles.title}>{t('review.title')}</Text>
-        <Text style={styles.subtitle}>{t('review.subtitle')}</Text>
-        <Text style={styles.open}>{t('review.openCount', { count: totalOpen })}</Text>
+        <Text style={[styles.title, { color: colors.ink }]}>{t('review.title')}</Text>
+        <Text style={[styles.subtitle, { color: colors.muted }]}>{t('review.subtitle')}</Text>
+        <Text style={[styles.open, { color: colors.brand }]}>{t('review.openCount', { count: totalOpen })}</Text>
 
         <View style={styles.shortcuts}>
-          <Pressable onPress={() => navigation.navigate('Materials')} style={styles.chip}>
-            <Text style={styles.chipText}>{t('materials.title')}</Text>
+          <Pressable
+            onPress={() => navigation.navigate('Materials')}
+            style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
+          >
+            <Text style={[styles.chipText, { color: colors.ink }]}>{t('materials.title')}</Text>
           </Pressable>
-          <Pressable onPress={() => navigation.navigate('Categories')} style={styles.chip}>
-            <Text style={styles.chipText}>{t('categories.title')}</Text>
+          <Pressable
+            onPress={() => navigation.navigate('Categories')}
+            style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
+          >
+            <Text style={[styles.chipText, { color: colors.ink }]}>{t('categories.title')}</Text>
           </Pressable>
-          <Pressable onPress={() => navigation.navigate('ReviewCalendar')} style={styles.chip}>
-            <Text style={styles.chipText}>{t('calendar.title')}</Text>
+          <Pressable
+            onPress={() => navigation.navigate('ReviewCalendar')}
+            style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
+          >
+            <Text style={[styles.chipText, { color: colors.ink }]}>{t('calendar.title')}</Text>
           </Pressable>
-          <Pressable onPress={() => navigation.navigate('MaterialCreate')} style={[styles.chip, styles.chipBrand]}>
-            <Text style={[styles.chipText, styles.chipBrandText]}>{t('materials.create')}</Text>
+          <Pressable
+            onPress={() => navigation.navigate('MaterialCreate')}
+            style={[styles.chip, { backgroundColor: colors.brand, borderColor: colors.brand }]}
+          >
+            <Text style={[styles.chipText, { color: colors.onBrand }]}>{t('materials.create')}</Text>
           </Pressable>
         </View>
 
-        {message ? <Text style={styles.success}>{message}</Text> : null}
-        {error || queryError ? <Text style={styles.error}>{error ?? t('auth.errors.generic')}</Text> : null}
+        {message ? <Text style={[styles.success, { color: colors.brand }]}>{message}</Text> : null}
+        {error || queryError ? (
+          <Text style={[styles.error, { color: colors.danger }]}>{error ?? t('auth.errors.generic')}</Text>
+        ) : null}
 
         <ReminderSection
           title={t('review.overdue')}
@@ -224,36 +240,30 @@ export function ReviewInboxScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { backgroundColor: colors.bg, flex: 1 },
+  safe: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  title: { color: colors.ink, fontSize: 28, fontWeight: '700' },
-  subtitle: { color: colors.muted, fontSize: 14, marginTop: 4 },
-  open: { color: colors.brand, fontSize: 14, fontWeight: '600', marginTop: 8 },
+  title: { fontSize: 28, fontWeight: '700' },
+  subtitle: { fontSize: 14, marginTop: 4 },
+  open: { fontSize: 14, fontWeight: '600', marginTop: 8 },
   shortcuts: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginVertical: 8 },
   chip: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 999,
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  chipBrand: { backgroundColor: colors.brand, borderColor: colors.brand },
-  chipText: { color: colors.ink, fontSize: 13, fontWeight: '600' },
-  chipBrandText: { color: '#07110d' },
-  success: { color: colors.brand, fontSize: 14 },
-  error: { color: colors.danger, fontSize: 14 },
+  chipText: { fontSize: 13, fontWeight: '600' },
+  success: { fontSize: 14 },
+  error: { fontSize: 14 },
   section: { gap: 10, marginTop: 8 },
-  sectionTitle: { color: colors.ink, fontSize: 18, fontWeight: '700' },
-  count: { color: colors.muted, fontSize: 14, fontWeight: '500' },
+  sectionTitle: { fontSize: 18, fontWeight: '700' },
+  count: { fontSize: 14, fontWeight: '500' },
   empty: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     padding: 16,
   },
-  emptyTitle: { color: colors.ink, fontSize: 15, fontWeight: '600' },
-  emptyBody: { color: colors.muted, fontSize: 13, marginTop: 4 },
+  emptyTitle: { fontSize: 15, fontWeight: '600' },
+  emptyBody: { fontSize: 13, marginTop: 4 },
 });

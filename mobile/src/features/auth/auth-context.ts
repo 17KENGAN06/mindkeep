@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { LoginPayload, RegisterPayload } from '../../api/auth';
+import type { GoogleLoginPayload, LoginPayload, RegisterPayload } from '../../api/auth';
 import type { User } from '../../types/auth';
 
 export type AuthContextValue = {
@@ -8,6 +8,7 @@ export type AuthContextValue = {
   isLoading: boolean;
   login: (payload: LoginPayload) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<User>;
+  googleLogin: (payload: GoogleLoginPayload) => Promise<User>;
   updateTimezone: (timezone: string) => Promise<User>;
   logout: () => Promise<void>;
 };

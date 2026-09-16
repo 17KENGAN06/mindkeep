@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { nutritionApi } from '../../api/nutrition';
-import type { CreateMealPayload, NutritionSettings } from '../../types/nutrition';
+import type { CreateMealPayload, NutritionSettings, UpdateMealPayload } from '../../types/nutrition';
 
 const nutritionKey = ['nutrition'] as const;
 
@@ -29,6 +29,17 @@ export function useCreateMeal() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateMealPayload) => nutritionApi.createMeal(payload),
+    onSuccess: () => {
+      void invalidateNutrition(queryClient);
+    },
+  });
+}
+
+export function useUpdateMeal() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: UpdateMealPayload }) =>
+      nutritionApi.updateMeal(id, payload),
     onSuccess: () => {
       void invalidateNutrition(queryClient);
     },

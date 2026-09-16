@@ -10,8 +10,15 @@ export type ReviewStackParamList = {
   ReviewCalendar: undefined;
   Materials: undefined;
   MaterialCreate: undefined;
+  MaterialEdit: { id: string };
   MaterialDetail: { id: string };
   Categories: undefined;
+};
+
+export type TasksStackParamList = {
+  TasksHome: undefined;
+  MonthPlan: undefined;
+  Forest: { year?: number; month?: number };
 };
 
 export type MoreStackParamList = {
@@ -22,12 +29,18 @@ export type MoreStackParamList = {
   NoteEdit: { id: string };
   Notifications: undefined;
   Finance: undefined;
+  Contact: undefined;
+  Guide: undefined;
+  Statistics: undefined;
+  Blog: undefined;
+  BlogArticle: { slug: string };
+  Admin: undefined;
 };
 
 export type AppTabParamList = {
   Today: undefined;
   Review: NavigatorScreenParams<ReviewStackParamList>;
-  Tasks: undefined;
+  Tasks: NavigatorScreenParams<TasksStackParamList>;
   Fuel: undefined;
   More: NavigatorScreenParams<MoreStackParamList>;
 };

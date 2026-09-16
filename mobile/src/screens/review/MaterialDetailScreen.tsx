@@ -10,13 +10,14 @@ import {
   useDeleteMaterial,
   useMaterial,
 } from '../../features/materials/useMaterials';
+import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
-import { colors } from '../../theme';
 import { formatDate } from '../../utils/date';
 
 export function MaterialDetailScreen() {
   const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();
   const route = useRoute<RouteProp<ReviewStackParamList, 'MaterialDetail'>>();
@@ -41,7 +42,7 @@ export function MaterialDetailScreen() {
 
   if (isLoading) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
         <ActivityIndicator color={colors.brand} size="large" />
       </View>
     );
@@ -49,8 +50,8 @@ export function MaterialDetailScreen() {
 
   if (isError || !material) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.error}>{t('auth.errors.generic')}</Text>
+      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
+        <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
       </View>
     );
   }
@@ -60,17 +61,17 @@ export function MaterialDetailScreen() {
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <View style={styles.head}>
-        <Text style={styles.title}>{material.title}</Text>
+        <Text style={[styles.title, { color: colors.ink }]}>{material.title}</Text>
         <Badge
           tone={material.status === 'ARCHIVED' ? 'neutral' : 'brand'}
           label={t(`materials.status.${material.status}`)}
         />
       </View>
-      <Text style={styles.meta}>
+      <Text style={[styles.meta, { color: colors.muted }]}>
         {t('materials.learnedAt')}: {formatDate(material.learnedAt, language)}
       </Text>
       {material.category ? (
-        <Text style={styles.meta}>
+        <Text style={[styles.meta, { color: colors.muted }]}>
           {t('materials.fields.category')}: {material.category.name}
         </Text>
       ) : null}
@@ -80,30 +81,30 @@ export function MaterialDetailScreen() {
       ) : null}
 
       {material.content?.trim() ? (
-        <View style={styles.block}>
-          <Text style={styles.blockTitle}>{t('materials.fields.content')}</Text>
-          <Text style={styles.body}>{material.content}</Text>
+        <View style={[styles.block, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+          <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('materials.fields.content')}</Text>
+          <Text style={[styles.body, { color: colors.ink }]}>{material.content}</Text>
         </View>
       ) : null}
 
       {material.sourceUrl ? (
-        <View style={styles.block}>
-          <Text style={styles.blockTitle}>{t('materials.fields.sourceUrl')}</Text>
-          <Text style={styles.link} onPress={() => void Linking.openURL(material.sourceUrl!)}>
+        <View style={[styles.block, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+          <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('materials.fields.sourceUrl')}</Text>
+          <Text style={[styles.link, { color: colors.brand }]} onPress={() => void Linking.openURL(material.sourceUrl!)}>
             {material.sourceUrl}
           </Text>
         </View>
       ) : null}
 
-      <View style={styles.block}>
-        <Text style={styles.blockTitle}>{t('materials.remindersTitle')}</Text>
-        <Text style={styles.meta}>{t('materials.remindersSubtitle')}</Text>
+      <View style={[styles.block, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+        <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('materials.remindersTitle')}</Text>
+        <Text style={[styles.meta, { color: colors.muted }]}>{t('materials.remindersSubtitle')}</Text>
         {material.reminders.map((reminder) => (
           <View key={reminder.id} style={styles.reminderRow}>
-            <Text style={styles.reminderText}>
+            <Text style={[styles.reminderText, { color: colors.ink }]}>
               #{reminder.sequenceNumber} · {t(`materials.intervals.${reminder.intervalType}`)}
             </Text>
-            <Text style={styles.meta}>{formatDate(reminder.scheduledAt, language)}</Text>
+            <Text style={[styles.meta, { color: colors.muted }]}>{formatDate(reminder.scheduledAt, language)}</Text>
             <Badge
               tone={
                 reminder.status === 'COMPLETED'
@@ -121,6 +122,11 @@ export function MaterialDetailScreen() {
       </View>
 
       <View style={styles.actions}>
+        <AppButton
+          variant="secondary"
+          label={t('common.edit')}
+          onPress={() => navigation.navigate('MaterialEdit', { id: material.id })}
+        />
         {material.status !== 'ARCHIVED' ? (
           <AppButton
             variant="secondary"
@@ -139,24 +145,21 @@ export function MaterialDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  centered: { alignItems: 'center', backgroundColor: colors.bg, flex: 1, justifyContent: 'center' },
+  centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
   head: { flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
-  title: { color: colors.ink, flex: 1, fontSize: 24, fontWeight: '700' },
-  meta: { color: colors.muted, fontSize: 13 },
-  error: { color: colors.danger },
+  title: { flex: 1, fontSize: 24, fontWeight: '700' },
+  meta: { fontSize: 13 },
   block: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     gap: 8,
     padding: 14,
   },
-  blockTitle: { color: colors.ink, fontSize: 15, fontWeight: '700' },
-  body: { color: colors.ink, fontSize: 15, lineHeight: 22 },
-  link: { color: colors.brand, fontSize: 14 },
+  blockTitle: { fontSize: 15, fontWeight: '700' },
+  body: { fontSize: 15, lineHeight: 22 },
+  link: { fontSize: 14 },
   reminderRow: { gap: 6, marginTop: 8 },
-  reminderText: { color: colors.ink, fontSize: 14, fontWeight: '600' },
+  reminderText: { fontSize: 14, fontWeight: '600' },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
 });

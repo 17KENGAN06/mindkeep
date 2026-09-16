@@ -1,14 +1,14 @@
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ApiError } from './src/api/client';
 import { AuthProvider } from './src/features/auth/AuthProvider';
 import { clearStoredToken } from './src/features/auth/session';
+import { ThemeProvider, hydrateTheme } from './src/features/theme/ThemeProvider';
 import { hydrateLanguage } from './src/i18n';
 import { RootNavigator } from './src/navigation/RootNavigator';
-import { colors } from './src/theme';
+import { palettes, type ThemeMode } from './src/theme';
 
 function signOutOnUnauthorized(error: unknown) {
   if (!(error instanceof ApiError) || error.status !== 401) return;
@@ -30,16 +30,18 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
-  const [ready, setReady] = useState(false);
+  const [theme, setTheme] = useState<ThemeMode | null>(null);
 
   useEffect(() => {
-    void hydrateLanguage().finally(() => setReady(true));
+    void Promise.all([hydrateLanguage(), hydrateTheme()]).then(([, nextTheme]) => {
+      setTheme(nextTheme);
+    });
   }, []);
 
-  if (!ready) {
+  if (!theme) {
     return (
       <View style={styles.boot}>
-        <ActivityIndicator color={colors.brand} size="large" />
+        <ActivityIndicator color={palettes.dark.brand} size="large" />
       </View>
     );
   }
@@ -48,8 +50,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <AuthProvider>
-          <StatusBar style="light" />
-          <RootNavigator />
+          <ThemeProvider initialTheme={theme}>
+            <RootNavigator />
+          </ThemeProvider>
         </AuthProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
@@ -59,7 +62,7 @@ export default function App() {
 const styles = StyleSheet.create({
   boot: {
     alignItems: 'center',
-    backgroundColor: colors.bg,
+    backgroundColor: palettes.dark.bg,
     flex: 1,
     justifyContent: 'center',
   },

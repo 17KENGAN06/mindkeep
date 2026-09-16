@@ -22,14 +22,40 @@ export type DailyTaskDaySummary = {
   minutesDone: number;
 };
 
+export type DailyTaskMonthSummary = {
+  month: number;
+  total: number;
+  completed: number;
+  pending: number;
+  overdue: number;
+  minutes: number;
+  minutesDone: number;
+};
+
 export type DailyTaskPeriodResponse = {
   period: {
     view: 'month' | 'year';
     year: number;
     month: number | null;
   };
+  totals?: {
+    total: number;
+    completed: number;
+    pending: number;
+    overdue: number;
+    minutes: number;
+    minutesDone: number;
+  };
   days: DailyTaskDaySummary[];
+  byMonth?: DailyTaskMonthSummary[];
   tasks: DailyTask[];
+};
+
+export type ForestSummaryResponse = {
+  year: number;
+  month: number;
+  totalCompleted: number;
+  completedToday: number;
 };
 
 export type CreateDailyTaskPayload = {
@@ -37,4 +63,11 @@ export type CreateDailyTaskPayload = {
   minutes: number;
   date: string;
   note?: string;
+};
+
+export type UpdateDailyTaskPayload = {
+  title?: string;
+  minutes?: number;
+  note?: string;
+  completed?: boolean;
 };

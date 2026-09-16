@@ -1,30 +1,33 @@
 import { useEffect, useState } from 'react';
 import { BrandMark } from '@/components/brand/BrandMark';
 
-const MIN_MS = 1100;
+const MIN_MS = 900;
+const MAX_MS = 1800;
 
 export function Preloader() {
   const [visible, setVisible] = useState(true);
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    const started = performance.now();
+    let hidden = false;
+    let leaveTimer = 0;
 
-    const finish = () => {
-      const wait = Math.max(0, MIN_MS - (performance.now() - started));
-      window.setTimeout(() => {
-        setLeaving(true);
-        window.setTimeout(() => setVisible(false), 480);
-      }, wait);
+    const hide = () => {
+      if (hidden) return;
+      hidden = true;
+      setLeaving(true);
+      leaveTimer = window.setTimeout(() => setVisible(false), 480);
     };
 
-    if (document.readyState === 'complete') {
-      finish();
-      return;
-    }
+    const minTimer = window.setTimeout(hide, MIN_MS);
+    const maxTimer = window.setTimeout(hide, MAX_MS);
 
-    window.addEventListener('load', finish, { once: true });
-    return () => window.removeEventListener('load', finish);
+    return () => {
+      hidden = true;
+      window.clearTimeout(minTimer);
+      window.clearTimeout(maxTimer);
+      window.clearTimeout(leaveTimer);
+    };
   }, []);
 
   if (!visible) return null;

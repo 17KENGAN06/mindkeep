@@ -6,13 +6,22 @@
   "build": {
     "preview": {
       "distribution": "internal",
-      "ios": {
-        "simulator": false
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://api.mindkeep.cloud"
       }
     },
     "production": {
+      "android": {
+        "buildType": "app-bundle"
+      },
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://api.mindkeep.cloud"
       }
     }
   },

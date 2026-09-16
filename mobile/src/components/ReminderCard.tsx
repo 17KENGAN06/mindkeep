@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
-import { colors } from '../theme';
 import type { Reminder } from '../types/reminder';
 import { formatDate } from '../utils/date';
 import { AnswerReveal } from './AnswerReveal';
@@ -36,16 +36,19 @@ export function ReminderCard({
   onOpenMaterial,
 }: ReminderCardProps) {
   const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const { material } = reminder;
   const hasFlashcard = Boolean(material.question?.trim() && material.answer?.trim());
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
       <View style={styles.head}>
         <View style={styles.headText}>
-          <Text style={styles.title}>{material.title}</Text>
-          <Text style={styles.meta}>{material.category?.name ?? t('materials.fields.noCategory')}</Text>
+          <Text style={[styles.title, { color: colors.ink }]}>{material.title}</Text>
+          <Text style={[styles.meta, { color: colors.muted }]}>
+            {material.category?.name ?? t('materials.fields.noCategory')}
+          </Text>
         </View>
         <Badge
           tone={statusTone(reminder.status, reminder.daysOverdue)}
@@ -53,21 +56,21 @@ export function ReminderCard({
         />
       </View>
 
-      <Text style={styles.row}>
-        <Text style={styles.rowLabel}>{t('review.learnedAt')}: </Text>
+      <Text style={[styles.row, { color: colors.muted }]}>
+        <Text style={[styles.rowLabel, { color: colors.ink }]}>{t('review.learnedAt')}: </Text>
         {formatDate(material.learnedAt, language)}
       </Text>
-      <Text style={styles.row}>
-        <Text style={styles.rowLabel}>{t('review.sequence')}: </Text>
+      <Text style={[styles.row, { color: colors.muted }]}>
+        <Text style={[styles.rowLabel, { color: colors.ink }]}>{t('review.sequence')}: </Text>
         #{reminder.sequenceNumber} · {t(`materials.intervals.${reminder.intervalType}`)}
       </Text>
-      <Text style={styles.row}>
-        <Text style={styles.rowLabel}>{t('review.scheduledAt')}: </Text>
+      <Text style={[styles.row, { color: colors.muted }]}>
+        <Text style={[styles.rowLabel, { color: colors.ink }]}>{t('review.scheduledAt')}: </Text>
         {formatDate(reminder.scheduledAt, language)}
       </Text>
       {reminder.daysOverdue > 0 ? (
-        <Text style={[styles.row, styles.overdue]}>
-          <Text style={styles.rowLabel}>{t('review.daysOverdue')}: </Text>
+        <Text style={[styles.row, { color: colors.danger }]}>
+          <Text style={[styles.rowLabel, { color: colors.ink }]}>{t('review.daysOverdue')}: </Text>
           {reminder.daysOverdue}
         </Text>
       ) : null}
@@ -79,13 +82,13 @@ export function ReminderCard({
       ) : null}
 
       {!hasFlashcard && material.content?.trim() ? (
-        <Text style={styles.content} numberOfLines={8}>
+        <Text style={[styles.content, { color: colors.ink }]} numberOfLines={8}>
           {material.content}
         </Text>
       ) : null}
 
       {hasFlashcard && material.content?.trim() ? (
-        <Text style={styles.notes} numberOfLines={6}>
+        <Text style={[styles.notes, { color: colors.muted }]} numberOfLines={6}>
           {material.content}
         </Text>
       ) : null}
@@ -113,7 +116,7 @@ export function ReminderCard({
             />
           </>
         ) : (
-          <Text style={styles.notDue}>{t('review.notDue')}</Text>
+          <Text style={[styles.notDue, { color: colors.muted }]}>{t('review.notDue')}</Text>
         )}
       </View>
     </View>
@@ -122,22 +125,19 @@ export function ReminderCard({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 24,
     borderWidth: 1,
     padding: 16,
   },
   head: { flexDirection: 'row', justifyContent: 'space-between', gap: 10, alignItems: 'flex-start' },
   headText: { flex: 1 },
-  title: { color: colors.ink, fontSize: 17, fontWeight: '700' },
-  meta: { color: colors.muted, fontSize: 13, marginTop: 4 },
-  row: { color: colors.muted, fontSize: 14, marginTop: 8 },
-  rowLabel: { color: colors.ink, fontWeight: '600' },
-  overdue: { color: colors.danger },
+  title: { fontSize: 17, fontWeight: '700' },
+  meta: { fontSize: 13, marginTop: 4 },
+  row: { fontSize: 14, marginTop: 8 },
+  rowLabel: { fontWeight: '600' },
   block: { marginTop: 14 },
-  content: { color: colors.ink, fontSize: 15, lineHeight: 22, marginTop: 14 },
-  notes: { color: colors.muted, fontSize: 14, lineHeight: 20, marginTop: 12 },
+  content: { fontSize: 15, lineHeight: 22, marginTop: 14 },
+  notes: { fontSize: 14, lineHeight: 20, marginTop: 12 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 16 },
-  notDue: { color: colors.muted, fontSize: 13, flex: 1, paddingVertical: 10 },
+  notDue: { fontSize: 13, flex: 1, paddingVertical: 10 },
 });

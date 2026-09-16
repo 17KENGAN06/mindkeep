@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import type { Material, MaterialPayload, MaterialsQuery } from '../types/material';
+import type { Material, MaterialPayload, MaterialStatus, MaterialsQuery } from '../types/material';
 
 function toQuery(params: MaterialsQuery): string {
   const searchParams = new URLSearchParams();
@@ -16,6 +16,8 @@ export const materialsApi = {
   getById: (id: string) => apiClient.get<{ material: Material }>(`/api/materials/${id}`),
   create: (payload: MaterialPayload) =>
     apiClient.post<{ material: Material }>('/api/materials', payload),
+  update: (id: string, payload: Partial<MaterialPayload> & { status?: MaterialStatus }) =>
+    apiClient.patch<{ material: Material }>(`/api/materials/${id}`, payload),
   archive: (id: string) => apiClient.patch<{ material: Material }>(`/api/materials/${id}/archive`),
   remove: (id: string) => apiClient.delete<{ success: boolean }>(`/api/materials/${id}`),
 };

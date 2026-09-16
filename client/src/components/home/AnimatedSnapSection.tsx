@@ -8,9 +8,13 @@ type AnimatedSnapSectionProps = {
   children: ReactNode;
 };
 
+function isDesktopSnap(): boolean {
+  return typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches;
+}
+
 /**
- * Forces a paint of the hidden state before adding play,
- * so enter animations always replay on section change.
+ * Desktop: replay enter animations when a full-page section becomes active.
+ * Mobile: keep content visible after first play — a small scroll must not blank the block.
  */
 export function AnimatedSnapSection({
   id,
@@ -22,8 +26,15 @@ export function AnimatedSnapSection({
   const [play, setPlay] = useState(false);
 
   useEffect(() => {
+    const desktop = isDesktopSnap();
+
     if (!active) {
-      setPlay(false);
+      if (desktop) setPlay(false);
+      return;
+    }
+
+    if (!desktop) {
+      setPlay(true);
       return;
     }
 

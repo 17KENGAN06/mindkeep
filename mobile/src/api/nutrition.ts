@@ -4,6 +4,7 @@ import type {
   Meal,
   NutritionPeriodResponse,
   NutritionSettings,
+  UpdateMealPayload,
   WaterDay,
 } from '../types/nutrition';
 
@@ -14,6 +15,8 @@ export const nutritionApi = {
     apiClient.patch<{ settings: NutritionSettings }>('/api/nutrition/settings', payload),
   createMeal: (payload: CreateMealPayload) =>
     apiClient.post<{ meal: Meal }>('/api/nutrition/meals', payload),
+  updateMeal: (id: string, payload: UpdateMealPayload) =>
+    apiClient.patch<{ meal: Meal }>(`/api/nutrition/meals/${id}`, payload),
   removeMeal: (id: string) => apiClient.delete<{ success: boolean }>(`/api/nutrition/meals/${id}`),
   setWater: (date: string, glasses: number) =>
     apiClient.put<{ water: WaterDay }>('/api/nutrition/water', { date, glasses }),

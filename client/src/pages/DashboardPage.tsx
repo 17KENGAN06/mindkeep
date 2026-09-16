@@ -2,13 +2,16 @@
   BookOpen,
   Check,
   CheckCircle2,
+  Droplets,
   GraduationCap,
   PiggyBank,
+  UtensilsCrossed,
   Wallet,
 } from 'lucide-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { WaterGlasses } from '@/components/nutrition/WaterGlasses';
 import { Badge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -16,6 +19,7 @@ import { Loader } from '@/components/ui/Loader';
 import { useAuth } from '@/features/auth/useAuth';
 import { currentPeriodDefaults, formatMoney, formatSignedMoney } from '@/features/finance/financeUtils';
 import { useFinanceSummary } from '@/features/finance/useFinance';
+import { useNutritionPeriod, useSetWater } from '@/features/nutrition/useNutrition';
 import {
   useActivityStatistics,
   useDashboardStatistics,
@@ -146,6 +150,8 @@ export function DashboardPage() {
     year: period.year,
     month: period.month,
   });
+  const nutritionQuery = useNutritionPeriod(period.year, period.month);
+  const setWater = useSetWater();
   const updateTask = useUpdateDailyTask();
 
   const loading =
@@ -181,6 +187,14 @@ export function DashboardPage() {
   const todayDone = todayTasks.filter((task) => task.completed).length;
   const todayTotal = todayTasks.length;
   const tasksPercent = todayTotal > 0 ? (todayDone / todayTotal) * 100 : 0;
+
+  const nutrition = nutritionQuery.data;
+  const todayMeals = (nutrition?.meals ?? []).filter((meal) => meal.date === today);
+  const todayCalories = todayMeals.reduce((sum, meal) => sum + meal.calories, 0);
+  const calorieGoal = nutrition?.settings.calorieGoal ?? 2000;
+  const waterGoal = nutrition?.settings.waterGoal ?? 8;
+  const todayWater = nutrition?.water.find((row) => row.date === today)?.glasses ?? 0;
+  const overeating = todayCalories > calorieGoal;
 
   const reviewsOpen = stats.todayReminders + stats.overdueReminders;
   const reviewsPlanned = stats.completedReviews + reviewsOpen;
@@ -252,7 +266,7 @@ export function DashboardPage() {
         <p className="max-w-sm text-sm text-muted italic lg:text-right">{t('dashboard.quote')}</p>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         <ProgressCard
           icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
           title={t('dashboard.cards.tasksToday')}
@@ -280,6 +294,74 @@ export function DashboardPage() {
           valueText={`${formatMoney(budgetLeft, language)} / ${formatMoney(budgetTotal, language)}`}
           percent={(budgetLeft / budgetTotal) * 100}
         />
+        <ProgressCard
+          icon={<UtensilsCrossed className="h-5 w-5" aria-hidden />}
+          title={t('dashboard.cards.caloriesToday')}
+          valueText={`${todayCalories} / ${calorieGoal}`}
+          percent={(todayCalories / Math.max(calorieGoal, 1)) * 100}
+        />
+        <ProgressCard
+          icon={<Droplets className="h-5 w-5" aria-hidden />}
+          title={t('dashboard.cards.waterToday')}
+          valueText={`${todayWater} / ${waterGoal} ${t('calories.glasses')}`}
+          percent={(todayWater / Math.max(waterGoal, 1)) * 100}
+        />
+      </section>
+
+      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-base font-semibold text-ink">{t('dashboard.fuelTitle')}</h2>
+            {overeating ? <Badge tone="danger">{t('calories.overeating')}</Badge> : null}
+          </div>
+          <Link to="/nutrition" className="text-sm font-medium text-brand-500 no-underline">
+            {t('dashboard.allFuel')} →
+          </Link>
+        </div>
+        <div className="mt-5 grid gap-6 lg:grid-cols-2">
+          <div>
+            <p className="text-sm text-muted">
+              {todayCalories} / {calorieGoal} {t('calories.kcal')}
+            </p>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-line/70">
+              <div
+                className={`h-full rounded-full ${overeating ? 'bg-red-500' : 'bg-brand-500'}`}
+                style={{
+                  width: `${Math.min(100, Math.round((todayCalories / Math.max(calorieGoal, 1)) * 100))}%`,
+                }}
+              />
+            </div>
+            <ul className="mt-4 space-y-2">
+              {todayMeals.length === 0 ? (
+                <li className="rounded-2xl border border-dashed border-line px-4 py-6 text-center text-sm text-muted">
+                  {t('dashboard.noMealsToday')}
+                </li>
+              ) : (
+                todayMeals.slice(0, 4).map((meal) => (
+                  <li key={meal.id} className="flex items-center justify-between gap-3 text-sm">
+                    <span className="min-w-0 truncate text-ink">{meal.title}</span>
+                    <span className="shrink-0 tabular-nums text-muted">
+                      {meal.calories} {t('calories.kcal')}
+                    </span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+          <div>
+            <p className="mb-3 text-sm text-muted">
+              {todayWater} / {waterGoal} {t('calories.glasses')}
+            </p>
+            <WaterGlasses
+              glasses={todayWater}
+              goal={waterGoal}
+              disabled={setWater.isPending}
+              onChange={(glasses) => {
+                void setWater.mutateAsync({ date: today, glasses });
+              }}
+            />
+          </div>
+        </div>
       </section>
 
       <section className="grid gap-4 xl:grid-cols-2">

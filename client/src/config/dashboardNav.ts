@@ -34,6 +34,13 @@ export const dashboardNav: DashboardNavEntry[] = [
     matchPrefixes: ['/notes'],
   },
   {
+    type: 'link',
+    id: 'nutrition',
+    labelKey: 'nav.nutrition',
+    to: '/nutrition',
+    matchPrefixes: ['/nutrition', '/calories'],
+  },
+  {
     type: 'group',
     id: 'planning',
     labelKey: 'nav.planning',
@@ -126,6 +133,12 @@ export const dashboardNav: DashboardNavEntry[] = [
         id: 'guide',
         labelKey: 'nav.guide',
         to: '/guide',
+      },
+      {
+        type: 'link',
+        id: 'contact',
+        labelKey: 'nav.contact',
+        to: '/contact',
       },
       {
         type: 'link',

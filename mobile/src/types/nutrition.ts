@@ -36,3 +36,8 @@ export type CreateMealPayload = {
   calories: number;
   date: string;
 };
+
+export type UpdateMealPayload = {
+  title?: string;
+  calories?: number;
+};

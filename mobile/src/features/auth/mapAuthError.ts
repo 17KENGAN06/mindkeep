@@ -27,6 +27,9 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.validation');
     case 'MISSING_TOKEN':
       return t('auth.errors.missingToken');
+    case 'GOOGLE_AUTH_UNAVAILABLE':
+    case 'INVALID_GOOGLE_CREDENTIAL':
+      return t('auth.errors.googleUnavailable');
     default:
       if (error.status === 429) return t('auth.errors.rateLimited');
       if (error.status >= 500) return t('auth.errors.server');

@@ -3,8 +3,16 @@ import { env } from '@/config/env';
 import { useAuth } from '@/features/auth/useAuth';
 
 export function ProtectedRoute() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, isReady, user } = useAuth();
   const location = useLocation();
+
+  if (!isReady) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center">
+        <div className="h-12 w-12 rounded-2xl border border-brand-500/30 border-t-brand-500" />
+      </div>
+    );
+  }
 
   if (!isAuthenticated) {
     return (

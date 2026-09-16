@@ -21,10 +21,11 @@ import {
   useDeleteMeal,
   useNutritionPeriod,
   useSetWater,
+  useUpdateMeal,
   useUpdateNutritionSettings,
 } from '../features/nutrition/useNutrition';
+import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
-import { colors } from '../theme';
 import type { CalendarDaySummary } from '../types/calendar';
 import type { Meal } from '../types/nutrition';
 import { formatDate, todayDateKey } from '../utils/date';
@@ -45,6 +46,7 @@ function clampPercent(value: number): number {
 
 export function FuelScreen() {
   const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const today = todayDateKey();
   const initial = new Date();
@@ -57,10 +59,12 @@ export function FuelScreen() {
   const [waterGoalInput, setWaterGoalInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const periodQuery = useNutritionPeriod(year, month);
   const updateSettings = useUpdateNutritionSettings();
   const createMeal = useCreateMeal();
+  const updateMeal = useUpdateMeal();
   const deleteMeal = useDeleteMeal();
   const setWater = useSetWater();
 
@@ -69,6 +73,13 @@ export function FuelScreen() {
     setCalorieGoalInput(String(periodQuery.data.settings.calorieGoal));
     setWaterGoalInput(String(periodQuery.data.settings.waterGoal));
   }, [periodQuery.data]);
+
+  useEffect(() => {
+    setEditingId(null);
+    setTitle('');
+    setKcal('');
+    setFormError(null);
+  }, [selectedDate]);
 
   const settings = periodQuery.data?.settings;
   const meals = periodQuery.data?.meals ?? [];
@@ -154,7 +165,21 @@ export function FuelScreen() {
     }
   };
 
-  const onAddMeal = async () => {
+  const resetMealForm = () => {
+    setEditingId(null);
+    setTitle('');
+    setKcal('');
+    setFormError(null);
+  };
+
+  const onStartEditMeal = (meal: Meal) => {
+    setEditingId(meal.id);
+    setTitle(meal.title);
+    setKcal(String(meal.calories));
+    setFormError(null);
+  };
+
+  const onSaveMeal = async () => {
     setFormError(null);
     const calories = Number(kcal);
     if (!title.trim()) {
@@ -166,13 +191,19 @@ export function FuelScreen() {
       return;
     }
     try {
-      await createMeal.mutateAsync({
-        title: title.trim(),
-        calories: Math.round(calories),
-        date: selectedDate,
-      });
-      setTitle('');
-      setKcal('');
+      if (editingId) {
+        await updateMeal.mutateAsync({
+          id: editingId,
+          payload: { title: title.trim(), calories: Math.round(calories) },
+        });
+      } else {
+        await createMeal.mutateAsync({
+          title: title.trim(),
+          calories: Math.round(calories),
+          date: selectedDate,
+        });
+      }
+      resetMealForm();
     } catch {
       setFormError(t('auth.errors.generic'));
     }
@@ -189,6 +220,9 @@ export function FuelScreen() {
           setFormError(null);
           void deleteMeal
             .mutateAsync(meal.id)
+            .then(() => {
+              if (editingId === meal.id) resetMealForm();
+            })
             .catch(() => setFormError(t('auth.errors.generic')))
             .finally(() => setBusyId(null));
         },
@@ -207,7 +241,7 @@ export function FuelScreen() {
 
   if (periodQuery.isLoading && !periodQuery.data) {
     return (
-      <SafeAreaView style={styles.safe}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -216,7 +250,7 @@ export function FuelScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView
           contentContainerStyle={styles.content}
@@ -229,10 +263,12 @@ export function FuelScreen() {
             />
           }
         >
-          <Text style={styles.title}>{t('fuel.title')}</Text>
-          <Text style={styles.subtitle}>{t('fuel.subtitle')}</Text>
+          <Text style={[styles.title, { color: colors.ink }]}>{t('fuel.title')}</Text>
+          <Text style={[styles.subtitle, { color: colors.muted }]}>{t('fuel.subtitle')}</Text>
 
-          {periodQuery.isError ? <Text style={styles.error}>{t('auth.errors.generic')}</Text> : null}
+          {periodQuery.isError ? (
+            <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
+          ) : null}
 
           <MonthGrid
             year={year}
@@ -244,16 +280,21 @@ export function FuelScreen() {
           />
 
           <View style={styles.dayHead}>
-            <Text style={styles.dayTitle}>{t('fuel.dayTitle', { date: formatDate(selectedDate, language) })}</Text>
+            <Text style={[styles.dayTitle, { color: colors.ink }]}>
+              {t('fuel.dayTitle', { date: formatDate(selectedDate, language) })}
+            </Text>
             {overeating ? <Badge tone="danger" label={t('fuel.overeating')} /> : null}
           </View>
 
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>{t('fuel.caloriesTitle')}</Text>
-            <Text style={styles.label}>{t('fuel.calorieGoal')}</Text>
+          <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('fuel.caloriesTitle')}</Text>
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.calorieGoal')}</Text>
             <TextInput
               keyboardType="number-pad"
-              style={styles.input}
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
               value={calorieGoalInput}
               onChangeText={setCalorieGoalInput}
             />
@@ -273,49 +314,82 @@ export function FuelScreen() {
             </View>
 
             <View style={styles.progressRow}>
-              <Text style={styles.muted}>{t('fuel.progress')}</Text>
-              <Text style={[styles.progressValue, overeating && styles.overText]}>
+              <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.progress')}</Text>
+              <Text
+                style={[
+                  styles.progressValue,
+                  { color: colors.ink },
+                  overeating && { color: colors.danger },
+                ]}
+              >
                 {eaten} / {calorieGoal} {t('fuel.kcal')}
               </Text>
             </View>
-            <View style={styles.barTrack}>
+            <View style={[styles.barTrack, { backgroundColor: colors.line }]}>
               <View
                 style={[
                   styles.barFill,
-                  overeating ? styles.barOver : styles.barOk,
-                  { width: `${caloriePercent}%` },
+                  { backgroundColor: overeating ? colors.danger : colors.brand, width: `${caloriePercent}%` },
                 ]}
               />
             </View>
 
-            <Text style={styles.sectionTitle}>{t('fuel.addMeal')}</Text>
-            <Text style={styles.label}>{t('fuel.mealTitle')}</Text>
+            <Text style={[styles.sectionTitle, { color: colors.ink }]}>
+              {editingId ? t('fuel.editMeal') : t('fuel.addMeal')}
+            </Text>
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.mealTitle')}</Text>
             <TextInput
-              style={styles.input}
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
               value={title}
               onChangeText={setTitle}
               placeholder={t('fuel.mealPlaceholder')}
               placeholderTextColor={colors.muted}
             />
-            <Text style={styles.label}>{t('fuel.mealCalories')}</Text>
-            <TextInput keyboardType="number-pad" style={styles.input} value={kcal} onChangeText={setKcal} />
-            <AppButton
-              label={t('fuel.saveMeal')}
-              loading={createMeal.isPending}
-              onPress={() => void onAddMeal()}
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.mealCalories')}</Text>
+            <TextInput
+              keyboardType="number-pad"
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
+              value={kcal}
+              onChangeText={setKcal}
             />
+            <AppButton
+              label={editingId ? t('common.save') : t('fuel.saveMeal')}
+              loading={createMeal.isPending || updateMeal.isPending}
+              onPress={() => void onSaveMeal()}
+            />
+            {editingId ? (
+              <AppButton variant="ghost" label={t('common.cancel')} onPress={resetMealForm} />
+            ) : null}
 
             {dayMeals.length === 0 ? (
-              <Text style={styles.empty}>{t('fuel.emptyMeals')}</Text>
+              <Text style={[styles.empty, { color: colors.muted }]}>{t('fuel.emptyMeals')}</Text>
             ) : (
               dayMeals.map((meal) => (
-                <View key={meal.id} style={styles.mealRow}>
-                  <Text style={styles.mealTitle} numberOfLines={1}>
+                <View
+                  key={meal.id}
+                  style={[
+                    styles.mealRow,
+                    editingId === meal.id && { borderColor: colors.brand, borderRadius: 12, borderWidth: 1, padding: 6 },
+                  ]}
+                >
+                  <Text style={[styles.mealTitle, { color: colors.ink }]} numberOfLines={1}>
                     {meal.title}
                   </Text>
-                  <Text style={styles.muted}>
+                  <Text style={[styles.muted, { color: colors.muted }]}>
                     {meal.calories} {t('fuel.kcal')}
                   </Text>
+                  <AppButton
+                    variant="ghost"
+                    label={t('common.edit')}
+                    disabled={busyId === meal.id}
+                    onPress={() => onStartEditMeal(meal)}
+                  />
                   <AppButton
                     variant="ghost"
                     label={t('common.delete')}
@@ -327,13 +401,16 @@ export function FuelScreen() {
             )}
           </View>
 
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>{t('fuel.waterTitle')}</Text>
-            <Text style={styles.muted}>{t('fuel.waterHint')}</Text>
-            <Text style={styles.label}>{t('fuel.waterGoal')}</Text>
+          <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('fuel.waterTitle')}</Text>
+            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.waterHint')}</Text>
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.waterGoal')}</Text>
             <TextInput
               keyboardType="number-pad"
-              style={styles.input}
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
               value={waterGoalInput}
               onChangeText={setWaterGoalInput}
             />
@@ -344,12 +421,12 @@ export function FuelScreen() {
             />
 
             <View style={styles.progressRow}>
-              <Text style={styles.muted}>{t('fuel.waterProgress')}</Text>
-              <Text style={styles.progressValue}>
+              <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.waterProgress')}</Text>
+              <Text style={[styles.progressValue, { color: colors.ink }]}>
                 {glasses} / {waterGoal} {t('fuel.glasses')}
               </Text>
             </View>
-            <View style={styles.barTrack}>
+            <View style={[styles.barTrack, { backgroundColor: colors.line }]}>
               <View style={[styles.barFill, styles.barWater, { width: `${waterPercent}%` }]} />
             </View>
 
@@ -361,7 +438,7 @@ export function FuelScreen() {
             />
           </View>
 
-          {formError ? <Text style={styles.error}>{formError}</Text> : null}
+          {formError ? <Text style={[styles.error, { color: colors.danger }]}>{formError}</Text> : null}
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -369,43 +446,39 @@ export function FuelScreen() {
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
+  const { colors } = useTheme();
   return (
-    <View style={styles.stat}>
-      <Text style={styles.statLabel}>{label}</Text>
-      <Text style={styles.statValue}>{value}</Text>
+    <View style={[styles.stat, { backgroundColor: colors.bg, borderColor: colors.line }]}>
+      <Text style={[styles.statLabel, { color: colors.muted }]}>{label}</Text>
+      <Text style={[styles.statValue, { color: colors.ink }]}>{value}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { backgroundColor: colors.bg, flex: 1 },
+  safe: { flex: 1 },
   flex: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  title: { color: colors.ink, fontSize: 28, fontWeight: '700' },
-  subtitle: { color: colors.muted, fontSize: 14 },
+  title: { fontSize: 28, fontWeight: '700' },
+  subtitle: { fontSize: 14 },
   dayHead: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  dayTitle: { color: colors.ink, flex: 1, fontSize: 18, fontWeight: '700' },
+  dayTitle: { flex: 1, fontSize: 18, fontWeight: '700' },
   card: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     gap: 10,
     padding: 14,
   },
-  cardTitle: { color: colors.ink, fontSize: 16, fontWeight: '700' },
-  sectionTitle: { color: colors.ink, fontSize: 15, fontWeight: '700', marginTop: 4 },
-  label: { color: colors.muted, fontSize: 13, fontWeight: '600' },
-  muted: { color: colors.muted, fontSize: 13 },
-  empty: { color: colors.muted, fontSize: 14, paddingVertical: 8 },
-  error: { color: colors.danger, fontSize: 14 },
+  cardTitle: { fontSize: 16, fontWeight: '700' },
+  sectionTitle: { fontSize: 15, fontWeight: '700', marginTop: 4 },
+  label: { fontSize: 13, fontWeight: '600' },
+  muted: { fontSize: 13 },
+  empty: { fontSize: 14, paddingVertical: 8 },
+  error: { fontSize: 14 },
   input: {
-    backgroundColor: colors.bg,
-    borderColor: colors.line,
     borderRadius: 12,
     borderWidth: 1,
-    color: colors.ink,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,
@@ -413,23 +486,18 @@ const styles = StyleSheet.create({
   },
   stats: { flexDirection: 'row', gap: 8 },
   stat: {
-    backgroundColor: colors.bg,
-    borderColor: colors.line,
     borderRadius: 14,
     borderWidth: 1,
     flex: 1,
     padding: 10,
   },
-  statLabel: { color: colors.muted, fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  statValue: { color: colors.ink, fontSize: 13, fontWeight: '700', marginTop: 4 },
+  statLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
+  statValue: { fontSize: 13, fontWeight: '700', marginTop: 4 },
   progressRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
-  progressValue: { color: colors.ink, fontSize: 13, fontWeight: '700' },
-  overText: { color: colors.danger },
-  barTrack: { backgroundColor: colors.line, borderRadius: 999, height: 8, overflow: 'hidden' },
+  progressValue: { fontSize: 13, fontWeight: '700' },
+  barTrack: { borderRadius: 999, height: 8, overflow: 'hidden' },
   barFill: { borderRadius: 999, height: '100%' },
-  barOk: { backgroundColor: colors.brand },
-  barOver: { backgroundColor: colors.danger },
   barWater: { backgroundColor: '#38bdf8' },
-  mealRow: { alignItems: 'center', flexDirection: 'row', gap: 8 },
-  mealTitle: { color: colors.ink, flex: 1, fontSize: 15, fontWeight: '600' },
+  mealRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  mealTitle: { flex: 1, fontSize: 15, fontWeight: '600' },
 });

@@ -15,9 +15,9 @@ import {
   useMarkNotificationRead,
   useNotifications,
 } from '../../features/notifications/useNotifications';
+import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { AppTabParamList } from '../../navigation/types';
-import { colors } from '../../theme';
 import type { AppNotification } from '../../types/notification';
 import { formatDate } from '../../utils/date';
 
@@ -29,6 +29,7 @@ function typeTone(type: AppNotification['type']) {
 
 export function NotificationsScreen() {
   const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const tabNavigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
   const listQuery = useNotifications();
@@ -52,7 +53,7 @@ export function NotificationsScreen() {
 
   if (listQuery.isLoading && !listQuery.data) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
         <ActivityIndicator color={colors.brand} size="large" />
       </View>
     );
@@ -69,8 +70,10 @@ export function NotificationsScreen() {
         />
       }
     >
-      <Text style={styles.subtitle}>{t('notifications.subtitle')}</Text>
-      <Text style={styles.unread}>{t('notifications.unreadCount', { count: unreadCount })}</Text>
+      <Text style={[styles.subtitle, { color: colors.muted }]}>{t('notifications.subtitle')}</Text>
+      <Text style={[styles.unread, { color: colors.brand }]}>
+        {t('notifications.unreadCount', { count: unreadCount })}
+      </Text>
 
       <AppButton
         variant="secondary"
@@ -80,21 +83,27 @@ export function NotificationsScreen() {
         onPress={() => void markAllRead.mutateAsync()}
       />
 
-      {listQuery.isError ? <Text style={styles.error}>{t('auth.errors.generic')}</Text> : null}
+      {listQuery.isError ? (
+        <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
+      ) : null}
 
       {notifications.length === 0 ? (
-        <View style={styles.empty}>
-          <Text style={styles.emptyTitle}>{t('notifications.emptyTitle')}</Text>
-          <Text style={styles.emptyBody}>{t('notifications.emptyDescription')}</Text>
+        <View style={[styles.empty, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+          <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('notifications.emptyTitle')}</Text>
+          <Text style={[styles.emptyBody, { color: colors.muted }]}>{t('notifications.emptyDescription')}</Text>
         </View>
       ) : (
         notifications.map((notification) => (
           <View
             key={notification.id}
-            style={[styles.card, !notification.isRead && styles.cardUnread]}
+            style={[
+              styles.card,
+              { backgroundColor: colors.panel, borderColor: colors.line },
+              !notification.isRead && { borderColor: `${colors.brand}66` },
+            ]}
           >
             <View style={styles.head}>
-              <Text style={styles.title}>{notification.title}</Text>
+              <Text style={[styles.title, { color: colors.ink }]}>{notification.title}</Text>
               <Badge
                 tone={typeTone(notification.type)}
                 label={t(`notifications.types.${notification.type}`)}
@@ -103,8 +112,10 @@ export function NotificationsScreen() {
             {!notification.isRead ? (
               <Badge tone="warn" label={t('notifications.unread')} />
             ) : null}
-            <Text style={styles.message}>{notification.message}</Text>
-            <Text style={styles.meta}>{formatDate(notification.createdAt, language)}</Text>
+            <Text style={[styles.message, { color: colors.muted }]}>{notification.message}</Text>
+            <Text style={[styles.meta, { color: colors.muted }]}>
+              {formatDate(notification.createdAt, language)}
+            </Text>
 
             <View style={styles.actions}>
               {notification.materialId ? (
@@ -138,32 +149,26 @@ export function NotificationsScreen() {
 }
 
 const styles = StyleSheet.create({
-  centered: { alignItems: 'center', backgroundColor: colors.bg, flex: 1, justifyContent: 'center' },
+  centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { color: colors.muted, fontSize: 14 },
-  unread: { color: colors.brand, fontSize: 14, fontWeight: '700' },
-  error: { color: colors.danger },
+  subtitle: { fontSize: 14 },
+  unread: { fontSize: 14, fontWeight: '700' },
   empty: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     padding: 16,
   },
-  emptyTitle: { color: colors.ink, fontSize: 16, fontWeight: '700' },
-  emptyBody: { color: colors.muted, fontSize: 14, marginTop: 6 },
+  emptyTitle: { fontSize: 16, fontWeight: '700' },
+  emptyBody: { fontSize: 14, marginTop: 6 },
   card: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     gap: 8,
     padding: 14,
   },
-  cardUnread: { borderColor: 'rgba(142, 239, 180, 0.4)' },
   head: { alignItems: 'flex-start', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  title: { color: colors.ink, flex: 1, fontSize: 16, fontWeight: '700' },
-  message: { color: colors.muted, fontSize: 14 },
-  meta: { color: colors.muted, fontSize: 12 },
+  title: { flex: 1, fontSize: 16, fontWeight: '700' },
+  message: { fontSize: 14 },
+  meta: { fontSize: 12 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
 });

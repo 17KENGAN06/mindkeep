@@ -2,6 +2,7 @@
   "expo": {
     "name": "MindKeep",
     "slug": "mindkeep",
+    "owner": "17kengan06",
     "scheme": "mindkeep",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,7 +14,10 @@
     },
     "userInterfaceStyle": "dark",
     "extra": {
-      "privacyPolicyUrl": "https://mindkeep.cloud/privacy"
+      "privacyPolicyUrl": "https://mindkeep.cloud/privacy",
+      "eas": {
+        "projectId": "e3304cc5-f62e-4cd8-b580-ed47b2b6c118"
+      }
     },
     "ios": {
       "supportsTablet": false,
@@ -24,6 +28,8 @@
       }
     },
     "android": {
+      "package": "cloud.mindkeep.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#07110d",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -36,9 +42,16 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "runtimeVersion": "exposdk:57.0.0",
+    "newArchEnabled": true,
     "plugins": [
       "expo-secure-store",
-      "expo-localization"
+      "expo-localization",
+      "expo-web-browser"
     ]
   }
 }

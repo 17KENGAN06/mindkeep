@@ -14,10 +14,17 @@ export type RegisterPayload = {
   timezone?: string;
 };
 
+export type GoogleLoginPayload = {
+  credential: string;
+  timezone?: string;
+};
+
 export const authApi = {
   login: (payload: LoginPayload) => apiClient.post<AuthResponse>('/api/auth/login', payload),
   register: (payload: RegisterPayload) =>
     apiClient.post<AuthResponse>('/api/auth/register', payload),
+  googleLogin: (payload: GoogleLoginPayload) =>
+    apiClient.post<AuthResponse>('/api/auth/google', payload),
   me: () => apiClient.get<{ user: User }>('/api/auth/me'),
   updateMe: (payload: { timezone: string }) =>
     apiClient.patch<{ user: User }>('/api/auth/me', payload),

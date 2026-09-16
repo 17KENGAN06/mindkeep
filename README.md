@@ -29,6 +29,7 @@ Languages (i18n): **Russian**, **Ukrainian**, **English**, **Finnish**.
 learning-reminder/
   client/                 # React SPA
   server/                 # Express API + Prisma
+  mobile/                 # Expo app (iPhone + Android via Expo Go)
   deploy/railway-cron.http
   .env.example
   README.md
@@ -131,6 +132,19 @@ npm run dev:client
 | `npm run start:server` | Production API (`migrate deploy` + start) |
 | `npm run start:client` | Serve client `dist` on `PORT` |
 | `npm run lint` | ESLint for both packages |
+| `npm run dev:mobile` | Expo Go for iPhone and Android |
+
+---
+
+## Phones (no App Store / Play fee)
+
+Same account as the website. Install **Expo Go** (free) on the phone, then:
+
+```bash
+npm run dev:mobile
+```
+
+Scan the QR code. Production API is `https://api.mindkeep.cloud`. Stores are optional later.
 
 ---
 
@@ -276,7 +290,7 @@ You can also host the client on Railway (`client/` root). Prefer Hostinger stati
 | `PORT` | server / client | Listen port (Railway injects) |
 | `CRON_SECRET` | server | Protect cron endpoint |
 | `ENABLE_NODE_CRON` | server | Optional local hourly job |
-| `EMAIL_FROM`, `RESEND_API_KEY` | server | Future email |
+| `EMAIL_FROM`, `RESEND_API_KEY` | server | Contact form (Resend). `EMAIL_FROM` must be a verified sender. |
 | `TELEGRAM_BOT_TOKEN` | server | Future Telegram |
 | `ADMIN_EMAILS` | server | Comma-separated admin emails |
 | `VITE_API_URL` | client (build) | API base URL |

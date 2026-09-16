@@ -29,12 +29,15 @@
     "admin": "Админ",
     "blog": "Блог",
     "guide": "Как пользоваться",
+    "contact": "Контакты",
     "planning": "Планирование",
     "learning": "Обучение",
     "repetition": "Повторение",
     "finance": "Финансы",
     "more": "Ещё",
     "tasks": "Ежедневные задачи",
+    "calories": "Питание",
+    "nutrition": "Питание",
     "monthPlan": "План на месяц",
     "notes": "Заметки",
     "budget": "Бюджет",
@@ -555,6 +558,40 @@
     "submitLogin": "Войти как администратор",
     "backHome": "На экран техосмотра"
   },
+  "calories": {
+    "title": "Питание",
+    "subtitle": "Калории считаются по приёмам пищи. Вода — только стаканы, без калорийности.",
+    "caloriesTitle": "Калории",
+    "calorieGoal": "Норма калорий в день",
+    "waterGoal": "Стаканов в день",
+    "glasses": "стаканов",
+    "waterHint": "Отмечайте стаканы. К калориям вода не относится.",
+    "waterProgress": "Стаканы за день",
+    "saveGoals": "Сохранить нормы",
+    "statEaten": "Съедено",
+    "statGoal": "Норма",
+    "statLeft": "Осталось",
+    "statOver": "Сверх нормы",
+    "statWater": "Вода",
+    "dayTitle": "{{date}}",
+    "progress": "Калории за день",
+    "kcal": "ккал",
+    "overeating": "Перебор",
+    "addMeal": "Добавить приём пищи",
+    "mealTitle": "Приём пищи",
+    "mealPlaceholder": "Обед, перекус...",
+    "mealCalories": "ккал",
+    "saveMeal": "Добавить",
+    "emptyMeals": "За этот день ещё нет приёмов пищи.",
+    "waterTitle": "Вода",
+    "errors": {
+      "title": "Назовите приём пищи",
+      "calories": "Укажите калории",
+      "calorieGoal": "Норма не меньше 500 ккал",
+      "waterGoal": "Нужен хотя бы 1 стакан",
+      "unavailable": "Сервер питания недоступен. Нужен деплой API с таблицами калорий и воды."
+    }
+  },
   "dashboard": {
     "welcome": "Привет, {{name}}",
     "subtitle": "Сводка по задачам, повторениям и финансам — всё важное на одном экране.",
@@ -570,11 +607,16 @@
       "reviews": "Повторения",
       "spentToday": "Потрачено сегодня",
       "budgetLeft": "Осталось в бюджете",
+      "caloriesToday": "Калории сегодня",
+      "waterToday": "Вода сегодня",
       "of": "{{done}} из {{total}} выполнено",
       "ofPlanned": "{{done}} из {{total}} запланировано"
     },
     "upcomingTasks": "Ближайшие задачи",
     "allTasks": "Все задачи",
+    "fuelTitle": "Питание",
+    "allFuel": "Открыть питание",
+    "noMealsToday": "Сегодня ещё нет приёмов пищи.",
     "weekTitle": "Выполнено за неделю",
     "weekTabs": {
       "tasks": "Задачи",
@@ -772,6 +814,7 @@
       "tasks": "Ежедневные задачи · Mindkeep",
       "forest": "Ваш лес · Mindkeep",
       "notes": "Заметки · Mindkeep",
+      "calories": "Питание · Mindkeep",
       "monthPlan": "План на месяц · Mindkeep",
       "budget": "Бюджет · Mindkeep",
       "transactions": "Транзакции · Mindkeep",
@@ -781,6 +824,7 @@
       "blog": "Блог · Mindkeep",
       "guide": "Как пользоваться · Mindkeep",
       "privacy": "Политика конфиденциальности · Mindkeep",
+      "contact": "Контакты · Mindkeep",
       "notFound": "Страница не найдена · Mindkeep"
     }
   },
@@ -794,6 +838,45 @@
     "rights": "Все права защищены. Продукт создан и поддерживается студией.",
     "ownership": "Mindkeep является собственностью <studio />. © {{year}}",
     "lineCompact": "Mindkeep является собственностью WEISEZAHOY © {{year}}"
+  },
+  "contact": {
+    "eyebrow": "Студия",
+    "title": "Контакты",
+    "intro": "Выберите тему — письмо уйдёт в нужный ящик. Можно написать и напрямую.",
+    "partnershipTitle": "Сотрудничество",
+    "partnershipBody": "Партнёрства, пресса и совместные проекты со студией.",
+    "supportTitle": "Баги и вопросы",
+    "supportBody": "Если что-то сломалось, непонятно или нужен ответ человека.",
+    "fields": {
+      "topic": "О чём сообщение?",
+      "name": "Имя",
+      "email": "Email",
+      "message": "Сообщение"
+    },
+    "placeholders": {
+      "topic": "Выберите тему",
+      "message": "Напишите несколько строк, чтобы мы могли помочь."
+    },
+    "topics": {
+      "partnership": "Сотрудничество",
+      "bug": "Нашёл ошибку",
+      "question": "Есть вопрос"
+    },
+    "destination": "Это сообщение уйдёт на {{email}}",
+    "send": "Отправить",
+    "successTitle": "Сообщение отправлено",
+    "successBody": "Спасибо. Ответим на указанный email.",
+    "errors": {
+      "topicRequired": "Выберите тему",
+      "nameRequired": "Укажите имя",
+      "nameMax": "Имя слишком длинное",
+      "email": "Введите корректный email",
+      "messageMin": "Напишите хотя бы короткое сообщение",
+      "messageMax": "Сообщение слишком длинное",
+      "validation": "Проверьте форму и попробуйте снова",
+      "generic": "Не удалось отправить сообщение",
+      "unavailable": "Форма временно недоступна. Напишите напрямую на адрес выше."
+    }
   },
   "notFound": {
     "eyebrow": "Потерянный след",

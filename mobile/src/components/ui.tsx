@@ -1,23 +1,23 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors } from '../theme';
+import { useTheme } from '../features/theme/useTheme';
 
 type Tone = 'brand' | 'danger' | 'warn' | 'neutral';
 
-const toneBg: Record<Tone, string> = {
-  brand: 'rgba(142, 239, 180, 0.16)',
-  danger: 'rgba(248, 113, 113, 0.16)',
-  warn: 'rgba(251, 191, 36, 0.16)',
-  neutral: 'rgba(138, 163, 150, 0.16)',
-};
-
-const toneFg: Record<Tone, string> = {
-  brand: colors.brand,
-  danger: colors.danger,
-  warn: colors.warn,
-  neutral: colors.muted,
-};
-
 export function Badge({ tone, label }: { tone: Tone; label: string }) {
+  const { colors } = useTheme();
+  const toneBg: Record<Tone, string> = {
+    brand: `${colors.brand}29`,
+    danger: `${colors.danger}29`,
+    warn: `${colors.warn}29`,
+    neutral: `${colors.muted}29`,
+  };
+  const toneFg: Record<Tone, string> = {
+    brand: colors.brand,
+    danger: colors.danger,
+    warn: colors.warn,
+    neutral: colors.muted,
+  };
+
   return (
     <View style={[styles.badge, { backgroundColor: toneBg[tone] }]}>
       <Text style={[styles.badgeText, { color: toneFg[tone] }]}>{label}</Text>
@@ -40,6 +40,7 @@ export function AppButton({
   loading = false,
   variant = 'primary',
 }: ButtonProps) {
+  const { colors } = useTheme();
   const busy = disabled || loading;
   return (
     <Pressable
@@ -48,22 +49,26 @@ export function AppButton({
       onPress={onPress}
       style={[
         styles.button,
-        variant === 'primary' && styles.primary,
-        variant === 'secondary' && styles.secondary,
-        variant === 'ghost' && styles.ghost,
-        variant === 'danger' && styles.danger,
+        variant === 'primary' && { backgroundColor: colors.brand },
+        variant === 'secondary' && {
+          backgroundColor: colors.panel,
+          borderColor: colors.line,
+          borderWidth: 1,
+        },
+        variant === 'ghost' && { backgroundColor: 'transparent' },
+        variant === 'danger' && { backgroundColor: `${colors.danger}29` },
         busy && styles.disabled,
       ]}
     >
       {loading ? (
-        <ActivityIndicator color={variant === 'primary' ? '#07110d' : colors.ink} />
+        <ActivityIndicator color={variant === 'primary' ? colors.onBrand : colors.ink} />
       ) : (
         <Text
           style={[
             styles.buttonText,
-            variant === 'primary' && styles.primaryText,
-            variant === 'danger' && styles.dangerText,
-            (variant === 'secondary' || variant === 'ghost') && styles.secondaryText,
+            variant === 'primary' && { color: colors.onBrand },
+            variant === 'danger' && { color: colors.danger },
+            (variant === 'secondary' || variant === 'ghost') && { color: colors.ink },
           ]}
         >
           {label}
@@ -88,13 +93,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
   },
-  primary: { backgroundColor: colors.brand },
-  secondary: { backgroundColor: colors.panel, borderColor: colors.line, borderWidth: 1 },
-  ghost: { backgroundColor: 'transparent' },
-  danger: { backgroundColor: 'rgba(248, 113, 113, 0.16)' },
   disabled: { opacity: 0.6 },
   buttonText: { fontSize: 15, fontWeight: '700' },
-  primaryText: { color: '#07110d' },
-  secondaryText: { color: colors.ink },
-  dangerText: { color: colors.danger },
 });

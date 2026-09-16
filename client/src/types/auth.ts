@@ -10,6 +10,8 @@ export type User = {
 
 export type AuthResponse = {
   user: User;
+  /** Present for native clients; the website keeps using the httpOnly cookie. */
+  token?: string;
 };
 
 export type ApiErrorBody = {

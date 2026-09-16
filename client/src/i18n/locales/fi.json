@@ -29,12 +29,15 @@
     "admin": "Admin",
     "blog": "Blogi",
     "guide": "Käyttöohje",
+    "contact": "Yhteystiedot",
     "planning": "Suunnittelu",
     "learning": "Oppiminen",
     "repetition": "Kertaus",
     "finance": "Talous",
     "more": "Lisää",
     "tasks": "Päivittäiset tehtävät",
+    "calories": "Ravinto",
+    "nutrition": "Ravinto",
     "monthPlan": "Kuukausisuunnitelma",
     "notes": "Muistiinpanot",
     "budget": "Budjetti",
@@ -555,6 +558,40 @@
     "submitLogin": "Kirjaudu ylläpitäjänä",
     "backHome": "Takaisin huoltonäyttöön"
   },
+  "calories": {
+    "title": "Ravinto",
+    "subtitle": "Kalorit tulevat vain aterioista. Vesi on laseja, ilman kaloreita.",
+    "caloriesTitle": "Kalorit",
+    "calorieGoal": "Päivän kaloritavoite",
+    "waterGoal": "Laseja päivässä",
+    "glasses": "lasia",
+    "waterHint": "Merkitse lasit. Vesi ei lisää kaloreita.",
+    "waterProgress": "Lasit tänään",
+    "saveGoals": "Tallenna tavoitteet",
+    "statEaten": "Syöty",
+    "statGoal": "Tavoite",
+    "statLeft": "Jäljellä",
+    "statOver": "Yli tavoitteen",
+    "statWater": "Vesi",
+    "dayTitle": "{{date}}",
+    "progress": "Kalorit tänään",
+    "kcal": "kcal",
+    "overeating": "Ylitys",
+    "addMeal": "Lisää ateria",
+    "mealTitle": "Ateria",
+    "mealPlaceholder": "Lounas, välipala...",
+    "mealCalories": "kcal",
+    "saveMeal": "Lisää",
+    "emptyMeals": "Tälle päivälle ei ole vielä aterioita.",
+    "waterTitle": "Vesi",
+    "errors": {
+      "title": "Anna aterialle nimi",
+      "calories": "Anna kalorit",
+      "calorieGoal": "Tavoitteen tulee olla vähintään 500 kcal",
+      "waterGoal": "Aseta vähintään 1 lasi",
+      "unavailable": "Ravinto-API ei ole vielä käytössä. API pitää deployata kalori- ja vesitauluilla."
+    }
+  },
   "dashboard": {
     "welcome": "Hei, {{name}}",
     "subtitle": "Yhteenveto tehtävistä, kertauksista ja taloudesta — kaikki tärkeä yhdellä näytöllä.",
@@ -570,11 +607,16 @@
       "reviews": "Kertaukset",
       "spentToday": "Kulutettu tänään",
       "budgetLeft": "Budjettia jäljellä",
+      "caloriesToday": "Kalorit tänään",
+      "waterToday": "Vesi tänään",
       "of": "{{done}} / {{total}} valmiina",
       "ofPlanned": "{{done}} / {{total}} suunniteltu"
     },
     "upcomingTasks": "Seuraavat tehtävät",
     "allTasks": "Kaikki tehtävät",
+    "fuelTitle": "Ravinto",
+    "allFuel": "Avaa ravinto",
+    "noMealsToday": "Tänään ei ole vielä aterioita.",
     "weekTitle": "Valmistunut tällä viikolla",
     "weekTabs": {
       "tasks": "Tehtävät",
@@ -772,6 +814,7 @@
       "tasks": "Päivittäiset tehtävät · Mindkeep",
       "forest": "Metsäsi · Mindkeep",
       "notes": "Muistiinpanot · Mindkeep",
+      "calories": "Ravinto · Mindkeep",
       "monthPlan": "Kuukausisuunnitelma · Mindkeep",
       "budget": "Budjetti · Mindkeep",
       "transactions": "Tapahtumat · Mindkeep",
@@ -781,6 +824,7 @@
       "blog": "Blogi · Mindkeep",
       "guide": "Käyttöohje · Mindkeep",
       "privacy": "Tietosuojaseloste · Mindkeep",
+      "contact": "Yhteystiedot · Mindkeep",
       "notFound": "Sivua ei löytynyt · Mindkeep"
     }
   },
@@ -794,6 +838,45 @@
     "rights": "Kaikki oikeudet pidätetään. Tuote on studion suunnittelema ja ylläpitämä.",
     "ownership": "Mindkeep on yhtiön <studio /> omaisuutta. © {{year}}",
     "lineCompact": "Mindkeep on WEISEZAHOYn omaisuutta © {{year}}"
+  },
+  "contact": {
+    "eyebrow": "Studio",
+    "title": "Yhteystiedot",
+    "intro": "Valitse aihe, niin viesti menee oikeaan postilaatikkoon. Voit myös kirjoittaa suoraan.",
+    "partnershipTitle": "Yhteistyö",
+    "partnershipBody": "Kumppanuudet, media ja yhteiset projektit studion kanssa.",
+    "supportTitle": "Bugit ja kysymykset",
+    "supportBody": "Jos jokin on rikki, epäselvää tai tarvitset ihmisen vastauksen.",
+    "fields": {
+      "topic": "Mistä on kyse?",
+      "name": "Nimi",
+      "email": "Sähköposti",
+      "message": "Viesti"
+    },
+    "placeholders": {
+      "topic": "Valitse aihe",
+      "message": "Kirjoita muutama rivi, jotta voimme auttaa."
+    },
+    "topics": {
+      "partnership": "Yhteistyö",
+      "bug": "Löysin virheen",
+      "question": "Minulla on kysymys"
+    },
+    "destination": "Tämä viesti lähetetään osoitteeseen {{email}}",
+    "send": "Lähetä",
+    "successTitle": "Viesti lähetetty",
+    "successBody": "Kiitos. Vastaamme jättämääsi sähköpostiin.",
+    "errors": {
+      "topicRequired": "Valitse aihe",
+      "nameRequired": "Lisää nimesi",
+      "nameMax": "Nimi on liian pitkä",
+      "email": "Anna kelvollinen sähköposti",
+      "messageMin": "Kirjoita edes lyhyt viesti",
+      "messageMax": "Viesti on liian pitkä",
+      "validation": "Tarkista lomake ja yritä uudelleen",
+      "generic": "Viestiä ei voitu lähettää",
+      "unavailable": "Lomake ei ole juuri nyt käytössä. Kirjoita suoraan yllä olevaan osoitteeseen."
+    }
   },
   "notFound": {
     "eyebrow": "Kadonneet jäljet",

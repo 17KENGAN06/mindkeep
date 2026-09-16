@@ -13,6 +13,8 @@ const routeTitleKeys: Record<string, string> = {
   '/calendar': 'seo.titles.calendar',
   '/month-plan': 'seo.titles.monthPlan',
   '/notes': 'seo.titles.notes',
+  '/nutrition': 'seo.titles.calories',
+  '/calories': 'seo.titles.calories',
   '/materials': 'seo.titles.materials',
   '/categories': 'seo.titles.categories',
   '/finance': 'seo.titles.budget',
@@ -24,6 +26,7 @@ const routeTitleKeys: Record<string, string> = {
   '/blog': 'seo.titles.blog',
   '/guide': 'seo.titles.guide',
   '/privacy': 'seo.titles.privacy',
+  '/contact': 'seo.titles.contact',
 };
 
 export function DocumentTitle() {

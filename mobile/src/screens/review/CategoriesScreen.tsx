@@ -18,11 +18,12 @@ import {
   useDeleteCategory,
   useUpdateCategory,
 } from '../../features/categories/useCategories';
-import { colors } from '../../theme';
+import { useTheme } from '../../features/theme/useTheme';
 import type { Category } from '../../types/category';
 
 export function CategoriesScreen() {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const categoriesQuery = useCategories();
   const createCategory = useCreateCategory();
   const updateCategory = useUpdateCategory();
@@ -73,18 +74,26 @@ export function CategoriesScreen() {
   const categories = categoriesQuery.data ?? [];
 
   return (
-    <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView
+      style={[styles.root, { backgroundColor: colors.bg }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <Text style={styles.subtitle}>{t('categories.subtitle')}</Text>
-        <Text style={styles.label}>{editing ? t('categories.editTitle') : t('categories.createTitle')}</Text>
+        <Text style={[styles.subtitle, { color: colors.muted }]}>{t('categories.subtitle')}</Text>
+        <Text style={[styles.label, { color: colors.ink }]}>
+          {editing ? t('categories.editTitle') : t('categories.createTitle')}
+        </Text>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
           value={name}
           onChangeText={setName}
           placeholder={t('categories.name')}
           placeholderTextColor={colors.muted}
         />
-        {error ? <Text style={styles.error}>{error}</Text> : null}
+        {error ? <Text style={{ color: colors.danger }}>{error}</Text> : null}
         <View style={styles.row}>
           {editing ? (
             <AppButton
@@ -104,15 +113,20 @@ export function CategoriesScreen() {
           />
         </View>
 
-        {categoriesQuery.isError ? <Text style={styles.error}>{t('auth.errors.generic')}</Text> : null}
+        {categoriesQuery.isError ? (
+          <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
+        ) : null}
         {categories.length === 0 ? (
-          <Text style={styles.empty}>{t('categories.emptyDescription')}</Text>
+          <Text style={[styles.empty, { color: colors.muted }]}>{t('categories.emptyDescription')}</Text>
         ) : (
           categories.map((category) => (
-            <View key={category.id} style={styles.card}>
+            <View
+              key={category.id}
+              style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
+            >
               <View style={styles.cardText}>
-                <Text style={styles.cardTitle}>{category.name}</Text>
-                <Text style={styles.meta}>
+                <Text style={[styles.cardTitle, { color: colors.ink }]}>{category.name}</Text>
+                <Text style={[styles.meta, { color: colors.muted }]}>
                   {t('categories.materialsCount', { count: category._count.materials })}
                 </Text>
               </View>
@@ -137,32 +151,26 @@ export function CategoriesScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { backgroundColor: colors.bg, flex: 1 },
+  root: { flex: 1 },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { color: colors.muted, fontSize: 14 },
-  label: { color: colors.ink, fontSize: 15, fontWeight: '700' },
+  subtitle: { fontSize: 14 },
+  label: { fontSize: 15, fontWeight: '700' },
   input: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 14,
     borderWidth: 1,
-    color: colors.ink,
     fontSize: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  error: { color: colors.danger },
-  empty: { color: colors.muted, fontSize: 14 },
+  empty: { fontSize: 14 },
   card: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     gap: 10,
     padding: 14,
   },
   cardText: { gap: 4 },
-  cardTitle: { color: colors.ink, fontSize: 16, fontWeight: '700' },
-  meta: { color: colors.muted, fontSize: 13 },
+  cardTitle: { fontSize: 16, fontWeight: '700' },
+  meta: { fontSize: 13 },
 });

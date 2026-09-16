@@ -29,12 +29,32 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   // Used by server CSRF middleware when Origin is absent.
   headers.set('X-Requested-With', 'learning-reminder');
 
-  const response = await fetch(`${env.apiUrl}${path}`, {
-    ...options,
-    headers,
-    credentials: 'include',
-    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
-  });
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 12_000);
+  if (options.signal) {
+    options.signal.addEventListener('abort', () => controller.abort(), { once: true });
+  }
+
+  let response: Response;
+  try {
+    response = await fetch(`${env.apiUrl}${path}`, {
+      ...options,
+      headers,
+      credentials: 'include',
+      signal: controller.signal,
+      body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+    });
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new ApiError(408, {
+        code: 'TIMEOUT',
+        message: 'Request timed out',
+      });
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+  }
 
   if (response.status === 204) {
     return undefined as T;
@@ -57,6 +77,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 export const apiClient = {
   get: <T>(path: string) => request<T>(path),
   post: <T>(path: string, body?: unknown) => request<T>(path, { method: 'POST', body }),
+  put: <T>(path: string, body?: unknown) => request<T>(path, { method: 'PUT', body }),
   patch: <T>(path: string, body?: unknown) => request<T>(path, { method: 'PATCH', body }),
   delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),
 };

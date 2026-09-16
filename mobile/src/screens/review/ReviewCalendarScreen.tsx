@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../../components/MonthGrid';
 import { AppButton, Badge } from '../../components/ui';
 import { useReminderCalendar } from '../../features/reminders/useCalendar';
+import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
-import { colors } from '../../theme';
 import { formatDate, todayDateKey } from '../../utils/date';
 
 function statusTone(status: string) {
@@ -20,6 +20,7 @@ function statusTone(status: string) {
 
 export function ReviewCalendarScreen() {
   const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();
   const today = todayDateKey();
@@ -38,7 +39,7 @@ export function ReviewCalendarScreen() {
 
   if (calendarQuery.isLoading && !calendarQuery.data) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
         <ActivityIndicator color={colors.brand} size="large" />
       </View>
     );
@@ -46,16 +47,16 @@ export function ReviewCalendarScreen() {
 
   if (calendarQuery.isError || !calendarQuery.data) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.error}>{t('auth.errors.generic')}</Text>
+      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
+        <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
       </View>
     );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
-      <Text style={styles.subtitle}>{t('calendar.subtitle')}</Text>
-      <Text style={styles.timezone}>{calendarQuery.data.timezone}</Text>
+      <Text style={[styles.subtitle, { color: colors.muted }]}>{t('calendar.subtitle')}</Text>
+      <Text style={[styles.timezone, { color: colors.muted }]}>{calendarQuery.data.timezone}</Text>
 
       <MonthGrid
         year={year}
@@ -69,11 +70,11 @@ export function ReviewCalendarScreen() {
         onSelectDate={setSelectedDate}
       />
 
-      <Text style={styles.dayTitle}>
+      <Text style={[styles.dayTitle, { color: colors.ink }]}>
         {selectedDate ? t('calendar.dayTitle', { date: formatDate(selectedDate, language) }) : t('calendar.pickDay')}
       </Text>
       {selectedSummary ? (
-        <Text style={styles.counts}>
+        <Text style={[styles.counts, { color: colors.muted }]}>
           {t('calendar.dayCounts', {
             total: selectedSummary.total,
             overdue: selectedSummary.overdue,
@@ -84,14 +85,17 @@ export function ReviewCalendarScreen() {
       ) : null}
 
       {selectedReminders.length === 0 ? (
-        <Text style={styles.empty}>{t('calendar.emptyDayDescription')}</Text>
+        <Text style={[styles.empty, { color: colors.muted }]}>{t('calendar.emptyDayDescription')}</Text>
       ) : (
         selectedReminders.map((reminder) => (
-          <View key={reminder.id} style={styles.card}>
+          <View
+            key={reminder.id}
+            style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
+          >
             <View style={styles.cardHead}>
               <View style={styles.cardText}>
-                <Text style={styles.cardTitle}>{reminder.material.title}</Text>
-                <Text style={styles.meta}>
+                <Text style={[styles.cardTitle, { color: colors.ink }]}>{reminder.material.title}</Text>
+                <Text style={[styles.meta, { color: colors.muted }]}>
                   {reminder.material.category?.name ?? t('materials.fields.noCategory')} · #
                   {reminder.sequenceNumber} · {t(`materials.intervals.${reminder.intervalType}`)}
                 </Text>
@@ -116,24 +120,21 @@ export function ReviewCalendarScreen() {
 }
 
 const styles = StyleSheet.create({
-  centered: { alignItems: 'center', backgroundColor: colors.bg, flex: 1, justifyContent: 'center' },
+  centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { color: colors.muted, fontSize: 14 },
-  timezone: { color: colors.muted, fontSize: 12 },
-  dayTitle: { color: colors.ink, fontSize: 18, fontWeight: '700', marginTop: 8 },
-  counts: { color: colors.muted, fontSize: 13 },
-  empty: { color: colors.muted, fontSize: 14, marginTop: 8 },
-  error: { color: colors.danger },
+  subtitle: { fontSize: 14 },
+  timezone: { fontSize: 12 },
+  dayTitle: { fontSize: 18, fontWeight: '700', marginTop: 8 },
+  counts: { fontSize: 13 },
+  empty: { fontSize: 14, marginTop: 8 },
   card: {
-    backgroundColor: colors.panel,
-    borderColor: colors.line,
     borderRadius: 20,
     borderWidth: 1,
     padding: 14,
   },
   cardHead: { flexDirection: 'row', gap: 8, justifyContent: 'space-between' },
   cardText: { flex: 1 },
-  cardTitle: { color: colors.ink, fontSize: 16, fontWeight: '700' },
-  meta: { color: colors.muted, fontSize: 13, marginTop: 4 },
+  cardTitle: { fontSize: 16, fontWeight: '700' },
+  meta: { fontSize: 13, marginTop: 4 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 },
 });
