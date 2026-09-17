@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+  <g transform="translate(160 160) scale(1.375)">
+    <path
+      d="M256 112c0 0-96 64-96 176 0 64 41.6 112 96 112s96-48 96-112C352 176 256 112 256 112Z"
+      fill="#ffffff"
+    />
+    <circle cx="368" cy="160" r="18" fill="#ffffff"/>
+    <circle cx="400" cy="256" r="18" fill="#ffffff"/>
+    <circle cx="368" cy="352" r="18" fill="#ffffff"/>
+  </g>
+</svg>

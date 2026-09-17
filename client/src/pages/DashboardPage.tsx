@@ -2,11 +2,8 @@
   BookOpen,
   Check,
   CheckCircle2,
-  Droplets,
   GraduationCap,
   PiggyBank,
-  UtensilsCrossed,
-  Wallet,
 } from 'lucide-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -201,16 +198,11 @@ export function DashboardPage() {
   const reviewsPercent = reviewsPlanned > 0 ? (stats.completedReviews / reviewsPlanned) * 100 : 0;
 
   const finance = financeQuery.data;
-  const spentToday = (finance?.operations ?? [])
-    .filter((op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === today)
-    .reduce((sum, op) => sum + op.amount, 0);
   const monthExpense = finance?.totals.expense ?? 0;
   const monthIncome = finance?.totals.income ?? 0;
   const opening = finance?.totals.openingBalance ?? 0;
   const budgetTotal = Math.max(opening + monthIncome, monthExpense, 1);
   const budgetLeft = Math.max(budgetTotal - monthExpense, 0);
-  const dayOfMonth = new Date().getDate();
-  const softDailyLimit = Math.max(monthExpense / Math.max(dayOfMonth, 1), spentToday, 1);
 
   const categorySegments = (finance?.byCategory ?? [])
     .filter((item) => item.expense > 0)
@@ -283,28 +275,10 @@ export function DashboardPage() {
           percent={reviewsPercent}
         />
         <ProgressCard
-          icon={<Wallet className="h-5 w-5" aria-hidden />}
-          title={t('dashboard.cards.spentToday')}
-          valueText={`${formatMoney(spentToday, language)} / ${formatMoney(softDailyLimit, language)}`}
-          percent={(spentToday / softDailyLimit) * 100}
-        />
-        <ProgressCard
           icon={<PiggyBank className="h-5 w-5" aria-hidden />}
           title={t('dashboard.cards.budgetLeft')}
           valueText={`${formatMoney(budgetLeft, language)} / ${formatMoney(budgetTotal, language)}`}
           percent={(budgetLeft / budgetTotal) * 100}
-        />
-        <ProgressCard
-          icon={<UtensilsCrossed className="h-5 w-5" aria-hidden />}
-          title={t('dashboard.cards.caloriesToday')}
-          valueText={`${todayCalories} / ${calorieGoal}`}
-          percent={(todayCalories / Math.max(calorieGoal, 1)) * 100}
-        />
-        <ProgressCard
-          icon={<Droplets className="h-5 w-5" aria-hidden />}
-          title={t('dashboard.cards.waterToday')}
-          valueText={`${todayWater} / ${waterGoal} ${t('calories.glasses')}`}
-          percent={(todayWater / Math.max(waterGoal, 1)) * 100}
         />
       </section>
 

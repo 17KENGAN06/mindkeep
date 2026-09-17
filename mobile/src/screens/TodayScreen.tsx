@@ -13,6 +13,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { WaterGlasses } from '../components/WaterGlasses';
+import { AppIcon } from '../components/AppIcon';
+import { BrandMark } from '../components/BrandMark';
 import { useAuth } from '../features/auth/useAuth';
 import { currentPeriodDefaults, formatMoney } from '../features/finance/financeUtils';
 import { useFinanceSummary } from '../features/finance/useFinance';
@@ -214,8 +216,13 @@ export function TodayScreen() {
           />
         }
       >
-        <Text style={[styles.hello, { color: colors.ink }]}>{t('today.hello', { name: user?.name ?? '' })}</Text>
-        <Text style={[styles.tagline, { color: colors.muted }]}>{t('dashboard.tagline')}</Text>
+        <View style={styles.helloRow}>
+          <BrandMark size={44} />
+          <View style={styles.helloCopy}>
+            <Text style={[styles.hello, { color: colors.ink }]}>{t('today.hello', { name: user?.name ?? '' })}</Text>
+            <Text style={[styles.tagline, { color: colors.muted }]}>{t('dashboard.tagline')}</Text>
+          </View>
+        </View>
         {error ? <Text style={[styles.error, { color: colors.danger }]}>{t('today.error')}</Text> : null}
 
         <View style={styles.grid}>
@@ -288,9 +295,7 @@ export function TodayScreen() {
                     task.completed && { backgroundColor: colors.brand, borderColor: colors.brand },
                   ]}
                 >
-                  {task.completed ? (
-                    <Text style={[styles.checkMark, { color: colors.onBrand }]}>✓</Text>
-                  ) : null}
+                  {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
                 </View>
                 <Text
                   style={[
@@ -525,6 +530,8 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: { padding: 20, paddingBottom: 40 },
+  helloRow: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 4 },
+  helloCopy: { flex: 1 },
   hello: { fontSize: 28, fontWeight: '700' },
   tagline: { fontSize: 14, marginTop: 6, marginBottom: 16 },
   error: { marginBottom: 12 },

@@ -17,6 +17,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
+import { AppIcon } from '../components/AppIcon';
 import { AppButton } from '../components/ui';
 import { ForestCard } from '../components/forest/ForestCard';
 import {
@@ -210,6 +211,7 @@ export function TasksScreen() {
             onPress={() => navigation.navigate('MonthPlan')}
             style={[styles.planLink, { backgroundColor: colors.panel, borderColor: colors.line }]}
           >
+            <AppIcon name="calendar-outline" color={colors.brand} size={18} />
             <Text style={[styles.planLinkText, { color: colors.brand }]}>{t('tasks.planTitle')}</Text>
           </Pressable>
 
@@ -264,9 +266,7 @@ export function TasksScreen() {
                       task.completed && { backgroundColor: colors.brand, borderColor: colors.brand },
                     ]}
                   >
-                    {task.completed ? (
-                      <Text style={[styles.checkMark, { color: colors.onBrand }]}>✓</Text>
-                    ) : null}
+                    {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
                   </View>
                   <Text
                     style={[
@@ -347,9 +347,12 @@ const styles = StyleSheet.create({
   title: { fontSize: 28, fontWeight: '700' },
   subtitle: { fontSize: 14 },
   planLink: {
+    alignItems: 'center',
     alignSelf: 'flex-start',
     borderRadius: 12,
     borderWidth: 1,
+    flexDirection: 'row',
+    gap: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },

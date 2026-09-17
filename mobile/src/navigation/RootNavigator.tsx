@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useTheme } from '../features/theme/useTheme';
+import { AppIcon, type AppIconName } from '../components/AppIcon';
+import { BrandMark } from '../components/BrandMark';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { FuelScreen } from '../screens/FuelScreen';
@@ -18,6 +20,14 @@ import type { AppTabParamList, AuthStackParamList } from './types';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const Tabs = createBottomTabNavigator<AppTabParamList>();
+
+const TAB_ICONS: Record<keyof AppTabParamList, { idle: AppIconName; active: AppIconName }> = {
+  Today: { idle: 'today-outline', active: 'today' },
+  Review: { idle: 'sync-outline', active: 'sync' },
+  Tasks: { idle: 'checkbox-outline', active: 'checkbox' },
+  Fuel: { idle: 'water-outline', active: 'water' },
+  More: { idle: 'grid-outline', active: 'grid' },
+};
 
 function AuthNavigator() {
   return (
@@ -43,15 +53,21 @@ function AppTabs() {
 
   return (
     <Tabs.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: colors.brand,
-        tabBarInactiveTintColor: colors.muted,
-        tabBarBadgeStyle: { backgroundColor: colors.danger, color: '#fff' },
-        tabBarStyle: {
-          backgroundColor: colors.panel,
-          borderTopColor: colors.line,
-        },
+      screenOptions={({ route }) => {
+        const icons = TAB_ICONS[route.name];
+        return {
+          headerShown: false,
+          tabBarActiveTintColor: colors.brand,
+          tabBarInactiveTintColor: colors.muted,
+          tabBarBadgeStyle: { backgroundColor: colors.danger, color: '#fff' },
+          tabBarStyle: {
+            backgroundColor: colors.panel,
+            borderTopColor: colors.line,
+          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <AppIcon name={focused ? icons.active : icons.idle} color={color} size={size} />
+          ),
+        };
       }}
     >
       <Tabs.Screen
@@ -92,7 +108,8 @@ export function RootNavigator() {
   if (isLoading) {
     return (
       <View style={[styles.boot, { backgroundColor: colors.bg }]}>
-        <ActivityIndicator color={colors.brand} size="large" />
+        <BrandMark size={72} />
+        <ActivityIndicator color={colors.brand} size="large" style={styles.bootSpinner} />
       </View>
     );
   }
@@ -109,5 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
+    gap: 20,
   },
+  bootSpinner: { marginTop: 4 },
 });

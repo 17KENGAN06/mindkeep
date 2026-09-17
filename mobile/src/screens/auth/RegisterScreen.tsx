@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../../components/LanguageSwitcher';
+import { BrandMark } from '../../components/BrandMark';
 import { GoogleSignInButton } from '../../components/GoogleSignInButton';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
@@ -82,6 +83,7 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
     >
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <LanguageSwitcher />
+        <BrandMark size={64} style={styles.mark} />
         <Text style={[styles.brand, { color: colors.brand }]}>{t('common.appName')}</Text>
         <Text style={[styles.title, { color: colors.ink }]}>{t('auth.registerTitle')}</Text>
         <Text style={[styles.subtitle, { color: colors.muted }]}>{t('auth.registerSubtitle')}</Text>
@@ -170,7 +172,8 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   flex: { flex: 1 },
   content: { flexGrow: 1, justifyContent: 'center', padding: 24, paddingVertical: 48 },
-  brand: { fontSize: 14, fontWeight: '600', marginBottom: 12, marginTop: 20 },
+  mark: { marginBottom: 16, marginTop: 12 },
+  brand: { fontSize: 14, fontWeight: '600', marginBottom: 12 },
   title: { fontSize: 28, fontWeight: '700' },
   subtitle: { fontSize: 15, marginTop: 8, marginBottom: 28 },
   label: { fontSize: 13, marginBottom: 6 },

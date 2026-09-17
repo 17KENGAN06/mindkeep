@@ -8,6 +8,7 @@ import {
   requestGoogleIdToken,
 } from '../features/auth/googleSignIn';
 import { useAuth } from '../features/auth/useAuth';
+import { AppIcon } from '../components/AppIcon';
 import { useTheme } from '../features/theme/useTheme';
 
 type GoogleSignInButtonProps = {
@@ -57,7 +58,10 @@ export function GoogleSignInButton({ disabled = false, onError }: GoogleSignInBu
         {busy ? (
           <ActivityIndicator color={colors.ink} />
         ) : (
-          <Text style={[styles.buttonText, { color: colors.ink }]}>{t('auth.continueWithGoogle')}</Text>
+          <View style={styles.buttonInner}>
+            <AppIcon name="logo-google" color={colors.ink} size={18} />
+            <Text style={[styles.buttonText, { color: colors.ink }]}>{t('auth.continueWithGoogle')}</Text>
+          </View>
         )}
       </Pressable>
     </View>
@@ -83,6 +87,11 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     paddingVertical: 14,
+  },
+  buttonInner: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10,
   },
   buttonDisabled: { opacity: 0.7 },
   buttonText: { fontSize: 16, fontWeight: '700' },

@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, View } from 'react-native';
+import { AppIcon } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
 
 type WaterGlassesProps = {
@@ -31,11 +32,10 @@ export function WaterGlasses({ glasses, goal, disabled = false, onChange }: Wate
               disabled && styles.slotDisabled,
             ]}
           >
-            <View
-              style={[
-                styles.drop,
-                filled ? styles.dropFilled : { backgroundColor: colors.muted, opacity: 0.35 },
-              ]}
+            <AppIcon
+              name={filled ? 'water' : 'water-outline'}
+              color={filled ? '#38bdf8' : colors.muted}
+              size={20}
             />
           </Pressable>
         );
@@ -56,6 +56,4 @@ const styles = StyleSheet.create({
   },
   slotFilled: { backgroundColor: 'rgba(56, 189, 248, 0.18)', borderColor: 'rgba(56, 189, 248, 0.45)' },
   slotDisabled: { opacity: 0.5 },
-  drop: { borderRadius: 8, height: 16, width: 12 },
-  dropFilled: { backgroundColor: '#38bdf8' },
 });

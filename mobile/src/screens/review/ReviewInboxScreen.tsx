@@ -14,6 +14,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { ReminderCard } from '../../components/ReminderCard';
+import { AppIcon } from '../../components/AppIcon';
 import {
   useCompleteReminder,
   useOverdueReminders,
@@ -161,28 +162,27 @@ export function ReviewInboxScreen() {
         <Text style={[styles.open, { color: colors.brand }]}>{t('review.openCount', { count: totalOpen })}</Text>
 
         <View style={styles.shortcuts}>
-          <Pressable
-            onPress={() => navigation.navigate('Materials')}
-            style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
-          >
-            <Text style={[styles.chipText, { color: colors.ink }]}>{t('materials.title')}</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => navigation.navigate('Categories')}
-            style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
-          >
-            <Text style={[styles.chipText, { color: colors.ink }]}>{t('categories.title')}</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => navigation.navigate('ReviewCalendar')}
-            style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
-          >
-            <Text style={[styles.chipText, { color: colors.ink }]}>{t('calendar.title')}</Text>
-          </Pressable>
+          {(
+            [
+              { screen: 'Materials' as const, icon: 'library-outline' as const, label: t('materials.title') },
+              { screen: 'Categories' as const, icon: 'pricetags-outline' as const, label: t('categories.title') },
+              { screen: 'ReviewCalendar' as const, icon: 'calendar-outline' as const, label: t('calendar.title') },
+            ] as const
+          ).map((item) => (
+            <Pressable
+              key={item.screen}
+              onPress={() => navigation.navigate(item.screen)}
+              style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
+            >
+              <AppIcon name={item.icon} color={colors.brand} size={16} />
+              <Text style={[styles.chipText, { color: colors.ink }]}>{item.label}</Text>
+            </Pressable>
+          ))}
           <Pressable
             onPress={() => navigation.navigate('MaterialCreate')}
             style={[styles.chip, { backgroundColor: colors.brand, borderColor: colors.brand }]}
           >
+            <AppIcon name="add" color={colors.onBrand} size={16} />
             <Text style={[styles.chipText, { color: colors.onBrand }]}>{t('materials.create')}</Text>
           </Pressable>
         </View>
@@ -248,8 +248,11 @@ const styles = StyleSheet.create({
   open: { fontSize: 14, fontWeight: '600', marginTop: 8 },
   shortcuts: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginVertical: 8 },
   chip: {
+    alignItems: 'center',
     borderRadius: 999,
     borderWidth: 1,
+    flexDirection: 'row',
+    gap: 6,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
