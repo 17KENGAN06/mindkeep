@@ -38,6 +38,7 @@
     "tasks": "Щоденні задачі",
     "calories": "Харчування",
     "nutrition": "Харчування",
+    "rhythm": "Звички",
     "monthPlan": "План на місяць",
     "notes": "Нотатки",
     "budget": "Бюджет",
@@ -630,6 +631,8 @@
       "budgetLeft": "Залишилось у бюджеті",
       "caloriesToday": "Калорії сьогодні",
       "waterToday": "Вода сьогодні",
+      "rhythmToday": "Звички сьогодні",
+      "rhythmEmpty": "Додайте звичку",
       "of": "{{done}} з {{total}} виконано",
       "ofPlanned": "{{done}} з {{total}} заплановано"
     },
@@ -821,6 +824,28 @@
       "completed": "Виконано"
     }
   },
+  "rhythm": {
+    "title": "Звички",
+    "subtitle": "Звичка закріплюється за {{days}} днів. Познач клітинку — як у таблиці.",
+    "prevMonth": "Попередній місяць",
+    "nextMonth": "Наступний місяць",
+    "statHabits": "Звички",
+    "statToday": "Сьогодні",
+    "statMonth": "Місяць",
+    "statFormed": "Закріплено",
+    "addLabel": "Нова звичка",
+    "addPlaceholder": "Наприклад: вода після пробудження",
+    "addHint": "Один рядок — одна звичка. Цикл — 30 днів.",
+    "add": "Додати",
+    "empty": "Поки немає звичок. Додай перший рядок — і таблиця почне заповнюватися.",
+    "habit": "Звичка",
+    "monthCol": "Місяць",
+    "formed": "30 днів",
+    "streak": "серія {{count}}",
+    "errors": {
+      "title": "Напиши назву звички"
+    }
+  },
   "seo": {
     "titles": {
       "home": "Mindkeep — задачі, повторення та фінанси",
@@ -837,6 +862,7 @@
       "forest": "Ваш ліс · Mindkeep",
       "notes": "Нотатки · Mindkeep",
       "calories": "Харчування · Mindkeep",
+      "rhythm": "Звички · Mindkeep",
       "monthPlan": "План на місяць · Mindkeep",
       "budget": "Бюджет · Mindkeep",
       "transactions": "Транзакції · Mindkeep",
@@ -855,6 +881,9 @@
     "tagline": "Де день знаходить порядок — а знання й гроші лишаються під контролем.",
     "about": "Mindkeep обʼєднує щоденні задачі, особисті фінанси в євро та повторення знань за ритмом 3 · 7 · 30 — спокійно і без зайвого шуму.",
     "linksLabel": "Навігація",
+    "follow": "Ми в Instagram",
+    "instagram": "Instagram",
+    "instagramHandle": "@mindkeep.cloud",
     "visitStudio": "Сайт студії",
     "privacy": "Конфіденційність",
     "rights": "Усі права захищено. Продукт створено й підтримується студією.",

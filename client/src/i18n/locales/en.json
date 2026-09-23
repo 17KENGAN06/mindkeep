@@ -38,6 +38,7 @@
     "tasks": "Daily tasks",
     "calories": "Nutrition",
     "nutrition": "Nutrition",
+    "rhythm": "Habits",
     "monthPlan": "Month plan",
     "notes": "Notes",
     "budget": "Budget",
@@ -630,6 +631,8 @@
       "budgetLeft": "Left in budget",
       "caloriesToday": "Calories today",
       "waterToday": "Water today",
+      "rhythmToday": "Habits today",
+      "rhythmEmpty": "Add a habit",
       "of": "{{done}} of {{total}} done",
       "ofPlanned": "{{done}} of {{total}} planned"
     },
@@ -821,6 +824,28 @@
       "completed": "Completed"
     }
   },
+  "rhythm": {
+    "title": "Habits",
+    "subtitle": "A habit takes {{days}} days to settle. Mark a cell — like a spreadsheet.",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "statHabits": "Habits",
+    "statToday": "Today",
+    "statMonth": "Month",
+    "statFormed": "Settled",
+    "addLabel": "New habit",
+    "addPlaceholder": "e.g. water after waking up",
+    "addHint": "One row is one habit. The cycle is 30 days.",
+    "add": "Add",
+    "empty": "No habits yet. Add the first row and the grid will start filling in.",
+    "habit": "Habit",
+    "monthCol": "Month",
+    "formed": "30 days",
+    "streak": "{{count}}-day streak",
+    "errors": {
+      "title": "Enter a habit name"
+    }
+  },
   "seo": {
     "titles": {
       "home": "Mindkeep — tasks, review, and finance",
@@ -837,6 +862,7 @@
       "forest": "Your Forest · Mindkeep",
       "notes": "Notes · Mindkeep",
       "calories": "Nutrition · Mindkeep",
+      "rhythm": "Habits · Mindkeep",
       "monthPlan": "Month plan · Mindkeep",
       "budget": "Budget · Mindkeep",
       "transactions": "Transactions · Mindkeep",
@@ -855,6 +881,9 @@
     "tagline": "Where the day finds order — and knowledge and money stay in view.",
     "about": "Mindkeep brings together daily tasks, personal finance in euros, and knowledge review on a 3 · 7 · 30 rhythm — calmly, without extra noise.",
     "linksLabel": "Navigate",
+    "follow": "On Instagram",
+    "instagram": "Instagram",
+    "instagramHandle": "@mindkeep.cloud",
     "visitStudio": "Studio site",
     "privacy": "Privacy",
     "rights": "All rights reserved. Designed and maintained by the studio.",

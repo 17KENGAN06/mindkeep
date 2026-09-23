@@ -28,6 +28,14 @@ export function formatMonthShort(year: number, month: number, language: AppLangu
   return format(new Date(year, month - 1, 1), 'LLL', { locale: locales[language] ?? enUS });
 }
 
+export function formatMonthTitle(year: number, month: number, language: AppLanguage = 'en'): string {
+  return format(new Date(year, month - 1, 1), 'LLLL yyyy', { locale: locales[language] ?? enUS });
+}
+
+export function weekdayShort(year: number, month: number, day: number, language: AppLanguage = 'en'): string {
+  return format(new Date(year, month - 1, day), 'EEEEEE', { locale: locales[language] ?? enUS });
+}
+
 export function toDateInputValue(value?: string | Date): string {
   const date = value ? (typeof value === 'string' ? parseISO(value) : value) : new Date();
   return format(date, 'yyyy-MM-dd');

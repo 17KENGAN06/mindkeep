@@ -4,6 +4,7 @@
   CheckCircle2,
   GraduationCap,
   PiggyBank,
+  Repeat,
 } from 'lucide-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -17,6 +18,7 @@ import { useAuth } from '@/features/auth/useAuth';
 import { currentPeriodDefaults, formatMoney, formatSignedMoney } from '@/features/finance/financeUtils';
 import { useFinanceSummary } from '@/features/finance/useFinance';
 import { useNutritionPeriod, useSetWater } from '@/features/nutrition/useNutrition';
+import { useRhythmPeriod } from '@/features/rhythm/useRhythm';
 import {
   useActivityStatistics,
   useDashboardStatistics,
@@ -148,6 +150,7 @@ export function DashboardPage() {
     month: period.month,
   });
   const nutritionQuery = useNutritionPeriod(period.year, period.month);
+  const rhythmQuery = useRhythmPeriod(period.year, period.month);
   const setWater = useSetWater();
   const updateTask = useUpdateDailyTask();
 
@@ -205,6 +208,11 @@ export function DashboardPage() {
   const budgetTotal = Math.max(opening + monthIncome, monthExpense, 1);
   const budgetLeft = Math.max(budgetTotal - monthExpense, 0);
 
+  const rhythmHabits = rhythmQuery.data?.habits ?? [];
+  const rhythmToday = rhythmQuery.data?.today ?? today;
+  const rhythmDone = rhythmHabits.filter((habit) => habit.checks.includes(rhythmToday)).length;
+  const rhythmTotal = rhythmHabits.length;
+
   const categorySegments = (finance?.byCategory ?? [])
     .filter((item) => item.expense > 0)
     .slice(0, 5)
@@ -259,7 +267,7 @@ export function DashboardPage() {
         <p className="max-w-sm text-sm text-muted italic lg:text-right">{t('dashboard.quote')}</p>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <ProgressCard
           icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
           title={t('dashboard.cards.tasksToday')}
@@ -280,6 +288,16 @@ export function DashboardPage() {
           title={t('dashboard.cards.budgetLeft')}
           valueText={`${formatMoney(budgetLeft, language)} / ${formatMoney(budgetTotal, language)}`}
           percent={(budgetLeft / budgetTotal) * 100}
+        />
+        <ProgressCard
+          icon={<Repeat className="h-5 w-5" aria-hidden />}
+          title={t('dashboard.cards.rhythmToday')}
+          valueText={
+            rhythmTotal === 0
+              ? t('dashboard.cards.rhythmEmpty')
+              : t('dashboard.cards.of', { done: rhythmDone, total: rhythmTotal })
+          }
+          percent={rhythmTotal === 0 ? 0 : (rhythmDone / rhythmTotal) * 100}
         />
       </section>
 

@@ -4,6 +4,17 @@ import { BrandMark } from '@/components/brand/BrandMark';
 
 const STUDIO_URL = 'https://weisezahoy.com/';
 const STUDIO_NAME = 'WEISEZAHOY';
+const INSTAGRAM_URL = 'https://www.instagram.com/mindkeep.cloud/';
+
+function InstagramMark({ className = 'h-4 w-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" strokeWidth="1.7" />
+      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.7" />
+      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" />
+    </svg>
+  );
+}
 
 type SiteFooterProps = {
   compact?: boolean;
@@ -58,6 +69,27 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
             {!compact ? (
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{t('footer.about')}</p>
             ) : null}
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t('footer.instagram')}
+              className={`group mt-5 inline-flex items-center gap-3 rounded-2xl bg-brand-50/50 ring-1 ring-line no-underline transition hover:bg-brand-50 hover:ring-brand-400 ${
+                compact ? 'px-3 py-2' : 'px-3.5 py-2.5'
+              }`}
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-panel text-brand-500 shadow-sm ring-1 ring-line transition group-hover:text-brand-400 group-hover:ring-brand-400">
+                <InstagramMark className="h-[18px] w-[18px]" />
+              </span>
+              <span className="min-w-0 text-left">
+                <span className="block text-[11px] font-medium tracking-[0.18em] text-muted uppercase">
+                  {t('footer.follow')}
+                </span>
+                <span className="mt-0.5 block text-sm font-semibold tracking-tight text-ink transition group-hover:text-brand-500">
+                  {t('footer.instagramHandle')}
+                </span>
+              </span>
+            </a>
           </div>
 
           <div className="md:text-right">

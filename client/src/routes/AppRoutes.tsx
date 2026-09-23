@@ -33,6 +33,7 @@ import { NotificationsPage } from '@/pages/NotificationsPage';
 import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { ReviewPage } from '@/pages/ReviewPage';
+import { RhythmPage } from '@/pages/RhythmPage';
 import { StatisticsPage } from '@/pages/StatisticsPage';
 import { TasksPage } from '@/pages/TasksPage';
 
@@ -127,6 +128,8 @@ export function AppRoutes() {
           <Route path="/month-plan" element={<MonthPlanPage />} />
           <Route path="/nutrition" element={<CaloriesPage />} />
           <Route path="/calories" element={<Navigate to="/nutrition" replace />} />
+          <Route path="/habits" element={<RhythmPage />} />
+          <Route path="/rhythm" element={<Navigate to="/habits" replace />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/notes/new" element={<NoteCreatePage />} />
           <Route path="/notes/:id" element={<NoteDetailPage />} />

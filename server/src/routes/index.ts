@@ -12,6 +12,7 @@ import { notificationRouter } from '@/routes/notification.routes.js';
 import { noteRouter } from '@/routes/note.routes.js';
 import { nutritionRouter } from '@/routes/nutrition.routes.js';
 import { reminderRouter } from '@/routes/reminder.routes.js';
+import { rhythmRouter } from '@/routes/rhythm.routes.js';
 import { reviewRouter } from '@/routes/review.routes.js';
 import { statisticsRouter } from '@/routes/statistics.routes.js';
 
@@ -27,6 +28,7 @@ apiRouter.use('/tasks', dailyTaskRouter);
 apiRouter.use('/materials', materialRouter);
 apiRouter.use('/notes', noteRouter);
 apiRouter.use('/nutrition', nutritionRouter);
+apiRouter.use('/rhythm', rhythmRouter);
 apiRouter.use('/reminders', reminderRouter);
 apiRouter.use('/reviews', reviewRouter);
 apiRouter.use('/notifications', notificationRouter);

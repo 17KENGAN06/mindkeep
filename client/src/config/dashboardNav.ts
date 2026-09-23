@@ -41,6 +41,13 @@ export const dashboardNav: DashboardNavEntry[] = [
     matchPrefixes: ['/nutrition', '/calories'],
   },
   {
+    type: 'link',
+    id: 'rhythm',
+    labelKey: 'nav.rhythm',
+    to: '/habits',
+    matchPrefixes: ['/habits', '/rhythm'],
+  },
+  {
     type: 'group',
     id: 'planning',
     labelKey: 'nav.planning',

@@ -23,6 +23,7 @@ export type TasksStackParamList = {
 
 export type MoreStackParamList = {
   MoreHome: undefined;
+  Rhythm: undefined;
   Notes: undefined;
   NoteCreate: undefined;
   NoteDetail: { id: string };

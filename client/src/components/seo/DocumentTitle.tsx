@@ -15,6 +15,8 @@ const routeTitleKeys: Record<string, string> = {
   '/notes': 'seo.titles.notes',
   '/nutrition': 'seo.titles.calories',
   '/calories': 'seo.titles.calories',
+  '/habits': 'seo.titles.rhythm',
+  '/rhythm': 'seo.titles.rhythm',
   '/materials': 'seo.titles.materials',
   '/categories': 'seo.titles.categories',
   '/finance': 'seo.titles.budget',

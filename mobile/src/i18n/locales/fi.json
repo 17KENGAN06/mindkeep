@@ -246,6 +246,19 @@
       "minutes": "Vähintään 1 minuutti"
     }
   },
+  "rhythm": {
+    "title": "Tavat",
+    "subtitle": "Tapa juurtuu {{days}} päivässä. Merkitse solu — kuin taulukossa.",
+    "menuHint": "30 päivän tapataulukko.",
+    "addPlaceholder": "esim. vesi herättyä",
+    "add": "Lisää",
+    "empty": "Ei vielä tapoja. Lisää ensimmäinen rivi.",
+    "formed": "30 pv",
+    "streak": "{{count}} päivän putki",
+    "errors": {
+      "title": "Kirjoita tavan nimi"
+    }
+  },
   "notes": {
     "title": "Muistiinpanot",
     "subtitle": "Tallenna ideat, opit ja asiat, joihin haluat palata.",

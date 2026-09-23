@@ -38,6 +38,7 @@
     "tasks": "Päivittäiset tehtävät",
     "calories": "Ravinto",
     "nutrition": "Ravinto",
+    "rhythm": "Tavat",
     "monthPlan": "Kuukausisuunnitelma",
     "notes": "Muistiinpanot",
     "budget": "Budjetti",
@@ -630,6 +631,8 @@
       "budgetLeft": "Budjettia jäljellä",
       "caloriesToday": "Kalorit tänään",
       "waterToday": "Vesi tänään",
+      "rhythmToday": "Tavat tänään",
+      "rhythmEmpty": "Lisää tapa",
       "of": "{{done}} / {{total}} valmiina",
       "ofPlanned": "{{done}} / {{total}} suunniteltu"
     },
@@ -821,6 +824,28 @@
       "completed": "Valmis"
     }
   },
+  "rhythm": {
+    "title": "Tavat",
+    "subtitle": "Tapa juurtuu {{days}} päivässä. Merkitse solu — kuin taulukossa.",
+    "prevMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi",
+    "statHabits": "Tavat",
+    "statToday": "Tänään",
+    "statMonth": "Kuukausi",
+    "statFormed": "Juurtunut",
+    "addLabel": "Uusi tapa",
+    "addPlaceholder": "esim. vesi herättyä",
+    "addHint": "Yksi rivi on yksi tapa. Jakso on 30 päivää.",
+    "add": "Lisää",
+    "empty": "Ei vielä tapoja. Lisää ensimmäinen rivi, niin taulukko alkaa täyttyä.",
+    "habit": "Tapa",
+    "monthCol": "Kk",
+    "formed": "30 pv",
+    "streak": "{{count}} päivän putki",
+    "errors": {
+      "title": "Kirjoita tavan nimi"
+    }
+  },
   "seo": {
     "titles": {
       "home": "Mindkeep — tehtävät, kertaus ja talous",
@@ -837,6 +862,7 @@
       "forest": "Metsäsi · Mindkeep",
       "notes": "Muistiinpanot · Mindkeep",
       "calories": "Ravinto · Mindkeep",
+      "rhythm": "Tavat · Mindkeep",
       "monthPlan": "Kuukausisuunnitelma · Mindkeep",
       "budget": "Budjetti · Mindkeep",
       "transactions": "Tapahtumat · Mindkeep",
@@ -855,6 +881,9 @@
     "tagline": "Missä päivä löytää järjestyksen — ja tieto sekä raha pysyvät näkyvissä.",
     "about": "Mindkeep yhdistää päivittäiset tehtävät, henkilökohtaisen talouden euroissa ja tiedon kertauksen rytmillä 3 · 7 · 30 — rauhallisesti, ilman ylimääräistä melua.",
     "linksLabel": "Navigointi",
+    "follow": "Instagramissa",
+    "instagram": "Instagram",
+    "instagramHandle": "@mindkeep.cloud",
     "visitStudio": "Studion sivusto",
     "privacy": "Tietosuoja",
     "rights": "Kaikki oikeudet pidätetään. Tuote on studion suunnittelema ja ylläpitämä.",

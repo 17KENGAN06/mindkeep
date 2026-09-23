@@ -246,6 +246,19 @@
       "minutes": "Minutes must be at least 1"
     }
   },
+  "rhythm": {
+    "title": "Habits",
+    "subtitle": "A habit takes {{days}} days to settle. Mark a cell — like a spreadsheet.",
+    "menuHint": "A 30-day habit grid.",
+    "addPlaceholder": "e.g. water after waking up",
+    "add": "Add",
+    "empty": "No habits yet. Add the first row.",
+    "formed": "30 days",
+    "streak": "{{count}}-day streak",
+    "errors": {
+      "title": "Enter a habit name"
+    }
+  },
   "notes": {
     "title": "Notes",
     "subtitle": "Keep ideas, lessons and things worth remembering.",

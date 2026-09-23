@@ -85,6 +85,12 @@ export function MoreScreen() {
 
         <MenuCard
           first
+          icon="repeat-outline"
+          title={t('rhythm.title')}
+          hint={t('rhythm.menuHint')}
+          onPress={() => navigation.navigate('Rhythm')}
+        />
+        <MenuCard
           icon="document-text-outline"
           title={t('notes.title')}
           hint={t('notes.menuHint')}
