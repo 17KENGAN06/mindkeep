@@ -7,6 +7,7 @@ import type {
 } from '@/validations/rhythm.schemas.js';
 import { HABIT_CYCLE_DAYS, MAX_HABITS } from '@/validations/rhythm.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { todayKeyInTimeZone } from '@/utils/timezone.js';
 
 function parseDateOnly(value: string): Date {
   const [y, m, d] = value.split('-').map(Number);
@@ -28,9 +29,9 @@ function periodRange(query: RhythmPeriodQuery): { from: Date; to: Date; daysInMo
   return { from, to, daysInMonth };
 }
 
-function todayKey(): string {
-  const now = new Date();
-  return toDateKey(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 12, 0, 0)));
+async function userTimezone(userId: string): Promise<string> {
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { timezone: true } });
+  return user?.timezone || 'Europe/Helsinki';
 }
 
 function currentStreak(checks: Set<string>, today: string): number {
@@ -48,7 +49,7 @@ function currentStreak(checks: Set<string>, today: string): number {
 export class RhythmService {
   async listPeriod(userId: string, query: RhythmPeriodQuery) {
     const { from, to, daysInMonth } = periodRange(query);
-    const today = todayKey();
+    const today = todayKeyInTimeZone(await userTimezone(userId));
     const streakFrom = addUtcDays(parseDateOnly(today), -(HABIT_CYCLE_DAYS + 2));
     const [habits, monthDays, recentDays, lifetimeGroups] = await Promise.all([
       prisma.habit.findMany({
@@ -158,7 +159,8 @@ export class RhythmService {
     }
 
     const date = parseDateOnly(input.date);
-    if (toDateKey(date) > todayKey()) {
+    const today = todayKeyInTimeZone(await userTimezone(userId));
+    if (toDateKey(date) > today) {
       throw new AppError('Future days cannot be marked.', {
         statusCode: 400,
         code: 'FUTURE_HABIT_DAY',

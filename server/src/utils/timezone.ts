@@ -1,10 +1,14 @@
-import { endOfDay, startOfDay } from 'date-fns';
+import { endOfDay, format, startOfDay } from 'date-fns';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 
 export type DayBounds = {
   startUtc: Date;
   endUtc: Date;
 };
+
+export function todayKeyInTimeZone(timezone: string, at: Date = new Date()): string {
+  return format(toZonedTime(at, timezone), 'yyyy-MM-dd');
+}
 
 /** Calendar day bounds for a user timezone, returned as UTC Date values. */
 export function getDayBoundsInTimeZone(timezone: string, at: Date = new Date()): DayBounds {

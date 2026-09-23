@@ -101,3 +101,17 @@ export function monthGrid(year: number, month: number): Date[] {
     return day;
   });
 }
+
+export function monthCells(
+  year: number,
+  month: number,
+): Array<{ date: string; day: number; inMonth: boolean }> {
+  const cells = monthGrid(year, month).map((date) => ({
+    date: todayDateKey(date),
+    day: date.getDate(),
+    inMonth: date.getMonth() === month - 1,
+  }));
+  let last = cells.length - 1;
+  while (last >= 0 && !cells[last]?.inMonth) last -= 1;
+  return cells.slice(0, Math.ceil((last + 1) / 7) * 7);
+}

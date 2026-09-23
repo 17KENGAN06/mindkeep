@@ -36,6 +36,30 @@ export function weekdayShort(year: number, month: number, day: number, language:
   return format(new Date(year, month - 1, day), 'EEEEEE', { locale: locales[language] ?? enUS });
 }
 
+export function weekdayLabels(language: AppLanguage = 'en'): string[] {
+  return Array.from({ length: 7 }, (_, index) =>
+    format(new Date(2024, 0, 1 + index), 'EEEEEE', { locale: locales[language] ?? enUS }),
+  );
+}
+
+export function monthCells(
+  year: number,
+  month: number,
+): Array<{ date: string; day: number; inMonth: boolean }> {
+  const first = new Date(year, month - 1, 1);
+  const mondayOffset = (first.getDay() + 6) % 7;
+  const start = new Date(year, month - 1, 1 - mondayOffset);
+  return Array.from({ length: 42 }, (_, index) => {
+    const date = new Date(start);
+    date.setDate(start.getDate() + index);
+    return {
+      date: format(date, 'yyyy-MM-dd'),
+      day: date.getDate(),
+      inMonth: date.getMonth() === month - 1,
+    };
+  });
+}
+
 export function toDateInputValue(value?: string | Date): string {
   const date = value ? (typeof value === 'string' ? parseISO(value) : value) : new Date();
   return format(date, 'yyyy-MM-dd');
