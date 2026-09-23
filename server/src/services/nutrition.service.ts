@@ -96,7 +96,9 @@ export class NutritionService {
     const settings = await this.getSettings(userId);
     const { from, to } = periodRange(query);
 
-    const [meals, waterDays, weightDays] = await Promise.all([
+    const trendFrom = new Date(Date.UTC(query.year, query.month - 4, 1, 0, 0, 0));
+
+    const [meals, waterDays, weightDays, weightTrendDays] = await Promise.all([
       prisma.meal.findMany({
         where: { userId, date: { gte: from, lt: to } },
         orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
@@ -106,6 +108,10 @@ export class NutritionService {
       }),
       prisma.weightDay.findMany({
         where: { userId, date: { gte: from, lt: to } },
+      }),
+      prisma.weightDay.findMany({
+        where: { userId, date: { gte: trendFrom, lt: to } },
+        orderBy: { date: 'asc' },
       }),
     ]);
 
@@ -154,6 +160,10 @@ export class NutritionService {
         glasses: row.glasses,
       })),
       weight: weightDays.map((row) => ({
+        date: toDateKey(row.date),
+        kg: roundKg(row.kg),
+      })),
+      weightTrend: weightTrendDays.map((row) => ({
         date: toDateKey(row.date),
         kg: roundKg(row.kg),
       })),

@@ -11,7 +11,7 @@ export const updateNutritionSettingsSchema = z
   .object({
     calorieGoal: z.coerce.number().int().min(500).max(10000).optional(),
     waterGoal: z.coerce.number().int().min(1).max(20).optional(),
-    weightGoal: z.number().min(20).max(400).nullable().optional(),
+    weightGoal: z.coerce.number().min(20).max(400).nullable().optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one field is required',

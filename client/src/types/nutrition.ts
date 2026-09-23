@@ -40,5 +40,6 @@ export type NutritionPeriodResponse = {
   meals: Meal[];
   water: WaterDay[];
   weight?: WeightDay[];
+  weightTrend?: WeightDay[];
   weightAvg?: number | null;
 };

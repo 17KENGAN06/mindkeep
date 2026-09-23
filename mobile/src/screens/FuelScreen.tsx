@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
 import { AppButton, Badge } from '../components/ui';
 import { WaterGlasses } from '../components/WaterGlasses';
+import { WeightTrendChart } from '../components/WeightTrendChart';
 import {
   useCreateMeal,
   useDeleteMeal,
@@ -42,6 +43,12 @@ function dateInMonth(date: string, year: number, month: number): boolean {
 
 function formatKg(value: number): string {
   return (Math.round(value * 10) / 10).toFixed(1);
+}
+
+function parseKg(value: string): number | null {
+  const parsed = Number(value.trim().replace(',', '.'));
+  if (!Number.isFinite(parsed) || parsed < 20 || parsed > 400) return null;
+  return Math.round(parsed * 10) / 10;
 }
 
 function clampPercent(value: number): number {
@@ -257,13 +264,13 @@ export function FuelScreen() {
 
   const onSaveWeightGoal = async () => {
     setFormError(null);
-    const next = Number(weightGoalInput.replace(',', '.'));
-    if (!Number.isFinite(next) || next < 20 || next > 400) {
+    const next = parseKg(weightGoalInput);
+    if (next == null) {
       setFormError(t('fuel.errors.weightGoal'));
       return;
     }
     try {
-      await updateSettings.mutateAsync({ weightGoal: Number(formatKg(next)) });
+      await updateSettings.mutateAsync({ weightGoal: next });
     } catch {
       setFormError(t('auth.errors.generic'));
     }
@@ -271,8 +278,8 @@ export function FuelScreen() {
 
   const onSaveWeight = async () => {
     setFormError(null);
-    const kg = Number(weightInput.replace(',', '.'));
-    if (!Number.isFinite(kg) || kg < 20 || kg > 400) {
+    const kg = parseKg(weightInput);
+    if (kg == null) {
       setFormError(t('fuel.errors.weight'));
       return;
     }
@@ -493,7 +500,7 @@ export function FuelScreen() {
 
           <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('fuel.weightTitle')}</Text>
-            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.weightHint')}</Text>
+            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.weightGuide')}</Text>
             <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.weightGoal')}</Text>
             <TextInput
               keyboardType="decimal-pad"
@@ -541,7 +548,17 @@ export function FuelScreen() {
               />
             </View>
 
+            <WeightTrendChart
+              points={periodQuery.data?.weightTrend ?? weight}
+              selectedDate={selectedDate}
+              year={year}
+              month={month}
+              goalKg={weightGoal}
+              onSelectDate={setSelectedDate}
+            />
+
             <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.weightToday')}</Text>
+            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.weightDecimalHint')}</Text>
             <TextInput
               keyboardType="decimal-pad"
               style={[
@@ -550,7 +567,7 @@ export function FuelScreen() {
               ]}
               value={weightInput}
               onChangeText={setWeightInput}
-              placeholder={t('fuel.emptyWeight')}
+              placeholder="84.1"
               placeholderTextColor={colors.muted}
             />
             <AppButton

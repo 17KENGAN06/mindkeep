@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
 import { WaterGlasses } from '@/components/nutrition/WaterGlasses';
+import { WeightTrendChart } from '@/components/nutrition/WeightTrendChart';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -21,6 +22,12 @@ import { toDateInputValue } from '@/utils/date';
 
 function formatKg(value: number): string {
   return (Math.round(value * 10) / 10).toFixed(1);
+}
+
+function parseKg(value: string): number | null {
+  const parsed = Number(value.trim().replace(',', '.'));
+  if (!Number.isFinite(parsed) || parsed < 20 || parsed > 400) return null;
+  return Math.round(parsed * 10) / 10;
 }
 
 function currentDefaults() {
@@ -189,13 +196,13 @@ export function CaloriesPage() {
   const onSaveWeightGoal = async (event: FormEvent) => {
     event.preventDefault();
     setFormError(null);
-    const weightGoal = Number(weightGoalInput.replace(',', '.'));
-    if (!Number.isFinite(weightGoal) || weightGoal < 20 || weightGoal > 400) {
+    const weightGoal = parseKg(weightGoalInput);
+    if (weightGoal == null) {
       setFormError(t('calories.errors.weightGoal'));
       return;
     }
     try {
-      await updateSettings.mutateAsync({ weightGoal: Number(formatKg(weightGoal)) });
+      await updateSettings.mutateAsync({ weightGoal });
     } catch {
       setFormError(t('auth.errors.generic'));
     }
@@ -204,8 +211,8 @@ export function CaloriesPage() {
   const onSaveWeight = async (event: FormEvent) => {
     event.preventDefault();
     setFormError(null);
-    const kg = Number(weightInput.replace(',', '.'));
-    if (!Number.isFinite(kg) || kg < 20 || kg > 400) {
+    const kg = parseKg(weightInput);
+    if (kg == null) {
       setFormError(t('calories.errors.weight'));
       return;
     }
@@ -408,7 +415,7 @@ export function CaloriesPage() {
         <section className="space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div>
             <h3 className="text-base font-semibold text-ink">{t('calories.weightTitle')}</h3>
-            <p className="mt-1 text-sm text-muted">{t('calories.weightHint')}</p>
+            <p className="mt-1 max-w-xl text-sm text-muted">{t('calories.weightGuide')}</p>
           </div>
 
           <form
@@ -417,12 +424,12 @@ export function CaloriesPage() {
           >
             <Input
               label={t('calories.weightGoal')}
-              type="number"
-              min="20"
-              max="400"
-              step="0.1"
+              type="text"
+              inputMode="decimal"
+              autoComplete="off"
               value={weightGoalInput}
               onChange={(event) => setWeightGoalInput(event.target.value)}
+              hint={t('calories.weightDecimalHint')}
             />
             <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:w-auto">
               {t('calories.saveGoals')}
@@ -467,19 +474,28 @@ export function CaloriesPage() {
             ))}
           </div>
 
+          <WeightTrendChart
+            points={periodQuery.data.weightTrend ?? weight}
+            selectedDate={selectedDate}
+            year={year}
+            month={month}
+            goalKg={settings.weightGoal}
+            onSelectDate={setSelectedDate}
+          />
+
           <form
             className="grid gap-3 sm:grid-cols-[1fr_auto]"
             onSubmit={(event) => void onSaveWeight(event)}
           >
             <Input
               label={t('calories.weightToday')}
-              type="number"
-              min="20"
-              max="400"
-              step="0.1"
+              type="text"
+              inputMode="decimal"
+              autoComplete="off"
               value={weightInput}
               onChange={(event) => setWeightInput(event.target.value)}
-              placeholder={t('calories.emptyWeight')}
+              placeholder="84.1"
+              hint={t('calories.weightDecimalHint')}
             />
             <div className="flex items-end">
               <Button type="submit" isLoading={setWeight.isPending} className="w-full sm:w-auto">

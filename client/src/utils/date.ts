@@ -14,6 +14,20 @@ export function formatDate(value: string | Date, language: AppLanguage = 'en'): 
   return format(date, 'd MMM yyyy', { locale: locales[language] ?? enUS });
 }
 
+export function formatDateLong(value: string | Date, language: AppLanguage = 'en'): string {
+  const date = typeof value === 'string' ? parseISO(value) : value;
+  return format(date, 'd MMMM yyyy', { locale: locales[language] ?? enUS });
+}
+
+export function formatChartDate(value: string | Date, language: AppLanguage = 'en'): string {
+  const date = typeof value === 'string' ? parseISO(value) : value;
+  return format(date, 'd MMM yyyy', { locale: locales[language] ?? enUS });
+}
+
+export function formatMonthShort(year: number, month: number, language: AppLanguage = 'en'): string {
+  return format(new Date(year, month - 1, 1), 'LLL', { locale: locales[language] ?? enUS });
+}
+
 export function toDateInputValue(value?: string | Date): string {
   const date = value ? (typeof value === 'string' ? parseISO(value) : value) : new Date();
   return format(date, 'yyyy-MM-dd');
