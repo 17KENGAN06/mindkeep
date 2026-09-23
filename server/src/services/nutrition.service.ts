@@ -6,6 +6,7 @@ import type {
   UpdateMealInput,
   UpdateNutritionSettingsInput,
   UpsertWaterInput,
+  UpsertWeightInput,
 } from '@/validations/nutrition.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 
@@ -26,6 +27,22 @@ function parseDateOnly(value: string): Date {
 
 function toDateKey(date: Date): string {
   return date.toISOString().slice(0, 10);
+}
+
+function roundKg(value: number): number {
+  return Math.round(value * 10) / 10;
+}
+
+function serializeSettings(settings: {
+  calorieGoal: number;
+  waterGoal: number;
+  weightGoal: number | null;
+}) {
+  return {
+    calorieGoal: settings.calorieGoal,
+    waterGoal: settings.waterGoal,
+    weightGoal: settings.weightGoal === null ? null : roundKg(settings.weightGoal),
+  };
 }
 
 function periodRange(query: NutritionPeriodQuery): { from: Date; to: Date } {
@@ -62,20 +79,24 @@ export class NutritionService {
 
   async updateSettings(userId: string, input: UpdateNutritionSettingsInput) {
     await this.getSettings(userId);
-    return prisma.nutritionSettings.update({
+    const settings = await prisma.nutritionSettings.update({
       where: { userId },
       data: {
         ...(input.calorieGoal !== undefined ? { calorieGoal: input.calorieGoal } : {}),
         ...(input.waterGoal !== undefined ? { waterGoal: input.waterGoal } : {}),
+        ...(input.weightGoal !== undefined
+          ? { weightGoal: input.weightGoal === null ? null : roundKg(input.weightGoal) }
+          : {}),
       },
     });
+    return serializeSettings(settings);
   }
 
   async listPeriod(userId: string, query: NutritionPeriodQuery) {
     const settings = await this.getSettings(userId);
     const { from, to } = periodRange(query);
 
-    const [meals, waterDays] = await Promise.all([
+    const [meals, waterDays, weightDays] = await Promise.all([
       prisma.meal.findMany({
         where: { userId, date: { gte: from, lt: to } },
         orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
@@ -83,9 +104,13 @@ export class NutritionService {
       prisma.waterDay.findMany({
         where: { userId, date: { gte: from, lt: to } },
       }),
+      prisma.weightDay.findMany({
+        where: { userId, date: { gte: from, lt: to } },
+      }),
     ]);
 
     const waterByDate = new Map(waterDays.map((row) => [toDateKey(row.date), row.glasses]));
+    const weightByDate = new Map(weightDays.map((row) => [toDateKey(row.date), roundKg(row.kg)]));
     const caloriesByDate = new Map<string, { calories: number; mealCount: number }>();
 
     for (const meal of meals) {
@@ -96,34 +121,43 @@ export class NutritionService {
       caloriesByDate.set(key, bucket);
     }
 
-    const dayKeys = new Set([...caloriesByDate.keys(), ...waterByDate.keys()]);
+    const dayKeys = new Set([...caloriesByDate.keys(), ...waterByDate.keys(), ...weightByDate.keys()]);
     const days = [...dayKeys]
       .sort((a, b) => a.localeCompare(b))
       .map((date) => {
         const eaten = caloriesByDate.get(date)?.calories ?? 0;
         const mealCount = caloriesByDate.get(date)?.mealCount ?? 0;
         const waterGlasses = waterByDate.get(date) ?? 0;
+        const weightKg = weightByDate.get(date) ?? null;
         return {
           date,
           calories: eaten,
           mealCount,
           waterGlasses,
+          weightKg,
           overeating: eaten > settings.calorieGoal,
           waterMet: waterGlasses >= settings.waterGoal,
         };
       });
 
+    const weightAvg =
+      weightDays.length === 0
+        ? null
+        : roundKg(weightDays.reduce((sum, row) => sum + row.kg, 0) / weightDays.length);
+
     return {
-      settings: {
-        calorieGoal: settings.calorieGoal,
-        waterGoal: settings.waterGoal,
-      },
+      settings: serializeSettings(settings),
       days,
       meals: meals.map(serializeMeal),
       water: waterDays.map((row) => ({
         date: toDateKey(row.date),
         glasses: row.glasses,
       })),
+      weight: weightDays.map((row) => ({
+        date: toDateKey(row.date),
+        kg: roundKg(row.kg),
+      })),
+      weightAvg,
     };
   }
 
@@ -174,6 +208,17 @@ export class NutritionService {
       update: { glasses: input.glasses },
     });
     return { date: toDateKey(row.date), glasses: row.glasses };
+  }
+
+  async upsertWeight(userId: string, input: UpsertWeightInput) {
+    const date = parseDateOnly(input.date);
+    const kg = roundKg(input.kg);
+    const row = await prisma.weightDay.upsert({
+      where: { userId_date: { userId, date } },
+      create: { userId, date, kg },
+      update: { kg },
+    });
+    return { date: toDateKey(row.date), kg: roundKg(row.kg) };
   }
 }
 

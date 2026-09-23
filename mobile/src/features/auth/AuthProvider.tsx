@@ -65,6 +65,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       }
       await setStoredToken(token);
+      queryClient.removeQueries({
+        predicate: (query) => query.queryKey[0] !== 'auth',
+      });
       const synced = await applyDeviceTimezone(user);
       queryClient.setQueryData(['auth', 'me'], synced);
       return synced;

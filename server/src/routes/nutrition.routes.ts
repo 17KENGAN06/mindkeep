@@ -10,6 +10,7 @@ import {
   updateMealSchema,
   updateNutritionSettingsSchema,
   upsertWaterSchema,
+  upsertWeightSchema,
 } from '@/validations/nutrition.schemas.js';
 
 export const nutritionRouter = Router();
@@ -32,6 +33,12 @@ nutritionRouter.put(
   '/water',
   validate(upsertWaterSchema),
   asyncHandler((req, res) => nutritionController.upsertWater(req, res)),
+);
+
+nutritionRouter.put(
+  '/weight',
+  validate(upsertWeightSchema),
+  asyncHandler((req, res) => nutritionController.upsertWeight(req, res)),
 );
 
 nutritionRouter.post(

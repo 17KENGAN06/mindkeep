@@ -207,6 +207,7 @@ export function TodayScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={styles.content}
         refreshControl={
           <RefreshControl
@@ -528,20 +529,22 @@ export function TodayScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
+  scroll: { flex: 1 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  content: { padding: 20, paddingBottom: 40 },
-  helloRow: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 4 },
-  helloCopy: { flex: 1 },
+  content: { padding: 20, paddingBottom: 40, width: '100%' },
+  helloRow: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 4, maxWidth: '100%' },
+  helloCopy: { flex: 1, minWidth: 0 },
   hello: { fontSize: 28, fontWeight: '700' },
   tagline: { fontSize: 14, marginTop: 6, marginBottom: 16 },
   error: { marginBottom: 12 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 14 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 14, maxWidth: '100%' },
   progressCard: {
     borderRadius: 20,
     borderWidth: 1,
     padding: 14,
     width: '48%',
     flexGrow: 1,
+    maxWidth: '100%',
   },
   progressTitle: { fontSize: 13 },
   progressValue: { fontSize: 16, fontWeight: '700', marginTop: 8, marginBottom: 10 },
@@ -551,10 +554,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 14,
     padding: 16,
+    maxWidth: '100%',
+    overflow: 'hidden',
   },
-  cardHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 },
-  cardTitle: { fontSize: 16, fontWeight: '700', marginBottom: 10, flex: 1 },
-  link: { fontSize: 13, fontWeight: '600', marginBottom: 10 },
+  cardHead: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    gap: 8,
+    maxWidth: '100%',
+  },
+  cardTitle: { fontSize: 16, fontWeight: '700', marginBottom: 10, flexGrow: 1, flexShrink: 1 },
+  link: { fontSize: 13, fontWeight: '600', marginBottom: 10, flexShrink: 0 },
   empty: { fontSize: 14, paddingVertical: 8 },
   taskRow: {
     alignItems: 'center',
@@ -564,6 +575,7 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 8,
     padding: 10,
+    maxWidth: '100%',
   },
   check: {
     alignItems: 'center',
@@ -572,10 +584,11 @@ const styles = StyleSheet.create({
     height: 36,
     justifyContent: 'center',
     width: 36,
+    flexShrink: 0,
   },
   checkMark: { fontWeight: '800' },
-  taskTitle: { flex: 1, fontSize: 15, fontWeight: '600' },
-  minutes: { fontSize: 13 },
+  taskTitle: { flex: 1, flexShrink: 1, fontSize: 15, fontWeight: '600', minWidth: 0 },
+  minutes: { fontSize: 13, flexShrink: 0 },
   reviewCount: { fontSize: 20, fontWeight: '700', marginTop: 4 },
   over: { fontSize: 13, fontWeight: '700', marginBottom: 8 },
   progressLabel: { fontSize: 14, marginBottom: 8 },
@@ -590,15 +603,15 @@ const styles = StyleSheet.create({
   },
   mealTitle: { flex: 1, fontSize: 14 },
   waterWrap: { marginTop: 8 },
-  tabs: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12 },
+  tabs: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12, maxWidth: '100%' },
   tab: {
     borderRadius: 12,
     borderWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 6,
   },
-  chartRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 6, height: 140 },
-  chartCol: { flex: 1, alignItems: 'center', height: '100%' },
+  chartRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 4, height: 140, width: '100%', maxWidth: '100%' },
+  chartCol: { flex: 1, alignItems: 'center', height: '100%', minWidth: 0 },
   chartBars: { flex: 1, width: '70%', justifyContent: 'flex-end', alignItems: 'center' },
   chartPlanned: {
     position: 'absolute',
@@ -612,7 +625,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },
-  chartLabel: { fontSize: 10, marginTop: 6 },
+  chartLabel: { fontSize: 10, marginTop: 6, maxWidth: '100%' },
   legend: { flexDirection: 'row', gap: 16, marginTop: 10 },
   legendItem: { fontSize: 12 },
   legendMuted: { fontSize: 12 },

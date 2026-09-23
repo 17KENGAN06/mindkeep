@@ -1,5 +1,5 @@
 import { useCallback, useMemo, type ReactNode } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import {
   authApi,
   type GoogleLoginPayload,
@@ -7,6 +7,12 @@ import {
   type RegisterPayload,
 } from '@/api/auth';
 import { AuthContext } from '@/features/auth/auth-context';
+
+function dropUserQueries(queryClient: QueryClient) {
+  queryClient.removeQueries({
+    predicate: (query) => query.queryKey[0] !== 'auth',
+  });
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
@@ -28,6 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginMutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
+      dropUserQueries(queryClient);
       queryClient.setQueryData(['auth', 'me'], data.user);
     },
   });
@@ -35,6 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const registerMutation = useMutation({
     mutationFn: authApi.register,
     onSuccess: (data) => {
+      dropUserQueries(queryClient);
       queryClient.setQueryData(['auth', 'me'], data.user);
     },
   });
@@ -42,17 +50,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const googleLoginMutation = useMutation({
     mutationFn: authApi.googleLogin,
     onSuccess: (data) => {
+      dropUserQueries(queryClient);
       queryClient.setQueryData(['auth', 'me'], data.user);
     },
   });
   const googleLoginMutateAsync = googleLoginMutation.mutateAsync;
-
-  const logoutMutation = useMutation({
-    mutationFn: authApi.logout,
-    onSuccess: () => {
-      queryClient.setQueryData(['auth', 'me'], null);
-    },
-  });
 
   const login = useCallback(
     async (payload: LoginPayload) => {
@@ -79,8 +81,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const logout = useCallback(async () => {
-    await logoutMutation.mutateAsync();
-  }, [logoutMutation]);
+    try {
+      await authApi.logout();
+    } catch {
+      // Cookie is cleared locally even if the API is unreachable.
+    }
+    dropUserQueries(queryClient);
+    queryClient.setQueryData(['auth', 'me'], null);
+  }, [queryClient]);
 
   const value = useMemo(
     () => ({

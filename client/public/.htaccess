@@ -1,12 +1,45 @@
-# Hostinger / Apache — SPA fallback for React Router
+# Hostinger / LiteSpeed — SPA fallback + fewer dropped reloads
+DirectoryIndex index.html
+Options -MultiViews -Indexes
+
+<IfModule mod_headers.c>
+  # Hostinger CDN advertises HTTP/3 (Alt-Svc h3). On many mobile networks
+  # QUIC/UDP is dropped, so the first visit works and a reload shows
+  # ERR_CONNECTION_CLOSED. Clear the advertisement from origin responses.
+  # If hcdn still injects Alt-Svc at the edge, disable CDN HTTP/3 in hPanel.
+  Header always unset Alt-Svc
+  Header unset Alt-Svc
+  Header always set Alt-Svc "clear"
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Do not rewrite the SPA shell itself (avoids LiteSpeed rewrite loops)
+  RewriteRule ^index\.html$ - [L]
 
   # Keep real files and folders
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
 
   # Send everything else to index.html
-  RewriteRule ^ index.html [L]
+  RewriteRule . /index.html [L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType application/x-javascript "access plus 7 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(?:js|css|woff2|png|svg|webp|ico)$">
+    Header set Cache-Control "public, max-age=604800, immutable"
+  </FilesMatch>
 </IfModule>

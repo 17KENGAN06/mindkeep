@@ -21,6 +21,7 @@ import {
   useDeleteMeal,
   useNutritionPeriod,
   useSetWater,
+  useSetWeight,
   useUpdateMeal,
   useUpdateNutritionSettings,
 } from '../features/nutrition/useNutrition';
@@ -37,6 +38,10 @@ function firstOfMonth(year: number, month: number): string {
 function dateInMonth(date: string, year: number, month: number): boolean {
   const [y, m] = date.split('-').map(Number);
   return y === year && m === month;
+}
+
+function formatKg(value: number): string {
+  return (Math.round(value * 10) / 10).toFixed(1);
 }
 
 function clampPercent(value: number): number {
@@ -57,6 +62,8 @@ export function FuelScreen() {
   const [kcal, setKcal] = useState('');
   const [calorieGoalInput, setCalorieGoalInput] = useState('');
   const [waterGoalInput, setWaterGoalInput] = useState('');
+  const [weightGoalInput, setWeightGoalInput] = useState('');
+  const [weightInput, setWeightInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -67,12 +74,23 @@ export function FuelScreen() {
   const updateMeal = useUpdateMeal();
   const deleteMeal = useDeleteMeal();
   const setWater = useSetWater();
+  const setWeight = useSetWeight();
 
   useEffect(() => {
     if (!periodQuery.data) return;
     setCalorieGoalInput(String(periodQuery.data.settings.calorieGoal));
     setWaterGoalInput(String(periodQuery.data.settings.waterGoal));
+    setWeightGoalInput(
+      periodQuery.data.settings.weightGoal == null
+        ? ''
+        : formatKg(periodQuery.data.settings.weightGoal),
+    );
   }, [periodQuery.data]);
+
+  useEffect(() => {
+    const logged = periodQuery.data?.weight?.find((row) => row.date === selectedDate)?.kg;
+    setWeightInput(logged == null ? '' : formatKg(logged));
+  }, [periodQuery.data, selectedDate]);
 
   useEffect(() => {
     setEditingId(null);
@@ -84,9 +102,13 @@ export function FuelScreen() {
   const settings = periodQuery.data?.settings;
   const meals = periodQuery.data?.meals ?? [];
   const water = periodQuery.data?.water ?? [];
+  const weight = periodQuery.data?.weight ?? [];
+  const weightAvg = periodQuery.data?.weightAvg ?? null;
   const dayMeals = meals.filter((meal) => meal.date === selectedDate);
   const eaten = dayMeals.reduce((sum, meal) => sum + meal.calories, 0);
   const glasses = water.find((row) => row.date === selectedDate)?.glasses ?? 0;
+  const dayWeight = weight.find((row) => row.date === selectedDate)?.kg ?? null;
+  const weightGoal = settings?.weightGoal ?? null;
   const calorieGoal = settings?.calorieGoal ?? 2000;
   const waterGoal = settings?.waterGoal ?? 8;
   const overeating = eaten > calorieGoal;
@@ -97,14 +119,17 @@ export function FuelScreen() {
   const calendarDays: CalendarDaySummary[] = useMemo(() => {
     const fromApi = periodQuery.data?.days;
     if (fromApi?.length) {
-      return fromApi.map((day) => ({
-        date: day.date,
-        total: day.mealCount,
-        overdue: day.overeating ? 1 : 0,
-        pending: 0,
-        completed: !day.overeating && day.mealCount > 0 ? day.mealCount : 0,
-        skipped: 0,
-      }));
+      return fromApi.map((day) => {
+        const marked = day.mealCount > 0 || day.weightKg != null;
+        return {
+          date: day.date,
+          total: day.mealCount > 0 ? day.mealCount : marked ? 1 : 0,
+          overdue: day.overeating ? 1 : 0,
+          pending: 0,
+          completed: !day.overeating && marked ? Math.max(day.mealCount, 1) : 0,
+          skipped: 0,
+        };
+      });
     }
 
     const mealsByDate = new Map<string, { count: number; calories: number }>();
@@ -228,6 +253,34 @@ export function FuelScreen() {
         },
       },
     ]);
+  };
+
+  const onSaveWeightGoal = async () => {
+    setFormError(null);
+    const next = Number(weightGoalInput.replace(',', '.'));
+    if (!Number.isFinite(next) || next < 20 || next > 400) {
+      setFormError(t('fuel.errors.weightGoal'));
+      return;
+    }
+    try {
+      await updateSettings.mutateAsync({ weightGoal: Number(formatKg(next)) });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    }
+  };
+
+  const onSaveWeight = async () => {
+    setFormError(null);
+    const kg = Number(weightInput.replace(',', '.'));
+    if (!Number.isFinite(kg) || kg < 20 || kg > 400) {
+      setFormError(t('fuel.errors.weight'));
+      return;
+    }
+    try {
+      await setWeight.mutateAsync({ date: selectedDate, kg });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    }
   };
 
   const onWaterChange = async (next: number) => {
@@ -438,6 +491,75 @@ export function FuelScreen() {
             />
           </View>
 
+          <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('fuel.weightTitle')}</Text>
+            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.weightHint')}</Text>
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.weightGoal')}</Text>
+            <TextInput
+              keyboardType="decimal-pad"
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
+              value={weightGoalInput}
+              onChangeText={setWeightGoalInput}
+            />
+            <AppButton
+              label={t('common.save')}
+              loading={updateSettings.isPending}
+              onPress={() => void onSaveWeightGoal()}
+            />
+
+            <View style={styles.stats}>
+              <Stat
+                label={t('fuel.weightToday')}
+                value={dayWeight == null ? '—' : `${formatKg(dayWeight)} ${t('fuel.kg')}`}
+              />
+              <Stat
+                label={t('fuel.statAvg')}
+                value={weightAvg == null ? '—' : `${formatKg(weightAvg)} ${t('fuel.kg')}`}
+              />
+              <Stat
+                label={t('fuel.statTarget')}
+                value={weightGoal == null ? '—' : `${formatKg(weightGoal)} ${t('fuel.kg')}`}
+              />
+              <Stat
+                label={
+                  dayWeight == null || weightGoal == null
+                    ? t('fuel.statLeft')
+                    : Math.abs(dayWeight - weightGoal) < 0.05
+                      ? t('fuel.statOnTarget')
+                      : dayWeight > weightGoal
+                        ? t('fuel.statToLose')
+                        : t('fuel.statToGain')
+                }
+                value={
+                  dayWeight == null || weightGoal == null
+                    ? '—'
+                    : `${formatKg(Math.abs(dayWeight - weightGoal))} ${t('fuel.kg')}`
+                }
+              />
+            </View>
+
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.weightToday')}</Text>
+            <TextInput
+              keyboardType="decimal-pad"
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
+              value={weightInput}
+              onChangeText={setWeightInput}
+              placeholder={t('fuel.emptyWeight')}
+              placeholderTextColor={colors.muted}
+            />
+            <AppButton
+              label={t('fuel.saveWeight')}
+              loading={setWeight.isPending}
+              onPress={() => void onSaveWeight()}
+            />
+          </View>
+
           {formError ? <Text style={[styles.error, { color: colors.danger }]}>{formError}</Text> : null}
         </ScrollView>
       </KeyboardAvoidingView>
@@ -484,11 +606,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
-  stats: { flexDirection: 'row', gap: 8 },
+  stats: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   stat: {
     borderRadius: 14,
     borderWidth: 1,
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: '45%',
+    minWidth: 120,
     padding: 10,
   },
   statLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },

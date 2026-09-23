@@ -66,7 +66,8 @@
     }
   },
   "materials": {
-    "title": "Materials",
+    "title": "Add material",
+    "detailTitle": "Material",
     "subtitle": "Everything you recently learned, with a fixed 3 / 7 / 30 day review plan.",
     "create": "Add material",
     "createTitle": "New material",
@@ -160,7 +161,7 @@
   },
   "fuel": {
     "title": "Nutrition",
-    "subtitle": "Calories come from meals. Water is glasses only.",
+    "subtitle": "Calories come from meals. Water is glasses. Weight follows the selected calendar day.",
     "caloriesTitle": "Calories",
     "calorieGoal": "Daily calorie goal",
     "waterGoal": "Glasses per day",
@@ -168,6 +169,18 @@
     "waterHint": "Tap glasses. Water is not added to calories.",
     "waterProgress": "Glasses today",
     "waterTitle": "Water",
+    "weightTitle": "Weight",
+    "weightHint": "Log weight for the selected day. The average is for this month.",
+    "weightGoal": "Target weight, kg",
+    "weightToday": "Weight for the day, kg",
+    "kg": "kg",
+    "statAvg": "Month AVG",
+    "statTarget": "Target",
+    "statToLose": "Left to lose",
+    "statToGain": "Left to gain",
+    "statOnTarget": "At target",
+    "saveWeight": "Save weight",
+    "emptyWeight": "No weight logged for this day yet.",
     "dayTitle": "{{date}}",
     "progress": "Calories today",
     "kcal": "kcal",
@@ -189,7 +202,9 @@
       "title": "Give the meal a name",
       "calories": "Enter calories",
       "calorieGoal": "Goal should be at least 500 kcal",
-      "waterGoal": "Set at least 1 glass"
+      "waterGoal": "Set at least 1 glass",
+      "weight": "Enter a weight between 20 and 400 kg",
+      "weightGoal": "Target weight should be 20–400 kg"
     }
   },
   "tasks": {

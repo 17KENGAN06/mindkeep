@@ -1,5 +1,11 @@
 import { apiClient } from '@/api/client';
-import type { Meal, NutritionPeriodResponse, NutritionSettings, WaterDay } from '@/types/nutrition';
+import type {
+  Meal,
+  NutritionPeriodResponse,
+  NutritionSettings,
+  WaterDay,
+  WeightDay,
+} from '@/types/nutrition';
 
 export type CreateMealPayload = {
   title: string;
@@ -24,4 +30,6 @@ export const nutritionApi = {
   removeMeal: (id: string) => apiClient.delete<{ success: boolean }>(`/api/nutrition/meals/${id}`),
   setWater: (date: string, glasses: number) =>
     apiClient.put<{ water: WaterDay }>('/api/nutrition/water', { date, glasses }),
+  setWeight: (date: string, kg: number) =>
+    apiClient.put<{ weight: WeightDay }>('/api/nutrition/weight', { date, kg }),
 };

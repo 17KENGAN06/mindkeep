@@ -11,6 +11,7 @@ export const updateNutritionSettingsSchema = z
   .object({
     calorieGoal: z.coerce.number().int().min(500).max(10000).optional(),
     waterGoal: z.coerce.number().int().min(1).max(20).optional(),
+    weightGoal: z.number().min(20).max(400).nullable().optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one field is required',
@@ -40,8 +41,14 @@ export const upsertWaterSchema = z.object({
   glasses: z.coerce.number().int().min(0).max(30),
 });
 
+export const upsertWeightSchema = z.object({
+  date: dateOnly,
+  kg: z.coerce.number().min(20).max(400),
+});
+
 export type NutritionPeriodQuery = z.infer<typeof nutritionPeriodQuerySchema>;
 export type UpdateNutritionSettingsInput = z.infer<typeof updateNutritionSettingsSchema>;
 export type CreateMealInput = z.infer<typeof createMealSchema>;
 export type UpdateMealInput = z.infer<typeof updateMealSchema>;
 export type UpsertWaterInput = z.infer<typeof upsertWaterSchema>;
+export type UpsertWeightInput = z.infer<typeof upsertWeightSchema>;

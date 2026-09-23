@@ -66,7 +66,8 @@
     }
   },
   "materials": {
-    "title": "Materiaalit",
+    "title": "Lisää materiaali",
+    "detailTitle": "Materiaali",
     "subtitle": "Äskettäin oppimasi asiat kiinteällä 3 / 7 / 30 päivän kertausaikataululla.",
     "create": "Lisää materiaali",
     "createTitle": "Uusi materiaali",
@@ -160,7 +161,7 @@
   },
   "fuel": {
     "title": "Ravinto",
-    "subtitle": "Kalorit tulevat aterioista. Vesi on vain laseja.",
+    "subtitle": "Kalorit tulevat aterioista. Vesi on laseja. Paino seuraa valittua kalenteripäivää.",
     "caloriesTitle": "Kalorit",
     "calorieGoal": "Päivän kaloritavoite",
     "waterGoal": "Laseja päivässä",
@@ -168,6 +169,18 @@
     "waterHint": "Merkitse lasit. Vesi ei lisää kaloreita.",
     "waterProgress": "Lasit tänään",
     "waterTitle": "Vesi",
+    "weightTitle": "Paino",
+    "weightHint": "Kirjaa paino valitulle päivälle. Keskiarvo lasketaan tältä kuukaudelta.",
+    "weightGoal": "Tavoitepaino, kg",
+    "weightToday": "Päivän paino, kg",
+    "kg": "kg",
+    "statAvg": "Kuukauden AVG",
+    "statTarget": "Tavoite",
+    "statToLose": "Jäljellä (pudotus)",
+    "statToGain": "Jäljellä (lisäys)",
+    "statOnTarget": "Tavoitteessa",
+    "saveWeight": "Tallenna paino",
+    "emptyWeight": "Tälle päivälle ei ole vielä painoa.",
     "dayTitle": "{{date}}",
     "progress": "Kalorit tänään",
     "kcal": "kcal",
@@ -189,7 +202,9 @@
       "title": "Anna aterialle nimi",
       "calories": "Anna kalorit",
       "calorieGoal": "Tavoitteen tulee olla vähintään 500 kcal",
-      "waterGoal": "Aseta vähintään 1 lasi"
+      "waterGoal": "Aseta vähintään 1 lasi",
+      "weight": "Anna paino väliltä 20–400 kg",
+      "weightGoal": "Tavoitepainon tulee olla 20–400 kg"
     }
   },
   "tasks": {

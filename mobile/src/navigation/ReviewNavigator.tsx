@@ -46,7 +46,7 @@ export function ReviewNavigator() {
       <Stack.Screen
         name="MaterialDetail"
         component={MaterialDetailScreen}
-        options={{ title: t('materials.title') }}
+        options={{ title: t('materials.detailTitle') }}
       />
       <Stack.Screen name="Categories" component={CategoriesScreen} options={{ title: t('categories.title') }} />
     </Stack.Navigator>

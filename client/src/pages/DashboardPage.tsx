@@ -155,7 +155,8 @@ export function DashboardPage() {
     dashboardQuery.isLoading ||
     activityQuery.isLoading ||
     tasksQuery.isLoading ||
-    financeQuery.isLoading;
+    financeQuery.isLoading ||
+    nutritionQuery.isLoading;
 
   const weekDays = useMemo(() => {
     const days: string[] = [];
@@ -247,7 +248,7 @@ export function DashboardPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-6">
       <section className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
           <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
@@ -338,11 +339,11 @@ export function DashboardPage() {
         </div>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-2">
-        <article className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-base font-semibold text-ink">{t('dashboard.upcomingTasks')}</h2>
-            <Link to="/tasks" className="text-sm font-medium text-brand-500 no-underline">
+      <section className="grid min-w-0 gap-4 xl:grid-cols-2">
+        <article className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+          <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
+            <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.upcomingTasks')}</h2>
+            <Link to="/tasks" className="shrink-0 text-sm font-medium text-brand-500 no-underline">
               {t('dashboard.allTasks')} →
             </Link>
           </div>
@@ -390,9 +391,9 @@ export function DashboardPage() {
           </ul>
         </article>
 
-        <article className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-base font-semibold text-ink">{t('dashboard.weekTitle')}</h2>
+        <article className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+          <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
+            <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.weekTitle')}</h2>
             <div className="flex flex-wrap gap-1 rounded-2xl bg-brand-50/40 p-1 ring-1 ring-line/60">
               {(
                 [
@@ -417,7 +418,7 @@ export function DashboardPage() {
             </div>
           </div>
 
-          <div className="mt-5 flex h-44 items-end gap-2">
+          <div className="mt-5 flex h-44 min-w-0 items-end gap-1 sm:gap-2">
             {weekSeries.map((day) => {
               const planned =
                 weekTab === 'tasks'
@@ -435,8 +436,8 @@ export function DashboardPage() {
               const doneHeight = `${Math.max((done / chartMax) * 100, done > 0 ? 8 : 0)}%`;
 
               return (
-                <div key={day.date} className="flex flex-1 flex-col items-center gap-2">
-                  <div className="relative flex h-32 w-full items-end justify-center">
+                <div key={day.date} className="flex min-w-0 flex-1 flex-col items-center gap-2">
+                  <div className="relative flex h-32 w-full min-w-0 items-end justify-center">
                     <div
                       className="absolute bottom-0 w-[70%] max-w-8 rounded-t-lg bg-brand-200/80"
                       style={{ height: plannedHeight }}
@@ -446,8 +447,11 @@ export function DashboardPage() {
                       style={{ height: doneHeight }}
                     />
                   </div>
-                  <span className="text-[10px] text-muted">
-                    {formatDate(day.date, language).split(' ').slice(0, 2).join(' ')}
+                  <span className="w-full truncate text-center text-[10px] text-muted">
+                    <span className="sm:hidden">{day.date.slice(8)}</span>
+                    <span className="hidden sm:inline">
+                      {formatDate(day.date, language).split(' ').slice(0, 2).join(' ')}
+                    </span>
                   </span>
                 </div>
               );

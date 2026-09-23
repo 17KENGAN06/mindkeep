@@ -13,10 +13,15 @@ import {
   useDeleteMeal,
   useNutritionPeriod,
   useSetWater,
+  useSetWeight,
   useUpdateNutritionSettings,
 } from '@/features/nutrition/useNutrition';
 import type { CalendarDaySummary } from '@/types/calendar';
 import { toDateInputValue } from '@/utils/date';
+
+function formatKg(value: number): string {
+  return (Math.round(value * 10) / 10).toFixed(1);
+}
 
 function currentDefaults() {
   const now = new Date();
@@ -37,6 +42,8 @@ export function CaloriesPage() {
   const [kcal, setKcal] = useState('');
   const [calorieGoalInput, setCalorieGoalInput] = useState('');
   const [waterGoalInput, setWaterGoalInput] = useState('');
+  const [weightGoalInput, setWeightGoalInput] = useState('');
+  const [weightInput, setWeightInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
@@ -45,6 +52,7 @@ export function CaloriesPage() {
   const createMeal = useCreateMeal();
   const deleteMeal = useDeleteMeal();
   const setWater = useSetWater();
+  const setWeight = useSetWeight();
 
   useEffect(() => {
     const [y, m] = selectedDate.split('-').map(Number);
@@ -57,7 +65,17 @@ export function CaloriesPage() {
     if (!periodQuery.data) return;
     setCalorieGoalInput(String(periodQuery.data.settings.calorieGoal));
     setWaterGoalInput(String(periodQuery.data.settings.waterGoal));
+    setWeightGoalInput(
+      periodQuery.data.settings.weightGoal == null
+        ? ''
+        : formatKg(periodQuery.data.settings.weightGoal),
+    );
   }, [periodQuery.data]);
+
+  useEffect(() => {
+    const logged = periodQuery.data?.weight?.find((row) => row.date === selectedDate)?.kg;
+    setWeightInput(logged == null ? '' : formatKg(logged));
+  }, [periodQuery.data, selectedDate]);
 
   if (periodQuery.isLoading) return <Loader />;
   if (periodQuery.isError || !periodQuery.data) {
@@ -78,22 +96,28 @@ export function CaloriesPage() {
   }
 
   const { settings, meals, water, days } = periodQuery.data;
+  const weight = periodQuery.data.weight ?? [];
+  const weightAvg = periodQuery.data.weightAvg ?? null;
   const dayMeals = meals.filter((meal) => meal.date === selectedDate);
   const eaten = dayMeals.reduce((sum, meal) => sum + meal.calories, 0);
   const glasses = water.find((row) => row.date === selectedDate)?.glasses ?? 0;
+  const dayWeight = weight.find((row) => row.date === selectedDate)?.kg ?? null;
   const overeating = eaten > settings.calorieGoal;
   const remaining = settings.calorieGoal - eaten;
   const caloriePercent = Math.min(100, Math.round((eaten / Math.max(settings.calorieGoal, 1)) * 100));
   const waterPercent = Math.min(100, Math.round((glasses / Math.max(settings.waterGoal, 1)) * 100));
 
-  const calendarDays: CalendarDaySummary[] = days.map((day) => ({
-    date: day.date,
-    total: day.mealCount,
-    overdue: day.overeating ? 1 : 0,
-    completed: !day.overeating && day.mealCount > 0 ? day.mealCount : 0,
-    pending: 0,
-    skipped: 0,
-  }));
+  const calendarDays: CalendarDaySummary[] = days.map((day) => {
+    const marked = day.mealCount > 0 || day.weightKg != null;
+    return {
+      date: day.date,
+      total: day.mealCount > 0 ? day.mealCount : marked ? 1 : 0,
+      overdue: day.overeating ? 1 : 0,
+      completed: !day.overeating && marked ? Math.max(day.mealCount, 1) : 0,
+      pending: 0,
+      skipped: 0,
+    };
+  });
 
   const onSaveCalorieGoal = async (event: FormEvent) => {
     event.preventDefault();
@@ -159,6 +183,36 @@ export function CaloriesPage() {
       setFormError(t('auth.errors.generic'));
     } finally {
       setBusyId(null);
+    }
+  };
+
+  const onSaveWeightGoal = async (event: FormEvent) => {
+    event.preventDefault();
+    setFormError(null);
+    const weightGoal = Number(weightGoalInput.replace(',', '.'));
+    if (!Number.isFinite(weightGoal) || weightGoal < 20 || weightGoal > 400) {
+      setFormError(t('calories.errors.weightGoal'));
+      return;
+    }
+    try {
+      await updateSettings.mutateAsync({ weightGoal: Number(formatKg(weightGoal)) });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    }
+  };
+
+  const onSaveWeight = async (event: FormEvent) => {
+    event.preventDefault();
+    setFormError(null);
+    const kg = Number(weightInput.replace(',', '.'));
+    if (!Number.isFinite(kg) || kg < 20 || kg > 400) {
+      setFormError(t('calories.errors.weight'));
+      return;
+    }
+    try {
+      await setWeight.mutateAsync({ date: selectedDate, kg });
+    } catch {
+      setFormError(t('auth.errors.generic'));
     }
   };
 
@@ -350,6 +404,90 @@ export function CaloriesPage() {
             />
           </section>
         </div>
+
+        <section className="space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+          <div>
+            <h3 className="text-base font-semibold text-ink">{t('calories.weightTitle')}</h3>
+            <p className="mt-1 text-sm text-muted">{t('calories.weightHint')}</p>
+          </div>
+
+          <form
+            className="flex flex-col gap-3 sm:flex-row sm:items-end"
+            onSubmit={(event) => void onSaveWeightGoal(event)}
+          >
+            <Input
+              label={t('calories.weightGoal')}
+              type="number"
+              min="20"
+              max="400"
+              step="0.1"
+              value={weightGoalInput}
+              onChange={(event) => setWeightGoalInput(event.target.value)}
+            />
+            <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:w-auto">
+              {t('calories.saveGoals')}
+            </Button>
+          </form>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {[
+              {
+                label: t('calories.weightToday'),
+                value: dayWeight == null ? '—' : `${formatKg(dayWeight)} ${t('calories.kg')}`,
+              },
+              {
+                label: t('calories.statAvg'),
+                value: weightAvg == null ? '—' : `${formatKg(weightAvg)} ${t('calories.kg')}`,
+              },
+              {
+                label: t('calories.statTarget'),
+                value:
+                  settings.weightGoal == null
+                    ? '—'
+                    : `${formatKg(settings.weightGoal)} ${t('calories.kg')}`,
+              },
+              (() => {
+                if (dayWeight == null || settings.weightGoal == null) {
+                  return { label: t('calories.statLeft'), value: '—' };
+                }
+                const delta = Number(formatKg(dayWeight - settings.weightGoal));
+                if (Math.abs(delta) < 0.05) {
+                  return { label: t('calories.statOnTarget'), value: `0 ${t('calories.kg')}` };
+                }
+                return {
+                  label: delta > 0 ? t('calories.statToLose') : t('calories.statToGain'),
+                  value: `${formatKg(Math.abs(delta))} ${t('calories.kg')}`,
+                };
+              })(),
+            ].map((card) => (
+              <div key={card.label} className="rounded-2xl bg-brand-50/40 p-3 ring-1 ring-line">
+                <p className="text-[11px] font-medium tracking-wide text-muted uppercase">{card.label}</p>
+                <p className="mt-1 text-sm font-semibold text-ink sm:text-base">{card.value}</p>
+              </div>
+            ))}
+          </div>
+
+          <form
+            className="grid gap-3 sm:grid-cols-[1fr_auto]"
+            onSubmit={(event) => void onSaveWeight(event)}
+          >
+            <Input
+              label={t('calories.weightToday')}
+              type="number"
+              min="20"
+              max="400"
+              step="0.1"
+              value={weightInput}
+              onChange={(event) => setWeightInput(event.target.value)}
+              placeholder={t('calories.emptyWeight')}
+            />
+            <div className="flex items-end">
+              <Button type="submit" isLoading={setWeight.isPending} className="w-full sm:w-auto">
+                {t('calories.saveWeight')}
+              </Button>
+            </div>
+          </form>
+        </section>
 
         <ErrorMessage message={formError ?? undefined} />
       </section>
