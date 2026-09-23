@@ -52,20 +52,20 @@ export class RhythmService {
     const streakFrom = addUtcDays(parseDateOnly(today), -(HABIT_CYCLE_DAYS + 2));
     const [habits, monthDays, recentDays, lifetimeGroups] = await Promise.all([
       prisma.habit.findMany({
-        where: { userId },
-        orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
+        where: { userId, isActive: true },
+        orderBy: { createdAt: 'asc' },
       }),
-      prisma.habitDay.findMany({
-        where: { userId, date: { gte: from, lt: to } },
+      prisma.habitLog.findMany({
+        where: { userId, completed: true, date: { gte: from, lt: to } },
         orderBy: { date: 'asc' },
       }),
-      prisma.habitDay.findMany({
-        where: { userId, date: { gte: streakFrom } },
+      prisma.habitLog.findMany({
+        where: { userId, completed: true, date: { gte: streakFrom } },
         select: { habitId: true, date: true },
       }),
-      prisma.habitDay.groupBy({
+      prisma.habitLog.groupBy({
         by: ['habitId'],
-        where: { userId },
+        where: { userId, completed: true },
         _count: { _all: true },
       }),
     ]);
@@ -101,7 +101,7 @@ export class RhythmService {
         return {
           id: habit.id,
           title: habit.title,
-          sortOrder: habit.sortOrder,
+          sortOrder: 0,
           createdAt: habit.createdAt.toISOString(),
           checks,
           done: checks.length,
@@ -115,7 +115,7 @@ export class RhythmService {
   }
 
   async createHabit(userId: string, input: CreateHabitInput) {
-    const count = await prisma.habit.count({ where: { userId } });
+    const count = await prisma.habit.count({ where: { userId, isActive: true } });
     if (count >= MAX_HABITS) {
       throw new AppError(`You can track up to ${MAX_HABITS} habits.`, {
         statusCode: 400,
@@ -123,16 +123,9 @@ export class RhythmService {
       });
     }
 
-    const last = await prisma.habit.findFirst({
-      where: { userId },
-      orderBy: { sortOrder: 'desc' },
-      select: { sortOrder: true },
-    });
-
     return prisma.habit.create({
       data: {
         title: input.title,
-        sortOrder: (last?.sortOrder ?? 0) + 1,
         userId,
       },
     });
@@ -154,7 +147,7 @@ export class RhythmService {
     if (!existing) {
       throw new AppError('Habit not found', { statusCode: 404, code: 'HABIT_NOT_FOUND' });
     }
-    await prisma.habit.delete({ where: { id } });
+    await prisma.habit.update({ where: { id }, data: { isActive: false } });
     return { success: true };
   }
 
@@ -173,13 +166,13 @@ export class RhythmService {
     }
 
     if (input.done) {
-      await prisma.habitDay.upsert({
+      await prisma.habitLog.upsert({
         where: { habitId_date: { habitId: input.habitId, date } },
-        create: { habitId: input.habitId, userId, date },
-        update: {},
+        create: { habitId: input.habitId, userId, date, completed: true },
+        update: { completed: true },
       });
     } else {
-      await prisma.habitDay.deleteMany({
+      await prisma.habitLog.deleteMany({
         where: { habitId: input.habitId, userId, date },
       });
     }

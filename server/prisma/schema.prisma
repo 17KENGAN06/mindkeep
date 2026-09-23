@@ -85,7 +85,7 @@ model User {
   waterDays          WaterDay[]
   weightDays         WeightDay[]
   habits             Habit[]
-  habitDays          HabitDay[]
+  habitLogs          HabitLog[]
 }
 
 model UserReview {
@@ -337,29 +337,34 @@ model WeightDay {
 }
 
 model Habit {
-  id        String   @id @default(cuid())
-  title     String
-  sortOrder Int      @default(0)
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  title         String
+  isActive      Boolean  @default(true)
+  targetPerWeek Int      @default(7)
+  userId        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   user User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  days HabitDay[]
+  logs HabitLog[]
 
-  @@index([userId, sortOrder])
+  @@index([userId])
+  @@index([userId, isActive])
 }
 
-model HabitDay {
+model HabitLog {
   id        String   @id @default(cuid())
   date      DateTime
+  completed Boolean  @default(true)
   habitId   String
   userId    String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([habitId, date])
+  @@index([userId])
   @@index([userId, date])
 }
