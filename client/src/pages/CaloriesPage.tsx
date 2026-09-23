@@ -418,25 +418,22 @@ export function CaloriesPage() {
             <p className="mt-1 max-w-xl text-sm text-muted">{t('calories.weightGuide')}</p>
           </div>
 
-          <div className="space-y-1.5">
-            <form
-              className="grid w-full max-w-xl grid-cols-1 items-end gap-3 sm:grid-cols-[minmax(0,1fr)_11rem]"
-              onSubmit={(event) => void onSaveWeightGoal(event)}
-            >
-              <Input
-                label={t('calories.weightGoal')}
-                type="text"
-                inputMode="decimal"
-                autoComplete="off"
-                value={weightGoalInput}
-                onChange={(event) => setWeightGoalInput(event.target.value)}
-              />
-              <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:!w-full">
-                {t('calories.saveGoals')}
-              </Button>
-            </form>
-            <p className="max-w-xl text-xs text-muted">{t('calories.weightDecimalHint')}</p>
-          </div>
+          <form className="max-w-xl" onSubmit={(event) => void onSaveWeightGoal(event)}>
+            <Input
+              label={t('calories.weightGoal')}
+              type="text"
+              inputMode="decimal"
+              autoComplete="off"
+              value={weightGoalInput}
+              onChange={(event) => setWeightGoalInput(event.target.value)}
+              hint={t('calories.weightDecimalHint')}
+              action={
+                <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:!w-44">
+                  {t('calories.saveGoals')}
+                </Button>
+              }
+            />
+          </form>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[
@@ -485,26 +482,23 @@ export function CaloriesPage() {
             onSelectDate={setSelectedDate}
           />
 
-          <div className="space-y-1.5">
-            <form
-              className="grid w-full max-w-xl grid-cols-1 items-end gap-3 sm:grid-cols-[minmax(0,1fr)_11rem]"
-              onSubmit={(event) => void onSaveWeight(event)}
-            >
-              <Input
-                label={t('calories.weightToday')}
-                type="text"
-                inputMode="decimal"
-                autoComplete="off"
-                value={weightInput}
-                onChange={(event) => setWeightInput(event.target.value)}
-                placeholder="84.1"
-              />
-              <Button type="submit" isLoading={setWeight.isPending} className="w-full sm:!w-full">
-                {t('calories.saveWeight')}
-              </Button>
-            </form>
-            <p className="max-w-xl text-xs text-muted">{t('calories.weightDecimalHint')}</p>
-          </div>
+          <form className="max-w-xl" onSubmit={(event) => void onSaveWeight(event)}>
+            <Input
+              label={t('calories.weightToday')}
+              type="text"
+              inputMode="decimal"
+              autoComplete="off"
+              value={weightInput}
+              onChange={(event) => setWeightInput(event.target.value)}
+              placeholder="84.1"
+              hint={t('calories.weightDecimalHint')}
+              action={
+                <Button type="submit" isLoading={setWeight.isPending} className="w-full sm:!w-44">
+                  {t('calories.saveWeight')}
+                </Button>
+              }
+            />
+          </form>
         </section>
 
         <ErrorMessage message={formError ?? undefined} />

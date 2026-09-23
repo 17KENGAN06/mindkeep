@@ -1,28 +1,39 @@
-import type { InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes, ReactNode } from 'react';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   error?: string;
   hint?: string;
+  action?: ReactNode;
 };
 
-export function Input({ label, error, hint, id, className = '', ...props }: InputProps) {
+export function Input({ label, error, hint, action, id, className = '', ...props }: InputProps) {
   const inputId = id ?? props.name;
+  const describedBy = error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined;
 
   return (
-    <label className="block space-y-1.5" htmlFor={inputId}>
-      <span className="text-sm font-medium text-ink">{label}</span>
+    <div
+      className={
+        action
+          ? 'grid grid-cols-1 items-center gap-x-3 gap-y-1.5 sm:grid-cols-[minmax(0,1fr)_auto]'
+          : 'block space-y-1.5'
+      }
+    >
+      <label className={`block text-sm font-medium text-ink${action ? ' sm:col-span-2' : ''}`} htmlFor={inputId}>
+        {label}
+      </label>
       <input
         id={inputId}
         className={`w-full rounded-xl border bg-panel px-3 py-2.5 text-sm text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
           error ? 'border-red-400' : 'border-line'
         } ${className}`}
         aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
+        aria-describedby={describedBy}
         {...props}
       />
+      {action ? <div className="sm:row-start-2">{action}</div> : null}
       {hint && !error ? (
-        <span id={`${inputId}-hint`} className="block text-xs text-muted">
+        <span id={`${inputId}-hint`} className={`block text-xs text-muted${action ? ' sm:col-start-1' : ''}`}>
           {hint}
         </span>
       ) : null}
@@ -31,6 +42,6 @@ export function Input({ label, error, hint, id, className = '', ...props }: Inpu
           {error}
         </span>
       ) : null}
-    </label>
+    </div>
   );
 }
