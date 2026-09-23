@@ -420,7 +420,7 @@ export function CaloriesPage() {
 
           <div className="space-y-1.5">
             <form
-              className="flex flex-col gap-3 sm:flex-row sm:items-end"
+              className="grid w-full max-w-xl grid-cols-1 items-end gap-3 sm:grid-cols-[minmax(0,1fr)_11rem]"
               onSubmit={(event) => void onSaveWeightGoal(event)}
             >
               <Input
@@ -431,11 +431,11 @@ export function CaloriesPage() {
                 value={weightGoalInput}
                 onChange={(event) => setWeightGoalInput(event.target.value)}
               />
-              <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:w-auto">
+              <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:!w-full">
                 {t('calories.saveGoals')}
               </Button>
             </form>
-            <p className="text-xs text-muted">{t('calories.weightDecimalHint')}</p>
+            <p className="max-w-xl text-xs text-muted">{t('calories.weightDecimalHint')}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -487,7 +487,7 @@ export function CaloriesPage() {
 
           <div className="space-y-1.5">
             <form
-              className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end"
+              className="grid w-full max-w-xl grid-cols-1 items-end gap-3 sm:grid-cols-[minmax(0,1fr)_11rem]"
               onSubmit={(event) => void onSaveWeight(event)}
             >
               <Input
@@ -499,11 +499,11 @@ export function CaloriesPage() {
                 onChange={(event) => setWeightInput(event.target.value)}
                 placeholder="84.1"
               />
-              <Button type="submit" isLoading={setWeight.isPending} className="w-full sm:w-auto">
+              <Button type="submit" isLoading={setWeight.isPending} className="w-full sm:!w-full">
                 {t('calories.saveWeight')}
               </Button>
             </form>
-            <p className="text-xs text-muted">{t('calories.weightDecimalHint')}</p>
+            <p className="max-w-xl text-xs text-muted">{t('calories.weightDecimalHint')}</p>
           </div>
         </section>
 
