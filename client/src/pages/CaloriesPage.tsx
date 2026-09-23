@@ -418,23 +418,25 @@ export function CaloriesPage() {
             <p className="mt-1 max-w-xl text-sm text-muted">{t('calories.weightGuide')}</p>
           </div>
 
-          <form
-            className="flex flex-col gap-3 sm:flex-row sm:items-end"
-            onSubmit={(event) => void onSaveWeightGoal(event)}
-          >
-            <Input
-              label={t('calories.weightGoal')}
-              type="text"
-              inputMode="decimal"
-              autoComplete="off"
-              value={weightGoalInput}
-              onChange={(event) => setWeightGoalInput(event.target.value)}
-              hint={t('calories.weightDecimalHint')}
-            />
-            <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:w-auto">
-              {t('calories.saveGoals')}
-            </Button>
-          </form>
+          <div className="space-y-1.5">
+            <form
+              className="flex flex-col gap-3 sm:flex-row sm:items-end"
+              onSubmit={(event) => void onSaveWeightGoal(event)}
+            >
+              <Input
+                label={t('calories.weightGoal')}
+                type="text"
+                inputMode="decimal"
+                autoComplete="off"
+                value={weightGoalInput}
+                onChange={(event) => setWeightGoalInput(event.target.value)}
+              />
+              <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:w-auto">
+                {t('calories.saveGoals')}
+              </Button>
+            </form>
+            <p className="text-xs text-muted">{t('calories.weightDecimalHint')}</p>
+          </div>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[
@@ -483,26 +485,26 @@ export function CaloriesPage() {
             onSelectDate={setSelectedDate}
           />
 
-          <form
-            className="grid gap-3 sm:grid-cols-[1fr_auto]"
-            onSubmit={(event) => void onSaveWeight(event)}
-          >
-            <Input
-              label={t('calories.weightToday')}
-              type="text"
-              inputMode="decimal"
-              autoComplete="off"
-              value={weightInput}
-              onChange={(event) => setWeightInput(event.target.value)}
-              placeholder="84.1"
-              hint={t('calories.weightDecimalHint')}
-            />
-            <div className="flex items-end">
+          <div className="space-y-1.5">
+            <form
+              className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end"
+              onSubmit={(event) => void onSaveWeight(event)}
+            >
+              <Input
+                label={t('calories.weightToday')}
+                type="text"
+                inputMode="decimal"
+                autoComplete="off"
+                value={weightInput}
+                onChange={(event) => setWeightInput(event.target.value)}
+                placeholder="84.1"
+              />
               <Button type="submit" isLoading={setWeight.isPending} className="w-full sm:w-auto">
                 {t('calories.saveWeight')}
               </Button>
-            </div>
-          </form>
+            </form>
+            <p className="text-xs text-muted">{t('calories.weightDecimalHint')}</p>
+          </div>
         </section>
 
         <ErrorMessage message={formError ?? undefined} />
