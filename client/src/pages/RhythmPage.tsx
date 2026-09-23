@@ -159,7 +159,7 @@ export function RhythmPage() {
         ))}
       </section>
 
-      <form className="max-w-xl" onSubmit={(event) => void onAdd(event)}>
+      <form className="w-full max-w-3xl" onSubmit={(event) => void onAdd(event)}>
         <Input
           label={t('rhythm.addLabel')}
           value={title}
