@@ -96,7 +96,7 @@ export class NutritionService {
     const settings = await this.getSettings(userId);
     const { from, to } = periodRange(query);
 
-    const trendFrom = new Date(Date.UTC(query.year, query.month - 4, 1, 0, 0, 0));
+    const trendFrom = new Date(Date.UTC(query.year, query.month - 12, 1, 0, 0, 0));
 
     const [meals, waterDays, weightDays, weightTrendDays] = await Promise.all([
       prisma.meal.findMany({

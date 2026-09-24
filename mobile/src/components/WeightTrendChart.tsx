@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { WeightDay } from '../types/nutrition';
 import { formatDate, formatMonthShort } from '../utils/date';
+
+export const WEIGHT_TREND_RANGES = [1, 3, 6, 12] as const;
+export type WeightTrendRange = (typeof WEIGHT_TREND_RANGES)[number];
 
 type WeightTrendChartProps = {
   points: WeightDay[];
@@ -17,6 +20,14 @@ type WeightTrendChartProps = {
 
 function formatKg(value: number): string {
   return (Math.round(value * 10) / 10).toFixed(1);
+}
+
+function pad(value: number): string {
+  return String(value).padStart(2, '0');
+}
+
+function dateKey(year: number, month: number, day: number): string {
+  return `${year}-${pad(month)}-${pad(day)}`;
 }
 
 function niceScale(minValue: number, maxValue: number): { min: number; max: number; ticks: number[] } {
@@ -32,6 +43,30 @@ function utcDay(date: string): number {
   return Date.UTC(Number(date.slice(0, 4)), Number(date.slice(5, 7)) - 1, Number(date.slice(8, 10)));
 }
 
+function rangeBounds(year: number, month: number, monthsCount: WeightTrendRange) {
+  const rangeStart = Date.UTC(year, month - monthsCount, 1);
+  const rangeEnd = Date.UTC(year, month, 1);
+  const start = new Date(rangeStart);
+  const endExclusive = new Date(rangeEnd);
+  return {
+    rangeStart,
+    rangeEnd,
+    startKey: dateKey(start.getUTCFullYear(), start.getUTCMonth() + 1, start.getUTCDate()),
+    endKey: dateKey(endExclusive.getUTCFullYear(), endExclusive.getUTCMonth() + 1, endExclusive.getUTCDate()),
+    months: Array.from({ length: monthsCount }, (_, index) => {
+      const date = new Date(year, month - monthsCount + index, 1);
+      return { year: date.getFullYear(), month: date.getMonth() + 1 };
+    }),
+  };
+}
+
+function dayLabels(year: number, month: number): Array<{ date: string; label: string }> {
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const days = [1, 8, 15, 22].filter((day) => day <= daysInMonth);
+  if (daysInMonth > 22) days.push(daysInMonth);
+  return days.map((day) => ({ date: dateKey(year, month, day), label: String(day) }));
+}
+
 export function WeightTrendChart({
   points,
   selectedDate,
@@ -43,18 +78,28 @@ export function WeightTrendChart({
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const [chartWidth, setChartWidth] = useState(320);
+  const [range, setRange] = useState<WeightTrendRange>(1);
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
-  const sorted = [...points].sort((a, b) => a.date.localeCompare(b.date));
+  const bounds = rangeBounds(year, month, range);
+  const sorted = useMemo(
+    () =>
+      [...points]
+        .filter((point) => point.date >= bounds.startKey && point.date < bounds.endKey)
+        .sort((a, b) => a.date.localeCompare(b.date)),
+    [bounds.endKey, bounds.startKey, points],
+  );
   const selected =
     sorted.find((point) => point.date === selectedDate) ?? sorted[sorted.length - 1] ?? null;
 
-  const months = [3, 2, 1, 0].map((offset) => {
-    const date = new Date(year, month - 1 - offset, 1);
-    return { year: date.getFullYear(), month: date.getMonth() + 1 };
-  });
-  const firstMonth = months[0] ?? { year, month };
-  const rangeStart = Date.UTC(firstMonth.year, firstMonth.month - 1, 1);
-  const rangeEnd = Date.UTC(year, month, 1);
+  const axis =
+    range === 1
+      ? dayLabels(year, month)
+      : bounds.months
+          .filter((_, index) => range < 12 || index % 2 === 0)
+          .map((item) => ({
+            date: dateKey(item.year, item.month, 1),
+            label: formatMonthShort(item.year, item.month, language),
+          }));
 
   const values = sorted.map((point) => point.kg);
   if (goalKg != null) values.push(goalKg);
@@ -69,7 +114,7 @@ export function WeightTrendChart({
   const innerHeight = chartHeight - padTop - padBottom;
 
   const toX = (date: string) => {
-    const ratio = (utcDay(date) - rangeStart) / Math.max(rangeEnd - rangeStart, 1);
+    const ratio = (utcDay(date) - bounds.rangeStart) / Math.max(bounds.rangeEnd - bounds.rangeStart, 1);
     return padLeft + Math.min(1, Math.max(0, ratio)) * innerWidth;
   };
   const toY = (kg: number) => padTop + ((scale.max - kg) / (scale.max - scale.min)) * innerHeight;
@@ -78,6 +123,26 @@ export function WeightTrendChart({
 
   return (
     <View style={styles.wrap}>
+      <View style={styles.rangeHead}>
+        <Text style={[styles.rangeLabel, { color: colors.muted }]}>{t('fuel.weightRange')}</Text>
+        <View style={[styles.rangeRow, { backgroundColor: `${colors.brand}14`, borderColor: colors.line }]}>
+          {WEIGHT_TREND_RANGES.map((value) => {
+            const selectedRange = value === range;
+            return (
+              <Pressable
+                key={value}
+                onPress={() => setRange(value)}
+                style={[styles.rangeBtn, selectedRange && { backgroundColor: colors.brand }]}
+              >
+                <Text style={[styles.rangeText, { color: selectedRange ? colors.onBrand : colors.muted }]}>
+                  {t(`fuel.weightRange${value}`)}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </View>
+
       {sorted.length === 0 ? (
         <View style={[styles.empty, { borderColor: colors.line }]}>
           <Text style={[styles.emptyText, { color: colors.muted }]}>{t('fuel.weightChartEmpty')}</Text>
@@ -97,18 +162,18 @@ export function WeightTrendChart({
                 </View>
               );
             })}
-            {months.map((item, index) => (
+            {axis.map((item) => (
               <Text
-                key={`${item.year}-${item.month}`}
+                key={item.date}
                 style={[
                   styles.month,
                   {
                     color: colors.muted,
-                    left: padLeft + ((index + 0.5) / months.length) * innerWidth - 16,
+                    left: toX(item.date) - 16,
                   },
                 ]}
               >
-                {formatMonthShort(item.year, item.month, language)}
+                {item.label}
               </Text>
             ))}
             {coords.slice(1).map((point, index) => {
@@ -178,6 +243,22 @@ export function WeightTrendChart({
 
 const styles = StyleSheet.create({
   wrap: { gap: 8 },
+  rangeHead: { gap: 8 },
+  rangeLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
+  rangeRow: {
+    borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: 'row',
+    padding: 4,
+  },
+  rangeBtn: {
+    alignItems: 'center',
+    borderRadius: 12,
+    flex: 1,
+    minHeight: 36,
+    justifyContent: 'center',
+  },
+  rangeText: { fontSize: 14, fontWeight: '700' },
   empty: {
     alignItems: 'center',
     borderRadius: 16,
