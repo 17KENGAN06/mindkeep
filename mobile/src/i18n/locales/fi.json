@@ -622,11 +622,46 @@
       "timezone": "Aikavyöhyke",
       "materials": "Materiaalit",
       "reminders": "Muistutukset",
+      "uses": "Käyttää",
+      "lastActivity": "Aktiivisuus",
       "created": "Luotu"
     },
     "roles": {
       "admin": "Admin",
       "user": "Käyttäjä"
+    },
+    "backToUsers": "Takaisin käyttäjiin",
+    "activitySubtitle": "Vain osiot ja aktiivisuuden faktat — ei tekstejä eikä otsikoita.",
+    "modulesTitle": "Mitä käyttää",
+    "modulesHint": "Määrät ja päivämäärät. Kirjausten sisältö pysyy piilossa.",
+    "recentTitle": "Viimeisimmät toimet",
+    "recentHint": "Mitä teki tuotteessa, ilman itse kirjauksia.",
+    "used": "Käyttää",
+    "idle": "Ei vielä",
+    "noActivity": "Ei vielä aktiivisuutta",
+    "neverUsed": "Ei ole käyttänyt tätä osiota",
+    "lastUsed": "Viimeksi {{date}}",
+    "openActivity": "Näytä aktiivisuus",
+    "modules": {
+      "review": "Kertaus",
+      "tasks": "Tehtävät",
+      "habits": "Tavat",
+      "nutrition": "Ravinto",
+      "finance": "Talous",
+      "notes": "Muistiinpanot"
+    },
+    "moduleHints": {
+      "review": "Muistutuksia: {{reminders}}, valmiina: {{completed}}",
+      "tasks": "Valmiina: {{completed}}",
+      "habits": "Merkintöjä: {{checks}}",
+      "nutrition": "Ateriat: {{meals}} · vesi: {{water}} · paino: {{weight}}",
+      "count": "Kirjauksia: {{count}}"
+    },
+    "actions": {
+      "created": "loi kirjauksen",
+      "completed": "valmisti",
+      "logged": "kirjasi",
+      "checked": "merkitsi"
     }
   },
   "statistics": {

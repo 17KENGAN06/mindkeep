@@ -1,16 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { adminApi } from '@/api/admin';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
+import type { AppLanguage } from '@/i18n';
+import { formatDate } from '@/utils/date';
 
 export function AdminPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
@@ -150,15 +153,22 @@ export function AdminPage() {
                   <th className="px-4 py-3 font-medium">{t('admin.columns.email')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.role')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.timezone')}</th>
-                  <th className="px-4 py-3 font-medium">{t('admin.columns.materials')}</th>
-                  <th className="px-4 py-3 font-medium">{t('admin.columns.reminders')}</th>
+                  <th className="px-4 py-3 font-medium">{t('admin.columns.uses')}</th>
+                  <th className="px-4 py-3 font-medium">{t('admin.columns.lastActivity')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.created')}</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((item) => (
                   <tr key={item.id} className="border-t border-line">
-                    <td className="px-4 py-3 font-medium text-ink">{item.name}</td>
+                    <td className="px-4 py-3 font-medium text-ink">
+                      <Link
+                        to={`/admin/users/${item.id}`}
+                        className="text-brand-500 no-underline hover:underline"
+                      >
+                        {item.name}
+                      </Link>
+                    </td>
                     <td className="px-4 py-3 text-muted">{item.email}</td>
                     <td className="px-4 py-3">
                       <span
@@ -172,8 +182,18 @@ export function AdminPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-muted">{item.timezone}</td>
-                    <td className="px-4 py-3 text-ink">{item.materialsCount}</td>
-                    <td className="px-4 py-3 text-ink">{item.remindersCount}</td>
+                    <td className="px-4 py-3">
+                      {(item.modules ?? []).length === 0 ? (
+                        <span className="text-muted">{t('admin.idle')}</span>
+                      ) : (
+                        <span className="text-ink">
+                          {(item.modules ?? []).map((moduleId) => t(`admin.modules.${moduleId}`)).join(' · ')}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-muted">
+                      {item.lastActivityAt ? formatDate(item.lastActivityAt, language) : t('admin.noActivity')}
+                    </td>
                     <td className="px-4 py-3 text-muted">
                       {format(new Date(item.createdAt), 'yyyy-MM-dd')}
                     </td>

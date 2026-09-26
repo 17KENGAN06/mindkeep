@@ -1,11 +1,14 @@
 import {
   ActivityIndicator,
+  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { AppButton } from '../../components/ui';
 import { useAuth } from '../../features/auth/useAuth';
@@ -17,12 +20,14 @@ import {
 } from '../../features/admin/useAdmin';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
+import type { MoreStackParamList } from '../../navigation/types';
 import { formatDate } from '../../utils/date';
 
 export function AdminScreen() {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
+  const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
   const { user } = useAuth();
   const enabled = user?.role === 'ADMIN';
   const overviewQuery = useAdminOverview(enabled);
@@ -130,22 +135,32 @@ export function AdminScreen() {
       {users.length === 0 ? (
         <Text style={[styles.empty, { color: colors.muted }]}>{t('admin.empty')}</Text>
       ) : (
-        users.map((item) => (
-          <View key={item.id} style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{item.name}</Text>
-            <Text style={[styles.meta, { color: colors.muted }]}>{item.email}</Text>
-            <Text style={[styles.meta, { color: colors.ink }]}>
-              {item.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')} · {item.timezone}
-            </Text>
-            <Text style={[styles.meta, { color: colors.muted }]}>
-              {t('admin.columns.materials')}: {item.materialsCount} · {t('admin.columns.reminders')}:{' '}
-              {item.remindersCount}
-            </Text>
-            <Text style={[styles.meta, { color: colors.muted }]}>
-              {t('admin.columns.created')}: {formatDate(item.createdAt, language)}
-            </Text>
-          </View>
-        ))
+        users.map((item) => {
+          const modules = item.modules ?? [];
+          return (
+            <Pressable
+              key={item.id}
+              onPress={() => navigation.navigate('AdminUser', { id: item.id })}
+              style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
+            >
+              <Text style={[styles.cardTitle, { color: colors.ink }]}>{item.name}</Text>
+              <Text style={[styles.meta, { color: colors.muted }]}>{item.email}</Text>
+              <Text style={[styles.meta, { color: colors.ink }]}>
+                {item.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')} · {item.timezone}
+              </Text>
+              <Text style={[styles.meta, { color: colors.ink }]}>
+                {modules.length === 0
+                  ? t('admin.idle')
+                  : modules.map((moduleId) => t(`admin.modules.${moduleId}`)).join(' · ')}
+              </Text>
+              <Text style={[styles.meta, { color: colors.muted }]}>
+                {item.lastActivityAt
+                  ? `${t('admin.columns.lastActivity')}: ${formatDate(item.lastActivityAt, language)}`
+                  : t('admin.noActivity')}
+              </Text>
+            </Pressable>
+          );
+        })
       )}
     </ScrollView>
   );

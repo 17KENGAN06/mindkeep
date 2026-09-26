@@ -622,11 +622,46 @@
       "timezone": "Часовой пояс",
       "materials": "Материалы",
       "reminders": "Напоминания",
+      "uses": "Чем пользуется",
+      "lastActivity": "Активность",
       "created": "Создан"
     },
     "roles": {
       "admin": "Админ",
       "user": "Пользователь"
+    },
+    "backToUsers": "К пользователям",
+    "activitySubtitle": "Только разделы и факты активности — без текстов и названий.",
+    "modulesTitle": "Какими разделами пользуется",
+    "modulesHint": "Счётчики и даты. Содержимое записей не показывается.",
+    "recentTitle": "Последние действия",
+    "recentHint": "Что делал в продукте, без самих записей.",
+    "used": "Пользуется",
+    "idle": "Пока нет",
+    "noActivity": "Активности ещё нет",
+    "neverUsed": "Ещё не заходил в раздел",
+    "lastUsed": "Последний раз {{date}}",
+    "openActivity": "Смотреть активность",
+    "modules": {
+      "review": "Повторения",
+      "tasks": "Задачи",
+      "habits": "Привычки",
+      "nutrition": "Питание",
+      "finance": "Финансы",
+      "notes": "Заметки"
+    },
+    "moduleHints": {
+      "review": "Напоминаний: {{reminders}}, закрыто: {{completed}}",
+      "tasks": "Выполнено: {{completed}}",
+      "habits": "Отметок: {{checks}}",
+      "nutrition": "Приёмы: {{meals}} · вода: {{water}} · вес: {{weight}}",
+      "count": "Записей: {{count}}"
+    },
+    "actions": {
+      "created": "создал запись",
+      "completed": "закрыл",
+      "logged": "записал",
+      "checked": "отметил"
     }
   },
   "statistics": {

@@ -13,6 +13,11 @@ export class AdminController {
     res.json({ users });
   }
 
+  async getUserActivity(req: Request, res: Response): Promise<void> {
+    const activity = await adminService.getUserActivity(req.params.id as string);
+    res.json({ activity });
+  }
+
   async listReviews(_req: Request, res: Response): Promise<void> {
     res.json({ reviews: await adminService.listReviews() });
   }

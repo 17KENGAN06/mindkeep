@@ -46,6 +46,8 @@ export function DocumentTitle() {
         key = 'seo.titles.notes';
       } else if (pathname.startsWith('/finance/')) {
         key = 'seo.titles.budget';
+      } else if (pathname.startsWith('/admin/users/')) {
+        key = 'seo.titles.adminUser';
       } else if (pathname.startsWith('/blog/')) {
         key = 'seo.titles.blog';
       } else {

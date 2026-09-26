@@ -12,6 +12,7 @@ import { CategoriesPage } from '@/pages/CategoriesPage';
 import { ContactPage } from '@/pages/ContactPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { AdminPage } from '@/pages/AdminPage';
+import { AdminUserPage } from '@/pages/AdminUserPage';
 import { FinanceBudgetPage } from '@/pages/finance/FinanceBudgetPage';
 import { FinanceCategoriesPage } from '@/pages/finance/FinanceCategoriesPage';
 import { FinanceTransactionsPage } from '@/pages/finance/FinanceTransactionsPage';
@@ -146,6 +147,7 @@ export function AppRoutes() {
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/users/:id" element={<AdminUserPage />} />
         </Route>
       </Route>
 

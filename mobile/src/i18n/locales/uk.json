@@ -622,11 +622,46 @@
       "timezone": "Часовий пояс",
       "materials": "Матеріали",
       "reminders": "Нагадування",
+      "uses": "Чим користується",
+      "lastActivity": "Активність",
       "created": "Створено"
     },
     "roles": {
       "admin": "Адмін",
       "user": "Користувач"
+    },
+    "backToUsers": "До користувачів",
+    "activitySubtitle": "Лише розділи і факти активності — без текстів і назв.",
+    "modulesTitle": "Якими розділами користується",
+    "modulesHint": "Лічильники і дати. Вміст записів не показується.",
+    "recentTitle": "Останні дії",
+    "recentHint": "Що робив у продукті, без самих записів.",
+    "used": "Користується",
+    "idle": "Ще немає",
+    "noActivity": "Активності ще немає",
+    "neverUsed": "Ще не заходив у розділ",
+    "lastUsed": "Останній раз {{date}}",
+    "openActivity": "Дивитися активність",
+    "modules": {
+      "review": "Повторення",
+      "tasks": "Задачі",
+      "habits": "Звички",
+      "nutrition": "Харчування",
+      "finance": "Фінанси",
+      "notes": "Нотатки"
+    },
+    "moduleHints": {
+      "review": "Нагадувань: {{reminders}}, закрито: {{completed}}",
+      "tasks": "Виконано: {{completed}}",
+      "habits": "Позначок: {{checks}}",
+      "nutrition": "Прийоми: {{meals}} · вода: {{water}} · вага: {{weight}}",
+      "count": "Записів: {{count}}"
+    },
+    "actions": {
+      "created": "створив запис",
+      "completed": "закрив",
+      "logged": "записав",
+      "checked": "позначив"
     }
   },
   "statistics": {

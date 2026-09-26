@@ -5,6 +5,7 @@ import { requireAdmin, requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
 import {
   adminReviewIdSchema,
+  adminUserIdSchema,
   moderateReviewSchema,
 } from '@/validations/admin.schemas.js';
 
@@ -20,6 +21,12 @@ adminRouter.get(
 adminRouter.get(
   '/users',
   asyncHandler((req, res) => adminController.listUsers(req, res)),
+);
+
+adminRouter.get(
+  '/users/:id',
+  validate(adminUserIdSchema, 'params'),
+  asyncHandler((req, res) => adminController.getUserActivity(req, res)),
 );
 
 adminRouter.get(

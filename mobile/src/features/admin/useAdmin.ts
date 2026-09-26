@@ -17,6 +17,14 @@ export function useAdminUsers(enabled: boolean) {
   });
 }
 
+export function useAdminUserActivity(id: string | undefined, enabled: boolean) {
+  return useQuery({
+    queryKey: ['admin', 'users', id],
+    queryFn: async () => (await adminApi.userActivity(id!)).activity,
+    enabled: enabled && Boolean(id),
+  });
+}
+
 export function useAdminReviews(enabled: boolean) {
   return useQuery({
     queryKey: ['admin', 'reviews'],

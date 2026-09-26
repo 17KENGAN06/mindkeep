@@ -502,11 +502,46 @@
       "timezone": "Timezone",
       "materials": "Materials",
       "reminders": "Reminders",
+      "uses": "Uses",
+      "lastActivity": "Activity",
       "created": "Created"
     },
     "roles": {
       "admin": "Admin",
       "user": "User"
+    },
+    "backToUsers": "Back to users",
+    "activitySubtitle": "Only sections and activity facts — no titles or written text.",
+    "modulesTitle": "What they use",
+    "modulesHint": "Counts and dates. Entry contents stay hidden.",
+    "recentTitle": "Recent actions",
+    "recentHint": "What they did in the product, without the records themselves.",
+    "used": "Active",
+    "idle": "Not yet",
+    "noActivity": "No activity yet",
+    "neverUsed": "Has not used this section yet",
+    "lastUsed": "Last used {{date}}",
+    "openActivity": "View activity",
+    "modules": {
+      "review": "Reviews",
+      "tasks": "Tasks",
+      "habits": "Habits",
+      "nutrition": "Nutrition",
+      "finance": "Finance",
+      "notes": "Notes"
+    },
+    "moduleHints": {
+      "review": "Reminders: {{reminders}}, done: {{completed}}",
+      "tasks": "Completed: {{completed}}",
+      "habits": "Checks: {{checks}}",
+      "nutrition": "Meals: {{meals}} · water: {{water}} · weight: {{weight}}",
+      "count": "Records: {{count}}"
+    },
+    "actions": {
+      "created": "created a record",
+      "completed": "completed",
+      "logged": "logged",
+      "checked": "checked in"
     }
   },
   "auth": {
@@ -878,6 +913,7 @@
       "transactions": "Transactions · Mindkeep",
       "expenseCategories": "Expense categories · Mindkeep",
       "admin": "Admin · Mindkeep",
+      "adminUser": "User activity · Mindkeep",
       "fallback": "Mindkeep",
       "blog": "Blog · Mindkeep",
       "guide": "How to use · Mindkeep",

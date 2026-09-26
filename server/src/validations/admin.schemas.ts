@@ -5,6 +5,10 @@ export const adminReviewIdSchema = z.object({
   id: z.string().cuid(),
 });
 
+export const adminUserIdSchema = z.object({
+  id: z.string().cuid(),
+});
+
 export const moderateReviewSchema = z.object({
   status: z.enum([UserReviewStatus.APPROVED, UserReviewStatus.REJECTED]),
 });

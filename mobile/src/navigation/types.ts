@@ -36,6 +36,7 @@ export type MoreStackParamList = {
   Blog: undefined;
   BlogArticle: { slug: string };
   Admin: undefined;
+  AdminUser: { id: string };
 };
 
 export type AppTabParamList = {
