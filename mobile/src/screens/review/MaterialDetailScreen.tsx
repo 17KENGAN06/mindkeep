@@ -70,14 +70,17 @@ export function MaterialDetailScreen() {
         {t('materials.learnedAt')}: {formatDate(material.learnedAt, language)}
       </Text>
       {material.category ? (
-        <Text style={[styles.meta, { color: colors.muted }]}>
-          {t('materials.fields.category')}: {material.category.name}
-        </Text>
+        <View style={[styles.labelChip, { backgroundColor: colors.bg, borderColor: colors.line }]}>
+          <Text style={[styles.labelKey, { color: colors.muted }]}>{t('materials.fields.category')}</Text>
+          <Text style={[styles.labelValue, { color: colors.ink }]}>{material.category.name}</Text>
+        </View>
       ) : null}
 
       {material.content?.trim() ? (
         <View style={[styles.block, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('materials.fields.content')}</Text>
+          <View style={[styles.sectionHead, { backgroundColor: colors.bg, borderColor: colors.line }]}>
+            <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('materials.fields.content')}</Text>
+          </View>
           <MaterialBody content={material.content} />
         </View>
       ) : null}
@@ -143,6 +146,23 @@ const styles = StyleSheet.create({
   head: { flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
   title: { flex: 1, fontSize: 24, fontWeight: '700' },
   meta: { fontSize: 13 },
+  labelChip: {
+    alignSelf: 'flex-start',
+    borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  labelKey: { fontSize: 12, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase' },
+  labelValue: { fontSize: 14, fontWeight: '700' },
+  sectionHead: {
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
   block: {
     borderRadius: 20,
     borderWidth: 1,

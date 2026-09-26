@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { isValidElement, useState, type ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
@@ -57,6 +57,18 @@ function CodeBlock({ language, children }: { language: string; children: ReactNo
   );
 }
 
+function isTitleParagraph(children: ReactNode): boolean {
+  const parts = Array.isArray(children) ? children : [children];
+  const visible = parts.filter((part) => {
+    if (part == null || part === false) return false;
+    if (typeof part === 'string' || typeof part === 'number') return String(part).trim().length > 0;
+    return true;
+  });
+  if (visible.length !== 1) return false;
+  const only = visible[0];
+  return isValidElement(only) && (only.type === 'strong' || only.type === 'b');
+}
+
 function MarkdownLink({ href, children }: { href?: string; children: ReactNode }) {
   if (!href) return <>{children}</>;
   if (href.startsWith('#') || href.startsWith('/')) {
@@ -99,6 +111,12 @@ export function FormattedText({ text, className = '' }: FormattedTextProps) {
           },
           a({ href, children }) {
             return <MarkdownLink href={href}>{children}</MarkdownLink>;
+          },
+          p({ children }) {
+            if (isTitleParagraph(children)) {
+              return <h3>{children}</h3>;
+            }
+            return <p>{children}</p>;
           },
         }}
       >

@@ -65,15 +65,20 @@ export function MaterialDetailPage() {
 
       <section className="space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         {material.category ? (
-          <p className="text-sm text-muted">
-            {t('materials.fields.category')}: {material.category.name}
-          </p>
+          <div className="inline-flex items-center gap-2 rounded-2xl bg-brand-50 px-3.5 py-2 ring-1 ring-line">
+            <span className="text-xs font-semibold tracking-wide text-muted uppercase">
+              {t('materials.fields.category')}
+            </span>
+            <span className="text-sm font-semibold text-ink">{material.category.name}</span>
+          </div>
         ) : null}
 
         {material.content?.trim() ? (
           <div>
-            <h2 className="text-sm font-semibold text-ink">{t('materials.fields.content')}</h2>
-            <div className="mt-2">
+            <div className="rounded-2xl bg-brand-50 px-4 py-3 ring-1 ring-brand-200">
+              <p className="text-base font-semibold text-ink">{t('materials.fields.content')}</p>
+            </div>
+            <div className="mt-4">
               <FormattedText text={material.content} />
             </div>
           </div>
@@ -81,7 +86,9 @@ export function MaterialDetailPage() {
 
         {material.sourceUrl ? (
           <div>
-            <h2 className="text-sm font-semibold text-ink">{t('materials.fields.sourceUrl')}</h2>
+            <div className="rounded-2xl bg-brand-50 px-4 py-3 ring-1 ring-brand-200">
+              <p className="text-base font-semibold text-ink">{t('materials.fields.sourceUrl')}</p>
+            </div>
             <SourceLink href={material.sourceUrl} actionLabel={t('materials.openSource')} />
           </div>
         ) : null}

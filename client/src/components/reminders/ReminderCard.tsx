@@ -81,10 +81,10 @@ export function ReminderCard({
 
       {material.content?.trim() ? (
         <div className="mt-4 rounded-2xl bg-brand-50/30 px-4 py-4 ring-1 ring-line/70">
-          <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+          <p className="rounded-xl bg-brand-50 px-3 py-2 text-sm font-semibold text-ink ring-1 ring-brand-200">
             {t('materials.fields.content')}
           </p>
-          <div className="mt-2">
+          <div className="mt-4">
             <FormattedText text={material.content} />
           </div>
         </div>

@@ -83,7 +83,6 @@ export function MaterialForm({
             value={field.value ?? ''}
             onChange={field.onChange}
             label={t('materials.fields.content')}
-            hint={t('materials.fields.contentHint')}
             error={errors.content?.message}
           />
         )}

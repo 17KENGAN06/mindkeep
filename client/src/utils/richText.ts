@@ -1,4 +1,4 @@
-import { looksJammed, normalizePastedText } from '@/utils/pasteText';
+import { normalizePastedText, pickPastedText } from '@/utils/pasteText';
 
 const WORD = /[\p{L}\p{N}]/u;
 
@@ -102,6 +102,8 @@ export function markdownToHtml(markdown: string): string {
       const trimmed = part.trim();
       if (!trimmed) return '';
       if (/^<(h[1-4]|ul|ol)\b/.test(trimmed)) return trimmed;
+      const title = trimmed.match(/^<strong>([\s\S]+)<\/strong>$/);
+      if (title) return `<h3>${title[1]}</h3>`;
       return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
     })
     .filter(Boolean)
@@ -111,13 +113,8 @@ export function markdownToHtml(markdown: string): string {
 export function readClipboardAsMarkdown(data: DataTransfer | null): string {
   if (!data) return '';
   const html = data.getData('text/html');
-  const plain = normalizePastedText(data.getData('text/plain'));
   const fromHtml = html.trim() ? htmlToMarkdown(html) : '';
-
-  if (fromHtml && (!plain || looksJammed(plain) || fromHtml.includes('**') || fromHtml.includes('\n\n'))) {
-    return fromHtml;
-  }
-  return plain || fromHtml;
+  return pickPastedText(data.getData('text/plain'), fromHtml);
 }
 
 export function splitHtmlAtCaret(root: HTMLElement): { before: string; after: string } {

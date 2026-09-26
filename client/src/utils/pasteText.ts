@@ -5,15 +5,35 @@ export function normalizePastedText(value: string): string {
     .replace(/\r\n/g, '\n')
     .replace(/\r/g, '\n')
     .replace(/\u00A0|\u202F|\u2007/g, ' ')
-    .replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, '')
+    .replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, ' ')
+    .replace(/[^\S\n]{2,}/g, ' ')
     .replace(/\n{4,}/g, '\n\n\n');
 }
 
-export function looksJammed(value: string): boolean {
+export function spaceRatio(value: string): number {
   const letters = value.replace(/[^\p{L}\p{N}]+/gu, '');
-  if (letters.length < 24) return false;
-  const spaces = (value.match(/[ \t]/g) ?? []).length;
-  return spaces / letters.length < 0.045;
+  if (letters.length < 8) return 1;
+  return (value.match(/[ \t]/g) ?? []).length / letters.length;
+}
+
+export function looksJammed(value: string): boolean {
+  return spaceRatio(value) < 0.06;
+}
+
+export function pickPastedText(plain: string, fromHtml: string): string {
+  const p = normalizePastedText(plain);
+  const h = normalizePastedText(fromHtml);
+  const pScore = spaceRatio(p);
+  const hScore = spaceRatio(h);
+
+  if (pScore >= 0.06 && hScore >= 0.06) {
+    const htmlRicher = h.includes('**') || /^#{1,4} /m.test(h) || /^- /m.test(h);
+    if (htmlRicher && hScore >= pScore * 0.75) return h;
+    return pScore >= hScore ? p : h;
+  }
+  if (pScore >= 0.06) return p;
+  if (hScore >= 0.06) return h;
+  return pScore >= hScore ? p || h : h || p;
 }
 
 function joinInline(parts: string[]): string {
@@ -64,13 +84,8 @@ export function htmlToPlainText(html: string): string {
 export function readClipboard(data: DataTransfer | null): string {
   if (!data) return '';
   const html = data.getData('text/html');
-  const plain = normalizePastedText(data.getData('text/plain'));
   const fromHtml = html.trim() ? htmlToPlainText(html) : '';
-
-  if (looksJammed(plain) && fromHtml && !looksJammed(fromHtml)) {
-    return fromHtml;
-  }
-  return plain || fromHtml;
+  return pickPastedText(data.getData('text/plain'), fromHtml);
 }
 
 export function insertAtCursor(value: string, incoming: string, start: number, end = start): string {

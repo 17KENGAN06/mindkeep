@@ -76,8 +76,13 @@ export const RichNoteField = forwardRef<RichNoteHandle, RichNoteFieldProps>(func
         const markdown = readClipboardAsMarkdown(event.clipboardData);
         if (!markdown) return;
         if (onPasteMarkdown?.(markdown)) return;
-        document.execCommand('insertHTML', false, markdownToHtml(markdown));
-        emit();
+        const node = nodeRef.current;
+        if (!node) return;
+        const { before, after } = splitHtmlAtCaret(node);
+        const next = `${before}${markdown}${after}`;
+        lastValue.current = next;
+        node.innerHTML = markdownToHtml(next);
+        onChange(next);
       }}
     />
   );
