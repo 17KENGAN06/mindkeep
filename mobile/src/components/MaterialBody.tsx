@@ -27,7 +27,14 @@ export function MaterialBody({ content }: MaterialBodyProps) {
           </View>
         ) : (
           <Text key={block.id} style={[styles.text, { color: colors.ink }]}>
-            {block.value}
+            {block.value.split(/(\*\*[^*]+\*\*)/g).map((part, index) => {
+              const bold = part.startsWith('**') && part.endsWith('**') && part.length > 4;
+              return (
+                <Text key={`${block.id}-${index}`} style={bold ? styles.bold : undefined}>
+                  {bold ? part.slice(2, -2) : part}
+                </Text>
+              );
+            })}
           </Text>
         ),
       )}
@@ -38,6 +45,7 @@ export function MaterialBody({ content }: MaterialBodyProps) {
 const styles = StyleSheet.create({
   wrap: { gap: 10 },
   text: { fontSize: 15, lineHeight: 22 },
+  bold: { fontWeight: '700' },
   code: {
     borderRadius: 16,
     borderWidth: 1,

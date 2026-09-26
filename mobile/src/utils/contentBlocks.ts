@@ -28,6 +28,27 @@ export function ensureEditableBlocks(blocks: ContentBlock[]): ContentBlock[] {
   return next;
 }
 
+export function insertCodeSplit(
+  blocks: ContentBlock[],
+  textBlockId: string,
+  before: string,
+  after: string,
+): ContentBlock[] {
+  const index = blocks.findIndex((block) => block.id === textBlockId && block.type === 'text');
+  if (index < 0) {
+    return insertCodeAfter(blocks);
+  }
+  const next = [...blocks];
+  next.splice(
+    index,
+    1,
+    createContentBlock('text', before),
+    createContentBlock('code'),
+    createContentBlock('text', after),
+  );
+  return next;
+}
+
 export function insertCodeAt(blocks: ContentBlock[], textBlockId: string, cursor: number): ContentBlock[] {
   const index = blocks.findIndex((block) => block.id === textBlockId && block.type === 'text');
   if (index < 0) {

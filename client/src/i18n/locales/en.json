@@ -787,7 +787,7 @@
       "learnedAt": "Learning date",
       "category": "Category",
       "noCategory": "No category",
-      "contentHint": "Paste from ChatGPT or Telegram — spaces and line breaks stay. Insert code wherever you need it.",
+      "contentHint": "Paste from ChatGPT or Telegram — bold text, paragraphs, and spacing appear immediately.",
       "contentContinue": "Continue the text here"
     },
     "filters": {
