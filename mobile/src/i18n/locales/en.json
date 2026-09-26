@@ -246,6 +246,10 @@
       "titlePlaceholder": "Read, walk, call...",
       "minutes": "Minutes"
     },
+    "split": "Split",
+    "splitHint": "How many parts",
+    "splitProgress": "{{done}}/{{count}}",
+    "unsplit": "Join",
     "errors": {
       "title": "Give the task a name",
       "minutes": "Minutes must be at least 1"

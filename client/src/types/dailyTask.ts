@@ -6,6 +6,8 @@ export type DailyTask = {
   completed: boolean;
   completedAt: string | null;
   note: string;
+  splitCount: number;
+  splitDone: number;
   userId: string;
   createdAt: string;
   updatedAt: string;

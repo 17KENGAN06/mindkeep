@@ -45,6 +45,8 @@ export class DailyTaskService {
     completed: boolean;
     completedAt: Date | null;
     note: string;
+    splitCount: number;
+    splitDone: number;
     userId: string;
     createdAt: Date;
     updatedAt: Date;
@@ -52,6 +54,8 @@ export class DailyTaskService {
     return {
       ...task,
       date: toDateKey(task.date),
+      splitCount: Math.max(1, task.splitCount ?? 1),
+      splitDone: Math.max(0, task.splitDone ?? 0),
     };
   }
 
@@ -235,18 +239,48 @@ export class DailyTaskService {
       });
     }
 
+    let splitCount = existing.splitCount ?? 1;
+    let splitDone = existing.splitDone ?? 0;
+    let completed = existing.completed;
+
+    if (input.splitCount !== undefined) {
+      splitCount = input.splitCount;
+      splitDone = Math.min(splitDone, splitCount);
+      if (splitCount === 1) {
+        splitDone = completed ? 1 : 0;
+      } else if (completed) {
+        splitDone = splitCount;
+      }
+    }
+
+    if (input.splitDone !== undefined) {
+      splitDone = Math.min(Math.max(0, input.splitDone), splitCount);
+      if (splitCount > 1) {
+        completed = splitDone >= splitCount;
+      }
+    }
+
+    if (input.completed !== undefined) {
+      completed = input.completed;
+      if (splitCount > 1) {
+        splitDone = completed ? splitCount : 0;
+      }
+    }
+
     const task = await prisma.dailyTask.update({
       where: { id },
       data: {
         ...(input.title !== undefined ? { title: input.title } : {}),
         ...(input.minutes !== undefined ? { minutes: input.minutes } : {}),
         ...(input.note !== undefined ? { note: input.note } : {}),
-        ...(input.completed !== undefined
-          ? {
-              completed: input.completed,
-              completedAt: input.completed ? new Date() : null,
-            }
-          : {}),
+        splitCount,
+        splitDone,
+        completed,
+        completedAt: completed
+          ? existing.completed && existing.completedAt
+            ? existing.completedAt
+            : new Date()
+          : null,
       },
     });
 

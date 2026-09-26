@@ -246,6 +246,10 @@
       "titlePlaceholder": "Прочитать, прогулка, звонок...",
       "minutes": "Минуты"
     },
+    "split": "Разделить",
+    "splitHint": "На сколько частей",
+    "splitProgress": "{{done}}/{{count}}",
+    "unsplit": "Собрать",
     "errors": {
       "title": "Назовите задачу",
       "minutes": "Минуты — хотя бы 1"

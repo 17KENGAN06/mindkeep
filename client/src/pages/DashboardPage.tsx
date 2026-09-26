@@ -400,6 +400,14 @@ export function DashboardPage() {
                   >
                     {task.title}
                   </p>
+                  {(task.splitCount ?? 1) > 1 ? (
+                    <span className="shrink-0 rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-500">
+                      {t('tasks.splitProgress', {
+                        done: task.splitDone ?? 0,
+                        count: task.splitCount,
+                      })}
+                    </span>
+                  ) : null}
                   <span className="shrink-0 text-xs text-muted">
                     {task.minutes} {t('tasks.minShort')}
                   </span>

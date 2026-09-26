@@ -308,6 +308,11 @@ export function TodayScreen() {
                 >
                   {task.title}
                 </Text>
+                {(task.splitCount ?? 1) > 1 ? (
+                  <Text style={[styles.splitBadge, { color: colors.brand }]}>
+                    {t('tasks.splitProgress', { done: task.splitDone ?? 0, count: task.splitCount })}
+                  </Text>
+                ) : null}
                 <Text style={[styles.minutes, { color: colors.muted }]}>
                   {task.minutes} {t('today.min')}
                 </Text>
@@ -589,6 +594,7 @@ const styles = StyleSheet.create({
   checkMark: { fontWeight: '800' },
   taskTitle: { flex: 1, flexShrink: 1, fontSize: 15, fontWeight: '600', minWidth: 0 },
   minutes: { fontSize: 13, flexShrink: 0 },
+  splitBadge: { fontSize: 12, fontWeight: '700', flexShrink: 0 },
   reviewCount: { fontSize: 20, fontWeight: '700', marginTop: 4 },
   over: { fontSize: 13, fontWeight: '700', marginBottom: 8 },
   progressLabel: { fontSize: 14, marginBottom: 8 },

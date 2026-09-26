@@ -30,6 +30,8 @@ export type UpdateDailyTaskPayload = {
   minutes?: number;
   note?: string;
   completed?: boolean;
+  splitCount?: number;
+  splitDone?: number;
 };
 
 export const dailyTasksApi = {

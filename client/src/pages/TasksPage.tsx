@@ -138,6 +138,36 @@ export function TasksPage() {
     }
   };
 
+  const onSplit = async (task: DailyTask, splitCount: number) => {
+    setBusyId(task.id);
+    setFormError(null);
+    try {
+      await updateTask.mutateAsync({
+        id: task.id,
+        payload: { splitCount, splitDone: splitCount === 1 ? 0 : 0 },
+      });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const onSetPart = async (task: DailyTask, splitDone: number) => {
+    setBusyId(task.id);
+    setFormError(null);
+    try {
+      await updateTask.mutateAsync({
+        id: task.id,
+        payload: { splitDone },
+      });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   const onDelete = async (id: string) => {
     setBusyId(id);
     setFormError(null);
@@ -298,6 +328,8 @@ export function TasksPage() {
               tasks={dayTasks}
               onToggle={(task) => void onToggle(task)}
               onDelete={(id) => void onDelete(id)}
+              onSplit={(task, count) => void onSplit(task, count)}
+              onSetPart={(task, done) => void onSetPart(task, done)}
               busyId={busyId}
             />
           </section>

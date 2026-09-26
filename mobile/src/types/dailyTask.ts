@@ -5,6 +5,8 @@ export type DailyTask = {
   date: string;
   completed: boolean;
   note: string;
+  splitCount?: number;
+  splitDone?: number;
 };
 
 export type DailyTaskDayResponse = {
@@ -70,4 +72,6 @@ export type UpdateDailyTaskPayload = {
   minutes?: number;
   note?: string;
   completed?: boolean;
+  splitCount?: number;
+  splitDone?: number;
 };

@@ -271,6 +271,8 @@ model DailyTask {
   completed   Boolean   @default(false)
   completedAt DateTime?
   note        String    @default("")
+  splitCount  Int       @default(1)
+  splitDone   Int       @default(0)
   userId      String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

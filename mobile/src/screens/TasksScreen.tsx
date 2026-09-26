@@ -59,6 +59,7 @@ export function TasksScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [pickingId, setPickingId] = useState<string | null>(null);
 
   const periodQuery = useTasksPeriod(year, month);
   const toggleTask = useToggleTask(selectedDate);
@@ -157,6 +158,31 @@ export function TasksScreen() {
     }
   };
 
+  const onSplit = async (task: DailyTask, splitCount: number) => {
+    setBusyId(task.id);
+    setPickingId(null);
+    setFormError(null);
+    try {
+      await updateTask.mutateAsync({ id: task.id, payload: { splitCount, splitDone: 0 } });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const onSetPart = async (task: DailyTask, splitDone: number) => {
+    setBusyId(task.id);
+    setFormError(null);
+    try {
+      await updateTask.mutateAsync({ id: task.id, payload: { splitDone } });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   const onDelete = (task: DailyTask) => {
     Alert.alert(t('tasks.deleteTitle'), t('tasks.deleteDescription', { title: task.title }), [
       { text: t('common.cancel'), style: 'cancel' },
@@ -244,58 +270,116 @@ export function TasksScreen() {
           {dayTasks.length === 0 ? (
             <Text style={[styles.empty, { color: colors.muted }]}>{t('tasks.empty')}</Text>
           ) : (
-            dayTasks.map((task) => (
-              <View
-                key={task.id}
-                style={[
-                  styles.taskRow,
-                  { backgroundColor: colors.panel, borderColor: colors.line },
-                  task.completed && { borderColor: `${colors.brand}59` },
-                  editingId === task.id && { borderColor: colors.brand },
-                ]}
-              >
-                <Pressable
-                  disabled={busyId === task.id}
-                  onPress={() => void onToggle(task)}
-                  style={styles.taskMain}
+            dayTasks.map((task) => {
+              const splitCount = Math.max(1, task.splitCount ?? 1);
+              const splitDone = Math.min(splitCount, Math.max(0, task.splitDone ?? 0));
+              return (
+                <View
+                  key={task.id}
+                  style={[
+                    styles.taskCard,
+                    { backgroundColor: colors.panel, borderColor: colors.line },
+                    task.completed && { borderColor: `${colors.brand}59` },
+                    editingId === task.id && { borderColor: colors.brand },
+                  ]}
                 >
-                  <View
-                    style={[
-                      styles.check,
-                      { borderColor: colors.line },
-                      task.completed && { backgroundColor: colors.brand, borderColor: colors.brand },
-                    ]}
-                  >
-                    {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
+                  <View style={styles.taskRow}>
+                    <Pressable
+                      disabled={busyId === task.id}
+                      onPress={() => void onToggle(task)}
+                      style={styles.taskMain}
+                    >
+                      <View
+                        style={[
+                          styles.check,
+                          { borderColor: colors.line },
+                          task.completed && { backgroundColor: colors.brand, borderColor: colors.brand },
+                        ]}
+                      >
+                        {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
+                      </View>
+                      <Text
+                        style={[
+                          styles.taskTitle,
+                          { color: colors.ink },
+                          task.completed && { color: colors.muted, textDecorationLine: 'line-through' },
+                        ]}
+                        numberOfLines={2}
+                      >
+                        {task.title}
+                      </Text>
+                      <Text style={[styles.minutes, { color: colors.muted }]}>
+                        {task.minutes} {t('today.min')}
+                      </Text>
+                    </Pressable>
+                    <AppButton
+                      variant="ghost"
+                      label={t('common.edit')}
+                      disabled={busyId === task.id}
+                      onPress={() => onStartEdit(task)}
+                    />
+                    <AppButton
+                      variant="ghost"
+                      label={t('common.delete')}
+                      disabled={busyId === task.id || deleteTask.isPending}
+                      onPress={() => onDelete(task)}
+                    />
                   </View>
-                  <Text
-                    style={[
-                      styles.taskTitle,
-                      { color: colors.ink },
-                      task.completed && { color: colors.muted, textDecorationLine: 'line-through' },
-                    ]}
-                    numberOfLines={2}
-                  >
-                    {task.title}
-                  </Text>
-                  <Text style={[styles.minutes, { color: colors.muted }]}>
-                    {task.minutes} {t('today.min')}
-                  </Text>
-                </Pressable>
-                <AppButton
-                  variant="ghost"
-                  label={t('common.edit')}
-                  disabled={busyId === task.id}
-                  onPress={() => onStartEdit(task)}
-                />
-                <AppButton
-                  variant="ghost"
-                  label={t('common.delete')}
-                  disabled={busyId === task.id || deleteTask.isPending}
-                  onPress={() => onDelete(task)}
-                />
-              </View>
-            ))
+                  {splitCount > 1 ? (
+                    <View style={styles.splitRow}>
+                      {Array.from({ length: splitCount }, (_, index) => {
+                        const step = index + 1;
+                        const filled = step <= splitDone;
+                        return (
+                          <Pressable
+                            key={step}
+                            disabled={busyId === task.id}
+                            onPress={() => void onSetPart(task, splitDone === step ? step - 1 : step)}
+                            style={[
+                              styles.splitChip,
+                              { backgroundColor: filled ? colors.brand : `${colors.brand}22` },
+                            ]}
+                          >
+                            <Text style={[styles.splitChipText, { color: filled ? colors.onBrand : colors.ink }]}>
+                              {step}
+                            </Text>
+                          </Pressable>
+                        );
+                      })}
+                      <Text style={[styles.splitLabel, { color: colors.brand }]}>
+                        {t('tasks.splitProgress', { done: splitDone, count: splitCount })}
+                      </Text>
+                      <Pressable disabled={busyId === task.id} onPress={() => void onSplit(task, 1)}>
+                        <Text style={[styles.splitAction, { color: colors.muted }]}>{t('tasks.unsplit')}</Text>
+                      </Pressable>
+                    </View>
+                  ) : pickingId === task.id ? (
+                    <View style={styles.splitRow}>
+                      <Text style={[styles.splitAction, { color: colors.muted }]}>{t('tasks.splitHint')}</Text>
+                      {[2, 3, 4, 5, 6, 7, 8].map((count) => (
+                        <Pressable
+                          key={count}
+                          disabled={busyId === task.id}
+                          onPress={() => void onSplit(task, count)}
+                          style={[styles.splitChip, { backgroundColor: `${colors.brand}22` }]}
+                        >
+                          <Text style={[styles.splitChipText, { color: colors.ink }]}>{count}</Text>
+                        </Pressable>
+                      ))}
+                    </View>
+                  ) : (
+                    <Pressable
+                      disabled={busyId === task.id}
+                      onPress={() => setPickingId(task.id)}
+                      style={[styles.splitBtn, { borderColor: colors.line }]}
+                    >
+                      <AppIcon name="git-branch-outline" color={colors.brand} size={16} />
+                      <Text style={[styles.splitBtnText, { color: colors.brand }]}>{t('tasks.split')}</Text>
+                    </Pressable>
+                  )}
+                </View>
+              );
+            })
           )}
 
           <View style={[styles.form, { backgroundColor: colors.panel, borderColor: colors.line }]}>
@@ -360,15 +444,49 @@ const styles = StyleSheet.create({
   dayTitle: { fontSize: 18, fontWeight: '700', marginTop: 8 },
   empty: { fontSize: 14 },
   error: { fontSize: 14 },
-  taskRow: {
-    alignItems: 'center',
+  taskCard: {
     borderRadius: 16,
     borderWidth: 1,
+    gap: 8,
+    paddingBottom: 10,
+    paddingRight: 4,
+  },
+  taskRow: {
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 4,
-    paddingRight: 4,
   },
+  splitRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    paddingHorizontal: 10,
+  },
+  splitChip: {
+    alignItems: 'center',
+    borderRadius: 10,
+    height: 32,
+    justifyContent: 'center',
+    minWidth: 32,
+    paddingHorizontal: 8,
+  },
+  splitChipText: { fontSize: 13, fontWeight: '700' },
+  splitLabel: { fontSize: 13, fontWeight: '700' },
+  splitAction: { fontSize: 12, fontWeight: '600' },
+  splitBtn: {
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    borderRadius: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 6,
+    marginLeft: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  splitBtnText: { fontSize: 13, fontWeight: '700' },
   taskMain: {
     alignItems: 'center',
     flex: 1,

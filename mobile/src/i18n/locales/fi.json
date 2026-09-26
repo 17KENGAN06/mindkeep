@@ -246,6 +246,10 @@
       "titlePlaceholder": "Lue, kävely, soita...",
       "minutes": "Minuutit"
     },
+    "split": "Jaa",
+    "splitHint": "Kuinka moneen osaan",
+    "splitProgress": "{{done}}/{{count}}",
+    "unsplit": "Yhdistä",
     "errors": {
       "title": "Anna tehtävälle nimi",
       "minutes": "Vähintään 1 minuutti"

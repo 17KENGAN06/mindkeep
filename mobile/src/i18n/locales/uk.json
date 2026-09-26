@@ -246,6 +246,10 @@
       "titlePlaceholder": "Почитати, прогулянка, дзвінок...",
       "minutes": "Хвилини"
     },
+    "split": "Поділити",
+    "splitHint": "На скільки частин",
+    "splitProgress": "{{done}}/{{count}}",
+    "unsplit": "Зібрати",
     "errors": {
       "title": "Назвіть задачу",
       "minutes": "Хвилин має бути щонайменше 1"

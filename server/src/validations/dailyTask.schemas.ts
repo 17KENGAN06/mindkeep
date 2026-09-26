@@ -43,6 +43,8 @@ export const updateDailyTaskSchema = z
     minutes: z.coerce.number().int().min(1).max(24 * 60).optional(),
     note: z.string().trim().max(500).optional(),
     completed: z.boolean().optional(),
+    splitCount: z.coerce.number().int().min(1).max(8).optional(),
+    splitDone: z.coerce.number().int().min(0).max(8).optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one field is required',
