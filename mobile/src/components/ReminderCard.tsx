@@ -4,7 +4,7 @@ import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { Reminder } from '../types/reminder';
 import { formatDate } from '../utils/date';
-import { AnswerReveal } from './AnswerReveal';
+import { MaterialBody } from './MaterialBody';
 import { AppButton, Badge } from './ui';
 
 type ReminderCardProps = {
@@ -39,8 +39,6 @@ export function ReminderCard({
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const { material } = reminder;
-  const hasFlashcard = Boolean(material.question?.trim() && material.answer?.trim());
-
   return (
     <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
       <View style={styles.head}>
@@ -75,22 +73,10 @@ export function ReminderCard({
         </Text>
       ) : null}
 
-      {hasFlashcard ? (
+      {material.content?.trim() ? (
         <View style={styles.block}>
-          <AnswerReveal question={material.question!} answer={material.answer!} />
+          <MaterialBody content={material.content} />
         </View>
-      ) : null}
-
-      {!hasFlashcard && material.content?.trim() ? (
-        <Text style={[styles.content, { color: colors.ink }]} numberOfLines={8}>
-          {material.content}
-        </Text>
-      ) : null}
-
-      {hasFlashcard && material.content?.trim() ? (
-        <Text style={[styles.notes, { color: colors.muted }]} numberOfLines={6}>
-          {material.content}
-        </Text>
       ) : null}
 
       <View style={styles.actions}>
@@ -136,8 +122,6 @@ const styles = StyleSheet.create({
   row: { fontSize: 14, marginTop: 8 },
   rowLabel: { fontWeight: '600' },
   block: { marginTop: 14 },
-  content: { fontSize: 15, lineHeight: 22, marginTop: 14 },
-  notes: { fontSize: 14, lineHeight: 20, marginTop: 12 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 16 },
   notDue: { fontSize: 13, flex: 1, paddingVertical: 10 },
 });

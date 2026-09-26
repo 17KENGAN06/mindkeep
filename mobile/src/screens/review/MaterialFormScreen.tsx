@@ -13,6 +13,7 @@ import {
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { MaterialContentEditor } from '../../components/MaterialContentEditor';
 import { AppButton } from '../../components/ui';
 import { useCategories } from '../../features/categories/useCategories';
 import {
@@ -48,8 +49,6 @@ export function MaterialFormScreen() {
   const updateMaterial = useUpdateMaterial();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
   const [learnedAt, setLearnedAt] = useState(todayDateKey());
   const [categoryId, setCategoryId] = useState('');
@@ -61,8 +60,6 @@ export function MaterialFormScreen() {
     const material = materialQuery.data;
     setTitle(material.title);
     setContent(material.content ?? '');
-    setQuestion(material.question ?? '');
-    setAnswer(material.answer ?? '');
     setSourceUrl(material.sourceUrl ?? '');
     setLearnedAt(isoToDateKey(material.learnedAt));
     setCategoryId(material.categoryId ?? '');
@@ -88,8 +85,8 @@ export function MaterialFormScreen() {
       title: title.trim(),
       description: '',
       content: content.trim(),
-      question: question.trim() ? question.trim() : null,
-      answer: answer.trim() ? answer.trim() : null,
+      question: isEdit ? (materialQuery.data?.question ?? null) : null,
+      answer: isEdit ? (materialQuery.data?.answer ?? null) : null,
       sourceUrl: sourceUrl.trim() ? sourceUrl.trim() : null,
       learnedAt: dateInputToIso(learnedAt),
       categoryId: categoryId || null,
@@ -144,41 +141,7 @@ export function MaterialFormScreen() {
           onChangeText={setTitle}
         />
 
-        <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.content')}</Text>
-        <TextInput
-          multiline
-          style={[
-            styles.input,
-            styles.area,
-            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
-          ]}
-          value={content}
-          onChangeText={setContent}
-        />
-
-        <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.question')}</Text>
-        <TextInput
-          multiline
-          style={[
-            styles.input,
-            styles.areaShort,
-            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
-          ]}
-          value={question}
-          onChangeText={setQuestion}
-        />
-
-        <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.answer')}</Text>
-        <TextInput
-          multiline
-          style={[
-            styles.input,
-            styles.areaShort,
-            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
-          ]}
-          value={answer}
-          onChangeText={setAnswer}
-        />
+        <MaterialContentEditor value={content} onChange={setContent} />
 
         <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.sourceUrl')}</Text>
         <TextInput
@@ -270,8 +233,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  area: { minHeight: 120, textAlignVertical: 'top' },
-  areaShort: { minHeight: 80, textAlignVertical: 'top' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 8 },
   chip: {
     borderRadius: 999,

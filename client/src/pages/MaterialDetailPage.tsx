@@ -1,7 +1,6 @@
 ﻿import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { AnswerReveal } from '@/components/materials/AnswerReveal';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
@@ -28,8 +27,6 @@ export function MaterialDetailPage() {
 
   if (isLoading) return <Loader />;
   if (isError || !material) return <ErrorMessage message={t('auth.errors.generic')} />;
-
-  const hasFlashcard = Boolean(material.question?.trim() && material.answer?.trim());
 
   return (
     <div className="space-y-6">
@@ -72,33 +69,11 @@ export function MaterialDetailPage() {
           </p>
         ) : null}
 
-        {hasFlashcard ? (
-          <AnswerReveal question={material.question!} answer={material.answer!} />
-        ) : null}
-
         {material.content?.trim() ? (
           <div>
             <h2 className="text-sm font-semibold text-ink">{t('materials.fields.content')}</h2>
             <div className="mt-2">
               <FormattedText text={material.content} />
-            </div>
-          </div>
-        ) : null}
-
-        {!hasFlashcard && material.question?.trim() ? (
-          <div>
-            <h2 className="text-sm font-semibold text-ink">{t('materials.fields.question')}</h2>
-            <div className="mt-2">
-              <FormattedText text={material.question} />
-            </div>
-          </div>
-        ) : null}
-
-        {!hasFlashcard && material.answer?.trim() ? (
-          <div>
-            <h2 className="text-sm font-semibold text-ink">{t('materials.fields.answer')}</h2>
-            <div className="mt-2">
-              <FormattedText text={material.answer} />
             </div>
           </div>
         ) : null}

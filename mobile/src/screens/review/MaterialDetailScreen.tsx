@@ -3,7 +3,7 @@ import { ActivityIndicator, Alert, Linking, ScrollView, StyleSheet, Text, View }
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { AnswerReveal } from '../../components/AnswerReveal';
+import { MaterialBody } from '../../components/MaterialBody';
 import { AppButton, Badge } from '../../components/ui';
 import {
   useArchiveMaterial,
@@ -56,8 +56,6 @@ export function MaterialDetailScreen() {
     );
   }
 
-  const hasFlashcard = Boolean(material.question?.trim() && material.answer?.trim());
-
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <View style={styles.head}>
@@ -76,14 +74,10 @@ export function MaterialDetailScreen() {
         </Text>
       ) : null}
 
-      {hasFlashcard ? (
-        <AnswerReveal question={material.question!} answer={material.answer!} />
-      ) : null}
-
       {material.content?.trim() ? (
         <View style={[styles.block, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('materials.fields.content')}</Text>
-          <Text style={[styles.body, { color: colors.ink }]}>{material.content}</Text>
+          <MaterialBody content={material.content} />
         </View>
       ) : null}
 
@@ -157,7 +151,6 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   blockTitle: { fontSize: 15, fontWeight: '700' },
-  body: { fontSize: 15, lineHeight: 22 },
   link: { fontSize: 14 },
   reminderRow: { gap: 6, marginTop: 8 },
   reminderText: { fontSize: 14, fontWeight: '600' },

@@ -79,7 +79,7 @@
     "nextReview": "Seuraava kertaus",
     "remindersTitle": "Kertausaikataulu",
     "remindersSubtitle": "Päivämäärät lasketaan alkuperäisestä oppimispäivästä eivätkä siirry suorituksen jälkeen.",
-    "emptyDescription": "Lisää aihe, muistiinpano, sana tai kysymys-vastaus aloittaaksesi kertausaikataulun.",
+    "emptyDescription": "Lisää aihe, muistiinpano tai koodi aloittaaksesi kertausaikataulun.",
     "deleteTitle": "Poistetaanko materiaali?",
     "deleteDescription": "”{{title}}” ja sen muistutukset poistetaan pysyvästi.",
     "fields": {
@@ -87,6 +87,9 @@
       "content": "Pääteksti",
       "question": "Kysymys",
       "answer": "Vastaus",
+      "codeBlock": "Koodi",
+      "codeLanguage": "Kieli, esim. ts",
+      "codePlaceholder": "Liitä koodi tähän",
       "sourceUrl": "Lähdelinkki",
       "learnedAt": "Oppimispäivä",
       "category": "Kategoria",
@@ -118,7 +121,10 @@
       "url": "Anna kelvollinen URL"
     },
     "revealAnswer": "Näytä vastaus",
-    "hideAnswer": "Piilota vastaus"
+    "hideAnswer": "Piilota vastaus",
+    "addCodeBlock": "Lisää koodilohko",
+    "addTextBlock": "Lisää teksti",
+    "removeCodeBlock": "Poista"
   },
   "review": {
     "title": "Kertaa tänään",

@@ -771,7 +771,7 @@
     "remindersTitle": "Kertausaikataulu",
     "remindersSubtitle": "Päivämäärät lasketaan alkuperäisestä oppimispäivästä eivätkä siirry suorituksen jälkeen.",
     "emptyTitle": "Ei vielä materiaaleja",
-    "emptyDescription": "Lisää aihe, muistiinpano, sana tai kysymys-vastaus aloittaaksesi kertausaikataulun.",
+    "emptyDescription": "Lisää aihe, muistiinpano tai koodi aloittaaksesi kertausaikataulun.",
     "deleteTitle": "Poistetaanko materiaali?",
     "deleteDescription": "”{{title}}” ja sen muistutukset poistetaan pysyvästi.",
     "fields": {
@@ -780,13 +780,14 @@
       "content": "Pääteksti",
       "question": "Kysymys",
       "answer": "Vastaus",
+      "codeBlock": "Koodi",
+      "codeLanguage": "Kieli, esim. ts",
+      "codePlaceholder": "Liitä koodi tähän",
       "sourceUrl": "Lähdelinkki",
       "learnedAt": "Oppimispäivä",
       "category": "Kategoria",
       "noCategory": "Ei kategoriaa",
-      "contentHint": "Voit liittää tekstiä ChatGPT:stä ja muista lähteistä — muotoilu säilyy.",
-      "questionHint": "Tämä kysymys näkyy kertauksessa.",
-      "answerHint": "Vastaus avautuu vasta, kun napautat korttia."
+      "contentHint": "Kirjoita muistiinpano ja lisää koodilohkoja — hyödyllistä ohjelmointimuistiinpanoissa."
     },
     "filters": {
       "search": "Haku",
@@ -817,7 +818,12 @@
     },
     "revealAnswer": "Näytä vastaus",
     "hideAnswer": "Piilota vastaus",
-    "showNotes": "Näytä materiaalin muistiinpanot"
+    "showNotes": "Näytä materiaalin muistiinpanot",
+    "addCodeBlock": "Lisää koodilohko",
+    "addTextBlock": "Lisää teksti",
+    "removeCodeBlock": "Poista",
+    "copyCode": "Kopioi",
+    "copiedCode": "Kopioitu"
   },
   "review": {
     "title": "Kertaa tänään",

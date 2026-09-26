@@ -11,7 +11,7 @@ function emptyToNull(value: string | null | undefined): string | null | undefine
 export const createMaterialSchema = z.object({
   title: z.string().trim().min(1, 'Title is required').max(200),
   description: z.string().trim().max(2000).default(''),
-  content: z.string().trim().max(20000).default(''),
+  content: z.string().trim().max(50000).default(''),
   question: z.string().trim().max(5000).nullable().optional(),
   answer: z.string().trim().max(5000).nullable().optional(),
   sourceUrl: z.union([z.url(), z.literal(''), z.null()]).optional(),
@@ -28,7 +28,7 @@ export const createMaterialSchema = z.object({
 export const updateMaterialSchema = z.object({
   title: z.string().trim().min(1).max(200).optional(),
   description: z.string().trim().max(2000).optional(),
-  content: z.string().trim().max(20000).optional(),
+  content: z.string().trim().max(50000).optional(),
   question: z.string().trim().max(5000).nullable().optional(),
   answer: z.string().trim().max(5000).nullable().optional(),
   sourceUrl: z.union([z.url(), z.literal(''), z.null()]).optional(),

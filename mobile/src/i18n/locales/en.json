@@ -79,7 +79,7 @@
     "nextReview": "Next review",
     "remindersTitle": "Review schedule",
     "remindersSubtitle": "Dates are calculated from the original learning date and do not shift after completion.",
-    "emptyDescription": "Add a topic, note, word or Q&A to start your review schedule.",
+    "emptyDescription": "Add a topic, notes, or code to start your review schedule.",
     "deleteTitle": "Delete material?",
     "deleteDescription": "“{{title}}” and its reminders will be permanently deleted.",
     "fields": {
@@ -87,6 +87,9 @@
       "content": "Main text",
       "question": "Question",
       "answer": "Answer",
+      "codeBlock": "Code",
+      "codeLanguage": "Language, e.g. ts",
+      "codePlaceholder": "Paste code here",
       "sourceUrl": "Source URL",
       "learnedAt": "Learning date",
       "category": "Category",
@@ -118,7 +121,10 @@
       "url": "Enter a valid URL"
     },
     "revealAnswer": "Show answer",
-    "hideAnswer": "Hide answer"
+    "hideAnswer": "Hide answer",
+    "addCodeBlock": "Add code block",
+    "addTextBlock": "Add text",
+    "removeCodeBlock": "Remove"
   },
   "review": {
     "title": "Review today",

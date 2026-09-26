@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { MaterialContentEditor } from '@/components/materials/MaterialContentEditor';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
-import { Textarea } from '@/components/ui/Textarea';
 import { createMaterialFormSchema, type MaterialFormValues } from '@/schemas/material';
 import type { Category } from '@/types/category';
 import type { Material } from '@/types/material';
@@ -33,8 +33,6 @@ function toFormValues(material?: Material): MaterialFormValues {
   return {
     title: material?.title ?? '',
     content: material?.content ?? '',
-    question: material?.question ?? '',
-    answer: material?.answer ?? '',
     sourceUrl: material?.sourceUrl ?? '',
     learnedAt: toDateInputValue(material?.learnedAt),
     categoryId: material?.categoryId ?? '',
@@ -53,6 +51,7 @@ export function MaterialForm({
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<MaterialFormValues>({
@@ -65,8 +64,8 @@ export function MaterialForm({
       title: values.title,
       description: '',
       content: values.content ?? '',
-      question: values.question?.trim() ? values.question.trim() : null,
-      answer: values.answer?.trim() ? values.answer.trim() : null,
+      question: initialMaterial ? initialMaterial.question : null,
+      answer: initialMaterial ? initialMaterial.answer : null,
       sourceUrl: values.sourceUrl?.trim() ? values.sourceUrl.trim() : null,
       learnedAt: dateInputToIso(values.learnedAt),
       categoryId: values.categoryId ? values.categoryId : null,
@@ -76,24 +75,18 @@ export function MaterialForm({
   return (
     <form className="space-y-4" onSubmit={submit} noValidate>
       <Input label={t('materials.fields.title')} error={errors.title?.message} {...register('title')} />
-      <Textarea
-        label={t('materials.fields.content')}
-        hint={t('materials.fields.contentHint')}
-        error={errors.content?.message}
-        rows={8}
-        {...register('content')}
-      />
-      <Textarea
-        label={t('materials.fields.question')}
-        hint={t('materials.fields.questionHint')}
-        error={errors.question?.message}
-        {...register('question')}
-      />
-      <Textarea
-        label={t('materials.fields.answer')}
-        hint={t('materials.fields.answerHint')}
-        error={errors.answer?.message}
-        {...register('answer')}
+      <Controller
+        name="content"
+        control={control}
+        render={({ field }) => (
+          <MaterialContentEditor
+            value={field.value ?? ''}
+            onChange={field.onChange}
+            label={t('materials.fields.content')}
+            hint={t('materials.fields.contentHint')}
+            error={errors.content?.message}
+          />
+        )}
       />
       <Input
         label={t('materials.fields.sourceUrl')}

@@ -1,6 +1,5 @@
 ﻿import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { AnswerReveal } from '@/components/materials/AnswerReveal';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { FormattedText } from '@/components/ui/FormattedText';
@@ -30,8 +29,6 @@ export function ReminderCard({
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const { material } = reminder;
-  const hasFlashcard = Boolean(material.question?.trim() && material.answer?.trim());
-
   return (
     <article className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
@@ -77,13 +74,7 @@ export function ReminderCard({
         ) : null}
       </dl>
 
-      {hasFlashcard ? (
-        <div className="mt-4">
-          <AnswerReveal question={material.question!} answer={material.answer!} />
-        </div>
-      ) : null}
-
-      {!hasFlashcard && material.content?.trim() ? (
+      {material.content?.trim() ? (
         <div className="mt-4 rounded-2xl bg-brand-50/30 px-4 py-4 ring-1 ring-line/70">
           <p className="text-xs font-semibold tracking-wide text-muted uppercase">
             {t('materials.fields.content')}
@@ -92,17 +83,6 @@ export function ReminderCard({
             <FormattedText text={material.content} />
           </div>
         </div>
-      ) : null}
-
-      {hasFlashcard && material.content?.trim() ? (
-        <details className="mt-4 rounded-2xl bg-brand-50/20 px-4 py-3 ring-1 ring-line/60">
-          <summary className="cursor-pointer text-sm font-medium text-ink">
-            {t('materials.showNotes')}
-          </summary>
-          <div className="mt-3">
-            <FormattedText text={material.content} />
-          </div>
-        </details>
       ) : null}
 
       <div className="mt-4 flex flex-wrap gap-2">

@@ -19,6 +19,7 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
 import type { MaterialStatus } from '../../types/material';
+import { previewContent } from '../../utils/contentBlocks';
 import { formatDate } from '../../utils/date';
 
 export function MaterialsScreen() {
@@ -125,9 +126,13 @@ export function MaterialsScreen() {
               label={t(`materials.status.${material.status}`)}
             />
           </View>
-          {material.question?.trim() || material.content?.trim() ? (
+          {previewContent(material.content) ? (
             <Text style={[styles.preview, { color: colors.muted }]} numberOfLines={2}>
-              {material.question?.trim() || material.content}
+              {previewContent(material.content)}
+            </Text>
+          ) : material.content?.trim() ? (
+            <Text style={[styles.preview, { color: colors.muted }]} numberOfLines={2}>
+              {t('materials.fields.codeBlock')}
             </Text>
           ) : null}
           <Text style={[styles.meta, { color: colors.muted }]}>

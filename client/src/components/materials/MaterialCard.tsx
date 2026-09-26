@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/Badge';
 import type { AppLanguage } from '@/i18n';
 import type { Material } from '@/types/material';
+import { previewContent } from '@/utils/contentBlocks';
 import { formatDate } from '@/utils/date';
 
 type MaterialCardProps = {
@@ -21,10 +22,10 @@ export function MaterialCard({ material }: MaterialCardProps) {
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-base font-semibold text-ink">{material.title}</h2>
-          {material.question?.trim() ? (
-            <p className="mt-1 line-clamp-2 text-sm text-muted">{material.question}</p>
+          {previewContent(material.content).trim() ? (
+            <p className="mt-1 line-clamp-2 text-sm text-muted">{previewContent(material.content)}</p>
           ) : material.content?.trim() ? (
-            <p className="mt-1 line-clamp-2 text-sm text-muted">{material.content}</p>
+            <p className="mt-1 line-clamp-2 text-sm text-muted">{t('materials.fields.codeBlock')}</p>
           ) : null}
         </div>
         <Badge tone={material.status === 'ARCHIVED' ? 'neutral' : 'success'}>

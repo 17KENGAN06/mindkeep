@@ -771,7 +771,7 @@
     "remindersTitle": "Review schedule",
     "remindersSubtitle": "Dates are calculated from the original learning date and do not shift after completion.",
     "emptyTitle": "No materials yet",
-    "emptyDescription": "Add a topic, note, word or Q&A to start your review schedule.",
+    "emptyDescription": "Add a topic, notes, or code to start your review schedule.",
     "deleteTitle": "Delete material?",
     "deleteDescription": "“{{title}}” and its reminders will be permanently deleted.",
     "fields": {
@@ -780,13 +780,14 @@
       "content": "Main text",
       "question": "Question",
       "answer": "Answer",
+      "codeBlock": "Code",
+      "codeLanguage": "Language, e.g. ts",
+      "codePlaceholder": "Paste code here",
       "sourceUrl": "Source URL",
       "learnedAt": "Learning date",
       "category": "Category",
       "noCategory": "No category",
-      "contentHint": "You can paste text from ChatGPT and other sources — formatting will be preserved.",
-      "questionHint": "This question will be shown during review.",
-      "answerHint": "The answer opens only after you tap the reveal card."
+      "contentHint": "Write a note and add code blocks — useful for programming notes."
     },
     "filters": {
       "search": "Search",
@@ -817,7 +818,12 @@
     },
     "revealAnswer": "Show answer",
     "hideAnswer": "Hide answer",
-    "showNotes": "Show material notes"
+    "showNotes": "Show material notes",
+    "addCodeBlock": "Add code block",
+    "addTextBlock": "Add text",
+    "removeCodeBlock": "Remove",
+    "copyCode": "Copy",
+    "copiedCode": "Copied"
   },
   "review": {
     "title": "Review today",
