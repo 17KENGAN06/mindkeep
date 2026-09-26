@@ -511,17 +511,29 @@
       "user": "User"
     },
     "backToUsers": "Back to users",
-    "activitySubtitle": "Only sections and activity facts — no titles or written text.",
+    "activitySubtitle": "Full usage statistics. Texts, amounts, weight values, and entry titles stay hidden.",
     "modulesTitle": "What they use",
-    "modulesHint": "Counts and dates. Entry contents stay hidden.",
+    "modulesHint": "Counts and dates only — no entry contents.",
     "recentTitle": "Recent actions",
-    "recentHint": "What they did in the product, without the records themselves.",
+    "recentHint": "Which section they touched and what they did, without the records.",
     "used": "Active",
     "idle": "Not yet",
     "noActivity": "No activity yet",
     "neverUsed": "Has not used this section yet",
+    "firstUsed": "First used {{date}}",
     "lastUsed": "Last used {{date}}",
+    "registered": "In the product since {{date}}",
     "openActivity": "View activity",
+    "openStats": "Statistics",
+    "timelineTitle": "Activity over 30 days",
+    "timelineHint": "How many actions per day. Not what they wrote.",
+    "timelineTotal": "Total actions: {{count}}",
+    "summary": {
+      "modulesUsed": "Sections",
+      "activeDays": "Active days",
+      "events7": "Last 7 days",
+      "events30": "Last 30 days"
+    },
     "modules": {
       "review": "Reviews",
       "tasks": "Tasks",
@@ -531,10 +543,12 @@
       "notes": "Notes"
     },
     "moduleHints": {
-      "review": "Reminders: {{reminders}}, done: {{completed}}",
-      "tasks": "Completed: {{completed}}",
-      "habits": "Checks: {{checks}}",
-      "nutrition": "Meals: {{meals}} · water: {{water}} · weight: {{weight}}",
+      "review": "Materials: {{materials}} · reminders: {{reminders}} · done: {{completed}} · open: {{pending}}",
+      "tasks": "Total: {{count}} · completed: {{completed}} · last 30 days: {{last30}}",
+      "habits": "Habits: {{count}} · active: {{active}} · checks: {{checks}} · last 30 days: {{last30}}",
+      "nutrition": "Meals: {{meals}} · water days: {{water}} · weight days: {{weight}}",
+      "finance": "Records: {{count}} · income: {{income}} · expense: {{expense}}",
+      "notes": "Notes: {{count}}",
       "count": "Records: {{count}}"
     },
     "actions": {

@@ -631,17 +631,29 @@
       "user": "Käyttäjä"
     },
     "backToUsers": "Takaisin käyttäjiin",
-    "activitySubtitle": "Vain osiot ja aktiivisuuden faktat — ei tekstejä eikä otsikoita.",
+    "activitySubtitle": "Täysi käyttötilasto. Tekstit, summat, painoarvot ja otsikot pysyvät piilossa.",
     "modulesTitle": "Mitä käyttää",
-    "modulesHint": "Määrät ja päivämäärät. Kirjausten sisältö pysyy piilossa.",
+    "modulesHint": "Vain määrät ja päivämäärät — ei kirjausten sisältöä.",
     "recentTitle": "Viimeisimmät toimet",
-    "recentHint": "Mitä teki tuotteessa, ilman itse kirjauksia.",
+    "recentHint": "Mitä osiota käytti ja mitä teki, ilman itse kirjauksia.",
     "used": "Käyttää",
     "idle": "Ei vielä",
     "noActivity": "Ei vielä aktiivisuutta",
     "neverUsed": "Ei ole käyttänyt tätä osiota",
+    "firstUsed": "Ensimmäisen kerran {{date}}",
     "lastUsed": "Viimeksi {{date}}",
+    "registered": "Tuotteessa {{date}} lähtien",
     "openActivity": "Näytä aktiivisuus",
+    "openStats": "Tilastot",
+    "timelineTitle": "Aktiivisuus 30 päivässä",
+    "timelineHint": "Toimien määrä päivässä. Ei sitä, mitä kirjoitti.",
+    "timelineTotal": "Toimia yhteensä: {{count}}",
+    "summary": {
+      "modulesUsed": "Osiot",
+      "activeDays": "Aktiiviset päivät",
+      "events7": "7 päivää",
+      "events30": "30 päivää"
+    },
     "modules": {
       "review": "Kertaus",
       "tasks": "Tehtävät",
@@ -651,10 +663,12 @@
       "notes": "Muistiinpanot"
     },
     "moduleHints": {
-      "review": "Muistutuksia: {{reminders}}, valmiina: {{completed}}",
-      "tasks": "Valmiina: {{completed}}",
-      "habits": "Merkintöjä: {{checks}}",
-      "nutrition": "Ateriat: {{meals}} · vesi: {{water}} · paino: {{weight}}",
+      "review": "Materiaaleja: {{materials}} · muistutuksia: {{reminders}} · valmiina: {{completed}} · auki: {{pending}}",
+      "tasks": "Yhteensä: {{count}} · valmiina: {{completed}} · 30 päivässä: {{last30}}",
+      "habits": "Tapoja: {{count}} · aktiivisia: {{active}} · merkintöjä: {{checks}} · 30 päivässä: {{last30}}",
+      "nutrition": "Ateriat: {{meals}} · vesipäivät: {{water}} · painopäivät: {{weight}}",
+      "finance": "Kirjauksia: {{count}} · tulot: {{income}} · menot: {{expense}}",
+      "notes": "Muistiinpanoja: {{count}}",
       "count": "Kirjauksia: {{count}}"
     },
     "actions": {

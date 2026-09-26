@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { adminApi } from '@/api/admin';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -15,6 +15,7 @@ export function AdminPage() {
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const { user } = useAuth();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const overviewQuery = useQuery({
@@ -152,23 +153,20 @@ export function AdminPage() {
                   <th className="px-4 py-3 font-medium">{t('admin.columns.name')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.email')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.role')}</th>
-                  <th className="px-4 py-3 font-medium">{t('admin.columns.timezone')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.uses')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.lastActivity')}</th>
                   <th className="px-4 py-3 font-medium">{t('admin.columns.created')}</th>
+                  <th className="px-4 py-3 font-medium" />
                 </tr>
               </thead>
               <tbody>
                 {users.map((item) => (
-                  <tr key={item.id} className="border-t border-line">
-                    <td className="px-4 py-3 font-medium text-ink">
-                      <Link
-                        to={`/admin/users/${item.id}`}
-                        className="text-brand-500 no-underline hover:underline"
-                      >
-                        {item.name}
-                      </Link>
-                    </td>
+                  <tr
+                    key={item.id}
+                    className="cursor-pointer border-t border-line hover:bg-brand-50/70"
+                    onClick={() => navigate(`/admin/users/${item.id}`)}
+                  >
+                    <td className="px-4 py-3 font-medium text-ink">{item.name}</td>
                     <td className="px-4 py-3 text-muted">{item.email}</td>
                     <td className="px-4 py-3">
                       <span
@@ -181,7 +179,6 @@ export function AdminPage() {
                         {item.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-muted">{item.timezone}</td>
                     <td className="px-4 py-3">
                       {(item.modules ?? []).length === 0 ? (
                         <span className="text-muted">{t('admin.idle')}</span>
@@ -196,6 +193,9 @@ export function AdminPage() {
                     </td>
                     <td className="px-4 py-3 text-muted">
                       {format(new Date(item.createdAt), 'yyyy-MM-dd')}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <span className="text-sm font-medium text-brand-500">{t('admin.openStats')}</span>
                     </td>
                   </tr>
                 ))}

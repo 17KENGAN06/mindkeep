@@ -146,7 +146,7 @@ export function AdminScreen() {
               <Text style={[styles.cardTitle, { color: colors.ink }]}>{item.name}</Text>
               <Text style={[styles.meta, { color: colors.muted }]}>{item.email}</Text>
               <Text style={[styles.meta, { color: colors.ink }]}>
-                {item.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')} · {item.timezone}
+                {item.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')}
               </Text>
               <Text style={[styles.meta, { color: colors.ink }]}>
                 {modules.length === 0
@@ -158,6 +158,7 @@ export function AdminScreen() {
                   ? `${t('admin.columns.lastActivity')}: ${formatDate(item.lastActivityAt, language)}`
                   : t('admin.noActivity')}
               </Text>
+              <Text style={[styles.meta, { color: colors.brand }]}>{t('admin.openStats')}</Text>
             </Pressable>
           );
         })

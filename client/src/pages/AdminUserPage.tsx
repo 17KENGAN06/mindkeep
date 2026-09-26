@@ -5,7 +5,7 @@ import { adminApi, type AdminActivityModuleId } from '@/api/admin';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { useAuth } from '@/features/auth/useAuth';
-import { formatDateLong } from '@/utils/date';
+import { formatDate, formatDateLong } from '@/utils/date';
 import type { AppLanguage } from '@/i18n';
 
 function moduleHint(
@@ -15,13 +15,27 @@ function moduleHint(
   t: (key: string, opts?: Record<string, unknown>) => string,
 ): string {
   if (id === 'review') {
-    return t('admin.moduleHints.review', { reminders: extra.reminders ?? 0, completed: extra.completed ?? 0 });
+    return t('admin.moduleHints.review', {
+      materials: extra.materials ?? count,
+      reminders: extra.reminders ?? 0,
+      completed: extra.completed ?? 0,
+      pending: extra.pending ?? 0,
+    });
   }
   if (id === 'tasks') {
-    return t('admin.moduleHints.tasks', { completed: extra.completed ?? 0 });
+    return t('admin.moduleHints.tasks', {
+      count,
+      completed: extra.completed ?? 0,
+      last30: extra.last30 ?? 0,
+    });
   }
   if (id === 'habits') {
-    return t('admin.moduleHints.habits', { checks: extra.checks ?? 0 });
+    return t('admin.moduleHints.habits', {
+      count,
+      active: extra.active ?? 0,
+      checks: extra.checks ?? 0,
+      last30: extra.last30 ?? 0,
+    });
   }
   if (id === 'nutrition') {
     return t('admin.moduleHints.nutrition', {
@@ -30,7 +44,14 @@ function moduleHint(
       weight: extra.weightDays ?? 0,
     });
   }
-  return t('admin.moduleHints.count', { count });
+  if (id === 'finance') {
+    return t('admin.moduleHints.finance', {
+      count,
+      income: extra.income ?? 0,
+      expense: extra.expense ?? 0,
+    });
+  }
+  return t('admin.moduleHints.notes', { count });
 }
 
 export function AdminUserPage() {
@@ -57,7 +78,8 @@ export function AdminUserPage() {
     return <ErrorMessage message={t('admin.loadError')} />;
   }
 
-  const { user: profile, lastActivityAt, modules, recent } = activityQuery.data;
+  const { user: profile, lastActivityAt, summary, timeline, modules, recent } = activityQuery.data;
+  const max = Math.max(...timeline.map((point) => point.count), 1);
 
   return (
     <div className="min-w-0 space-y-6">
@@ -67,19 +89,55 @@ export function AdminUserPage() {
         </Link>
         <h1 className="mt-3 text-2xl font-semibold text-ink">{profile.name}</h1>
         <p className="mt-1 text-sm text-muted">{t('admin.activitySubtitle')}</p>
+        <p className="mt-2 text-xs text-muted">
+          {t('admin.registered', { date: formatDateLong(profile.createdAt, language) })}
+          {' · '}
+          {profile.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')}
+        </p>
       </div>
 
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <InfoCard label={t('admin.columns.email')} value={profile.email} />
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <InfoCard
-          label={t('admin.columns.role')}
-          value={profile.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')}
+          label={t('admin.summary.modulesUsed')}
+          value={`${summary.modulesUsed} / ${summary.modulesTotal}`}
         />
-        <InfoCard label={t('admin.columns.timezone')} value={profile.timezone} />
+        <InfoCard label={t('admin.summary.activeDays')} value={String(summary.activeDays30)} />
+        <InfoCard label={t('admin.summary.events7')} value={String(summary.events7)} />
         <InfoCard
           label={t('admin.columns.lastActivity')}
           value={lastActivityAt ? formatDateLong(lastActivityAt, language) : t('admin.noActivity')}
         />
+      </section>
+
+      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <h2 className="text-sm font-semibold text-ink">{t('admin.timelineTitle')}</h2>
+        <p className="mt-1 text-sm text-muted">{t('admin.timelineHint')}</p>
+        <div className="mt-5 flex h-28 items-end gap-0.5 sm:gap-1">
+          {timeline.map((point) => {
+            const height = `${Math.max((point.count / max) * 100, point.count > 0 ? 10 : 3)}%`;
+            return (
+              <div
+                key={point.date}
+                className="flex min-w-0 flex-1 flex-col items-center justify-end"
+                title={`${formatDate(point.date, language)}: ${point.count}`}
+              >
+                <div
+                  className={`w-full max-w-3 rounded-t ${point.count > 0 ? 'bg-brand-500' : 'bg-brand-100'}`}
+                  style={{ height }}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-2 flex justify-between text-[11px] text-muted">
+          <span>{timeline[0] ? formatDate(timeline[0].date, language) : ''}</span>
+          <span>{t('admin.timelineTotal', { count: summary.events30 })}</span>
+          <span>
+            {timeline[timeline.length - 1]
+              ? formatDate(timeline[timeline.length - 1]!.date, language)
+              : ''}
+          </span>
+        </div>
       </section>
 
       <section>
@@ -106,10 +164,15 @@ export function AdminUserPage() {
               <p className="mt-2 text-2xl font-semibold text-ink">{item.count}</p>
               <p className="mt-1 text-xs text-muted">{moduleHint(item.id, item.extra, item.count, t)}</p>
               <p className="mt-2 text-xs text-muted">
-                {item.lastAt
-                  ? t('admin.lastUsed', { date: formatDateLong(item.lastAt, language) })
+                {item.firstAt
+                  ? t('admin.firstUsed', { date: formatDateLong(item.firstAt, language) })
                   : t('admin.neverUsed')}
               </p>
+              {item.lastAt ? (
+                <p className="mt-1 text-xs text-muted">
+                  {t('admin.lastUsed', { date: formatDateLong(item.lastAt, language) })}
+                </p>
+              ) : null}
             </article>
           ))}
         </div>
@@ -144,7 +207,7 @@ function InfoCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
       <p className="text-xs tracking-wide text-muted uppercase">{label}</p>
-      <p className="mt-2 break-all text-sm font-semibold text-ink">{value}</p>
+      <p className="mt-2 text-xl font-semibold text-ink">{value}</p>
     </div>
   );
 }

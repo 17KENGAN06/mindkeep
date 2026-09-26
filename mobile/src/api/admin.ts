@@ -19,18 +19,24 @@ export type AdminUserActivity = {
   user: {
     id: string;
     name: string;
-    email: string;
-    timezone: string;
     role: 'USER' | 'ADMIN';
     createdAt: string;
-    updatedAt: string;
   };
   lastActivityAt: string | null;
+  summary: {
+    modulesUsed: number;
+    modulesTotal: number;
+    activeDays30: number;
+    events7: number;
+    events30: number;
+  };
+  timeline: Array<{ date: string; count: number }>;
   modules: Array<{
     id: AdminActivityModuleId;
     used: boolean;
     count: number;
     extra: Record<string, number>;
+    firstAt: string | null;
     lastAt: string | null;
   }>;
   recent: Array<{

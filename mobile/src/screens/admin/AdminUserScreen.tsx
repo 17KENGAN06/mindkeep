@@ -10,7 +10,7 @@ import { useAdminUserActivity } from '../../features/admin/useAdmin';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
-import { formatDateLong } from '../../utils/date';
+import { formatDate, formatDateLong } from '../../utils/date';
 
 function moduleHint(
   id: AdminActivityModuleId,
@@ -19,13 +19,27 @@ function moduleHint(
   t: (key: string, opts?: Record<string, unknown>) => string,
 ): string {
   if (id === 'review') {
-    return t('admin.moduleHints.review', { reminders: extra.reminders ?? 0, completed: extra.completed ?? 0 });
+    return t('admin.moduleHints.review', {
+      materials: extra.materials ?? count,
+      reminders: extra.reminders ?? 0,
+      completed: extra.completed ?? 0,
+      pending: extra.pending ?? 0,
+    });
   }
   if (id === 'tasks') {
-    return t('admin.moduleHints.tasks', { completed: extra.completed ?? 0 });
+    return t('admin.moduleHints.tasks', {
+      count,
+      completed: extra.completed ?? 0,
+      last30: extra.last30 ?? 0,
+    });
   }
   if (id === 'habits') {
-    return t('admin.moduleHints.habits', { checks: extra.checks ?? 0 });
+    return t('admin.moduleHints.habits', {
+      count,
+      active: extra.active ?? 0,
+      checks: extra.checks ?? 0,
+      last30: extra.last30 ?? 0,
+    });
   }
   if (id === 'nutrition') {
     return t('admin.moduleHints.nutrition', {
@@ -34,7 +48,14 @@ function moduleHint(
       weight: extra.weightDays ?? 0,
     });
   }
-  return t('admin.moduleHints.count', { count });
+  if (id === 'finance') {
+    return t('admin.moduleHints.finance', {
+      count,
+      income: extra.income ?? 0,
+      expense: extra.expense ?? 0,
+    });
+  }
+  return t('admin.moduleHints.notes', { count });
 }
 
 export function AdminUserScreen() {
@@ -49,7 +70,7 @@ export function AdminUserScreen() {
 
   useLayoutEffect(() => {
     const name = activityQuery.data?.user.name;
-    navigation.setOptions({ title: name || t('admin.openActivity') });
+    navigation.setOptions({ title: name || t('admin.openStats') });
   }, [activityQuery.data?.user.name, navigation, t]);
 
   if (!enabled) {
@@ -76,7 +97,8 @@ export function AdminUserScreen() {
     );
   }
 
-  const { user: profile, lastActivityAt, modules, recent } = activityQuery.data;
+  const { user: profile, lastActivityAt, summary, timeline, modules, recent } = activityQuery.data;
+  const max = Math.max(...timeline.map((point) => point.count), 1);
 
   return (
     <ScrollView
@@ -92,13 +114,18 @@ export function AdminUserScreen() {
       }
     >
       <Text style={[styles.subtitle, { color: colors.muted }]}>{t('admin.activitySubtitle')}</Text>
+      <Text style={[styles.meta, { color: colors.muted }]}>
+        {t('admin.registered', { date: formatDateLong(profile.createdAt, language) })}
+        {' · '}
+        {profile.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')}
+      </Text>
 
       <View style={styles.stats}>
         {(
           [
-            [t('admin.columns.email'), profile.email],
-            [t('admin.columns.role'), profile.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')],
-            [t('admin.columns.timezone'), profile.timezone],
+            [t('admin.summary.modulesUsed'), `${summary.modulesUsed} / ${summary.modulesTotal}`],
+            [t('admin.summary.activeDays'), String(summary.activeDays30)],
+            [t('admin.summary.events7'), String(summary.events7)],
             [
               t('admin.columns.lastActivity'),
               lastActivityAt ? formatDateLong(lastActivityAt, language) : t('admin.noActivity'),
@@ -110,6 +137,37 @@ export function AdminUserScreen() {
             <Text style={[styles.statValue, { color: colors.ink }]}>{value}</Text>
           </View>
         ))}
+      </View>
+
+      <Text style={[styles.section, { color: colors.ink }]}>{t('admin.timelineTitle')}</Text>
+      <Text style={[styles.hint, { color: colors.muted }]}>{t('admin.timelineHint')}</Text>
+      <View style={[styles.chart, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+        <View style={styles.bars}>
+          {timeline.map((point) => {
+            const height = Math.max((point.count / max) * 72, point.count > 0 ? 8 : 2);
+            return (
+              <View key={point.date} style={styles.barWrap}>
+                <View
+                  style={[
+                    styles.bar,
+                    {
+                      height,
+                      backgroundColor: point.count > 0 ? colors.brand : colors.line,
+                    },
+                  ]}
+                />
+              </View>
+            );
+          })}
+        </View>
+        <View style={styles.chartMeta}>
+          <Text style={[styles.meta, { color: colors.muted }]}>
+            {timeline[0] ? formatDate(timeline[0].date, language) : ''}
+          </Text>
+          <Text style={[styles.meta, { color: colors.muted }]}>
+            {t('admin.timelineTotal', { count: summary.events30 })}
+          </Text>
+        </View>
       </View>
 
       <Text style={[styles.section, { color: colors.ink }]}>{t('admin.modulesTitle')}</Text>
@@ -127,10 +185,15 @@ export function AdminUserScreen() {
             {moduleHint(item.id, item.extra, item.count, t)}
           </Text>
           <Text style={[styles.meta, { color: colors.muted }]}>
-            {item.lastAt
-              ? t('admin.lastUsed', { date: formatDateLong(item.lastAt, language) })
+            {item.firstAt
+              ? t('admin.firstUsed', { date: formatDateLong(item.firstAt, language) })
               : t('admin.neverUsed')}
           </Text>
+          {item.lastAt ? (
+            <Text style={[styles.meta, { color: colors.muted }]}>
+              {t('admin.lastUsed', { date: formatDateLong(item.lastAt, language) })}
+            </Text>
+          ) : null}
         </View>
       ))}
 
@@ -171,8 +234,13 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   statLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  statValue: { fontSize: 14, fontWeight: '700', marginTop: 6 },
+  statValue: { fontSize: 16, fontWeight: '700', marginTop: 6 },
   section: { fontSize: 16, fontWeight: '700', marginTop: 8 },
+  chart: { borderRadius: 16, borderWidth: 1, padding: 12 },
+  bars: { alignItems: 'flex-end', flexDirection: 'row', gap: 2, height: 76 },
+  barWrap: { alignItems: 'center', flex: 1, height: 76, justifyContent: 'flex-end' },
+  bar: { borderRadius: 2, width: '100%' },
+  chartMeta: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
   card: { borderRadius: 16, borderWidth: 1, gap: 6, padding: 14 },
   row: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   cardTitle: { fontSize: 16, fontWeight: '700' },

@@ -631,17 +631,29 @@
       "user": "Користувач"
     },
     "backToUsers": "До користувачів",
-    "activitySubtitle": "Лише розділи і факти активності — без текстів і назв.",
+    "activitySubtitle": "Повна статистика використання. Тексти, суми, вага і назви записів приховані.",
     "modulesTitle": "Якими розділами користується",
-    "modulesHint": "Лічильники і дати. Вміст записів не показується.",
+    "modulesHint": "Лише лічильники і дати — без вмісту.",
     "recentTitle": "Останні дії",
-    "recentHint": "Що робив у продукті, без самих записів.",
+    "recentHint": "Який розділ чіпав і що зробив, без самих записів.",
     "used": "Користується",
     "idle": "Ще немає",
     "noActivity": "Активності ще немає",
     "neverUsed": "Ще не заходив у розділ",
+    "firstUsed": "Перший раз {{date}}",
     "lastUsed": "Останній раз {{date}}",
+    "registered": "У продукті з {{date}}",
     "openActivity": "Дивитися активність",
+    "openStats": "Статистика",
+    "timelineTitle": "Активність за 30 днів",
+    "timelineHint": "Скільки дій на день. Без того, що саме писав.",
+    "timelineTotal": "Усього дій: {{count}}",
+    "summary": {
+      "modulesUsed": "Розділи",
+      "activeDays": "Дні активності",
+      "events7": "За 7 днів",
+      "events30": "За 30 днів"
+    },
     "modules": {
       "review": "Повторення",
       "tasks": "Задачі",
@@ -651,10 +663,12 @@
       "notes": "Нотатки"
     },
     "moduleHints": {
-      "review": "Нагадувань: {{reminders}}, закрито: {{completed}}",
-      "tasks": "Виконано: {{completed}}",
-      "habits": "Позначок: {{checks}}",
-      "nutrition": "Прийоми: {{meals}} · вода: {{water}} · вага: {{weight}}",
+      "review": "Матеріалів: {{materials}} · нагадувань: {{reminders}} · закрито: {{completed}} · відкрито: {{pending}}",
+      "tasks": "Усього: {{count}} · виконано: {{completed}} · за 30 днів: {{last30}}",
+      "habits": "Звичок: {{count}} · активних: {{active}} · позначок: {{checks}} · за 30 днів: {{last30}}",
+      "nutrition": "Прийоми: {{meals}} · дні води: {{water}} · дні ваги: {{weight}}",
+      "finance": "Записів: {{count}} · доходи: {{income}} · витрати: {{expense}}",
+      "notes": "Нотаток: {{count}}",
       "count": "Записів: {{count}}"
     },
     "actions": {

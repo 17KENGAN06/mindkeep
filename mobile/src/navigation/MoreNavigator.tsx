@@ -49,7 +49,7 @@ export function MoreNavigator() {
       <Stack.Screen name="Blog" component={BlogScreen} options={{ title: t('blog.title') }} />
       <Stack.Screen name="BlogArticle" component={BlogArticleScreen} options={{ title: t('blog.eyebrow') }} />
       <Stack.Screen name="Admin" component={AdminScreen} options={{ title: t('admin.title') }} />
-      <Stack.Screen name="AdminUser" component={AdminUserScreen} options={{ title: t('admin.openActivity') }} />
+      <Stack.Screen name="AdminUser" component={AdminUserScreen} options={{ title: t('admin.openStats') }} />
       <Stack.Screen
         name="NoteCreate"
         component={NoteEditorScreen}

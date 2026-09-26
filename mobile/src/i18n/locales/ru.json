@@ -631,17 +631,29 @@
       "user": "Пользователь"
     },
     "backToUsers": "К пользователям",
-    "activitySubtitle": "Только разделы и факты активности — без текстов и названий.",
+    "activitySubtitle": "Полная статистика использования. Тексты, суммы, вес и названия записей скрыты.",
     "modulesTitle": "Какими разделами пользуется",
-    "modulesHint": "Счётчики и даты. Содержимое записей не показывается.",
+    "modulesHint": "Только счётчики и даты — без содержимого.",
     "recentTitle": "Последние действия",
-    "recentHint": "Что делал в продукте, без самих записей.",
+    "recentHint": "Какой раздел трогал и что сделал, без самих записей.",
     "used": "Пользуется",
     "idle": "Пока нет",
     "noActivity": "Активности ещё нет",
     "neverUsed": "Ещё не заходил в раздел",
+    "firstUsed": "Первый раз {{date}}",
     "lastUsed": "Последний раз {{date}}",
+    "registered": "В продукте с {{date}}",
     "openActivity": "Смотреть активность",
+    "openStats": "Статистика",
+    "timelineTitle": "Активность за 30 дней",
+    "timelineHint": "Сколько действий в день. Без того, что именно писал.",
+    "timelineTotal": "Всего действий: {{count}}",
+    "summary": {
+      "modulesUsed": "Разделы",
+      "activeDays": "Дни активности",
+      "events7": "За 7 дней",
+      "events30": "За 30 дней"
+    },
     "modules": {
       "review": "Повторения",
       "tasks": "Задачи",
@@ -651,10 +663,12 @@
       "notes": "Заметки"
     },
     "moduleHints": {
-      "review": "Напоминаний: {{reminders}}, закрыто: {{completed}}",
-      "tasks": "Выполнено: {{completed}}",
-      "habits": "Отметок: {{checks}}",
-      "nutrition": "Приёмы: {{meals}} · вода: {{water}} · вес: {{weight}}",
+      "review": "Материалов: {{materials}} · напоминаний: {{reminders}} · закрыто: {{completed}} · открыто: {{pending}}",
+      "tasks": "Всего: {{count}} · выполнено: {{completed}} · за 30 дней: {{last30}}",
+      "habits": "Привычек: {{count}} · активных: {{active}} · отметок: {{checks}} · за 30 дней: {{last30}}",
+      "nutrition": "Приёмы: {{meals}} · дни воды: {{water}} · дни веса: {{weight}}",
+      "finance": "Записей: {{count}} · доходы: {{income}} · расходы: {{expense}}",
+      "notes": "Заметок: {{count}}",
       "count": "Записей: {{count}}"
     },
     "actions": {
