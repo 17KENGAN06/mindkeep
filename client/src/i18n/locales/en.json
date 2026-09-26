@@ -787,7 +787,7 @@
       "learnedAt": "Learning date",
       "category": "Category",
       "noCategory": "No category",
-      "contentHint": "Write in words, insert code where you need it, then continue.",
+      "contentHint": "Paste from ChatGPT or Telegram — spaces and line breaks stay. Insert code wherever you need it.",
       "contentContinue": "Continue the text here"
     },
     "filters": {
@@ -825,7 +825,8 @@
     "addTextBlock": "Add text",
     "removeCodeBlock": "Remove",
     "copyCode": "Copy",
-    "copiedCode": "Copied"
+    "copiedCode": "Copied",
+    "openSource": "Open"
   },
   "review": {
     "title": "Review today",

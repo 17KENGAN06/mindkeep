@@ -787,7 +787,7 @@
       "learnedAt": "Oppimispäivä",
       "category": "Kategoria",
       "noCategory": "Ei kategoriaa",
-      "contentHint": "Kirjoita sanoin, lisää koodi oikeaan kohtaan ja jatka sen jälkeen.",
+      "contentHint": "Liitä ChatGPT:stä tai Telegramista — välilyönnit ja rivinvaihdot säilyvät. Lisää koodi mihin tahansa kohtaan.",
       "contentContinue": "Jatka tekstiä tässä"
     },
     "filters": {
@@ -825,7 +825,8 @@
     "addTextBlock": "Lisää teksti",
     "removeCodeBlock": "Poista",
     "copyCode": "Kopioi",
-    "copiedCode": "Kopioitu"
+    "copiedCode": "Kopioitu",
+    "openSource": "Avaa"
   },
   "review": {
     "title": "Kertaa tänään",

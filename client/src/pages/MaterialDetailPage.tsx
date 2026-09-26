@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { FormattedText } from '@/components/ui/FormattedText';
+import { SourceLink } from '@/components/ui/SourceLink';
 import { Loader } from '@/components/ui/Loader';
 import {
   useArchiveMaterial,
@@ -81,14 +82,7 @@ export function MaterialDetailPage() {
         {material.sourceUrl ? (
           <div>
             <h2 className="text-sm font-semibold text-ink">{t('materials.fields.sourceUrl')}</h2>
-            <a
-              href={material.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-1 block break-all text-sm text-brand-500"
-            >
-              {material.sourceUrl}
-            </a>
+            <SourceLink href={material.sourceUrl} actionLabel={t('materials.openSource')} />
           </div>
         ) : null}
       </section>

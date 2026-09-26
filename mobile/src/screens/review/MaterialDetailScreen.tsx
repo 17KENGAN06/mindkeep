@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { ActivityIndicator, Alert, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { MaterialBody } from '../../components/MaterialBody';
+import { SourceLink } from '../../components/SourceLink';
 import { AppButton, Badge } from '../../components/ui';
 import {
   useArchiveMaterial,
@@ -84,9 +85,7 @@ export function MaterialDetailScreen() {
       {material.sourceUrl ? (
         <View style={[styles.block, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('materials.fields.sourceUrl')}</Text>
-          <Text style={[styles.link, { color: colors.brand }]} onPress={() => void Linking.openURL(material.sourceUrl!)}>
-            {material.sourceUrl}
-          </Text>
+          <SourceLink href={material.sourceUrl} />
         </View>
       ) : null}
 
@@ -151,7 +150,6 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   blockTitle: { fontSize: 15, fontWeight: '700' },
-  link: { fontSize: 14 },
   reminderRow: { gap: 6, marginTop: 8 },
   reminderText: { fontSize: 14, fontWeight: '600' },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },

@@ -126,7 +126,8 @@
     "addCodeBlock": "Lisää koodilohko",
     "insertCodeHere": "Lisää koodi tähän",
     "addTextBlock": "Lisää teksti",
-    "removeCodeBlock": "Poista"
+    "removeCodeBlock": "Poista",
+    "openSource": "Avaa"
   },
   "review": {
     "title": "Kertaa tänään",

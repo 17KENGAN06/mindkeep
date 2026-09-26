@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
 import { parseContentBlocks } from '../utils/contentBlocks';
+import { HighlightedCode } from '../utils/highlightCode';
 
 type MaterialBodyProps = {
   content: string;
@@ -21,7 +22,7 @@ export function MaterialBody({ content }: MaterialBodyProps) {
               {block.language || t('materials.fields.codeBlock')}
             </Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <Text style={[styles.codeText, { color: colors.ink }]}>{block.value}</Text>
+              <HighlightedCode value={block.value} color={colors.ink} />
             </ScrollView>
           </View>
         ) : (
@@ -40,9 +41,9 @@ const styles = StyleSheet.create({
   code: {
     borderRadius: 16,
     borderWidth: 1,
-    gap: 8,
-    padding: 12,
+    gap: 10,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
   },
-  codeLabel: { fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
-  codeText: { fontFamily: 'monospace', fontSize: 13, lineHeight: 20 },
+  codeLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase' },
 });

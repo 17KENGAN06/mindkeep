@@ -126,7 +126,8 @@
     "addCodeBlock": "Add code block",
     "insertCodeHere": "Insert code here",
     "addTextBlock": "Add text",
-    "removeCodeBlock": "Remove"
+    "removeCodeBlock": "Remove",
+    "openSource": "Open"
   },
   "review": {
     "title": "Review today",

@@ -10,6 +10,7 @@ import {
   serializeContentBlocks,
   type ContentBlock,
 } from '../utils/contentBlocks';
+import { containsCodeFence, normalizePastedText } from '../utils/pasteText';
 
 type MaterialContentEditorProps = {
   value: string;
@@ -40,6 +41,16 @@ export function MaterialContentEditor({ value, onChange }: MaterialContentEditor
     const serialized = serializeContentBlocks(next);
     serializedRef.current = serialized;
     onChange(serialized);
+  };
+
+  const applyText = (id: string, next: string) => {
+    const value = normalizePastedText(next);
+    const updated = updateBlock(blocks, id, { value });
+    if (containsCodeFence(value)) {
+      commit(ensureEditableBlocks(parseContentBlocks(serializeContentBlocks(updated))));
+      return;
+    }
+    commit(updated);
   };
 
   const addCodeInText = (textId: string) => {
@@ -87,7 +98,7 @@ export function MaterialContentEditor({ value, onChange }: MaterialContentEditor
               autoCorrect={false}
               autoCapitalize="none"
               value={block.value}
-              onChangeText={(next) => commit(updateBlock(blocks, block.id, { value: next }))}
+              onChangeText={(next) => commit(updateBlock(blocks, block.id, { value: normalizePastedText(next) }))}
               placeholder={t('materials.fields.codePlaceholder')}
               placeholderTextColor={colors.muted}
               style={[styles.codeInput, { color: colors.ink }]}
@@ -100,7 +111,7 @@ export function MaterialContentEditor({ value, onChange }: MaterialContentEditor
               value={block.value}
               onChangeText={(next) => {
                 focusedTextId.current = block.id;
-                commit(updateBlock(blocks, block.id, { value: next }));
+                applyText(block.id, next);
               }}
               onFocus={() => {
                 focusedTextId.current = block.id;
@@ -150,16 +161,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 12,
-    paddingTop: 10,
+    paddingHorizontal: 18,
+    paddingTop: 14,
   },
   language: { flex: 1, fontSize: 16, marginRight: 8 },
   codeInput: {
     fontFamily: 'monospace',
     fontSize: 16,
+    lineHeight: 22,
     minHeight: 140,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
     textAlignVertical: 'top',
   },
 });

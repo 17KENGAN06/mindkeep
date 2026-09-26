@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { FormattedText } from '@/components/ui/FormattedText';
+import { SourceLink } from '@/components/ui/SourceLink';
 import type { AppLanguage } from '@/i18n';
 import type { Reminder } from '@/types/reminder';
 import { formatDate } from '@/utils/date';
@@ -73,6 +74,10 @@ export function ReminderCard({
           </div>
         ) : null}
       </dl>
+
+      {material.sourceUrl ? (
+        <SourceLink href={material.sourceUrl} actionLabel={t('materials.openSource')} />
+      ) : null}
 
       {material.content?.trim() ? (
         <div className="mt-4 rounded-2xl bg-brand-50/30 px-4 py-4 ring-1 ring-line/70">

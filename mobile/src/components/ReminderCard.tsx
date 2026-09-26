@@ -5,6 +5,7 @@ import type { AppLanguage } from '../i18n';
 import type { Reminder } from '../types/reminder';
 import { formatDate } from '../utils/date';
 import { MaterialBody } from './MaterialBody';
+import { SourceLink } from './SourceLink';
 import { AppButton, Badge } from './ui';
 
 type ReminderCardProps = {
@@ -71,6 +72,12 @@ export function ReminderCard({
           <Text style={[styles.rowLabel, { color: colors.ink }]}>{t('review.daysOverdue')}: </Text>
           {reminder.daysOverdue}
         </Text>
+      ) : null}
+
+      {material.sourceUrl ? (
+        <View style={styles.block}>
+          <SourceLink href={material.sourceUrl} />
+        </View>
       ) : null}
 
       {material.content?.trim() ? (

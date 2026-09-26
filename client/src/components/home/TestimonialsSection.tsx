@@ -192,7 +192,7 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
               <select
                 value={rating}
                 onChange={(event) => setRating(Number(event.target.value))}
-                className="mt-1 block min-h-11 rounded-xl border border-line bg-surface px-3 text-base text-ink"
+                className="mt-1 block min-h-11 rounded-xl border border-line bg-surface px-3 text-sm text-ink"
               >
                 <option value={5}>5★</option>
                 <option value={4}>4★</option>
@@ -208,7 +208,7 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
                 onChange={(event) => setText(event.target.value)}
                 minLength={20}
                 maxLength={1000}
-                className="mt-1 block min-h-20 w-full resize-y rounded-xl border border-line bg-surface px-3 py-2 text-base text-ink"
+                className="mt-1 block min-h-20 w-full resize-y rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink"
               />
             </label>
             <label className="text-xs font-medium text-muted">
@@ -217,7 +217,7 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
                 value={location}
                 onChange={(event) => setLocation(event.target.value)}
                 maxLength={120}
-                className="mt-1 block min-h-11 w-full rounded-xl border border-line bg-surface px-3 text-base text-ink"
+                className="mt-1 block min-h-11 w-full rounded-xl border border-line bg-surface px-3 text-sm text-ink"
               />
             </label>
             <Button

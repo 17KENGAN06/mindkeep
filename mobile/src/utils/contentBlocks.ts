@@ -85,8 +85,8 @@ export function parseContentBlocks(raw: string): ContentBlock[] {
   let match: RegExpExecArray | null;
 
   while ((match = fence.exec(text)) !== null) {
-    const before = text.slice(last, match.index).trim();
-    if (before) {
+    const before = text.slice(last, match.index).replace(/^\n+|\n+$/g, '');
+    if (before.trim()) {
       blocks.push({ id: nextId(), type: 'text', value: before, language: '' });
     }
     blocks.push({
@@ -98,8 +98,8 @@ export function parseContentBlocks(raw: string): ContentBlock[] {
     last = match.index + match[0].length;
   }
 
-  const after = text.slice(last).trim();
-  if (after) {
+  const after = text.slice(last).replace(/^\n+|\n+$/g, '');
+  if (after.trim()) {
     blocks.push({ id: nextId(), type: 'text', value: after, language: '' });
   }
 
@@ -117,7 +117,7 @@ export function serializeContentBlocks(blocks: ContentBlock[]): string {
         const language = block.language.trim();
         return `\`\`\`${language}\n${block.value.replace(/\n+$/, '')}\n\`\`\``;
       }
-      return block.value.trim();
+      return block.value.replace(/^\n+|\n+$/g, '');
     })
     .filter((part) => part.length > 0)
     .join('\n\n');

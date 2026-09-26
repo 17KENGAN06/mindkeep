@@ -7,8 +7,8 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { useDeleteNote, useNote } from '@/features/notes/useNotes';
 import type { AppLanguage } from '@/i18n';
+import { SourceLink } from '@/components/ui/SourceLink';
 import { formatDate } from '@/utils/date';
-import { sourceHost } from '@/utils/url';
 
 export function NoteDetailPage() {
   const { t, i18n } = useTranslation();
@@ -21,8 +21,6 @@ export function NoteDetailPage() {
 
   if (isLoading) return <Loader />;
   if (isError || !note) return <ErrorMessage message={t('notes.notFound')} />;
-
-  const host = note.sourceUrl ? sourceHost(note.sourceUrl) : null;
 
   return (
     <div className="space-y-6">
@@ -59,14 +57,7 @@ export function NoteDetailPage() {
         {note.sourceUrl ? (
           <div className="border-t border-line pt-4">
             <p className="text-sm font-semibold text-ink">{t('notes.source')}</p>
-            <a
-              href={note.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 inline-block break-all text-sm text-brand-500"
-            >
-              {host ?? note.sourceUrl}
-            </a>
+            <SourceLink href={note.sourceUrl} actionLabel={t('materials.openSource')} />
           </div>
         ) : null}
       </article>

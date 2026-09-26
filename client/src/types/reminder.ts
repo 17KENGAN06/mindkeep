@@ -7,6 +7,7 @@ export type ReminderMaterial = {
   question: string | null;
   answer: string | null;
   learnedAt: string;
+  sourceUrl: string | null;
   status: 'ACTIVE' | 'ARCHIVED';
   category: { id: string; name: string } | null;
 };

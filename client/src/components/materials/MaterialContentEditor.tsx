@@ -8,6 +8,7 @@ import {
   serializeContentBlocks,
   type ContentBlock,
 } from '@/utils/contentBlocks';
+import { containsCodeFence, insertAtCursor, readClipboard } from '@/utils/pasteText';
 
 type MaterialContentEditorProps = {
   value: string;
@@ -69,6 +70,36 @@ export function MaterialContentEditor({
     addCodeInText(textId);
   };
 
+  const pasteInto = (
+    blockId: string,
+    target: HTMLTextAreaElement,
+    data: DataTransfer | null,
+    splitFences = false,
+  ) => {
+    const pasted = readClipboard(data);
+    if (!pasted) return false;
+
+    const start = target.selectionStart ?? target.value.length;
+    const end = target.selectionEnd ?? start;
+    const nextValue = insertAtCursor(target.value, pasted, start, end);
+    const updated = updateBlock(blocks, blockId, { value: nextValue });
+
+    if (splitFences && containsCodeFence(nextValue)) {
+      commit(ensureEditableBlocks(parseContentBlocks(serializeContentBlocks(updated))));
+      return true;
+    }
+
+    commit(updated);
+    window.requestAnimationFrame(() => {
+      const field = textRefs.current[blockId] ?? target;
+      const cursor = start + pasted.length;
+      field.focus();
+      field.setSelectionRange(cursor, cursor);
+      rememberCursor(blockId, field);
+    });
+    return true;
+  };
+
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -85,15 +116,15 @@ export function MaterialContentEditor({
       <div className="space-y-3">
         {blocks.map((block, index) =>
           block.type === 'code' ? (
-            <div key={block.id} className="overflow-hidden rounded-2xl ring-1 ring-line">
-              <div className="flex items-center justify-between gap-2 bg-brand-50 px-3 py-2">
+            <div key={block.id} className="overflow-hidden rounded-2xl bg-[#0a1611] ring-1 ring-line">
+              <div className="flex items-center justify-between gap-3 border-b border-line/80 bg-transparent px-5 py-3">
                 <input
                   value={block.language}
                   onChange={(event) =>
                     commit(updateBlock(blocks, block.id, { language: event.target.value }))
                   }
                   placeholder={t('materials.fields.codeLanguage')}
-                  className="min-w-0 flex-1 bg-transparent text-base font-medium text-muted outline-none sm:text-xs"
+                  className="min-w-0 flex-1 bg-transparent text-sm font-medium text-muted outline-none"
                 />
                 <button
                   type="button"
@@ -106,10 +137,15 @@ export function MaterialContentEditor({
               <textarea
                 value={block.value}
                 onChange={(event) => commit(updateBlock(blocks, block.id, { value: event.target.value }))}
+                onPaste={(event) => {
+                  if (pasteInto(block.id, event.currentTarget, event.clipboardData)) {
+                    event.preventDefault();
+                  }
+                }}
                 spellCheck={false}
                 rows={8}
                 placeholder={t('materials.fields.codePlaceholder')}
-                className="min-h-36 w-full resize-y bg-[#08140f] px-3 py-3 font-mono text-base leading-relaxed text-ink outline-none sm:text-[13px]"
+                className="min-h-36 w-full resize-y bg-transparent px-5 py-5 font-mono text-[13px] leading-7 text-ink outline-none"
               />
             </div>
           ) : (
@@ -126,13 +162,18 @@ export function MaterialContentEditor({
                 onSelect={(event) => rememberCursor(block.id, event.currentTarget)}
                 onClick={(event) => rememberCursor(block.id, event.currentTarget)}
                 onKeyUp={(event) => rememberCursor(block.id, event.currentTarget)}
+                onPaste={(event) => {
+                  if (pasteInto(block.id, event.currentTarget, event.clipboardData, true)) {
+                    event.preventDefault();
+                  }
+                }}
                 rows={block.value.trim() ? 6 : 4}
                 placeholder={
                   blocks[index - 1]?.type === 'code'
                     ? t('materials.fields.contentContinue')
                     : t('materials.fields.content')
                 }
-                className={`min-h-24 w-full rounded-xl border bg-panel px-3 py-2.5 text-base text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
+                className={`min-h-24 w-full whitespace-pre-wrap rounded-xl border bg-panel px-3 py-2.5 text-sm text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
                   error ? 'border-red-400' : 'border-line'
                 }`}
               />

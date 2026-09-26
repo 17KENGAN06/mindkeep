@@ -1,12 +1,22 @@
 import { useState, type ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
+import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { highlightCode, languageLabel } from '@/utils/highlight';
+import { isHttpUrl, sourceHost } from '@/utils/url';
 
 type FormattedTextProps = {
   text: string;
   className?: string;
 };
+
+function textFromChildren(children: ReactNode): string {
+  if (typeof children === 'string' || typeof children === 'number') return String(children);
+  if (Array.isArray(children)) return children.map(textFromChildren).join('');
+  return '';
+}
 
 function CodeBlock({ language, children }: { language: string; children: ReactNode }) {
   const { t } = useTranslation();
@@ -24,10 +34,10 @@ function CodeBlock({ language, children }: { language: string; children: ReactNo
   };
 
   return (
-    <div className="my-3 overflow-hidden rounded-2xl bg-[#08140f] ring-1 ring-line">
-      <div className="flex items-center justify-between gap-2 px-3 py-2">
+    <div className="material-code my-4 overflow-hidden rounded-2xl bg-[#0a1611] ring-1 ring-line">
+      <div className="flex items-center justify-between gap-3 border-b border-line/80 px-5 py-3">
         <span className="text-[11px] font-semibold tracking-wide text-muted uppercase">
-          {language || t('materials.fields.codeBlock')}
+          {languageLabel(language) || t('materials.fields.codeBlock')}
         </span>
         <button
           type="button"
@@ -37,10 +47,30 @@ function CodeBlock({ language, children }: { language: string; children: ReactNo
           {copied ? t('materials.copiedCode') : t('materials.copyCode')}
         </button>
       </div>
-      <pre className="m-0 overflow-x-auto px-4 pb-4">
-        <code className="bg-transparent p-0 font-mono text-[13px] leading-relaxed text-ink">{value}</code>
+      <pre className="material-code__body m-0 overflow-x-auto">
+        <code
+          className="hljs block whitespace-pre-wrap break-words bg-transparent p-0 font-mono text-[13px] leading-7"
+          dangerouslySetInnerHTML={{ __html: highlightCode(value, language) }}
+        />
       </pre>
     </div>
+  );
+}
+
+function MarkdownLink({ href, children }: { href?: string; children: ReactNode }) {
+  if (!href) return <>{children}</>;
+  if (href.startsWith('#') || href.startsWith('/')) {
+    return <a href={href}>{children}</a>;
+  }
+
+  const raw = textFromChildren(children).trim();
+  const label = !raw || raw === href || isHttpUrl(raw) ? sourceHost(href) : children;
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="material-link">
+      <span className="min-w-0 truncate">{label}</span>
+      <ArrowUpRight className="h-3 w-3 shrink-0" aria-hidden />
+    </a>
   );
 }
 
@@ -54,18 +84,21 @@ export function FormattedText({ text, className = '' }: FormattedTextProps) {
   return (
     <div className={`formatted-text text-sm leading-relaxed text-muted ${className}`}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkBreaks]}
         components={{
           pre({ children }) {
             return <>{children}</>;
           },
-          code({ className, children }) {
-            const language = /language-(\w+)/.exec(className ?? '')?.[1] ?? '';
-            const isBlock = Boolean(className) || String(children).includes('\n');
+          code({ className: codeClass, children }) {
+            const language = /language-(\w+)/.exec(codeClass ?? '')?.[1] ?? '';
+            const isBlock = Boolean(codeClass) || String(children).includes('\n');
             if (!isBlock) {
-              return <code className={className}>{children}</code>;
+              return <code className={codeClass}>{children}</code>;
             }
             return <CodeBlock language={language}>{children}</CodeBlock>;
+          },
+          a({ href, children }) {
+            return <MarkdownLink href={href}>{children}</MarkdownLink>;
           },
         }}
       >

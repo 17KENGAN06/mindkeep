@@ -126,7 +126,8 @@
     "addCodeBlock": "Додати блок коду",
     "insertCodeHere": "Вставити код сюди",
     "addTextBlock": "Додати текст",
-    "removeCodeBlock": "Прибрати"
+    "removeCodeBlock": "Прибрати",
+    "openSource": "Відкрити"
   },
   "review": {
     "title": "Повторити сьогодні",

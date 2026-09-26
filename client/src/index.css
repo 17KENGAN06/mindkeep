@@ -674,7 +674,8 @@ html[data-theme='light'] .ambient-aurora-b {
 }
 
 .formatted-text {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .formatted-text > :first-child {
@@ -685,8 +686,10 @@ html[data-theme='light'] .ambient-aurora-b {
   margin-bottom: 0;
 }
 
-.formatted-text p {
+.formatted-text p,
+.formatted-text li {
   margin: 0.55em 0;
+  white-space: pre-wrap;
 }
 
 .formatted-text h1,
@@ -728,6 +731,7 @@ html[data-theme='light'] .ambient-aurora-b {
 
 .formatted-text li {
   margin: 0.2em 0;
+  white-space: pre-wrap;
 }
 
 .formatted-text li::marker {
@@ -766,6 +770,100 @@ html[data-theme='light'] .ambient-aurora-b {
   padding: 0;
 }
 
+.formatted-text .material-code pre,
+.formatted-text pre.material-code__body {
+  margin: 0;
+  overflow-x: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 1.15rem 1.25rem 1.25rem;
+}
+
+.formatted-text .material-code code {
+  display: block;
+  background: transparent;
+  padding: 0;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  tab-size: 2;
+  line-height: 1.7;
+  color: #d7efe3;
+}
+
+.material-code .hljs-comment,
+.material-code .hljs-quote {
+  color: #7d9a8c;
+  font-style: italic;
+}
+
+.material-code .hljs-keyword,
+.material-code .hljs-selector-tag,
+.material-code .hljs-literal,
+.material-code .hljs-section,
+.material-code .hljs-link {
+  color: #8eefb4;
+}
+
+.material-code .hljs-string,
+.material-code .hljs-bullet,
+.material-code .hljs-addition {
+  color: #e8c07a;
+}
+
+.material-code .hljs-number,
+.material-code .hljs-attr,
+.material-code .hljs-variable,
+.material-code .hljs-template-variable,
+.material-code .hljs-regexp {
+  color: #7ec8e3;
+}
+
+.material-code .hljs-title,
+.material-code .hljs-title.function_,
+.material-code .hljs-name {
+  color: #f2faf5;
+}
+
+.material-code .hljs-type,
+.material-code .hljs-class .hljs-title,
+.material-code .hljs-title.class_ {
+  color: #9ecbff;
+}
+
+.material-code .hljs-built_in,
+.material-code .hljs-meta,
+.material-code .hljs-symbol {
+  color: #5fc98e;
+}
+
+.material-code .hljs-deletion,
+.material-code .hljs-tag {
+  color: #f0a8a8;
+}
+
+.formatted-text a,
+.formatted-text a.material-link {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.28rem;
+  margin: 0.1rem 0.12rem;
+  border-radius: 999px;
+  background: var(--app-brand-50);
+  padding: 0.18rem 0.55rem 0.18rem 0.65rem;
+  color: var(--app-brand-500);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-decoration: none;
+  overflow-wrap: break-word;
+}
+
+.formatted-text a:hover {
+  background: var(--app-brand-100);
+}
+
 .formatted-text blockquote {
   margin: 0.75em 0;
   border-left: 3px solid var(--app-brand-500);
@@ -773,11 +871,6 @@ html[data-theme='light'] .ambient-aurora-b {
   color: var(--app-muted);
 }
 
-.formatted-text a {
-  color: var(--app-brand-500);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
 
 .formatted-text hr {
   margin: 1rem 0;

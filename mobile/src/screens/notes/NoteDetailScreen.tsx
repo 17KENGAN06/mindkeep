@@ -1,7 +1,8 @@
-import { ActivityIndicator, Alert, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { SourceLink } from '../../components/SourceLink';
 import { AppButton } from '../../components/ui';
 import { useDeleteNote, useNote } from '../../features/notes/useNotes';
 import { useTheme } from '../../features/theme/useTheme';
@@ -58,11 +59,7 @@ export function NoteDetailScreen() {
         {t('notes.updated')}: {formatDate(note.updatedAt, language)}
       </Text>
       <Text style={[styles.body, { color: colors.ink }]}>{note.content}</Text>
-      {note.sourceUrl ? (
-        <Text style={[styles.link, { color: colors.brand }]} onPress={() => void Linking.openURL(note.sourceUrl!)}>
-          {t('notes.source')}: {note.sourceUrl}
-        </Text>
-      ) : null}
+      {note.sourceUrl ? <SourceLink href={note.sourceUrl} /> : null}
 
       <View style={styles.actions}>
         <AppButton
@@ -87,6 +84,5 @@ const styles = StyleSheet.create({
   title: { fontSize: 26, fontWeight: '700' },
   meta: { fontSize: 13 },
   body: { fontSize: 16, lineHeight: 24 },
-  link: { fontSize: 14 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
 });

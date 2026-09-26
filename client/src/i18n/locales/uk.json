@@ -787,7 +787,7 @@
       "learnedAt": "Дата вивчення",
       "category": "Категорія",
       "noCategory": "Без категорії",
-      "contentHint": "Пишіть словами, вставте код у потрібному місці і продовжуйте далі.",
+      "contentHint": "Вставляйте з ChatGPT або Telegram — пробіли й переноси зберігаються. Код можна додати будь-де.",
       "contentContinue": "Продовжіть текст тут"
     },
     "filters": {
@@ -825,7 +825,8 @@
     "addTextBlock": "Додати текст",
     "removeCodeBlock": "Прибрати",
     "copyCode": "Копіювати",
-    "copiedCode": "Скопійовано"
+    "copiedCode": "Скопійовано",
+    "openSource": "Відкрити"
   },
   "review": {
     "title": "Повторити сьогодні",
