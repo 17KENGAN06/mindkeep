@@ -89,7 +89,7 @@ html[data-theme='light'] {
 
 @layer base {
   html {
-    @apply antialiased scroll-smooth;
+    @apply overflow-x-clip antialiased scroll-smooth;
   }
 
   body {
@@ -150,6 +150,15 @@ html[data-theme='light'] {
 
   .testimonial-track::-webkit-scrollbar {
     display: none;
+  }
+}
+
+/* iOS zooms any focused field under 16px and the page starts to pan sideways. */
+@media (max-width: 767px) {
+  input:not([type='checkbox']):not([type='radio']):not([type='hidden']):not([type='range']):not([type='file']),
+  textarea,
+  select {
+    font-size: 16px !important;
   }
 }
 

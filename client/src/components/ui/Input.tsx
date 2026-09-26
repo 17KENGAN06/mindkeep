@@ -25,7 +25,7 @@ export function Input({ label, error, hint, action, id, className = '', ...props
       <div className={action ? 'min-w-0 sm:col-start-1 sm:row-start-2' : undefined}>
         <input
           id={inputId}
-          className={`min-w-0 w-full rounded-xl border bg-panel px-3 py-2.5 text-sm text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
+          className={`min-w-0 w-full rounded-xl border bg-panel px-3 py-2.5 text-base text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
             error ? 'border-red-400' : 'border-line'
           } ${className}`}
           aria-invalid={Boolean(error)}

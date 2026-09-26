@@ -82,7 +82,7 @@ export function MaterialContentEditor({
                     commit(updateBlock(blocks, block.id, { language: event.target.value }))
                   }
                   placeholder={t('materials.fields.codeLanguage')}
-                  className="min-w-0 flex-1 bg-transparent text-xs font-medium text-muted outline-none"
+                  className="min-w-0 flex-1 bg-transparent text-base font-medium text-muted outline-none sm:text-xs"
                 />
                 <button
                   type="button"
@@ -98,7 +98,7 @@ export function MaterialContentEditor({
                 spellCheck={false}
                 rows={8}
                 placeholder={t('materials.fields.codePlaceholder')}
-                className="min-h-36 w-full resize-y bg-[#08140f] px-3 py-3 font-mono text-[13px] leading-relaxed text-ink outline-none"
+                className="min-h-36 w-full resize-y bg-[#08140f] px-3 py-3 font-mono text-base leading-relaxed text-ink outline-none sm:text-[13px]"
               />
             </div>
           ) : (
@@ -107,7 +107,7 @@ export function MaterialContentEditor({
               value={block.value}
               onChange={(event) => commit(updateBlock(blocks, block.id, { value: event.target.value }))}
               rows={8}
-              className={`min-h-28 w-full rounded-xl border bg-panel px-3 py-2.5 text-sm text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
+              className={`min-h-28 w-full rounded-xl border bg-panel px-3 py-2.5 text-base text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
                 error ? 'border-red-400' : 'border-line'
               }`}
             />

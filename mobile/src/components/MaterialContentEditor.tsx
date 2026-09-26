@@ -125,10 +125,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingTop: 10,
   },
-  language: { flex: 1, fontSize: 13, marginRight: 8 },
+  language: { flex: 1, fontSize: 16, marginRight: 8 },
   codeInput: {
     fontFamily: 'monospace',
-    fontSize: 13,
+    fontSize: 16,
     minHeight: 140,
     paddingHorizontal: 12,
     paddingVertical: 10,
