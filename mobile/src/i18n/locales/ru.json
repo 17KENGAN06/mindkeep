@@ -90,6 +90,7 @@
       "codeBlock": "Код",
       "codeLanguage": "Язык, например ts",
       "codePlaceholder": "Вставьте код сюда",
+      "contentContinue": "Продолжите текст здесь",
       "sourceUrl": "Ссылка",
       "learnedAt": "Дата изучения",
       "category": "Категория",
@@ -123,6 +124,7 @@
     "revealAnswer": "Показать ответ",
     "hideAnswer": "Скрыть ответ",
     "addCodeBlock": "Добавить блок кода",
+    "insertCodeHere": "Вставить код сюда",
     "addTextBlock": "Добавить текст",
     "removeCodeBlock": "Убрать"
   },

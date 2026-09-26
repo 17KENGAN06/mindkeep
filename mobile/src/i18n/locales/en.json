@@ -90,6 +90,7 @@
       "codeBlock": "Code",
       "codeLanguage": "Language, e.g. ts",
       "codePlaceholder": "Paste code here",
+      "contentContinue": "Continue the text here",
       "sourceUrl": "Source URL",
       "learnedAt": "Learning date",
       "category": "Category",
@@ -123,6 +124,7 @@
     "revealAnswer": "Show answer",
     "hideAnswer": "Hide answer",
     "addCodeBlock": "Add code block",
+    "insertCodeHere": "Insert code here",
     "addTextBlock": "Add text",
     "removeCodeBlock": "Remove"
   },

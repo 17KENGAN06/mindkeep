@@ -787,7 +787,8 @@
       "learnedAt": "Oppimispäivä",
       "category": "Kategoria",
       "noCategory": "Ei kategoriaa",
-      "contentHint": "Kirjoita muistiinpano ja lisää koodilohkoja — hyödyllistä ohjelmointimuistiinpanoissa."
+      "contentHint": "Kirjoita sanoin, lisää koodi oikeaan kohtaan ja jatka sen jälkeen.",
+      "contentContinue": "Jatka tekstiä tässä"
     },
     "filters": {
       "search": "Haku",
@@ -820,6 +821,7 @@
     "hideAnswer": "Piilota vastaus",
     "showNotes": "Näytä materiaalin muistiinpanot",
     "addCodeBlock": "Lisää koodilohko",
+    "insertCodeHere": "Lisää koodi tähän",
     "addTextBlock": "Lisää teksti",
     "removeCodeBlock": "Poista",
     "copyCode": "Kopioi",

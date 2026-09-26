@@ -787,7 +787,8 @@
       "learnedAt": "Learning date",
       "category": "Category",
       "noCategory": "No category",
-      "contentHint": "Write a note and add code blocks — useful for programming notes."
+      "contentHint": "Write in words, insert code where you need it, then continue.",
+      "contentContinue": "Continue the text here"
     },
     "filters": {
       "search": "Search",
@@ -820,6 +821,7 @@
     "hideAnswer": "Hide answer",
     "showNotes": "Show material notes",
     "addCodeBlock": "Add code block",
+    "insertCodeHere": "Insert code here",
     "addTextBlock": "Add text",
     "removeCodeBlock": "Remove",
     "copyCode": "Copy",

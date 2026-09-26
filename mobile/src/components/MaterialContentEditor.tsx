@@ -3,7 +3,10 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
 import {
+  ensureEditableBlocks,
+  insertCodeAt,
   parseContentBlocks,
+  removeCodeBlock,
   serializeContentBlocks,
   type ContentBlock,
 } from '../utils/contentBlocks';
@@ -20,12 +23,14 @@ function updateBlock(blocks: ContentBlock[], id: string, patch: Partial<ContentB
 export function MaterialContentEditor({ value, onChange }: MaterialContentEditorProps) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const [blocks, setBlocks] = useState<ContentBlock[]>(() => parseContentBlocks(value));
+  const [blocks, setBlocks] = useState<ContentBlock[]>(() => ensureEditableBlocks(parseContentBlocks(value)));
   const serializedRef = useRef(serializeContentBlocks(blocks));
+  const focusedTextId = useRef(blocks.find((block) => block.type === 'text')?.id ?? '');
+  const cursors = useRef<Record<string, number>>({});
 
   useEffect(() => {
     if (value === serializedRef.current) return;
-    const next = parseContentBlocks(value);
+    const next = ensureEditableBlocks(parseContentBlocks(value));
     setBlocks(next);
     serializedRef.current = serializeContentBlocks(next);
   }, [value]);
@@ -37,29 +42,31 @@ export function MaterialContentEditor({ value, onChange }: MaterialContentEditor
     onChange(serialized);
   };
 
+  const addCodeInText = (textId: string) => {
+    const block = blocks.find((item) => item.id === textId);
+    const cursor = cursors.current[textId] ?? block?.value.length ?? 0;
+    commit(insertCodeAt(blocks, textId, cursor));
+  };
+
+  const addCode = () => {
+    const textId =
+      focusedTextId.current ||
+      [...blocks].reverse().find((block) => block.type === 'text')?.id ||
+      blocks[0]?.id;
+    if (!textId) return;
+    addCodeInText(textId);
+  };
+
   return (
     <View style={styles.wrap}>
       <View style={styles.head}>
         <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.content')}</Text>
-        <Pressable
-          onPress={() =>
-            commit([...blocks, { id: `${Date.now()}-code`, type: 'code', value: '', language: '' }])
-          }
-        >
+        <Pressable onPress={addCode}>
           <Text style={[styles.action, { color: colors.brand }]}>{t('materials.addCodeBlock')}</Text>
         </Pressable>
       </View>
-      {blocks[blocks.length - 1]?.type === 'code' ? (
-        <Pressable
-          onPress={() =>
-            commit([...blocks, { id: `${Date.now()}-text`, type: 'text', value: '', language: '' }])
-          }
-        >
-          <Text style={[styles.action, { color: colors.muted }]}>{t('materials.addTextBlock')}</Text>
-        </Pressable>
-      ) : null}
 
-      {blocks.map((block) =>
+      {blocks.map((block, index) =>
         block.type === 'code' ? (
           <View key={block.id} style={[styles.codeWrap, { backgroundColor: colors.bg, borderColor: colors.line }]}>
             <View style={styles.codeHead}>
@@ -70,7 +77,7 @@ export function MaterialContentEditor({ value, onChange }: MaterialContentEditor
                 placeholderTextColor={colors.muted}
                 style={[styles.language, { color: colors.muted }]}
               />
-              <Pressable onPress={() => commit(blocks.filter((item) => item.id !== block.id))}>
+              <Pressable onPress={() => commit(removeCodeBlock(blocks, block.id))}>
                 <Text style={[styles.action, { color: colors.muted }]}>{t('materials.removeCodeBlock')}</Text>
               </Pressable>
             </View>
@@ -87,16 +94,36 @@ export function MaterialContentEditor({ value, onChange }: MaterialContentEditor
             />
           </View>
         ) : (
-          <TextInput
-            key={block.id}
-            multiline
-            value={block.value}
-            onChangeText={(next) => commit(updateBlock(blocks, block.id, { value: next }))}
-            style={[
-              styles.input,
-              { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
-            ]}
-          />
+          <View key={block.id} style={styles.textWrap}>
+            <TextInput
+              multiline
+              value={block.value}
+              onChangeText={(next) => {
+                focusedTextId.current = block.id;
+                commit(updateBlock(blocks, block.id, { value: next }));
+              }}
+              onFocus={() => {
+                focusedTextId.current = block.id;
+              }}
+              onSelectionChange={(event) => {
+                focusedTextId.current = block.id;
+                cursors.current[block.id] = event.nativeEvent.selection.start;
+              }}
+              placeholder={
+                blocks[index - 1]?.type === 'code'
+                  ? t('materials.fields.contentContinue')
+                  : t('materials.fields.content')
+              }
+              placeholderTextColor={colors.muted}
+              style={[
+                styles.input,
+                { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+              ]}
+            />
+            <Pressable onPress={() => addCodeInText(block.id)}>
+              <Text style={[styles.action, { color: colors.brand }]}>{t('materials.insertCodeHere')}</Text>
+            </Pressable>
+          </View>
         ),
       )}
     </View>
@@ -108,11 +135,12 @@ const styles = StyleSheet.create({
   head: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   label: { fontSize: 13 },
   action: { fontSize: 13, fontWeight: '700' },
+  textWrap: { gap: 8 },
   input: {
     borderRadius: 14,
     borderWidth: 1,
     fontSize: 16,
-    minHeight: 120,
+    minHeight: 100,
     paddingHorizontal: 14,
     paddingVertical: 12,
     textAlignVertical: 'top',

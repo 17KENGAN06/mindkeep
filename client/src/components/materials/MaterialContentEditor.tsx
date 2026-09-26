@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  ensureEditableBlocks,
+  insertCodeAt,
   parseContentBlocks,
+  removeCodeBlock,
   serializeContentBlocks,
   type ContentBlock,
 } from '@/utils/contentBlocks';
@@ -26,12 +29,15 @@ export function MaterialContentEditor({
   error,
 }: MaterialContentEditorProps) {
   const { t } = useTranslation();
-  const [blocks, setBlocks] = useState<ContentBlock[]>(() => parseContentBlocks(value));
+  const [blocks, setBlocks] = useState<ContentBlock[]>(() => ensureEditableBlocks(parseContentBlocks(value)));
   const serializedRef = useRef(serializeContentBlocks(blocks));
+  const focusedTextId = useRef(blocks.find((block) => block.type === 'text')?.id ?? '');
+  const cursors = useRef<Record<string, number>>({});
+  const textRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
 
   useEffect(() => {
     if (value === serializedRef.current) return;
-    const next = parseContentBlocks(value);
+    const next = ensureEditableBlocks(parseContentBlocks(value));
     setBlocks(next);
     serializedRef.current = serializeContentBlocks(next);
   }, [value]);
@@ -43,36 +49,41 @@ export function MaterialContentEditor({
     onChange(serialized);
   };
 
+  const rememberCursor = (id: string, target: HTMLTextAreaElement) => {
+    focusedTextId.current = id;
+    cursors.current[id] = target.selectionStart ?? target.value.length;
+  };
+
+  const addCodeInText = (textId: string) => {
+    const field = textRefs.current[textId];
+    const cursor = field?.selectionStart ?? cursors.current[textId] ?? field?.value.length ?? 0;
+    commit(insertCodeAt(blocks, textId, cursor));
+  };
+
+  const addCode = () => {
+    const textId =
+      focusedTextId.current ||
+      [...blocks].reverse().find((block) => block.type === 'text')?.id ||
+      blocks[0]?.id;
+    if (!textId) return;
+    addCodeInText(textId);
+  };
+
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="text-sm font-medium text-ink">{label}</span>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            className="rounded-lg px-2.5 py-1 text-xs font-semibold text-brand-500 ring-1 ring-line hover:bg-brand-50"
-            onClick={() =>
-              commit([...blocks, { id: `${Date.now()}-code`, type: 'code', value: '', language: '' }])
-            }
-          >
-            {t('materials.addCodeBlock')}
-          </button>
-          {blocks[blocks.length - 1]?.type === 'code' ? (
-            <button
-              type="button"
-              className="rounded-lg px-2.5 py-1 text-xs font-semibold text-muted ring-1 ring-line hover:bg-brand-50"
-              onClick={() =>
-                commit([...blocks, { id: `${Date.now()}-text`, type: 'text', value: '', language: '' }])
-              }
-            >
-              {t('materials.addTextBlock')}
-            </button>
-          ) : null}
-        </div>
+        <button
+          type="button"
+          className="rounded-lg px-2.5 py-1 text-xs font-semibold text-brand-500 ring-1 ring-line hover:bg-brand-50"
+          onClick={addCode}
+        >
+          {t('materials.addCodeBlock')}
+        </button>
       </div>
 
       <div className="space-y-3">
-        {blocks.map((block) =>
+        {blocks.map((block, index) =>
           block.type === 'code' ? (
             <div key={block.id} className="overflow-hidden rounded-2xl ring-1 ring-line">
               <div className="flex items-center justify-between gap-2 bg-brand-50 px-3 py-2">
@@ -87,7 +98,7 @@ export function MaterialContentEditor({
                 <button
                   type="button"
                   className="text-xs font-semibold text-muted hover:text-ink"
-                  onClick={() => commit(blocks.filter((item) => item.id !== block.id))}
+                  onClick={() => commit(removeCodeBlock(blocks, block.id))}
                 >
                   {t('materials.removeCodeBlock')}
                 </button>
@@ -102,15 +113,37 @@ export function MaterialContentEditor({
               />
             </div>
           ) : (
-            <textarea
-              key={block.id}
-              value={block.value}
-              onChange={(event) => commit(updateBlock(blocks, block.id, { value: event.target.value }))}
-              rows={8}
-              className={`min-h-28 w-full rounded-xl border bg-panel px-3 py-2.5 text-base text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
-                error ? 'border-red-400' : 'border-line'
-              }`}
-            />
+            <div key={block.id} className="space-y-2">
+              <textarea
+                ref={(node) => {
+                  textRefs.current[block.id] = node;
+                }}
+                value={block.value}
+                onChange={(event) => {
+                  rememberCursor(block.id, event.currentTarget);
+                  commit(updateBlock(blocks, block.id, { value: event.target.value }));
+                }}
+                onSelect={(event) => rememberCursor(block.id, event.currentTarget)}
+                onClick={(event) => rememberCursor(block.id, event.currentTarget)}
+                onKeyUp={(event) => rememberCursor(block.id, event.currentTarget)}
+                rows={block.value.trim() ? 6 : 4}
+                placeholder={
+                  blocks[index - 1]?.type === 'code'
+                    ? t('materials.fields.contentContinue')
+                    : t('materials.fields.content')
+                }
+                className={`min-h-24 w-full rounded-xl border bg-panel px-3 py-2.5 text-base text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
+                  error ? 'border-red-400' : 'border-line'
+                }`}
+              />
+              <button
+                type="button"
+                className="text-xs font-semibold text-brand-500 hover:underline"
+                onClick={() => addCodeInText(block.id)}
+              >
+                {t('materials.insertCodeHere')}
+              </button>
+            </div>
           ),
         )}
       </div>

@@ -90,6 +90,7 @@
       "codeBlock": "Koodi",
       "codeLanguage": "Kieli, esim. ts",
       "codePlaceholder": "Liitä koodi tähän",
+      "contentContinue": "Jatka tekstiä tässä",
       "sourceUrl": "Lähdelinkki",
       "learnedAt": "Oppimispäivä",
       "category": "Kategoria",
@@ -123,6 +124,7 @@
     "revealAnswer": "Näytä vastaus",
     "hideAnswer": "Piilota vastaus",
     "addCodeBlock": "Lisää koodilohko",
+    "insertCodeHere": "Lisää koodi tähän",
     "addTextBlock": "Lisää teksti",
     "removeCodeBlock": "Poista"
   },

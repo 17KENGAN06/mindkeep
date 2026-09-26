@@ -90,6 +90,7 @@
       "codeBlock": "Код",
       "codeLanguage": "Мова, наприклад ts",
       "codePlaceholder": "Вставте код сюди",
+      "contentContinue": "Продовжіть текст тут",
       "sourceUrl": "Посилання",
       "learnedAt": "Дата вивчення",
       "category": "Категорія",
@@ -123,6 +124,7 @@
     "revealAnswer": "Показати відповідь",
     "hideAnswer": "Сховати відповідь",
     "addCodeBlock": "Додати блок коду",
+    "insertCodeHere": "Вставити код сюди",
     "addTextBlock": "Додати текст",
     "removeCodeBlock": "Прибрати"
   },
