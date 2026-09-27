@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { contactApi } from '../../api/contact';
 import { AppButton } from '../../components/ui';
 import { CONTACT_INBOX, CONTACT_TOPICS, inboxForTopic, type ContactTopic } from '../../config/contact';
+import { issueBotToken } from '../../features/auth/botChallenge';
 import { mapContactError } from '../../features/contact/mapContactError';
 import { useAuth } from '../../features/auth/useAuth';
 import { useTheme } from '../../features/theme/useTheme';
@@ -58,11 +59,13 @@ export function ContactScreen() {
 
     setBusy(true);
     try {
+      const botToken = await issueBotToken();
       await contactApi.send({
         topic,
         name: name.trim(),
         email: email.trim(),
         message: message.trim(),
+        botToken,
         website: '',
       });
       setSent(true);

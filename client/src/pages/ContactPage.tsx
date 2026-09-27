@@ -27,6 +27,7 @@ export function ContactPage() {
   const [botError, setBotError] = useState<string | undefined>();
   const [formError, setFormError] = useState<string | undefined>();
   const [sent, setSent] = useState(false);
+  const challengeReady = botToken !== null;
 
   const {
     register,
@@ -56,13 +57,18 @@ export function ContactPage() {
       return;
     }
 
+    if (!botToken) {
+      setBotError(t('auth.bot.challengeFailed'));
+      return;
+    }
+
     try {
       await contactApi.send({
         topic: values.topic as ContactTopic,
         name: values.name.trim(),
         email: values.email.trim(),
         message: values.message.trim(),
-        ...(botToken ? { botToken } : {}),
+        botToken,
         website: values.website ?? '',
       });
       setSent(true);
@@ -182,7 +188,7 @@ export function ContactPage() {
 
               <ErrorMessage message={formError} />
 
-              <Button type="submit" isLoading={isSubmitting} disabled={isSubmitting} className="w-full">
+              <Button type="submit" isLoading={isSubmitting} disabled={!challengeReady} className="w-full">
                 {t('contact.send')}
               </Button>
             </form>

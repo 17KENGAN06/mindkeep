@@ -47,7 +47,8 @@
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen",
     "settings": "Einstellungen",
-    "menu": "Menü"
+    "menu": "Menü",
+    "account": "Konto"
   },
   "placeholders": {
     "comingSoon": "Dieser Bereich ist noch in Arbeit",
@@ -607,8 +608,30 @@
       "serverOutdated": "Die API ist noch nicht aktualisiert. Warte auf das Deploy oder versuche es später erneut.",
       "googleUnavailable": "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut.",
       "googleEmailInUse": "Zu dieser E-Mail gibt es schon ein Konto. Melde dich mit dem Passwort an.",
-      "maintenanceAdminOnly": "Derzeit ist nur die Administratoranmeldung verfügbar."
-    }
+      "maintenanceAdminOnly": "Derzeit ist nur die Administratoranmeldung verfügbar.",
+      "emailUnavailable": "E-Mail konnte nicht gesendet werden. Später erneut versuchen.",
+      "invalidEmailToken": "Dieser Link ist ungültig oder abgelaufen."
+    },
+    "checkEmailTitle": "Prüfe deine E-Mail",
+    "checkEmailBody": "Wir haben einen Link an {{email}} gesendet. Das Konto entsteht erst nach der Bestätigung.",
+    "forgotPassword": "Passwort vergessen?",
+    "forgotTitle": "Passwort zurücksetzen",
+    "forgotSubtitle": "Wenn dieses Konto ein Passwort hat, senden wir einen Link.",
+    "forgotSubmit": "Link senden",
+    "forgotSent": "Wenn ein Konto existiert, ist der Link unterwegs. Prüfe dein Postfach.",
+    "resetTitle": "Neues Passwort",
+    "resetSubtitle": "Danach wirst du angemeldet.",
+    "resetSubmit": "Passwort speichern",
+    "verifyTitle": "E-Mail bestätigen",
+    "verifyWorking": "Einen Moment…",
+    "accountTitle": "Konto",
+    "accountSubtitle": "E-Mail und Passwort dieses MindKeep-Kontos.",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "changePassword": "Passwort ändern",
+    "passwordChanged": "Passwort aktualisiert.",
+    "setPassword": "Passwort setzen",
+    "setPasswordHint": "Dieses Konto nutzt Google. Du kannst ein Passwort hinzufügen."
   },
   "maintenance": {
     "eyebrow": "Wartung",
@@ -949,7 +972,11 @@
       "guide": "So geht’s · Mindkeep",
       "privacy": "Datenschutz · Mindkeep",
       "contact": "Kontakt · Mindkeep",
-      "notFound": "Seite nicht gefunden · Mindkeep"
+      "notFound": "Seite nicht gefunden · Mindkeep",
+      "forgotPassword": "Passwort zurücksetzen · Mindkeep",
+      "resetPassword": "Neues Passwort · Mindkeep",
+      "verifyEmail": "E-Mail bestätigen · Mindkeep",
+      "account": "Konto · Mindkeep"
     }
   },
   "footer": {
@@ -964,7 +991,9 @@
     "privacy": "Datenschutz",
     "rights": "Alle Rechte vorbehalten. Gestaltet und betreut vom Studio.",
     "ownership": "Mindkeep ist Eigentum von <studio />. © {{year}}",
-    "lineCompact": "Mindkeep ist Eigentum von WEISEZAHOY © {{year}}"
+    "lineCompact": "Mindkeep ist Eigentum von WEISEZAHOY © {{year}}",
+    "tiktok": "TikTok",
+    "tiktokHandle": "@mindkeep.cloud"
   },
   "contact": {
     "eyebrow": "Studio",

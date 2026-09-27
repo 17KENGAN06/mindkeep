@@ -83,13 +83,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [persistUser],
   );
 
-  const register = useCallback(
-    async (payload: RegisterPayload) => {
-      const result = await authApi.register(payload);
-      return persistUser(result.user, result.token);
-    },
-    [persistUser],
-  );
+  const register = useCallback(async (payload: RegisterPayload) => {
+    return authApi.register(payload);
+  }, []);
 
   const googleLogin = useCallback(
     async (payload: GoogleLoginPayload) => {

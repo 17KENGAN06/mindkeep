@@ -4,6 +4,7 @@ export type User = {
   email: string;
   timezone: string;
   role: 'USER' | 'ADMIN';
+  hasPassword?: boolean;
   createdAt: string;
   updatedAt: string;
 };

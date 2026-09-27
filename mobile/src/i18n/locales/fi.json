@@ -424,8 +424,31 @@
       "missingToken": "Palvelin ei palauttanut istuntotunnusta. API pitää deployata.",
       "timezone": "Valitse kelvollinen aikavyöhyke.",
       "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen.",
-      "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla."
-    }
+      "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla.",
+      "botRejected": "Bottisuoja hylkäsi pyynnön. Päivitä ja yritä uudelleen.",
+      "emailUnavailable": "Sähköpostia ei voitu lähettää. Yritä myöhemmin.",
+      "invalidEmailToken": "Linkki on virheellinen tai vanhentunut."
+    },
+    "checkEmailTitle": "Tarkista sähköposti",
+    "checkEmailBody": "Lähetimme linkin osoitteeseen {{email}}. Tili syntyy vasta vahvistuksen jälkeen.",
+    "forgotPassword": "Unohtuiko salasana?",
+    "forgotTitle": "Nollaa salasana",
+    "forgotSubtitle": "Jos tilillä on salasana, lähetämme nollauslinkin.",
+    "forgotSubmit": "Lähetä linkki",
+    "forgotSent": "Jos tili on olemassa, linkki on matkalla. Tarkista postilaatikko.",
+    "resetTitle": "Uusi salasana",
+    "resetSubtitle": "Sen jälkeen kirjaudut sisään.",
+    "resetSubmit": "Tallenna salasana",
+    "verifyTitle": "Sähköpostin vahvistus",
+    "verifyWorking": "Hetki…",
+    "accountTitle": "Tili",
+    "accountSubtitle": "Tämän MindKeep-tilin sähköposti ja salasana.",
+    "currentPassword": "Nykyinen salasana",
+    "newPassword": "Uusi salasana",
+    "changePassword": "Vaihda salasana",
+    "passwordChanged": "Salasana päivitetty.",
+    "setPassword": "Aseta salasana",
+    "setPasswordHint": "Tämä tili käyttää Googlea. Voit lisätä myös salasanan."
   },
   "dashboard": {
     "tagline": "Enemmän kuin tietoa. Enemmän kuin suunnitelmia. Opiskele. Toimi. Kasva.",
@@ -758,5 +781,8 @@
         ]
       }
     }
+  },
+  "nav": {
+    "account": "Tili"
   }
 }

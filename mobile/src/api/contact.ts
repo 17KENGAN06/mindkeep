@@ -6,6 +6,7 @@ export type ContactPayload = {
   name: string;
   email: string;
   message: string;
+  botToken?: string;
   website?: string;
 };
 

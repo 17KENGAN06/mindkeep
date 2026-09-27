@@ -424,8 +424,31 @@
       "missingToken": "El servidor no devolvió un token de sesión. Despliega la API más reciente.",
       "timezone": "Elige una zona horaria válida.",
       "googleUnavailable": "El inicio de sesión con Google falló. Inténtalo de nuevo.",
-      "googleEmailInUse": "Ya hay una cuenta con este correo. Entra con tu contraseña."
-    }
+      "googleEmailInUse": "Ya hay una cuenta con este correo. Entra con tu contraseña.",
+      "botRejected": "La protección anti-bots rechazó la solicitud. Actualiza e inténtalo de nuevo.",
+      "emailUnavailable": "No se pudo enviar el correo. Inténtalo más tarde.",
+      "invalidEmailToken": "Este enlace no es válido o ha caducado."
+    },
+    "checkEmailTitle": "Revisa tu correo",
+    "checkEmailBody": "Enviamos un enlace a {{email}}. La cuenta se crea solo al confirmarlo.",
+    "forgotPassword": "¿Olvidaste la contraseña?",
+    "forgotTitle": "Restablecer contraseña",
+    "forgotSubtitle": "Si esta cuenta tiene contraseña, enviaremos un enlace.",
+    "forgotSubmit": "Enviar enlace",
+    "forgotSent": "Si la cuenta existe, el enlace está en camino. Revisa tu bandeja.",
+    "resetTitle": "Nueva contraseña",
+    "resetSubtitle": "Después entrarás.",
+    "resetSubmit": "Guardar contraseña",
+    "verifyTitle": "Confirmando el correo",
+    "verifyWorking": "Un momento…",
+    "accountTitle": "Cuenta",
+    "accountSubtitle": "Correo y contraseña de esta cuenta MindKeep.",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "changePassword": "Cambiar contraseña",
+    "passwordChanged": "Contraseña actualizada.",
+    "setPassword": "Crear una contraseña",
+    "setPasswordHint": "Esta cuenta usa Google. Puedes añadir también una contraseña."
   },
   "dashboard": {
     "tagline": "Más que conocimiento. Más que planes. Aprende. Actúa. Crece.",
@@ -758,5 +781,8 @@
         ]
       }
     }
+  },
+  "nav": {
+    "account": "Cuenta"
   }
 }

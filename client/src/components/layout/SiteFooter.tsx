@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { BrandMark } from '@/components/brand/BrandMark';
@@ -5,6 +6,7 @@ import { BrandMark } from '@/components/brand/BrandMark';
 const STUDIO_URL = 'https://weisezahoy.com/';
 const STUDIO_NAME = 'WEISEZAHOY';
 const INSTAGRAM_URL = 'https://www.instagram.com/mindkeep.cloud/';
+const TIKTOK_URL = 'https://www.tiktok.com/@mindkeep.cloud';
 
 function InstagramMark({ className = 'h-4 w-4' }: { className?: string }) {
   return (
@@ -13,6 +15,50 @@ function InstagramMark({ className = 'h-4 w-4' }: { className?: string }) {
       <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.7" />
       <circle cx="17.2" cy="6.8" r="1" fill="currentColor" />
     </svg>
+  );
+}
+
+function TikTokMark({ className = 'h-4 w-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.44a2.89 2.89 0 0 1-5.76-.38 2.89 2.89 0 0 1 2.88-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.16 15.05a6.34 6.34 0 0 0 6.33 6.33 6.34 6.34 0 0 0 6.33-6.33V8.73a8.18 8.18 0 0 0 4.77 1.52V6.8c-.34 0-.67-.04-1-.11Z" />
+    </svg>
+  );
+}
+
+function SocialLink({
+  href,
+  label,
+  handle,
+  compact,
+  icon,
+}: {
+  href: string;
+  label: string;
+  handle: string;
+  compact: boolean;
+  icon: ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className={`group inline-flex items-center gap-3 rounded-2xl bg-brand-50/50 ring-1 ring-line no-underline transition hover:bg-brand-50 hover:ring-brand-400 ${
+        compact ? 'px-3 py-2' : 'px-3.5 py-2.5'
+      }`}
+    >
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-panel text-brand-500 shadow-sm ring-1 ring-line transition group-hover:text-brand-400 group-hover:ring-brand-400">
+        {icon}
+      </span>
+      <span className="min-w-0 text-left">
+        <span className="block text-[11px] font-medium tracking-[0.18em] text-muted uppercase">{label}</span>
+        <span className="mt-0.5 block text-sm font-semibold tracking-tight text-ink transition group-hover:text-brand-500">
+          {handle}
+        </span>
+      </span>
+    </a>
   );
 }
 
@@ -69,27 +115,22 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
             {!compact ? (
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{t('footer.about')}</p>
             ) : null}
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t('footer.instagram')}
-              className={`group mt-5 inline-flex items-center gap-3 rounded-2xl bg-brand-50/50 ring-1 ring-line no-underline transition hover:bg-brand-50 hover:ring-brand-400 ${
-                compact ? 'px-3 py-2' : 'px-3.5 py-2.5'
-              }`}
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-panel text-brand-500 shadow-sm ring-1 ring-line transition group-hover:text-brand-400 group-hover:ring-brand-400">
-                <InstagramMark className="h-[18px] w-[18px]" />
-              </span>
-              <span className="min-w-0 text-left">
-                <span className="block text-[11px] font-medium tracking-[0.18em] text-muted uppercase">
-                  {t('footer.follow')}
-                </span>
-                <span className="mt-0.5 block text-sm font-semibold tracking-tight text-ink transition group-hover:text-brand-500">
-                  {t('footer.instagramHandle')}
-                </span>
-              </span>
-            </a>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <SocialLink
+                href={INSTAGRAM_URL}
+                label={t('footer.instagram')}
+                handle={t('footer.instagramHandle')}
+                compact={compact}
+                icon={<InstagramMark className="h-[18px] w-[18px]" />}
+              />
+              <SocialLink
+                href={TIKTOK_URL}
+                label={t('footer.tiktok')}
+                handle={t('footer.tiktokHandle')}
+                compact={compact}
+                icon={<TikTokMark className="h-[18px] w-[18px]" />}
+              />
+            </div>
           </div>
 
           <div className="md:text-right">

@@ -15,6 +15,7 @@ import { LanguageSwitcher } from '../../components/LanguageSwitcher';
 import { BrandMark } from '../../components/BrandMark';
 import { GoogleSignInButton } from '../../components/GoogleSignInButton';
 import { mapAuthError } from '../../features/auth/mapAuthError';
+import { issueBotToken } from '../../features/auth/botChallenge';
 import { useAuth } from '../../features/auth/useAuth';
 import { detectDeviceTimezone } from '../../config/timezones';
 import { useTheme } from '../../features/theme/useTheme';
@@ -35,6 +36,7 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
 
   const onSubmit = async () => {
     setError(null);
@@ -61,13 +63,17 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
 
     setBusy(true);
     try {
+      const botToken = await issueBotToken();
       await register({
         name: name.trim(),
         email: email.trim(),
         password,
         confirmPassword,
         timezone: detectDeviceTimezone(),
+        botToken,
+        website: '',
       });
+      setPendingEmail(email.trim());
     } catch (caught) {
       setError(mapAuthError(caught, t));
     } finally {
@@ -88,6 +94,18 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
         <Text style={[styles.title, { color: colors.ink }]}>{t('auth.registerTitle')}</Text>
         <Text style={[styles.subtitle, { color: colors.muted }]}>{t('auth.registerSubtitle')}</Text>
 
+        {pendingEmail ? (
+          <>
+            <Text style={[styles.pending, { color: colors.ink }]}>{t('auth.checkEmailTitle')}</Text>
+            <Text style={[styles.subtitle, { color: colors.muted }]}>
+              {t('auth.checkEmailBody', { email: pendingEmail })}
+            </Text>
+            <Pressable onPress={onGoLogin} style={styles.linkWrap}>
+              <Text style={[styles.link, { color: colors.brand }]}>{t('auth.submitLogin')}</Text>
+            </Pressable>
+          </>
+        ) : (
+          <>
         <Text style={[styles.label, { color: colors.muted }]}>{t('auth.name')}</Text>
         <TextInput
           autoComplete="name"
@@ -162,6 +180,8 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
             {t('auth.hasAccount')} {t('auth.submitLogin')}
           </Text>
         </Pressable>
+          </>
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
     </SafeAreaView>
@@ -196,4 +216,5 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 16, fontWeight: '700' },
   linkWrap: { marginTop: 20, alignItems: 'center' },
   link: { fontSize: 14 },
+  pending: { fontSize: 18, fontWeight: '700', marginTop: 12 },
 });

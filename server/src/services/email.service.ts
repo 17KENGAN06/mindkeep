@@ -4,15 +4,15 @@ import { AppError } from '@/utils/AppError.js';
 
 type SendEmailInput = {
   to: string;
-  replyTo: string;
+  replyTo?: string;
   subject: string;
   text: string;
 };
 
-function contactUnavailable(): never {
-  throw new AppError('Contact form is temporarily unavailable', {
+function emailUnavailable(): never {
+  throw new AppError('Email is temporarily unavailable', {
     statusCode: 503,
-    code: 'CONTACT_UNAVAILABLE',
+    code: 'EMAIL_UNAVAILABLE',
   });
 }
 
@@ -22,11 +22,11 @@ export async function sendEmail(input: SendEmailInput): Promise<void> {
 
   if (!from || !apiKey) {
     if (env.NODE_ENV === 'production') {
-      logger.error('Contact email is not configured');
-      contactUnavailable();
+      logger.error('Transactional email is not configured');
+      emailUnavailable();
     }
 
-    logger.info('Contact email skipped in development', {
+    logger.info('Email skipped in development', {
       to: input.to,
       replyTo: input.replyTo,
       subject: input.subject,
@@ -44,7 +44,7 @@ export async function sendEmail(input: SendEmailInput): Promise<void> {
     body: JSON.stringify({
       from,
       to: [input.to],
-      reply_to: input.replyTo,
+      ...(input.replyTo ? { reply_to: input.replyTo } : {}),
       subject: input.subject,
       text: input.text,
     }),
@@ -52,10 +52,10 @@ export async function sendEmail(input: SendEmailInput): Promise<void> {
 
   if (!response.ok) {
     const details = await response.text().catch(() => '');
-    logger.error('Resend rejected contact email', {
+    logger.error('Resend rejected email', {
       status: response.status,
       details: details.slice(0, 500),
     });
-    contactUnavailable();
+    emailUnavailable();
   }
 }

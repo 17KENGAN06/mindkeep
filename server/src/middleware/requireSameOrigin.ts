@@ -32,7 +32,6 @@ export function requireSameOrigin(req: Request, _res: Response, next: NextFuncti
       throw new AppError('Invalid origin', {
         statusCode: 403,
         code: 'CSRF_REJECTED',
-        details: { origin: normalized },
       });
     }
 

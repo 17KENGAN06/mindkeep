@@ -8,6 +8,7 @@ import { NoteEditorScreen } from '../screens/notes/NoteEditorScreen';
 import { NotesScreen } from '../screens/notes/NotesScreen';
 import { FinanceScreen } from '../screens/finance/FinanceScreen';
 import { ContactScreen } from '../screens/contact/ContactScreen';
+import { AccountScreen } from '../screens/auth/AccountScreen';
 import { GuideScreen } from '../screens/guide/GuideScreen';
 import { NotificationsScreen } from '../screens/notifications/NotificationsScreen';
 import { StatisticsScreen } from '../screens/statistics/StatisticsScreen';
@@ -44,6 +45,7 @@ export function MoreNavigator() {
       />
       <Stack.Screen name="Finance" component={FinanceScreen} options={{ title: t('finance.title') }} />
       <Stack.Screen name="Contact" component={ContactScreen} options={{ title: t('contact.title') }} />
+      <Stack.Screen name="Account" component={AccountScreen} options={{ title: t('auth.accountTitle') }} />
       <Stack.Screen name="Guide" component={GuideScreen} options={{ title: t('common.guide') }} />
       <Stack.Screen name="Statistics" component={StatisticsScreen} options={{ title: t('statistics.title') }} />
       <Stack.Screen name="Blog" component={BlogScreen} options={{ title: t('blog.title') }} />

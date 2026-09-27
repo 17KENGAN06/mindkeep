@@ -11,6 +11,7 @@ import { notFoundHandler } from '@/middleware/notFoundHandler.js';
 import { requireSameOrigin } from '@/middleware/requireSameOrigin.js';
 import { apiRouter } from '@/routes/index.js';
 
+/** Auth endpoints skipped here have their own IP limiters. Login is not left unthrottled. */
 const RATE_LIMIT_SKIP_PATHS = new Set([
   '/api/health',
   '/api/auth/me',
@@ -21,6 +22,9 @@ const RATE_LIMIT_SKIP_PATHS = new Set([
   '/api/auth/google/finish',
   '/api/auth/logout',
   '/api/auth/challenge',
+  '/api/auth/forgot-password',
+  '/api/auth/verify-email',
+  '/api/auth/reset-password',
 ]);
 
 function normalizePath(req: Request): string {
@@ -39,6 +43,7 @@ app.set('trust proxy', 1);
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
+    contentSecurityPolicy: false,
   }),
 );
 app.use(

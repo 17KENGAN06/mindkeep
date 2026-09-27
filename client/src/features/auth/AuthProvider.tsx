@@ -7,6 +7,9 @@ import {
   type RegisterPayload,
 } from '@/api/auth';
 import { AuthContext } from '@/features/auth/auth-context';
+import type { User } from '@/types/auth';
+
+const verifyEmailRuns = new Map<string, Promise<User>>();
 
 function dropUserQueries(queryClient: QueryClient) {
   queryClient.removeQueries({
@@ -31,27 +34,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     staleTime: 60_000,
   });
 
+  const applySession = useCallback(
+    (user: User) => {
+      dropUserQueries(queryClient);
+      queryClient.setQueryData(['auth', 'me'], user);
+      return user;
+    },
+    [queryClient],
+  );
+
   const loginMutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      dropUserQueries(queryClient);
-      queryClient.setQueryData(['auth', 'me'], data.user);
+      applySession(data.user);
     },
   });
 
   const registerMutation = useMutation({
     mutationFn: authApi.register,
-    onSuccess: (data) => {
-      dropUserQueries(queryClient);
-      queryClient.setQueryData(['auth', 'me'], data.user);
-    },
   });
 
   const googleLoginMutation = useMutation({
     mutationFn: authApi.googleLogin,
     onSuccess: (data) => {
-      dropUserQueries(queryClient);
-      queryClient.setQueryData(['auth', 'me'], data.user);
+      applySession(data.user);
     },
   });
   const googleLoginMutateAsync = googleLoginMutation.mutateAsync;
@@ -66,8 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = useCallback(
     async (payload: RegisterPayload) => {
-      const result = await registerMutation.mutateAsync(payload);
-      return result.user;
+      return registerMutation.mutateAsync(payload);
     },
     [registerMutation],
   );
@@ -78,6 +83,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return result.user;
     },
     [googleLoginMutateAsync],
+  );
+
+  const verifyEmail = useCallback(
+    async (token: string) => {
+      const existing = verifyEmailRuns.get(token);
+      if (existing) return existing;
+      const run = authApi.verifyEmail({ token }).then((result) => applySession(result.user));
+      verifyEmailRuns.set(token, run);
+      return run;
+    },
+    [applySession],
+  );
+
+  const resetPassword = useCallback(
+    async (payload: { token: string; password: string; confirmPassword: string }) => {
+      const result = await authApi.resetPassword(payload);
+      return applySession(result.user);
+    },
+    [applySession],
   );
 
   const logout = useCallback(async () => {
@@ -98,9 +122,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       login,
       googleLogin,
       register,
+      verifyEmail,
+      resetPassword,
       logout,
     }),
-    [googleLogin, login, logout, meQuery.data, meQuery.isPending, register],
+    [googleLogin, login, logout, meQuery.data, meQuery.isPending, register, resetPassword, verifyEmail],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

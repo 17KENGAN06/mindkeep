@@ -424,8 +424,31 @@
       "missingToken": "The server did not return a session token. Deploy the latest API.",
       "timezone": "Choose a valid timezone.",
       "googleUnavailable": "Google sign-in failed. Please try again.",
-      "googleEmailInUse": "This email already has an account. Sign in with your password."
-    }
+      "googleEmailInUse": "This email already has an account. Sign in with your password.",
+      "botRejected": "Request blocked by bot protection. Refresh and try again.",
+      "emailUnavailable": "Could not send email. Try again later.",
+      "invalidEmailToken": "This link is invalid or has expired."
+    },
+    "checkEmailTitle": "Check your email",
+    "checkEmailBody": "We sent a confirmation link to {{email}}. The account is created only after you open it.",
+    "forgotPassword": "Forgot password?",
+    "forgotTitle": "Reset password",
+    "forgotSubtitle": "If this email has a password, we will send a reset link.",
+    "forgotSubmit": "Send link",
+    "forgotSent": "If an account exists for this email, a reset link is on its way. Check your inbox.",
+    "resetTitle": "Choose a new password",
+    "resetSubtitle": "Then you will be signed in.",
+    "resetSubmit": "Save password",
+    "verifyTitle": "Confirming email",
+    "verifyWorking": "One moment…",
+    "accountTitle": "Account",
+    "accountSubtitle": "Email and password for this MindKeep account.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "changePassword": "Change password",
+    "passwordChanged": "Password updated.",
+    "setPassword": "Set a password",
+    "setPasswordHint": "This account uses Google. You can add a password to also sign in with email."
   },
   "dashboard": {
     "tagline": "More than knowledge. More than plans. Learn. Act. Grow.",
@@ -758,5 +781,8 @@
         ]
       }
     }
+  },
+  "nav": {
+    "account": "Account"
   }
 }

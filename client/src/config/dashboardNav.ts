@@ -137,6 +137,12 @@ export const dashboardNav: DashboardNavEntry[] = [
       },
       {
         type: 'link',
+        id: 'account',
+        labelKey: 'nav.account',
+        to: '/account',
+      },
+      {
+        type: 'link',
         id: 'guide',
         labelKey: 'nav.guide',
         to: '/guide',

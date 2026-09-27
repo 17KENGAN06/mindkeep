@@ -11,6 +11,7 @@ import { AppIcon, type AppIconName } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
+import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
 import { FuelScreen } from '../screens/FuelScreen';
 import { TasksNavigator } from './TasksNavigator';
 import { TodayScreen } from '../screens/TodayScreen';
@@ -34,11 +35,17 @@ function AuthNavigator() {
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="Login">
         {(props) => (
-          <LoginScreen onGoRegister={() => props.navigation.navigate('Register')} />
+          <LoginScreen
+            onGoRegister={() => props.navigation.navigate('Register')}
+            onGoForgot={() => props.navigation.navigate('ForgotPassword')}
+          />
         )}
       </AuthStack.Screen>
       <AuthStack.Screen name="Register">
         {(props) => <RegisterScreen onGoLogin={() => props.navigation.navigate('Login')} />}
+      </AuthStack.Screen>
+      <AuthStack.Screen name="ForgotPassword">
+        {(props) => <ForgotPasswordScreen onGoLogin={() => props.navigation.navigate('Login')} />}
       </AuthStack.Screen>
     </AuthStack.Navigator>
   );

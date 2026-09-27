@@ -33,6 +33,12 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.googleUnavailable');
     case 'GOOGLE_EMAIL_IN_USE':
       return t('auth.errors.googleEmailInUse');
+    case 'BOT_REJECTED':
+      return t('auth.errors.botRejected');
+    case 'EMAIL_UNAVAILABLE':
+      return t('auth.errors.emailUnavailable');
+    case 'INVALID_EMAIL_TOKEN':
+      return t('auth.errors.invalidEmailToken');
     default:
       if (error.status === 429) return t('auth.errors.rateLimited');
       if (error.status >= 500) return t('auth.errors.server');

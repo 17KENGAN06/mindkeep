@@ -424,8 +424,31 @@
       "missingToken": "Serwer nie zwrócił tokenu sesji. Wdróż najnowsze API.",
       "timezone": "Wybierz poprawną strefę czasową.",
       "googleUnavailable": "Logowanie przez Google nie powiodło się. Spróbuj ponownie.",
-      "googleEmailInUse": "Konto z tym e-mailem już istnieje. Zaloguj się hasłem."
-    }
+      "googleEmailInUse": "Konto z tym e-mailem już istnieje. Zaloguj się hasłem.",
+      "botRejected": "Ochrona przed botami odrzuciła żądanie. Odśwież i spróbuj ponownie.",
+      "emailUnavailable": "Nie udało się wysłać e-maila. Spróbuj później.",
+      "invalidEmailToken": "Ten link jest nieważny lub wygasł."
+    },
+    "checkEmailTitle": "Sprawdź e-mail",
+    "checkEmailBody": "Wysłaliśmy link na {{email}}. Konto powstanie dopiero po potwierdzeniu.",
+    "forgotPassword": "Nie pamiętasz hasła?",
+    "forgotTitle": "Reset hasła",
+    "forgotSubtitle": "Jeśli to konto ma hasło, wyślemy link do resetu.",
+    "forgotSubmit": "Wyślij link",
+    "forgotSent": "Jeśli konto istnieje, link jest w drodze. Sprawdź skrzynkę.",
+    "resetTitle": "Nowe hasło",
+    "resetSubtitle": "Potem zostaniesz zalogowany.",
+    "resetSubmit": "Zapisz hasło",
+    "verifyTitle": "Potwierdzanie e-maila",
+    "verifyWorking": "Chwila…",
+    "accountTitle": "Konto",
+    "accountSubtitle": "E-mail i hasło tego konta MindKeep.",
+    "currentPassword": "Obecne hasło",
+    "newPassword": "Nowe hasło",
+    "changePassword": "Zmień hasło",
+    "passwordChanged": "Hasło zaktualizowane.",
+    "setPassword": "Ustaw hasło",
+    "setPasswordHint": "To konto jest przez Google. Możesz dodać hasło i logować się też e-mailem."
   },
   "dashboard": {
     "tagline": "Więcej niż wiedza. Więcej niż plany. Ucz się. Działaj. Rośnij.",
@@ -758,5 +781,8 @@
         ]
       }
     }
+  },
+  "nav": {
+    "account": "Konto"
   }
 }

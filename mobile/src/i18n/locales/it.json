@@ -424,8 +424,31 @@
       "missingToken": "Il server non ha restituito un token di sessione. Fai il deploy dell'API più recente.",
       "timezone": "Scegli un fuso orario valido.",
       "googleUnavailable": "Accesso con Google non riuscito. Riprova.",
-      "googleEmailInUse": "Esiste già un account con questa email. Accedi con la password."
-    }
+      "googleEmailInUse": "Esiste già un account con questa email. Accedi con la password.",
+      "botRejected": "La protezione anti-bot ha bloccato la richiesta. Aggiorna e riprova.",
+      "emailUnavailable": "Impossibile inviare l’email. Riprova più tardi.",
+      "invalidEmailToken": "Questo link non è valido o è scaduto."
+    },
+    "checkEmailTitle": "Controlla l’email",
+    "checkEmailBody": "Abbiamo inviato un link a {{email}}. L’account nasce solo dopo la conferma.",
+    "forgotPassword": "Password dimenticata?",
+    "forgotTitle": "Reimposta password",
+    "forgotSubtitle": "Se questo account ha una password, invieremo un link.",
+    "forgotSubmit": "Invia link",
+    "forgotSent": "Se l’account esiste, il link è in arrivo. Controlla la posta.",
+    "resetTitle": "Nuova password",
+    "resetSubtitle": "Poi accederai.",
+    "resetSubmit": "Salva password",
+    "verifyTitle": "Conferma email",
+    "verifyWorking": "Un attimo…",
+    "accountTitle": "Account",
+    "accountSubtitle": "Email e password di questo account MindKeep.",
+    "currentPassword": "Password attuale",
+    "newPassword": "Nuova password",
+    "changePassword": "Cambia password",
+    "passwordChanged": "Password aggiornata.",
+    "setPassword": "Imposta una password",
+    "setPasswordHint": "Questo account usa Google. Puoi aggiungere anche una password."
   },
   "dashboard": {
     "tagline": "Più della conoscenza. Più dei piani. Impara. Agisci. Cresci.",
@@ -758,5 +781,8 @@
         ]
       }
     }
+  },
+  "nav": {
+    "account": "Account"
   }
 }

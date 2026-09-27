@@ -47,7 +47,8 @@
     "openMenu": "Avaa valikko",
     "closeMenu": "Sulje valikko",
     "settings": "Asetukset",
-    "menu": "Valikko"
+    "menu": "Valikko",
+    "account": "Tili"
   },
   "placeholders": {
     "comingSoon": "Osio on kehitteillä",
@@ -607,8 +608,30 @@
       "serverOutdated": "API:ta ei ole vielä päivitetty. Odota deployta tai yritä myöhemmin.",
       "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen.",
       "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla.",
-      "maintenanceAdminOnly": "Tällä hetkellä vain ylläpitäjän kirjautuminen on käytössä."
-    }
+      "maintenanceAdminOnly": "Tällä hetkellä vain ylläpitäjän kirjautuminen on käytössä.",
+      "emailUnavailable": "Sähköpostia ei voitu lähettää. Yritä myöhemmin.",
+      "invalidEmailToken": "Linkki on virheellinen tai vanhentunut."
+    },
+    "checkEmailTitle": "Tarkista sähköposti",
+    "checkEmailBody": "Lähetimme linkin osoitteeseen {{email}}. Tili syntyy vasta vahvistuksen jälkeen.",
+    "forgotPassword": "Unohtuiko salasana?",
+    "forgotTitle": "Nollaa salasana",
+    "forgotSubtitle": "Jos tilillä on salasana, lähetämme nollauslinkin.",
+    "forgotSubmit": "Lähetä linkki",
+    "forgotSent": "Jos tili on olemassa, linkki on matkalla. Tarkista postilaatikko.",
+    "resetTitle": "Uusi salasana",
+    "resetSubtitle": "Sen jälkeen kirjaudut sisään.",
+    "resetSubmit": "Tallenna salasana",
+    "verifyTitle": "Sähköpostin vahvistus",
+    "verifyWorking": "Hetki…",
+    "accountTitle": "Tili",
+    "accountSubtitle": "Tämän MindKeep-tilin sähköposti ja salasana.",
+    "currentPassword": "Nykyinen salasana",
+    "newPassword": "Uusi salasana",
+    "changePassword": "Vaihda salasana",
+    "passwordChanged": "Salasana päivitetty.",
+    "setPassword": "Aseta salasana",
+    "setPasswordHint": "Tämä tili käyttää Googlea. Voit lisätä myös salasanan."
   },
   "maintenance": {
     "eyebrow": "Huoltokatko",
@@ -949,7 +972,11 @@
       "guide": "Käyttöohje · Mindkeep",
       "privacy": "Tietosuojaseloste · Mindkeep",
       "contact": "Yhteystiedot · Mindkeep",
-      "notFound": "Sivua ei löytynyt · Mindkeep"
+      "notFound": "Sivua ei löytynyt · Mindkeep",
+      "forgotPassword": "Nollaa salasana · Mindkeep",
+      "resetPassword": "Uusi salasana · Mindkeep",
+      "verifyEmail": "Vahvista sähköposti · Mindkeep",
+      "account": "Tili · Mindkeep"
     }
   },
   "footer": {
@@ -964,7 +991,9 @@
     "privacy": "Tietosuoja",
     "rights": "Kaikki oikeudet pidätetään. Tuote on studion suunnittelema ja ylläpitämä.",
     "ownership": "Mindkeep on yhtiön <studio /> omaisuutta. © {{year}}",
-    "lineCompact": "Mindkeep on WEISEZAHOYn omaisuutta © {{year}}"
+    "lineCompact": "Mindkeep on WEISEZAHOYn omaisuutta © {{year}}",
+    "tiktok": "TikTok",
+    "tiktokHandle": "@mindkeep.cloud"
   },
   "contact": {
     "eyebrow": "Studio",

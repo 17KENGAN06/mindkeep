@@ -20,6 +20,10 @@ import { ForestPage } from '@/pages/ForestPage';
 import { GuidePage } from '@/pages/GuidePage';
 import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
+import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
+import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
+import { VerifyEmailPage } from '@/pages/VerifyEmailPage';
+import { AccountPage } from '@/pages/AccountPage';
 import { MaterialCreatePage } from '@/pages/MaterialCreatePage';
 import { MaterialDetailPage } from '@/pages/MaterialDetailPage';
 import { MaterialEditPage } from '@/pages/MaterialEditPage';
@@ -112,6 +116,7 @@ export function AppRoutes() {
         }
       >
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/register"
           element={
@@ -120,9 +125,15 @@ export function AppRoutes() {
         />
       </Route>
 
+      <Route element={<AuthLayout />}>
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
+      </Route>
+
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/account" element={<AccountPage />} />
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/forest" element={<ForestPage />} />
           <Route path="/calendar" element={<CalendarPage />} />

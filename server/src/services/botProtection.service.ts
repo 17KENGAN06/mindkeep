@@ -42,9 +42,13 @@ export function assertBotProtection(input: {
 
   const token = input.botToken?.trim();
 
-  // Soft mode: allow requests without a challenge token (older clients / rollout).
-  // When a token is present, it must be valid.
   if (!token) {
+    if (env.NODE_ENV === 'production') {
+      throw new AppError('Bot check failed', {
+        statusCode: 400,
+        code: 'BOT_REJECTED',
+      });
+    }
     return;
   }
 

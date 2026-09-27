@@ -15,6 +15,7 @@ export function mapContactError(error: unknown, t: Translate): string {
     case 'BOT_REJECTED':
       return t('auth.bot.rejected');
     case 'CONTACT_UNAVAILABLE':
+    case 'EMAIL_UNAVAILABLE':
       return t('contact.errors.unavailable');
     case 'RATE_LIMITED':
       return t('auth.errors.rateLimited');

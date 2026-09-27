@@ -47,7 +47,8 @@
     "openMenu": "Відкрити меню",
     "closeMenu": "Закрити меню",
     "settings": "Налаштування",
-    "menu": "Меню"
+    "menu": "Меню",
+    "account": "Акаунт"
   },
   "placeholders": {
     "comingSoon": "Розділ у розробці",
@@ -607,8 +608,30 @@
       "serverOutdated": "Сервер ще не оновлено. Зачекайте деплой або спробуйте пізніше.",
       "googleUnavailable": "Не вдалося увійти через Google. Спробуйте ще раз.",
       "googleEmailInUse": "На цю пошту вже є акаунт. Увійдіть з паролем.",
-      "maintenanceAdminOnly": "Зараз доступний лише вхід для адміністратора."
-    }
+      "maintenanceAdminOnly": "Зараз доступний лише вхід для адміністратора.",
+      "emailUnavailable": "Не вдалося надіслати лист. Спробуйте пізніше.",
+      "invalidEmailToken": "Це посилання недійсне або прострочене."
+    },
+    "checkEmailTitle": "Перевірте пошту",
+    "checkEmailBody": "Ми надіслали посилання на {{email}}. Акаунт зʼявиться лише після підтвердження.",
+    "forgotPassword": "Забули пароль?",
+    "forgotTitle": "Скинути пароль",
+    "forgotSubtitle": "Якщо на цю пошту вже є пароль, надішлемо посилання для скидання.",
+    "forgotSubmit": "Надіслати посилання",
+    "forgotSent": "Якщо акаунт існує, лист уже в дорозі. Перевірте вхідні.",
+    "resetTitle": "Новий пароль",
+    "resetSubtitle": "Після збереження ви увійдете.",
+    "resetSubmit": "Зберегти пароль",
+    "verifyTitle": "Підтвердження пошти",
+    "verifyWorking": "Зачекайте…",
+    "accountTitle": "Акаунт",
+    "accountSubtitle": "Пошта і пароль цього акаунта MindKeep.",
+    "currentPassword": "Поточний пароль",
+    "newPassword": "Новий пароль",
+    "changePassword": "Змінити пароль",
+    "passwordChanged": "Пароль оновлено.",
+    "setPassword": "Задати пароль",
+    "setPasswordHint": "Цей акаунт через Google. Можна додати пароль і входити також з пошти."
   },
   "maintenance": {
     "eyebrow": "Технічне обслуговування",
@@ -949,7 +972,11 @@
       "guide": "Як користуватися · Mindkeep",
       "privacy": "Політика конфіденційності · Mindkeep",
       "contact": "Контакти · Mindkeep",
-      "notFound": "Сторінку не знайдено · Mindkeep"
+      "notFound": "Сторінку не знайдено · Mindkeep",
+      "forgotPassword": "Скинути пароль · Mindkeep",
+      "resetPassword": "Новий пароль · Mindkeep",
+      "verifyEmail": "Підтвердження пошти · Mindkeep",
+      "account": "Акаунт · Mindkeep"
     }
   },
   "footer": {
@@ -964,7 +991,9 @@
     "privacy": "Конфіденційність",
     "rights": "Усі права захищено. Продукт створено й підтримується студією.",
     "ownership": "Mindkeep є власністю <studio />. © {{year}}",
-    "lineCompact": "Mindkeep є власністю WEISEZAHOY © {{year}}"
+    "lineCompact": "Mindkeep є власністю WEISEZAHOY © {{year}}",
+    "tiktok": "TikTok",
+    "tiktokHandle": "@mindkeep.cloud"
   },
   "contact": {
     "eyebrow": "Студія",

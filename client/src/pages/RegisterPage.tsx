@@ -29,6 +29,7 @@ export function RegisterPage() {
   const [humanChecked, setHumanChecked] = useState(false);
   const [botError, setBotError] = useState<string | undefined>();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
   const defaultTimezone = useMemo(() => detectTimezone(), []);
   const challengeReady = botToken !== null;
 
@@ -57,6 +58,11 @@ export function RegisterPage() {
       return;
     }
 
+    if (!botToken) {
+      setBotError(t('auth.bot.challengeFailed'));
+      return;
+    }
+
     try {
       await registerUser({
         name: values.name,
@@ -64,10 +70,10 @@ export function RegisterPage() {
         password: values.password,
         confirmPassword: values.confirmPassword,
         timezone: values.timezone,
-        ...(botToken ? { botToken } : {}),
+        botToken,
         website: values.website ?? '',
       });
-      void navigate('/dashboard');
+      setPendingEmail(values.email);
     } catch (error) {
       setFormError(mapAuthError(error, t));
     }
@@ -85,6 +91,22 @@ export function RegisterPage() {
       setIsGoogleLoading(false);
     }
   };
+
+  if (pendingEmail) {
+    return (
+      <div className="space-y-4">
+        <h1 className="text-xl font-semibold text-ink sm:text-2xl">{t('auth.checkEmailTitle')}</h1>
+        <p className="text-sm leading-relaxed text-muted">
+          {t('auth.checkEmailBody', { email: pendingEmail })}
+        </p>
+        <p className="text-sm text-muted">
+          <Link to="/login" className="font-medium text-brand-700">
+            {t('nav.login')}
+          </Link>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-5 sm:space-y-6">

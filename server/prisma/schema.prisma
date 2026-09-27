@@ -75,6 +75,7 @@ model User {
   googleId     String?  @unique
   timezone     String   @default("Europe/Helsinki")
   role         UserRole @default(USER)
+  emailVerified Boolean @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -386,5 +387,23 @@ model GoogleSignInTicket {
   expiresAt DateTime
   createdAt DateTime @default(now())
 
+  @@index([expiresAt])
+}
+
+enum EmailTokenType {
+  VERIFY_EMAIL
+  RESET_PASSWORD
+}
+
+model EmailToken {
+  id        String         @id @default(cuid())
+  type      EmailTokenType
+  email     String
+  codeHash  String         @unique
+  payload   String?
+  expiresAt DateTime
+  createdAt DateTime       @default(now())
+
+  @@index([email, type])
   @@index([expiresAt])
 }

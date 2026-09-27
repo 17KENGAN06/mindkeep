@@ -7,7 +7,7 @@ export type AuthContextValue = {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (payload: LoginPayload) => Promise<User>;
-  register: (payload: RegisterPayload) => Promise<User>;
+  register: (payload: RegisterPayload) => Promise<{ pending: true }>;
   googleLogin: (payload: GoogleLoginPayload) => Promise<User>;
   updateTimezone: (timezone: string) => Promise<User>;
   logout: () => Promise<void>;

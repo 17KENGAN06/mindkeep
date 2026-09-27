@@ -129,6 +129,12 @@ export function MoreScreen() {
           />
         ) : null}
         <MenuCard
+          icon="person-outline"
+          title={t('auth.accountTitle')}
+          hint={t('auth.accountSubtitle')}
+          onPress={() => navigation.navigate('Account')}
+        />
+        <MenuCard
           icon="help-circle-outline"
           title={t('common.guide')}
           hint={t('common.guideHint')}

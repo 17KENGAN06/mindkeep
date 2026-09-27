@@ -7,11 +7,27 @@ const passwordSchema = z
   .max(72, 'Password must be at most 72 characters');
 
 const botFields = {
-  /** Optional until challenge endpoint is available on all deploys */
+  /** Required in production by assertBotProtection; optional in local dev. */
   botToken: z.string().min(20).max(500).optional(),
   /** Honeypot — must stay empty */
   website: z.string().max(200).optional().default(''),
 };
+
+function isIanaTimeZone(value: string): boolean {
+  try {
+    Intl.DateTimeFormat('en-US', { timeZone: value }).format(new Date());
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const timezoneSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(100)
+  .refine(isIanaTimeZone, 'Invalid timezone');
 
 export const registerSchema = z
   .object({
@@ -19,7 +35,7 @@ export const registerSchema = z
     email: z.email('Invalid email'),
     password: passwordSchema,
     confirmPassword: passwordSchema,
-    timezone: z.string().trim().min(1).max(100).default('Europe/Helsinki'),
+    timezone: timezoneSchema.default('Europe/Helsinki'),
     ...botFields,
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -37,7 +53,7 @@ export const googleLoginSchema = z
   .object({
     credential: z.string().min(100).max(10_000).optional(),
     code: z.string().trim().min(20).max(128).optional(),
-    timezone: z.string().trim().min(1).max(100).default('Europe/Helsinki'),
+    timezone: timezoneSchema.default('Europe/Helsinki'),
   })
   .refine((data) => Boolean(data.credential) !== Boolean(data.code), {
     message: 'Provide either a Google credential or a one-time code',
@@ -49,26 +65,47 @@ export const googleFinishSchema = z.object({
   state: z.string().min(20).max(4000),
 });
 
-function isIanaTimeZone(value: string): boolean {
-  try {
-    Intl.DateTimeFormat('en-US', { timeZone: value }).format(new Date());
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 export const updateMeSchema = z.object({
-  timezone: z
-    .string()
-    .trim()
-    .min(1)
-    .max(100)
-    .refine(isIanaTimeZone, 'Invalid timezone'),
+  timezone: timezoneSchema,
 });
+
+export const verifyEmailSchema = z.object({
+  token: z.string().trim().min(20).max(200),
+});
+
+export const forgotPasswordSchema = z.object({
+  email: z.email('Invalid email'),
+  ...botFields,
+});
+
+export const resetPasswordSchema = z
+  .object({
+    token: z.string().trim().min(20).max(200),
+    password: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().max(72).optional(),
+    password: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
 export type GoogleFinishInput = z.infer<typeof googleFinishSchema>;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;
+export type VerifyEmailInput = z.infer<typeof verifyEmailSchema>;
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;

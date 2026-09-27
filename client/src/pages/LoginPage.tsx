@@ -47,11 +47,16 @@ export function LoginPage() {
       return;
     }
 
+    if (!botToken) {
+      setBotError(t('auth.bot.challengeFailed'));
+      return;
+    }
+
     try {
       await login({
         email: values.email,
         password: values.password,
-        ...(botToken ? { botToken } : {}),
+        botToken,
         website: values.website ?? '',
       });
       void navigate('/dashboard');
@@ -123,6 +128,14 @@ export function LoginPage() {
           {maintenance ? t('maintenance.submitLogin') : t('auth.submitLogin')}
         </Button>
       </form>
+
+      {maintenance ? null : (
+        <p className="text-sm text-muted">
+          <Link to="/forgot-password" className="font-medium text-brand-700">
+            {t('auth.forgotPassword')}
+          </Link>
+        </p>
+      )}
 
       <GoogleSignIn
         onCredential={(credential) => void handleGoogleCredential(credential)}

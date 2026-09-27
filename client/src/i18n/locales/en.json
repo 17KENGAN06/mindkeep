@@ -47,7 +47,8 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "settings": "Settings",
-    "menu": "Menu"
+    "menu": "Menu",
+    "account": "Account"
   },
   "placeholders": {
     "comingSoon": "This section is under development",
@@ -607,8 +608,30 @@
       "serverOutdated": "The API is not updated yet. Wait for deploy or try again later.",
       "googleUnavailable": "Google sign-in failed. Please try again.",
       "googleEmailInUse": "This email already has an account. Sign in with your password.",
-      "maintenanceAdminOnly": "Only administrator sign-in is available right now."
-    }
+      "maintenanceAdminOnly": "Only administrator sign-in is available right now.",
+      "emailUnavailable": "Could not send email. Try again later.",
+      "invalidEmailToken": "This link is invalid or has expired."
+    },
+    "checkEmailTitle": "Check your email",
+    "checkEmailBody": "We sent a confirmation link to {{email}}. The account is created only after you open it.",
+    "forgotPassword": "Forgot password?",
+    "forgotTitle": "Reset password",
+    "forgotSubtitle": "If this email has a password, we will send a reset link.",
+    "forgotSubmit": "Send link",
+    "forgotSent": "If an account exists for this email, a reset link is on its way. Check your inbox.",
+    "resetTitle": "Choose a new password",
+    "resetSubtitle": "Then you will be signed in.",
+    "resetSubmit": "Save password",
+    "verifyTitle": "Confirming email",
+    "verifyWorking": "One moment…",
+    "accountTitle": "Account",
+    "accountSubtitle": "Email and password for this MindKeep account.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "changePassword": "Change password",
+    "passwordChanged": "Password updated.",
+    "setPassword": "Set a password",
+    "setPasswordHint": "This account uses Google. You can add a password to also sign in with email."
   },
   "maintenance": {
     "eyebrow": "Maintenance",
@@ -949,7 +972,11 @@
       "guide": "How to use · Mindkeep",
       "privacy": "Privacy policy · Mindkeep",
       "contact": "Contact · Mindkeep",
-      "notFound": "Page not found · Mindkeep"
+      "notFound": "Page not found · Mindkeep",
+      "forgotPassword": "Reset password · Mindkeep",
+      "resetPassword": "New password · Mindkeep",
+      "verifyEmail": "Confirm email · Mindkeep",
+      "account": "Account · Mindkeep"
     }
   },
   "footer": {
@@ -964,7 +991,9 @@
     "privacy": "Privacy",
     "rights": "All rights reserved. Designed and maintained by the studio.",
     "ownership": "Mindkeep is the property of <studio />. © {{year}}",
-    "lineCompact": "Mindkeep is the property of WEISEZAHOY © {{year}}"
+    "lineCompact": "Mindkeep is the property of WEISEZAHOY © {{year}}",
+    "tiktok": "TikTok",
+    "tiktokHandle": "@mindkeep.cloud"
   },
   "contact": {
     "eyebrow": "Studio",

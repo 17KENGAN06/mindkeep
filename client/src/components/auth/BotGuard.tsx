@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { authApi } from '@/api/auth';
 
 type BotGuardProps = {
-  onReady: (botToken: string) => void;
+  onReady: (botToken: string | null) => void;
   humanChecked: boolean;
   onHumanCheckedChange: (checked: boolean) => void;
   error?: string;
@@ -17,14 +17,14 @@ export function BotGuard({
 }: BotGuardProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [softMode, setSoftMode] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
     void (async () => {
       setLoading(true);
-      setSoftMode(false);
+      setFailed(false);
       try {
         const { botToken } = await authApi.challenge();
         if (!cancelled) {
@@ -32,10 +32,9 @@ export function BotGuard({
           setLoading(false);
         }
       } catch {
-        // Challenge may be missing on older API deploys — allow login/register anyway.
         if (!cancelled) {
-          onReady('');
-          setSoftMode(true);
+          onReady(null);
+          setFailed(true);
           setLoading(false);
         }
       }
@@ -60,7 +59,7 @@ export function BotGuard({
       </label>
 
       {loading ? <p className="text-xs text-muted">{t('auth.bot.preparing')}</p> : null}
-      {softMode ? <p className="text-xs text-muted">{t('auth.bot.softMode')}</p> : null}
+      {failed ? <p className="text-xs text-red-600">{t('auth.bot.challengeFailed')}</p> : null}
       {error ? <p className="text-xs text-red-600">{error}</p> : null}
     </div>
   );

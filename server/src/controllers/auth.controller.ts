@@ -12,11 +12,15 @@ import {
 } from '@/services/googleOAuth.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
+  ChangePasswordInput,
+  ForgotPasswordInput,
   GoogleFinishInput,
   GoogleLoginInput,
   LoginInput,
   RegisterInput,
+  ResetPasswordInput,
   UpdateMeInput,
+  VerifyEmailInput,
 } from '@/validations/auth.schemas.js';
 
 export class AuthController {
@@ -27,8 +31,9 @@ export class AuthController {
   async register(req: Request, res: Response): Promise<void> {
     const input = req.body as RegisterInput;
     assertBotProtection(input);
-    const { user, token } = await authService.register(input);
-    sendAuthSession(req, res, 201, user, token);
+    await authService.register(input);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(201).json({ pending: true });
   }
 
   async login(req: Request, res: Response): Promise<void> {
@@ -98,6 +103,37 @@ export class AuthController {
     }
 
     const user = await authService.updateMe(req.user.id, req.body as UpdateMeInput);
+    res.status(200).json({ user });
+  }
+
+  async verifyEmail(req: Request, res: Response): Promise<void> {
+    const { user, token } = await authService.verifyEmail(req.body as VerifyEmailInput);
+    sendAuthSession(req, res, 200, user, token);
+  }
+
+  async forgotPassword(req: Request, res: Response): Promise<void> {
+    const input = req.body as ForgotPasswordInput;
+    assertBotProtection(input);
+    await authService.forgotPassword(input);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json({ sent: true });
+  }
+
+  async resetPassword(req: Request, res: Response): Promise<void> {
+    const { user, token } = await authService.resetPassword(req.body as ResetPasswordInput);
+    sendAuthSession(req, res, 200, user, token);
+  }
+
+  async changePassword(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const user = await authService.changePassword(req.user.id, req.body as ChangePasswordInput);
+    res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ user });
   }
 }

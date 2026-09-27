@@ -15,6 +15,7 @@ import { LanguageSwitcher } from '../../components/LanguageSwitcher';
 import { BrandMark } from '../../components/BrandMark';
 import { GoogleSignInButton } from '../../components/GoogleSignInButton';
 import { mapAuthError } from '../../features/auth/mapAuthError';
+import { issueBotToken } from '../../features/auth/botChallenge';
 import { useAuth } from '../../features/auth/useAuth';
 import { useTheme } from '../../features/theme/useTheme';
 
@@ -22,9 +23,10 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type LoginScreenProps = {
   onGoRegister: () => void;
+  onGoForgot: () => void;
 };
 
-export function LoginScreen({ onGoRegister }: LoginScreenProps) {
+export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { login } = useAuth();
@@ -46,7 +48,8 @@ export function LoginScreen({ onGoRegister }: LoginScreenProps) {
 
     setBusy(true);
     try {
-      await login({ email: email.trim(), password });
+      const botToken = await issueBotToken();
+      await login({ email: email.trim(), password, botToken, website: '' });
     } catch (caught) {
       setError(mapAuthError(caught, t));
     } finally {
@@ -108,6 +111,10 @@ export function LoginScreen({ onGoRegister }: LoginScreenProps) {
         </Pressable>
 
         <GoogleSignInButton disabled={busy} onError={setError} />
+
+        <Pressable onPress={onGoForgot} style={styles.linkWrap}>
+          <Text style={[styles.link, { color: colors.brand }]}>{t('auth.forgotPassword')}</Text>
+        </Pressable>
 
         <Pressable onPress={onGoRegister} style={styles.linkWrap}>
           <Text style={[styles.link, { color: colors.brand }]}>

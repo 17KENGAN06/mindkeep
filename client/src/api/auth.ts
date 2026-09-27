@@ -26,10 +26,22 @@ export type GoogleLoginPayload = {
 
 export const authApi = {
   challenge: () => apiClient.get<{ botToken: string }>('/api/auth/challenge'),
-  register: (payload: RegisterPayload) => apiClient.post<AuthResponse>('/api/auth/register', payload),
+  register: (payload: RegisterPayload) =>
+    apiClient.post<{ pending: true }>('/api/auth/register', payload),
   login: (payload: LoginPayload) => apiClient.post<AuthResponse>('/api/auth/login', payload),
   googleLogin: (payload: GoogleLoginPayload) =>
     apiClient.post<AuthResponse>('/api/auth/google', payload),
+  verifyEmail: (payload: { token: string }) =>
+    apiClient.post<AuthResponse>('/api/auth/verify-email', payload),
+  forgotPassword: (payload: { email: string } & BotPayload) =>
+    apiClient.post<{ sent: true }>('/api/auth/forgot-password', payload),
+  resetPassword: (payload: { token: string; password: string; confirmPassword: string }) =>
+    apiClient.post<AuthResponse>('/api/auth/reset-password', payload),
+  changePassword: (payload: {
+    currentPassword?: string;
+    password: string;
+    confirmPassword: string;
+  }) => apiClient.post<{ user: User }>('/api/auth/change-password', payload),
   logout: () => apiClient.post<{ success: boolean }>('/api/auth/logout'),
   me: () => apiClient.get<{ user: User }>('/api/auth/me'),
 };
