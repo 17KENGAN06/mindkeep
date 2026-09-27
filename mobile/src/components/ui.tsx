@@ -1,7 +1,7 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '../features/theme/useTheme';
 
-type Tone = 'brand' | 'danger' | 'warn' | 'neutral';
+type Tone = 'brand' | 'danger' | 'warn' | 'neutral' | 'expense';
 
 export function Badge({ tone, label }: { tone: Tone; label: string }) {
   const { colors } = useTheme();
@@ -10,12 +10,14 @@ export function Badge({ tone, label }: { tone: Tone; label: string }) {
     danger: `${colors.danger}29`,
     warn: `${colors.warn}29`,
     neutral: `${colors.muted}29`,
+    expense: `${colors.expense}29`,
   };
   const toneFg: Record<Tone, string> = {
     brand: colors.brand,
     danger: colors.danger,
     warn: colors.warn,
     neutral: colors.muted,
+    expense: colors.expense,
   };
 
   return (

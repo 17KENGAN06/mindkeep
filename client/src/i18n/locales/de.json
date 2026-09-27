@@ -1,0 +1,1133 @@
+{
+  "common": {
+    "appName": "Mindkeep",
+    "loading": "Wird geladen...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "back": "Zurück",
+    "language": "Sprache",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "themeLight": "Helles Design",
+    "themeDark": "Dunkles Design",
+    "theme": "Design"
+  },
+  "nav": {
+    "home": "Start",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "dashboard": "Übersicht",
+    "categories": "Kategorien",
+    "logout": "Abmelden",
+    "materials": "Material hinzufügen",
+    "review": "Heute wiederholen",
+    "notifications": "Benachrichtigungen",
+    "statistics": "Statistik",
+    "analytics": "Analysen",
+    "calendar": "Kalender",
+    "reviewCalendar": "Wiederholungskalender",
+    "admin": "Admin",
+    "blog": "Blog",
+    "guide": "So geht’s",
+    "contact": "Kontakt",
+    "planning": "Planung",
+    "learning": "Lernen",
+    "repetition": "Wiederholen",
+    "finance": "Finanzen",
+    "more": "Mehr",
+    "tasks": "Tagesaufgaben",
+    "calories": "Ernährung",
+    "nutrition": "Ernährung",
+    "rhythm": "Gewohnheiten",
+    "monthPlan": "Monatsplan",
+    "notes": "Notizen",
+    "budget": "Budget",
+    "transactions": "Buchungen",
+    "expenseCategories": "Ausgabenkategorien",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "settings": "Einstellungen",
+    "menu": "Menü"
+  },
+  "placeholders": {
+    "comingSoon": "Dieser Bereich ist noch in Arbeit",
+    "tasks": {
+      "title": "Tagesaufgaben",
+      "description": "Plane den Tag und behalte im Blick, was erledigt ist."
+    },
+    "monthPlan": {
+      "title": "Monatsplan",
+      "description": "Sammle Ziele und größere Arbeiten in einem Monatsplan."
+    },
+    "budget": {
+      "title": "Budget",
+      "description": "Behalte Budget und Geldfluss im Blick."
+    },
+    "transactions": {
+      "title": "Buchungen",
+      "description": "Einnahmen und Ausgaben ansehen und erfassen."
+    },
+    "expenseCategories": {
+      "title": "Ausgabenkategorien",
+      "description": "Ordne Ausgaben in klare Kategorien."
+    }
+  },
+  "finance": {
+    "budgetTitle": "Budget",
+    "budgetSubtitle": "Einnahmen und Ausgaben in Euro im Blick — einfach und klar.",
+    "transactionsTitle": "Buchungen",
+    "transactionsSubtitle": "Alle Einnahmen und Ausgaben im gewählten Zeitraum.",
+    "categoriesTitle": "Ausgabenkategorien",
+    "categoriesSubtitle": "Gruppiere Ausgaben nach Kategorie.",
+    "viewMonth": "Monat",
+    "viewYear": "Jahr",
+    "year": "Jahr",
+    "month": "Monat",
+    "totalIncome": "Einnahmen",
+    "totalExpense": "Ausgaben",
+    "balance": "Periodensaldo",
+    "netWithOpening": "Inklusive Anfangsbestand",
+    "yearBreakdown": "Monatsübersicht",
+    "addOperation": "Buchung hinzufügen",
+    "operationsTitle": "Buchungen der Periode",
+    "type": "Art",
+    "typeFilter": "Nach Art filtern",
+    "allTypes": "Alle",
+    "income": "Einnahme",
+    "expense": "Ausgabe",
+    "amount": "Betrag",
+    "date": "Datum",
+    "category": "Kategorie",
+    "noCategory": "Keine Kategorie",
+    "comment": "Kommentar",
+    "noComment": "Kein Kommentar",
+    "saveOperation": "Speichern",
+    "emptyOperations": "In diesem Zeitraum gibt es noch keine Buchungen",
+    "createCategory": "Neue Kategorie",
+    "editCategory": "Kategorie bearbeiten",
+    "categoryName": "Name",
+    "emptyCategories": "Noch keine Kategorien",
+    "emptyCategoriesHint": "Lege deine erste Ausgabenkategorie an.",
+    "operationsCount": "Buchungen: {{count}}",
+    "deleteCategoryTitle": "Kategorie löschen?",
+    "deleteCategoryDescription": "Die Kategorie „{{name}}“ wird gelöscht. Buchungen bleiben ohne Kategorie.",
+    "months": {
+      "1": "Januar",
+      "2": "Februar",
+      "3": "März",
+      "4": "April",
+      "5": "Mai",
+      "6": "Juni",
+      "7": "Juli",
+      "8": "August",
+      "9": "September",
+      "10": "Oktober",
+      "11": "November",
+      "12": "Dezember"
+    },
+    "errors": {
+      "amount": "Gib einen gültigen Betrag ein",
+      "categoryTaken": "Eine Kategorie mit diesem Namen existiert bereits"
+    },
+    "moneyKind": {
+      "label": "Geldform",
+      "cash": "Bargeld",
+      "electronic": "Elektronisch",
+      "all": "Alle"
+    },
+    "wallets": {
+      "title": "Bargeld und elektronisch",
+      "subtitle": "Periodensaldo nach Geldform — nur auf dieser Budgetseite.",
+      "cashHint": "Scheine und Münzen",
+      "electronicHint": "Karte, Überweisung, Konto",
+      "showOps": "Buchungen anzeigen"
+    }
+  },
+  "tasks": {
+    "title": "Tagesaufgaben",
+    "subtitle": "Plane Aufgaben nach Datum, verfolge Erledigung und eingeplante Zeit.",
+    "planTitle": "Monatsplan",
+    "planSubtitle": "Verlauf und Übersicht der Aufgaben nach Monat und Jahr.",
+    "openDaily": "Aufgaben öffnen",
+    "viewMonth": "Monat",
+    "viewYear": "Jahr",
+    "year": "Jahr",
+    "month": "Monat",
+    "statTotal": "Aufgaben gesamt",
+    "statCompleted": "Erledigt",
+    "statPending": "Offen",
+    "statMinutes": "Minuten",
+    "completionRate": "Erledigung",
+    "yearBreakdown": "Nach Monat",
+    "historyByMonth": "Verlauf nach Monat",
+    "historyByDay": "Verlauf nach Tag",
+    "emptyPeriod": "In diesem Zeitraum gibt es noch keine Aufgaben",
+    "monthStats": "{{completed}} von {{total}} erledigt",
+    "minShort": "Min.",
+    "dayTitle": "Aufgaben für {{date}}",
+    "pickDay": "Wähle einen Tag im Kalender",
+    "pickDayFirst": "Wähle zuerst einen Tag",
+    "dayStats": "{{completed}}/{{total}} · {{minutes}} Min.",
+    "addTask": "Aufgabe hinzufügen",
+    "taskTitle": "Titel",
+    "taskTitlePlaceholder": "z. B. Englisch üben",
+    "minutes": "Minuten pro Tag",
+    "saveTask": "Hinzufügen",
+    "emptyDay": "Keine Aufgaben für diesen Tag",
+    "emptyDayHint": "Aufgabe hinzufügen: Titel links, Zeit rechts.",
+    "markComplete": "Als erledigt markieren",
+    "markIncomplete": "Als offen markieren",
+    "split": "Teilen",
+    "splitHint": "Wie viele Teile",
+    "splitProgress": "{{done}}/{{count}}",
+    "unsplit": "Zusammenführen",
+    "splitPart": "Teil {{n}} von {{count}}",
+    "durationMinutes": "{{minutes}} Min.",
+    "durationHours": "{{hours}} Std.",
+    "durationHoursMinutes": "{{hours}} Std. {{minutes}} Min.",
+    "errors": {
+      "title": "Gib einen Aufgabentitel ein",
+      "minutes": "Gib die Zeit in Minuten ein"
+    }
+  },
+  "forest": {
+    "title": "Dein Wald",
+    "trees": "{{count}} Bäume",
+    "addedToday": "+{{count}} heute",
+    "groveProgress": "Hain {{grove}} · {{current}} / {{total}}",
+    "remaining": "{{count}} bis zum nächsten Hain",
+    "remainingDone": "Hain abgeschlossen",
+    "remainingZone": "{{count}} bis zu einer Waldzone",
+    "zoneOpen": "Waldzone freigeschaltet",
+    "explore": "Wald erkunden",
+    "plusOne": "+1 Baum",
+    "groveCompleted": "Hain abgeschlossen",
+    "groveComplete1": "Erster Hain",
+    "groveComplete2": "Zweiter Hain",
+    "groveComplete3": "Dritter Hain",
+    "groveHint1": "25 Bäume — der erste Hain ist vollständig.",
+    "groveHint2": "Zwei Haine in diesem Monat. Noch einer bis zur Waldzone.",
+    "groveHint3": "Drei Haine. Die nächsten 25 Bäume öffnen eine Waldzone.",
+    "zoneComplete": "Waldzone",
+    "zoneHint": "100 Bäume — die Waldzone gehört dir.",
+    "newGrove": "Neuer Hain",
+    "newGroveHint": "Hier beginnt ein frischer Hain.",
+    "newZone": "Neue Waldzone",
+    "newZoneHint": "Ein neues Stück Wald öffnet sich.",
+    "grovePip": "Hain {{n}}",
+    "zonePip": "Zone",
+    "zonesCount": "×{{count}}",
+    "pathLabel": "Hain {{grove}} von 4, {{zone}} Zonen",
+    "pageTitle": "Dein Wald",
+    "pageSubtitle": "Jede erledigte Aufgabe in diesem Monat pflanzt einen Baum. Haine und Waldzonen wachsen aus diesem Stand — nie aus Aufgaben, die noch vor dir liegen.",
+    "backToTasks": "Zurück zu den Aufgaben",
+    "rulesTitle": "So wächst der Wald",
+    "ruleTrees": "1 erledigte Aufgabe = 1 Baum.",
+    "ruleGrove": "25 Bäume schließen einen Hain ab.",
+    "ruleZone": "100 Bäume schalten eine Waldzone frei.",
+    "rulePath": "Hain 1, dann 2, dann 3 — und 100 Bäume öffnen eine Waldzone.",
+    "ruleMonth": "Jeder Monat hat seinen eigenen Wald.",
+    "yearTitle": "Der Wald ist eine Monatsansicht",
+    "yearHint": "Bäume werden aus erledigten Aufgaben eines Monats gepflanzt. Wechsle zurück zur Monatsansicht, um den Wald dieses Monats zu sehen.",
+    "monthScope": "Nur erledigte Aufgaben aus diesem Monat pflanzen hier Bäume."
+  },
+  "notes": {
+    "title": "Notizen",
+    "subtitle": "Bewahre Ideen, Lektionen und Dinge, die sich zu merken lohnen.",
+    "create": "+ Neue Notiz",
+    "createFirst": "Erste Notiz erstellen",
+    "createTitle": "Neue Notiz",
+    "createSubtitle": "Sichere einen Gedanken, Auszug oder eine Lektion, bevor er entgleitet.",
+    "editTitle": "Notiz bearbeiten",
+    "save": "Notiz speichern",
+    "saveChanges": "Änderungen speichern",
+    "backToNotes": "Zurück zu den Notizen",
+    "search": "Suchen",
+    "searchPlaceholder": "Notizen durchsuchen...",
+    "sortLabel": "Sortieren",
+    "sortNewest": "Neueste",
+    "sortOldest": "Älteste",
+    "emptyTitle": "Noch nichts hier",
+    "emptyDescription": "Bewahre Ideen, Lektionen und Dinge, zu denen du zurückkehren willst.",
+    "emptySearchTitle": "Keine Notizen gefunden",
+    "emptySearchDescription": "Probiere eine andere Suche oder erstelle eine neue Notiz.",
+    "source": "Quelle",
+    "notFound": "Diese Notiz wurde nicht gefunden.",
+    "deleteTitle": "Diese Notiz löschen?",
+    "deleteDescription": "Das lässt sich nicht rückgängig machen.",
+    "fields": {
+      "title": "Titel",
+      "content": "Notiz",
+      "sourceUrl": "Quellenlink",
+      "sourceHint": "Optional. Leer lassen, wenn es keinen Link gibt."
+    },
+    "placeholders": {
+      "title": "Gib deiner Notiz einen Titel...",
+      "content": "Schreib etwas, das sich zu merken lohnt...",
+      "sourceUrl": "https://..."
+    },
+    "errors": {
+      "titleRequired": "Füge einen Titel hinzu",
+      "titleMax": "Der Titel ist zu lang",
+      "contentRequired": "Schreib eine Notiz",
+      "contentMax": "Die Notiz ist zu lang",
+      "url": "Gib einen gültigen http- oder https-Link ein"
+    }
+  },
+  "home": {
+    "title": "Lernen. Handeln. Steuern.",
+    "subtitle": "Mindkeep bringt Tagesaufgaben, persönliche Finanzen und verteiltes Wiederholen in einen ruhigen Arbeitsraum.",
+    "ctaRegister": "Kostenlos starten",
+    "ctaLogin": "Anmelden",
+    "eyebrow": "Aufgaben · Wiederholen · Finanzen",
+    "pillarsTitle": "Drei Säulen eines ruhigen Rhythmus",
+    "pillarsSubtitle": "Plane den Tag, festige, was du lernst, und halte Geld sichtbar — ohne zwischen Apps zu jonglieren.",
+    "pillars": {
+      "tasks": {
+        "title": "Tagesaufgaben",
+        "text": "Setze Ziele für Tag und Monat, hak sie ab und sieh den Fortschritt ohne Lärm."
+      },
+      "repetition": {
+        "title": "Wiederholen bei 3 · 7 · 30",
+        "text": "Speichere Materialien und kehre nach festem Zeitplan zurück, damit Wissen länger bleibt."
+      },
+      "finance": {
+        "title": "Persönliche Finanzen",
+        "text": "Einnahmen und Ausgaben in Euro, Kategorien und ein klares Periodensaldo."
+      }
+    },
+    "howTitle": "So funktioniert’s",
+    "howSubtitle": "Ein Konto — drei Richtungen. Fang klein an und lass die Gewohnheit in deinem Tempo wachsen.",
+    "stepLabel": "Schritt {{n}}",
+    "steps": {
+      "1": {
+        "title": "Forme den Tag",
+        "text": "Füge Aufgaben für heute oder einen Monatsplan hinzu — und markiere, was erledigt ist."
+      },
+      "2": {
+        "title": "Behalte, was du lernst",
+        "text": "Speichere nach dem Lernen ein Material; Mindkeep erinnert dich an Tag 3, 7 und 30."
+      },
+      "3": {
+        "title": "Geld im Blick behalten",
+        "text": "Erfasse Einnahme oder Ausgabe in Euro — die Periodenübersicht bleibt ehrlich und klar."
+      }
+    },
+    "rhythmTitle": "Ein Gedächtnisrhythmus ohne komplexe Algorithmen",
+    "rhythmSubtitle": "Beim Wiederholen sind die Abstände fest. Daten werden vom Lerntag gezählt und verschieben sich nicht, wenn du eine Wiederholung als erledigt markierst.",
+    "daysLabel": "Tage",
+    "intervals": {
+      "three": "Erste Wiederholung — eine frische Spur festigen",
+      "seven": "Zweite Wiederholung — die Bedeutung halten",
+      "thirty": "Dritte Wiederholung — Richtung Langzeitgedächtnis"
+    },
+    "featuresTitle": "Alles, was du brauchst, an einem Ort",
+    "featuresSubtitle": "Mindkeep umfasst Planung, Lernen und Budget — ruhig und vorhersehbar.",
+    "features": {
+      "planning": {
+        "title": "Tages- und Monatsplanung",
+        "text": "Tagesaufgaben und Monatsansicht, damit du das Nahe und den Horizont siehst."
+      },
+      "memory": {
+        "title": "Materialien und Wiederholen",
+        "text": "Kategorien, Suche, Archiv und ein 3 · 7 · 30-Kalender — ohne Noten, ohne SM-2."
+      },
+      "money": {
+        "title": "Budget ohne Verwirrung",
+        "text": "Euro-Buchungen, Ausgabenkategorien sowie Monats- oder Jahresübersichten."
+      },
+      "calendar": {
+        "title": "Kalender und Überblick",
+        "text": "Wiederholungen, Aufgaben und Finanzen sammeln sich auf dem Dashboard in klaren Ausschnitten."
+      }
+    },
+    "ctaTitle": "Baue deinen Rhythmus in Mindkeep",
+    "ctaSubtitle": "Erstelle ein Konto und starte mit einer Aufgabe, einem Material oder einem Budgeteintrag.",
+    "apps": {
+      "eyebrow": "Mobil",
+      "title": "Apps für iPhone und Android",
+      "subtitle": "Native Mindkeep-Apps sind in Arbeit. Derselbe Arbeitsraum für Aufgaben, Wiederholen und Finanzen — bald in der Tasche.",
+      "badge": "Bald",
+      "note": "Die Store-Buttons sind eine Vorschau. Die Web-App läuft bereits unter mindkeep.cloud.",
+      "readBlog": "Lernnotizen lesen"
+    },
+    "testimonials": {
+      "eyebrow": "Stimmen aus der Beta",
+      "title": "Getestet von unseren ersten Nutzerinnen und Nutzern",
+      "subtitle": "Menschen aus verschiedenen Ländern haben Mindkeep vor dem Start ausprobiert und ehrliche Eindrücke geteilt.",
+      "beta": "Teilnehmerin / Teilnehmer am Betatest",
+      "all": "Alle Stimmen",
+      "rating": "Bewertung: {{count}} von 5",
+      "previous": "Vorherige Stimmen",
+      "next": "Nächste Stimmen",
+      "communityMember": "Mindkeep-Nutzer",
+      "loginHint": "Eine Bewertung kannst du nach 20 abgeschlossenen Wiederholungen hinterlassen.",
+      "progressHint": "Du hast {{count}} von {{required}} Wiederholungen abgeschlossen. Nutze Mindkeep noch etwas länger, dann erscheint hier das Feedback-Formular.",
+      "pending": "Danke! Deine Bewertung wurde an den Admin gesendet und wartet auf Freigabe.",
+      "approved": "Deine Bewertung wurde freigegeben und veröffentlicht.",
+      "yourRating": "Bewertung",
+      "yourReview": "Deine Stimme",
+      "yourLocation": "Stadt und Land (optional)",
+      "submit": "Zur Freigabe senden",
+      "submitError": "Die Bewertung konnte nicht gesendet werden. Bitte versuche es erneut."
+    },
+    "sections": {
+      "hero": "Start",
+      "pillars": "Möglichkeiten",
+      "how": "So funktioniert’s",
+      "rhythm": "3·7·30-Rhythmus",
+      "features": "Innen",
+      "apps": "Apps",
+      "testimonials": "Stimmen",
+      "blog": "Blog",
+      "cta": "Ausprobieren"
+    },
+    "heroHighlights": {
+      "tasks": "Tagespläne ohne Kopflärm",
+      "repetition": "Gedächtnis im 3 · 7 · 30-Rhythmus",
+      "finance": "Euro-Budget — klar und ruhig"
+    },
+    "heroVisual": {
+      "tasksTitle": "Aufgaben heute",
+      "tasksItem1": "Finnischen Wortschatz wiederholen",
+      "tasksItem2": "Wochenbudget abschließen",
+      "reviewTitle": "Wiederholen",
+      "reviewQuestion": "Wie sagt man danke auf Finnisch?",
+      "reviewHint": "Tippen, um die Antwort zu zeigen",
+      "financeTitle": "Finanzen",
+      "financeLabel": "Periodensaldo",
+      "financeValue": "+€420"
+    },
+    "mobileNav": {
+      "title": "Seitennavigation",
+      "sections": "Landing-Abschnitte",
+      "pages": "Seiten",
+      "prev": "Vorheriger Abschnitt",
+      "next": "Nächster Abschnitt",
+      "openHint": "Tippen · Menü",
+      "close": "Schließen",
+      "closeFull": "Menü schließen"
+    },
+    "heroLead": "Ein Arbeitsraum: Tagesaufgaben, 3·7·30-Wiederholungen und ein Euro-Budget — ohne zwischen Apps zu wechseln.",
+    "heroBrowse": "Abschnitte unten durchsehen"
+  },
+  "guide": {
+    "eyebrow": "Einfache Anleitung",
+    "title": "So nutzt du Mindkeep",
+    "intro": "Mindkeep ist ein Arbeitsraum für Aufgaben, Finanzen und Wissenswiederholung. Starte mit einem Bereich und ergänze den Rest, wenn du soweit bist.",
+    "stepsTitle": "In sechs einfachen Schritten starten",
+    "stepLabel": "Schritt {{number}}",
+    "steps": [
+      {
+        "title": "Konto erstellen",
+        "body": "Registriere dich per E-Mail oder Google. Deine Zeitzone wird automatisch erkannt — wichtig für Aufgaben- und Wiederholungsdaten."
+      },
+      {
+        "title": "Die Übersicht öffnen",
+        "body": "Das Dashboard zeigt die Aufgaben von heute, Wiederholungen und einen kurzen Finanzüberblick."
+      },
+      {
+        "title": "Aufgaben hinzufügen",
+        "body": "Unter Planung fügst du Arbeit für den Tag hinzu oder baust einen Monatsplan — und hakst Punkte ab."
+      },
+      {
+        "title": "Festhalten, was du gelernt hast",
+        "body": "Füge nach einer Lektion oder Übung ein Material hinzu. Mindkeep plant Wiederholungen für Tag 3, 7 und 30."
+      },
+      {
+        "title": "Geldbewegung erfassen",
+        "body": "Im Budget trägst du Einnahme oder Ausgabe ein. Alle Beträge werden in Euro geführt."
+      },
+      {
+        "title": "Über Kalender zurückkehren",
+        "body": "Aufgaben- und Wiederholungskalender zeigen, was heute fällig ist und was kommt — ohne Druck und ohne komplizierte Einrichtung."
+      }
+    ],
+    "rulesTitle": "Gut zu wissen",
+    "rules": [
+      "Aufgaben, Finanzen und Wiederholen teilen ein Konto, bleiben aber aus dem Weg.",
+      "Der 3 / 7 / 30-Wiederholungsplan wird vom Lerndatum gezählt und verschiebt sich nach dem Abschluss nicht.",
+      "Das Budget wird in Euro geführt — ohne Umrechnung und ohne Extra-Komplexität.",
+      "Deine Daten gehören nur deinem Konto und sind für andere Nutzer nicht sichtbar."
+    ],
+    "faqTitle": "FAQ",
+    "faq": [
+      {
+        "question": "Wo soll ich anfangen?",
+        "answer": "Mit dem, was jetzt zählt: den Aufgaben von heute, einem ersten Wiederholungsmaterial oder einem Einnahmen-/Ausgabeneintrag. Den Rest kannst du später verbinden."
+      },
+      {
+        "question": "Muss ich jeden Bereich nutzen?",
+        "answer": "Nein. Du kannst nur Aufgaben, nur Wiederholen oder nur Finanzen nutzen — der Arbeitsraum ist für flexiblen Gebrauch gebaut."
+      },
+      {
+        "question": "Was kann ich als Materialien hinzufügen?",
+        "answer": "Wörter, Notizen, Formeln, Regeln, Arbeitsentscheidungen, Links oder Fragen und Antworten — alles, zu dem du zurückkehren willst."
+      },
+      {
+        "question": "In welcher Währung ist das Budget?",
+        "answer": "Mindkeep führt Finanzen derzeit in Euro. So bleiben Übersichten einfach und Wechselkursverwirrung bleibt aus."
+      }
+    ],
+    "ctaTitle": "Mach heute den ersten Schritt",
+    "ctaSubtitle": "Füge eine Aufgabe, ein Material oder einen Finanzeintrag hinzu — und sieh, wie Mindkeep den Tag an einem Ort sammelt.",
+    "ctaGuest": "Konto erstellen",
+    "ctaUser": "Übersicht öffnen"
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Nutzer und Plattformüberblick.",
+    "usersTitle": "Nutzer",
+    "empty": "Noch keine Nutzer",
+    "loadError": "Admindaten konnten nicht geladen werden.",
+    "reviewsTitle": "Bewertungsfreigabe",
+    "reviewsEmpty": "Noch keine eingereichten Bewertungen",
+    "approveReview": "Freigeben",
+    "rejectReview": "Ablehnen",
+    "reviewStatus": {
+      "PENDING": "Wartet auf Prüfung",
+      "APPROVED": "Veröffentlicht",
+      "REJECTED": "Abgelehnt"
+    },
+    "stats": {
+      "users": "Nutzer",
+      "admins": "Admins",
+      "materials": "Materialien",
+      "reminders": "Erinnerungen"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "E-Mail",
+      "role": "Rolle",
+      "timezone": "Zeitzone",
+      "materials": "Materialien",
+      "reminders": "Erinnerungen",
+      "uses": "Nutzungen",
+      "lastActivity": "Aktivität",
+      "created": "Erstellt"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "Nutzer"
+    },
+    "backToUsers": "Zurück zu den Nutzern",
+    "activitySubtitle": "Vollständige Nutzungsstatistik. Texte, Beträge, Gewichtswerte und Eintragstitel bleiben verborgen.",
+    "modulesTitle": "Was sie nutzen",
+    "modulesHint": "Nur Zahlen und Daten — keine Eintragsinhalte.",
+    "recentTitle": "Letzte Aktionen",
+    "recentHint": "Welchen Bereich sie berührt und was sie getan haben, ohne die Datensätze.",
+    "used": "Aktiv",
+    "idle": "Noch nicht",
+    "noActivity": "Noch keine Aktivität",
+    "neverUsed": "Diesen Bereich noch nicht genutzt",
+    "firstUsed": "Zuerst genutzt {{date}}",
+    "lastUsed": "Zuletzt genutzt {{date}}",
+    "registered": "Im Produkt seit {{date}}",
+    "openActivity": "Aktivität ansehen",
+    "openStats": "Statistik",
+    "timelineTitle": "Aktivität über 30 Tage",
+    "timelineHint": "Wie viele Aktionen pro Tag. Nicht, was geschrieben wurde.",
+    "timelineTotal": "Aktionen gesamt: {{count}}",
+    "summary": {
+      "modulesUsed": "Bereiche",
+      "activeDays": "Aktive Tage",
+      "events7": "Letzte 7 Tage",
+      "events30": "Letzte 30 Tage"
+    },
+    "modules": {
+      "review": "Wiederholungen",
+      "tasks": "Aufgaben",
+      "habits": "Gewohnheiten",
+      "nutrition": "Ernährung",
+      "finance": "Finanzen",
+      "notes": "Notizen"
+    },
+    "moduleHints": {
+      "review": "Materialien: {{materials}} · Erinnerungen: {{reminders}} · erledigt: {{completed}} · offen: {{pending}}",
+      "tasks": "Gesamt: {{count}} · erledigt: {{completed}} · letzte 30 Tage: {{last30}}",
+      "habits": "Gewohnheiten: {{count}} · aktiv: {{active}} · Checks: {{checks}} · letzte 30 Tage: {{last30}}",
+      "nutrition": "Mahlzeiten: {{meals}} · Wassertage: {{water}} · Gewichtstage: {{weight}}",
+      "finance": "Einträge: {{count}} · Einnahmen: {{income}} · Ausgaben: {{expense}}",
+      "notes": "Notizen: {{count}}",
+      "count": "Einträge: {{count}}"
+    },
+    "actions": {
+      "created": "hat einen Eintrag erstellt",
+      "completed": "hat abgeschlossen",
+      "logged": "hat erfasst",
+      "checked": "hat eingecheckt"
+    }
+  },
+  "auth": {
+    "loginTitle": "Willkommen zurück",
+    "loginSubtitle": "Melde dich an, um Aufgaben, Wiederholen und Finanzen fortzusetzen.",
+    "registerTitle": "Konto erstellen",
+    "registerSubtitle": "Ein Arbeitsraum für Planung, Gedächtnis und Budget.",
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "timezone": "Zeitzone",
+    "submitLogin": "Anmelden",
+    "submitRegister": "Registrieren",
+    "noAccount": "Noch kein Konto?",
+    "hasAccount": "Schon ein Konto?",
+    "passwordHint": "Mindestens 8 Zeichen",
+    "or": "oder",
+    "googleProcessing": "Anmeldung mit Google",
+    "bot": {
+      "humanLabel": "Ich bin kein Roboter",
+      "humanRequired": "Bitte bestätige, dass du kein Roboter bist",
+      "preparing": "Formularschutz wird vorbereitet…",
+      "challengeFailed": "Schutz konnte nicht vorbereitet werden. Lade die Seite neu.",
+      "softMode": "Basisschutz ist aktiv. Du kannst fortfahren.",
+      "rejected": "Anfrage durch Bot-Schutz blockiert. Bitte neu laden und erneut versuchen."
+    },
+    "errors": {
+      "required": "Dieses Feld ist erforderlich",
+      "email": "Gib eine gültige E-Mail-Adresse ein",
+      "passwordMin": "Das Passwort muss mindestens 8 Zeichen haben",
+      "passwordMatch": "Die Passwörter stimmen nicht überein",
+      "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "invalidCredentials": "Ungültige E-Mail oder ungültiges Passwort",
+      "emailTaken": "Diese E-Mail ist bereits registriert",
+      "registerFailed": "Mit diesen Angaben konnte kein Konto erstellt werden.",
+      "passwordMax": "Das Passwort darf höchstens 72 Zeichen haben",
+      "network": "Der Server ist nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
+      "csrf": "Die Sicherheitsprüfung hat diese Anfrage abgelehnt (Origin-Abweichung). Setzen Sie CLIENT_URL=https://mindkeep.cloud auf der API.",
+      "rateLimited": "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut.",
+      "validation": "Prüfe die Formularfelder und versuche es erneut.",
+      "server": "Der Server ist vorübergehend nicht erreichbar. Versuche es in Kürze erneut.",
+      "serverOutdated": "Die API ist noch nicht aktualisiert. Warte auf das Deploy oder versuche es später erneut.",
+      "googleUnavailable": "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut.",
+      "maintenanceAdminOnly": "Derzeit ist nur die Administratoranmeldung verfügbar."
+    }
+  },
+  "maintenance": {
+    "eyebrow": "Wartung",
+    "title": "Projekt in technischer Prüfung",
+    "subtitle": "Wir führen vorübergehend technische Arbeiten durch, um die Stabilität des Dienstes zu verbessern. Bitte schauen Sie etwas später wieder vorbei.",
+    "adminLogin": "Administratoranmeldung",
+    "loginTitle": "Administratoranmeldung",
+    "loginSubtitle": "Während der Wartung können sich nur Nutzer mit Administratorrolle anmelden.",
+    "submitLogin": "Als Administrator anmelden",
+    "backHome": "Zurück zum Wartungsbildschirm"
+  },
+  "calories": {
+    "title": "Ernährung",
+    "subtitle": "Kalorien kommen aus Mahlzeiten. Wasser sind Gläser. Das Gewicht folgt dem gewählten Kalendertag.",
+    "caloriesTitle": "Kalorien",
+    "calorieGoal": "Tägliches Kalorienziel",
+    "waterGoal": "Gläser pro Tag",
+    "glasses": "Gläser",
+    "waterHint": "Tippe auf Gläser, um Wasser zu erfassen. Es wird nicht zu den Kalorien addiert.",
+    "waterProgress": "Gläser heute",
+    "saveGoals": "Ziele speichern",
+    "statEaten": "Gegessen",
+    "statGoal": "Ziel",
+    "statLeft": "Übrig",
+    "statOver": "Darüber",
+    "statWater": "Wasser",
+    "dayTitle": "{{date}}",
+    "progress": "Kalorien heute",
+    "kcal": "kcal",
+    "overeating": "Überessen",
+    "addMeal": "Mahlzeit hinzufügen",
+    "mealTitle": "Mahlzeit",
+    "mealPlaceholder": "Mittagessen, Snack...",
+    "mealCalories": "kcal",
+    "saveMeal": "Hinzufügen",
+    "emptyMeals": "Für diesen Tag sind noch keine Mahlzeiten erfasst.",
+    "waterTitle": "Wasser",
+    "weightTitle": "Gewicht",
+    "weightHint": "Erfasse das Gewicht für den gewählten Tag. Der Durchschnitt gilt für diesen Monat.",
+    "weightGuide": "Die Punkte im Diagramm sind deine Wiegungen. Weiter erfassen, um Anstieg und Rückgang zu sehen.",
+    "weightDecimalHint": "Dezimalstellen sind in Ordnung: 84.1, 84.5, 92.3",
+    "weightGoal": "Zielgewicht, kg",
+    "weightToday": "Gewicht des Tages, kg",
+    "kg": "kg",
+    "statAvg": "Monats-Ø",
+    "statTarget": "Ziel",
+    "statToLose": "Noch abzunehmen",
+    "statToGain": "Noch zuzunehmen",
+    "statOnTarget": "Am Ziel",
+    "saveWeight": "Gewicht speichern",
+    "emptyWeight": "Für diesen Tag ist noch kein Gewicht erfasst.",
+    "weightChartTitle": "Gewichtstrend",
+    "weightChartEmpty": "Erfasse das Gewicht an ein paar Tagen, dann erscheinen Anstieg und Rückgang hier.",
+    "weightRange": "Zeitraum, Mon.",
+    "weightRange1": "1",
+    "weightRange3": "3",
+    "weightRange6": "6",
+    "weightRange12": "12",
+    "weightUp": "Auf +{{kg}} kg",
+    "weightDown": "Ab −{{kg}} kg",
+    "weightFlat": "Keine Änderung",
+    "errors": {
+      "title": "Gib der Mahlzeit einen Namen",
+      "calories": "Kalorien eingeben",
+      "calorieGoal": "Das Ziel sollte mindestens 500 kcal betragen",
+      "waterGoal": "Lege mindestens 1 Glas fest",
+      "weight": "Gib ein Gewicht zwischen 20 und 400 kg ein",
+      "weightGoal": "Das Zielgewicht sollte 20–400 kg betragen",
+      "unavailable": "Die Ernährungs-API ist noch nicht verfügbar. Deploye die API mit Kalorien-, Wasser- und Gewichtstabellen."
+    }
+  },
+  "dashboard": {
+    "welcome": "Hallo, {{name}}",
+    "subtitle": "Ein Überblick über Aufgaben, Wiederholungen und Finanzen — alles, was heute zählt.",
+    "tagline": "Mehr als Wissen. Mehr als Pläne. Lernen. Handeln. Wachsen.",
+    "quote": "„Kleine Schritte jeden Tag führen zu großen Ergebnissen.“",
+    "timezone": "Zeitzone: {{timezone}}",
+    "open": "Öffnen",
+    "ctaTasks": "Zu den Aufgaben",
+    "ctaReview": "Zum Wiederholen",
+    "ctaFinance": "Zum Budget",
+    "cards": {
+      "tasksToday": "Aufgaben für heute",
+      "reviews": "Wiederholungen",
+      "spentToday": "Heute ausgegeben",
+      "budgetLeft": "Noch im Budget",
+      "caloriesToday": "Kalorien heute",
+      "waterToday": "Wasser heute",
+      "rhythmToday": "Gewohnheiten heute",
+      "rhythmEmpty": "Gewohnheit hinzufügen",
+      "of": "{{done}} von {{total}} erledigt",
+      "ofPlanned": "{{done}} von {{total}} geplant"
+    },
+    "upcomingTasks": "Anstehende Aufgaben",
+    "allTasks": "Alle Aufgaben",
+    "fuelTitle": "Ernährung",
+    "allFuel": "Ernährung öffnen",
+    "noMealsToday": "Heute keine Mahlzeiten erfasst.",
+    "weekTitle": "Diese Woche erledigt",
+    "weekTabs": {
+      "tasks": "Aufgaben",
+      "reviews": "Wiederholungen",
+      "expenses": "Ausgaben"
+    },
+    "legendDone": "Erledigt",
+    "legendPlanned": "Geplant",
+    "financeTitle": "Finanzübersicht",
+    "allFinance": "Alle Finanzen",
+    "spentLabel": "ausgegeben",
+    "stats": {
+      "activeMaterials": "Aktive Materialien",
+      "todayReminders": "Heute fällig",
+      "overdueReminders": "Überfällig",
+      "completedReviews": "Erledigte Wiederholungen"
+    },
+    "modules": {
+      "planningHint": "Heutige Aufgaben und Monatsfortschritt",
+      "repetitionHint": "3 / 7 / 30-Plan und anstehende Wiederholungen",
+      "financeHint": "Einnahmen und Ausgaben im laufenden Monat",
+      "tasksToday": "Heute",
+      "minutesToday": "Minuten heute",
+      "tasksMonth": "Aufgaben in diesem Monat",
+      "tasksDoneMonth": "Erledigt",
+      "noTasksToday": "Noch keine Aufgaben für heute",
+      "opsMonth": "Buchungen",
+      "noFinance": "Diesen Monat noch keine Buchungen",
+      "financeUnavailable": "Finanzen konnten nicht geladen werden"
+    },
+    "nextReviewTitle": "Nächste Wiederholung",
+    "noNextReview": "Gerade keine offenen Wiederholungen. Füge ein Material hinzu, um den 3 / 7 / 30-Plan zu starten.",
+    "goToReview": "Zum Wiederholen",
+    "activityTitle": "Erledigte Wiederholungen (7 Tage)",
+    "activitySubtitle": "Wie viele Wiederholungen du jeden Tag in deiner Zeitzone abgeschlossen hast.",
+    "recentTitle": "Letzte Materialien",
+    "viewAllMaterials": "Alle Materialien"
+  },
+  "categories": {
+    "title": "Kategorien",
+    "subtitle": "Ordne Materialien nach Thema. Du siehst nur deine eigenen Kategorien.",
+    "createTitle": "Neue Kategorie",
+    "editTitle": "Kategorie umbenennen",
+    "name": "Kategoriename",
+    "create": "Kategorie hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteTitle": "Kategorie löschen?",
+    "deleteDescription": "Die Kategorie „{{name}}“ wird entfernt. Materialien behalten ihren Inhalt, verlieren aber diese Kategorie.",
+    "emptyTitle": "Noch keine Kategorien",
+    "emptyDescription": "Lege Kategorien wie Englisch, Finnisch, Programmieren oder Arbeit an.",
+    "materialsCount": "{{count}} Materialien",
+    "errors": {
+      "required": "Gib einen Kategorienamen ein",
+      "nameTaken": "Du hast bereits eine Kategorie mit diesem Namen"
+    }
+  },
+  "materials": {
+    "title": "Material hinzufügen",
+    "detailTitle": "Material",
+    "subtitle": "Alles, was du kürzlich gelernt hast, mit festem 3 / 7 / 30-Tage-Wiederholungsplan.",
+    "create": "Material hinzufügen",
+    "createTitle": "Neues Material",
+    "createSubtitle": "Erinnerungen für Tag 3, 7 und 30 werden automatisch auf dem Server erstellt.",
+    "editTitle": "Material bearbeiten",
+    "archive": "Archivieren",
+    "learnedAt": "Gelernt",
+    "nextReview": "Nächste Wiederholung",
+    "remindersTitle": "Wiederholungsplan",
+    "remindersSubtitle": "Daten werden vom ursprünglichen Lerndatum berechnet und verschieben sich nach dem Abschluss nicht.",
+    "emptyTitle": "Noch keine Materialien",
+    "emptyDescription": "Füge ein Thema, Notizen oder Code hinzu, um den Wiederholungsplan zu starten.",
+    "deleteTitle": "Material löschen?",
+    "deleteDescription": "„{{title}}“ und die Erinnerungen werden dauerhaft gelöscht.",
+    "fields": {
+      "title": "Titel",
+      "description": "Beschreibung",
+      "content": "Haupttext",
+      "question": "Frage",
+      "answer": "Antwort",
+      "codeBlock": "Code",
+      "codeLanguage": "Sprache, z. B. ts",
+      "codePlaceholder": "Code hier einfügen",
+      "sourceUrl": "Quellen-URL",
+      "learnedAt": "Lerndatum",
+      "category": "Kategorie",
+      "noCategory": "Keine Kategorie",
+      "contentHint": "Aus ChatGPT oder Telegram einfügen — Fettschrift, Absätze und Abstände erscheinen sofort.",
+      "contentContinue": "Text hier fortsetzen"
+    },
+    "filters": {
+      "search": "Suchen",
+      "category": "Kategorie",
+      "status": "Status",
+      "allCategories": "Alle Kategorien",
+      "allStatuses": "Alle Status"
+    },
+    "status": {
+      "ACTIVE": "Aktiv",
+      "ARCHIVED": "Archiviert"
+    },
+    "intervals": {
+      "THREE_DAYS": "Nach 3 Tagen",
+      "SEVEN_DAYS": "Nach 7 Tagen",
+      "THIRTY_DAYS": "Nach 30 Tagen"
+    },
+    "reminderStatus": {
+      "PENDING": "Offen",
+      "COMPLETED": "Erledigt",
+      "OVERDUE": "Überfällig",
+      "SKIPPED": "Übersprungen"
+    },
+    "errors": {
+      "titleRequired": "Titel ist erforderlich",
+      "learnedAtRequired": "Lerndatum ist erforderlich",
+      "url": "Gib eine gültige URL ein"
+    },
+    "revealAnswer": "Antwort zeigen",
+    "hideAnswer": "Antwort ausblenden",
+    "showNotes": "Materialnotizen zeigen",
+    "addCodeBlock": "Codeblock hinzufügen",
+    "insertCodeHere": "Code hier einfügen",
+    "addTextBlock": "Text hinzufügen",
+    "removeCodeBlock": "Entfernen",
+    "copyCode": "Kopieren",
+    "copiedCode": "Kopiert",
+    "openSource": "Öffnen"
+  },
+  "review": {
+    "title": "Heute wiederholen",
+    "subtitle": "Feste Erinnerungen für überfällige, heutige und kommende Wiederholungen. Kein SM-2-Scoring.",
+    "openCount": "Offene Wiederholungen: {{count}}",
+    "overdue": "Überfällig",
+    "today": "Heute",
+    "upcoming": "Bevorstehend",
+    "learnedAt": "Gelernt",
+    "sequence": "Wiederholung",
+    "scheduledAt": "Geplant",
+    "daysOverdue": "Tage überfällig",
+    "openMaterial": "Material öffnen",
+    "completed": "Erledigt",
+    "skip": "Überspringen",
+    "processing": "Wird verarbeitet…",
+    "notDue": "Diese Wiederholung wird am geplanten Datum verfügbar.",
+    "successCompleted": "Wiederholung als erledigt markiert. Die nächste feste Erinnerung bleibt auf ihrem Datum.",
+    "successSkipped": "Wiederholung übersprungen. Die nächste feste Erinnerung bleibt auf ihrem Datum.",
+    "emptyOverdueTitle": "Keine überfälligen Wiederholungen",
+    "emptyOverdueDescription": "Schön — nichts ist überfällig.",
+    "emptyTodayTitle": "Nichts für heute",
+    "emptyTodayDescription": "Komm zurück, wenn der nächste feste Wiederholungstag da ist.",
+    "emptyUpcomingTitle": "Keine kommenden Wiederholungen",
+    "emptyUpcomingDescription": "Füge Materialien hinzu, um einen 3 / 7 / 30-Tage-Plan zu erzeugen."
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "subtitle": "In-App-Erinnerungen, die der Server erstellt, wenn Wiederholungen fällig werden.",
+    "unreadCount": "Ungelesen: {{count}}",
+    "markAllRead": "Alle als gelesen markieren",
+    "markRead": "Als gelesen markieren",
+    "openMaterial": "Material öffnen",
+    "unread": "Ungelesen",
+    "emptyTitle": "Noch keine Benachrichtigungen",
+    "emptyDescription": "Wenn eine Wiederholung fällig wird, erscheint sie hier.",
+    "bellLabel": "Benachrichtigungen, ungelesen: {{count}}",
+    "types": {
+      "REVIEW_DUE": "Heute fällig",
+      "REVIEW_OVERDUE": "Überfällig",
+      "SYSTEM": "System"
+    }
+  },
+  "statistics": {
+    "title": "Statistik",
+    "subtitle": "Wiederholungsaktivität und Zahlen zu deinem Lernplan."
+  },
+  "calendar": {
+    "title": "Wiederholungskalender",
+    "subtitle": "Geplante, erledigte und überfällige Wiederholungen nach Tag ansehen.",
+    "prevMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat",
+    "dayTitle": "Wiederholungen am {{date}}",
+    "pickDay": "Tag wählen",
+    "pickDayDescription": "Tippe auf ein Datum, um Materialien zur Wiederholung zu sehen.",
+    "dayCounts": "{{total}} gesamt · {{overdue}} überfällig · {{pending}} offen · {{completed}} erledigt",
+    "emptyDayTitle": "Keine Wiederholungen an diesem Tag",
+    "emptyDayDescription": "Wähle ein anderes Datum oder füge ein neues Material hinzu.",
+    "cellAria": "{{day}}, {{count}} Einträge",
+    "legend": {
+      "overdue": "Überfällig",
+      "pending": "Offen",
+      "completed": "Erledigt"
+    }
+  },
+  "rhythm": {
+    "title": "Gewohnheiten",
+    "subtitle": "Eine Gewohnheit braucht {{days}} Tage, um sich zu setzen. Markiere eine Zelle — wie in einer Tabelle.",
+    "prevMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat",
+    "statHabits": "Gewohnheiten",
+    "statToday": "Heute",
+    "statMonth": "Monat",
+    "statFormed": "Gefestigt",
+    "addLabel": "Neue Gewohnheit",
+    "addPlaceholder": "z. B. Wasser nach dem Aufstehen",
+    "addHint": "Eine Zeile ist eine Gewohnheit. Der Zyklus dauert 30 Tage.",
+    "add": "Hinzufügen",
+    "empty": "Noch keine Gewohnheiten. Füge die erste Zeile hinzu, dann füllt sich das Raster.",
+    "habit": "Gewohnheit",
+    "monthCol": "Monat",
+    "formed": "30 Tage",
+    "streak": "{{count}}-Tage-Serie",
+    "errors": {
+      "title": "Gib einen Gewohnheitsnamen ein"
+    }
+  },
+  "seo": {
+    "titles": {
+      "home": "Mindkeep — Aufgaben, Wiederholen und Finanzen",
+      "login": "Anmelden · Mindkeep",
+      "register": "Kostenlos starten · Mindkeep",
+      "dashboard": "Übersicht · Mindkeep",
+      "review": "Heute wiederholen · Mindkeep",
+      "calendar": "Wiederholungskalender · Mindkeep",
+      "materials": "Material hinzufügen · Mindkeep",
+      "categories": "Kategorien · Mindkeep",
+      "notifications": "Benachrichtigungen · Mindkeep",
+      "statistics": "Analysen · Mindkeep",
+      "tasks": "Tagesaufgaben · Mindkeep",
+      "forest": "Dein Wald · Mindkeep",
+      "notes": "Notizen · Mindkeep",
+      "calories": "Ernährung · Mindkeep",
+      "rhythm": "Gewohnheiten · Mindkeep",
+      "monthPlan": "Monatsplan · Mindkeep",
+      "budget": "Budget · Mindkeep",
+      "transactions": "Buchungen · Mindkeep",
+      "expenseCategories": "Ausgabenkategorien · Mindkeep",
+      "admin": "Admin · Mindkeep",
+      "adminUser": "Nutzeraktivität · Mindkeep",
+      "fallback": "Mindkeep",
+      "blog": "Blog · Mindkeep",
+      "guide": "So geht’s · Mindkeep",
+      "privacy": "Datenschutz · Mindkeep",
+      "contact": "Kontakt · Mindkeep",
+      "notFound": "Seite nicht gefunden · Mindkeep"
+    }
+  },
+  "footer": {
+    "craftedLabel": "Eigentum von",
+    "tagline": "Wo der Tag Ordnung findet — und Wissen und Geld im Blick bleiben.",
+    "about": "Mindkeep verbindet Tagesaufgaben, persönliche Finanzen in Euro und Wissenswiederholung im 3 · 7 · 30-Rhythmus — ruhig, ohne Extra-Lärm.",
+    "linksLabel": "Navigation",
+    "follow": "Auf Instagram",
+    "instagram": "Instagram",
+    "instagramHandle": "@mindkeep.cloud",
+    "visitStudio": "Studio-Website",
+    "privacy": "Datenschutz",
+    "rights": "Alle Rechte vorbehalten. Gestaltet und betreut vom Studio.",
+    "ownership": "Mindkeep ist Eigentum von <studio />. © {{year}}",
+    "lineCompact": "Mindkeep ist Eigentum von WEISEZAHOY © {{year}}"
+  },
+  "contact": {
+    "eyebrow": "Studio",
+    "title": "Kontakt",
+    "intro": "Wähle ein Thema, dann geht die Nachricht an das richtige Postfach. Du kannst uns auch direkt schreiben.",
+    "partnershipTitle": "Partnerschaft",
+    "partnershipBody": "Zusammenarbeit, Presse und Studioarbeit.",
+    "supportTitle": "Fehler und Fragen",
+    "supportBody": "Etwas ist kaputt, unklar, oder du brauchst einfach eine menschliche Antwort.",
+    "fields": {
+      "topic": "Worum geht es?",
+      "name": "Name",
+      "email": "E-Mail",
+      "message": "Nachricht"
+    },
+    "placeholders": {
+      "topic": "Thema wählen",
+      "message": "Schreib ein paar Zeilen, damit wir helfen können."
+    },
+    "topics": {
+      "partnership": "Partnerschaft / Zusammenarbeit",
+      "bug": "Ich habe einen Fehler gefunden",
+      "question": "Ich habe eine Frage"
+    },
+    "destination": "Diese Nachricht wird an {{email}} gesendet",
+    "send": "Nachricht senden",
+    "successTitle": "Nachricht gesendet",
+    "successBody": "Danke. Wir antworten an die hinterlassene E-Mail.",
+    "errors": {
+      "topicRequired": "Wähle ein Thema",
+      "nameRequired": "Gib deinen Namen an",
+      "nameMax": "Der Name ist zu lang",
+      "email": "Gib eine gültige E-Mail-Adresse ein",
+      "messageMin": "Schreib mindestens eine kurze Nachricht",
+      "messageMax": "Die Nachricht ist zu lang",
+      "validation": "Prüfe das Formular und versuche es erneut",
+      "generic": "Die Nachricht konnte nicht gesendet werden",
+      "unavailable": "Das Formular ist vorübergehend nicht verfügbar. Schreib uns direkt an die Adresse oben."
+    }
+  },
+  "notFound": {
+    "eyebrow": "Pfad verloren",
+    "title": "Diese Seite gibt es nicht",
+    "subtitle": "Der Link ist vielleicht veraltet oder vertippt. Geh nach Hause oder schau im Blog vorbei.",
+    "home": "Zurück zur Startseite"
+  },
+  "privacy": {
+    "eyebrow": "Rechtliches",
+    "title": "Datenschutzerklärung",
+    "updated": "Aktualisiert: 22. Juli 2026",
+    "intro": "Diese Erklärung beschreibt, welche Daten Mindkeep erhebt, warum wir sie benötigen und wie wir sie schützen. Mit der Nutzung des Dienstes stimmen Sie den nachfolgend beschriebenen Praktiken zu.",
+    "contactLabel": "Fragen zu Daten:",
+    "sections": [
+      {
+        "title": "1. Wer verantwortlich ist",
+        "body": [
+          "Mindkeep wird vom Studio WEISEZAHOY betrieben.",
+          "Für Anfragen zu personenbezogenen Daten wenden Sie sich bitte an die auf dieser Seite angegebene E-Mail-Adresse."
+        ]
+      },
+      {
+        "title": "2. Welche Daten wir erheben",
+        "body": [
+          "Kontodaten: Name, E-Mail und ein gehashtes Passwort bei der Registrierung.",
+          "Lerninhalte: Materialien, Kategorien, Lerndaten und Wiederholungsstatus.",
+          "Technische Daten: Zeitzone, Oberflächensprache sowie grundlegende Serverprotokolle für Sicherheit und Zuverlässigkeit."
+        ]
+      },
+      {
+        "title": "3. Warum wir Daten nutzen",
+        "body": [
+          "Um Ihr Konto anzulegen, Materialien zu speichern und Erinnerungen nach 3, 7 und 30 Tagen zu planen.",
+          "Um Kalender, Statistik und In-App-Benachrichtigungen anzuzeigen.",
+          "Um den Dienst zu sichern, Missbrauch zu verhindern und die Zuverlässigkeit zu verbessern."
+        ]
+      },
+      {
+        "title": "4. Speicherung und Sicherheit",
+        "body": [
+          "Daten werden auf gesicherten Servern gespeichert und, soweit verfügbar, über HTTPS übertragen.",
+          "Passwörter werden niemals im Klartext gespeichert — wir verwenden kryptografisches Hashing.",
+          "Adminzugriff ist auf befugte Betreiber beschränkt."
+        ]
+      },
+      {
+        "title": "5. Weitergabe an Dritte",
+        "body": [
+          "Wir verkaufen keine personenbezogenen Daten.",
+          "Hosting- und Datenbankanbieter dürfen Daten nur verarbeiten, um Mindkeep im Auftrag des Betreibers zu betreiben."
+        ]
+      },
+      {
+        "title": "6. Ihre Rechte",
+        "body": [
+          "Sie können Auskunft über Ihre Daten, Berichtigungen oder die Löschung des Kontos verlangen.",
+          "Sprache, Design und Lerninhalte können Sie jederzeit in der App ändern."
+        ]
+      },
+      {
+        "title": "7. Cookies und lokale Daten",
+        "body": [
+          "Mindkeep kann ein Sitzungstoken, die Sprache und die Designpräferenz lokal in Ihrem Browser speichern.",
+          "Diese dienen der Anmeldung und dem Bedienkomfort, nicht der Werbeverfolgung."
+        ]
+      },
+      {
+        "title": "8. Aktualisierungen dieser Erklärung",
+        "body": [
+          "Wir können diese Erklärung aktualisieren. Die aktuelle Fassung ist stets auf dieser Seite mit dem Aktualisierungsdatum verfügbar."
+        ]
+      }
+    ]
+  },
+  "blog": {
+    "eyebrow": "Journal",
+    "title": "Notizen zu Gedächtnis und Fokus",
+    "subtitle": "Drei Themen, die prägen, wie Mindkeep über Lernen denkt.",
+    "viewAll": "Blog öffnen",
+    "back": "Alle Artikel",
+    "byAuthor": "Von {{author}}",
+    "originLabel": "Wer diese Idee geprägt hat",
+    "moreTitle": "Weiterlesen",
+    "topics": {
+      "spaced-repetition": {
+        "label": "Verteiltes Wiederholen",
+        "description": "Wie zeitlich gestaffelte Rückkehren fragiles Gedächtnis in dauerhaftes Abrufen verwandeln."
+      },
+      "pomodoro": {
+        "label": "Pomodoro",
+        "description": "Kurze, fokussierte Sprints, die die Aufmerksamkeit beim Lernen schützen."
+      },
+      "pareto": {
+        "label": "80/20-Ergebnisse",
+        "description": "Finde die wenigen Inputs, die den Großteil deines Fortschritts bewegen."
+      }
+    },
+    "articles": {
+      "spaced-repetition-memory": {
+        "title": "Warum Rückkehren an Tag 3, 7 und 30 wirken",
+        "excerpt": "Ein ruhiger Leitfaden zum verteilten Wiederholen — und warum Mindkeep Intervalle fest lässt.",
+        "originNote": "Hermann Ebbinghaus kartierte in den 1880er-Jahren die Vergessenskurve. Seine Arbeit inspirierte gestaffelte Rückkehren, die das Gedächtnis stärken, bevor die Spur verblasst.",
+        "body": [
+          "Lernen ist kein einzelner Moment — es ist eine Reihe von Rückkehren. Triffst du eine Idee einmal, ist die Spur fragil. Triffst du sie wieder im richtigen Abstand, baut der Geist den Weg mit weniger Mühe und mehr Klarheit neu.",
+          "Verteiltes Wiederholen wuchs aus dieser Einsicht: plane Wiederholungen, bevor das Vergessen gewinnt. Klassische Systeme passen den Abstand nach jeder Antwort an. Mindkeep wählt einen sanfteren Vertrag — feste Rückkehren an Tag 3, Tag 7 und Tag 30 ab dem Tag, an dem du etwas gelernt hast.",
+          "Feste Intervalle nehmen den Lärm des Selbstbewertens. Du kehrst trotzdem bewusst zurück. Du schützt trotzdem das Langzeitgedächtnis. Du vertraust einfach einem klaren Rhythmus statt einem ständig wechselnden Algorithmus.",
+          "Nutze diese Vorlage, wenn du über Gedächtnis schreibst: beginne mit dem Gefühl des Vergessens, benenne die Methode, nenne den Ursprung, und verbinde sie dann damit, wie Mindkeep in der Praxis arbeitet."
+        ]
+      },
+      "pomodoro-focus": {
+        "title": "Pomodoro: in hellen, kurzen Fenstern lernen",
+        "excerpt": "Wie 25-Minuten-Fokusblöcke beim Lernen helfen, ohne auszubrennen.",
+        "originNote": "Francesco Cirillo entwickelte die Pomodoro-Technik Ende der 1980er-Jahre und benannte sie nach einem tomatenförmigen Küchentimer.",
+        "body": [
+          "Tiefes Lernen braucht Aufmerksamkeit — und Aufmerksamkeit mag Kanten. Ein kurzer, geschützter Block sagt dem Geist: dieses Fenster gilt nur einer Sache.",
+          "Das Pomodoro-Muster ist einfach: etwa 25 Minuten fokussieren, dann kurz ruhen. Nach ein paar Zyklen eine längere Pause. Es geht nicht um Perfektion. Es geht um einen wiederholbaren Takt, der Energie für die nächste Rückkehr bereithält.",
+          "Verbinde Pomodoro mit Mindkeep: nutze einen Fokusblock, um festzuhalten, was du gelernt hast, und lass den 3 · 7 · 30-Plan dich später zurückholen. Jetzt erfassen. Später zurückkehren. Intensität und Gedächtnis schützen.",
+          "Wenn du künftige Texte zu Fokus entwirfst, behalte diese Form: Problem der Ablenkung → Cirillos Methode → praktische Verbindung mit Mindkeep → eine sanfte Einladung, es heute zu versuchen."
+        ]
+      },
+      "pareto-learning-results": {
+        "title": "Die 80/20-Regel beim Lernen",
+        "excerpt": "Wie Vilfredo Paretos Einsicht hilft zu wählen, was sich zu merken lohnt.",
+        "originNote": "Der Ökonom Vilfredo Pareto beobachtete, dass eine Minderheit der Ursachen oft die Mehrheit der Ergebnisse treibt — später popularisiert als 80/20-Prinzip.",
+        "body": [
+          "Nicht jede Tatsache verdient denselben Platz im Kopf. Manche Ideen öffnen viele andere. Manche schmücken nur die Oberfläche.",
+          "Das Pareto-Prinzip schlägt eine nützliche Neigung vor: suche die wenigen, die zählen. Beim Sprachenlernen können das hochfrequente Wörter sein. Beim Programmieren die Muster, die du wöchentlich nutzt. Bei der Arbeit die Prinzipien hinter deinen besten Entscheidungen.",
+          "Mindkeep hilft dir, das zu behalten, was du gewählt hast — nicht alles, was du berührt hast. Erfasse das Material, das sich vermehrt. Wiederhole es in festem Rhythmus. Lass den Rest außerhalb des Plans, damit die Aufmerksamkeit scharf bleibt.",
+          "Vorlage für künftige 80/20-Notizen: benenne die überfüllte Anstrengung → führe Pareto ein → gib ein konkretes Lernbeispiel → zeige, wie Mindkeep das Wesentliche mit 3 · 7 · 30-Rückkehren schützt."
+        ]
+      }
+    }
+  }
+}

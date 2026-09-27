@@ -11,7 +11,7 @@
   startOfWeek,
   subMonths,
 } from 'date-fns';
-import { enUS, fi, ru, uk } from 'date-fns/locale';
+import { de, enUS, es, fi, fr, it, pl, ru, uk } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
@@ -19,7 +19,7 @@ import type { AppLanguage } from '@/i18n';
 import type { CalendarDaySummary } from '@/types/calendar';
 import { toDateInputValue } from '@/utils/date';
 
-const locales = { en: enUS, ru, uk, fi } as const;
+const locales = { uk, ru, en: enUS, pl, de, fr, it, es, fi } as const;
 
 type CalendarProps = {
   year: number;

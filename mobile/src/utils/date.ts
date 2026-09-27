@@ -1,9 +1,14 @@
 import type { AppLanguage } from '../i18n';
 
 const intlLocales: Record<AppLanguage, string> = {
-  en: 'en-US',
-  ru: 'ru-RU',
   uk: 'uk-UA',
+  ru: 'ru-RU',
+  en: 'en-US',
+  pl: 'pl-PL',
+  de: 'de-DE',
+  fr: 'fr-FR',
+  it: 'it-IT',
+  es: 'es-ES',
   fi: 'fi-FI',
 };
 

@@ -194,7 +194,7 @@ export function FinanceBudgetPage() {
                 card.tone === 'good'
                   ? 'text-brand-500'
                   : card.tone === 'bad'
-                    ? 'text-red-400'
+                    ? 'text-expense'
                     : 'text-ink'
               }`}
             >
@@ -252,7 +252,7 @@ export function FinanceBudgetPage() {
                     <dt className="text-[11px] tracking-wide text-muted uppercase">
                       {t('finance.expense')}
                     </dt>
-                    <dd className="mt-1 text-sm font-semibold text-red-400">
+                    <dd className="mt-1 text-sm font-semibold text-expense">
                       {formatSignedMoney(-wallet.totals.expense, language)}
                     </dd>
                   </div>

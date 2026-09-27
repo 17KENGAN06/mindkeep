@@ -1,0 +1,753 @@
+{
+  "common": {
+    "appName": "MindKeep",
+    "loading": "Caricamento...",
+    "language": "Lingua",
+    "logout": "Esci",
+    "comingNext": "Questa sezione arriverà nelle prossime fasi.",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "back": "Indietro",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "privacy": "Informativa sulla privacy",
+    "guide": "Come si usa",
+    "contact": "Contatti",
+    "safariHint": "Apre mindkeep.cloud nel browser.",
+    "guideHint": "Come è pensata l'app.",
+    "timezone": "Fuso orario",
+    "timezoneHint": "Preso automaticamente da questo telefono. I ripassi lo usano per oggi e i ritardi.",
+    "timezoneCurrent": "Ora: {{timezone}}",
+    "timezoneDevice": "Telefono · {{timezone}}",
+    "theme": "Tema",
+    "themeLight": "Chiaro",
+    "themeDark": "Scuro",
+    "statistics": "Statistiche",
+    "admin": "Admin",
+    "blog": "Blog"
+  },
+  "tabs": {
+    "today": "Oggi",
+    "review": "Ripasso",
+    "tasks": "Attività",
+    "fuel": "Nutrizione",
+    "more": "Altro"
+  },
+  "today": {
+    "hello": "Ciao, {{name}}",
+    "tasks": "Attività di oggi",
+    "noTasks": "Nessuna attività per oggi.",
+    "reviews": "Ripassi",
+    "reviewsDue": "{{today}} oggi · {{overdue}} in ritardo",
+    "openReview": "Apri",
+    "noReviews": "Niente da ripassare oggi.",
+    "calories": "Calorie",
+    "water": "Acqua",
+    "kcal": "kcal",
+    "min": "min",
+    "overeating": "Eccesso",
+    "noMeals": "Nessun pasto registrato oggi.",
+    "error": "Impossibile aggiornare oggi. Trascina verso il basso per riprovare."
+  },
+  "categories": {
+    "title": "Categorie",
+    "subtitle": "Organizza i materiali per tema. Vedi solo le tue categorie.",
+    "createTitle": "Nuova categoria",
+    "editTitle": "Rinomina categoria",
+    "name": "Nome della categoria",
+    "create": "Aggiungi categoria",
+    "deleteTitle": "Eliminare la categoria?",
+    "deleteDescription": "La categoria « {{name}} » verrà rimossa. I materiali tengono il contenuto, ma perdono questa categoria.",
+    "emptyDescription": "Crea categorie come Inglese, Finlandese, Programmazione o Lavoro.",
+    "materialsCount": "{{count}} materiali",
+    "errors": {
+      "required": "Inserisci un nome di categoria",
+      "nameTaken": "Hai già una categoria con questo nome"
+    }
+  },
+  "materials": {
+    "title": "Aggiungi materiale",
+    "detailTitle": "Materiale",
+    "subtitle": "Tutto ciò che hai imparato di recente, con un piano di ripasso fisso a 3 / 7 / 30 giorni.",
+    "create": "Aggiungi materiale",
+    "createTitle": "Nuovo materiale",
+    "editTitle": "Modifica materiale",
+    "createSubtitle": "I promemoria per i giorni 3, 7 e 30 vengono creati automaticamente sul server.",
+    "editSubtitle": "Modifica il testo. Le date 3 / 7 / 30 restano come erano.",
+    "archive": "Archivia",
+    "learnedAt": "Imparato",
+    "nextReview": "Prossimo ripasso",
+    "remindersTitle": "Calendario di ripasso",
+    "remindersSubtitle": "Le date si calcolano dalla data di apprendimento originale e non si spostano dopo il completamento.",
+    "emptyDescription": "Aggiungi un tema, delle note o del codice per avviare il calendario di ripasso.",
+    "deleteTitle": "Eliminare il materiale?",
+    "deleteDescription": "« {{title}} » e i suoi promemoria verranno eliminati in modo permanente.",
+    "fields": {
+      "title": "Titolo",
+      "content": "Testo principale",
+      "question": "Domanda",
+      "answer": "Risposta",
+      "codeBlock": "Codice",
+      "codeLanguage": "Linguaggio, es. ts",
+      "codePlaceholder": "Incolla il codice qui",
+      "contentContinue": "Continua il testo qui",
+      "sourceUrl": "URL della fonte",
+      "learnedAt": "Data di apprendimento",
+      "category": "Categoria",
+      "noCategory": "Nessuna categoria"
+    },
+    "filters": {
+      "search": "Cerca",
+      "allCategories": "Tutte le categorie",
+      "allStatuses": "Tutti gli stati"
+    },
+    "status": {
+      "ACTIVE": "Attivo",
+      "ARCHIVED": "Archiviato"
+    },
+    "intervals": {
+      "THREE_DAYS": "Dopo 3 giorni",
+      "SEVEN_DAYS": "Dopo 7 giorni",
+      "THIRTY_DAYS": "Dopo 30 giorni"
+    },
+    "reminderStatus": {
+      "PENDING": "In attesa",
+      "COMPLETED": "Completato",
+      "OVERDUE": "In ritardo",
+      "SKIPPED": "Saltato"
+    },
+    "errors": {
+      "titleRequired": "Il titolo è obbligatorio",
+      "learnedAtRequired": "La data di apprendimento è obbligatoria",
+      "url": "Inserisci un URL valido"
+    },
+    "revealAnswer": "Mostra risposta",
+    "hideAnswer": "Nascondi risposta",
+    "addCodeBlock": "Aggiungi blocco di codice",
+    "insertCodeHere": "Inserisci il codice qui",
+    "addTextBlock": "Aggiungi testo",
+    "removeCodeBlock": "Rimuovi",
+    "openSource": "Apri"
+  },
+  "review": {
+    "title": "Ripassa oggi",
+    "subtitle": "Promemoria fissi per ripassi in ritardo, di oggi e in arrivo. Senza punteggio SM-2.",
+    "openCount": "Ripassi aperti: {{count}}",
+    "overdue": "In ritardo",
+    "today": "Oggi",
+    "upcoming": "In arrivo",
+    "learnedAt": "Imparato",
+    "sequence": "Ripasso",
+    "scheduledAt": "Programmato",
+    "daysOverdue": "Giorni di ritardo",
+    "openMaterial": "Apri materiale",
+    "completed": "Completato",
+    "skip": "Salta",
+    "notDue": "Questo ripasso diventerà disponibile alla data prevista.",
+    "successCompleted": "Ripasso segnato come completato. Il prossimo promemoria fisso resta alla sua data.",
+    "successSkipped": "Ripasso saltato. Il prossimo promemoria fisso resta alla sua data.",
+    "emptyOverdueTitle": "Nessun ripasso in ritardo",
+    "emptyOverdueDescription": "Ottimo — niente è scaduto.",
+    "emptyTodayTitle": "Niente per oggi",
+    "emptyTodayDescription": "Torna quando arriva il prossimo giorno di ripasso fisso.",
+    "emptyUpcomingTitle": "Nessun ripasso in arrivo",
+    "emptyUpcomingDescription": "Aggiungi materiali per generare un calendario di 3 / 7 / 30 giorni."
+  },
+  "calendar": {
+    "title": "Calendario dei ripassi",
+    "subtitle": "Vedi ripassi programmati, completati e in ritardo, giorno per giorno.",
+    "prevMonth": "Mese precedente",
+    "nextMonth": "Mese successivo",
+    "dayTitle": "Ripassi del {{date}}",
+    "pickDay": "Seleziona un giorno",
+    "dayCounts": "{{total}} in totale · {{overdue}} in ritardo · {{pending}} in attesa · {{completed}} completati",
+    "emptyDayDescription": "Scegli un'altra data o aggiungi un nuovo materiale.",
+    "legend": {
+      "overdue": "In ritardo",
+      "pending": "In attesa",
+      "completed": "Completato"
+    }
+  },
+  "fuel": {
+    "title": "Nutrizione",
+    "subtitle": "Le calorie arrivano dai pasti. L'acqua si conta in bicchieri. Il peso segue il giorno scelto nel calendario.",
+    "caloriesTitle": "Calorie",
+    "calorieGoal": "Obiettivo calorico giornaliero",
+    "waterGoal": "Bicchieri al giorno",
+    "glasses": "bicchieri",
+    "waterHint": "Tocca i bicchieri. L'acqua non viene aggiunta alle calorie.",
+    "waterProgress": "Bicchieri oggi",
+    "waterTitle": "Acqua",
+    "weightTitle": "Peso",
+    "weightHint": "Registra il peso per il giorno selezionato. La media è di questo mese.",
+    "weightGuide": "I punti del grafico sono le tue pesate. Continua a registrare per vedere salita e discesa.",
+    "weightDecimalHint": "I decimali vanno bene: 84.1, 84.5, 92.3",
+    "weightGoal": "Peso obiettivo, kg",
+    "weightToday": "Peso del giorno, kg",
+    "kg": "kg",
+    "statAvg": "MEDIA mese",
+    "statTarget": "Obiettivo",
+    "statToLose": "Da perdere",
+    "statToGain": "Da guadagnare",
+    "statOnTarget": "In obiettivo",
+    "saveWeight": "Salva peso",
+    "emptyWeight": "Nessun peso registrato per questo giorno.",
+    "weightChartTitle": "Andamento del peso",
+    "weightChartEmpty": "Registra il peso per qualche giorno e qui compariranno salita e discesa.",
+    "weightRange": "Intervallo, mesi",
+    "weightRange1": "1",
+    "weightRange3": "3",
+    "weightRange6": "6",
+    "weightRange12": "12",
+    "weightUp": "Su +{{kg}} kg",
+    "weightDown": "Giù −{{kg}} kg",
+    "weightFlat": "Nessun cambiamento",
+    "dayTitle": "{{date}}",
+    "progress": "Calorie oggi",
+    "kcal": "kcal",
+    "overeating": "Eccesso",
+    "statEaten": "Mangiate",
+    "statGoal": "Obiettivo",
+    "statLeft": "Rimanenti",
+    "statOver": "Oltre",
+    "addMeal": "Aggiungi un pasto",
+    "mealTitle": "Pasto",
+    "mealPlaceholder": "Pranzo, spuntino...",
+    "mealCalories": "kcal",
+    "saveMeal": "Aggiungi",
+    "editMeal": "Modifica pasto",
+    "emptyMeals": "Nessun pasto registrato per questo giorno.",
+    "deleteTitle": "Eliminare il pasto?",
+    "deleteDescription": "« {{title}} » verrà rimosso.",
+    "errors": {
+      "title": "Dai un nome al pasto",
+      "calories": "Inserisci le calorie",
+      "calorieGoal": "L'obiettivo deve essere di almeno 500 kcal",
+      "waterGoal": "Imposta almeno 1 bicchiere",
+      "weight": "Inserisci un peso tra 20 e 400 kg",
+      "weightGoal": "Il peso obiettivo deve essere tra 20 e 400 kg"
+    }
+  },
+  "tasks": {
+    "title": "Attività",
+    "subtitle": "Scegli un giorno, spunta il lavoro o aggiungi un'attività cronometrata. Le attività completate piantano alberi.",
+    "planTitle": "Piano del mese",
+    "planSubtitle": "Cronologia e sintesi delle attività per mese e anno.",
+    "viewMonth": "Mese",
+    "viewYear": "Anno",
+    "statTotal": "Attività totali",
+    "statCompleted": "Completate",
+    "statPending": "Rimanenti",
+    "completionRate": "Completamento",
+    "historyByMonth": "Cronologia per mese",
+    "historyByDay": "Cronologia per giorno",
+    "emptyPeriod": "Nessuna attività in questo periodo",
+    "monthStats": "{{completed}} di {{total}} completate",
+    "dayTitle": "{{date}}",
+    "empty": "Nessuna attività in questo giorno per ora.",
+    "add": "Nuova attività",
+    "edit": "Modifica attività",
+    "save": "Aggiungi attività",
+    "deleteTitle": "Eliminare l'attività?",
+    "deleteDescription": "« {{title}} » verrà rimossa.",
+    "fields": {
+      "title": "Titolo",
+      "titlePlaceholder": "Leggere, camminare, chiamare...",
+      "minutes": "Minuti"
+    },
+    "split": "Dividi",
+    "splitHint": "Quante parti",
+    "splitProgress": "{{done}}/{{count}}",
+    "unsplit": "Unisci",
+    "errors": {
+      "title": "Dai un nome all'attività",
+      "minutes": "I minuti devono essere almeno 1"
+    }
+  },
+  "rhythm": {
+    "title": "Abitudini",
+    "subtitle": "Un'abitudine impiega {{days}} giorni a insediarsi. Segna una cella — come in un foglio di calcolo.",
+    "menuHint": "Una griglia di abitudini su 30 giorni.",
+    "addPlaceholder": "es. acqua al risveglio",
+    "add": "Aggiungi",
+    "empty": "Nessuna abitudine per ora. Aggiungi la prima riga.",
+    "formed": "30 giorni",
+    "streak": "Serie di {{count}} giorni",
+    "errors": {
+      "title": "Inserisci un nome per l'abitudine"
+    }
+  },
+  "notes": {
+    "title": "Note",
+    "subtitle": "Conserva idee, lezioni e cose che vale la pena ricordare.",
+    "menuHint": "Crea, cerca e modifica le tue note.",
+    "create": "Nuova nota",
+    "createTitle": "Nuova nota",
+    "createSubtitle": "Salva un pensiero prima che sfugga.",
+    "editTitle": "Modifica nota",
+    "save": "Salva nota",
+    "saveChanges": "Salva le modifiche",
+    "searchPlaceholder": "Cerca note...",
+    "sortNewest": "Più recenti",
+    "sortOldest": "Più vecchie",
+    "emptyTitle": "Ancora niente qui",
+    "emptyDescription": "Salva idee, lezioni e ciò a cui vuoi tornare.",
+    "emptySearchTitle": "Nessuna nota trovata",
+    "emptySearchDescription": "Prova un'altra ricerca o crea una nuova nota.",
+    "source": "Fonte",
+    "updated": "Aggiornata",
+    "notFound": "Questa nota non è stata trovata.",
+    "deleteTitle": "Eliminare questa nota?",
+    "deleteDescription": "Questa azione non si può annullare.",
+    "fields": {
+      "title": "Titolo",
+      "content": "Nota",
+      "sourceUrl": "Link della fonte",
+      "sourceHint": "Facoltativo. Lascia vuoto se non c'è un link."
+    },
+    "placeholders": {
+      "title": "Dai un titolo alla nota...",
+      "content": "Scrivi qualcosa che vale la pena ricordare...",
+      "sourceUrl": "https://..."
+    },
+    "errors": {
+      "titleRequired": "Aggiungi un titolo",
+      "titleMax": "Il titolo è troppo lungo",
+      "contentRequired": "Scrivi una nota",
+      "contentMax": "La nota è troppo lunga",
+      "url": "Inserisci un link http o https valido"
+    }
+  },
+  "notifications": {
+    "title": "Notifiche",
+    "subtitle": "Promemoria in-app creati dal server quando i ripassi diventano dovuti.",
+    "menuHint": "Ripassi non letti e messaggi di sistema.",
+    "unreadCount": "Non lette: {{count}}",
+    "markAllRead": "Segna tutte come lette",
+    "markRead": "Segna come letta",
+    "open": "Apri",
+    "openMaterial": "Apri materiale",
+    "unread": "Non letta",
+    "emptyTitle": "Nessuna notifica per ora",
+    "emptyDescription": "Quando un ripasso diventa dovuto, apparirà qui.",
+    "types": {
+      "REVIEW_DUE": "In scadenza oggi",
+      "REVIEW_OVERDUE": "In ritardo",
+      "SYSTEM": "Sistema"
+    }
+  },
+  "finance": {
+    "title": "Budget",
+    "subtitle": "Tieni traccia di entrate e uscite in euro — semplice e chiaro.",
+    "menuHint": "Totali del mese, operazioni, contanti ed elettronico.",
+    "viewMonth": "Mese",
+    "viewYear": "Anno",
+    "yearBreakdown": "Per mese",
+    "totalIncome": "Entrate",
+    "totalExpense": "Uscite",
+    "balance": "Saldo del periodo",
+    "netWithOpening": "Con saldo iniziale",
+    "openingBalance": "Saldo iniziale",
+    "addOperation": "Aggiungi operazione",
+    "operationsTitle": "Operazioni del periodo",
+    "type": "Tipo",
+    "income": "Entrata",
+    "expense": "Uscita",
+    "amount": "Importo",
+    "date": "Data",
+    "category": "Categoria",
+    "noCategory": "Nessuna categoria",
+    "comment": "Commento",
+    "commentPlaceholder": "Nota facoltativa",
+    "noComment": "Nessun commento",
+    "saveOperation": "Salva",
+    "emptyOperations": "Nessuna operazione in questo periodo.",
+    "createCategory": "Aggiungi categoria",
+    "categoryName": "Nome della nuova categoria",
+    "deleteCategoryTitle": "Eliminare la categoria?",
+    "deleteCategoryDescription": "La categoria « {{name}} » verrà eliminata. Le operazioni restano senza categoria.",
+    "deleteOperationTitle": "Eliminare questa operazione?",
+    "deleteOperationDescription": "Questa azione non si può annullare.",
+    "errors": {
+      "amount": "Inserisci un importo valido",
+      "date": "Usa la data nel formato YYYY-MM-DD",
+      "opening": "Inserisci un saldo iniziale valido",
+      "categoryTaken": "Esiste già una categoria con questo nome"
+    },
+    "moneyKind": {
+      "label": "Forma del denaro",
+      "cash": "Contanti",
+      "electronic": "Elettronico"
+    }
+  },
+  "auth": {
+    "loginTitle": "Bentornato",
+    "loginSubtitle": "Accedi per continuare con attività, ripasso e calorie.",
+    "registerTitle": "Crea il tuo account",
+    "registerSubtitle": "Lo stesso account MindKeep del sito.",
+    "name": "Nome",
+    "email": "E-mail",
+    "password": "Password",
+    "confirmPassword": "Conferma password",
+    "submitLogin": "Accedi",
+    "submitRegister": "Registrati",
+    "noAccount": "Non hai ancora un account?",
+    "hasAccount": "Hai già un account?",
+    "passwordHint": "Almeno 8 caratteri",
+    "timezoneDetected": "Fuso orario di questo telefono: {{timezone}}",
+    "or": "oppure",
+    "continueWithGoogle": "Continua con Google",
+    "googleProcessing": "Accesso con Google",
+    "errors": {
+      "required": "Questo campo è obbligatorio",
+      "email": "Inserisci un'e-mail valida",
+      "passwordMin": "La password deve avere almeno 8 caratteri",
+      "passwordMatch": "Le password non coincidono",
+      "passwordMax": "La password deve avere al massimo 72 caratteri",
+      "generic": "Qualcosa è andato storto. Riprova.",
+      "invalidCredentials": "E-mail o password non validi",
+      "emailTaken": "Questa e-mail è già registrata",
+      "network": "Impossibile raggiungere il server. Controlla la connessione e riprova.",
+      "csrf": "Il controllo di sicurezza ha rifiutato questa richiesta.",
+      "rateLimited": "Troppi tentativi. Attendi qualche minuto e riprova.",
+      "validation": "Controlla i campi del modulo e riprova.",
+      "server": "Il server è temporaneamente non disponibile. Riprova tra poco.",
+      "maintenanceAdminOnly": "Al momento è disponibile solo l'accesso amministratore.",
+      "missingToken": "Il server non ha restituito un token di sessione. Fai il deploy dell'API più recente.",
+      "timezone": "Scegli un fuso orario valido.",
+      "googleUnavailable": "Accesso con Google non riuscito. Riprova."
+    }
+  },
+  "dashboard": {
+    "tagline": "Più della conoscenza. Più dei piani. Impara. Agisci. Cresci.",
+    "cards": {
+      "tasksToday": "Attività di oggi",
+      "reviews": "Ripassi",
+      "spentToday": "Speso oggi",
+      "budgetLeft": "Resto del budget",
+      "caloriesToday": "Calorie oggi",
+      "waterToday": "Acqua oggi",
+      "of": "{{done}} di {{total}} completate",
+      "ofPlanned": "{{done}} di {{total}} previste"
+    },
+    "upcomingTasks": "Attività di oggi",
+    "allTasks": "Tutte le attività",
+    "fuelTitle": "Nutrizione",
+    "allFuel": "Apri nutrizione",
+    "noMealsToday": "Nessun pasto registrato oggi.",
+    "weekTitle": "Questa settimana",
+    "weekTabs": {
+      "tasks": "Attività",
+      "reviews": "Ripassi",
+      "expenses": "Spese"
+    },
+    "legendDone": "Completato",
+    "legendPlanned": "Pianificato",
+    "financeTitle": "Budget di questo mese",
+    "allFinance": "Budget",
+    "spentLabel": "speso",
+    "modules": {
+      "noTasksToday": "Nessuna attività per oggi",
+      "noFinance": "Nessuna operazione questo mese"
+    },
+    "recentTitle": "Materiali recenti",
+    "viewAllMaterials": "Tutti i materiali",
+    "stats": {
+      "activeMaterials": "Materiali attivi",
+      "todayReminders": "In scadenza oggi",
+      "overdueReminders": "In ritardo",
+      "completedReviews": "Ripassi completati"
+    },
+    "activityTitle": "Ripassi completati (7 giorni)",
+    "activitySubtitle": "Quanti ripassi hai completato ogni giorno nel tuo fuso orario."
+  },
+  "contact": {
+    "title": "Contatti",
+    "menuHint": "Scrivi dall'app. La stessa casella del sito.",
+    "intro": "Scegli un argomento e il messaggio arriverà nella casella giusta. Puoi anche scriverci direttamente.",
+    "partnershipTitle": "Partnership",
+    "partnershipBody": "Collaborazioni, stampa e lavoro dello studio.",
+    "supportTitle": "Bug e domande",
+    "supportBody": "Qualcosa è rotto, poco chiaro, o ti serve semplicemente una risposta umana.",
+    "fields": {
+      "topic": "Di cosa si tratta?",
+      "name": "Nome",
+      "email": "E-mail",
+      "message": "Messaggio"
+    },
+    "placeholders": {
+      "message": "Scrivi qualche riga così possiamo aiutarti."
+    },
+    "topics": {
+      "partnership": "Partnership / collaborazione",
+      "bug": "Ho trovato un bug",
+      "question": "Ho una domanda"
+    },
+    "destination": "Questo messaggio verrà inviato a {{email}}",
+    "send": "Invia messaggio",
+    "successTitle": "Messaggio inviato",
+    "successBody": "Grazie. Risponderemo all'e-mail che hai lasciato.",
+    "errors": {
+      "topicRequired": "Scegli un argomento",
+      "nameRequired": "Aggiungi il tuo nome",
+      "nameMax": "Il nome è troppo lungo",
+      "email": "Inserisci un'e-mail valida",
+      "messageMin": "Scrivi almeno un breve messaggio",
+      "messageMax": "Il messaggio è troppo lungo",
+      "validation": "Controlla il modulo e riprova",
+      "generic": "Impossibile inviare il messaggio",
+      "unavailable": "Il modulo è temporaneamente non disponibile. Scrivici direttamente all'indirizzo sopra."
+    }
+  },
+  "guide": {
+    "eyebrow": "Guida semplice",
+    "title": "Come usare Mindkeep",
+    "intro": "Mindkeep è uno spazio di lavoro per attività, finanze e ripasso delle conoscenze. Parti da un'area e aggiungi il resto quando sei pronto.",
+    "stepsTitle": "Inizia in sei passi semplici",
+    "stepLabel": "Passo {{number}}",
+    "steps": [
+      {
+        "title": "Crea un account",
+        "body": "Registrati con e-mail o Google. Il fuso orario viene rilevato automaticamente — importante per le date di attività e ripassi."
+      },
+      {
+        "title": "Apri la panoramica",
+        "body": "La dashboard mostra le attività di oggi, i ripassi e un breve riepilogo finanziario."
+      },
+      {
+        "title": "Aggiungi attività",
+        "body": "In Pianificazione, aggiungi il lavoro del giorno o costruisci un piano del mese — poi spunta gli elementi."
+      },
+      {
+        "title": "Salva ciò che hai imparato",
+        "body": "Aggiungi un materiale dopo una lezione o un esercizio. Mindkeep programma i ripassi per i giorni 3, 7 e 30."
+      },
+      {
+        "title": "Registra i movimenti di denaro",
+        "body": "In Budget, registra un'entrata o un'uscita. Tutti gli importi sono tenuti in euro."
+      },
+      {
+        "title": "Torna dai calendari",
+        "body": "I calendari di attività e ripassi mostrano cosa è dovuto oggi e cosa arriva — senza pressione né impostazioni complesse."
+      }
+    ],
+    "rulesTitle": "Buono a sapersi",
+    "rules": [
+      "Attività, finanze e ripasso condividono un account, ma restano ciascuno per conto proprio.",
+      "Il calendario di ripasso 3 / 7 / 30 si conta dalla data di apprendimento e non si sposta dopo il completamento.",
+      "Il budget è tenuto in euro — senza conversioni né complessità extra.",
+      "I tuoi dati appartengono solo al tuo account e non sono visibili ad altri utenti."
+    ],
+    "faqTitle": "FAQ",
+    "faq": [
+      {
+        "question": "Da dove dovrei iniziare?",
+        "answer": "Da ciò che conta ora: le attività di oggi, un primo materiale da ripassare o una voce di entrata/uscita. Il resto lo colleghi dopo."
+      },
+      {
+        "question": "Devo usare ogni sezione?",
+        "answer": "No. Puoi usare solo le attività, solo il ripasso o solo le finanze — lo spazio è pensato per un uso flessibile."
+      },
+      {
+        "question": "Cosa posso aggiungere come materiali?",
+        "answer": "Parole, note, formule, regole, decisioni di lavoro, link o Q&A — tutto ciò a cui vuoi tornare."
+      },
+      {
+        "question": "In quale valuta è il budget?",
+        "answer": "Al momento Mindkeep tiene le finanze in euro. Così i riepiloghi restano semplici e si evita la confusione dei tassi di cambio."
+      }
+    ],
+    "ctaTitle": "Fai il primo passo oggi",
+    "ctaSubtitle": "Aggiungi un'attività, un materiale o una voce finanziaria — e vedi come Mindkeep raccoglie la giornata in un solo posto.",
+    "ctaGuest": "Crea un account",
+    "ctaUser": "Apri la panoramica"
+  },
+  "forest": {
+    "title": "La tua foresta",
+    "trees": "{{count}} alberi",
+    "addedToday": "+{{count}} oggi",
+    "groveProgress": "Boschetto {{grove}} · {{current}} / {{total}}",
+    "remaining": "{{count}} al prossimo boschetto",
+    "remainingDone": "Boschetto completato",
+    "remainingZone": "{{count}} a una zona forestale",
+    "zoneOpen": "Zona forestale sbloccata",
+    "explore": "Esplora la foresta",
+    "plusOne": "+1 albero",
+    "groveCompleted": "Boschetto completato",
+    "groveComplete1": "Primo boschetto",
+    "groveComplete2": "Secondo boschetto",
+    "groveComplete3": "Terzo boschetto",
+    "groveHint1": "25 alberi — il primo boschetto è completo.",
+    "groveHint2": "Due boschetti questo mese. Ancora uno per una zona forestale.",
+    "groveHint3": "Tre boschetti. I prossimi 25 alberi aprono una zona forestale.",
+    "zoneComplete": "Zona forestale",
+    "zoneHint": "100 alberi — una zona forestale è tua.",
+    "newGrove": "Nuovo boschetto",
+    "newGroveHint": "Un nuovo boschetto inizia qui.",
+    "newZone": "Nuova zona forestale",
+    "newZoneHint": "Si apre un nuovo tratto di foresta.",
+    "grovePip": "Boschetto {{n}}",
+    "zonePip": "Zona",
+    "zonesCount": "×{{count}}",
+    "pathLabel": "Boschetto {{grove}} di 4, {{zone}} zone",
+    "pageTitle": "La tua foresta",
+    "pageSubtitle": "Ogni attività completata in questo mese pianta un albero. Boschetti e zone crescono da quel registro — mai dalle attività ancora da fare.",
+    "backToTasks": "Torna alle attività",
+    "rulesTitle": "Come cresce la foresta",
+    "ruleTrees": "1 attività completata = 1 albero.",
+    "ruleGrove": "25 alberi completano un boschetto.",
+    "ruleZone": "100 alberi sbloccano una zona forestale.",
+    "rulePath": "Boschetto 1, poi 2, poi 3 — e 100 alberi aprono una zona forestale.",
+    "ruleMonth": "Ogni mese ha la sua foresta.",
+    "yearTitle": "La foresta è una vista mensile",
+    "yearHint": "Gli alberi nascono dalle attività completate in un mese. Torna alla vista mensile per vedere la foresta di quel mese.",
+    "monthScope": "Solo le attività completate di questo mese piantano alberi qui."
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Utenti e panoramica della piattaforma.",
+    "usersTitle": "Utenti",
+    "empty": "Nessun utente per ora",
+    "loadError": "Impossibile caricare i dati admin.",
+    "reviewsTitle": "Moderazione recensioni",
+    "reviewsEmpty": "Nessuna recensione inviata per ora",
+    "approveReview": "Approva",
+    "rejectReview": "Rifiuta",
+    "reviewStatus": {
+      "PENDING": "In attesa di revisione",
+      "APPROVED": "Pubblicata",
+      "REJECTED": "Rifiutata"
+    },
+    "stats": {
+      "users": "Utenti",
+      "admins": "Admin",
+      "materials": "Materiali",
+      "reminders": "Promemoria"
+    },
+    "columns": {
+      "name": "Nome",
+      "email": "E-mail",
+      "role": "Ruolo",
+      "timezone": "Fuso orario",
+      "materials": "Materiali",
+      "reminders": "Promemoria",
+      "uses": "Usi",
+      "lastActivity": "Attività",
+      "created": "Creato"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "Utente"
+    },
+    "backToUsers": "Torna agli utenti",
+    "activitySubtitle": "Statistiche d'uso complete. Testi, importi, valori di peso e titoli delle voci restano nascosti.",
+    "modulesTitle": "Cosa usano",
+    "modulesHint": "Solo conteggi e date — nessun contenuto delle voci.",
+    "recentTitle": "Azioni recenti",
+    "recentHint": "Quale sezione hanno toccato e cosa hanno fatto, senza i record.",
+    "used": "Attivo",
+    "idle": "Non ancora",
+    "noActivity": "Nessuna attività per ora",
+    "neverUsed": "Non ha ancora usato questa sezione",
+    "firstUsed": "Primo uso il {{date}}",
+    "lastUsed": "Ultimo uso il {{date}}",
+    "registered": "Nel prodotto dal {{date}}",
+    "openActivity": "Vedi attività",
+    "openStats": "Statistiche",
+    "timelineTitle": "Attività su 30 giorni",
+    "timelineHint": "Quante azioni al giorno. Non ciò che hanno scritto.",
+    "timelineTotal": "Azioni totali: {{count}}",
+    "summary": {
+      "modulesUsed": "Sezioni",
+      "activeDays": "Giorni attivi",
+      "events7": "Ultimi 7 giorni",
+      "events30": "Ultimi 30 giorni"
+    },
+    "modules": {
+      "review": "Ripassi",
+      "tasks": "Attività",
+      "habits": "Abitudini",
+      "nutrition": "Nutrizione",
+      "finance": "Finanze",
+      "notes": "Note"
+    },
+    "moduleHints": {
+      "review": "Materiali: {{materials}} · promemoria: {{reminders}} · fatti: {{completed}} · aperti: {{pending}}",
+      "tasks": "Totale: {{count}} · completate: {{completed}} · ultimi 30 giorni: {{last30}}",
+      "habits": "Abitudini: {{count}} · attive: {{active}} · check: {{checks}} · ultimi 30 giorni: {{last30}}",
+      "nutrition": "Pasti: {{meals}} · giorni acqua: {{water}} · giorni peso: {{weight}}",
+      "finance": "Record: {{count}} · entrate: {{income}} · uscite: {{expense}}",
+      "notes": "Note: {{count}}",
+      "count": "Record: {{count}}"
+    },
+    "actions": {
+      "created": "ha creato un record",
+      "completed": "ha completato",
+      "logged": "ha registrato",
+      "checked": "ha fatto check-in"
+    }
+  },
+  "statistics": {
+    "title": "Statistiche",
+    "subtitle": "Attività di ripasso e conteggi del tuo calendario di apprendimento."
+  },
+  "blog": {
+    "eyebrow": "Diario",
+    "title": "Note su memoria e concentrazione",
+    "subtitle": "Tre temi che danno forma al modo in cui Mindkeep pensa l'apprendimento.",
+    "viewAll": "Apri il blog",
+    "back": "Tutti gli articoli",
+    "byAuthor": "Di {{author}}",
+    "originLabel": "Chi ha dato forma a questa idea",
+    "moreTitle": "Continua a leggere",
+    "topics": {
+      "spaced-repetition": {
+        "label": "Ripetizione dilazionata",
+        "description": "Come i ritorni al momento giusto trasformano una memoria fragile in un ricordo duraturo."
+      },
+      "pomodoro": {
+        "label": "Pomodoro",
+        "description": "Sprint brevi e concentrati che proteggono l'attenzione mentre impari."
+      },
+      "pareto": {
+        "label": "Risultati 80/20",
+        "description": "Trova le poche voci vitali che muovono la maggior parte dei tuoi progressi."
+      }
+    },
+    "articles": {
+      "spaced-repetition-memory": {
+        "title": "Perché tornare nei giorni 3, 7 e 30 funziona",
+        "excerpt": "Una guida calma alla ripetizione dilazionata — e perché Mindkeep tiene gli intervalli fissi.",
+        "originNote": "Hermann Ebbinghaus ha mappato la curva dell'oblio negli anni 1880. Il suo lavoro ha ispirato ritorni dilazionati che rafforzano la memoria prima che svanisca.",
+        "body": [
+          "Imparare non è un istante unico — è una serie di ritorni. Quando incontri un'idea una volta, la traccia è fragile. Quando la rivedi alla giusta distanza, la mente ricostruisce il percorso con meno sforzo e più chiarezza.",
+          "La ripetizione dilazionata nasce da quella intuizione: programma i ripassi prima che vinca l'oblio. I sistemi classici adattano l'intervallo dopo ogni risposta. Mindkeep sceglie un patto più gentile — ritorni fissi nei giorni 3, 7 e 30 dal giorno in cui hai imparato qualcosa.",
+          "Gli intervalli fissi tolgono il rumore di darti un voto. Torni comunque di proposito. Proteggi comunque la memoria a lungo termine. Ti fidi semplicemente di un ritmo chiaro invece di un algoritmo che cambia in continuazione.",
+          "Usa questo schema ogni volta che scrivi sulla memoria: parti dalla sensazione di dimenticare, nomina il metodo, riconosci l'origine, poi collegala a come Mindkeep si comporta in pratica."
+        ]
+      },
+      "pomodoro-focus": {
+        "title": "Pomodoro: impara in finestre brevi e luminose",
+        "excerpt": "Come blocchi di 25 minuti ti aiutano a studiare senza bruciarti.",
+        "originNote": "Francesco Cirillo ha creato la tecnica Pomodoro alla fine degli anni 1980, chiamandola così da un timer da cucina a forma di pomodoro.",
+        "body": [
+          "L'apprendimento profondo ha bisogno di attenzione — e l'attenzione ama i bordi. Un blocco breve e protetto dice alla mente: questa finestra è per una cosa sola.",
+          "Lo schema Pomodoro è semplice: concentrati per circa 25 minuti, poi riposa un po'. Dopo alcuni cicli, fai una pausa più lunga. Il punto non è la perfezione. Il punto è una cadenza ripetibile che tiene energia per il prossimo ritorno.",
+          "Abbina Pomodoro a Mindkeep: usa un blocco di focus per catturare ciò che hai imparato, poi lascia che il calendario 3 · 7 · 30 ti riporti più tardi. Cattura ora. Torna dopo. Proteggi intensità e memoria.",
+          "Quando scriverai futuri articoli sulla concentrazione, tieni questa forma: problema della distrazione → metodo di Cirillo → abbinamento pratico con Mindkeep → un invito gentile a provarlo oggi."
+        ]
+      },
+      "pareto-learning-results": {
+        "title": "La regola 80/20 nell'apprendimento",
+        "excerpt": "Come l'intuizione di Vilfredo Pareto ti aiuta a scegliere cosa vale la pena ricordare.",
+        "originNote": "L'economista Vilfredo Pareto osservò che una minoranza di cause produce spesso una maggioranza di risultati — idea poi popolarizzata come principio 80/20.",
+        "body": [
+          "Non ogni fatto merita lo stesso spazio nella mente. Alcune idee ne sbloccano molte altre. Altre decorano solo la superficie.",
+          "Il principio di Pareto suggerisce un bias utile: cerca le poche voci vitali. Nelle lingue possono essere le parole più frequenti. Nel codice, i pattern che riusi ogni settimana. Nel lavoro, i principi dietro le tue decisioni migliori.",
+          "Mindkeep ti aiuta a tenere ciò che hai scelto — non tutto ciò che hai toccato. Cattura il materiale che si compone. Ripassalo su un ritmo fisso. Lascia il resto fuori dal calendario, così l'attenzione resta nitida.",
+          "Schema per future note 80/20: nomina lo sforzo troppo affollato → introduci Pareto → dai un esempio concreto di apprendimento → mostra come Mindkeep protegge l'essenziale con ritorni 3 · 7 · 30."
+        ]
+      }
+    }
+  }
+}

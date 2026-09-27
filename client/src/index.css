@@ -27,6 +27,9 @@
   --color-brand-700: var(--app-brand-700);
   --color-brand-800: var(--app-brand-800);
   --color-brand-900: var(--app-brand-900);
+
+  --color-expense: var(--app-expense);
+  --color-expense-soft: var(--app-expense-soft);
 }
 
 :root,
@@ -56,6 +59,9 @@ html[data-theme='dark'] {
   --app-brand-700: #4bb87a;
   --app-brand-800: #348a5a;
   --app-brand-900: #256344;
+
+  --app-expense: #d9a441;
+  --app-expense-soft: rgba(217, 164, 65, 0.18);
 }
 
 html[data-theme='light'] {
@@ -85,6 +91,9 @@ html[data-theme='light'] {
   --app-brand-700: #274e3e;
   --app-brand-800: #214135;
   --app-brand-900: #1b352c;
+
+  --app-expense: #8b5a12;
+  --app-expense-soft: rgba(139, 90, 18, 0.14);
 }
 
 @layer base {

@@ -44,7 +44,7 @@ export function FinanceOperationsList({
               <div className="flex flex-wrap items-center gap-2">
                 <span
                   className={`rounded-lg px-2 py-0.5 text-xs font-semibold ${
-                    positive ? 'bg-brand-100 text-brand-500' : 'bg-red-500/15 text-red-400'
+                    positive ? 'bg-brand-100 text-brand-500' : 'bg-expense-soft text-expense'
                   }`}
                 >
                   {positive ? t('finance.income') : t('finance.expense')}
@@ -73,7 +73,7 @@ export function FinanceOperationsList({
 
             <div className="flex items-center justify-between gap-3 sm:justify-end">
               <p
-                className={`text-base font-semibold ${positive ? 'text-brand-500' : 'text-red-400'}`}
+                className={`text-base font-semibold ${positive ? 'text-brand-500' : 'text-expense'}`}
               >
                 {formatSignedMoney(signed, language)}
               </p>

@@ -296,13 +296,13 @@ export function FinanceScreen() {
         <View style={styles.stats}>
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.totalIncome')}</Text>
-            <Text style={[styles.statValue, { color: colors.ink }]}>
+            <Text style={[styles.statValue, { color: colors.brand }]}>
               {formatMoney(summary?.totals.income ?? 0, language)}
             </Text>
           </View>
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.totalExpense')}</Text>
-            <Text style={[styles.statValue, { color: colors.ink }]}>
+            <Text style={[styles.statValue, { color: colors.expense }]}>
               {formatMoney(summary?.totals.expense ?? 0, language)}
             </Text>
           </View>
@@ -532,7 +532,7 @@ export function FinanceScreen() {
                   <View style={styles.opBody}>
                     <View style={styles.row}>
                       <Badge
-                        tone={operation.type === 'INCOME' ? 'brand' : 'danger'}
+                        tone={operation.type === 'INCOME' ? 'brand' : 'expense'}
                         label={
                           operation.type === 'INCOME' ? t('finance.income') : t('finance.expense')
                         }
@@ -556,7 +556,7 @@ export function FinanceScreen() {
                     <Text
                       style={[
                         styles.opAmount,
-                        { color: operation.type === 'INCOME' ? colors.brand : colors.danger },
+                        { color: operation.type === 'INCOME' ? colors.brand : colors.expense },
                       ]}
                     >
                       {formatSignedMoney(signed, language)}

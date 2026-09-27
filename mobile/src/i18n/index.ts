@@ -2,15 +2,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import de from './locales/de.json';
 import en from './locales/en.json';
+import es from './locales/es.json';
 import fi from './locales/fi.json';
+import fr from './locales/fr.json';
+import it from './locales/it.json';
+import pl from './locales/pl.json';
 import ru from './locales/ru.json';
 import uk from './locales/uk.json';
 
 export const supportedLanguages = [
-  { code: 'ru', label: 'Русский' },
   { code: 'uk', label: 'Українська' },
+  { code: 'ru', label: 'Русский' },
   { code: 'en', label: 'English' },
+  { code: 'pl', label: 'Polski' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'fr', label: 'Français' },
+  { code: 'it', label: 'Italiano' },
+  { code: 'es', label: 'Español' },
   { code: 'fi', label: 'Suomi' },
 ] as const;
 
@@ -26,9 +36,14 @@ function deviceLanguage(): AppLanguage {
 
 void i18n.use(initReactI18next).init({
   resources: {
-    en: { translation: en },
-    ru: { translation: ru },
     uk: { translation: uk },
+    ru: { translation: ru },
+    en: { translation: en },
+    pl: { translation: pl },
+    de: { translation: de },
+    fr: { translation: fr },
+    it: { translation: it },
+    es: { translation: es },
     fi: { translation: fi },
   },
   lng: deviceLanguage(),

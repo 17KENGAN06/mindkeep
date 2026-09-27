@@ -1,11 +1,16 @@
 import { format, parseISO } from 'date-fns';
-import { enUS, fi, ru, uk } from 'date-fns/locale';
+import { de, enUS, es, fi, fr, it, pl, ru, uk } from 'date-fns/locale';
 import type { AppLanguage } from '@/i18n';
 
 const locales = {
-  en: enUS,
-  ru,
   uk,
+  ru,
+  en: enUS,
+  pl,
+  de,
+  fr,
+  it,
+  es,
   fi,
 } as const;
 

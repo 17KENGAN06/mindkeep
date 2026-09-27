@@ -597,7 +597,7 @@ export function DashboardPage() {
               <Badge tone="success">
                 {t('finance.totalIncome')}: {formatSignedMoney(monthIncome, language)}
               </Badge>
-              <Badge tone="danger">
+              <Badge tone="expense">
                 {t('finance.totalExpense')}: {formatSignedMoney(-monthExpense, language)}
               </Badge>
             </div>

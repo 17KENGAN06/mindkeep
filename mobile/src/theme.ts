@@ -10,6 +10,7 @@ export type ColorTokens = {
   onBrand: string;
   danger: string;
   warn: string;
+  expense: string;
 };
 
 export const palettes: Record<ThemeMode, ColorTokens> = {
@@ -23,6 +24,7 @@ export const palettes: Record<ThemeMode, ColorTokens> = {
     onBrand: '#07110d',
     danger: '#f87171',
     warn: '#fbbf24',
+    expense: '#d9a441',
   },
   light: {
     bg: '#dfe6e2',
@@ -34,6 +36,7 @@ export const palettes: Record<ThemeMode, ColorTokens> = {
     onBrand: '#f4faf7',
     danger: '#dc2626',
     warn: '#d97706',
+    expense: '#8b5a12',
   },
 };
 
