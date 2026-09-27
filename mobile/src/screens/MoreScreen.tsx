@@ -9,7 +9,7 @@ import { detectDeviceTimezone } from '../config/timezones';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useTheme } from '../features/theme/useTheme';
-import { setAppLanguage, supportedLanguages, type AppLanguage } from '../i18n';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import type { MoreStackParamList } from '../navigation/types';
 
 const SITE_URLS = {
@@ -62,11 +62,10 @@ function MenuCard({
 }
 
 export function MoreScreen() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { theme, colors, setTheme } = useTheme();
   const { user, logout } = useAuth();
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
-  const current = (i18n.resolvedLanguage ?? i18n.language).slice(0, 2);
   const unreadQuery = useUnreadNotificationsCount();
   const unread = unreadQuery.data ?? 0;
   const timezone = user?.timezone || detectDeviceTimezone();
@@ -186,31 +185,7 @@ export function MoreScreen() {
         </View>
 
         <Text style={[styles.section, { color: colors.muted }]}>{t('common.language')}</Text>
-        <View style={styles.row}>
-          {supportedLanguages.map((language) => {
-            const active = current === language.code;
-            return (
-              <Pressable
-                key={language.code}
-                onPress={() => void setAppLanguage(language.code as AppLanguage)}
-                style={[
-                  styles.chip,
-                  { borderColor: colors.line },
-                  active && { backgroundColor: colors.brand, borderColor: colors.brand },
-                ]}
-              >
-                <Text
-                  style={[
-                    { color: colors.ink, fontSize: 14 },
-                    active && { color: colors.onBrand, fontWeight: '700' },
-                  ]}
-                >
-                  {language.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
+        <LanguageSwitcher />
 
         <Pressable onPress={() => void logout()} style={[styles.logout, { borderColor: colors.line }]}>
           <AppIcon name="log-out-outline" color={colors.danger} size={18} />

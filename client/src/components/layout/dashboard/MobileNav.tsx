@@ -186,9 +186,9 @@ export function MobileNav({ entries, isAdmin, onLogout }: MobileNavProps) {
                 <span className="text-sm font-medium text-ink">{t('common.theme')}</span>
                 <ThemeToggle />
               </div>
-              <div className="flex items-center justify-between gap-3 rounded-2xl border border-line/70 bg-brand-50/30 px-4 py-3">
+              <div className="space-y-2 rounded-2xl border border-line/70 bg-brand-50/30 px-4 py-3">
                 <span className="text-sm font-medium text-ink">{t('common.language')}</span>
-                <LanguageSwitcher />
+                <LanguageSwitcher variant="panel" />
               </div>
             </div>
 
