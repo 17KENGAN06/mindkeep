@@ -377,14 +377,16 @@
     "moneyKind": {
       "label": "Money form",
       "cash": "Cash",
-      "electronic": "Electronic"
+      "electronic": "Electronic",
+      "all": "All"
     },
     "currency": "Currency",
     "displayCurrency": "Show totals in",
     "budgetSubtitle": "Choose cash or card first, then the currency. Each currency stays on its own — no converted totals.",
     "perCurrencyTitle": "By currency",
     "perCurrencyHint": "Income, expense and balance are counted separately for every currency.",
-    "emptyCurrencies": "No operations in this period yet."
+    "emptyCurrencies": "No operations in this period yet.",
+    "allCurrencies": "All currencies"
   },
   "auth": {
     "loginTitle": "Welcome back",

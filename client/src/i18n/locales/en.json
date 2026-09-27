@@ -146,7 +146,8 @@
     "displayCurrency": "Show totals in",
     "perCurrencyTitle": "By currency",
     "perCurrencyHint": "Income, expense and balance are counted separately for every currency.",
-    "emptyCurrencies": "No operations in this period yet."
+    "emptyCurrencies": "No operations in this period yet.",
+    "allCurrencies": "All currencies"
   },
   "tasks": {
     "title": "Daily tasks",

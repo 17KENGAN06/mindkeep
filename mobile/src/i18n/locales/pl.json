@@ -377,14 +377,16 @@
     "moneyKind": {
       "label": "Forma pieniędzy",
       "cash": "Gotówka",
-      "electronic": "Elektroniczne"
+      "electronic": "Elektroniczne",
+      "all": "Wszystkie"
     },
     "currency": "Waluta",
     "displayCurrency": "Pokazuj sumy w",
     "budgetSubtitle": "Najpierw gotówka albo karta, potem waluta. Każda waluta liczy się osobno — bez przeliczeń.",
     "perCurrencyTitle": "Według walut",
     "perCurrencyHint": "Przychód, wydatek i saldo liczymy osobno dla każdej waluty.",
-    "emptyCurrencies": "W tym okresie nie ma jeszcze operacji."
+    "emptyCurrencies": "W tym okresie nie ma jeszcze operacji.",
+    "allCurrencies": "Wszystkie waluty"
   },
   "auth": {
     "loginTitle": "Witamy z powrotem",

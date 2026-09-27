@@ -146,7 +146,8 @@
     "displayCurrency": "Pokazuj sumy w",
     "perCurrencyTitle": "Według walut",
     "perCurrencyHint": "Przychód, wydatek i saldo liczymy osobno dla każdej waluty.",
-    "emptyCurrencies": "W tym okresie nie ma jeszcze operacji."
+    "emptyCurrencies": "W tym okresie nie ma jeszcze operacji.",
+    "allCurrencies": "Wszystkie waluty"
   },
   "tasks": {
     "title": "Zadania dnia",

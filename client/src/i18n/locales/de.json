@@ -146,7 +146,8 @@
     "displayCurrency": "Summen anzeigen in",
     "perCurrencyTitle": "Nach Währung",
     "perCurrencyHint": "Einnahmen, Ausgaben und Saldo werden für jede Währung getrennt gezählt.",
-    "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen."
+    "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen.",
+    "allCurrencies": "Alle Währungen"
   },
   "tasks": {
     "title": "Tagesaufgaben",

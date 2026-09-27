@@ -146,7 +146,8 @@
     "displayCurrency": "Показывать итоги в",
     "perCurrencyTitle": "По валютам",
     "perCurrencyHint": "Доход, расход и баланс считаются отдельно для каждой валюты.",
-    "emptyCurrencies": "За этот период операций пока нет."
+    "emptyCurrencies": "За этот период операций пока нет.",
+    "allCurrencies": "Все валюты"
   },
   "tasks": {
     "title": "Ежедневные задачи",

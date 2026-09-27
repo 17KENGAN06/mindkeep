@@ -144,27 +144,27 @@ export function Select({
               id={listId}
               role="listbox"
               aria-labelledby={inputId}
-              className="absolute z-50 mt-2 max-h-72 w-full overflow-y-auto rounded-2xl bg-panel p-1.5 shadow-lg ring-1 ring-line"
+              className="absolute inset-x-0 z-50 mt-2 max-h-72 min-w-0 overflow-x-hidden overflow-y-auto overscroll-contain rounded-2xl bg-panel p-1.5 shadow-lg ring-1 ring-line"
             >
               <div
                 aria-hidden
                 className="pointer-events-none absolute -top-8 -right-6 h-20 w-20 rounded-full bg-brand-500/15 blur-2xl"
               />
-              <div className="relative grid gap-0.5">
+              <div className="relative grid min-w-0 gap-0.5">
                 {placeholder ? (
                   <button
                     type="button"
                     role="option"
                     aria-selected={stringValue === ''}
-                    className={`flex min-h-10 w-full items-center justify-between rounded-xl px-3 text-left text-sm font-semibold transition ${
+                    className={`flex min-h-10 w-full min-w-0 items-center justify-between gap-2 rounded-xl px-3 text-left text-sm font-semibold transition ${
                       stringValue === ''
                         ? 'bg-brand-500 text-[#07110d] shadow-sm'
                         : 'text-ink hover:bg-brand-50'
                     }`}
                     onClick={() => pick('')}
                   >
-                    <span>{placeholder}</span>
-                    {stringValue === '' ? <Check className="h-4 w-4" aria-hidden /> : null}
+                    <span className="min-w-0 break-words">{placeholder}</span>
+                    {stringValue === '' ? <Check className="h-4 w-4 shrink-0" aria-hidden /> : null}
                   </button>
                 ) : null}
                 {options.map((option) => {
@@ -175,14 +175,14 @@ export function Select({
                       type="button"
                       role="option"
                       aria-selected={active}
-                      className={`flex min-h-10 w-full items-center justify-between rounded-xl px-3 text-left text-sm font-semibold transition ${
+                      className={`flex min-h-10 w-full min-w-0 items-center justify-between gap-2 rounded-xl px-3 text-left text-sm font-semibold transition ${
                         active
                           ? 'bg-brand-500 text-[#07110d] shadow-sm'
                           : 'text-ink hover:bg-brand-50'
                       }`}
                       onClick={() => pick(option.value)}
                     >
-                      <span className="min-w-0 truncate">{option.label}</span>
+                      <span className="min-w-0 break-words">{option.label}</span>
                       {active ? <Check className="h-4 w-4 shrink-0" aria-hidden /> : null}
                     </button>
                   );

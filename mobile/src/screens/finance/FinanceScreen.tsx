@@ -15,7 +15,11 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton, Badge } from '../../components/ui';
-import { currencyLabel, FINANCE_CURRENCIES, type FinanceCurrency } from '../../features/finance/currencies';
+import {
+  currencyLabel,
+  FINANCE_CURRENCIES,
+  type FinanceCurrency,
+} from '../../features/finance/currencies';
 import { formatSignedMoney, summarizeByCurrency } from '../../features/finance/financeUtils';
 import {
   useCreateFinanceCategory,
@@ -59,8 +63,9 @@ function Chip({
       ]}
     >
       <Text
+        numberOfLines={2}
         style={[
-          { color: colors.ink, fontSize: 13 },
+          { color: colors.ink, fontSize: 13, textAlign: 'center' },
           active && { color: colors.onBrand, fontWeight: '700' },
         ]}
       >
@@ -89,6 +94,8 @@ export function FinanceScreen() {
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [editingCategoryName, setEditingCategoryName] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
+  const [kindFilter, setKindFilter] = useState<'ALL' | FinanceMoneyKind>('ALL');
+  const [currencyFilter, setCurrencyFilter] = useState<string>('ALL');
 
   const summaryQuery = useFinanceSummary({
     view,
@@ -105,7 +112,29 @@ export function FinanceScreen() {
   const summary = summaryQuery.data;
   const categories = categoriesQuery.data ?? [];
   const operations = summary?.operations ?? [];
-  const currencyBuckets = useMemo(() => summarizeByCurrency(operations), [operations]);
+  const availableCurrencies = useMemo(() => {
+    const seen = new Set(operations.map((op) => op.currency || 'EUR'));
+    const ranked = FINANCE_CURRENCIES.filter((code) => seen.has(code));
+    const extra = [...seen].filter((code) => !(FINANCE_CURRENCIES as readonly string[]).includes(code));
+    return [...ranked, ...extra];
+  }, [operations]);
+  const activeCurrencyFilter =
+    currencyFilter !== 'ALL' && availableCurrencies.includes(currencyFilter) ? currencyFilter : 'ALL';
+  const filteredOperations = useMemo(
+    () =>
+      operations.filter((op) => {
+        if (kindFilter !== 'ALL' && (op.moneyKind ?? 'ELECTRONIC') !== kindFilter) return false;
+        if (activeCurrencyFilter !== 'ALL' && (op.currency || 'EUR') !== activeCurrencyFilter) {
+          return false;
+        }
+        return true;
+      }),
+    [operations, kindFilter, activeCurrencyFilter],
+  );
+  const currencyBuckets = useMemo(
+    () => summarizeByCurrency(filteredOperations),
+    [filteredOperations],
+  );
 
   const shiftPeriod = (delta: number) => {
     if (view === 'year') {
@@ -273,6 +302,41 @@ export function FinanceScreen() {
 
         {summaryQuery.isError ? (
           <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
+        ) : null}
+
+        <View style={styles.row}>
+          <Chip
+            label={t('finance.moneyKind.all')}
+            active={kindFilter === 'ALL'}
+            onPress={() => setKindFilter('ALL')}
+          />
+          <Chip
+            label={t('finance.moneyKind.electronic')}
+            active={kindFilter === 'ELECTRONIC'}
+            onPress={() => setKindFilter('ELECTRONIC')}
+          />
+          <Chip
+            label={t('finance.moneyKind.cash')}
+            active={kindFilter === 'CASH'}
+            onPress={() => setKindFilter('CASH')}
+          />
+        </View>
+        {availableCurrencies.length > 1 ? (
+          <View style={styles.row}>
+            <Chip
+              label={t('finance.allCurrencies')}
+              active={activeCurrencyFilter === 'ALL'}
+              onPress={() => setCurrencyFilter('ALL')}
+            />
+            {availableCurrencies.map((code) => (
+              <Chip
+                key={`filter-${code}`}
+                label={code}
+                active={activeCurrencyFilter === code}
+                onPress={() => setCurrencyFilter(code)}
+              />
+            ))}
+          </View>
         ) : null}
 
         {currencyBuckets.length === 0 ? (
@@ -514,10 +578,10 @@ export function FinanceScreen() {
 
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.operationsTitle')}</Text>
-          {operations.length === 0 ? (
+          {filteredOperations.length === 0 ? (
             <Text style={[styles.empty, { color: colors.muted }]}>{t('finance.emptyOperations')}</Text>
           ) : (
-            operations.map((operation) => {
+            filteredOperations.map((operation) => {
               const signed = operation.type === 'INCOME' ? operation.amount : -operation.amount;
               return (
                 <View key={operation.id} style={[styles.opRow, { borderColor: colors.line }]}>
@@ -612,6 +676,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     justifyContent: 'center',
+    maxWidth: '100%',
     minHeight: 44,
     paddingHorizontal: 12,
     paddingVertical: 8,

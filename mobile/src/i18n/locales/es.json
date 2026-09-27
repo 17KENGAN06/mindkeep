@@ -377,14 +377,16 @@
     "moneyKind": {
       "label": "Forma del dinero",
       "cash": "Efectivo",
-      "electronic": "Electrónico"
+      "electronic": "Electrónico",
+      "all": "Todas"
     },
     "currency": "Moneda",
     "displayCurrency": "Mostrar totales en",
     "budgetSubtitle": "Primero efectivo o tarjeta, luego la moneda. Cada moneda se cuenta aparte — sin conversión.",
     "perCurrencyTitle": "Por moneda",
     "perCurrencyHint": "Ingresos, gastos y saldo se cuentan por separado para cada moneda.",
-    "emptyCurrencies": "Aún no hay operaciones en este periodo."
+    "emptyCurrencies": "Aún no hay operaciones en este periodo.",
+    "allCurrencies": "Todas las monedas"
   },
   "auth": {
     "loginTitle": "Qué bueno verte de nuevo",

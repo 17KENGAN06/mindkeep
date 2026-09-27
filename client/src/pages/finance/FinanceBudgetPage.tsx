@@ -9,7 +9,12 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
-import { currencyLabel, currencyOptions, type FinanceCurrency } from '@/features/finance/currencies';
+import {
+  currencyLabel,
+  currencyOptions,
+  FINANCE_CURRENCIES,
+  type FinanceCurrency,
+} from '@/features/finance/currencies';
 import {
   currentPeriodDefaults,
   formatSignedMoney,
@@ -32,6 +37,37 @@ function todayInputValue(): string {
 }
 
 type KindFilter = 'ALL' | FinanceMoneyKind;
+type CurrencyFilter = 'ALL' | string;
+
+function FilterChips<T extends string>({
+  value,
+  onChange,
+  items,
+}: {
+  value: T;
+  onChange: (value: T) => void;
+  items: Array<{ id: T; label: string }>;
+}) {
+  return (
+    <div className="flex min-w-0 flex-wrap gap-1 rounded-2xl bg-brand-50/40 p-1 ring-1 ring-line/70">
+      {items.map((item) => {
+        const active = value === item.id;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            className={`min-h-9 rounded-xl px-3 text-xs font-semibold transition ${
+              active ? 'bg-brand-500 text-[#07110d] shadow-sm' : 'text-muted hover:bg-panel hover:text-ink'
+            }`}
+            onClick={() => onChange(item.id)}
+          >
+            {item.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 export function FinanceBudgetPage() {
   const { t, i18n } = useTranslation();
@@ -44,6 +80,7 @@ export function FinanceBudgetPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [kindFilter, setKindFilter] = useState<KindFilter>('ALL');
+  const [currencyFilter, setCurrencyFilter] = useState<CurrencyFilter>('ALL');
 
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
   const [moneyKind, setMoneyKind] = useState<FinanceMoneyKind>('ELECTRONIC');
@@ -62,11 +99,27 @@ export function FinanceBudgetPage() {
   const createOperation = useCreateFinanceOperation();
   const deleteOperation = useDeleteFinanceOperation();
 
+  const periodOperations = summaryQuery.data?.operations ?? [];
+
+  const availableCurrencies = useMemo(() => {
+    const seen = new Set(periodOperations.map((op) => op.currency || 'EUR'));
+    const ranked = FINANCE_CURRENCIES.filter((code) => seen.has(code));
+    const extra = [...seen].filter((code) => !ranked.includes(code as FinanceCurrency));
+    return [...ranked, ...extra];
+  }, [periodOperations]);
+
+  const activeCurrencyFilter =
+    currencyFilter !== 'ALL' && availableCurrencies.some((code) => code === currencyFilter)
+      ? currencyFilter
+      : 'ALL';
+
   const filteredOperations = useMemo(() => {
-    const ops = summaryQuery.data?.operations ?? [];
-    if (kindFilter === 'ALL') return ops;
-    return ops.filter((op) => (op.moneyKind ?? 'ELECTRONIC') === kindFilter);
-  }, [summaryQuery.data?.operations, kindFilter]);
+    return periodOperations.filter((op) => {
+      if (kindFilter !== 'ALL' && (op.moneyKind ?? 'ELECTRONIC') !== kindFilter) return false;
+      if (activeCurrencyFilter !== 'ALL' && (op.currency || 'EUR') !== activeCurrencyFilter) return false;
+      return true;
+    });
+  }, [periodOperations, kindFilter, activeCurrencyFilter]);
 
   const currencyBuckets = useMemo(
     () => summarizeByCurrency(filteredOperations),
@@ -142,7 +195,7 @@ export function FinanceBudgetPage() {
         onMonthChange={setMonth}
       />
 
-      <section className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+      <section className="min-w-0 overflow-visible rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <h2 className="text-base font-semibold text-ink">{t('finance.addOperation')}</h2>
         <form className="mt-4 grid min-w-0 gap-3 md:grid-cols-2" onSubmit={(event) => void onCreate(event)}>
           <div className="grid min-w-0 gap-3 md:col-span-2 md:grid-cols-2 md:items-start">
@@ -212,32 +265,31 @@ export function FinanceBudgetPage() {
       </section>
 
       <section className="space-y-3">
-        <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
+        <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div className="min-w-0">
             <h2 className="text-base font-semibold text-ink">{t('finance.perCurrencyTitle')}</h2>
             <p className="mt-1 text-sm text-muted">{t('finance.perCurrencyHint')}</p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {(
-              [
-                { id: 'ALL' as const, label: t('finance.moneyKind.all') },
-                { id: 'CASH' as const, label: t('finance.moneyKind.cash') },
-                { id: 'ELECTRONIC' as const, label: t('finance.moneyKind.electronic') },
-              ] as const
-            ).map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className={`rounded-xl px-3 py-2 text-xs font-semibold transition ${
-                  kindFilter === item.id
-                    ? 'bg-brand-500 text-[#07110d]'
-                    : 'bg-panel text-muted ring-1 ring-line hover:text-ink'
-                }`}
-                onClick={() => setKindFilter(item.id)}
-              >
-                {item.label}
-              </button>
-            ))}
+          <div className="flex min-w-0 flex-col gap-2 sm:items-end">
+            <FilterChips
+              value={kindFilter}
+              onChange={setKindFilter}
+              items={[
+                { id: 'ALL', label: t('finance.moneyKind.all') },
+                { id: 'ELECTRONIC', label: t('finance.moneyKind.electronic') },
+                { id: 'CASH', label: t('finance.moneyKind.cash') },
+              ]}
+            />
+            {availableCurrencies.length > 1 ? (
+              <FilterChips
+                value={activeCurrencyFilter}
+                onChange={setCurrencyFilter}
+                items={[
+                  { id: 'ALL', label: t('finance.allCurrencies') },
+                  ...availableCurrencies.map((code) => ({ id: code, label: code })),
+                ]}
+              />
+            ) : null}
           </div>
         </div>
 

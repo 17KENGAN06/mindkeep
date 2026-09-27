@@ -377,14 +377,16 @@
     "moneyKind": {
       "label": "Forme d'argent",
       "cash": "Espèces",
-      "electronic": "Électronique"
+      "electronic": "Électronique",
+      "all": "Toutes"
     },
     "currency": "Devise",
     "displayCurrency": "Afficher les totaux en",
     "budgetSubtitle": "D’abord espèces ou carte, puis la devise. Chaque devise reste à part — sans conversion.",
     "perCurrencyTitle": "Par devise",
     "perCurrencyHint": "Recettes, dépenses et solde sont comptés séparément pour chaque devise.",
-    "emptyCurrencies": "Aucune opération sur cette période."
+    "emptyCurrencies": "Aucune opération sur cette période.",
+    "allCurrencies": "Toutes les devises"
   },
   "auth": {
     "loginTitle": "Bon retour",

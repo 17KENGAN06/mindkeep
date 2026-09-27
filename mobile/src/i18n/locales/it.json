@@ -377,14 +377,16 @@
     "moneyKind": {
       "label": "Forma del denaro",
       "cash": "Contanti",
-      "electronic": "Elettronico"
+      "electronic": "Elettronico",
+      "all": "Tutte"
     },
     "currency": "Valuta",
     "displayCurrency": "Mostra i totali in",
     "budgetSubtitle": "Prima contanti o carta, poi la valuta. Ogni valuta resta a sé — senza conversioni.",
     "perCurrencyTitle": "Per valuta",
     "perCurrencyHint": "Entrate, uscite e saldo si contano separatamente per ogni valuta.",
-    "emptyCurrencies": "Nessuna operazione in questo periodo."
+    "emptyCurrencies": "Nessuna operazione in questo periodo.",
+    "allCurrencies": "Tutte le valute"
   },
   "auth": {
     "loginTitle": "Bentornato",

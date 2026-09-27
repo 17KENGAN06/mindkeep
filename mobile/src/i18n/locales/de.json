@@ -377,14 +377,16 @@
     "moneyKind": {
       "label": "Geldform",
       "cash": "Bargeld",
-      "electronic": "Elektronisch"
+      "electronic": "Elektronisch",
+      "all": "Alle"
     },
     "currency": "Währung",
     "displayCurrency": "Summen anzeigen in",
     "budgetSubtitle": "Zuerst bar oder Karte, dann die Währung. Jede Währung bleibt für sich — ohne Umrechnung.",
     "perCurrencyTitle": "Nach Währung",
     "perCurrencyHint": "Einnahmen, Ausgaben und Saldo werden für jede Währung getrennt gezählt.",
-    "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen."
+    "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen.",
+    "allCurrencies": "Alle Währungen"
   },
   "auth": {
     "loginTitle": "Willkommen zurück",

@@ -133,7 +133,7 @@
       "label": "Forma del dinero",
       "cash": "Efectivo",
       "electronic": "Electrónico",
-      "all": "Todo"
+      "all": "Todas"
     },
     "wallets": {
       "title": "Efectivo y electrónico",
@@ -146,7 +146,8 @@
     "displayCurrency": "Mostrar totales en",
     "perCurrencyTitle": "Por moneda",
     "perCurrencyHint": "Ingresos, gastos y saldo se cuentan por separado para cada moneda.",
-    "emptyCurrencies": "Aún no hay operaciones en este periodo."
+    "emptyCurrencies": "Aún no hay operaciones en este periodo.",
+    "allCurrencies": "Todas las monedas"
   },
   "tasks": {
     "title": "Tareas del día",

@@ -146,7 +146,8 @@
     "displayCurrency": "Näytä summat valuutassa",
     "perCurrencyTitle": "Valuutoittain",
     "perCurrencyHint": "Tulot, menot ja saldo lasketaan erikseen jokaiselle valuutalle.",
-    "emptyCurrencies": "Tällä jaksolla ei ole vielä tapahtumia."
+    "emptyCurrencies": "Tällä jaksolla ei ole vielä tapahtumia.",
+    "allCurrencies": "Kaikki valuutat"
   },
   "tasks": {
     "title": "Päivittäiset tehtävät",

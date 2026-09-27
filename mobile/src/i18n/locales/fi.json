@@ -377,14 +377,16 @@
     "moneyKind": {
       "label": "Rahan muoto",
       "cash": "Käteinen",
-      "electronic": "Sähköinen"
+      "electronic": "Sähköinen",
+      "all": "Kaikki"
     },
     "currency": "Valuutta",
     "displayCurrency": "Näytä summat valuutassa",
     "budgetSubtitle": "Valitse ensin käteinen tai kortti, sitten valuutta. Jokainen valuutta pysyy omanaaan — ilman muuntoa.",
     "perCurrencyTitle": "Valuutoittain",
     "perCurrencyHint": "Tulot, menot ja saldo lasketaan erikseen jokaiselle valuutalle.",
-    "emptyCurrencies": "Tällä jaksolla ei ole vielä tapahtumia."
+    "emptyCurrencies": "Tällä jaksolla ei ole vielä tapahtumia.",
+    "allCurrencies": "Kaikki valuutat"
   },
   "auth": {
     "loginTitle": "Tervetuloa takaisin",
