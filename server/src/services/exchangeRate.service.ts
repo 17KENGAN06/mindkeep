@@ -3,10 +3,18 @@ import { prisma } from '@/config/prisma.js';
 import { AppError } from '@/utils/AppError.js';
 
 const CURRENCIES = [
-  BudgetCurrency.RUB,
-  BudgetCurrency.USD,
-  BudgetCurrency.EUR,
   BudgetCurrency.UAH,
+  BudgetCurrency.EUR,
+  BudgetCurrency.USD,
+  BudgetCurrency.PLN,
+  BudgetCurrency.GBP,
+  BudgetCurrency.CHF,
+  BudgetCurrency.CZK,
+  BudgetCurrency.RON,
+  BudgetCurrency.TRY,
+  BudgetCurrency.GEL,
+  BudgetCurrency.KZT,
+  BudgetCurrency.RUB,
 ] as const;
 
 type RateMap = Record<BudgetCurrency, number>;
@@ -14,14 +22,35 @@ type RateMap = Record<BudgetCurrency, number>;
 let memoryCache: { fetchedAt: number; rates: RateMap; asOf: string } | null = null;
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
+function emptyRates(): RateMap {
+  return {
+    UAH: 1,
+    EUR: 1,
+    USD: 1,
+    PLN: 1,
+    GBP: 1,
+    CHF: 1,
+    CZK: 1,
+    RON: 1,
+    TRY: 1,
+    GEL: 1,
+    KZT: 1,
+    RUB: 1,
+  };
+}
+
 function startOfUtcDay(date = new Date()): Date {
   return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
 }
 
-/**
- * Fetch FX rates from open.er-api.com (Open Exchange Rates open endpoint).
- * Reliable free source; no API key. We normalize everything to RUB.
- */
+function rateToRub(usdToRub: number, usdRates: Record<string, number>, currency: BudgetCurrency): number {
+  if (currency === BudgetCurrency.RUB) return 1;
+  if (currency === BudgetCurrency.USD) return usdToRub;
+  const usdPerUnit = usdRates[currency];
+  if (!usdPerUnit) return usdToRub;
+  return usdToRub / usdPerUnit;
+}
+
 async function fetchRatesFromProvider(): Promise<{ rates: RateMap; asOf: string }> {
   const response = await fetch('https://open.er-api.com/v6/latest/USD', {
     headers: { Accept: 'application/json' },
@@ -48,12 +77,10 @@ async function fetchRatesFromProvider(): Promise<{ rates: RateMap; asOf: string 
   }
 
   const usdToRub = payload.rates.RUB;
-  const rates: RateMap = {
-    RUB: 1,
-    USD: usdToRub,
-    EUR: payload.rates.EUR ? usdToRub / payload.rates.EUR : usdToRub,
-    UAH: payload.rates.UAH ? usdToRub / payload.rates.UAH : usdToRub,
-  };
+  const rates = emptyRates();
+  for (const currency of CURRENCIES) {
+    rates[currency] = rateToRub(usdToRub, payload.rates, currency);
+  }
 
   return {
     rates,
@@ -90,7 +117,7 @@ async function loadRatesFromDb(day: Date): Promise<RateMap | null> {
     return null;
   }
 
-  const rates = { RUB: 1, USD: 1, EUR: 1, UAH: 1 } as RateMap;
+  const rates = emptyRates();
   for (const row of rows) {
     rates[row.currency] = row.rateToRub;
   }
@@ -119,14 +146,14 @@ export async function getRateMap(): Promise<{ rates: RateMap; asOf: string; sour
     const latest = await prisma.exchangeRate.findMany({
       where: { currency: { in: [...CURRENCIES] } },
       orderBy: { date: 'desc' },
-      take: 20,
+      take: 40,
     });
 
     if (latest.length > 0) {
       const newestDate = latest[0]?.date;
       const rows = latest.filter((row) => row.date.getTime() === newestDate?.getTime());
       if (rows.length >= CURRENCIES.length) {
-        const rates = { RUB: 1, USD: 1, EUR: 1, UAH: 1 } as RateMap;
+        const rates = emptyRates();
         for (const row of rows) {
           rates[row.currency] = row.rateToRub;
         }

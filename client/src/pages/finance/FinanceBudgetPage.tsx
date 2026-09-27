@@ -9,6 +9,7 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
+import { currencyOptions, type FinanceCurrency } from '@/features/finance/currencies';
 import {
   currentPeriodDefaults,
   formatMoney,
@@ -19,6 +20,7 @@ import {
   useDeleteFinanceOperation,
   useFinanceCategories,
   useFinanceSummary,
+  useUpdateFinanceSettings,
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
 import type { FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
@@ -46,6 +48,7 @@ export function FinanceBudgetPage() {
 
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
   const [moneyKind, setMoneyKind] = useState<FinanceMoneyKind>('ELECTRONIC');
+  const [currency, setCurrency] = useState<FinanceCurrency>('UAH');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(todayInputValue());
   const [comment, setComment] = useState('');
@@ -59,6 +62,7 @@ export function FinanceBudgetPage() {
   const categoriesQuery = useFinanceCategories();
   const createOperation = useCreateFinanceOperation();
   const deleteOperation = useDeleteFinanceOperation();
+  const updateSettings = useUpdateFinanceSettings();
 
   const filteredOperations = useMemo(() => {
     const ops = summaryQuery.data?.operations ?? [];
@@ -75,6 +79,7 @@ export function FinanceBudgetPage() {
   }
 
   const summary = summaryQuery.data;
+  const displayCurrency = summary.currency;
   const categories = categoriesQuery.data ?? [];
   const byKind = summary.totalsByKind ?? {
     CASH: { income: 0, expense: 0, balance: 0 },
@@ -94,6 +99,7 @@ export function FinanceBudgetPage() {
       await createOperation.mutateAsync({
         type,
         moneyKind,
+        currency,
         amount: parsedAmount,
         date,
         comment,
@@ -160,6 +166,19 @@ export function FinanceBudgetPage() {
         onMonthChange={setMonth}
       />
 
+      <div className="max-w-md">
+        <Select
+          label={t('finance.displayCurrency')}
+          value={displayCurrency}
+          onChange={(event) => {
+            void updateSettings.mutateAsync({
+              displayCurrency: event.target.value as FinanceCurrency,
+            });
+          }}
+          options={currencyOptions(language)}
+        />
+      </div>
+
       <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           {
@@ -199,8 +218,8 @@ export function FinanceBudgetPage() {
               }`}
             >
               {card.signed
-                ? formatSignedMoney(card.value, language)
-                : formatMoney(card.value, language)}
+                ? formatSignedMoney(card.value, language, displayCurrency)
+                : formatMoney(card.value, language, displayCurrency)}
             </p>
           </div>
         ))}
@@ -245,7 +264,7 @@ export function FinanceBudgetPage() {
                       {t('finance.income')}
                     </dt>
                     <dd className="mt-1 text-sm font-semibold text-brand-500">
-                      {formatSignedMoney(wallet.totals.income, language)}
+                      {formatSignedMoney(wallet.totals.income, language, displayCurrency)}
                     </dd>
                   </div>
                   <div>
@@ -253,7 +272,7 @@ export function FinanceBudgetPage() {
                       {t('finance.expense')}
                     </dt>
                     <dd className="mt-1 text-sm font-semibold text-expense">
-                      {formatSignedMoney(-wallet.totals.expense, language)}
+                      {formatSignedMoney(-wallet.totals.expense, language, displayCurrency)}
                     </dd>
                   </div>
                   <div>
@@ -261,7 +280,7 @@ export function FinanceBudgetPage() {
                       {t('finance.balance')}
                     </dt>
                     <dd className="mt-1 text-sm font-semibold text-ink">
-                      {formatSignedMoney(wallet.totals.balance, language)}
+                      {formatSignedMoney(wallet.totals.balance, language, displayCurrency)}
                     </dd>
                   </div>
                 </dl>
@@ -279,13 +298,13 @@ export function FinanceBudgetPage() {
               <div key={item.month} className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
                 <p className="text-sm font-medium text-ink">{t(`finance.months.${item.month}`)}</p>
                 <p className="mt-1 text-xs text-muted">
-                  {t('finance.income')}: {formatSignedMoney(item.income, language)}
+                  {t('finance.income')}: {formatSignedMoney(item.income, language, displayCurrency)}
                 </p>
                 <p className="text-xs text-muted">
-                  {t('finance.expense')}: {formatSignedMoney(-item.expense, language)}
+                  {t('finance.expense')}: {formatSignedMoney(-item.expense, language, displayCurrency)}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-ink">
-                  {formatSignedMoney(item.balance, language)}
+                  {formatSignedMoney(item.balance, language, displayCurrency)}
                 </p>
               </div>
             ))}
@@ -297,21 +316,27 @@ export function FinanceBudgetPage() {
         <h2 className="text-base font-semibold text-ink">{t('finance.addOperation')}</h2>
         <form className="mt-4 grid gap-3 md:grid-cols-2" onSubmit={(event) => void onCreate(event)}>
           <Select
-            label={t('finance.type')}
-            value={type}
-            onChange={(event) => setType(event.target.value as FinanceOperationType)}
-            options={[
-              { value: 'INCOME', label: t('finance.income') },
-              { value: 'EXPENSE', label: t('finance.expense') },
-            ]}
-          />
-          <Select
             label={t('finance.moneyKind.label')}
             value={moneyKind}
             onChange={(event) => setMoneyKind(event.target.value as FinanceMoneyKind)}
             options={[
-              { value: 'CASH', label: t('finance.moneyKind.cash') },
               { value: 'ELECTRONIC', label: t('finance.moneyKind.electronic') },
+              { value: 'CASH', label: t('finance.moneyKind.cash') },
+            ]}
+          />
+          <Select
+            label={t('finance.currency')}
+            value={currency}
+            onChange={(event) => setCurrency(event.target.value as FinanceCurrency)}
+            options={currencyOptions(language)}
+          />
+          <Select
+            label={t('finance.type')}
+            value={type}
+            onChange={(event) => setType(event.target.value as FinanceOperationType)}
+            options={[
+              { value: 'EXPENSE', label: t('finance.expense') },
+              { value: 'INCOME', label: t('finance.income') },
             ]}
           />
           <Input

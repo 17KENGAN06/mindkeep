@@ -1,4 +1,5 @@
-export type FinanceCurrency = 'EUR';
+export type { FinanceCurrency } from '../features/finance/currencies';
+import type { FinanceCurrency } from '../features/finance/currencies';
 export type FinanceOperationType = 'INCOME' | 'EXPENSE';
 export type FinanceMoneyKind = 'CASH' | 'ELECTRONIC';
 export type FinanceView = 'month' | 'year';

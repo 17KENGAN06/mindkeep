@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budget",
-    "budgetSubtitle": "Track income and expenses in euros — simple and clear.",
+    "budgetSubtitle": "Choose cash or card first, then the currency. Totals convert to the currency you view in.",
     "transactionsTitle": "Transactions",
     "transactionsSubtitle": "All income and expenses for the selected period.",
     "categoriesTitle": "Expense categories",
@@ -141,7 +141,9 @@
       "cashHint": "Bills and coins",
       "electronicHint": "Card, transfer, account",
       "showOps": "Show operations"
-    }
+    },
+    "currency": "Currency",
+    "displayCurrency": "Show totals in"
   },
   "tasks": {
     "title": "Daily tasks",
@@ -436,7 +438,7 @@
       },
       {
         "title": "Log money movement",
-        "body": "In Budget, record income or expense. All amounts are kept in euros."
+        "body": "In Budget, choose cash or card, then the currency, and log income or expense."
       },
       {
         "title": "Return via calendars",
@@ -447,7 +449,7 @@
     "rules": [
       "Tasks, finance, and review share one account but stay out of each other’s way.",
       "The 3 / 7 / 30 review schedule is counted from the learning date and does not shift after completion.",
-      "The budget is kept in euros — no conversion and no extra complexity.",
+      "Each operation has its own currency. Totals convert to the currency you view in.",
       "Your data belongs only to your account and is not visible to other users."
     ],
     "faqTitle": "FAQ",
@@ -466,7 +468,7 @@
       },
       {
         "question": "Which currency is the budget in?",
-        "answer": "Mindkeep currently keeps finance in euros. That keeps summaries simple and avoids exchange-rate confusion."
+        "answer": "You choose the currency for each operation. Totals are converted to the display currency you pick."
       }
     ],
     "ctaTitle": "Take the first step today",

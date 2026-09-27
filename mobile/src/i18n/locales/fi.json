@@ -378,7 +378,10 @@
       "label": "Rahan muoto",
       "cash": "Käteinen",
       "electronic": "Sähköinen"
-    }
+    },
+    "currency": "Valuutta",
+    "displayCurrency": "Näytä summat valuutassa",
+    "budgetSubtitle": "Valitse ensin käteinen tai kortti, sitten valuutta. Summat muunnetaan näyttövaluuttaan."
   },
   "auth": {
     "loginTitle": "Tervetuloa takaisin",
@@ -524,7 +527,7 @@
       },
       {
         "title": "Kirjaa rahaliikenne",
-        "body": "Budjetissa merkitse tulo tai meno. Kaikki summat pidetään euroissa."
+        "body": "Budjetissa valitse ensin käteinen tai kortti, sitten valuutta, ja kirjaa tulo tai meno."
       },
       {
         "title": "Palaa kalenterien kautta",
@@ -535,7 +538,7 @@
     "rules": [
       "Tehtävät, talous ja kertaus jakavat saman tilin, mutta eivät häiritse toisiaan.",
       "Kertausaikataulu 3 / 7 / 30 lasketaan oppimispäivästä eikä siirry suorituksen jälkeen.",
-      "Budjetti pidetään euroissa — ilman muunnoksia ja ylimääräistä monimutkaisuutta.",
+      "Jokaisella tapahtumalla on valuutta. Summat muunnetaan näyttövaluuttaan.",
       "Tietosi kuuluvat vain tilillesi eivätkä näy muille käyttäjille."
     ],
     "faqTitle": "UKK",

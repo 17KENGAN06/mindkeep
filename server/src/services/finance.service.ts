@@ -1,5 +1,6 @@
 import { BudgetCurrency, BudgetMoneyKind, BudgetOperationType, Prisma } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
+import { convertAmount, getRateMap } from '@/services/exchangeRate.service.js';
 import type {
   CreateFinanceCategoryInput,
   CreateFinanceOperationInput,
@@ -62,8 +63,7 @@ export class FinanceService {
     return prisma.budgetSettings.update({
       where: { userId },
       data: {
-        displayCurrency: DEFAULT_CURRENCY,
-        openingCurrency: DEFAULT_CURRENCY,
+        ...(input.displayCurrency ? { displayCurrency: input.displayCurrency, openingCurrency: input.displayCurrency } : {}),
         ...(input.openingBalance !== undefined ? { openingBalance: input.openingBalance } : {}),
       },
     });
@@ -170,7 +170,7 @@ export class FinanceService {
         type: input.type,
         moneyKind: input.moneyKind ?? BudgetMoneyKind.ELECTRONIC,
         amount: input.amount,
-        currency: DEFAULT_CURRENCY,
+        currency: input.currency ?? DEFAULT_CURRENCY,
         date: parseOperationDate(input.date),
         comment: input.comment ?? '',
         categoryId: input.categoryId ?? null,
@@ -205,6 +205,19 @@ export class FinanceService {
       orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
     });
 
+    const display = settings.displayCurrency;
+    let rates: Awaited<ReturnType<typeof getRateMap>>['rates'] | null = null;
+    try {
+      rates = (await getRateMap()).rates;
+    } catch {
+      rates = null;
+    }
+
+    const toDisplay = (amount: number, currency: BudgetCurrency) => {
+      if (!rates || currency === display) return amount;
+      return roundMoney(convertAmount(amount, currency, display, rates));
+    };
+
     let income = 0;
     let expense = 0;
     const byKind = {
@@ -220,20 +233,21 @@ export class FinanceService {
     }));
 
     for (const op of operations) {
+      const amount = toDisplay(op.amount, op.currency);
       const kind = op.moneyKind === BudgetMoneyKind.CASH ? 'CASH' : 'ELECTRONIC';
       if (op.type === BudgetOperationType.INCOME) {
-        income += op.amount;
-        byKind[kind].income = roundMoney(byKind[kind].income + op.amount);
+        income += amount;
+        byKind[kind].income = roundMoney(byKind[kind].income + amount);
       } else {
-        expense += op.amount;
-        byKind[kind].expense = roundMoney(byKind[kind].expense + op.amount);
+        expense += amount;
+        byKind[kind].expense = roundMoney(byKind[kind].expense + amount);
         const key = op.categoryId ?? 'uncategorized';
         const current = byCategory.get(key) ?? {
           id: op.categoryId,
           name: op.category?.name ?? '—',
           expense: 0,
         };
-        current.expense = roundMoney(current.expense + op.amount);
+        current.expense = roundMoney(current.expense + amount);
         byCategory.set(key, current);
       }
 
@@ -242,23 +256,19 @@ export class FinanceService {
       if (query.view === 'year') {
         const bucket = byMonth[op.date.getUTCMonth()]!;
         if (op.type === BudgetOperationType.INCOME) {
-          bucket.income = roundMoney(bucket.income + op.amount);
+          bucket.income = roundMoney(bucket.income + amount);
         } else {
-          bucket.expense = roundMoney(bucket.expense + op.amount);
+          bucket.expense = roundMoney(bucket.expense + amount);
         }
         bucket.balance = roundMoney(bucket.income - bucket.expense);
       }
     }
 
-    const openingBalance = roundMoney(settings.openingBalance);
+    const openingBalance = roundMoney(toDisplay(settings.openingBalance, settings.openingCurrency));
 
     return {
-      settings: {
-        ...settings,
-        displayCurrency: DEFAULT_CURRENCY,
-        openingCurrency: DEFAULT_CURRENCY,
-      },
-      currency: DEFAULT_CURRENCY,
+      settings,
+      currency: display,
       period: {
         view: query.view,
         year: query.year,

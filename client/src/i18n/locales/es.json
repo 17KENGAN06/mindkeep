@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Presupuesto",
-    "budgetSubtitle": "Sigue ingresos y gastos en euros — simple y claro.",
+    "budgetSubtitle": "Primero elige efectivo o tarjeta, luego la moneda. Los totales se convierten a la moneda de vista.",
     "transactionsTitle": "Operaciones",
     "transactionsSubtitle": "Todos los ingresos y gastos del periodo seleccionado.",
     "categoriesTitle": "Categorías de gasto",
@@ -141,7 +141,9 @@
       "cashHint": "Billetes y monedas",
       "electronicHint": "Tarjeta, transferencia, cuenta",
       "showOps": "Ver operaciones"
-    }
+    },
+    "currency": "Moneda",
+    "displayCurrency": "Mostrar totales en"
   },
   "tasks": {
     "title": "Tareas del día",
@@ -436,7 +438,7 @@
       },
       {
         "title": "Registra el movimiento de dinero",
-        "body": "En Presupuesto, anota un ingreso o un gasto. Todos los importes se llevan en euros."
+        "body": "En el presupuesto elige primero efectivo o tarjeta, luego la moneda, y anota ingreso o gasto."
       },
       {
         "title": "Vuelve por los calendarios",
@@ -447,7 +449,7 @@
     "rules": [
       "Tareas, finanzas y repaso comparten una cuenta, pero no se estorban entre sí.",
       "El calendario de repaso 3 / 7 / 30 se cuenta desde la fecha de aprendizaje y no se mueve después de completarlo.",
-      "El presupuesto se lleva en euros — sin conversión ni complejidad extra.",
+      "Cada operación tiene su moneda. Los totales se convierten a la moneda de vista.",
       "Tus datos pertenecen solo a tu cuenta y no son visibles para otros usuarios."
     ],
     "faqTitle": "FAQ",
@@ -466,7 +468,7 @@
       },
       {
         "question": "¿En qué moneda está el presupuesto?",
-        "answer": "Por ahora Mindkeep lleva las finanzas en euros. Así los resúmenes se mantienen simples y se evita la confusión de los tipos de cambio."
+        "answer": "Eliges la moneda en cada operación. Los totales se convierten a la moneda de vista."
       }
     ],
     "ctaTitle": "Da el primer paso hoy",

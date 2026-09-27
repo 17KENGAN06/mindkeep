@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { financeApi, type CreateOperationPayload } from '@/api/finance';
+import type { FinanceCurrency } from '@/features/finance/currencies';
 import type { FinancePeriodParams } from '@/types/finance';
 
 const financeKey = ['finance'] as const;
@@ -14,7 +15,8 @@ export function useFinanceSettings() {
 export function useUpdateFinanceSettings() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: { openingBalance?: number }) => financeApi.updateSettings(payload),
+    mutationFn: (payload: { openingBalance?: number; displayCurrency?: FinanceCurrency }) =>
+      financeApi.updateSettings(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });
     },

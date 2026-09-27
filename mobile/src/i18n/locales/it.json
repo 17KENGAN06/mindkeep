@@ -378,7 +378,10 @@
       "label": "Forma del denaro",
       "cash": "Contanti",
       "electronic": "Elettronico"
-    }
+    },
+    "currency": "Valuta",
+    "displayCurrency": "Mostra i totali in",
+    "budgetSubtitle": "Prima contanti o carta, poi la valuta. I totali sono convertiti nella valuta di visualizzazione."
   },
   "auth": {
     "loginTitle": "Bentornato",
@@ -524,7 +527,7 @@
       },
       {
         "title": "Registra i movimenti di denaro",
-        "body": "In Budget, registra un'entrata o un'uscita. Tutti gli importi sono tenuti in euro."
+        "body": "Nel budget scegli prima contanti o carta, poi la valuta, e registra entrata o uscita."
       },
       {
         "title": "Torna dai calendari",
@@ -535,7 +538,7 @@
     "rules": [
       "Attività, finanze e ripasso condividono un account, ma restano ciascuno per conto proprio.",
       "Il calendario di ripasso 3 / 7 / 30 si conta dalla data di apprendimento e non si sposta dopo il completamento.",
-      "Il budget è tenuto in euro — senza conversioni né complessità extra.",
+      "Ogni operazione ha la sua valuta. I totali sono convertiti nella valuta di visualizzazione.",
       "I tuoi dati appartengono solo al tuo account e non sono visibili ad altri utenti."
     ],
     "faqTitle": "FAQ",
@@ -554,7 +557,7 @@
       },
       {
         "question": "In quale valuta è il budget?",
-        "answer": "Al momento Mindkeep tiene le finanze in euro. Così i riepiloghi restano semplici e si evita la confusione dei tassi di cambio."
+        "answer": "Scegli la valuta per ogni operazione. I totali sono convertiti nella valuta di visualizzazione."
       }
     ],
     "ctaTitle": "Fai il primo passo oggi",

@@ -15,20 +15,20 @@ const intlLocales: Record<AppLanguage, string> = {
 
 export const FINANCE_CURRENCY = 'EUR' as const;
 
-export function formatMoney(amount: number, language: AppLanguage): string {
+export function formatMoney(amount: number, language: AppLanguage, currency: string = FINANCE_CURRENCY): string {
   try {
     return new Intl.NumberFormat(intlLocales[language], {
       style: 'currency',
-      currency: FINANCE_CURRENCY,
+      currency,
       maximumFractionDigits: 2,
     }).format(amount);
   } catch {
-    return `${amount.toFixed(2)} EUR`;
+    return `${amount.toFixed(2)} ${currency}`;
   }
 }
 
-export function formatSignedMoney(amount: number, language: AppLanguage): string {
-  const formatted = formatMoney(Math.abs(amount), language);
+export function formatSignedMoney(amount: number, language: AppLanguage, currency: string = FINANCE_CURRENCY): string {
+  const formatted = formatMoney(Math.abs(amount), language, currency);
   if (amount > 0) return `+${formatted}`;
   if (amount < 0) return `−${formatted}`;
   return formatted;

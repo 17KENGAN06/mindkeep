@@ -378,7 +378,10 @@
       "label": "Geldform",
       "cash": "Bargeld",
       "electronic": "Elektronisch"
-    }
+    },
+    "currency": "Währung",
+    "displayCurrency": "Summen anzeigen in",
+    "budgetSubtitle": "Zuerst bar oder Karte, dann die Währung. Summen werden in die Anzeigewährung umgerechnet."
   },
   "auth": {
     "loginTitle": "Willkommen zurück",
@@ -524,7 +527,7 @@
       },
       {
         "title": "Geldbewegung erfassen",
-        "body": "Im Budget trägst du Einnahme oder Ausgabe ein. Alle Beträge werden in Euro geführt."
+        "body": "Im Budget zuerst bar oder Karte, dann die Währung — und Einnahme oder Ausgabe erfassen."
       },
       {
         "title": "Über Kalender zurückkehren",
@@ -535,7 +538,7 @@
     "rules": [
       "Aufgaben, Finanzen und Wiederholen teilen ein Konto, bleiben aber aus dem Weg.",
       "Der 3 / 7 / 30-Wiederholungsplan wird vom Lerndatum gezählt und verschiebt sich nach dem Abschluss nicht.",
-      "Das Budget wird in Euro geführt — ohne Umrechnung und ohne Extra-Komplexität.",
+      "Jede Buchung hat ihre Währung. Summen werden in die Anzeigewährung umgerechnet.",
       "Deine Daten gehören nur deinem Konto und sind für andere Nutzer nicht sichtbar."
     ],
     "faqTitle": "FAQ",
@@ -554,7 +557,7 @@
       },
       {
         "question": "In welcher Währung ist das Budget?",
-        "answer": "Mindkeep führt Finanzen derzeit in Euro. So bleiben Übersichten einfach und Wechselkursverwirrung bleibt aus."
+        "answer": "Die Währung wählst du pro Buchung. Summen werden in die Anzeigewährung umgerechnet."
       }
     ],
     "ctaTitle": "Mach heute den ersten Schritt",

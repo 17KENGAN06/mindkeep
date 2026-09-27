@@ -110,6 +110,7 @@ export function TodayScreen() {
   const todayDone = tasks.filter((task) => task.completed).length;
   const todayTotal = tasks.length;
   const finance = financeQuery.data;
+  const money = finance?.currency ?? 'EUR';
   const spentToday = (finance?.operations ?? [])
     .filter((op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === today)
     .reduce((sum, op) => sum + op.amount, 0);
@@ -244,13 +245,13 @@ export function TodayScreen() {
           />
           <ProgressCard
             title={t('dashboard.cards.spentToday')}
-            valueText={`${formatMoney(spentToday, language)} / ${formatMoney(softDailyLimit, language)}`}
+            valueText={`${formatMoney(spentToday, language, money)} / ${formatMoney(softDailyLimit, language, money)}`}
             percent={(spentToday / softDailyLimit) * 100}
             onPress={() => navigation.navigate('More', { screen: 'Finance' })}
           />
           <ProgressCard
             title={t('dashboard.cards.budgetLeft')}
-            valueText={`${formatMoney(budgetLeft, language)} / ${formatMoney(budgetTotal, language)}`}
+            valueText={`${formatMoney(budgetLeft, language, money)} / ${formatMoney(budgetTotal, language, money)}`}
             percent={(budgetLeft / budgetTotal) * 100}
             onPress={() => navigation.navigate('More', { screen: 'Finance' })}
           />
@@ -514,7 +515,7 @@ export function TodayScreen() {
                     {item.name}
                   </Text>
                   <Text style={[styles.minutes, { color: colors.muted }]}>
-                    {formatMoney(item.expense, language)} · {share}%
+                    {formatMoney(item.expense, language, money)} · {share}%
                   </Text>
                 </View>
               );
@@ -522,8 +523,9 @@ export function TodayScreen() {
           )}
           {finance ? (
             <Text style={[styles.meta, { color: colors.muted }]}>
-              {t('finance.totalIncome')}: {formatMoney(monthIncome, language)} · {t('finance.totalExpense')}:{' '}
-              {formatMoney(monthExpense, language)} · {t('dashboard.spentLabel')} {formatMoney(categoryTotal, language)}
+              {t('finance.totalIncome')}: {formatMoney(monthIncome, language, money)} · {t('finance.totalExpense')}:{' '}
+              {formatMoney(monthExpense, language, money)} · {t('dashboard.spentLabel')}{' '}
+              {formatMoney(categoryTotal, language, money)}
             </Text>
           ) : null}
         </View>

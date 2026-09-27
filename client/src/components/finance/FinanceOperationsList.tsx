@@ -75,7 +75,7 @@ export function FinanceOperationsList({
               <p
                 className={`text-base font-semibold ${positive ? 'text-brand-500' : 'text-expense'}`}
               >
-                {formatSignedMoney(signed, language)}
+                {formatSignedMoney(signed, language, operation.currency)}
               </p>
               <button
                 type="button"

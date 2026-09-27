@@ -1,4 +1,5 @@
 import { apiClient } from './client';
+import type { FinanceCurrency } from '../features/finance/currencies';
 import type {
   FinanceCategory,
   FinanceMoneyKind,
@@ -23,6 +24,7 @@ function periodQuery(params: FinancePeriodParams): string {
 export type CreateOperationPayload = {
   type: FinanceOperationType;
   moneyKind?: FinanceMoneyKind;
+  currency?: FinanceCurrency;
   amount: number;
   date: string;
   comment?: string;
@@ -31,7 +33,7 @@ export type CreateOperationPayload = {
 
 export const financeApi = {
   getSettings: () => apiClient.get<{ settings: FinanceSettings }>('/api/finance/settings'),
-  updateSettings: (payload: { openingBalance?: number }) =>
+  updateSettings: (payload: { openingBalance?: number; displayCurrency?: FinanceCurrency }) =>
     apiClient.patch<{ settings: FinanceSettings }>('/api/finance/settings', payload),
   getSummary: (params: FinancePeriodParams) =>
     apiClient.get<FinanceSummary>(`/api/finance/summary?${periodQuery(params)}`),

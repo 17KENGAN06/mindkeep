@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budżet",
-    "budgetSubtitle": "Śledź przychody i wydatki w euro — prosto i przejrzyście.",
+    "budgetSubtitle": "Najpierw wybierz gotówkę albo kartę, potem walutę. Sumy przeliczamy na walutę podglądu.",
     "transactionsTitle": "Transakcje",
     "transactionsSubtitle": "Wszystkie przychody i wydatki w wybranym okresie.",
     "categoriesTitle": "Kategorie wydatków",
@@ -141,7 +141,9 @@
       "cashHint": "Banknoty i monety",
       "electronicHint": "Karta, przelew, konto",
       "showOps": "Pokaż operacje"
-    }
+    },
+    "currency": "Waluta",
+    "displayCurrency": "Pokazuj sumy w"
   },
   "tasks": {
     "title": "Zadania dnia",
@@ -436,7 +438,7 @@
       },
       {
         "title": "Zapisz ruch pieniędzy",
-        "body": "W Budżecie zapisz przychód albo wydatek. Wszystkie kwoty prowadzone są w euro."
+        "body": "W budżecie najpierw wybierz gotówkę albo kartę, potem walutę i zapisz przychód albo wydatek."
       },
       {
         "title": "Wracaj przez kalendarze",
@@ -447,7 +449,7 @@
     "rules": [
       "Zadania, finanse i powtórki dzielą jedno konto, ale nie wchodzą sobie w drogę.",
       "Harmonogram powtórek 3 / 7 / 30 liczony jest od daty nauki i nie przesuwa się po ukończeniu.",
-      "Budżet prowadzony jest w euro — bez przeliczeń i dodatkowej złożoności.",
+      "Każda operacja ma swoją walutę. Sumy przeliczamy na walutę podglądu.",
       "Twoje dane należą tylko do twojego konta i nie są widoczne dla innych użytkowników."
     ],
     "faqTitle": "FAQ",

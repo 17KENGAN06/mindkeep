@@ -202,6 +202,7 @@ export function DashboardPage() {
   const reviewsPercent = reviewsPlanned > 0 ? (stats.completedReviews / reviewsPlanned) * 100 : 0;
 
   const finance = financeQuery.data;
+  const money = finance?.currency ?? 'EUR';
   const monthExpense = finance?.totals.expense ?? 0;
   const monthIncome = finance?.totals.income ?? 0;
   const opening = finance?.totals.openingBalance ?? 0;
@@ -286,7 +287,7 @@ export function DashboardPage() {
         <ProgressCard
           icon={<PiggyBank className="h-5 w-5" aria-hidden />}
           title={t('dashboard.cards.budgetLeft')}
-          valueText={`${formatMoney(budgetLeft, language)} / ${formatMoney(budgetTotal, language)}`}
+          valueText={`${formatMoney(budgetLeft, language, money)} / ${formatMoney(budgetTotal, language, money)}`}
           percent={(budgetLeft / budgetTotal) * 100}
         />
         <ProgressCard
@@ -565,7 +566,7 @@ export function DashboardPage() {
                   value: item.expense,
                   color: item.color,
                 }))}
-                centerValue={formatMoney(categoryTotal, language)}
+                centerValue={formatMoney(categoryTotal, language, money)}
                 centerLabel={t('dashboard.spentLabel')}
               />
               <ul className="w-full flex-1 space-y-2">
@@ -584,7 +585,7 @@ export function DashboardPage() {
                         <span className="truncate">{item.name}</span>
                       </span>
                       <span className="shrink-0 text-muted">
-                        {formatMoney(item.expense, language)} · {share}%
+                        {formatMoney(item.expense, language, money)} · {share}%
                       </span>
                     </li>
                   );
@@ -595,10 +596,10 @@ export function DashboardPage() {
           {finance ? (
             <div className="mt-4 flex flex-wrap gap-2">
               <Badge tone="success">
-                {t('finance.totalIncome')}: {formatSignedMoney(monthIncome, language)}
+                {t('finance.totalIncome')}: {formatSignedMoney(monthIncome, language, money)}
               </Badge>
               <Badge tone="expense">
-                {t('finance.totalExpense')}: {formatSignedMoney(-monthExpense, language)}
+                {t('finance.totalExpense')}: {formatSignedMoney(-monthExpense, language, money)}
               </Badge>
             </div>
           ) : null}

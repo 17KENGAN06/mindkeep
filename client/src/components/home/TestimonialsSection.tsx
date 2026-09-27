@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { reviewsApi } from '@/api/reviews';
 import { Button } from '@/components/ui/Button';
+import { Select } from '@/components/ui/Select';
 import { testimonials } from '@/content/testimonials';
 import { useAuth } from '@/features/auth/useAuth';
 
@@ -187,20 +188,18 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
           <p className="text-sm text-muted">{t('home.testimonials.approved')}</p>
         ) : canSubmit ? (
           <div className="grid gap-3 md:grid-cols-[auto_1fr_1fr_auto] md:items-end">
-            <label className="text-xs font-medium text-muted">
-              {t('home.testimonials.yourRating')}
-              <select
-                value={rating}
-                onChange={(event) => setRating(Number(event.target.value))}
-                className="mt-1 block min-h-11 rounded-xl border border-line bg-surface px-3 text-sm text-ink"
-              >
-                <option value={5}>5★</option>
-                <option value={4}>4★</option>
-                <option value={3}>3★</option>
-                <option value={2}>2★</option>
-                <option value={1}>1★</option>
-              </select>
-            </label>
+            <Select
+              label={t('home.testimonials.yourRating')}
+              value={String(rating)}
+              onChange={(event) => setRating(Number(event.target.value))}
+              options={[
+                { value: '5', label: '5★' },
+                { value: '4', label: '4★' },
+                { value: '3', label: '3★' },
+                { value: '2', label: '2★' },
+                { value: '1', label: '1★' },
+              ]}
+            />
             <label className="text-xs font-medium text-muted">
               {t('home.testimonials.yourReview')}
               <textarea

@@ -15,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton, Badge } from '../../components/ui';
+import { FINANCE_CURRENCIES, type FinanceCurrency } from '../../features/finance/currencies';
 import { formatMoney, formatSignedMoney } from '../../features/finance/financeUtils';
 import {
   useCreateFinanceCategory,
@@ -77,6 +78,7 @@ export function FinanceScreen() {
   const [view, setView] = useState<FinanceView>('month');
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
   const [moneyKind, setMoneyKind] = useState<FinanceMoneyKind>('ELECTRONIC');
+  const [currency, setCurrency] = useState<FinanceCurrency>('UAH');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(todayDateKey());
   const [comment, setComment] = useState('');
@@ -204,6 +206,7 @@ export function FinanceScreen() {
       await createOperation.mutateAsync({
         type,
         moneyKind,
+        currency,
         amount: Math.round(parsedAmount * 100) / 100,
         date,
         comment: comment.trim(),
@@ -242,6 +245,7 @@ export function FinanceScreen() {
 
   const cash = summary?.totalsByKind.CASH ?? { income: 0, expense: 0, balance: 0 };
   const electronic = summary?.totalsByKind.ELECTRONIC ?? { income: 0, expense: 0, balance: 0 };
+  const money = summary?.currency ?? 'EUR';
 
   return (
     <KeyboardAvoidingView
@@ -297,13 +301,13 @@ export function FinanceScreen() {
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.totalIncome')}</Text>
             <Text style={[styles.statValue, { color: colors.brand }]}>
-              {formatMoney(summary?.totals.income ?? 0, language)}
+              {formatMoney(summary?.totals.income ?? 0, language, money)}
             </Text>
           </View>
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.totalExpense')}</Text>
             <Text style={[styles.statValue, { color: colors.expense }]}>
-              {formatMoney(summary?.totals.expense ?? 0, language)}
+              {formatMoney(summary?.totals.expense ?? 0, language, money)}
             </Text>
           </View>
         </View>
@@ -311,13 +315,13 @@ export function FinanceScreen() {
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.balance')}</Text>
             <Text style={[styles.statValue, { color: colors.ink }]}>
-              {formatSignedMoney(summary?.totals.balance ?? 0, language)}
+              {formatSignedMoney(summary?.totals.balance ?? 0, language, money)}
             </Text>
           </View>
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.netWithOpening')}</Text>
             <Text style={[styles.statValue, { color: colors.ink }]}>
-              {formatSignedMoney(summary?.totals.netWithOpening ?? 0, language)}
+              {formatSignedMoney(summary?.totals.netWithOpening ?? 0, language, money)}
             </Text>
           </View>
         </View>
@@ -325,12 +329,14 @@ export function FinanceScreen() {
         <View style={styles.stats}>
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.moneyKind.cash')}</Text>
-            <Text style={[styles.statValue, { color: colors.ink }]}>{formatSignedMoney(cash.balance, language)}</Text>
+            <Text style={[styles.statValue, { color: colors.ink }]}>
+              {formatSignedMoney(cash.balance, language, money)}
+            </Text>
           </View>
           <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.moneyKind.electronic')}</Text>
             <Text style={[styles.statValue, { color: colors.ink }]}>
-              {formatSignedMoney(electronic.balance, language)}
+              {formatSignedMoney(electronic.balance, language, money)}
             </Text>
           </View>
         </View>
@@ -351,12 +357,27 @@ export function FinanceScreen() {
                   {formatMonthTitle(year, item.month, language)}
                 </Text>
                 <Text style={[styles.opMeta, { color: colors.muted }]}>
-                  {formatSignedMoney(item.income, language)} · {formatSignedMoney(-item.expense, language)}
+                  {formatSignedMoney(item.income, language, money)} ·{' '}
+                  {formatSignedMoney(-item.expense, language, money)}
                 </Text>
               </Pressable>
             ))}
           </View>
         ) : null}
+
+        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+          <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.displayCurrency')}</Text>
+          <View style={styles.row}>
+            {FINANCE_CURRENCIES.map((code) => (
+              <Chip
+                key={`display-${code}`}
+                label={code}
+                active={money === code}
+                onPress={() => void updateSettings.mutateAsync({ displayCurrency: code })}
+              />
+            ))}
+          </View>
+        </View>
 
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <TextInput
@@ -377,19 +398,6 @@ export function FinanceScreen() {
 
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.addOperation')}</Text>
-          <Text style={[styles.label, { color: colors.muted }]}>{t('finance.type')}</Text>
-          <View style={styles.row}>
-            <Chip
-              label={t('finance.expense')}
-              active={type === 'EXPENSE'}
-              onPress={() => setType('EXPENSE')}
-            />
-            <Chip
-              label={t('finance.income')}
-              active={type === 'INCOME'}
-              onPress={() => setType('INCOME')}
-            />
-          </View>
           <Text style={[styles.label, { color: colors.muted }]}>{t('finance.moneyKind.label')}</Text>
           <View style={styles.row}>
             <Chip
@@ -401,6 +409,30 @@ export function FinanceScreen() {
               label={t('finance.moneyKind.cash')}
               active={moneyKind === 'CASH'}
               onPress={() => setMoneyKind('CASH')}
+            />
+          </View>
+          <Text style={[styles.label, { color: colors.muted }]}>{t('finance.currency')}</Text>
+          <View style={styles.row}>
+            {FINANCE_CURRENCIES.map((code) => (
+              <Chip
+                key={code}
+                label={code}
+                active={currency === code}
+                onPress={() => setCurrency(code)}
+              />
+            ))}
+          </View>
+          <Text style={[styles.label, { color: colors.muted }]}>{t('finance.type')}</Text>
+          <View style={styles.row}>
+            <Chip
+              label={t('finance.expense')}
+              active={type === 'EXPENSE'}
+              onPress={() => setType('EXPENSE')}
+            />
+            <Chip
+              label={t('finance.income')}
+              active={type === 'INCOME'}
+              onPress={() => setType('INCOME')}
             />
           </View>
           <Text style={[styles.label, { color: colors.muted }]}>{t('finance.amount')}</Text>
@@ -559,7 +591,7 @@ export function FinanceScreen() {
                         { color: operation.type === 'INCOME' ? colors.brand : colors.expense },
                       ]}
                     >
-                      {formatSignedMoney(signed, language)}
+                      {formatSignedMoney(signed, language, operation.currency)}
                     </Text>
                   </View>
                   <AppButton

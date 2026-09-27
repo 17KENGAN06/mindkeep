@@ -1,4 +1,5 @@
-export type FinanceCurrency = 'EUR';
+export type { FinanceCurrency } from '@/features/finance/currencies';
+import type { FinanceCurrency } from '@/features/finance/currencies';
 export type FinanceOperationType = 'INCOME' | 'EXPENSE';
 export type FinanceMoneyKind = 'CASH' | 'ELECTRONIC';
 export type FinanceView = 'month' | 'year';
@@ -32,7 +33,7 @@ export type FinanceOperation = {
   id: string;
   date: string;
   amount: number;
-  currency: FinanceCurrency | string;
+  currency: FinanceCurrency;
   type: FinanceOperationType;
   moneyKind: FinanceMoneyKind;
   comment: string;

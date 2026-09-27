@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budget",
-    "budgetSubtitle": "Suis tes revenus et tes dépenses en euros — simple et clair.",
+    "budgetSubtitle": "Choisis d’abord espèces ou carte, puis la devise. Les totaux sont convertis dans la devise d’affichage.",
     "transactionsTitle": "Opérations",
     "transactionsSubtitle": "Tous les revenus et dépenses de la période choisie.",
     "categoriesTitle": "Catégories de dépenses",
@@ -141,7 +141,9 @@
       "cashHint": "Billets et pièces",
       "electronicHint": "Carte, virement, compte",
       "showOps": "Voir les opérations"
-    }
+    },
+    "currency": "Devise",
+    "displayCurrency": "Afficher les totaux en"
   },
   "tasks": {
     "title": "Tâches du jour",
@@ -436,7 +438,7 @@
       },
       {
         "title": "Note les mouvements d'argent",
-        "body": "Dans Budget, enregistre un revenu ou une dépense. Tous les montants sont tenus en euros."
+        "body": "Dans le budget, choisis d’abord espèces ou carte, puis la devise, et note un revenu ou une dépense."
       },
       {
         "title": "Reviens par les calendriers",
@@ -447,7 +449,7 @@
     "rules": [
       "Tâches, finances et révision partagent un même compte, mais restent chacune de leur côté.",
       "Le calendrier de révision 3 / 7 / 30 se compte depuis la date d'apprentissage et ne bouge pas après achèvement.",
-      "Le budget est tenu en euros — sans conversion ni complexité supplémentaire.",
+      "Chaque opération a sa devise. Les totaux sont convertis dans la devise d’affichage.",
       "Tes données n'appartiennent qu'à ton compte et ne sont pas visibles par les autres utilisateurs."
     ],
     "faqTitle": "FAQ",
@@ -466,7 +468,7 @@
       },
       {
         "question": "Dans quelle devise est le budget ?",
-        "answer": "Mindkeep tient actuellement les finances en euros. Cela garde les synthèses simples et évite la confusion des taux de change."
+        "answer": "Tu choisis la devise pour chaque opération. Les totaux sont convertis dans la devise d’affichage."
       }
     ],
     "ctaTitle": "Fais le premier pas aujourd'hui",

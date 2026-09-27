@@ -43,10 +43,18 @@ enum UserReviewStatus {
 }
 
 enum BudgetCurrency {
-  RUB
-  USD
-  EUR
   UAH
+  EUR
+  USD
+  PLN
+  GBP
+  CHF
+  CZK
+  RON
+  TRY
+  GEL
+  KZT
+  RUB
 }
 
 enum BudgetOperationType {
