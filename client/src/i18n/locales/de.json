@@ -606,6 +606,7 @@
       "server": "Der Server ist vorübergehend nicht erreichbar. Versuche es in Kürze erneut.",
       "serverOutdated": "Die API ist noch nicht aktualisiert. Warte auf das Deploy oder versuche es später erneut.",
       "googleUnavailable": "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut.",
+      "googleEmailInUse": "Zu dieser E-Mail gibt es schon ein Konto. Melde dich mit dem Passwort an.",
       "maintenanceAdminOnly": "Derzeit ist nur die Administratoranmeldung verfügbar."
     }
   },

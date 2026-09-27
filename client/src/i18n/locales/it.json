@@ -606,6 +606,7 @@
       "server": "Il server è temporaneamente non disponibile. Riprova tra poco.",
       "serverOutdated": "L'API non è ancora aggiornata. Attendi il deploy o riprova più tardi.",
       "googleUnavailable": "Accesso con Google non riuscito. Riprova.",
+      "googleEmailInUse": "Esiste già un account con questa email. Accedi con la password.",
       "maintenanceAdminOnly": "Al momento è disponibile solo l'accesso amministratore."
     }
   },

@@ -5,6 +5,7 @@ import { authRateLimit } from '@/middleware/authRateLimit.js';
 import { requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
 import {
+  googleFinishSchema,
   googleLoginSchema,
   loginSchema,
   registerSchema,
@@ -42,9 +43,10 @@ authRouter.get('/google/callback', (req, res) => {
   authController.googleCallback(req, res);
 });
 
-authRouter.get(
+authRouter.post(
   '/google/finish',
   authRateLimit,
+  validate(googleFinishSchema),
   asyncHandler((req, res) => authController.googleFinish(req, res)),
 );
 

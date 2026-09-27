@@ -423,7 +423,8 @@
       "maintenanceAdminOnly": "Only administrator sign-in is available right now.",
       "missingToken": "The server did not return a session token. Deploy the latest API.",
       "timezone": "Choose a valid timezone.",
-      "googleUnavailable": "Google sign-in failed. Please try again."
+      "googleUnavailable": "Google sign-in failed. Please try again.",
+      "googleEmailInUse": "This email already has an account. Sign in with your password."
     }
   },
   "dashboard": {

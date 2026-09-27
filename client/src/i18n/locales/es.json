@@ -606,6 +606,7 @@
       "server": "El servidor no está disponible temporalmente. Inténtalo en un momento.",
       "serverOutdated": "La API aún no está actualizada. Espera el deploy o inténtalo más tarde.",
       "googleUnavailable": "El inicio de sesión con Google falló. Inténtalo de nuevo.",
+      "googleEmailInUse": "Ya hay una cuenta con este correo. Entra con tu contraseña.",
       "maintenanceAdminOnly": "Por ahora solo está disponible el inicio de sesión de administrador."
     }
   },

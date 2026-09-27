@@ -423,7 +423,8 @@
       "maintenanceAdminOnly": "Por ahora solo está disponible el inicio de sesión de administrador.",
       "missingToken": "El servidor no devolvió un token de sesión. Despliega la API más reciente.",
       "timezone": "Elige una zona horaria válida.",
-      "googleUnavailable": "El inicio de sesión con Google falló. Inténtalo de nuevo."
+      "googleUnavailable": "El inicio de sesión con Google falló. Inténtalo de nuevo.",
+      "googleEmailInUse": "Ya hay una cuenta con este correo. Entra con tu contraseña."
     }
   },
   "dashboard": {

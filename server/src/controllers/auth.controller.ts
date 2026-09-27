@@ -1,15 +1,18 @@
 import type { Request, Response } from 'express';
-import { ACCESS_TOKEN_COOKIE, getAuthCookieOptions } from '@/config/cookies.js';
+import { ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions } from '@/config/cookies.js';
 import { assertBotProtection, createBotChallenge } from '@/services/botProtection.service.js';
 import { authService } from '@/services/auth.service.js';
+import { sendAuthSession } from '@/utils/authSession.js';
 import {
-  appRedirectWithCredential,
+  appRedirectWithCode,
   buildGoogleAuthorizeUrl,
   decodeGoogleOAuthState,
   googleCallbackPageHtml,
+  issueGoogleSignInTicket,
 } from '@/services/googleOAuth.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
+  GoogleFinishInput,
   GoogleLoginInput,
   LoginInput,
   RegisterInput,
@@ -25,26 +28,20 @@ export class AuthController {
     const input = req.body as RegisterInput;
     assertBotProtection(input);
     const { user, token } = await authService.register(input);
-
-    res.cookie(ACCESS_TOKEN_COOKIE, token, getAuthCookieOptions());
-    res.status(201).json({ user, token });
+    sendAuthSession(req, res, 201, user, token);
   }
 
   async login(req: Request, res: Response): Promise<void> {
     const input = req.body as LoginInput;
     assertBotProtection(input);
     const { user, token } = await authService.login(input);
-
-    res.cookie(ACCESS_TOKEN_COOKIE, token, getAuthCookieOptions());
-    res.status(200).json({ user, token });
+    sendAuthSession(req, res, 200, user, token);
   }
 
   async googleLogin(req: Request, res: Response): Promise<void> {
     const input = req.body as GoogleLoginInput;
     const { user, token } = await authService.googleLogin(input);
-
-    res.cookie(ACCESS_TOKEN_COOKIE, token, getAuthCookieOptions());
-    res.status(200).json({ user, token });
+    sendAuthSession(req, res, 200, user, token);
   }
 
   async googleStart(req: Request, res: Response): Promise<void> {
@@ -65,26 +62,18 @@ export class AuthController {
   }
 
   async googleFinish(req: Request, res: Response): Promise<void> {
-    const credential = typeof req.query.credential === 'string' ? req.query.credential : '';
-    const state = typeof req.query.state === 'string' ? req.query.state : '';
-    if (credential.length < 100 || !state) {
-      throw new AppError('Invalid Google credential', {
-        statusCode: 400,
-        code: 'INVALID_GOOGLE_CREDENTIAL',
-      });
-    }
-
+    const { credential, state } = req.body as GoogleFinishInput;
     const parsed = decodeGoogleOAuthState(state);
+    const code = await issueGoogleSignInTicket(credential);
+    res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({
-      redirect: appRedirectWithCredential(parsed.returnUrl, credential),
+      redirect: appRedirectWithCode(parsed.returnUrl, code),
     });
   }
 
   async logout(_req: Request, res: Response): Promise<void> {
-    res.clearCookie(ACCESS_TOKEN_COOKIE, {
-      ...getAuthCookieOptions(),
-      maxAge: undefined,
-    });
+    res.clearCookie(ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions());
+    res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ success: true });
   }
 

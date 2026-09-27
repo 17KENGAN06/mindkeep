@@ -7,6 +7,7 @@ import type {
   LoginInput,
   RegisterInput,
 } from '@/validations/auth.schemas.js';
+import { consumeGoogleSignInTicket } from '@/services/googleOAuth.service.js';
 import { AppError } from '@/utils/AppError.js';
 import { signAccessToken } from '@/utils/jwt.js';
 import { hashPassword, verifyPassword } from '@/utils/password.js';
@@ -150,10 +151,21 @@ export class AuthService {
       });
     }
 
+    const idToken = input.code
+      ? await consumeGoogleSignInTicket(input.code)
+      : input.credential;
+
+    if (!idToken) {
+      throw new AppError('Invalid Google credential', {
+        statusCode: 401,
+        code: 'INVALID_GOOGLE_CREDENTIAL',
+      });
+    }
+
     let payload;
     try {
       const ticket = await googleClient.verifyIdToken({
-        idToken: input.credential,
+        idToken,
         audience: env.GOOGLE_CLIENT_ID,
       });
       payload = ticket.getPayload();
@@ -182,16 +194,17 @@ export class AuthService {
     if (!user) {
       const existingUser = await prisma.user.findUnique({
         where: { email },
+        select: { id: true },
       });
 
-      if (existingUser?.googleId && existingUser.googleId !== payload.sub) {
-        throw new AppError('This email is linked to another Google account', {
+      if (existingUser) {
+        throw new AppError('This email already has an account. Sign in with your password.', {
           statusCode: 409,
-          code: 'GOOGLE_ACCOUNT_CONFLICT',
+          code: 'GOOGLE_EMAIL_IN_USE',
         });
       }
 
-      if (env.MAINTENANCE_MODE && !shouldBeAdmin(email) && !existingUser) {
+      if (env.MAINTENANCE_MODE && !shouldBeAdmin(email)) {
         throw new AppError('Service is under maintenance. Admin access only.', {
           statusCode: 403,
           code: 'MAINTENANCE_ADMIN_ONLY',
@@ -199,22 +212,16 @@ export class AuthService {
       }
 
       const role = shouldBeAdmin(email) ? UserRole.ADMIN : UserRole.USER;
-      user = existingUser
-        ? await prisma.user.update({
-            where: { id: existingUser.id },
-            data: { googleId: payload.sub },
-            select: publicUserSelect,
-          })
-        : await prisma.user.create({
-            data: {
-              name,
-              email,
-              googleId: payload.sub,
-              timezone: input.timezone,
-              role,
-            },
-            select: publicUserSelect,
-          });
+      user = await prisma.user.create({
+        data: {
+          name,
+          email,
+          googleId: payload.sub,
+          timezone: input.timezone,
+          role,
+        },
+        select: publicUserSelect,
+      });
     }
 
     user = await ensureAdminRole(user);

@@ -24,6 +24,8 @@ const envSchema = z.object({
   RESEND_API_KEY: z.string().optional(),
   TELEGRAM_BOT_TOKEN: z.string().optional(),
   GOOGLE_CLIENT_ID: z.string().trim().min(1).optional(),
+  /** Canonical API origin for Google redirect_uri. Ignored Host header in production. */
+  API_PUBLIC_URL: z.url().optional(),
   ADMIN_EMAILS: z
     .string()
     .optional()
@@ -103,8 +105,16 @@ export function isAllowedBrowserOrigin(origin: string): boolean {
 export const env = {
   ...envConfig,
   CLIENT_URL: baseClientUrl,
+  API_PUBLIC_URL:
+    envConfig.API_PUBLIC_URL?.replace(/\/$/, '') ||
+    (envConfig.NODE_ENV === 'production' ? 'https://api.mindkeep.cloud' : ''),
   allowedClientOrigins,
 };
+
+/** Google callback HTML is served from the API origin and POSTs back to /google/finish. */
+export function isCanonicalApiOrigin(origin: string): boolean {
+  return Boolean(env.API_PUBLIC_URL) && normalizeOrigin(origin) === env.API_PUBLIC_URL;
+}
 
 export function assertRequiredSecrets(): void {
   const missing: string[] = [];

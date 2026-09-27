@@ -5,7 +5,7 @@ import { detectDeviceTimezone } from '../config/timezones';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import {
   GoogleSignInCancelledError,
-  requestGoogleIdToken,
+  requestGoogleSignInCode,
 } from '../features/auth/googleSignIn';
 import { useAuth } from '../features/auth/useAuth';
 import { AppIcon } from '../components/AppIcon';
@@ -27,8 +27,8 @@ export function GoogleSignInButton({ disabled = false, onError }: GoogleSignInBu
     onError(null);
     setBusy(true);
     try {
-      const credential = await requestGoogleIdToken();
-      await googleLogin({ credential, timezone: detectDeviceTimezone() });
+      const code = await requestGoogleSignInCode();
+      await googleLogin({ code, timezone: detectDeviceTimezone() });
     } catch (caught) {
       if (caught instanceof GoogleSignInCancelledError) return;
       onError(mapAuthError(caught, t));

@@ -423,7 +423,8 @@
       "maintenanceAdminOnly": "Al momento è disponibile solo l'accesso amministratore.",
       "missingToken": "Il server non ha restituito un token di sessione. Fai il deploy dell'API più recente.",
       "timezone": "Scegli un fuso orario valido.",
-      "googleUnavailable": "Accesso con Google non riuscito. Riprova."
+      "googleUnavailable": "Accesso con Google non riuscito. Riprova.",
+      "googleEmailInUse": "Esiste già un account con questa email. Accedi con la password."
     }
   },
   "dashboard": {

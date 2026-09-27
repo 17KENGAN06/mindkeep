@@ -1,9 +1,13 @@
-import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
+import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 import type { Request } from 'express';
+import { OAuth2Client } from 'google-auth-library';
 import { env } from '@/config/env.js';
+import { prisma } from '@/config/prisma.js';
 import { AppError } from '@/utils/AppError.js';
 
 const STATE_TTL_MS = 10 * 60 * 1000;
+const TICKET_TTL_MS = 2 * 60 * 1000;
+const googleClient = new OAuth2Client();
 
 type GoogleOAuthState = {
   returnUrl: string;
@@ -34,6 +38,17 @@ function isPrivateOrLocalHost(hostname: string): boolean {
   return false;
 }
 
+function hashTicketCode(code: string): string {
+  return createHash('sha256').update(code).digest('hex');
+}
+
+function invalidGoogleCredential(): AppError {
+  return new AppError('Invalid Google credential', {
+    statusCode: 400,
+    code: 'INVALID_GOOGLE_CREDENTIAL',
+  });
+}
+
 export function isSafeAppReturnUrl(value: string): boolean {
   if (!value || value.length > 500) return false;
   try {
@@ -50,12 +65,17 @@ export function isSafeAppReturnUrl(value: string): boolean {
   }
 }
 
+/** Production always uses API_PUBLIC_URL so Host / X-Forwarded-Host cannot spoof redirect_uri. */
 export function publicApiOrigin(req: Request): string {
+  if (env.API_PUBLIC_URL) {
+    return env.API_PUBLIC_URL;
+  }
+
   const forwardedProto = req.get('x-forwarded-proto')?.split(',')[0]?.trim();
-  const proto = forwardedProto || req.protocol || 'https';
-  const host = req.get('x-forwarded-host') || req.get('host');
+  const proto = forwardedProto || req.protocol || 'http';
+  const host = req.get('host');
   if (!host) {
-    return 'https://api.mindkeep.cloud';
+    return 'http://localhost:4000';
   }
   return `${proto}://${host}`;
 }
@@ -72,35 +92,23 @@ function encodeState(data: GoogleOAuthState): string {
 export function decodeGoogleOAuthState(state: string): GoogleOAuthState {
   const parts = state.split('.');
   if (parts.length !== 2 || !parts[0] || !parts[1]) {
-    throw new AppError('Invalid Google sign-in state', {
-      statusCode: 400,
-      code: 'INVALID_GOOGLE_CREDENTIAL',
-    });
+    throw invalidGoogleCredential();
   }
 
   const [payload, signature] = parts;
   if (!safeEqual(sign(payload), signature)) {
-    throw new AppError('Invalid Google sign-in state', {
-      statusCode: 400,
-      code: 'INVALID_GOOGLE_CREDENTIAL',
-    });
+    throw invalidGoogleCredential();
   }
 
   let data: GoogleOAuthState;
   try {
     data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as GoogleOAuthState;
   } catch {
-    throw new AppError('Invalid Google sign-in state', {
-      statusCode: 400,
-      code: 'INVALID_GOOGLE_CREDENTIAL',
-    });
+    throw invalidGoogleCredential();
   }
 
   if (!data.returnUrl || !data.nonce || !Number.isFinite(data.iat)) {
-    throw new AppError('Invalid Google sign-in state', {
-      statusCode: 400,
-      code: 'INVALID_GOOGLE_CREDENTIAL',
-    });
+    throw invalidGoogleCredential();
   }
 
   if (Date.now() - data.iat > STATE_TTL_MS) {
@@ -151,6 +159,66 @@ export function buildGoogleAuthorizeUrl(req: Request, returnUrl: string): string
   return `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
 }
 
+async function assertValidGoogleIdToken(idToken: string): Promise<void> {
+  if (!env.GOOGLE_CLIENT_ID) {
+    throw new AppError('Google sign-in is not configured', {
+      statusCode: 503,
+      code: 'GOOGLE_AUTH_UNAVAILABLE',
+    });
+  }
+
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken,
+      audience: env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    if (!payload?.sub || !payload.email || payload.email_verified !== true) {
+      throw new Error('unverified');
+    }
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw invalidGoogleCredential();
+  }
+}
+
+export async function issueGoogleSignInTicket(idToken: string): Promise<string> {
+  await assertValidGoogleIdToken(idToken);
+  await prisma.googleSignInTicket.deleteMany({
+    where: { expiresAt: { lt: new Date() } },
+  });
+
+  const code = randomBytes(32).toString('base64url');
+  await prisma.googleSignInTicket.create({
+    data: {
+      codeHash: hashTicketCode(code),
+      idToken,
+      expiresAt: new Date(Date.now() + TICKET_TTL_MS),
+    },
+  });
+  return code;
+}
+
+export async function consumeGoogleSignInTicket(code: string): Promise<string> {
+  const codeHash = hashTicketCode(code);
+
+  return prisma.$transaction(async (tx) => {
+    const ticket = await tx.googleSignInTicket.findUnique({ where: { codeHash } });
+    if (!ticket || ticket.expiresAt.getTime() < Date.now()) {
+      if (ticket) {
+        await tx.googleSignInTicket.delete({ where: { id: ticket.id } });
+      }
+      throw new AppError('Google sign-in expired. Try again.', {
+        statusCode: 401,
+        code: 'INVALID_GOOGLE_CREDENTIAL',
+      });
+    }
+
+    await tx.googleSignInTicket.delete({ where: { id: ticket.id } });
+    return ticket.idToken;
+  });
+}
+
 export function googleCallbackPageHtml(): string {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -174,11 +242,11 @@ export function googleCallbackPageHtml(): string {
         document.querySelector('p').textContent = 'Google sign-in was cancelled.';
         return;
       }
-      var finish = '/api/auth/google/finish?' + new URLSearchParams({
-        credential: idToken,
-        state: state
-      }).toString();
-      fetch(finish, { headers: { Accept: 'application/json' } })
+      fetch('/api/auth/google/finish', {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: idToken, state: state })
+      })
         .then(function (res) { return res.json().then(function (body) { return { ok: res.ok, body: body }; }); })
         .then(function (result) {
           var redirect = result.body && result.body.redirect;
@@ -197,8 +265,8 @@ export function googleCallbackPageHtml(): string {
 </html>`;
 }
 
-export function appRedirectWithCredential(returnUrl: string, credential: string): string {
+export function appRedirectWithCode(returnUrl: string, code: string): string {
   const url = new URL(returnUrl);
-  url.searchParams.set('credential', credential);
+  url.searchParams.set('code', code);
   return url.toString();
 }

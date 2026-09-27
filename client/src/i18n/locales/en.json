@@ -606,6 +606,7 @@
       "server": "The server is temporarily unavailable. Try again shortly.",
       "serverOutdated": "The API is not updated yet. Wait for deploy or try again later.",
       "googleUnavailable": "Google sign-in failed. Please try again.",
+      "googleEmailInUse": "This email already has an account. Sign in with your password.",
       "maintenanceAdminOnly": "Only administrator sign-in is available right now."
     }
   },

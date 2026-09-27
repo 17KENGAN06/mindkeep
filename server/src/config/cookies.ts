@@ -18,3 +18,9 @@ export function getAuthCookieOptions(): CookieOptions {
     maxAge: 7 * 24 * 60 * 60 * 1000,
   };
 }
+
+/** Same flags as set, without maxAge — required for browsers to drop the cookie. */
+export function getAuthCookieClearOptions(): CookieOptions {
+  const { maxAge: _maxAge, ...options } = getAuthCookieOptions();
+  return options;
+}

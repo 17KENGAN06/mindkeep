@@ -22,6 +22,8 @@ export function mapAuthError(error: unknown, t: Translate): string {
     case 'GOOGLE_ACCOUNT_CONFLICT':
     case 'GOOGLE_AUTH_UNAVAILABLE':
       return t('auth.errors.googleUnavailable');
+    case 'GOOGLE_EMAIL_IN_USE':
+      return t('auth.errors.googleEmailInUse');
     case 'BOT_REJECTED':
       return t('auth.bot.rejected');
     case 'MAINTENANCE_ADMIN_ONLY':

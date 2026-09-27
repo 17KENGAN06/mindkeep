@@ -423,7 +423,8 @@
       "maintenanceAdminOnly": "Tällä hetkellä vain ylläpitäjän kirjautuminen on käytössä.",
       "missingToken": "Palvelin ei palauttanut istuntotunnusta. API pitää deployata.",
       "timezone": "Valitse kelvollinen aikavyöhyke.",
-      "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen."
+      "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen.",
+      "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla."
     }
   },
   "dashboard": {

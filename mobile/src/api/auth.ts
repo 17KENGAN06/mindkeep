@@ -15,7 +15,8 @@ export type RegisterPayload = {
 };
 
 export type GoogleLoginPayload = {
-  credential: string;
+  credential?: string;
+  code?: string;
   timezone?: string;
 };
 

@@ -378,3 +378,13 @@ model HabitLog {
   @@index([userId])
   @@index([userId, date])
 }
+
+model GoogleSignInTicket {
+  id        String   @id @default(cuid())
+  codeHash  String   @unique
+  idToken   String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expiresAt])
+}

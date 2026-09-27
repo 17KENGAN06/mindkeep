@@ -11,9 +11,9 @@ export class GoogleSignInCancelledError extends Error {
   }
 }
 
-function credentialFromUrl(url: string): string | null {
+function codeFromUrl(url: string): string | null {
   const parsed = Linking.parse(url);
-  const fromQuery = parsed.queryParams?.credential;
+  const fromQuery = parsed.queryParams?.code;
   if (typeof fromQuery === 'string' && fromQuery.length > 0) {
     return fromQuery;
   }
@@ -21,10 +21,10 @@ function credentialFromUrl(url: string): string | null {
   const hash = url.split('#')[1];
   if (!hash) return null;
   const params = new URLSearchParams(hash);
-  return params.get('credential') ?? params.get('id_token');
+  return params.get('code');
 }
 
-export async function requestGoogleIdToken(): Promise<string> {
+export async function requestGoogleSignInCode(): Promise<string> {
   const returnUrl = Linking.createURL('google');
   const startUrl = `${env.apiUrl}/api/auth/google/start?${new URLSearchParams({
     returnUrl,
@@ -35,10 +35,10 @@ export async function requestGoogleIdToken(): Promise<string> {
     throw new GoogleSignInCancelledError();
   }
 
-  const credential = credentialFromUrl(result.url);
-  if (!credential) {
-    throw new Error('Google sign-in did not return a credential');
+  const code = codeFromUrl(result.url);
+  if (!code) {
+    throw new Error('Google sign-in did not return a code');
   }
 
-  return credential;
+  return code;
 }

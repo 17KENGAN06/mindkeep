@@ -606,6 +606,7 @@
       "server": "Palvelin on tilapäisesti poissa käytöstä. Yritä hetken kuluttua.",
       "serverOutdated": "API:ta ei ole vielä päivitetty. Odota deployta tai yritä myöhemmin.",
       "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen.",
+      "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla.",
       "maintenanceAdminOnly": "Tällä hetkellä vain ylläpitäjän kirjautuminen on käytössä."
     }
   },

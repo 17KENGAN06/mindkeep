@@ -423,7 +423,8 @@
       "maintenanceAdminOnly": "Derzeit ist nur die Administratoranmeldung verfügbar.",
       "missingToken": "Der Server hat kein Sitzungstoken zurückgegeben. Deploye die neueste API.",
       "timezone": "Wähle eine gültige Zeitzone.",
-      "googleUnavailable": "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut."
+      "googleUnavailable": "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut.",
+      "googleEmailInUse": "Zu dieser E-Mail gibt es schon ein Konto. Melde dich mit dem Passwort an."
     }
   },
   "dashboard": {

@@ -10,6 +10,7 @@ export type User = {
 
 export type AuthResponse = {
   user: User;
+  /** Native clients only. The website keeps the JWT in an httpOnly cookie. */
   token?: string;
 };
 

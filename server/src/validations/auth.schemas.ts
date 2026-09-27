@@ -33,9 +33,20 @@ export const loginSchema = z.object({
   ...botFields,
 });
 
-export const googleLoginSchema = z.object({
-  credential: z.string().min(100, 'Google credential is required').max(10_000),
-  timezone: z.string().trim().min(1).max(100).default('Europe/Helsinki'),
+export const googleLoginSchema = z
+  .object({
+    credential: z.string().min(100).max(10_000).optional(),
+    code: z.string().trim().min(20).max(128).optional(),
+    timezone: z.string().trim().min(1).max(100).default('Europe/Helsinki'),
+  })
+  .refine((data) => Boolean(data.credential) !== Boolean(data.code), {
+    message: 'Provide either a Google credential or a one-time code',
+    path: ['credential'],
+  });
+
+export const googleFinishSchema = z.object({
+  credential: z.string().min(100).max(10_000),
+  state: z.string().min(20).max(4000),
 });
 
 function isIanaTimeZone(value: string): boolean {
@@ -59,4 +70,5 @@ export const updateMeSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
+export type GoogleFinishInput = z.infer<typeof googleFinishSchema>;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;

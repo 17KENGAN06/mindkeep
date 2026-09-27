@@ -28,6 +28,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   }
 
   headers.set('X-Requested-With', 'learning-reminder');
+  headers.set('X-Mindkeep-Client', 'native');
 
   const token = await getStoredToken();
   if (token) {

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { UserRole } from '@prisma/client';
-import { ACCESS_TOKEN_COOKIE, getAuthCookieOptions } from '@/config/cookies.js';
+import { ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions } from '@/config/cookies.js';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
@@ -60,10 +60,7 @@ export const requireAuth = asyncHandler(async (req: Request, res: Response, next
     user.role !== UserRole.ADMIN &&
     !isAdminEmail(user.email)
   ) {
-    res.clearCookie(ACCESS_TOKEN_COOKIE, {
-      ...getAuthCookieOptions(),
-      maxAge: undefined,
-    });
+    res.clearCookie(ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions());
     throw new AppError('Authentication required', {
       statusCode: 401,
       code: 'UNAUTHORIZED',

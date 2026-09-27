@@ -423,7 +423,8 @@
       "maintenanceAdminOnly": "Seule la connexion administrateur est disponible pour le moment.",
       "missingToken": "Le serveur n'a pas renvoyé de jeton de session. Déploie la dernière API.",
       "timezone": "Choisis un fuseau horaire valide.",
-      "googleUnavailable": "La connexion Google a échoué. Réessaie."
+      "googleUnavailable": "La connexion Google a échoué. Réessaie.",
+      "googleEmailInUse": "Un compte existe déjà pour cet e-mail. Connecte-toi avec le mot de passe."
     }
   },
   "dashboard": {
