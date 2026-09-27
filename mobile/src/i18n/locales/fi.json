@@ -338,7 +338,7 @@
   },
   "finance": {
     "title": "Budjetti",
-    "subtitle": "Seuraa tuloja ja menoja euroissa — yksinkertaisesti ja selkeästi.",
+    "subtitle": "Ensin käteinen tai kortti, sitten valuutta. Jokainen lasketaan erikseen.",
     "menuHint": "Kuukauden summat, tapahtumat, käteinen ja sähköinen.",
     "viewMonth": "Kuukausi",
     "viewYear": "Vuosi",
@@ -381,7 +381,10 @@
     },
     "currency": "Valuutta",
     "displayCurrency": "Näytä summat valuutassa",
-    "budgetSubtitle": "Valitse ensin käteinen tai kortti, sitten valuutta. Summat muunnetaan näyttövaluuttaan."
+    "budgetSubtitle": "Valitse ensin käteinen tai kortti, sitten valuutta. Jokainen valuutta pysyy omanaaan — ilman muuntoa.",
+    "perCurrencyTitle": "Valuutoittain",
+    "perCurrencyHint": "Tulot, menot ja saldo lasketaan erikseen jokaiselle valuutalle.",
+    "emptyCurrencies": "Tällä jaksolla ei ole vielä tapahtumia."
   },
   "auth": {
     "loginTitle": "Tervetuloa takaisin",
@@ -446,7 +449,7 @@
     },
     "legendDone": "Valmis",
     "legendPlanned": "Suunniteltu",
-    "financeTitle": "Kuukauden budjetti",
+    "financeTitle": "Talous",
     "allFinance": "Budjetti",
     "spentLabel": "kulutettu",
     "modules": {

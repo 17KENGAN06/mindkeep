@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budget",
-    "budgetSubtitle": "Prima contanti o carta, poi la valuta. I totali sono convertiti nella valuta di visualizzazione.",
+    "budgetSubtitle": "Prima contanti o carta, poi la valuta. Ogni valuta resta a sé — senza conversioni.",
     "transactionsTitle": "Operazioni",
     "transactionsSubtitle": "Tutte le entrate e le uscite del periodo selezionato.",
     "categoriesTitle": "Categorie di spesa",
@@ -137,13 +137,16 @@
     },
     "wallets": {
       "title": "Contanti ed elettronico",
-      "subtitle": "Saldo del periodo suddiviso per forma del denaro — solo in questa pagina budget.",
+      "subtitle": "Entrate, uscite e saldo si contano separatamente per ogni valuta.",
       "cashHint": "Banconote e monete",
       "electronicHint": "Carta, bonifico, conto",
       "showOps": "Mostra operazioni"
     },
     "currency": "Valuta",
-    "displayCurrency": "Mostra i totali in"
+    "displayCurrency": "Mostra i totali in",
+    "perCurrencyTitle": "Per valuta",
+    "perCurrencyHint": "Entrate, uscite e saldo si contano separatamente per ogni valuta.",
+    "emptyCurrencies": "Nessuna operazione in questo periodo."
   },
   "tasks": {
     "title": "Attività del giorno",
@@ -710,7 +713,7 @@
     },
     "legendDone": "Completato",
     "legendPlanned": "Pianificato",
-    "financeTitle": "Sintesi finanziaria",
+    "financeTitle": "Finanze",
     "allFinance": "Tutte le finanze",
     "spentLabel": "speso",
     "stats": {

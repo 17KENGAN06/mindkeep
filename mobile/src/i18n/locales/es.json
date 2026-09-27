@@ -338,7 +338,7 @@
   },
   "finance": {
     "title": "Presupuesto",
-    "subtitle": "Sigue ingresos y gastos en euros — simple y claro.",
+    "subtitle": "Primero efectivo o tarjeta, luego la moneda. Cada una se cuenta aparte.",
     "menuHint": "Totales del mes, operaciones, efectivo y electrónico.",
     "viewMonth": "Mes",
     "viewYear": "Año",
@@ -381,7 +381,10 @@
     },
     "currency": "Moneda",
     "displayCurrency": "Mostrar totales en",
-    "budgetSubtitle": "Primero elige efectivo o tarjeta, luego la moneda. Los totales se convierten a la moneda de vista."
+    "budgetSubtitle": "Primero efectivo o tarjeta, luego la moneda. Cada moneda se cuenta aparte — sin conversión.",
+    "perCurrencyTitle": "Por moneda",
+    "perCurrencyHint": "Ingresos, gastos y saldo se cuentan por separado para cada moneda.",
+    "emptyCurrencies": "Aún no hay operaciones en este periodo."
   },
   "auth": {
     "loginTitle": "Qué bueno verte de nuevo",
@@ -446,7 +449,7 @@
     },
     "legendDone": "Completado",
     "legendPlanned": "Planificado",
-    "financeTitle": "Presupuesto de este mes",
+    "financeTitle": "Finanzas",
     "allFinance": "Presupuesto",
     "spentLabel": "gastado",
     "modules": {

@@ -81,28 +81,28 @@ export function FinanceCategoriesPage() {
   if (isError) return <ErrorMessage message={t('auth.errors.generic')} />;
 
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-6 overflow-x-hidden">
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('finance.categoriesTitle')}</h1>
         <p className="mt-1 text-sm text-muted">{t('finance.categoriesSubtitle')}</p>
       </section>
 
-      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+      <section className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <h2 className="mb-3 text-sm font-semibold text-ink">
           {editing ? t('finance.editCategory') : t('finance.createCategory')}
         </h2>
         <form
-          className="flex flex-col gap-3 sm:flex-row sm:items-start"
+          className="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end"
           onSubmit={editing ? onUpdate : onCreate}
           noValidate
         >
-          <div className="flex-1">
+          <div className="min-w-0 w-full flex-1">
             <Input
               label={t('finance.categoryName')}
               {...(editing ? editForm.register('name', { required: true }) : createForm.register('name', { required: true }))}
             />
           </div>
-          <div className="flex gap-2 pt-0 sm:pt-7">
+          <div className="flex w-full shrink-0 flex-wrap gap-2 sm:w-auto">
             {editing ? (
               <>
                 <Button type="submit" isLoading={updateCategory.isPending}>
@@ -132,10 +132,10 @@ export function FinanceCategoriesPage() {
           {categories.map((category) => (
             <li
               key={category.id}
-              className="flex items-center justify-between gap-3 rounded-2xl bg-panel px-4 py-3 ring-1 ring-line"
+              className="flex min-w-0 items-center justify-between gap-3 rounded-2xl bg-panel px-4 py-3 ring-1 ring-line"
             >
-              <div>
-                <p className="font-medium text-ink">{category.name}</p>
+              <div className="min-w-0">
+                <p className="truncate font-medium text-ink">{category.name}</p>
                 <p className="text-xs text-muted">
                   {t('finance.operationsCount', { count: category._count?.operations ?? 0 })}
                 </p>

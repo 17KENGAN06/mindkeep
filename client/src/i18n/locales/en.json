@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budget",
-    "budgetSubtitle": "Choose cash or card first, then the currency. Totals convert to the currency you view in.",
+    "budgetSubtitle": "Choose cash or card first, then the currency. Each currency stays on its own — no converted totals.",
     "transactionsTitle": "Transactions",
     "transactionsSubtitle": "All income and expenses for the selected period.",
     "categoriesTitle": "Expense categories",
@@ -137,13 +137,16 @@
     },
     "wallets": {
       "title": "Cash and electronic",
-      "subtitle": "Period balance split by money form — only on this budget page.",
+      "subtitle": "Income, expense and balance are counted separately for every currency.",
       "cashHint": "Bills and coins",
       "electronicHint": "Card, transfer, account",
       "showOps": "Show operations"
     },
     "currency": "Currency",
-    "displayCurrency": "Show totals in"
+    "displayCurrency": "Show totals in",
+    "perCurrencyTitle": "By currency",
+    "perCurrencyHint": "Income, expense and balance are counted separately for every currency.",
+    "emptyCurrencies": "No operations in this period yet."
   },
   "tasks": {
     "title": "Daily tasks",
@@ -710,7 +713,7 @@
     },
     "legendDone": "Completed",
     "legendPlanned": "Planned",
-    "financeTitle": "Financial summary",
+    "financeTitle": "Finance",
     "allFinance": "All finances",
     "spentLabel": "spent",
     "stats": {

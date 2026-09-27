@@ -1,11 +1,4 @@
-﻿import {
-  BookOpen,
-  Check,
-  CheckCircle2,
-  GraduationCap,
-  PiggyBank,
-  Repeat,
-} from 'lucide-react';
+﻿import { BookOpen, Check, CheckCircle2, GraduationCap, Repeat } from 'lucide-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +8,12 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { useAuth } from '@/features/auth/useAuth';
-import { currentPeriodDefaults, formatMoney, formatSignedMoney } from '@/features/finance/financeUtils';
+import { currencyLabel } from '@/features/finance/currencies';
+import {
+  currentPeriodDefaults,
+  formatSignedMoney,
+  summarizeByCurrency,
+} from '@/features/finance/financeUtils';
 import { useFinanceSummary } from '@/features/finance/useFinance';
 import { useNutritionPeriod, useSetWater } from '@/features/nutrition/useNutrition';
 import { useRhythmPeriod } from '@/features/rhythm/useRhythm';
@@ -31,7 +29,7 @@ import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
 import { formatDate, toDateInputValue } from '@/utils/date';
 
-type WeekTab = 'tasks' | 'reviews' | 'expenses';
+type WeekTab = 'tasks' | 'reviews';
 
 function clampPercent(value: number): number {
   if (!Number.isFinite(value) || value <= 0) return 0;
@@ -69,64 +67,6 @@ function ProgressCard({
   );
 }
 
-function DonutChart({
-  segments,
-  centerLabel,
-  centerValue,
-}: {
-  segments: Array<{ value: number; color: string }>;
-  centerLabel: string;
-  centerValue: string;
-}) {
-  const total = segments.reduce((sum, item) => sum + item.value, 0);
-  const radius = 54;
-  const stroke = 16;
-  const circumference = 2 * Math.PI * radius;
-  let offset = 0;
-
-  return (
-    <div className="relative mx-auto h-44 w-44">
-      <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90">
-        <circle
-          cx="70"
-          cy="70"
-          r={radius}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={stroke}
-          className="text-line/50"
-        />
-        {total > 0
-          ? segments.map((segment, index) => {
-              const length = (segment.value / total) * circumference;
-              const circle = (
-                <circle
-                  key={`${segment.color}-${index}`}
-                  cx="70"
-                  cy="70"
-                  r={radius}
-                  fill="none"
-                  stroke={segment.color}
-                  strokeWidth={stroke}
-                  strokeDasharray={`${length} ${circumference - length}`}
-                  strokeDashoffset={-offset}
-                  strokeLinecap="butt"
-                />
-              );
-              offset += length;
-              return circle;
-            })
-          : null}
-      </svg>
-      <div className="absolute inset-0 flex rotate-0 flex-col items-center justify-center px-4 text-center">
-        <p className="text-sm font-semibold text-ink">{centerValue}</p>
-        <p className="mt-0.5 text-[11px] text-muted">{centerLabel}</p>
-      </div>
-    </div>
-  );
-}
-
-const DONUT_COLORS = ['#8eefb4', '#5b8def', '#a78bfa', '#f59e0b', '#94a3b8', '#f472b6'];
 
 export function DashboardPage() {
   const { t, i18n } = useTranslation();
@@ -201,46 +141,27 @@ export function DashboardPage() {
   const reviewsPlanned = stats.completedReviews + reviewsOpen;
   const reviewsPercent = reviewsPlanned > 0 ? (stats.completedReviews / reviewsPlanned) * 100 : 0;
 
-  const finance = financeQuery.data;
-  const money = finance?.currency ?? 'EUR';
-  const monthExpense = finance?.totals.expense ?? 0;
-  const monthIncome = finance?.totals.income ?? 0;
-  const opening = finance?.totals.openingBalance ?? 0;
-  const budgetTotal = Math.max(opening + monthIncome, monthExpense, 1);
-  const budgetLeft = Math.max(budgetTotal - monthExpense, 0);
+  const currencyBuckets = summarizeByCurrency(financeQuery.data?.operations ?? []);
 
   const rhythmHabits = rhythmQuery.data?.habits ?? [];
   const rhythmToday = rhythmQuery.data?.today ?? today;
   const rhythmDone = rhythmHabits.filter((habit) => habit.checks.includes(rhythmToday)).length;
   const rhythmTotal = rhythmHabits.length;
 
-  const categorySegments = (finance?.byCategory ?? [])
-    .filter((item) => item.expense > 0)
-    .slice(0, 5)
-    .map((item, index) => ({
-      ...item,
-      color: DONUT_COLORS[index % DONUT_COLORS.length]!,
-    }));
-  const categoryTotal = categorySegments.reduce((sum, item) => sum + item.expense, 0);
-
   const weekSeries = weekDays.map((date) => {
     const dayTasks = (tasksQuery.data?.tasks ?? []).filter((task) => task.date === date);
     const tasksDone = dayTasks.filter((task) => task.completed).length;
     const tasksPlanned = dayTasks.length;
     const reviewsDone = activityQuery.data.activity.find((point) => point.date === date)?.count ?? 0;
-    const expenses = (finance?.operations ?? [])
-      .filter((op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === date)
-      .reduce((sum, op) => sum + op.amount, 0);
 
-    return { date, tasksDone, tasksPlanned, reviewsDone, expenses };
+    return { date, tasksDone, tasksPlanned, reviewsDone };
   });
 
   const chartMax = Math.max(
     1,
     ...weekSeries.map((day) => {
       if (weekTab === 'tasks') return Math.max(day.tasksPlanned, day.tasksDone);
-      if (weekTab === 'reviews') return day.reviewsDone;
-      return day.expenses;
+      return day.reviewsDone;
     }),
   );
 
@@ -268,7 +189,7 @@ export function DashboardPage() {
         <p className="max-w-sm text-sm text-muted italic lg:text-right">{t('dashboard.quote')}</p>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         <ProgressCard
           icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
           title={t('dashboard.cards.tasksToday')}
@@ -283,12 +204,6 @@ export function DashboardPage() {
             total: reviewsPlanned,
           })}
           percent={reviewsPercent}
-        />
-        <ProgressCard
-          icon={<PiggyBank className="h-5 w-5" aria-hidden />}
-          title={t('dashboard.cards.budgetLeft')}
-          valueText={`${formatMoney(budgetLeft, language, money)} / ${formatMoney(budgetTotal, language, money)}`}
-          percent={(budgetLeft / budgetTotal) * 100}
         />
         <ProgressCard
           icon={<Repeat className="h-5 w-5" aria-hidden />}
@@ -426,7 +341,6 @@ export function DashboardPage() {
                 [
                   ['tasks', t('dashboard.weekTabs.tasks')],
                   ['reviews', t('dashboard.weekTabs.reviews')],
-                  ['expenses', t('dashboard.weekTabs.expenses')],
                 ] as const
               ).map(([id, label]) => (
                 <button
@@ -447,18 +361,8 @@ export function DashboardPage() {
 
           <div className="mt-5 flex h-44 min-w-0 items-end gap-1 sm:gap-2">
             {weekSeries.map((day) => {
-              const planned =
-                weekTab === 'tasks'
-                  ? day.tasksPlanned
-                  : weekTab === 'reviews'
-                    ? Math.max(day.reviewsDone, 1)
-                    : day.expenses;
-              const done =
-                weekTab === 'tasks'
-                  ? day.tasksDone
-                  : weekTab === 'reviews'
-                    ? day.reviewsDone
-                    : day.expenses;
+              const planned = weekTab === 'tasks' ? day.tasksPlanned : Math.max(day.reviewsDone, 1);
+              const done = weekTab === 'tasks' ? day.tasksDone : day.reviewsDone;
               const plannedHeight = `${Math.max((planned / chartMax) * 100, planned > 0 ? 8 : 4)}%`;
               const doneHeight = `${Math.max((done / chartMax) * 100, done > 0 ? 8 : 0)}%`;
 
@@ -557,52 +461,32 @@ export function DashboardPage() {
             </Link>
           </div>
 
-          {!finance || categoryTotal === 0 ? (
+          {currencyBuckets.length === 0 ? (
             <p className="mt-8 text-center text-sm text-muted">{t('dashboard.modules.noFinance')}</p>
           ) : (
-            <div className="mt-4 flex flex-col items-center gap-5 sm:flex-row sm:items-start">
-              <DonutChart
-                segments={categorySegments.map((item) => ({
-                  value: item.expense,
-                  color: item.color,
-                }))}
-                centerValue={formatMoney(categoryTotal, language, money)}
-                centerLabel={t('dashboard.spentLabel')}
-              />
-              <ul className="w-full flex-1 space-y-2">
-                {categorySegments.map((item) => {
-                  const share = Math.round((item.expense / categoryTotal) * 100);
-                  return (
-                    <li
-                      key={`${item.id ?? item.name}`}
-                      className="flex items-center justify-between gap-3 text-sm"
-                    >
-                      <span className="inline-flex min-w-0 items-center gap-2 text-ink">
-                        <span
-                          className="h-2.5 w-2.5 shrink-0 rounded-full"
-                          style={{ backgroundColor: item.color }}
-                        />
-                        <span className="truncate">{item.name}</span>
-                      </span>
-                      <span className="shrink-0 text-muted">
-                        {formatMoney(item.expense, language, money)} · {share}%
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <ul className="mt-4 space-y-3">
+              {currencyBuckets.map((bucket) => (
+                <li
+                  key={bucket.currency}
+                  className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="min-w-0 text-sm font-semibold text-ink">
+                      {currencyLabel(bucket.currency, language)}
+                    </p>
+                    <p className="shrink-0 text-sm font-semibold text-ink">
+                      {formatSignedMoney(bucket.balance, language, bucket.currency)}
+                    </p>
+                  </div>
+                  <p className="mt-1 text-xs text-muted">
+                    {t('finance.income')} {formatSignedMoney(bucket.income, language, bucket.currency)}
+                    {' · '}
+                    {t('finance.expense')} {formatSignedMoney(-bucket.expense, language, bucket.currency)}
+                  </p>
+                </li>
+              ))}
+            </ul>
           )}
-          {finance ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Badge tone="success">
-                {t('finance.totalIncome')}: {formatSignedMoney(monthIncome, language, money)}
-              </Badge>
-              <Badge tone="expense">
-                {t('finance.totalExpense')}: {formatSignedMoney(-monthExpense, language, money)}
-              </Badge>
-            </div>
-          ) : null}
         </article>
       </section>
     </div>

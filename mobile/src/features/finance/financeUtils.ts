@@ -1,5 +1,6 @@
+import { FINANCE_CURRENCIES } from './currencies';
 import type { AppLanguage } from '../../i18n';
-import type { FinanceView } from '../../types/finance';
+import type { FinanceMoneyKind, FinanceOperation, FinanceView } from '../../types/finance';
 
 const intlLocales: Record<AppLanguage, string> = {
   uk: 'uk-UA',
@@ -14,6 +15,93 @@ const intlLocales: Record<AppLanguage, string> = {
 };
 
 export const FINANCE_CURRENCY = 'EUR' as const;
+
+export type FinanceKindBucket = {
+  income: number;
+  expense: number;
+  balance: number;
+};
+
+export type FinanceCurrencyBucket = {
+  currency: string;
+  income: number;
+  expense: number;
+  balance: number;
+  byKind: Record<FinanceMoneyKind, FinanceKindBucket>;
+  byMonth: Array<{ month: number; income: number; expense: number; balance: number }>;
+};
+
+function emptyKindBucket(): FinanceKindBucket {
+  return { income: 0, expense: 0, balance: 0 };
+}
+
+function roundMoney(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+export function summarizeByCurrency(operations: FinanceOperation[]): FinanceCurrencyBucket[] {
+  const map = new Map<string, FinanceCurrencyBucket>();
+
+  for (const operation of operations) {
+    const currency = operation.currency || FINANCE_CURRENCY;
+    let bucket = map.get(currency);
+    if (!bucket) {
+      bucket = {
+        currency,
+        income: 0,
+        expense: 0,
+        balance: 0,
+        byKind: { CASH: emptyKindBucket(), ELECTRONIC: emptyKindBucket() },
+        byMonth: Array.from({ length: 12 }, (_, index) => ({
+          month: index + 1,
+          income: 0,
+          expense: 0,
+          balance: 0,
+        })),
+      };
+      map.set(currency, bucket);
+    }
+
+    const kind: FinanceMoneyKind = operation.moneyKind === 'CASH' ? 'CASH' : 'ELECTRONIC';
+    const monthIndex = new Date(operation.date).getUTCMonth();
+    const month = bucket.byMonth[monthIndex];
+
+    if (operation.type === 'INCOME') {
+      bucket.income += operation.amount;
+      bucket.byKind[kind].income += operation.amount;
+      if (month) month.income += operation.amount;
+    } else {
+      bucket.expense += operation.amount;
+      bucket.byKind[kind].expense += operation.amount;
+      if (month) month.expense += operation.amount;
+    }
+  }
+
+  const ranked = FINANCE_CURRENCIES as readonly string[];
+  return [...map.values()]
+    .map((bucket) => {
+      bucket.income = roundMoney(bucket.income);
+      bucket.expense = roundMoney(bucket.expense);
+      bucket.balance = roundMoney(bucket.income - bucket.expense);
+      for (const kind of ['CASH', 'ELECTRONIC'] as const) {
+        const row = bucket.byKind[kind];
+        row.income = roundMoney(row.income);
+        row.expense = roundMoney(row.expense);
+        row.balance = roundMoney(row.income - row.expense);
+      }
+      for (const month of bucket.byMonth) {
+        month.income = roundMoney(month.income);
+        month.expense = roundMoney(month.expense);
+        month.balance = roundMoney(month.income - month.expense);
+      }
+      return bucket;
+    })
+    .sort((left, right) => {
+      const leftIndex = ranked.indexOf(left.currency);
+      const rightIndex = ranked.indexOf(right.currency);
+      return (leftIndex === -1 ? 99 : leftIndex) - (rightIndex === -1 ? 99 : rightIndex);
+    });
+}
 
 export function formatMoney(amount: number, language: AppLanguage, currency: string = FINANCE_CURRENCY): string {
   try {

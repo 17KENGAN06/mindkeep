@@ -338,7 +338,7 @@
   },
   "finance": {
     "title": "Budget",
-    "subtitle": "Einnahmen und Ausgaben in Euro im Blick — einfach und klar.",
+    "subtitle": "Zuerst bar oder Karte, dann die Währung. Jede zählt für sich.",
     "menuHint": "Monatssummen, Buchungen, Bargeld und elektronisch.",
     "viewMonth": "Monat",
     "viewYear": "Jahr",
@@ -381,7 +381,10 @@
     },
     "currency": "Währung",
     "displayCurrency": "Summen anzeigen in",
-    "budgetSubtitle": "Zuerst bar oder Karte, dann die Währung. Summen werden in die Anzeigewährung umgerechnet."
+    "budgetSubtitle": "Zuerst bar oder Karte, dann die Währung. Jede Währung bleibt für sich — ohne Umrechnung.",
+    "perCurrencyTitle": "Nach Währung",
+    "perCurrencyHint": "Einnahmen, Ausgaben und Saldo werden für jede Währung getrennt gezählt.",
+    "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen."
   },
   "auth": {
     "loginTitle": "Willkommen zurück",
@@ -446,7 +449,7 @@
     },
     "legendDone": "Erledigt",
     "legendPlanned": "Geplant",
-    "financeTitle": "Budget in diesem Monat",
+    "financeTitle": "Finanzen",
     "allFinance": "Budget",
     "spentLabel": "ausgegeben",
     "modules": {

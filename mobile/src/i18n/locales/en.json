@@ -338,7 +338,7 @@
   },
   "finance": {
     "title": "Budget",
-    "subtitle": "Track income and expenses in euros — simple and clear.",
+    "subtitle": "Cash or card first, then the currency. Each one is counted on its own.",
     "menuHint": "Month totals, operations, cash and electronic.",
     "viewMonth": "Month",
     "viewYear": "Year",
@@ -381,7 +381,10 @@
     },
     "currency": "Currency",
     "displayCurrency": "Show totals in",
-    "budgetSubtitle": "Choose cash or card first, then the currency. Totals convert to the currency you view in."
+    "budgetSubtitle": "Choose cash or card first, then the currency. Each currency stays on its own — no converted totals.",
+    "perCurrencyTitle": "By currency",
+    "perCurrencyHint": "Income, expense and balance are counted separately for every currency.",
+    "emptyCurrencies": "No operations in this period yet."
   },
   "auth": {
     "loginTitle": "Welcome back",
@@ -446,7 +449,7 @@
     },
     "legendDone": "Completed",
     "legendPlanned": "Planned",
-    "financeTitle": "Budget this month",
+    "financeTitle": "Finance",
     "allFinance": "Budget",
     "spentLabel": "spent",
     "modules": {

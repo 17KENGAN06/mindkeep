@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budget",
-    "budgetSubtitle": "Choisis d’abord espèces ou carte, puis la devise. Les totaux sont convertis dans la devise d’affichage.",
+    "budgetSubtitle": "D’abord espèces ou carte, puis la devise. Chaque devise reste à part — sans conversion.",
     "transactionsTitle": "Opérations",
     "transactionsSubtitle": "Tous les revenus et dépenses de la période choisie.",
     "categoriesTitle": "Catégories de dépenses",
@@ -137,13 +137,16 @@
     },
     "wallets": {
       "title": "Espèces et électronique",
-      "subtitle": "Solde de la période selon la forme d'argent — uniquement sur cette page budget.",
+      "subtitle": "Recettes, dépenses et solde sont comptés séparément pour chaque devise.",
       "cashHint": "Billets et pièces",
       "electronicHint": "Carte, virement, compte",
       "showOps": "Voir les opérations"
     },
     "currency": "Devise",
-    "displayCurrency": "Afficher les totaux en"
+    "displayCurrency": "Afficher les totaux en",
+    "perCurrencyTitle": "Par devise",
+    "perCurrencyHint": "Recettes, dépenses et solde sont comptés séparément pour chaque devise.",
+    "emptyCurrencies": "Aucune opération sur cette période."
   },
   "tasks": {
     "title": "Tâches du jour",
@@ -710,7 +713,7 @@
     },
     "legendDone": "Terminé",
     "legendPlanned": "Prévu",
-    "financeTitle": "Synthèse financière",
+    "financeTitle": "Finances",
     "allFinance": "Toutes les finances",
     "spentLabel": "dépensé",
     "stats": {

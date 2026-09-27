@@ -338,7 +338,7 @@
   },
   "finance": {
     "title": "Budżet",
-    "subtitle": "Śledź przychody i wydatki w euro — prosto i przejrzyście.",
+    "subtitle": "Najpierw gotówka albo karta, potem waluta. Każda liczona osobno.",
     "menuHint": "Sumy miesiąca, operacje, gotówka i elektroniczne.",
     "viewMonth": "Miesiąc",
     "viewYear": "Rok",
@@ -381,7 +381,10 @@
     },
     "currency": "Waluta",
     "displayCurrency": "Pokazuj sumy w",
-    "budgetSubtitle": "Najpierw wybierz gotówkę albo kartę, potem walutę. Sumy przeliczamy na walutę podglądu."
+    "budgetSubtitle": "Najpierw gotówka albo karta, potem waluta. Każda waluta liczy się osobno — bez przeliczeń.",
+    "perCurrencyTitle": "Według walut",
+    "perCurrencyHint": "Przychód, wydatek i saldo liczymy osobno dla każdej waluty.",
+    "emptyCurrencies": "W tym okresie nie ma jeszcze operacji."
   },
   "auth": {
     "loginTitle": "Witamy z powrotem",
@@ -446,7 +449,7 @@
     },
     "legendDone": "Ukończone",
     "legendPlanned": "Zaplanowane",
-    "financeTitle": "Budżet w tym miesiącu",
+    "financeTitle": "Finanse",
     "allFinance": "Budżet",
     "spentLabel": "wydano",
     "modules": {

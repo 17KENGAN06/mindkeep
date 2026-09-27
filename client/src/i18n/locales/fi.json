@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budjetti",
-    "budgetSubtitle": "Valitse ensin käteinen tai kortti, sitten valuutta. Summat muunnetaan näyttövaluuttaan.",
+    "budgetSubtitle": "Valitse ensin käteinen tai kortti, sitten valuutta. Jokainen valuutta pysyy omanaaan — ilman muuntoa.",
     "transactionsTitle": "Tapahtumat",
     "transactionsSubtitle": "Kaikki tulot ja menot valitulta jaksolta.",
     "categoriesTitle": "Kulujen kategoriat",
@@ -137,13 +137,16 @@
     },
     "wallets": {
       "title": "Käteinen ja sähköinen",
-      "subtitle": "Jaksojen saldot rahan muodon mukaan — vain tällä budjettisivulla.",
+      "subtitle": "Tulot, menot ja saldo lasketaan erikseen jokaiselle valuutalle.",
       "cashHint": "Setelit ja kolikot",
       "electronicHint": "Kortti, siirto, tili",
       "showOps": "Näytä tapahtumat"
     },
     "currency": "Valuutta",
-    "displayCurrency": "Näytä summat valuutassa"
+    "displayCurrency": "Näytä summat valuutassa",
+    "perCurrencyTitle": "Valuutoittain",
+    "perCurrencyHint": "Tulot, menot ja saldo lasketaan erikseen jokaiselle valuutalle.",
+    "emptyCurrencies": "Tällä jaksolla ei ole vielä tapahtumia."
   },
   "tasks": {
     "title": "Päivittäiset tehtävät",
@@ -710,7 +713,7 @@
     },
     "legendDone": "Valmis",
     "legendPlanned": "Suunniteltu",
-    "financeTitle": "Talousyhteenveto",
+    "financeTitle": "Talous",
     "allFinance": "Koko talous",
     "spentLabel": "kulutettu",
     "stats": {

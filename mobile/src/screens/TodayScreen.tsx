@@ -16,7 +16,8 @@ import { WaterGlasses } from '../components/WaterGlasses';
 import { AppIcon } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
 import { useAuth } from '../features/auth/useAuth';
-import { currentPeriodDefaults, formatMoney } from '../features/finance/financeUtils';
+import { currencyLabel } from '../features/finance/currencies';
+import { currentPeriodDefaults, formatSignedMoney, summarizeByCurrency } from '../features/finance/financeUtils';
 import { useFinanceSummary } from '../features/finance/useFinance';
 import { useNutritionPeriod, useSetWater } from '../features/nutrition/useNutrition';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
@@ -27,9 +28,7 @@ import type { AppLanguage } from '../i18n';
 import type { AppTabParamList } from '../navigation/types';
 import { lastNDateKeys, todayDateKey } from '../utils/date';
 
-type WeekTab = 'tasks' | 'reviews' | 'expenses';
-
-const CATEGORY_COLORS = ['#8eefb4', '#5b8def', '#a78bfa', '#f59e0b', '#94a3b8', '#f472b6'];
+type WeekTab = 'tasks' | 'reviews';
 
 function clampPercent(value: number): number {
   if (!Number.isFinite(value) || value <= 0) return 0;
@@ -109,40 +108,17 @@ export function TodayScreen() {
 
   const todayDone = tasks.filter((task) => task.completed).length;
   const todayTotal = tasks.length;
-  const finance = financeQuery.data;
-  const money = finance?.currency ?? 'EUR';
-  const spentToday = (finance?.operations ?? [])
-    .filter((op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === today)
-    .reduce((sum, op) => sum + op.amount, 0);
-  const monthExpense = finance?.totals.expense ?? 0;
-  const monthIncome = finance?.totals.income ?? 0;
-  const opening = finance?.totals.openingBalance ?? 0;
-  const budgetTotal = Math.max(opening + monthIncome, monthExpense, 1);
-  const budgetLeft = Math.max(budgetTotal - monthExpense, 0);
-  const dayOfMonth = new Date().getDate();
-  const softDailyLimit = Math.max(monthExpense / Math.max(dayOfMonth, 1), spentToday, 1);
-  const categorySegments = (finance?.byCategory ?? [])
-    .filter((item) => item.expense > 0)
-    .slice(0, 5)
-    .map((item, index) => ({
-      ...item,
-      color: CATEGORY_COLORS[index % CATEGORY_COLORS.length]!,
-    }));
-  const categoryTotal = categorySegments.reduce((sum, item) => sum + item.expense, 0);
+  const currencyBuckets = summarizeByCurrency(financeQuery.data?.operations ?? []);
 
   const weekTaskPool = [...(monthTasksQuery.data?.tasks ?? []), ...(prevTasksQuery.data?.tasks ?? [])];
   const weekSeries = weekDays.map((date) => {
     const reviewsDone = activityQuery.data?.activity.find((point) => point.date === date)?.count ?? 0;
-    const expenses = (finance?.operations ?? [])
-      .filter((op) => op.type === 'EXPENSE' && op.date.slice(0, 10) === date)
-      .reduce((sum, op) => sum + op.amount, 0);
     const dayTasks = weekTaskPool.filter((task) => task.date === date);
     return {
       date,
       tasksDone: dayTasks.filter((task) => task.completed).length,
       tasksPlanned: dayTasks.length,
       reviewsDone,
-      expenses,
     };
   });
 
@@ -150,8 +126,7 @@ export function TodayScreen() {
     1,
     ...weekSeries.map((day) => {
       if (weekTab === 'tasks') return Math.max(day.tasksPlanned, day.tasksDone);
-      if (weekTab === 'reviews') return day.reviewsDone;
-      return day.expenses;
+      return day.reviewsDone;
     }),
   );
 
@@ -242,18 +217,6 @@ export function TodayScreen() {
             })}
             percent={reviewsPlanned > 0 ? (completedReviews / reviewsPlanned) * 100 : 0}
             onPress={() => navigation.navigate('Review', { screen: 'ReviewInbox' })}
-          />
-          <ProgressCard
-            title={t('dashboard.cards.spentToday')}
-            valueText={`${formatMoney(spentToday, language, money)} / ${formatMoney(softDailyLimit, language, money)}`}
-            percent={(spentToday / softDailyLimit) * 100}
-            onPress={() => navigation.navigate('More', { screen: 'Finance' })}
-          />
-          <ProgressCard
-            title={t('dashboard.cards.budgetLeft')}
-            valueText={`${formatMoney(budgetLeft, language, money)} / ${formatMoney(budgetTotal, language, money)}`}
-            percent={(budgetLeft / budgetTotal) * 100}
-            onPress={() => navigation.navigate('More', { screen: 'Finance' })}
           />
           <ProgressCard
             title={t('dashboard.cards.caloriesToday')}
@@ -408,7 +371,7 @@ export function TodayScreen() {
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.weekTitle')}</Text>
           </View>
           <View style={styles.tabs}>
-            {(['tasks', 'reviews', 'expenses'] as const).map((id) => (
+            {(['tasks', 'reviews'] as const).map((id) => (
               <Pressable
                 key={id}
                 onPress={() => setWeekTab(id)}
@@ -431,10 +394,8 @@ export function TodayScreen() {
           </View>
           <View style={styles.chartRow}>
             {weekSeries.map((day) => {
-              const planned =
-                weekTab === 'tasks' ? day.tasksPlanned : weekTab === 'reviews' ? day.reviewsDone : day.expenses;
-              const done =
-                weekTab === 'tasks' ? day.tasksDone : weekTab === 'reviews' ? day.reviewsDone : day.expenses;
+              const planned = weekTab === 'tasks' ? day.tasksPlanned : day.reviewsDone;
+              const done = weekTab === 'tasks' ? day.tasksDone : day.reviewsDone;
               const plannedHeight = Math.max((planned / chartMax) * 100, planned > 0 ? 8 : 4);
               const doneHeight = Math.max((done / chartMax) * 100, done > 0 ? 8 : 0);
               return (
@@ -503,31 +464,27 @@ export function TodayScreen() {
               <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.allFinance')}</Text>
             </Pressable>
           </View>
-          {!finance || categoryTotal === 0 ? (
+          {currencyBuckets.length === 0 ? (
             <Text style={[styles.empty, { color: colors.muted }]}>{t('dashboard.modules.noFinance')}</Text>
           ) : (
-            categorySegments.map((item) => {
-              const share = Math.round((item.expense / categoryTotal) * 100);
-              return (
-                <View key={`${item.id ?? item.name}`} style={styles.financeRow}>
-                  <View style={[styles.dot, { backgroundColor: item.color }]} />
-                  <Text style={[styles.mealTitle, { color: colors.ink }]} numberOfLines={1}>
-                    {item.name}
+            currencyBuckets.map((bucket) => (
+              <View key={bucket.currency} style={[styles.financeRow, { borderColor: colors.line }]}>
+                <View style={styles.materialBody}>
+                  <Text style={[styles.materialTitle, { color: colors.ink }]} numberOfLines={1}>
+                    {currencyLabel(bucket.currency, language)}
                   </Text>
-                  <Text style={[styles.minutes, { color: colors.muted }]}>
-                    {formatMoney(item.expense, language, money)} · {share}%
+                  <Text style={[styles.meta, { color: colors.muted }]}>
+                    {t('finance.income')} {formatSignedMoney(bucket.income, language, bucket.currency)}
+                    {' · '}
+                    {t('finance.expense')} {formatSignedMoney(-bucket.expense, language, bucket.currency)}
                   </Text>
                 </View>
-              );
-            })
+                <Text style={[styles.minutes, { color: colors.ink }]}>
+                  {formatSignedMoney(bucket.balance, language, bucket.currency)}
+                </Text>
+              </View>
+            ))
           )}
-          {finance ? (
-            <Text style={[styles.meta, { color: colors.muted }]}>
-              {t('finance.totalIncome')}: {formatMoney(monthIncome, language, money)} · {t('finance.totalExpense')}:{' '}
-              {formatMoney(monthExpense, language, money)} · {t('dashboard.spentLabel')}{' '}
-              {formatMoney(categoryTotal, language, money)}
-            </Text>
-          ) : null}
         </View>
       </ScrollView>
     </SafeAreaView>

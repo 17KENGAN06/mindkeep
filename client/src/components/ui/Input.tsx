@@ -15,8 +15,8 @@ export function Input({ label, error, hint, action, id, className = '', ...props
     <div
       className={
         action
-          ? 'grid grid-cols-1 items-center gap-x-3 gap-y-1.5 sm:grid-cols-[minmax(12rem,1fr)_auto]'
-          : 'block space-y-1.5'
+          ? 'grid min-w-0 grid-cols-1 items-center gap-x-3 gap-y-1.5 sm:grid-cols-[minmax(0,1fr)_auto]'
+          : 'block min-w-0 space-y-1.5'
       }
     >
       <label className={`block text-sm font-medium text-ink${action ? ' sm:col-span-2' : ''}`} htmlFor={inputId}>

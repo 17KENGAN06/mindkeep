@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budżet",
-    "budgetSubtitle": "Najpierw wybierz gotówkę albo kartę, potem walutę. Sumy przeliczamy na walutę podglądu.",
+    "budgetSubtitle": "Najpierw gotówka albo karta, potem waluta. Każda waluta liczy się osobno — bez przeliczeń.",
     "transactionsTitle": "Transakcje",
     "transactionsSubtitle": "Wszystkie przychody i wydatki w wybranym okresie.",
     "categoriesTitle": "Kategorie wydatków",
@@ -137,13 +137,16 @@
     },
     "wallets": {
       "title": "Gotówka i elektroniczne",
-      "subtitle": "Saldo okresu według formy pieniędzy — tylko na tej stronie budżetu.",
+      "subtitle": "Przychód, wydatek i saldo liczymy osobno dla każdej waluty.",
       "cashHint": "Banknoty i monety",
       "electronicHint": "Karta, przelew, konto",
       "showOps": "Pokaż operacje"
     },
     "currency": "Waluta",
-    "displayCurrency": "Pokazuj sumy w"
+    "displayCurrency": "Pokazuj sumy w",
+    "perCurrencyTitle": "Według walut",
+    "perCurrencyHint": "Przychód, wydatek i saldo liczymy osobno dla każdej waluty.",
+    "emptyCurrencies": "W tym okresie nie ma jeszcze operacji."
   },
   "tasks": {
     "title": "Zadania dnia",
@@ -710,7 +713,7 @@
     },
     "legendDone": "Ukończone",
     "legendPlanned": "Zaplanowane",
-    "financeTitle": "Podsumowanie finansowe",
+    "financeTitle": "Finanse",
     "allFinance": "Wszystkie finanse",
     "spentLabel": "wydano",
     "stats": {

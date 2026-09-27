@@ -74,7 +74,7 @@
   },
   "finance": {
     "budgetTitle": "Budget",
-    "budgetSubtitle": "Zuerst bar oder Karte, dann die Währung. Summen werden in die Anzeigewährung umgerechnet.",
+    "budgetSubtitle": "Zuerst bar oder Karte, dann die Währung. Jede Währung bleibt für sich — ohne Umrechnung.",
     "transactionsTitle": "Buchungen",
     "transactionsSubtitle": "Alle Einnahmen und Ausgaben im gewählten Zeitraum.",
     "categoriesTitle": "Ausgabenkategorien",
@@ -137,13 +137,16 @@
     },
     "wallets": {
       "title": "Bargeld und elektronisch",
-      "subtitle": "Periodensaldo nach Geldform — nur auf dieser Budgetseite.",
+      "subtitle": "Einnahmen, Ausgaben und Saldo werden für jede Währung getrennt gezählt.",
       "cashHint": "Scheine und Münzen",
       "electronicHint": "Karte, Überweisung, Konto",
       "showOps": "Buchungen anzeigen"
     },
     "currency": "Währung",
-    "displayCurrency": "Summen anzeigen in"
+    "displayCurrency": "Summen anzeigen in",
+    "perCurrencyTitle": "Nach Währung",
+    "perCurrencyHint": "Einnahmen, Ausgaben und Saldo werden für jede Währung getrennt gezählt.",
+    "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen."
   },
   "tasks": {
     "title": "Tagesaufgaben",
@@ -710,7 +713,7 @@
     },
     "legendDone": "Erledigt",
     "legendPlanned": "Geplant",
-    "financeTitle": "Finanzübersicht",
+    "financeTitle": "Finanzen",
     "allFinance": "Alle Finanzen",
     "spentLabel": "ausgegeben",
     "stats": {

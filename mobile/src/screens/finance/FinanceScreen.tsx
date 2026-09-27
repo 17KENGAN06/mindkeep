@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -15,8 +15,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton, Badge } from '../../components/ui';
-import { FINANCE_CURRENCIES, type FinanceCurrency } from '../../features/finance/currencies';
-import { formatMoney, formatSignedMoney } from '../../features/finance/financeUtils';
+import { currencyLabel, FINANCE_CURRENCIES, type FinanceCurrency } from '../../features/finance/currencies';
+import { formatSignedMoney, summarizeByCurrency } from '../../features/finance/financeUtils';
 import {
   useCreateFinanceCategory,
   useCreateFinanceOperation,
@@ -25,7 +25,6 @@ import {
   useFinanceCategories,
   useFinanceSummary,
   useUpdateFinanceCategory,
-  useUpdateFinanceSettings,
 } from '../../features/finance/useFinance';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
@@ -41,10 +40,12 @@ function Chip({
   label,
   active,
   onPress,
+  fill = false,
 }: {
   label: string;
   active: boolean;
   onPress: () => void;
+  fill?: boolean;
 }) {
   const { colors } = useTheme();
   return (
@@ -53,6 +54,7 @@ function Chip({
       style={[
         styles.chip,
         { borderColor: colors.line },
+        fill && styles.chipFill,
         active && { backgroundColor: colors.brand, borderColor: colors.brand },
       ]}
     >
@@ -86,7 +88,6 @@ export function FinanceScreen() {
   const [categoryName, setCategoryName] = useState('');
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [editingCategoryName, setEditingCategoryName] = useState('');
-  const [openingInput, setOpeningInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
 
   const summaryQuery = useFinanceSummary({
@@ -95,7 +96,6 @@ export function FinanceScreen() {
     ...(view === 'month' ? { month } : {}),
   });
   const categoriesQuery = useFinanceCategories();
-  const updateSettings = useUpdateFinanceSettings();
   const createCategory = useCreateFinanceCategory();
   const updateCategory = useUpdateFinanceCategory();
   const deleteCategory = useDeleteFinanceCategory();
@@ -105,11 +105,7 @@ export function FinanceScreen() {
   const summary = summaryQuery.data;
   const categories = categoriesQuery.data ?? [];
   const operations = summary?.operations ?? [];
-
-  useEffect(() => {
-    if (summary?.totals.openingBalance == null) return;
-    setOpeningInput(String(summary.totals.openingBalance));
-  }, [summary?.totals.openingBalance]);
+  const currencyBuckets = useMemo(() => summarizeByCurrency(operations), [operations]);
 
   const shiftPeriod = (delta: number) => {
     if (view === 'year') {
@@ -119,20 +115,6 @@ export function FinanceScreen() {
     const next = new Date(year, month - 1 + delta, 1);
     setYear(next.getFullYear());
     setMonth(next.getMonth() + 1);
-  };
-
-  const onSaveOpening = async () => {
-    setFormError(null);
-    const next = Number(openingInput.replace(',', '.'));
-    if (!Number.isFinite(next)) {
-      setFormError(t('finance.errors.opening'));
-      return;
-    }
-    try {
-      await updateSettings.mutateAsync({ openingBalance: Math.round(next * 100) / 100 });
-    } catch {
-      setFormError(t('auth.errors.generic'));
-    }
   };
 
   const onCreateCategory = async () => {
@@ -243,10 +225,6 @@ export function FinanceScreen() {
     );
   }
 
-  const cash = summary?.totalsByKind.CASH ?? { income: 0, expense: 0, balance: 0 };
-  const electronic = summary?.totalsByKind.ELECTRONIC ?? { income: 0, expense: 0, balance: 0 };
-  const money = summary?.currency ?? 'EUR';
-
   return (
     <KeyboardAvoidingView
       style={[styles.flex, { backgroundColor: colors.bg }]}
@@ -297,119 +275,101 @@ export function FinanceScreen() {
           <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
         ) : null}
 
-        <View style={styles.stats}>
-          <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.totalIncome')}</Text>
-            <Text style={[styles.statValue, { color: colors.brand }]}>
-              {formatMoney(summary?.totals.income ?? 0, language, money)}
-            </Text>
-          </View>
-          <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.totalExpense')}</Text>
-            <Text style={[styles.statValue, { color: colors.expense }]}>
-              {formatMoney(summary?.totals.expense ?? 0, language, money)}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.stats}>
-          <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.balance')}</Text>
-            <Text style={[styles.statValue, { color: colors.ink }]}>
-              {formatSignedMoney(summary?.totals.balance ?? 0, language, money)}
-            </Text>
-          </View>
-          <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.netWithOpening')}</Text>
-            <Text style={[styles.statValue, { color: colors.ink }]}>
-              {formatSignedMoney(summary?.totals.netWithOpening ?? 0, language, money)}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.stats}>
-          <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.moneyKind.cash')}</Text>
-            <Text style={[styles.statValue, { color: colors.ink }]}>
-              {formatSignedMoney(cash.balance, language, money)}
-            </Text>
-          </View>
-          <View style={[styles.stat, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.moneyKind.electronic')}</Text>
-            <Text style={[styles.statValue, { color: colors.ink }]}>
-              {formatSignedMoney(electronic.balance, language, money)}
-            </Text>
-          </View>
-        </View>
-
-        {view === 'year' && (summary?.byMonth?.length ?? 0) > 0 ? (
+        {currencyBuckets.length === 0 ? (
           <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.yearBreakdown')}</Text>
-            {(summary?.byMonth ?? []).map((item) => (
-              <Pressable
-                key={item.month}
-                onPress={() => {
-                  setMonth(item.month);
-                  setView('month');
-                }}
-                style={[styles.monthStat, { borderColor: colors.line }]}
+            <Text style={[styles.empty, { color: colors.muted }]}>{t('finance.emptyCurrencies')}</Text>
+          </View>
+        ) : (
+          currencyBuckets.map((bucket) => {
+            const months = bucket.byMonth.filter((item) => item.income !== 0 || item.expense !== 0);
+            return (
+              <View
+                key={bucket.currency}
+                style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
               >
-                <Text style={[styles.opComment, { color: colors.ink }]}>
-                  {formatMonthTitle(year, item.month, language)}
+                <Text style={[styles.cardTitle, { color: colors.ink }]}>
+                  {currencyLabel(bucket.currency, language)}
                 </Text>
-                <Text style={[styles.opMeta, { color: colors.muted }]}>
-                  {formatSignedMoney(item.income, language, money)} ·{' '}
-                  {formatSignedMoney(-item.expense, language, money)}
+                <Text style={[styles.statValue, { color: colors.ink }]}>
+                  {formatSignedMoney(bucket.balance, language, bucket.currency)}
                 </Text>
-              </Pressable>
-            ))}
-          </View>
-        ) : null}
-
-        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.displayCurrency')}</Text>
-          <View style={styles.row}>
-            {FINANCE_CURRENCIES.map((code) => (
-              <Chip
-                key={`display-${code}`}
-                label={code}
-                active={money === code}
-                onPress={() => void updateSettings.mutateAsync({ displayCurrency: code })}
-              />
-            ))}
-          </View>
-        </View>
-
-        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <TextInput
-            keyboardType="decimal-pad"
-            style={[
-              styles.input,
-              { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
-            ]}
-            value={openingInput}
-            onChangeText={setOpeningInput}
-          />
-          <AppButton
-            label={t('common.save')}
-            loading={updateSettings.isPending}
-            onPress={() => void onSaveOpening()}
-          />
-        </View>
+                <View style={styles.stats}>
+                  <View style={[styles.stat, { backgroundColor: colors.bg, borderColor: colors.line }]}>
+                    <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.income')}</Text>
+                    <Text style={[styles.statValue, { color: colors.brand }]}>
+                      {formatSignedMoney(bucket.income, language, bucket.currency)}
+                    </Text>
+                  </View>
+                  <View style={[styles.stat, { backgroundColor: colors.bg, borderColor: colors.line }]}>
+                    <Text style={[styles.statLabel, { color: colors.muted }]}>{t('finance.expense')}</Text>
+                    <Text style={[styles.statValue, { color: colors.expense }]}>
+                      {formatSignedMoney(-bucket.expense, language, bucket.currency)}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.stats}>
+                  <View style={[styles.stat, { backgroundColor: colors.bg, borderColor: colors.line }]}>
+                    <Text style={[styles.statLabel, { color: colors.muted }]}>
+                      {t('finance.moneyKind.electronic')}
+                    </Text>
+                    <Text style={[styles.statValue, { color: colors.ink }]}>
+                      {formatSignedMoney(bucket.byKind.ELECTRONIC.balance, language, bucket.currency)}
+                    </Text>
+                  </View>
+                  <View style={[styles.stat, { backgroundColor: colors.bg, borderColor: colors.line }]}>
+                    <Text style={[styles.statLabel, { color: colors.muted }]}>
+                      {t('finance.moneyKind.cash')}
+                    </Text>
+                    <Text style={[styles.statValue, { color: colors.ink }]}>
+                      {formatSignedMoney(bucket.byKind.CASH.balance, language, bucket.currency)}
+                    </Text>
+                  </View>
+                </View>
+                {view === 'year'
+                  ? months.map((item) => (
+                      <Pressable
+                        key={`${bucket.currency}-${item.month}`}
+                        onPress={() => {
+                          setMonth(item.month);
+                          setView('month');
+                        }}
+                        style={[styles.monthStat, { borderColor: colors.line }]}
+                      >
+                        <Text style={[styles.opComment, { color: colors.ink }]}>
+                          {formatMonthTitle(year, item.month, language)}
+                        </Text>
+                        <Text style={[styles.opMeta, { color: colors.muted }]}>
+                          {formatSignedMoney(item.income, language, bucket.currency)} ·{' '}
+                          {formatSignedMoney(-item.expense, language, bucket.currency)}
+                        </Text>
+                      </Pressable>
+                    ))
+                  : null}
+              </View>
+            );
+          })
+        )}
 
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.addOperation')}</Text>
           <Text style={[styles.label, { color: colors.muted }]}>{t('finance.moneyKind.label')}</Text>
-          <View style={styles.row}>
-            <Chip
-              label={t('finance.moneyKind.electronic')}
-              active={moneyKind === 'ELECTRONIC'}
-              onPress={() => setMoneyKind('ELECTRONIC')}
-            />
-            <Chip
-              label={t('finance.moneyKind.cash')}
-              active={moneyKind === 'CASH'}
-              onPress={() => setMoneyKind('CASH')}
-            />
+          <View style={styles.pair}>
+            <View style={styles.pairSlot}>
+              <Chip
+                fill
+                label={t('finance.moneyKind.electronic')}
+                active={moneyKind === 'ELECTRONIC'}
+                onPress={() => setMoneyKind('ELECTRONIC')}
+              />
+            </View>
+            <View style={styles.pairSlot}>
+              <Chip
+                fill
+                label={t('finance.moneyKind.cash')}
+                active={moneyKind === 'CASH'}
+                onPress={() => setMoneyKind('CASH')}
+              />
+            </View>
           </View>
           <Text style={[styles.label, { color: colors.muted }]}>{t('finance.currency')}</Text>
           <View style={styles.row}>
@@ -644,12 +604,19 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 16, fontWeight: '700' },
   label: { fontSize: 13, fontWeight: '600' },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  pair: { flexDirection: 'row', gap: 8 },
+  pairSlot: { flex: 1 },
   chip: {
-    borderRadius: 999,
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    borderRadius: 14,
     borderWidth: 1,
+    justifyContent: 'center',
+    minHeight: 44,
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
+  chipFill: { alignSelf: 'stretch', width: '100%' },
   input: {
     borderRadius: 12,
     borderWidth: 1,

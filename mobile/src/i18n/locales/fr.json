@@ -338,7 +338,7 @@
   },
   "finance": {
     "title": "Budget",
-    "subtitle": "Suis tes revenus et tes dépenses en euros — simple et clair.",
+    "subtitle": "D’abord espèces ou carte, puis la devise. Chacune est comptée à part.",
     "menuHint": "Totaux du mois, opérations, espèces et électronique.",
     "viewMonth": "Mois",
     "viewYear": "Année",
@@ -381,7 +381,10 @@
     },
     "currency": "Devise",
     "displayCurrency": "Afficher les totaux en",
-    "budgetSubtitle": "Choisis d’abord espèces ou carte, puis la devise. Les totaux sont convertis dans la devise d’affichage."
+    "budgetSubtitle": "D’abord espèces ou carte, puis la devise. Chaque devise reste à part — sans conversion.",
+    "perCurrencyTitle": "Par devise",
+    "perCurrencyHint": "Recettes, dépenses et solde sont comptés séparément pour chaque devise.",
+    "emptyCurrencies": "Aucune opération sur cette période."
   },
   "auth": {
     "loginTitle": "Bon retour",
@@ -446,7 +449,7 @@
     },
     "legendDone": "Terminé",
     "legendPlanned": "Prévu",
-    "financeTitle": "Budget de ce mois",
+    "financeTitle": "Finances",
     "allFinance": "Budget",
     "spentLabel": "dépensé",
     "modules": {

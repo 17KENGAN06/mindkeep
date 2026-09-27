@@ -9,18 +9,17 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
-import { currencyOptions, type FinanceCurrency } from '@/features/finance/currencies';
+import { currencyLabel, currencyOptions, type FinanceCurrency } from '@/features/finance/currencies';
 import {
   currentPeriodDefaults,
-  formatMoney,
   formatSignedMoney,
+  summarizeByCurrency,
 } from '@/features/finance/financeUtils';
 import {
   useCreateFinanceOperation,
   useDeleteFinanceOperation,
   useFinanceCategories,
   useFinanceSummary,
-  useUpdateFinanceSettings,
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
 import type { FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
@@ -62,13 +61,17 @@ export function FinanceBudgetPage() {
   const categoriesQuery = useFinanceCategories();
   const createOperation = useCreateFinanceOperation();
   const deleteOperation = useDeleteFinanceOperation();
-  const updateSettings = useUpdateFinanceSettings();
 
   const filteredOperations = useMemo(() => {
     const ops = summaryQuery.data?.operations ?? [];
     if (kindFilter === 'ALL') return ops;
     return ops.filter((op) => (op.moneyKind ?? 'ELECTRONIC') === kindFilter);
   }, [summaryQuery.data?.operations, kindFilter]);
+
+  const currencyBuckets = useMemo(
+    () => summarizeByCurrency(filteredOperations),
+    [filteredOperations],
+  );
 
   if (summaryQuery.isLoading || categoriesQuery.isLoading) {
     return <Loader />;
@@ -78,13 +81,7 @@ export function FinanceBudgetPage() {
     return <ErrorMessage message={t('auth.errors.generic')} />;
   }
 
-  const summary = summaryQuery.data;
-  const displayCurrency = summary.currency;
   const categories = categoriesQuery.data ?? [];
-  const byKind = summary.totalsByKind ?? {
-    CASH: { income: 0, expense: 0, balance: 0 },
-    ELECTRONIC: { income: 0, expense: 0, balance: 0 },
-  };
 
   const onCreate = async (event: FormEvent) => {
     event.preventDefault();
@@ -129,29 +126,8 @@ export function FinanceBudgetPage() {
     }
   };
 
-  const activeMonths = summary.byMonth.filter(
-    (item) => item.income !== 0 || item.expense !== 0,
-  );
-
-  const wallets = [
-    {
-      key: 'CASH' as const,
-      title: t('finance.moneyKind.cash'),
-      hint: t('finance.wallets.cashHint'),
-      Icon: Banknote,
-      totals: byKind.CASH,
-    },
-    {
-      key: 'ELECTRONIC' as const,
-      title: t('finance.moneyKind.electronic'),
-      hint: t('finance.wallets.electronicHint'),
-      Icon: WalletCards,
-      totals: byKind.ELECTRONIC,
-    },
-  ];
-
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-6 overflow-x-hidden">
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('finance.budgetTitle')}</h1>
         <p className="mt-1 text-sm text-muted">{t('finance.budgetSubtitle')}</p>
@@ -166,170 +142,26 @@ export function FinanceBudgetPage() {
         onMonthChange={setMonth}
       />
 
-      <div className="max-w-md">
-        <Select
-          label={t('finance.displayCurrency')}
-          value={displayCurrency}
-          onChange={(event) => {
-            void updateSettings.mutateAsync({
-              displayCurrency: event.target.value as FinanceCurrency,
-            });
-          }}
-          options={currencyOptions(language)}
-        />
-      </div>
-
-      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {[
-          {
-            label: t('finance.totalIncome'),
-            value: summary.totals.income,
-            tone: 'good' as const,
-            signed: true,
-          },
-          {
-            label: t('finance.totalExpense'),
-            value: -summary.totals.expense,
-            tone: 'bad' as const,
-            signed: true,
-          },
-          {
-            label: t('finance.balance'),
-            value: summary.totals.balance,
-            tone: 'default' as const,
-            signed: true,
-          },
-          {
-            label: t('finance.netWithOpening'),
-            value: summary.totals.netWithOpening,
-            tone: 'default' as const,
-            signed: true,
-          },
-        ].map((card) => (
-          <div key={card.label} className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line">
-            <p className="text-xs font-medium tracking-wide text-muted uppercase">{card.label}</p>
-            <p
-              className={`mt-2 text-2xl font-semibold ${
-                card.tone === 'good'
-                  ? 'text-brand-500'
-                  : card.tone === 'bad'
-                    ? 'text-expense'
-                    : 'text-ink'
-              }`}
-            >
-              {card.signed
-                ? formatSignedMoney(card.value, language, displayCurrency)
-                : formatMoney(card.value, language, displayCurrency)}
-            </p>
-          </div>
-        ))}
-      </section>
-
-      <section className="space-y-3">
-        <div>
-          <h2 className="text-base font-semibold text-ink">{t('finance.wallets.title')}</h2>
-          <p className="mt-1 text-sm text-muted">{t('finance.wallets.subtitle')}</p>
-        </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          {wallets.map((wallet) => {
-            const Icon = wallet.Icon;
-            return (
-              <article
-                key={wallet.key}
-                className="relative overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -top-10 -right-8 h-28 w-28 rounded-full bg-brand-500/10 blur-2xl"
-                />
-                <div className="relative flex items-start justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2 text-brand-500">
-                      <Icon className="h-5 w-5" aria-hidden />
-                      <h3 className="font-display text-lg font-semibold text-ink">{wallet.title}</h3>
-                    </div>
-                    <p className="mt-1 text-xs text-muted">{wallet.hint}</p>
-                  </div>
-                  <button
-                    type="button"
-                    className="rounded-xl bg-brand-50/50 px-2.5 py-1.5 text-xs font-semibold text-brand-500 ring-1 ring-line/70 transition hover:bg-brand-50"
-                    onClick={() => setKindFilter(wallet.key)}
-                  >
-                    {t('finance.wallets.showOps')}
-                  </button>
-                </div>
-                <dl className="relative mt-5 grid grid-cols-3 gap-3">
-                  <div>
-                    <dt className="text-[11px] tracking-wide text-muted uppercase">
-                      {t('finance.income')}
-                    </dt>
-                    <dd className="mt-1 text-sm font-semibold text-brand-500">
-                      {formatSignedMoney(wallet.totals.income, language, displayCurrency)}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-[11px] tracking-wide text-muted uppercase">
-                      {t('finance.expense')}
-                    </dt>
-                    <dd className="mt-1 text-sm font-semibold text-expense">
-                      {formatSignedMoney(-wallet.totals.expense, language, displayCurrency)}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-[11px] tracking-wide text-muted uppercase">
-                      {t('finance.balance')}
-                    </dt>
-                    <dd className="mt-1 text-sm font-semibold text-ink">
-                      {formatSignedMoney(wallet.totals.balance, language, displayCurrency)}
-                    </dd>
-                  </div>
-                </dl>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      {view === 'year' && activeMonths.length > 0 ? (
-        <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
-          <h2 className="text-base font-semibold text-ink">{t('finance.yearBreakdown')}</h2>
-          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {activeMonths.map((item) => (
-              <div key={item.month} className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
-                <p className="text-sm font-medium text-ink">{t(`finance.months.${item.month}`)}</p>
-                <p className="mt-1 text-xs text-muted">
-                  {t('finance.income')}: {formatSignedMoney(item.income, language, displayCurrency)}
-                </p>
-                <p className="text-xs text-muted">
-                  {t('finance.expense')}: {formatSignedMoney(-item.expense, language, displayCurrency)}
-                </p>
-                <p className="mt-1 text-sm font-semibold text-ink">
-                  {formatSignedMoney(item.balance, language, displayCurrency)}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+      <section className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <h2 className="text-base font-semibold text-ink">{t('finance.addOperation')}</h2>
-        <form className="mt-4 grid gap-3 md:grid-cols-2" onSubmit={(event) => void onCreate(event)}>
-          <Select
-            label={t('finance.moneyKind.label')}
-            value={moneyKind}
-            onChange={(event) => setMoneyKind(event.target.value as FinanceMoneyKind)}
-            options={[
-              { value: 'ELECTRONIC', label: t('finance.moneyKind.electronic') },
-              { value: 'CASH', label: t('finance.moneyKind.cash') },
-            ]}
-          />
-          <Select
-            label={t('finance.currency')}
-            value={currency}
-            onChange={(event) => setCurrency(event.target.value as FinanceCurrency)}
-            options={currencyOptions(language)}
-          />
+        <form className="mt-4 grid min-w-0 gap-3 md:grid-cols-2" onSubmit={(event) => void onCreate(event)}>
+          <div className="grid min-w-0 gap-3 md:col-span-2 md:grid-cols-2 md:items-start">
+            <Select
+              label={t('finance.moneyKind.label')}
+              value={moneyKind}
+              onChange={(event) => setMoneyKind(event.target.value as FinanceMoneyKind)}
+              options={[
+                { value: 'ELECTRONIC', label: t('finance.moneyKind.electronic') },
+                { value: 'CASH', label: t('finance.moneyKind.cash') },
+              ]}
+            />
+            <Select
+              label={t('finance.currency')}
+              value={currency}
+              onChange={(event) => setCurrency(event.target.value as FinanceCurrency)}
+              options={currencyOptions(language)}
+            />
+          </div>
           <Select
             label={t('finance.type')}
             value={type}
@@ -370,7 +202,7 @@ export function FinanceBudgetPage() {
             value={comment}
             onChange={(event) => setComment(event.target.value)}
           />
-          <div className="md:col-span-2">
+          <div className="min-w-0 md:col-span-2">
             <ErrorMessage message={formError ?? undefined} />
             <Button type="submit" className="mt-2" isLoading={createOperation.isPending}>
               {t('finance.saveOperation')}
@@ -380,8 +212,11 @@ export function FinanceBudgetPage() {
       </section>
 
       <section className="space-y-3">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="text-base font-semibold text-ink">{t('finance.operationsTitle')}</h2>
+        <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-base font-semibold text-ink">{t('finance.perCurrencyTitle')}</h2>
+            <p className="mt-1 text-sm text-muted">{t('finance.perCurrencyHint')}</p>
+          </div>
           <div className="flex flex-wrap gap-2">
             {(
               [
@@ -405,13 +240,112 @@ export function FinanceBudgetPage() {
             ))}
           </div>
         </div>
-        <FinanceOperationsList
-          operations={filteredOperations}
-          language={language}
-          onDelete={(id) => void onDelete(id)}
-          deletingId={deletingId}
-          showMoneyKind
-        />
+
+        {currencyBuckets.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-line bg-brand-50/40 px-4 py-10 text-center">
+            <p className="text-sm font-medium text-ink">{t('finance.emptyCurrencies')}</p>
+          </div>
+        ) : (
+          <div className="space-y-5">
+            {currencyBuckets.map((bucket) => {
+              const ops = filteredOperations.filter((op) => (op.currency || 'EUR') === bucket.currency);
+              const months = bucket.byMonth.filter((item) => item.income !== 0 || item.expense !== 0);
+              return (
+                <article
+                  key={bucket.currency}
+                  className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line"
+                >
+                  <div className="relative">
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute -top-10 -right-8 h-28 w-28 rounded-full bg-brand-500/10 blur-2xl"
+                    />
+                    <div className="relative flex flex-wrap items-end justify-between gap-3">
+                      <h3 className="min-w-0 font-display text-xl font-semibold text-ink">
+                        {currencyLabel(bucket.currency, language)}
+                      </h3>
+                      <p className="text-2xl font-semibold text-ink">
+                        {formatSignedMoney(bucket.balance, language, bucket.currency)}
+                      </p>
+                    </div>
+
+                    <dl className="relative mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                      <div className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
+                        <dt className="text-[11px] tracking-wide text-muted uppercase">
+                          {t('finance.income')}
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold text-brand-500">
+                          {formatSignedMoney(bucket.income, language, bucket.currency)}
+                        </dd>
+                      </div>
+                      <div className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
+                        <dt className="text-[11px] tracking-wide text-muted uppercase">
+                          {t('finance.expense')}
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold text-expense">
+                          {formatSignedMoney(-bucket.expense, language, bucket.currency)}
+                        </dd>
+                      </div>
+                      <div className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
+                        <dt className="flex items-center gap-1.5 text-[11px] tracking-wide text-muted uppercase">
+                          <WalletCards className="h-3.5 w-3.5 text-brand-500" aria-hidden />
+                          {t('finance.moneyKind.electronic')}
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold text-ink">
+                          {formatSignedMoney(bucket.byKind.ELECTRONIC.balance, language, bucket.currency)}
+                        </dd>
+                      </div>
+                      <div className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
+                        <dt className="flex items-center gap-1.5 text-[11px] tracking-wide text-muted uppercase">
+                          <Banknote className="h-3.5 w-3.5 text-brand-500" aria-hidden />
+                          {t('finance.moneyKind.cash')}
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold text-ink">
+                          {formatSignedMoney(bucket.byKind.CASH.balance, language, bucket.currency)}
+                        </dd>
+                      </div>
+                    </dl>
+
+                    {view === 'year' && months.length > 0 ? (
+                      <div className="relative mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                        {months.map((item) => (
+                          <div
+                            key={item.month}
+                            className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70"
+                          >
+                            <p className="text-sm font-medium text-ink">
+                              {t(`finance.months.${item.month}`)}
+                            </p>
+                            <p className="mt-1 text-xs text-muted">
+                              {t('finance.income')}:{' '}
+                              {formatSignedMoney(item.income, language, bucket.currency)}
+                            </p>
+                            <p className="text-xs text-muted">
+                              {t('finance.expense')}:{' '}
+                              {formatSignedMoney(-item.expense, language, bucket.currency)}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  {ops.length > 0 ? (
+                    <div className="relative mt-5">
+                      <FinanceOperationsList
+                        operations={ops}
+                        language={language}
+                        onDelete={(id) => void onDelete(id)}
+                        deletingId={deletingId}
+                        showMoneyKind
+                      />
+                    </div>
+                  ) : null}
+                </article>
+              );
+            })}
+          </div>
+        )}
       </section>
     </div>
   );

@@ -338,7 +338,7 @@
   },
   "finance": {
     "title": "Budget",
-    "subtitle": "Tieni traccia di entrate e uscite in euro — semplice e chiaro.",
+    "subtitle": "Prima contanti o carta, poi la valuta. Ognuna si conta da sola.",
     "menuHint": "Totali del mese, operazioni, contanti ed elettronico.",
     "viewMonth": "Mese",
     "viewYear": "Anno",
@@ -381,7 +381,10 @@
     },
     "currency": "Valuta",
     "displayCurrency": "Mostra i totali in",
-    "budgetSubtitle": "Prima contanti o carta, poi la valuta. I totali sono convertiti nella valuta di visualizzazione."
+    "budgetSubtitle": "Prima contanti o carta, poi la valuta. Ogni valuta resta a sé — senza conversioni.",
+    "perCurrencyTitle": "Per valuta",
+    "perCurrencyHint": "Entrate, uscite e saldo si contano separatamente per ogni valuta.",
+    "emptyCurrencies": "Nessuna operazione in questo periodo."
   },
   "auth": {
     "loginTitle": "Bentornato",
@@ -446,7 +449,7 @@
     },
     "legendDone": "Completato",
     "legendPlanned": "Pianificato",
-    "financeTitle": "Budget di questo mese",
+    "financeTitle": "Finanze",
     "allFinance": "Budget",
     "spentLabel": "speso",
     "modules": {

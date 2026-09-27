@@ -60,9 +60,10 @@ export function Select({
   };
 
   const triggerLabel = current?.label ?? placeholder ?? '';
+  const compactPanel = resolvedVariant === 'panel' && options.length <= 2 && !placeholder;
 
   return (
-    <div ref={rootRef} className={`relative block space-y-1.5 ${className}`}>
+    <div ref={rootRef} className={`relative block min-w-0 space-y-1.5 ${className}`}>
       <span id={inputId} className="text-sm font-medium text-ink">
         {label}
       </span>
@@ -71,9 +72,11 @@ export function Select({
         <div
           role="listbox"
           aria-labelledby={inputId}
-          className={`grid gap-1 rounded-2xl bg-brand-50/40 p-1.5 ring-1 ${
-            error ? 'ring-red-400' : 'ring-line/70'
-          } ${options.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}
+          className={`grid min-w-0 gap-1 rounded-2xl bg-brand-50/40 ring-1 ${
+            compactPanel ? 'h-11 grid-cols-2 p-1' : 'p-1.5'
+          } ${error ? 'ring-red-400' : 'ring-line/70'} ${
+            options.length === 1 ? 'grid-cols-1' : 'grid-cols-2'
+          }`}
         >
           {placeholder ? (
             <button
@@ -100,7 +103,9 @@ export function Select({
                 role="option"
                 aria-selected={active}
                 disabled={disabled}
-                className={`min-h-10 rounded-xl px-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 ${
+                className={`${
+                  compactPanel ? 'h-full' : 'min-h-10'
+                } rounded-xl px-2 text-center text-sm font-semibold leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 ${
                   active
                     ? 'bg-brand-500 text-[#07110d] shadow-sm'
                     : 'text-muted hover:bg-panel hover:text-ink'
@@ -122,7 +127,7 @@ export function Select({
             aria-expanded={open}
             aria-controls={listId}
             aria-invalid={Boolean(error)}
-            className={`flex min-h-11 w-full items-center justify-between gap-2 rounded-xl border bg-panel px-3 py-2.5 text-left text-sm font-semibold outline-none transition hover:border-brand-400 focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 ${
+            className={`flex h-11 w-full min-w-0 items-center justify-between gap-2 rounded-xl border bg-panel px-3 text-left text-sm font-semibold outline-none transition hover:border-brand-400 focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 ${
               error ? 'border-red-400' : 'border-line'
             } ${current ? 'text-ink' : 'text-muted'}`}
             onClick={() => setOpen((value) => !value)}
