@@ -487,7 +487,7 @@ export function FuelScreen() {
               </Text>
             </View>
             <View style={[styles.barTrack, { backgroundColor: colors.line }]}>
-              <View style={[styles.barFill, styles.barWater, { width: `${waterPercent}%` }]} />
+              <View style={[styles.barFill, { backgroundColor: colors.brand, width: `${waterPercent}%` }]} />
             </View>
 
             <WaterGlasses
@@ -638,7 +638,6 @@ const styles = StyleSheet.create({
   progressValue: { fontSize: 13, fontWeight: '700' },
   barTrack: { borderRadius: 999, height: 8, overflow: 'hidden' },
   barFill: { borderRadius: 999, height: '100%' },
-  barWater: { backgroundColor: '#38bdf8' },
   mealRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   mealTitle: { flex: 1, fontSize: 15, fontWeight: '600' },
 });

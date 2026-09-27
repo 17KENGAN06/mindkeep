@@ -24,7 +24,7 @@ export function WaterGlasses({ glasses, goal, disabled = false, onChange }: Wate
             aria-label={`${next}`}
             className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ring-1 transition touch-manipulation disabled:opacity-50 ${
               filled
-                ? 'bg-sky-500/20 text-sky-400 ring-sky-400/40'
+                ? 'bg-brand-500/20 text-brand-500 ring-brand-400/50'
                 : 'bg-panel text-muted ring-line hover:ring-brand-400'
             }`}
             onClick={() => onChange(filled ? index : next)}

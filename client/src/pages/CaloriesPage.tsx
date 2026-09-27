@@ -399,7 +399,7 @@ export function CaloriesPage() {
                 </span>
               </div>
               <div className="mt-3 h-2 overflow-hidden rounded-full bg-line/70">
-                <div className="h-full rounded-full bg-sky-400" style={{ width: `${waterPercent}%` }} />
+                <div className="h-full rounded-full bg-brand-500" style={{ width: `${waterPercent}%` }} />
               </div>
             </div>
 

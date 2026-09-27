@@ -28,13 +28,15 @@ export function WaterGlasses({ glasses, goal, disabled = false, onChange }: Wate
             onPress={() => onChange(filled ? index : next)}
             style={[
               styles.slot,
-              filled ? styles.slotFilled : { backgroundColor: colors.panel, borderColor: colors.line },
+              filled
+                ? { backgroundColor: `${colors.brand}2E`, borderColor: `${colors.brand}73` }
+                : { backgroundColor: colors.panel, borderColor: colors.line },
               disabled && styles.slotDisabled,
             ]}
           >
             <AppIcon
               name={filled ? 'water' : 'water-outline'}
-              color={filled ? '#38bdf8' : colors.muted}
+              color={filled ? colors.brand : colors.muted}
               size={20}
             />
           </Pressable>
@@ -54,6 +56,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 48,
   },
-  slotFilled: { backgroundColor: 'rgba(56, 189, 248, 0.18)', borderColor: 'rgba(56, 189, 248, 0.45)' },
   slotDisabled: { opacity: 0.5 },
 });
