@@ -36,7 +36,7 @@ function clampPercent(value: number): number {
   return Math.min(100, Math.round(value));
 }
 
-function ProgressCard({
+function TodayProgressRow({
   icon,
   title,
   valueText,
@@ -49,20 +49,20 @@ function ProgressCard({
 }) {
   const safe = clampPercent(percent);
   return (
-    <div className="rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="text-sm text-muted">{title}</p>
-          <p className="mt-2 text-lg font-semibold text-ink sm:text-xl">{valueText}</p>
+    <div className="flex items-center gap-3 py-3.5 first:pt-0 last:pb-0">
+      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-500">
+        {icon}
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="truncate text-sm text-muted">{title}</p>
+          <p className="shrink-0 text-sm font-semibold tabular-nums text-ink">{valueText}</p>
         </div>
-        <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-500">
-          {icon}
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/70">
+          <div className="h-full rounded-full bg-brand-500 transition-all" style={{ width: `${safe}%` }} />
         </div>
       </div>
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-line/70">
-        <div className="h-full rounded-full bg-brand-500 transition-all" style={{ width: `${safe}%` }} />
-      </div>
-      <p className="mt-2 text-xs font-medium text-brand-500">{safe}%</p>
+      <p className="w-9 shrink-0 text-right text-xs font-medium tabular-nums text-brand-500">{safe}%</p>
     </div>
   );
 }
@@ -189,32 +189,34 @@ export function DashboardPage() {
         <p className="max-w-sm text-sm text-muted italic lg:text-right">{t('dashboard.quote')}</p>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        <ProgressCard
-          icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
-          title={t('dashboard.cards.tasksToday')}
-          valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
-          percent={tasksPercent}
-        />
-        <ProgressCard
-          icon={<GraduationCap className="h-5 w-5" aria-hidden />}
-          title={t('dashboard.cards.reviews')}
-          valueText={t('dashboard.cards.ofPlanned', {
-            done: stats.completedReviews,
-            total: reviewsPlanned,
-          })}
-          percent={reviewsPercent}
-        />
-        <ProgressCard
-          icon={<Repeat className="h-5 w-5" aria-hidden />}
-          title={t('dashboard.cards.rhythmToday')}
-          valueText={
-            rhythmTotal === 0
-              ? t('dashboard.cards.rhythmEmpty')
-              : t('dashboard.cards.of', { done: rhythmDone, total: rhythmTotal })
-          }
-          percent={rhythmTotal === 0 ? 0 : (rhythmDone / rhythmTotal) * 100}
-        />
+      <section className="rounded-3xl bg-panel px-4 py-4 shadow-sm ring-1 ring-line sm:px-5">
+        <div className="divide-y divide-line/80">
+          <TodayProgressRow
+            icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
+            title={t('dashboard.cards.tasksToday')}
+            valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
+            percent={tasksPercent}
+          />
+          <TodayProgressRow
+            icon={<GraduationCap className="h-5 w-5" aria-hidden />}
+            title={t('dashboard.cards.reviews')}
+            valueText={t('dashboard.cards.ofPlanned', {
+              done: stats.completedReviews,
+              total: reviewsPlanned,
+            })}
+            percent={reviewsPercent}
+          />
+          <TodayProgressRow
+            icon={<Repeat className="h-5 w-5" aria-hidden />}
+            title={t('dashboard.cards.rhythmToday')}
+            valueText={
+              rhythmTotal === 0
+                ? t('dashboard.cards.rhythmEmpty')
+                : t('dashboard.cards.of', { done: rhythmDone, total: rhythmTotal })
+            }
+            percent={rhythmTotal === 0 ? 0 : (rhythmDone / rhythmTotal) * 100}
+          />
+        </div>
       </section>
 
       <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
