@@ -644,7 +644,13 @@
     "changePassword": "Cambiar contraseña",
     "passwordChanged": "Contraseña actualizada.",
     "setPassword": "Crear una contraseña",
-    "setPasswordHint": "Esta cuenta usa Google. Puedes añadir también una contraseña."
+    "setPasswordHint": "Esta cuenta usa Google. Puedes añadir también una contraseña.",
+    "devicesTitle": "Dispositivos",
+    "devicesSubtitle": "Cierra sesión en un teléfono o navegador sin tocar los demás.",
+    "deviceThis": "Este dispositivo",
+    "deviceApp": "App",
+    "deviceBrowser": "Navegador",
+    "deviceRevoke": "Cerrar sesión"
   },
   "maintenance": {
     "eyebrow": "Mantenimiento",

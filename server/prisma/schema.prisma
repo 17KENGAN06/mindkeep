@@ -96,6 +96,23 @@ model User {
   habits             Habit[]
   habitLogs          HabitLog[]
   auditEvents        AdminAuditEvent[]
+  sessions           AuthSession[]
+}
+
+model AuthSession {
+  id               String    @id @default(cuid())
+  userId           String
+  kind             String    @default("browser")
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  refreshTokenHash String?
+  refreshExpiresAt DateTime?
+  createdAt        DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([refreshTokenHash])
 }
 
 enum AdminAuditAction {

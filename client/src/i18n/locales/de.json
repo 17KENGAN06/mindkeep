@@ -644,7 +644,13 @@
     "changePassword": "Passwort ändern",
     "passwordChanged": "Passwort aktualisiert.",
     "setPassword": "Passwort setzen",
-    "setPasswordHint": "Dieses Konto nutzt Google. Du kannst ein Passwort hinzufügen."
+    "setPasswordHint": "Dieses Konto nutzt Google. Du kannst ein Passwort hinzufügen.",
+    "devicesTitle": "Geräte",
+    "devicesSubtitle": "Melde ein Telefon oder den Browser ab, ohne die anderen zu berühren.",
+    "deviceThis": "Dieses Gerät",
+    "deviceApp": "App",
+    "deviceBrowser": "Browser",
+    "deviceRevoke": "Abmelden"
   },
   "maintenance": {
     "eyebrow": "Wartung",

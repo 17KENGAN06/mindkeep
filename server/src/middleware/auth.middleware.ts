@@ -5,6 +5,7 @@ import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { AppError } from '@/utils/AppError.js';
+import { findActiveAuthSession } from '@/services/session.service.js';
 import { getAccessTokenFromRequest } from '@/utils/accessToken.js';
 import { verifyAccessToken } from '@/utils/jwt.js';
 
@@ -33,6 +34,16 @@ export const requireAuth = asyncHandler(async (req: Request, res: Response, next
   }
 
   const payload = verifyAccessToken(token);
+  const session = await findActiveAuthSession(payload.jti, payload.sub);
+
+  if (!session) {
+    res.clearCookie(ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions());
+    throw new AppError('Authentication required', {
+      statusCode: 401,
+      code: 'UNAUTHORIZED',
+    });
+  }
+
   let user = await prisma.user.findUnique({
     where: { id: payload.sub },
     select: publicUserSelect,
@@ -68,6 +79,7 @@ export const requireAuth = asyncHandler(async (req: Request, res: Response, next
   }
 
   req.user = user;
+  req.authSessionId = session.id;
   next();
 });
 

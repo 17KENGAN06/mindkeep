@@ -644,7 +644,13 @@
     "changePassword": "Change password",
     "passwordChanged": "Password updated.",
     "setPassword": "Set a password",
-    "setPasswordHint": "This account uses Google. You can add a password to also sign in with email."
+    "setPasswordHint": "This account uses Google. You can add a password to also sign in with email.",
+    "devicesTitle": "Devices",
+    "devicesSubtitle": "Sign out a phone or browser without touching the others.",
+    "deviceThis": "This device",
+    "deviceApp": "App",
+    "deviceBrowser": "Browser",
+    "deviceRevoke": "Sign out"
   },
   "maintenance": {
     "eyebrow": "Maintenance",

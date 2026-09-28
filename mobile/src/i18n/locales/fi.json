@@ -448,7 +448,13 @@
     "changePassword": "Vaihda salasana",
     "passwordChanged": "Salasana päivitetty.",
     "setPassword": "Aseta salasana",
-    "setPasswordHint": "Tämä tili käyttää Googlea. Voit lisätä myös salasanan."
+    "setPasswordHint": "Tämä tili käyttää Googlea. Voit lisätä myös salasanan.",
+    "devicesTitle": "Laitteet",
+    "devicesSubtitle": "Kirjaudu ulos puhelimesta tai selaimesta koskematta muihin.",
+    "deviceThis": "Tämä laite",
+    "deviceApp": "Sovellus",
+    "deviceBrowser": "Selain",
+    "deviceRevoke": "Kirjaudu ulos"
   },
   "dashboard": {
     "tagline": "Enemmän kuin tietoa. Enemmän kuin suunnitelmia. Opiskele. Toimi. Kasva.",

@@ -448,7 +448,13 @@
     "changePassword": "Changer le mot de passe",
     "passwordChanged": "Mot de passe mis à jour.",
     "setPassword": "Définir un mot de passe",
-    "setPasswordHint": "Ce compte utilise Google. Tu peux aussi ajouter un mot de passe."
+    "setPasswordHint": "Ce compte utilise Google. Tu peux aussi ajouter un mot de passe.",
+    "devicesTitle": "Appareils",
+    "devicesSubtitle": "Déconnecte un téléphone ou un navigateur sans toucher aux autres.",
+    "deviceThis": "Cet appareil",
+    "deviceApp": "Appli",
+    "deviceBrowser": "Navigateur",
+    "deviceRevoke": "Déconnecter"
   },
   "dashboard": {
     "tagline": "Plus que du savoir. Plus que des plans. Apprendre. Agir. Grandir.",

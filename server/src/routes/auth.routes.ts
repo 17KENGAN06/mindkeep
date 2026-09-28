@@ -7,6 +7,7 @@ import {
   forgotPasswordRateLimit,
   googleAuthRateLimit,
   loginRateLimit,
+  refreshRateLimit,
   registerRateLimit,
 } from '@/middleware/authRateLimit.js';
 import { requireAuth } from '@/middleware/auth.middleware.js';
@@ -17,8 +18,10 @@ import {
   googleFinishSchema,
   googleLoginSchema,
   loginSchema,
+  refreshSchema,
   registerSchema,
   resetPasswordSchema,
+  sessionIdParamsSchema,
   updateMeSchema,
   verifyEmailSchema,
 } from '@/validations/auth.schemas.js';
@@ -91,6 +94,26 @@ authRouter.post(
 );
 
 authRouter.post('/logout', asyncHandler((req, res) => authController.logout(req, res)));
+
+authRouter.post(
+  '/refresh',
+  refreshRateLimit,
+  validate(refreshSchema),
+  asyncHandler((req, res) => authController.refresh(req, res)),
+);
+
+authRouter.get(
+  '/sessions',
+  requireAuth,
+  asyncHandler((req, res) => authController.listSessions(req, res)),
+);
+
+authRouter.delete(
+  '/sessions/:id',
+  requireAuth,
+  validate(sessionIdParamsSchema, 'params'),
+  asyncHandler((req, res) => authController.revokeSession(req, res)),
+);
 
 authRouter.get('/me', requireAuth, asyncHandler((req, res) => authController.me(req, res)));
 

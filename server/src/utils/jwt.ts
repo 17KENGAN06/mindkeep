@@ -5,6 +5,7 @@ import { AppError } from '@/utils/AppError.js';
 export type JwtPayload = {
   sub: string;
   email: string;
+  jti: string;
 };
 
 const TOKEN_TTL = '7d';
@@ -20,11 +21,16 @@ function getJwtSecret(): string {
   return env.JWT_SECRET;
 }
 
-export function signAccessToken(payload: JwtPayload): string {
-  return jwt.sign(payload, getJwtSecret(), {
-    expiresIn: TOKEN_TTL,
-    algorithm: 'HS256',
-  });
+export function signAccessToken(payload: JwtPayload, expiresIn: '15m' | '7d' = TOKEN_TTL): string {
+  return jwt.sign(
+    { sub: payload.sub, email: payload.email },
+    getJwtSecret(),
+    {
+      expiresIn,
+      algorithm: 'HS256',
+      jwtid: payload.jti,
+    },
+  );
 }
 
 export function verifyAccessToken(token: string): JwtPayload {
@@ -42,8 +48,16 @@ export function verifyAccessToken(token: string): JwtPayload {
 
     const sub = String(decoded.sub);
     const email = 'email' in decoded ? String(decoded.email) : '';
+    const jti = 'jti' in decoded && typeof decoded.jti === 'string' ? decoded.jti : '';
 
-    return { sub, email };
+    if (!jti) {
+      throw new AppError('Invalid or expired token', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    return { sub, email, jti };
   } catch (error) {
     if (error instanceof AppError) {
       throw error;

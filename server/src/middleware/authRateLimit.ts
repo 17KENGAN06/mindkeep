@@ -47,3 +47,8 @@ export const emailTokenRateLimit = ipAuthLimit(
   20,
   'Too many attempts. Please try again later.',
 );
+
+export const refreshRateLimit = ipAuthLimit(
+  40,
+  'Too many session refresh attempts. Please try again later.',
+);

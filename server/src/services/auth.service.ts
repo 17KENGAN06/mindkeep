@@ -20,8 +20,8 @@ import type {
   ResetPasswordInput,
   VerifyEmailInput,
 } from '@/validations/auth.schemas.js';
+import { issueAuthSession, revokeAuthSessionsForUser, type AuthSessionIssue } from '@/services/session.service.js';
 import { AppError } from '@/utils/AppError.js';
-import { signAccessToken } from '@/utils/jwt.js';
 import { hashPassword, verifyPassword } from '@/utils/password.js';
 
 const userRecordSelect = {
@@ -94,9 +94,12 @@ function assertMaintenanceAccess(user: Pick<PublicUser, 'email' | 'role'>): void
   });
 }
 
-function sessionFor(user: PublicUser): { user: PublicUser; token: string } {
-  const token = signAccessToken({ sub: user.id, email: user.email });
-  return { user, token };
+async function sessionFor(
+  user: PublicUser,
+  issue?: AuthSessionIssue,
+): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
+  const tokens = await issueAuthSession(user, issue);
+  return { user, ...tokens };
 }
 
 function appLink(path: string, token: string): string {
@@ -180,7 +183,10 @@ export class AuthService {
     return { pending: true };
   }
 
-  async verifyEmail(input: VerifyEmailInput): Promise<{ user: PublicUser; token: string }> {
+  async verifyEmail(
+    input: VerifyEmailInput,
+    issue?: AuthSessionIssue,
+  ): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
     const pending = await findValidEmailToken(EmailTokenType.VERIFY_EMAIL, input.token);
     let payload: VerifyPayload;
     try {
@@ -217,7 +223,7 @@ export class AuthService {
 
       const withRole = await ensureAdminRole(user);
       assertMaintenanceAccess(toPublicUser(withRole));
-      return sessionFor(toPublicUser(withRole));
+      return sessionFor(toPublicUser(withRole), issue);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         await prisma.emailToken.delete({ where: { id: pending.id } }).catch(() => undefined);
@@ -230,7 +236,10 @@ export class AuthService {
     }
   }
 
-  async login(input: LoginInput): Promise<{ user: PublicUser; token: string }> {
+  async login(
+    input: LoginInput,
+    issue?: AuthSessionIssue,
+  ): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
     const email = input.email.toLowerCase();
 
     const user = await prisma.user.findUnique({
@@ -250,10 +259,13 @@ export class AuthService {
     const withRole = await ensureAdminRole(user);
     const publicUser = toPublicUser(withRole);
     assertMaintenanceAccess(publicUser);
-    return sessionFor(publicUser);
+    return sessionFor(publicUser, issue);
   }
 
-  async googleLogin(input: GoogleLoginInput): Promise<{ user: PublicUser; token: string }> {
+  async googleLogin(
+    input: GoogleLoginInput,
+    issue?: AuthSessionIssue,
+  ): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
     if (!env.GOOGLE_CLIENT_ID) {
       throw new AppError('Google sign-in is not configured', {
         statusCode: 503,
@@ -340,7 +352,7 @@ export class AuthService {
     const withRole = await ensureAdminRole(user);
     const publicUser = toPublicUser(withRole);
     assertMaintenanceAccess(publicUser);
-    return sessionFor(publicUser);
+    return sessionFor(publicUser, issue);
   }
 
   async forgotPassword(input: ForgotPasswordInput): Promise<void> {
@@ -375,7 +387,10 @@ export class AuthService {
     }
   }
 
-  async resetPassword(input: ResetPasswordInput): Promise<{ user: PublicUser; token: string }> {
+  async resetPassword(
+    input: ResetPasswordInput,
+    issue?: AuthSessionIssue,
+  ): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
     const consumed = await consumeEmailToken(EmailTokenType.RESET_PASSWORD, input.token);
     const user = await prisma.user.findUnique({
       where: { email: consumed.email },
@@ -396,13 +411,19 @@ export class AuthService {
       select: userRecordSelect,
     });
 
+    await revokeAuthSessionsForUser(user.id);
+
     const withRole = await ensureAdminRole(updated);
     const publicUser = toPublicUser(withRole);
     assertMaintenanceAccess(publicUser);
-    return sessionFor(publicUser);
+    return sessionFor(publicUser, issue);
   }
 
-  async changePassword(userId: string, input: ChangePasswordInput): Promise<PublicUser> {
+  async changePassword(
+    userId: string,
+    input: ChangePasswordInput,
+    currentJti?: string,
+  ): Promise<PublicUser> {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: userRecordSelect,
@@ -431,6 +452,7 @@ export class AuthService {
       data: { passwordHash },
       select: userRecordSelect,
     });
+    await revokeAuthSessionsForUser(user.id, currentJti);
     return toPublicUser(await ensureAdminRole(updated));
   }
 

@@ -13,6 +13,15 @@ export type AuthResponse = {
   user: User;
   /** Present for native clients; the website keeps using the httpOnly cookie. */
   token?: string;
+  refreshToken?: string;
+};
+
+export type AuthDevice = {
+  id: string;
+  kind: 'browser' | 'native';
+  current: boolean;
+  createdAt: string;
+  expiresAt: string;
 };
 
 export type ApiErrorBody = {

@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import type { AuthResponse, User } from '../types/auth';
+import type { AuthDevice, AuthResponse, User } from '../types/auth';
 
 export type LoginPayload = {
   email: string;
@@ -42,5 +42,8 @@ export const authApi = {
   me: () => apiClient.get<{ user: User }>('/api/auth/me'),
   updateMe: (payload: { timezone: string }) =>
     apiClient.patch<{ user: User }>('/api/auth/me', payload),
-  logout: () => apiClient.post<{ success: boolean }>('/api/auth/logout'),
+  logout: (payload?: { refreshToken?: string }) =>
+    apiClient.post<{ success: boolean }>('/api/auth/logout', payload),
+  sessions: () => apiClient.get<{ sessions: AuthDevice[] }>('/api/auth/sessions'),
+  revokeSession: (id: string) => apiClient.delete<{ success: boolean }>(`/api/auth/sessions/${id}`),
 };

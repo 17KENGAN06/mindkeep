@@ -6,7 +6,7 @@ import { BudgetMoneyKind, BudgetOperationType } from '@prisma/client';
 import app from '@/app.js';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
-import { signAccessToken } from '@/utils/jwt.js';
+import { issueAuthSession } from '@/services/session.service.js';
 
 const TEST_EMAIL_SUFFIX = '@idor.mindkeep.test';
 const canRun = Boolean(env.DATABASE_URL && env.JWT_SECRET);
@@ -56,8 +56,8 @@ describe('foreign ids are 404 and do not change the owner row', { skip: !canRun 
     ]);
 
     ownerId = owner.id;
-    ownerToken = signAccessToken({ sub: owner.id, email: owner.email });
-    strangerToken = signAccessToken({ sub: stranger.id, email: stranger.email });
+    ownerToken = (await issueAuthSession(owner)).token;
+    strangerToken = (await issueAuthSession(stranger)).token;
 
     const [material, note, category, task] = await Promise.all([
       prisma.learningMaterial.create({
@@ -123,7 +123,6 @@ describe('foreign ids are 404 and do not change the owner row', { skip: !canRun 
       });
     }
     await prisma.user.deleteMany({ where: { email: { endsWith: TEST_EMAIL_SUFFIX } } });
-    await prisma.$disconnect();
   });
 
   test('owner can still read their material', async () => {

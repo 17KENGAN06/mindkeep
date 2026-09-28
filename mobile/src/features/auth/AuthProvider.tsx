@@ -2,11 +2,16 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { AppState } from 'react-native';
 import { authApi, type GoogleLoginPayload, type LoginPayload, type RegisterPayload } from '../../api/auth';
-import { ApiError } from '../../api/client';
+import { ApiError, refreshAccessToken } from '../../api/client';
 import { detectDeviceTimezone } from '../../config/timezones';
 import type { User } from '../../types/auth';
 import { AuthContext } from './auth-context';
-import { clearStoredToken, getStoredToken, setStoredToken } from './session';
+import {
+  clearStoredToken,
+  getStoredRefreshToken,
+  getStoredToken,
+  setStoredToken,
+} from './session';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
@@ -14,7 +19,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const meQuery = useQuery({
     queryKey: ['auth', 'me'],
     queryFn: async () => {
-      const token = await getStoredToken();
+      let token = await getStoredToken();
+      const refresh = await getStoredRefreshToken();
+      if (!token && refresh) {
+        const ok = await refreshAccessToken();
+        if (!ok) return null;
+        token = await getStoredToken();
+      }
       if (!token) return null;
       try {
         const response = await authApi.me();
@@ -57,14 +68,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const persistUser = useCallback(
-    async (user: User, token?: string) => {
+    async (user: User, token?: string, refreshToken?: string) => {
       if (!token) {
         throw new ApiError(503, {
           code: 'MISSING_TOKEN',
           message: 'Access token missing from auth response',
         });
       }
-      await setStoredToken(token);
+      await setStoredToken(token, refreshToken);
       queryClient.removeQueries({
         predicate: (query) => query.queryKey[0] !== 'auth',
       });
@@ -78,7 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(
     async (payload: LoginPayload) => {
       const result = await authApi.login(payload);
-      return persistUser(result.user, result.token);
+      return persistUser(result.user, result.token, result.refreshToken);
     },
     [persistUser],
   );
@@ -90,14 +101,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const googleLogin = useCallback(
     async (payload: GoogleLoginPayload) => {
       const result = await authApi.googleLogin(payload);
-      return persistUser(result.user, result.token);
+      return persistUser(result.user, result.token, result.refreshToken);
     },
     [persistUser],
   );
 
   const logout = useCallback(async () => {
+    const refreshToken = (await getStoredRefreshToken()) ?? undefined;
     try {
-      await authApi.logout();
+      await authApi.logout(refreshToken ? { refreshToken } : undefined);
     } catch {
       // Token is cleared locally even if the API is unreachable.
     }

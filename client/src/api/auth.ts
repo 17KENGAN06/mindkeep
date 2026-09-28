@@ -1,5 +1,5 @@
 import { apiClient } from '@/api/client';
-import type { AuthResponse, User } from '@/types/auth';
+import type { AuthDevice, AuthResponse, User } from '@/types/auth';
 
 export type BotPayload = {
   botToken?: string;
@@ -45,4 +45,7 @@ export const authApi = {
   }) => apiClient.post<{ user: User }>('/api/auth/change-password', payload),
   logout: () => apiClient.post<{ success: boolean }>('/api/auth/logout'),
   me: () => apiClient.get<{ user: User }>('/api/auth/me'),
+  sessions: () => apiClient.get<{ sessions: AuthDevice[] }>('/api/auth/sessions'),
+  revokeSession: (id: string) =>
+    apiClient.delete<{ success: boolean }>(`/api/auth/sessions/${id}`),
 };

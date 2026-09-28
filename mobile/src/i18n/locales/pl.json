@@ -448,7 +448,13 @@
     "changePassword": "Zmień hasło",
     "passwordChanged": "Hasło zaktualizowane.",
     "setPassword": "Ustaw hasło",
-    "setPasswordHint": "To konto jest przez Google. Możesz dodać hasło i logować się też e-mailem."
+    "setPasswordHint": "To konto jest przez Google. Możesz dodać hasło i logować się też e-mailem.",
+    "devicesTitle": "Urządzenia",
+    "devicesSubtitle": "Wyloguj telefon lub przeglądarkę, nie ruszając pozostałych.",
+    "deviceThis": "To urządzenie",
+    "deviceApp": "Aplikacja",
+    "deviceBrowser": "Przeglądarka",
+    "deviceRevoke": "Wyloguj"
   },
   "dashboard": {
     "tagline": "Więcej niż wiedza. Więcej niż plany. Ucz się. Działaj. Rośnij.",

@@ -644,7 +644,13 @@
     "changePassword": "Сменить пароль",
     "passwordChanged": "Пароль обновлён.",
     "setPassword": "Задать пароль",
-    "setPasswordHint": "Этот аккаунт через Google. Можно добавить пароль и входить также с почты."
+    "setPasswordHint": "Этот аккаунт через Google. Можно добавить пароль и входить также с почты.",
+    "devicesTitle": "Устройства",
+    "devicesSubtitle": "Можно выйти с телефона или браузера, не трогая остальные.",
+    "deviceThis": "Это устройство",
+    "deviceApp": "Приложение",
+    "deviceBrowser": "Браузер",
+    "deviceRevoke": "Выйти"
   },
   "maintenance": {
     "eyebrow": "Техническое обслуживание",

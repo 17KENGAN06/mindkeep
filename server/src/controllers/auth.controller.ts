@@ -2,7 +2,14 @@ import type { Request, Response } from 'express';
 import { ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions } from '@/config/cookies.js';
 import { assertBotProtection, createBotChallenge } from '@/services/botProtection.service.js';
 import { authService } from '@/services/auth.service.js';
-import { sendAuthSession } from '@/utils/authSession.js';
+import {
+  listAuthSessions,
+  revokeAuthSession,
+  revokeAuthSessionByRefresh,
+  revokeOwnedAuthSession,
+  rotateNativeRefresh,
+} from '@/services/session.service.js';
+import { authSessionIssueFrom, sendAuthSession } from '@/utils/authSession.js';
 import {
   appRedirectWithCode,
   buildGoogleAuthorizeUrl,
@@ -12,6 +19,8 @@ import {
 } from '@/services/googleOAuth.service.js';
 import { recordAdminAudit } from '@/services/audit.service.js';
 import { AppError } from '@/utils/AppError.js';
+import { getAccessTokenFromRequest } from '@/utils/accessToken.js';
+import { verifyAccessToken } from '@/utils/jwt.js';
 import type {
   ChangePasswordInput,
   ForgotPasswordInput,
@@ -19,7 +28,9 @@ import type {
   GoogleLoginInput,
   LoginInput,
   RegisterInput,
+  RefreshInput,
   ResetPasswordInput,
+  SessionIdParams,
   UpdateMeInput,
   VerifyEmailInput,
 } from '@/validations/auth.schemas.js';
@@ -41,9 +52,10 @@ export class AuthController {
     const input = req.body as LoginInput;
     assertBotProtection(input);
     try {
-      const { user, token } = await authService.login(input);
+      const issue = authSessionIssueFrom(req);
+      const { user, token, refreshToken } = await authService.login(input, issue);
       await recordAdminAudit({ action: 'LOGIN_SUCCESS', actorUserId: user.id });
-      sendAuthSession(req, res, 200, user, token);
+      sendAuthSession(req, res, 200, user, token, refreshToken);
     } catch (error) {
       if (error instanceof AppError && error.code === 'INVALID_CREDENTIALS') {
         await recordAdminAudit({ action: 'LOGIN_FAILURE' });
@@ -54,9 +66,10 @@ export class AuthController {
 
   async googleLogin(req: Request, res: Response): Promise<void> {
     const input = req.body as GoogleLoginInput;
-    const { user, token } = await authService.googleLogin(input);
+    const issue = authSessionIssueFrom(req);
+    const { user, token, refreshToken } = await authService.googleLogin(input, issue);
     await recordAdminAudit({ action: 'GOOGLE_LOGIN', actorUserId: user.id });
-    sendAuthSession(req, res, 200, user, token);
+    sendAuthSession(req, res, 200, user, token, refreshToken);
   }
 
   async googleStart(req: Request, res: Response): Promise<void> {
@@ -86,7 +99,23 @@ export class AuthController {
     });
   }
 
-  async logout(_req: Request, res: Response): Promise<void> {
+  async logout(req: Request, res: Response): Promise<void> {
+    const token = getAccessTokenFromRequest(req);
+    if (token) {
+      try {
+        const payload = verifyAccessToken(token);
+        await revokeAuthSession(payload.jti, payload.sub);
+      } catch {
+        // Cookie/Bearer may already be dead; still clear the browser cookie below.
+      }
+    }
+
+    const body = req.body as { refreshToken?: unknown } | undefined;
+    const refreshToken = typeof body?.refreshToken === 'string' ? body.refreshToken : undefined;
+    if (refreshToken) {
+      await revokeAuthSessionByRefresh(refreshToken);
+    }
+
     res.clearCookie(ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions());
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ success: true });
@@ -117,8 +146,12 @@ export class AuthController {
   }
 
   async verifyEmail(req: Request, res: Response): Promise<void> {
-    const { user, token } = await authService.verifyEmail(req.body as VerifyEmailInput);
-    sendAuthSession(req, res, 200, user, token);
+    const issue = authSessionIssueFrom(req);
+    const { user, token, refreshToken } = await authService.verifyEmail(
+      req.body as VerifyEmailInput,
+      issue,
+    );
+    sendAuthSession(req, res, 200, user, token, refreshToken);
   }
 
   async forgotPassword(req: Request, res: Response): Promise<void> {
@@ -130,9 +163,13 @@ export class AuthController {
   }
 
   async resetPassword(req: Request, res: Response): Promise<void> {
-    const { user, token } = await authService.resetPassword(req.body as ResetPasswordInput);
+    const issue = authSessionIssueFrom(req);
+    const { user, token, refreshToken } = await authService.resetPassword(
+      req.body as ResetPasswordInput,
+      issue,
+    );
     await recordAdminAudit({ action: 'PASSWORD_RESET', actorUserId: user.id });
-    sendAuthSession(req, res, 200, user, token);
+    sendAuthSession(req, res, 200, user, token, refreshToken);
   }
 
   async changePassword(req: Request, res: Response): Promise<void> {
@@ -143,10 +180,46 @@ export class AuthController {
       });
     }
 
-    const user = await authService.changePassword(req.user.id, req.body as ChangePasswordInput);
+    const user = await authService.changePassword(
+      req.user.id,
+      req.body as ChangePasswordInput,
+      req.authSessionId,
+    );
     await recordAdminAudit({ action: 'PASSWORD_CHANGED', actorUserId: user.id });
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ user });
+  }
+
+  async refresh(req: Request, res: Response): Promise<void> {
+    const { refreshToken } = req.body as RefreshInput;
+    const rotated = await rotateNativeRefresh(refreshToken);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json(rotated);
+  }
+
+  async listSessions(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const sessions = await listAuthSessions(req.user.id, req.authSessionId);
+    res.status(200).json({ sessions });
+  }
+
+  async revokeSession(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const { id } = req.params as SessionIdParams;
+    await revokeOwnedAuthSession(req.user.id, id);
+    res.status(200).json({ success: true });
   }
 }
 

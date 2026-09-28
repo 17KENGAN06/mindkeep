@@ -2,6 +2,7 @@ import type { CookieOptions } from 'express';
 import { env } from '@/config/env.js';
 
 export const ACCESS_TOKEN_COOKIE = 'access_token';
+export const ACCESS_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 /**
  * Production cookies use SameSite=None + Secure so auth works when
@@ -15,7 +16,7 @@ export function getAuthCookieOptions(): CookieOptions {
     secure: isProduction,
     sameSite: isProduction ? 'none' : 'lax',
     path: '/',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: ACCESS_TOKEN_TTL_MS,
   };
 }
 

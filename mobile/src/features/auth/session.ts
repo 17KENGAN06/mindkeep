@@ -1,34 +1,52 @@
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
-const TOKEN_KEY = 'mindkeep.access_token';
+const ACCESS_KEY = 'mindkeep.access_token';
+const REFRESH_KEY = 'mindkeep.refresh_token';
 
-export async function getStoredToken(): Promise<string | null> {
+async function read(key: string): Promise<string | null> {
   if (Platform.OS === 'web') {
     try {
-      return globalThis.localStorage?.getItem(TOKEN_KEY) ?? null;
+      return globalThis.localStorage?.getItem(key) ?? null;
     } catch {
       return null;
     }
   }
-
-  return SecureStore.getItemAsync(TOKEN_KEY);
+  return SecureStore.getItemAsync(key);
 }
 
-export async function setStoredToken(token: string): Promise<void> {
+async function write(key: string, value: string): Promise<void> {
   if (Platform.OS === 'web') {
-    globalThis.localStorage?.setItem(TOKEN_KEY, token);
+    globalThis.localStorage?.setItem(key, value);
     return;
   }
+  await SecureStore.setItemAsync(key, value);
+}
 
-  await SecureStore.setItemAsync(TOKEN_KEY, token);
+async function remove(key: string): Promise<void> {
+  if (Platform.OS === 'web') {
+    globalThis.localStorage?.removeItem(key);
+    return;
+  }
+  await SecureStore.deleteItemAsync(key);
+}
+
+export async function getStoredToken(): Promise<string | null> {
+  return read(ACCESS_KEY);
+}
+
+export async function getStoredRefreshToken(): Promise<string | null> {
+  return read(REFRESH_KEY);
+}
+
+export async function setStoredToken(token: string, refreshToken?: string): Promise<void> {
+  await write(ACCESS_KEY, token);
+  if (refreshToken) {
+    await write(REFRESH_KEY, refreshToken);
+  }
 }
 
 export async function clearStoredToken(): Promise<void> {
-  if (Platform.OS === 'web') {
-    globalThis.localStorage?.removeItem(TOKEN_KEY);
-    return;
-  }
-
-  await SecureStore.deleteItemAsync(TOKEN_KEY);
+  await remove(ACCESS_KEY);
+  await remove(REFRESH_KEY);
 }

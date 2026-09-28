@@ -113,6 +113,14 @@ export const changePasswordSchema = z
     path: ['confirmPassword'],
   });
 
+export const refreshSchema = z.object({
+  refreshToken: z.string().trim().min(20).max(200),
+});
+
+export const sessionIdParamsSchema = z.object({
+  id: z.string().cuid('Invalid session id'),
+});
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
@@ -122,3 +130,5 @@ export type VerifyEmailInput = z.infer<typeof verifyEmailSchema>;
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+export type RefreshInput = z.infer<typeof refreshSchema>;
+export type SessionIdParams = z.infer<typeof sessionIdParamsSchema>;

@@ -13,6 +13,15 @@ export type AuthResponse = {
   user: User;
   /** Native clients only. The website keeps the JWT in an httpOnly cookie. */
   token?: string;
+  refreshToken?: string;
+};
+
+export type AuthDevice = {
+  id: string;
+  kind: 'browser' | 'native';
+  current: boolean;
+  createdAt: string;
+  expiresAt: string;
 };
 
 export type ApiErrorBody = {

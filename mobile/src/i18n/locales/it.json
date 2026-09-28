@@ -448,7 +448,13 @@
     "changePassword": "Cambia password",
     "passwordChanged": "Password aggiornata.",
     "setPassword": "Imposta una password",
-    "setPasswordHint": "Questo account usa Google. Puoi aggiungere anche una password."
+    "setPasswordHint": "Questo account usa Google. Puoi aggiungere anche una password.",
+    "devicesTitle": "Dispositivi",
+    "devicesSubtitle": "Esci da telefono o browser senza toccare gli altri.",
+    "deviceThis": "Questo dispositivo",
+    "deviceApp": "App",
+    "deviceBrowser": "Browser",
+    "deviceRevoke": "Esci"
   },
   "dashboard": {
     "tagline": "Più della conoscenza. Più dei piani. Impara. Agisci. Cresci.",
