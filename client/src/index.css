@@ -247,6 +247,17 @@ html[data-theme='light'] {
     }
   }
 
+  /* Tablet: section dots sit at the bottom instead of overlapping the right column. */
+  @media (min-width: 768px) and (max-width: 1279px) {
+    .home-snap {
+      scroll-padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .home-snap-section {
+      padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
   .home-snap-section .desktop-motion {
     @apply pointer-events-none absolute hidden md:block;
   }
@@ -361,13 +372,6 @@ html[data-theme='light'] .ambient-aurora-b {
     pointer-events: auto !important;
   }
 
-  .ambient-aurora,
-  .ambient-aurora-b,
-  .ambient-particle,
-  .ambient-orb-a,
-  .ambient-orb-b,
-  .ambient-orb-c,
-  .ambient-orb-d,
   .hero-glow,
   .desktop-motion-line,
   .desktop-motion-glow {
@@ -505,9 +509,7 @@ html[data-theme='light'] .ambient-aurora-b {
 }
 
 .ambient-particle {
-  animation-name: particle-drift;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation: particle-drift 8s ease-in-out infinite;
   box-shadow: 0 0 10px var(--app-particle-glow);
 }
 
@@ -555,7 +557,7 @@ html[data-theme='light'] .ambient-aurora-b {
     opacity: 0.2;
   }
   50% {
-    transform: translate3d(18px, -46px, 0) scale(1.35);
+    transform: translate3d(7vw, -11vh, 0) scale(1.35);
     opacity: 0.95;
   }
 }
@@ -567,7 +569,7 @@ html[data-theme='light'] .ambient-aurora-b {
     opacity: 0.18;
   }
   50% {
-    transform: translate3d(-28px, -34px, 0);
+    transform: translate3d(-8vw, -9vh, 0);
     opacity: 0.9;
   }
 }
@@ -579,11 +581,11 @@ html[data-theme='light'] .ambient-aurora-b {
     opacity: 0.15;
   }
   33% {
-    transform: translate3d(36px, -18px, 0);
+    transform: translate3d(9vw, -6vh, 0);
     opacity: 0.8;
   }
   66% {
-    transform: translate3d(-22px, -40px, 0);
+    transform: translate3d(-6vw, -12vh, 0);
     opacity: 0.55;
   }
 }
@@ -595,7 +597,7 @@ html[data-theme='light'] .ambient-aurora-b {
     opacity: 0.2;
   }
   50% {
-    transform: translate3d(30px, 28px, 0) scale(1.4);
+    transform: translate3d(8vw, 8vh, 0) scale(1.4);
     opacity: 0.85;
   }
 }
