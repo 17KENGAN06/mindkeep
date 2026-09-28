@@ -454,7 +454,12 @@
     "deviceThis": "Tämä laite",
     "deviceApp": "Sovellus",
     "deviceBrowser": "Selain",
-    "deviceRevoke": "Kirjaudu ulos"
+    "deviceRevoke": "Kirjaudu ulos",
+    "deleteAccount": "Poista tili",
+    "deleteAccountHint": "Tämä poistaa pysyvästi muistiinpanot, tehtävät, kertaukset, talouden ja muut tiedot. Peruutus ei onnistu.",
+    "deleteAccountConfirm": "Poistetaanko tämä MindKeep-tili ja kaikki sen tiedot?",
+    "deleteAccountTypeLabel": "Kirjoita DELETE vahvistaaksesi",
+    "deleteAccountTypeHint": "Kirjoita DELETE isoilla kirjaimilla."
   },
   "dashboard": {
     "tagline": "Enemmän kuin tietoa. Enemmän kuin suunnitelmia. Opiskele. Toimi. Kasva.",

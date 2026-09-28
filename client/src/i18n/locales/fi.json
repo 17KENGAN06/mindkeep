@@ -650,7 +650,12 @@
     "deviceThis": "Tämä laite",
     "deviceApp": "Sovellus",
     "deviceBrowser": "Selain",
-    "deviceRevoke": "Kirjaudu ulos"
+    "deviceRevoke": "Kirjaudu ulos",
+    "deleteAccount": "Poista tili",
+    "deleteAccountHint": "Tämä poistaa pysyvästi muistiinpanot, tehtävät, kertaukset, talouden ja muut tiedot. Peruutus ei onnistu.",
+    "deleteAccountConfirm": "Poistetaanko tämä MindKeep-tili ja kaikki sen tiedot?",
+    "deleteAccountTypeLabel": "Kirjoita DELETE vahvistaaksesi",
+    "deleteAccountTypeHint": "Kirjoita DELETE isoilla kirjaimilla."
   },
   "maintenance": {
     "eyebrow": "Huoltokatko",
@@ -1062,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Oikeudellinen",
     "title": "Tietosuojaseloste",
-    "updated": "Päivitetty: 22. heinäkuuta 2026",
+    "updated": "Päivitetty: 28 September 2026",
     "intro": "Tämä seloste kertoo, mitä tietoja Mindkeep kerää, miksi niitä tarvitaan ja miten suojaamme niitä. Käyttämällä palvelua hyväksyt alla kuvatut käytännöt.",
     "contactLabel": "Tietopyynnöt:",
     "sections": [
@@ -1107,7 +1112,7 @@
       {
         "title": "6. Oikeutesi",
         "body": [
-          "Voit pyytää pääsyä tietoihisi, korjauksia tai tilin poistamista.",
+          "Tilin voit poistaa Tilistä sivustolla tai sovelluksessa. Muistiinpanot, tehtävät, kertaukset, talous ja muut henkilötiedot poistuvat palvelimiltamme.",
           "Voit vaihtaa kielen, teeman ja materiaalien sisällön milloin tahansa sovelluksessa."
         ]
       },

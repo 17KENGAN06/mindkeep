@@ -454,7 +454,12 @@
     "deviceThis": "To urządzenie",
     "deviceApp": "Aplikacja",
     "deviceBrowser": "Przeglądarka",
-    "deviceRevoke": "Wyloguj"
+    "deviceRevoke": "Wyloguj",
+    "deleteAccount": "Usuń konto",
+    "deleteAccountHint": "To trwale usunie notatki, zadania, powtórki, finanse i pozostałe dane. Tego nie cofniesz.",
+    "deleteAccountConfirm": "Usunąć to konto MindKeep i wszystkie jego dane?",
+    "deleteAccountTypeLabel": "Wpisz DELETE, aby potwierdzić",
+    "deleteAccountTypeHint": "Wpisz DELETE wielkimi literami."
   },
   "dashboard": {
     "tagline": "Więcej niż wiedza. Więcej niż plany. Ucz się. Działaj. Rośnij.",

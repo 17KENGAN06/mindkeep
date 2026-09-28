@@ -650,7 +650,12 @@
     "deviceThis": "To urządzenie",
     "deviceApp": "Aplikacja",
     "deviceBrowser": "Przeglądarka",
-    "deviceRevoke": "Wyloguj"
+    "deviceRevoke": "Wyloguj",
+    "deleteAccount": "Usuń konto",
+    "deleteAccountHint": "To trwale usunie notatki, zadania, powtórki, finanse i pozostałe dane. Tego nie cofniesz.",
+    "deleteAccountConfirm": "Usunąć to konto MindKeep i wszystkie jego dane?",
+    "deleteAccountTypeLabel": "Wpisz DELETE, aby potwierdzić",
+    "deleteAccountTypeHint": "Wpisz DELETE wielkimi literami."
   },
   "maintenance": {
     "eyebrow": "Konserwacja",
@@ -1062,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Informacje prawne",
     "title": "Polityka prywatności",
-    "updated": "Aktualizacja: 22 lipca 2026",
+    "updated": "Aktualizacja: 28 September 2026",
     "intro": "Niniejsza polityka wyjaśnia, jakie dane zbiera Mindkeep, dlaczego ich potrzebujemy i jak je chronimy. Korzystając z usługi, akceptują Państwo praktyki opisane poniżej.",
     "contactLabel": "Pytania o dane:",
     "sections": [
@@ -1107,7 +1112,7 @@
       {
         "title": "6. Państwa prawa",
         "body": [
-          "Mogą Państwo żądać dostępu do swoich danych, ich sprostowania albo usunięcia konta.",
+          "Konto usuniesz w sekcji Konto na stronie lub w aplikacji. Z serwerów znikną notatki, zadania, powtórki, finanse i pozostałe dane.",
           "Język, motyw i treści nauki można w każdej chwili zmienić w aplikacji."
         ]
       },

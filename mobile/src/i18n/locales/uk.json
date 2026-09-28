@@ -454,7 +454,12 @@
     "deviceThis": "Цей пристрій",
     "deviceApp": "Застосунок",
     "deviceBrowser": "Браузер",
-    "deviceRevoke": "Вийти"
+    "deviceRevoke": "Вийти",
+    "deleteAccount": "Видалити акаунт",
+    "deleteAccountHint": "Це назавжди видалить нотатки, задачі, повторення, фінанси та інші дані. Скасувати не можна.",
+    "deleteAccountConfirm": "Видалити цей акаунт MindKeep і всі його дані?",
+    "deleteAccountTypeLabel": "Введіть DELETE для підтвердження",
+    "deleteAccountTypeHint": "Наберіть DELETE великими літерами."
   },
   "dashboard": {
     "tagline": "Більше, ніж знання. Більше, ніж плани. Вчись. Дій. Розвивайся.",

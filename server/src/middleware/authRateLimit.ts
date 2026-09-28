@@ -52,3 +52,8 @@ export const refreshRateLimit = ipAuthLimit(
   40,
   'Too many session refresh attempts. Please try again later.',
 );
+
+export const deleteAccountRateLimit = ipAuthLimit(
+  3,
+  'Too many account deletion attempts. Please try again later.',
+);

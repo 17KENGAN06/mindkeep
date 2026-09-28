@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '@/api/auth';
 import { Button } from '@/components/ui/Button';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { mapAuthError } from '@/features/auth/mapAuthError';
@@ -102,6 +103,7 @@ export function AccountPage() {
       </form>
 
       <DeviceList />
+      <DeleteAccount hasPassword={hasPassword} />
     </section>
   );
 }
@@ -172,6 +174,75 @@ function DeviceList() {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function DeleteAccount({ hasPassword }: { hasPassword: boolean }) {
+  const { t } = useTranslation();
+  const { logout } = useAuth();
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  const onDelete = async () => {
+    setError(null);
+    if (confirm !== 'DELETE') {
+      setError(t('auth.deleteAccountTypeHint'));
+      return;
+    }
+    setBusy(true);
+    try {
+      await authApi.deleteAccount({
+        ...(hasPassword ? { password } : {}),
+        confirm: 'DELETE',
+      });
+      await logout();
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+      setOpen(false);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="space-y-4 rounded-3xl border border-line bg-panel/80 p-5">
+      <div>
+        <h2 className="text-base font-semibold text-ink">{t('auth.deleteAccount')}</h2>
+        <p className="mt-1 text-sm text-muted">{t('auth.deleteAccountHint')}</p>
+      </div>
+      {hasPassword ? (
+        <Input
+          label={t('auth.currentPassword')}
+          type="password"
+          autoComplete="current-password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+      ) : null}
+      <Input
+        label={t('auth.deleteAccountTypeLabel')}
+        value={confirm}
+        onChange={(event) => setConfirm(event.target.value)}
+        hint={t('auth.deleteAccountTypeHint')}
+      />
+      <ErrorMessage message={error ?? undefined} />
+      <Button type="button" variant="secondary" onClick={() => setOpen(true)}>
+        {t('auth.deleteAccount')}
+      </Button>
+      <ConfirmDialog
+        open={open}
+        title={t('auth.deleteAccount')}
+        description={t('auth.deleteAccountConfirm')}
+        confirmLabel={t('auth.deleteAccount')}
+        cancelLabel={t('common.cancel')}
+        isLoading={busy}
+        onConfirm={() => void onDelete()}
+        onCancel={() => setOpen(false)}
+      />
     </div>
   );
 }

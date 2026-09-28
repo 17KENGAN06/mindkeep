@@ -7,6 +7,7 @@ import app from '@/app.js';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { issueAuthSession } from '@/services/session.service.js';
+import { hashPassword } from '@/utils/password.js';
 
 const TEST_EMAIL_SUFFIX = '@refresh.mindkeep.test';
 const canRun = Boolean(env.DATABASE_URL && env.JWT_SECRET);
@@ -144,5 +145,29 @@ describe('native refresh tokens rotate and devices can be revoked', { skip: !can
 
     const alive = await api('/api/auth/me', { token: nativeToken });
     assert.equal(alive.status, 200);
+  });
+
+  test('deleting the account removes the user and kills the token', async () => {
+    const passwordHash = await hashPassword('DeleteMe99');
+    const doomed = await prisma.user.create({
+      data: {
+        name: 'Doomed',
+        email: `doomed.${Date.now()}${TEST_EMAIL_SUFFIX}`,
+        passwordHash,
+      },
+    });
+    const token = (await issueAuthSession(doomed)).token;
+    const gone = await api('/api/auth/delete-account', {
+      token,
+      method: 'POST',
+      body: { password: 'DeleteMe99', confirm: 'DELETE' },
+    });
+    assert.equal(gone.status, 200);
+
+    const me = await api('/api/auth/me', { token });
+    assert.equal(me.status, 401);
+
+    const row = await prisma.user.findUnique({ where: { id: doomed.id } });
+    assert.equal(row, null);
   });
 });

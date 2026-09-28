@@ -650,7 +650,12 @@
     "deviceThis": "Cet appareil",
     "deviceApp": "Appli",
     "deviceBrowser": "Navigateur",
-    "deviceRevoke": "Déconnecter"
+    "deviceRevoke": "Déconnecter",
+    "deleteAccount": "Supprimer le compte",
+    "deleteAccountHint": "Cela efface définitivement notes, tâches, révisions, finances et le reste. Impossible d’annuler.",
+    "deleteAccountConfirm": "Supprimer ce compte MindKeep et toutes ses données ?",
+    "deleteAccountTypeLabel": "Tape DELETE pour confirmer",
+    "deleteAccountTypeHint": "Tape DELETE en majuscules."
   },
   "maintenance": {
     "eyebrow": "Maintenance",
@@ -1062,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Mentions légales",
     "title": "Politique de confidentialité",
-    "updated": "Mise à jour : 22 juillet 2026",
+    "updated": "Mise à jour : 28 September 2026",
     "intro": "Cette politique explique quelles données Mindkeep collecte, pourquoi nous en avons besoin et comment nous les protégeons. En utilisant le service, vous acceptez les pratiques décrites ci-dessous.",
     "contactLabel": "Questions relatives aux données :",
     "sections": [
@@ -1107,7 +1112,7 @@
       {
         "title": "6. Vos droits",
         "body": [
-          "Vous pouvez demander l'accès à vos données, des corrections ou la suppression de votre compte.",
+          "Tu peux supprimer le compte dans Compte sur le site ou dans l’appli. Notes, tâches, révisions, finances et le reste des données personnelles quittent alors nos serveurs.",
           "Vous pouvez modifier la langue, le thème et le contenu d'apprentissage à tout moment dans l'application."
         ]
       },

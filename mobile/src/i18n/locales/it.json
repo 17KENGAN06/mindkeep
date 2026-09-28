@@ -454,7 +454,12 @@
     "deviceThis": "Questo dispositivo",
     "deviceApp": "App",
     "deviceBrowser": "Browser",
-    "deviceRevoke": "Esci"
+    "deviceRevoke": "Esci",
+    "deleteAccount": "Elimina account",
+    "deleteAccountHint": "Questo cancella per sempre note, compiti, ripassi, finanze e gli altri dati. Non si può annullare.",
+    "deleteAccountConfirm": "Eliminare questo account MindKeep e tutti i suoi dati?",
+    "deleteAccountTypeLabel": "Scrivi DELETE per confermare",
+    "deleteAccountTypeHint": "Scrivi DELETE in maiuscolo."
   },
   "dashboard": {
     "tagline": "Più della conoscenza. Più dei piani. Impara. Agisci. Cresci.",

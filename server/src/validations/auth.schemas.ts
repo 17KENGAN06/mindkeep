@@ -121,6 +121,11 @@ export const sessionIdParamsSchema = z.object({
   id: z.string().cuid('Invalid session id'),
 });
 
+export const deleteAccountSchema = z.object({
+  password: z.string().max(72).optional(),
+  confirm: z.literal('DELETE'),
+});
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
@@ -132,3 +137,4 @@ export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
 export type RefreshInput = z.infer<typeof refreshSchema>;
 export type SessionIdParams = z.infer<typeof sessionIdParamsSchema>;
+export type DeleteAccountInput = z.infer<typeof deleteAccountSchema>;

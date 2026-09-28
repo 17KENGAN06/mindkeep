@@ -13,6 +13,7 @@ import {
 import { consumeGoogleSignInTicket } from '@/services/googleOAuth.service.js';
 import type {
   ChangePasswordInput,
+  DeleteAccountInput,
   ForgotPasswordInput,
   GoogleLoginInput,
   LoginInput,
@@ -454,6 +455,33 @@ export class AuthService {
     });
     await revokeAuthSessionsForUser(user.id, currentJti);
     return toPublicUser(await ensureAdminRole(updated));
+  }
+
+  async deleteAccount(userId: string, input: DeleteAccountInput): Promise<void> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, passwordHash: true },
+    });
+
+    if (!user) {
+      throw new AppError('User not found', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    if (user.passwordHash) {
+      const ok = await verifyPassword(input.password ?? '', user.passwordHash);
+      if (!ok) {
+        throw new AppError('Current password is incorrect', {
+          statusCode: 401,
+          code: 'INVALID_CREDENTIALS',
+        });
+      }
+    }
+
+    await prisma.emailToken.deleteMany({ where: { email: user.email } });
+    await prisma.user.delete({ where: { id: user.id } });
   }
 
   async me(userId: string): Promise<PublicUser> {

@@ -454,7 +454,12 @@
     "deviceThis": "Это устройство",
     "deviceApp": "Приложение",
     "deviceBrowser": "Браузер",
-    "deviceRevoke": "Выйти"
+    "deviceRevoke": "Выйти",
+    "deleteAccount": "Удалить аккаунт",
+    "deleteAccountHint": "Это навсегда удалит заметки, задачи, повторения, финансы и остальные данные. Отменить нельзя.",
+    "deleteAccountConfirm": "Удалить этот аккаунт MindKeep и все его данные?",
+    "deleteAccountTypeLabel": "Введите DELETE для подтверждения",
+    "deleteAccountTypeHint": "Наберите DELETE заглавными буквами."
   },
   "dashboard": {
     "tagline": "Больше, чем знания. Больше, чем планы. Учись. Действуй. Развивайся.",

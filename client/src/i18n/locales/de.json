@@ -650,7 +650,12 @@
     "deviceThis": "Dieses Gerät",
     "deviceApp": "App",
     "deviceBrowser": "Browser",
-    "deviceRevoke": "Abmelden"
+    "deviceRevoke": "Abmelden",
+    "deleteAccount": "Konto löschen",
+    "deleteAccountHint": "Das entfernt Notizen, Aufgaben, Wiederholungen, Finanzen und alle anderen Daten endgültig. Das geht nicht rückgängig.",
+    "deleteAccountConfirm": "Dieses MindKeep-Konto und alle Daten löschen?",
+    "deleteAccountTypeLabel": "Tippe DELETE zur Bestätigung",
+    "deleteAccountTypeHint": "Tippe DELETE in Großbuchstaben."
   },
   "maintenance": {
     "eyebrow": "Wartung",
@@ -1062,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Rechtliches",
     "title": "Datenschutzerklärung",
-    "updated": "Aktualisiert: 22. Juli 2026",
+    "updated": "Aktualisiert: 28 September 2026",
     "intro": "Diese Erklärung beschreibt, welche Daten Mindkeep erhebt, warum wir sie benötigen und wie wir sie schützen. Mit der Nutzung des Dienstes stimmen Sie den nachfolgend beschriebenen Praktiken zu.",
     "contactLabel": "Fragen zu Daten:",
     "sections": [
@@ -1107,7 +1112,7 @@
       {
         "title": "6. Ihre Rechte",
         "body": [
-          "Sie können Auskunft über Ihre Daten, Berichtigungen oder die Löschung des Kontos verlangen.",
+          "Du kannst das Konto unter Konto auf der Website oder in der App löschen. Dann verschwinden Notizen, Aufgaben, Wiederholungen, Finanzen und die übrigen persönlichen Daten von unseren Servern.",
           "Sprache, Design und Lerninhalte können Sie jederzeit in der App ändern."
         ]
       },

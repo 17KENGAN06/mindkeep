@@ -3,6 +3,7 @@ import { authController } from '@/controllers/auth.controller.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
 import {
   challengeRateLimit,
+  deleteAccountRateLimit,
   emailTokenRateLimit,
   forgotPasswordRateLimit,
   googleAuthRateLimit,
@@ -14,6 +15,7 @@ import { requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
 import {
   changePasswordSchema,
+  deleteAccountSchema,
   forgotPasswordSchema,
   googleFinishSchema,
   googleLoginSchema,
@@ -129,4 +131,12 @@ authRouter.post(
   requireAuth,
   validate(changePasswordSchema),
   asyncHandler((req, res) => authController.changePassword(req, res)),
+);
+
+authRouter.post(
+  '/delete-account',
+  requireAuth,
+  deleteAccountRateLimit,
+  validate(deleteAccountSchema),
+  asyncHandler((req, res) => authController.deleteAccount(req, res)),
 );

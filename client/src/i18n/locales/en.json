@@ -650,7 +650,12 @@
     "deviceThis": "This device",
     "deviceApp": "App",
     "deviceBrowser": "Browser",
-    "deviceRevoke": "Sign out"
+    "deviceRevoke": "Sign out",
+    "deleteAccount": "Delete account",
+    "deleteAccountHint": "This permanently removes your notes, tasks, reviews, finance, and other data. It cannot be undone.",
+    "deleteAccountConfirm": "Delete this MindKeep account and all of its data?",
+    "deleteAccountTypeLabel": "Type DELETE to confirm",
+    "deleteAccountTypeHint": "Type DELETE in capital letters."
   },
   "maintenance": {
     "eyebrow": "Maintenance",
@@ -1062,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "updated": "Updated: July 22, 2026",
+    "updated": "Updated: 28 September 2026",
     "intro": "This policy explains what data Mindkeep collects, why we need it, and how we protect it. By using the service, you agree to the practices described below.",
     "contactLabel": "Data questions:",
     "sections": [
@@ -1107,7 +1112,7 @@
       {
         "title": "6. Your rights",
         "body": [
-          "You may request access to your data, corrections, or account deletion.",
+          "You can delete your account in Account on the website or in the app. That removes your notes, tasks, reviews, finance, and other personal data from our servers.",
           "You can change language, theme, and learning content at any time inside the app."
         ]
       },

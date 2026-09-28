@@ -23,6 +23,7 @@ import { getAccessTokenFromRequest } from '@/utils/accessToken.js';
 import { verifyAccessToken } from '@/utils/jwt.js';
 import type {
   ChangePasswordInput,
+  DeleteAccountInput,
   ForgotPasswordInput,
   GoogleFinishInput,
   GoogleLoginInput,
@@ -220,6 +221,20 @@ export class AuthController {
     const { id } = req.params as SessionIdParams;
     await revokeOwnedAuthSession(req.user.id, id);
     res.status(200).json({ success: true });
+  }
+
+  async deleteAccount(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    await authService.deleteAccount(req.user.id, req.body as DeleteAccountInput);
+    res.clearCookie(ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions());
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json({ deleted: true });
   }
 }
 

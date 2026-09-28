@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -31,6 +32,10 @@ export function AccountScreen() {
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleteConfirm, setDeleteConfirm] = useState('');
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleteBusy, setDeleteBusy] = useState(false);
   const sessionsQuery = useQuery({
     queryKey: ['auth', 'sessions'],
     queryFn: async () => (await authApi.sessions()).sessions,
@@ -52,6 +57,38 @@ export function AccountScreen() {
     } finally {
       setBusyId(null);
     }
+  };
+
+  const runDelete = async () => {
+    setDeleteError(null);
+    setDeleteBusy(true);
+    try {
+      await authApi.deleteAccount({
+        ...(hasPassword ? { password: deletePassword } : {}),
+        confirm: 'DELETE',
+      });
+      await logout();
+    } catch (caught) {
+      setDeleteError(mapAuthError(caught, t));
+    } finally {
+      setDeleteBusy(false);
+    }
+  };
+
+  const onDelete = () => {
+    setDeleteError(null);
+    if (deleteConfirm !== 'DELETE') {
+      setDeleteError(t('auth.deleteAccountTypeHint'));
+      return;
+    }
+    Alert.alert(t('auth.deleteAccount'), t('auth.deleteAccountConfirm'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('auth.deleteAccount'),
+        style: 'destructive',
+        onPress: () => void runDelete(),
+      },
+    ]);
   };
 
   const onSubmit = async () => {
@@ -171,6 +208,43 @@ export function AccountScreen() {
             />
           </View>
         ))}
+        <Text style={[styles.section, { color: colors.ink, marginTop: 28 }]}>
+          {t('auth.deleteAccount')}
+        </Text>
+        <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.deleteAccountHint')}</Text>
+        {hasPassword ? (
+          <View>
+            <Text style={[styles.label, { color: colors.muted }]}>{t('auth.currentPassword')}</Text>
+            <TextInput
+              secureTextEntry
+              autoComplete="password"
+              style={[
+                styles.input,
+                { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+              ]}
+              value={deletePassword}
+              onChangeText={setDeletePassword}
+            />
+          </View>
+        ) : null}
+        <Text style={[styles.label, { color: colors.muted }]}>{t('auth.deleteAccountTypeLabel')}</Text>
+        <TextInput
+          autoCapitalize="characters"
+          autoCorrect={false}
+          style={[
+            styles.input,
+            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+          ]}
+          value={deleteConfirm}
+          onChangeText={setDeleteConfirm}
+        />
+        {deleteError ? <Text style={[styles.error, { color: colors.danger }]}>{deleteError}</Text> : null}
+        <AppButton
+          label={t('auth.deleteAccount')}
+          variant="danger"
+          loading={deleteBusy}
+          onPress={onDelete}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );

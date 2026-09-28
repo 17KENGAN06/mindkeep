@@ -48,4 +48,6 @@ export const authApi = {
   sessions: () => apiClient.get<{ sessions: AuthDevice[] }>('/api/auth/sessions'),
   revokeSession: (id: string) =>
     apiClient.delete<{ success: boolean }>(`/api/auth/sessions/${id}`),
+  deleteAccount: (payload: { password?: string; confirm: 'DELETE' }) =>
+    apiClient.post<{ deleted: true }>('/api/auth/delete-account', payload),
 };

@@ -454,7 +454,12 @@
     "deviceThis": "This device",
     "deviceApp": "App",
     "deviceBrowser": "Browser",
-    "deviceRevoke": "Sign out"
+    "deviceRevoke": "Sign out",
+    "deleteAccount": "Delete account",
+    "deleteAccountHint": "This permanently removes your notes, tasks, reviews, finance, and other data. It cannot be undone.",
+    "deleteAccountConfirm": "Delete this MindKeep account and all of its data?",
+    "deleteAccountTypeLabel": "Type DELETE to confirm",
+    "deleteAccountTypeHint": "Type DELETE in capital letters."
   },
   "dashboard": {
     "tagline": "More than knowledge. More than plans. Learn. Act. Grow.",
