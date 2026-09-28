@@ -563,6 +563,19 @@
       "completed": "a terminé",
       "logged": "a consigné",
       "checked": "s'est pointé"
+    },
+    "auditTitle": "Journal des connexions et de la modération",
+    "auditHint": "Qui s'est connecté et quels avis ont été approuvés ou refusés. Les e-mails et mots de passe n'y figurent pas.",
+    "auditEmpty": "Aucun événement pour l'instant",
+    "auditAnonymous": "Compte inconnu",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Connecté",
+      "LOGIN_FAILURE": "Échec de connexion",
+      "GOOGLE_LOGIN": "Connecté avec Google",
+      "PASSWORD_CHANGED": "Mot de passe modifié",
+      "PASSWORD_RESET": "Mot de passe réinitialisé",
+      "REVIEW_APPROVED": "Avis approuvé",
+      "REVIEW_REJECTED": "Avis refusé"
     }
   },
   "auth": {

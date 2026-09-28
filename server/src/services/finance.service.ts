@@ -9,6 +9,7 @@ import type {
   UpdateFinanceSettingsInput,
 } from '@/validations/finance.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireDeleted, requireOwned } from '@/utils/owned.js';
 
 const DEFAULT_CURRENCY = BudgetCurrency.EUR;
 
@@ -95,13 +96,11 @@ export class FinanceService {
   }
 
   async updateCategory(userId: string, id: string, input: UpdateFinanceCategoryInput) {
-    const category = await prisma.budgetCategory.findFirst({ where: { id, userId } });
-    if (!category) {
-      throw new AppError('Category not found', {
-        statusCode: 404,
-        code: 'FINANCE_CATEGORY_NOT_FOUND',
-      });
-    }
+    requireOwned(
+      await prisma.budgetCategory.findFirst({ where: { id, userId } }),
+      'Category not found',
+      'FINANCE_CATEGORY_NOT_FOUND',
+    );
 
     try {
       return await prisma.budgetCategory.update({
@@ -121,15 +120,8 @@ export class FinanceService {
   }
 
   async removeCategory(userId: string, id: string) {
-    const category = await prisma.budgetCategory.findFirst({ where: { id, userId } });
-    if (!category) {
-      throw new AppError('Category not found', {
-        statusCode: 404,
-        code: 'FINANCE_CATEGORY_NOT_FOUND',
-      });
-    }
-
-    await prisma.budgetCategory.delete({ where: { id } });
+    const result = await prisma.budgetCategory.deleteMany({ where: { id, userId } });
+    requireDeleted(result.count, 'Category not found', 'FINANCE_CATEGORY_NOT_FOUND');
     return { success: true };
   }
 
@@ -153,15 +145,13 @@ export class FinanceService {
     await this.getOrCreateSettings(userId);
 
     if (input.categoryId) {
-      const category = await prisma.budgetCategory.findFirst({
-        where: { id: input.categoryId, userId },
-      });
-      if (!category) {
-        throw new AppError('Category not found', {
-          statusCode: 404,
-          code: 'FINANCE_CATEGORY_NOT_FOUND',
-        });
-      }
+      requireOwned(
+        await prisma.budgetCategory.findFirst({
+          where: { id: input.categoryId, userId },
+        }),
+        'Category not found',
+        'FINANCE_CATEGORY_NOT_FOUND',
+      );
     }
 
     return prisma.budgetOperation.create({
@@ -180,15 +170,8 @@ export class FinanceService {
   }
 
   async removeOperation(userId: string, id: string) {
-    const operation = await prisma.budgetOperation.findFirst({ where: { id, userId } });
-    if (!operation) {
-      throw new AppError('Operation not found', {
-        statusCode: 404,
-        code: 'FINANCE_OPERATION_NOT_FOUND',
-      });
-    }
-
-    await prisma.budgetOperation.delete({ where: { id } });
+    const result = await prisma.budgetOperation.deleteMany({ where: { id, userId } });
+    requireDeleted(result.count, 'Operation not found', 'FINANCE_OPERATION_NOT_FOUND');
     return { success: true };
   }
 

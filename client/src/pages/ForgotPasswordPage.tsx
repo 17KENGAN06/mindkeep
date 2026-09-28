@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/Input';
 import { mapAuthError } from '@/features/auth/mapAuthError';
 
 export function ForgotPasswordPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState('');
   const [botToken, setBotToken] = useState<string | null>(null);
   const [humanChecked, setHumanChecked] = useState(false);
@@ -35,7 +35,12 @@ export function ForgotPasswordPage() {
 
     setBusy(true);
     try {
-      await authApi.forgotPassword({ email: email.trim(), botToken, website: '' });
+      await authApi.forgotPassword({
+        email: email.trim(),
+        locale: i18n.resolvedLanguage ?? i18n.language,
+        botToken,
+        website: '',
+      });
       setSent(true);
     } catch (error) {
       setFormError(mapAuthError(error, t));

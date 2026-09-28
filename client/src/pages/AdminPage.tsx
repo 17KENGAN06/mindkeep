@@ -36,6 +36,12 @@ export function AdminPage() {
     enabled: user?.role === 'ADMIN',
   });
 
+  const auditQuery = useQuery({
+    queryKey: ['admin', 'audit'],
+    queryFn: async () => (await adminApi.audit()).events,
+    enabled: user?.role === 'ADMIN',
+  });
+
   const moderateReview = useMutation({
     mutationFn: ({
       id,
@@ -46,6 +52,7 @@ export function AdminPage() {
     }) => adminApi.moderateReview(id, status),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['admin', 'reviews'] });
+      void queryClient.invalidateQueries({ queryKey: ['admin', 'audit'] });
       void queryClient.invalidateQueries({ queryKey: ['reviews', 'approved'] });
     },
   });
@@ -54,17 +61,18 @@ export function AdminPage() {
     return <Navigate to="/dashboard" replace />;
   }
 
-  if (overviewQuery.isLoading || usersQuery.isLoading || reviewsQuery.isLoading) {
+  if (overviewQuery.isLoading || usersQuery.isLoading || reviewsQuery.isLoading || auditQuery.isLoading) {
     return <Loader />;
   }
 
-  if (overviewQuery.isError || usersQuery.isError || reviewsQuery.isError) {
+  if (overviewQuery.isError || usersQuery.isError || reviewsQuery.isError || auditQuery.isError) {
     return <ErrorMessage message={t('admin.loadError')} />;
   }
 
   const overview = overviewQuery.data;
   const users = usersQuery.data ?? [];
   const reviews = reviewsQuery.data ?? [];
+  const auditEvents = auditQuery.data ?? [];
 
   return (
     <div className="space-y-6">
@@ -83,6 +91,32 @@ export function AdminPage() {
           <StatCard label={t('admin.stats.reminders')} value={overview.remindersTotal} />
         </section>
       ) : null}
+
+      <section className="overflow-hidden rounded-3xl border border-line bg-panel">
+        <div className="border-b border-line px-4 py-3">
+          <h2 className="text-sm font-semibold text-ink">{t('admin.auditTitle')}</h2>
+          <p className="mt-1 text-xs text-muted">{t('admin.auditHint')}</p>
+        </div>
+        {auditEvents.length === 0 ? (
+          <div className="p-4">
+            <EmptyState title={t('admin.auditEmpty')} />
+          </div>
+        ) : (
+          <ul className="divide-y divide-line">
+            {auditEvents.map((event) => (
+              <li key={event.id} className="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+                <div>
+                  <p className="text-sm text-ink">
+                    {event.actor?.name ?? t('admin.auditAnonymous')}
+                    <span className="text-muted"> · {t(`admin.auditActions.${event.action}`)}</span>
+                  </p>
+                </div>
+                <p className="text-xs text-muted">{formatDate(event.createdAt, language)}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <section className="overflow-hidden rounded-3xl border border-line bg-panel">
         <div className="border-b border-line px-4 py-3">

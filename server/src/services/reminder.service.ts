@@ -4,6 +4,7 @@ import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { prisma } from '@/config/prisma.js';
 import type { CalendarQuery, ListRemindersQuery } from '@/validations/reminder.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireOwned } from '@/utils/owned.js';
 import { getCalendarDaysOverdue, getDayBoundsInTimeZone } from '@/utils/timezone.js';
 
 const reminderInclude = {
@@ -226,17 +227,14 @@ export class ReminderService {
   }
 
   async complete(userId: string, id: string) {
-    const reminder = await prisma.reviewReminder.findFirst({
-      where: { id, userId },
-      include: reminderInclude,
-    });
-
-    if (!reminder) {
-      throw new AppError('Reminder not found', {
-        statusCode: 404,
-        code: 'REMINDER_NOT_FOUND',
-      });
-    }
+    const reminder = requireOwned(
+      await prisma.reviewReminder.findFirst({
+        where: { id, userId },
+        include: reminderInclude,
+      }),
+      'Reminder not found',
+      'REMINDER_NOT_FOUND',
+    );
 
     if (
       reminder.status === ReminderStatus.COMPLETED ||
@@ -263,17 +261,14 @@ export class ReminderService {
   }
 
   async skip(userId: string, id: string) {
-    const reminder = await prisma.reviewReminder.findFirst({
-      where: { id, userId },
-      include: reminderInclude,
-    });
-
-    if (!reminder) {
-      throw new AppError('Reminder not found', {
-        statusCode: 404,
-        code: 'REMINDER_NOT_FOUND',
-      });
-    }
+    const reminder = requireOwned(
+      await prisma.reviewReminder.findFirst({
+        where: { id, userId },
+        include: reminderInclude,
+      }),
+      'Reminder not found',
+      'REMINDER_NOT_FOUND',
+    );
 
     if (
       reminder.status === ReminderStatus.COMPLETED ||

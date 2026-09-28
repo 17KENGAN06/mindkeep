@@ -563,6 +563,19 @@
       "completed": "ukończył",
       "logged": "zapisał",
       "checked": "odhaczył"
+    },
+    "auditTitle": "Dziennik logowań i moderacji",
+    "auditHint": "Kto się logował i które opinie zatwierdzono lub odrzucono. E-maile i hasła tu nie trafiają.",
+    "auditEmpty": "Brak zdarzeń",
+    "auditAnonymous": "Nieznane konto",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Zalogował się",
+      "LOGIN_FAILURE": "Nieudane logowanie",
+      "GOOGLE_LOGIN": "Zalogował się przez Google",
+      "PASSWORD_CHANGED": "Zmienił hasło",
+      "PASSWORD_RESET": "Zresetował hasło",
+      "REVIEW_APPROVED": "Zatwierdził opinię",
+      "REVIEW_REJECTED": "Odrzucił opinię"
     }
   },
   "auth": {

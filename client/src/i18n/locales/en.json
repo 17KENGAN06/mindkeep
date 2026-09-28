@@ -563,6 +563,19 @@
       "completed": "completed",
       "logged": "logged",
       "checked": "checked in"
+    },
+    "auditTitle": "Sign-in and moderation log",
+    "auditHint": "Who signed in and which reviews were approved or rejected. Emails and passwords are not stored here.",
+    "auditEmpty": "No audit events yet",
+    "auditAnonymous": "Unknown account",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Signed in",
+      "LOGIN_FAILURE": "Failed sign-in",
+      "GOOGLE_LOGIN": "Signed in with Google",
+      "PASSWORD_CHANGED": "Changed password",
+      "PASSWORD_RESET": "Reset password",
+      "REVIEW_APPROVED": "Approved a review",
+      "REVIEW_REJECTED": "Rejected a review"
     }
   },
   "auth": {

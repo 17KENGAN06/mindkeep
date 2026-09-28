@@ -11,6 +11,7 @@
     "start": "node dist/server.js",
     "start:prod": "node ./scripts/start-prod.mjs",
     "lint": "eslint .",
+    "test": "tsx --test --import ./test-setup-env.ts src/owned.test.ts src/ownership.idor.test.ts",
     "format": "prettier --write .",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",

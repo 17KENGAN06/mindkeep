@@ -21,7 +21,7 @@ function detectTimezone(): string {
 }
 
 export function RegisterPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { googleLogin, register: registerUser } = useAuth();
   const navigate = useNavigate();
   const [formError, setFormError] = useState<string | null>(null);
@@ -70,6 +70,7 @@ export function RegisterPage() {
         password: values.password,
         confirmPassword: values.confirmPassword,
         timezone: values.timezone,
+        locale: i18n.resolvedLanguage ?? i18n.language,
         botToken,
         website: values.website ?? '',
       });

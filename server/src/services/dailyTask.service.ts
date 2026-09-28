@@ -6,6 +6,7 @@ import type {
   UpdateDailyTaskInput,
 } from '@/validations/dailyTask.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireDeleted, requireOwned } from '@/utils/owned.js';
 import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
 
 function parseDateOnly(value: string): Date {
@@ -231,13 +232,11 @@ export class DailyTaskService {
   }
 
   async update(userId: string, id: string, input: UpdateDailyTaskInput) {
-    const existing = await prisma.dailyTask.findFirst({ where: { id, userId } });
-    if (!existing) {
-      throw new AppError('Task not found', {
-        statusCode: 404,
-        code: 'DAILY_TASK_NOT_FOUND',
-      });
-    }
+    const existing = requireOwned(
+      await prisma.dailyTask.findFirst({ where: { id, userId } }),
+      'Task not found',
+      'DAILY_TASK_NOT_FOUND',
+    );
 
     let splitCount = existing.splitCount ?? 1;
     let splitDone = existing.splitDone ?? 0;
@@ -288,15 +287,8 @@ export class DailyTaskService {
   }
 
   async remove(userId: string, id: string) {
-    const existing = await prisma.dailyTask.findFirst({ where: { id, userId } });
-    if (!existing) {
-      throw new AppError('Task not found', {
-        statusCode: 404,
-        code: 'DAILY_TASK_NOT_FOUND',
-      });
-    }
-
-    await prisma.dailyTask.delete({ where: { id } });
+    const result = await prisma.dailyTask.deleteMany({ where: { id, userId } });
+    requireDeleted(result.count, 'Task not found', 'DAILY_TASK_NOT_FOUND');
     return { success: true };
   }
 }

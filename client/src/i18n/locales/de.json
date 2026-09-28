@@ -563,6 +563,19 @@
       "completed": "hat abgeschlossen",
       "logged": "hat erfasst",
       "checked": "hat eingecheckt"
+    },
+    "auditTitle": "Anmelde- und Moderationsprotokoll",
+    "auditHint": "Wer sich angemeldet hat und welche Bewertungen freigegeben oder abgelehnt wurden. E-Mails und Passwörter stehen hier nicht.",
+    "auditEmpty": "Noch keine Protokolleinträge",
+    "auditAnonymous": "Unbekanntes Konto",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Angemeldet",
+      "LOGIN_FAILURE": "Anmeldung fehlgeschlagen",
+      "GOOGLE_LOGIN": "Mit Google angemeldet",
+      "PASSWORD_CHANGED": "Passwort geändert",
+      "PASSWORD_RESET": "Passwort zurückgesetzt",
+      "REVIEW_APPROVED": "Bewertung freigegeben",
+      "REVIEW_REJECTED": "Bewertung abgelehnt"
     }
   },
   "auth": {

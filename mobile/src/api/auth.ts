@@ -14,6 +14,7 @@ export type RegisterPayload = {
   password: string;
   confirmPassword: string;
   timezone?: string;
+  locale?: string;
   botToken?: string;
   website?: string;
 };
@@ -31,7 +32,7 @@ export const authApi = {
     apiClient.post<{ pending: true }>('/api/auth/register', payload),
   googleLogin: (payload: GoogleLoginPayload) =>
     apiClient.post<AuthResponse>('/api/auth/google', payload),
-  forgotPassword: (payload: { email: string; botToken?: string; website?: string }) =>
+  forgotPassword: (payload: { email: string; locale?: string; botToken?: string; website?: string }) =>
     apiClient.post<{ sent: true }>('/api/auth/forgot-password', payload),
   changePassword: (payload: {
     currentPassword?: string;

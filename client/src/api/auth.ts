@@ -12,6 +12,7 @@ export type RegisterPayload = {
   password: string;
   confirmPassword: string;
   timezone?: string;
+  locale?: string;
 } & BotPayload;
 
 export type LoginPayload = {
@@ -33,7 +34,7 @@ export const authApi = {
     apiClient.post<AuthResponse>('/api/auth/google', payload),
   verifyEmail: (payload: { token: string }) =>
     apiClient.post<AuthResponse>('/api/auth/verify-email', payload),
-  forgotPassword: (payload: { email: string } & BotPayload) =>
+  forgotPassword: (payload: { email: string; locale?: string } & BotPayload) =>
     apiClient.post<{ sent: true }>('/api/auth/forgot-password', payload),
   resetPassword: (payload: { token: string; password: string; confirmPassword: string }) =>
     apiClient.post<AuthResponse>('/api/auth/reset-password', payload),

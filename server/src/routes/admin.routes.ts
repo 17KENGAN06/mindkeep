@@ -40,3 +40,8 @@ adminRouter.patch(
   validate(moderateReviewSchema),
   asyncHandler((req, res) => adminController.moderateReview(req, res)),
 );
+
+adminRouter.get(
+  '/audit',
+  asyncHandler((req, res) => adminController.listAudit(req, res)),
+);

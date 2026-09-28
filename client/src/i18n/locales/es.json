@@ -563,6 +563,19 @@
       "completed": "completó",
       "logged": "registró",
       "checked": "marcó asistencia"
+    },
+    "auditTitle": "Registro de accesos y moderación",
+    "auditHint": "Quién inició sesión y qué reseñas se aprobaron o rechazaron. Aquí no se guardan correos ni contraseñas.",
+    "auditEmpty": "Aún no hay eventos",
+    "auditAnonymous": "Cuenta desconocida",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Inició sesión",
+      "LOGIN_FAILURE": "Inicio de sesión fallido",
+      "GOOGLE_LOGIN": "Inició sesión con Google",
+      "PASSWORD_CHANGED": "Cambió la contraseña",
+      "PASSWORD_RESET": "Restableció la contraseña",
+      "REVIEW_APPROVED": "Aprobó una reseña",
+      "REVIEW_REJECTED": "Rechazó una reseña"
     }
   },
   "auth": {

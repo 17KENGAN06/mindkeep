@@ -32,7 +32,9 @@ export function errorHandler(
       error: {
         code: err.code,
         message: err.message,
-        ...(err.details !== undefined ? { details: err.details } : {}),
+        ...(env.NODE_ENV !== 'production' && err.details !== undefined
+          ? { details: err.details }
+          : {}),
       },
     });
     return;

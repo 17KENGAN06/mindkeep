@@ -1,6 +1,7 @@
 import { NotificationType, Prisma, ReminderStatus } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireOwned } from '@/utils/owned.js';
 import { getCalendarDaysOverdue } from '@/utils/timezone.js';
 
 type ReminderForNotification = {
@@ -55,19 +56,16 @@ export class NotificationService {
   }
 
   async markRead(userId: string, id: string) {
-    const notification = await prisma.notification.findFirst({
-      where: { id, userId },
-    });
-
-    if (!notification) {
-      throw new AppError('Notification not found', {
-        statusCode: 404,
-        code: 'NOTIFICATION_NOT_FOUND',
-      });
-    }
+    const notification = requireOwned(
+      await prisma.notification.findFirst({
+        where: { id, userId },
+      }),
+      'Notification not found',
+      'NOTIFICATION_NOT_FOUND',
+    );
 
     return prisma.notification.update({
-      where: { id },
+      where: { id: notification.id },
       data: { isRead: true },
       include: {
         material: {

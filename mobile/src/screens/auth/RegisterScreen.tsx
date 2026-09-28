@@ -27,7 +27,7 @@ type RegisterScreenProps = {
 };
 
 export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const { register } = useAuth();
   const [name, setName] = useState('');
@@ -70,6 +70,7 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
         password,
         confirmPassword,
         timezone: detectDeviceTimezone(),
+        locale: i18n.resolvedLanguage ?? i18n.language,
         botToken,
         website: '',
       });

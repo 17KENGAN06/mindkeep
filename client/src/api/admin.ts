@@ -64,11 +64,30 @@ export type AdminReview = {
   user: { name: string; email: string };
 };
 
+export type AdminAuditAction =
+  | 'LOGIN_SUCCESS'
+  | 'LOGIN_FAILURE'
+  | 'GOOGLE_LOGIN'
+  | 'PASSWORD_CHANGED'
+  | 'PASSWORD_RESET'
+  | 'REVIEW_APPROVED'
+  | 'REVIEW_REJECTED';
+
+export type AdminAuditEvent = {
+  id: string;
+  action: AdminAuditAction;
+  targetType: string | null;
+  targetId: string | null;
+  createdAt: string;
+  actor: { id: string; name: string } | null;
+};
+
 export const adminApi = {
   overview: () => apiClient.get<{ overview: AdminOverview }>('/api/admin/overview'),
   users: () => apiClient.get<{ users: AdminUser[] }>('/api/admin/users'),
   userActivity: (id: string) => apiClient.get<{ activity: AdminUserActivity }>(`/api/admin/users/${id}`),
   reviews: () => apiClient.get<{ reviews: AdminReview[] }>('/api/admin/reviews'),
+  audit: () => apiClient.get<{ events: AdminAuditEvent[] }>('/api/admin/audit'),
   moderateReview: (id: string, status: 'APPROVED' | 'REJECTED') =>
     apiClient.patch<{ review: AdminReview }>(`/api/admin/reviews/${id}`, { status }),
 };

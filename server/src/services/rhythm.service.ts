@@ -7,6 +7,7 @@ import type {
 } from '@/validations/rhythm.schemas.js';
 import { HABIT_CYCLE_DAYS, MAX_HABITS } from '@/validations/rhythm.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireOwned } from '@/utils/owned.js';
 import { todayKeyInTimeZone } from '@/utils/timezone.js';
 
 function parseDateOnly(value: string): Date {
@@ -133,10 +134,11 @@ export class RhythmService {
   }
 
   async updateHabit(userId: string, id: string, input: UpdateHabitInput) {
-    const existing = await prisma.habit.findFirst({ where: { id, userId } });
-    if (!existing) {
-      throw new AppError('Habit not found', { statusCode: 404, code: 'HABIT_NOT_FOUND' });
-    }
+    requireOwned(
+      await prisma.habit.findFirst({ where: { id, userId } }),
+      'Habit not found',
+      'HABIT_NOT_FOUND',
+    );
     return prisma.habit.update({
       where: { id },
       data: { title: input.title },
@@ -144,19 +146,21 @@ export class RhythmService {
   }
 
   async removeHabit(userId: string, id: string) {
-    const existing = await prisma.habit.findFirst({ where: { id, userId } });
-    if (!existing) {
-      throw new AppError('Habit not found', { statusCode: 404, code: 'HABIT_NOT_FOUND' });
-    }
-    await prisma.habit.update({ where: { id }, data: { isActive: false } });
+    const existing = requireOwned(
+      await prisma.habit.findFirst({ where: { id, userId } }),
+      'Habit not found',
+      'HABIT_NOT_FOUND',
+    );
+    await prisma.habit.update({ where: { id: existing.id }, data: { isActive: false } });
     return { success: true };
   }
 
   async upsertCheck(userId: string, input: UpsertHabitCheckInput) {
-    const habit = await prisma.habit.findFirst({ where: { id: input.habitId, userId } });
-    if (!habit) {
-      throw new AppError('Habit not found', { statusCode: 404, code: 'HABIT_NOT_FOUND' });
-    }
+    requireOwned(
+      await prisma.habit.findFirst({ where: { id: input.habitId, userId } }),
+      'Habit not found',
+      'HABIT_NOT_FOUND',
+    );
 
     const date = parseDateOnly(input.date);
     const today = todayKeyInTimeZone(await userTimezone(userId));

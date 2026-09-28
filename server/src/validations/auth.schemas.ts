@@ -22,6 +22,17 @@ function isIanaTimeZone(value: string): boolean {
   }
 }
 
+const localeSchema = z
+  .string()
+  .trim()
+  .max(16)
+  .optional()
+  .transform((value) => {
+    const code = (value ?? '').toLowerCase().split(/[-_]/)[0] ?? '';
+    const allowed = ['uk', 'ru', 'en', 'pl', 'de', 'fr', 'it', 'es', 'fi'] as const;
+    return (allowed as readonly string[]).includes(code) ? code : 'en';
+  });
+
 const timezoneSchema = z
   .string()
   .trim()
@@ -36,6 +47,7 @@ export const registerSchema = z
     password: passwordSchema,
     confirmPassword: passwordSchema,
     timezone: timezoneSchema.default('Europe/Helsinki'),
+    locale: localeSchema,
     ...botFields,
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -75,6 +87,7 @@ export const verifyEmailSchema = z.object({
 
 export const forgotPasswordSchema = z.object({
   email: z.email('Invalid email'),
+  locale: localeSchema,
   ...botFields,
 });
 

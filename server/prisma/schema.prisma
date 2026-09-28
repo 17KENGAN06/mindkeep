@@ -95,6 +95,31 @@ model User {
   weightDays         WeightDay[]
   habits             Habit[]
   habitLogs          HabitLog[]
+  auditEvents        AdminAuditEvent[]
+}
+
+enum AdminAuditAction {
+  LOGIN_SUCCESS
+  LOGIN_FAILURE
+  GOOGLE_LOGIN
+  PASSWORD_CHANGED
+  PASSWORD_RESET
+  REVIEW_APPROVED
+  REVIEW_REJECTED
+}
+
+model AdminAuditEvent {
+  id          String           @id @default(cuid())
+  action      AdminAuditAction
+  actorUserId String?
+  targetType  String?
+  targetId    String?
+  createdAt   DateTime         @default(now())
+
+  actor User? @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([action, createdAt])
 }
 
 model UserReview {

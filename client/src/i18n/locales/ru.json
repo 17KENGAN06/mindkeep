@@ -563,6 +563,19 @@
       "completed": "закрыл",
       "logged": "записал",
       "checked": "отметил"
+    },
+    "auditTitle": "Журнал входов и модерации",
+    "auditHint": "Кто входил и какие отзывы одобрили или отклонили. Почта и пароли сюда не пишутся.",
+    "auditEmpty": "Пока нет событий",
+    "auditAnonymous": "Неизвестный аккаунт",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Вошёл",
+      "LOGIN_FAILURE": "Неудачный вход",
+      "GOOGLE_LOGIN": "Вошёл через Google",
+      "PASSWORD_CHANGED": "Сменил пароль",
+      "PASSWORD_RESET": "Сбросил пароль",
+      "REVIEW_APPROVED": "Одобрил отзыв",
+      "REVIEW_REJECTED": "Отклонил отзыв"
     }
   },
   "auth": {

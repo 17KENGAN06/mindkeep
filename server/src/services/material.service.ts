@@ -7,6 +7,7 @@ import type {
   UpdateMaterialInput,
 } from '@/validations/material.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireDeleted, requireOwned } from '@/utils/owned.js';
 
 const materialInclude = {
   category: {
@@ -38,17 +39,14 @@ function nextReminderDate(
 async function assertCategoryOwnership(userId: string, categoryId: string | null | undefined) {
   if (!categoryId) return;
 
-  const category = await prisma.category.findFirst({
-    where: { id: categoryId, userId },
-    select: { id: true },
-  });
-
-  if (!category) {
-    throw new AppError('Category not found', {
-      statusCode: 404,
-      code: 'CATEGORY_NOT_FOUND',
-    });
-  }
+  requireOwned(
+    await prisma.category.findFirst({
+      where: { id: categoryId, userId },
+      select: { id: true },
+    }),
+    'Category not found',
+    'CATEGORY_NOT_FOUND',
+  );
 }
 
 export class MaterialService {
@@ -79,17 +77,14 @@ export class MaterialService {
   }
 
   async getById(userId: string, id: string) {
-    const material = await prisma.learningMaterial.findFirst({
-      where: { id, userId },
-      include: materialInclude,
-    });
-
-    if (!material) {
-      throw new AppError('Material not found', {
-        statusCode: 404,
-        code: 'MATERIAL_NOT_FOUND',
-      });
-    }
+    const material = requireOwned(
+      await prisma.learningMaterial.findFirst({
+        where: { id, userId },
+        include: materialInclude,
+      }),
+      'Material not found',
+      'MATERIAL_NOT_FOUND',
+    );
 
     return {
       ...material,
@@ -216,11 +211,10 @@ export class MaterialService {
   }
 
   async remove(userId: string, id: string) {
-    await this.getById(userId, id);
-
-    await prisma.learningMaterial.delete({
-      where: { id },
+    const result = await prisma.learningMaterial.deleteMany({
+      where: { id, userId },
     });
+    requireDeleted(result.count, 'Material not found', 'MATERIAL_NOT_FOUND');
 
     return { success: true as const };
   }

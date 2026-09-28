@@ -1,46 +1,69 @@
-import type { ReactNode } from 'react';
+import { lazy, Suspense, type ComponentType, type ReactNode } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { env } from '@/config/env';
 import { useAuth } from '@/features/auth/useAuth';
-import { AuthLayout } from '@/layouts/AuthLayout';
-import { DashboardLayout } from '@/layouts/DashboardLayout';
-import { BlogArticlePage, BlogPage } from '@/pages/BlogPage';
-import { CalendarPage } from '@/pages/CalendarPage';
-import { CaloriesPage } from '@/pages/CaloriesPage';
-import { CategoriesPage } from '@/pages/CategoriesPage';
-import { ContactPage } from '@/pages/ContactPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { AdminPage } from '@/pages/AdminPage';
-import { AdminUserPage } from '@/pages/AdminUserPage';
-import { FinanceBudgetPage } from '@/pages/finance/FinanceBudgetPage';
-import { FinanceCategoriesPage } from '@/pages/finance/FinanceCategoriesPage';
-import { FinanceTransactionsPage } from '@/pages/finance/FinanceTransactionsPage';
-import { ForestPage } from '@/pages/ForestPage';
-import { GuidePage } from '@/pages/GuidePage';
 import { HomePage } from '@/pages/HomePage';
-import { LoginPage } from '@/pages/LoginPage';
-import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
-import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
-import { VerifyEmailPage } from '@/pages/VerifyEmailPage';
-import { AccountPage } from '@/pages/AccountPage';
-import { MaterialCreatePage } from '@/pages/MaterialCreatePage';
-import { MaterialDetailPage } from '@/pages/MaterialDetailPage';
-import { MaterialEditPage } from '@/pages/MaterialEditPage';
-import { MaterialsPage } from '@/pages/MaterialsPage';
-import { MonthPlanPage } from '@/pages/MonthPlanPage';
-import { NoteCreatePage } from '@/pages/NoteCreatePage';
-import { NoteDetailPage } from '@/pages/NoteDetailPage';
-import { NoteEditPage } from '@/pages/NoteEditPage';
-import { NotesPage } from '@/pages/NotesPage';
-import { NotFoundPage } from '@/pages/NotFoundPage';
-import { NotificationsPage } from '@/pages/NotificationsPage';
-import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage';
-import { RegisterPage } from '@/pages/RegisterPage';
-import { ReviewPage } from '@/pages/ReviewPage';
-import { RhythmPage } from '@/pages/RhythmPage';
-import { StatisticsPage } from '@/pages/StatisticsPage';
-import { TasksPage } from '@/pages/TasksPage';
+
+function lazyNamed(importer: () => Promise<Record<string, ComponentType>>, exportName: string) {
+  return lazy(() => importer().then((mod) => ({ default: mod[exportName]! })));
+}
+
+const AuthLayout = lazyNamed(() => import('@/layouts/AuthLayout'), 'AuthLayout');
+const DashboardLayout = lazyNamed(() => import('@/layouts/DashboardLayout'), 'DashboardLayout');
+const BlogPage = lazyNamed(() => import('@/pages/BlogPage'), 'BlogPage');
+const BlogArticlePage = lazyNamed(() => import('@/pages/BlogPage'), 'BlogArticlePage');
+const CalendarPage = lazyNamed(() => import('@/pages/CalendarPage'), 'CalendarPage');
+const CaloriesPage = lazyNamed(() => import('@/pages/CaloriesPage'), 'CaloriesPage');
+const CategoriesPage = lazyNamed(() => import('@/pages/CategoriesPage'), 'CategoriesPage');
+const ContactPage = lazyNamed(() => import('@/pages/ContactPage'), 'ContactPage');
+const DashboardPage = lazyNamed(() => import('@/pages/DashboardPage'), 'DashboardPage');
+const AdminPage = lazyNamed(() => import('@/pages/AdminPage'), 'AdminPage');
+const AdminUserPage = lazyNamed(() => import('@/pages/AdminUserPage'), 'AdminUserPage');
+const FinanceBudgetPage = lazyNamed(
+  () => import('@/pages/finance/FinanceBudgetPage'),
+  'FinanceBudgetPage',
+);
+const FinanceCategoriesPage = lazyNamed(
+  () => import('@/pages/finance/FinanceCategoriesPage'),
+  'FinanceCategoriesPage',
+);
+const FinanceTransactionsPage = lazyNamed(
+  () => import('@/pages/finance/FinanceTransactionsPage'),
+  'FinanceTransactionsPage',
+);
+const ForestPage = lazyNamed(() => import('@/pages/ForestPage'), 'ForestPage');
+const GuidePage = lazyNamed(() => import('@/pages/GuidePage'), 'GuidePage');
+const LoginPage = lazyNamed(() => import('@/pages/LoginPage'), 'LoginPage');
+const ForgotPasswordPage = lazyNamed(() => import('@/pages/ForgotPasswordPage'), 'ForgotPasswordPage');
+const ResetPasswordPage = lazyNamed(() => import('@/pages/ResetPasswordPage'), 'ResetPasswordPage');
+const VerifyEmailPage = lazyNamed(() => import('@/pages/VerifyEmailPage'), 'VerifyEmailPage');
+const AccountPage = lazyNamed(() => import('@/pages/AccountPage'), 'AccountPage');
+const MaterialCreatePage = lazyNamed(() => import('@/pages/MaterialCreatePage'), 'MaterialCreatePage');
+const MaterialDetailPage = lazyNamed(() => import('@/pages/MaterialDetailPage'), 'MaterialDetailPage');
+const MaterialEditPage = lazyNamed(() => import('@/pages/MaterialEditPage'), 'MaterialEditPage');
+const MaterialsPage = lazyNamed(() => import('@/pages/MaterialsPage'), 'MaterialsPage');
+const MonthPlanPage = lazyNamed(() => import('@/pages/MonthPlanPage'), 'MonthPlanPage');
+const NoteCreatePage = lazyNamed(() => import('@/pages/NoteCreatePage'), 'NoteCreatePage');
+const NoteDetailPage = lazyNamed(() => import('@/pages/NoteDetailPage'), 'NoteDetailPage');
+const NoteEditPage = lazyNamed(() => import('@/pages/NoteEditPage'), 'NoteEditPage');
+const NotesPage = lazyNamed(() => import('@/pages/NotesPage'), 'NotesPage');
+const NotFoundPage = lazyNamed(() => import('@/pages/NotFoundPage'), 'NotFoundPage');
+const NotificationsPage = lazyNamed(() => import('@/pages/NotificationsPage'), 'NotificationsPage');
+const PrivacyPolicyPage = lazyNamed(() => import('@/pages/PrivacyPolicyPage'), 'PrivacyPolicyPage');
+const RegisterPage = lazyNamed(() => import('@/pages/RegisterPage'), 'RegisterPage');
+const ReviewPage = lazyNamed(() => import('@/pages/ReviewPage'), 'ReviewPage');
+const RhythmPage = lazyNamed(() => import('@/pages/RhythmPage'), 'RhythmPage');
+const StatisticsPage = lazyNamed(() => import('@/pages/StatisticsPage'), 'StatisticsPage');
+const TasksPage = lazyNamed(() => import('@/pages/TasksPage'), 'TasksPage');
+
+function RouteFallback() {
+  return (
+    <div className="flex min-h-dvh items-center justify-center">
+      <div className="h-12 w-12 rounded-2xl border border-brand-500/30 border-t-brand-500" />
+    </div>
+  );
+}
 
 function PublicOnly({ children }: { children: ReactNode }) {
   const { isAuthenticated, isReady, user } = useAuth();
@@ -72,97 +95,97 @@ function MaintenanceHome({ children }: { children: ReactNode }) {
 
 export function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route
-        path="/blog"
-        element={
-          <MaintenanceHome>
-            <BlogPage />
-          </MaintenanceHome>
-        }
-      />
-      <Route
-        path="/blog/:slug"
-        element={
-          <MaintenanceHome>
-            <BlogArticlePage />
-          </MaintenanceHome>
-        }
-      />
-      <Route
-        path="/guide"
-        element={
-          <MaintenanceHome>
-            <GuidePage />
-          </MaintenanceHome>
-        }
-      />
-      <Route
-        path="/privacy"
-        element={
-          <MaintenanceHome>
-            <PrivacyPolicyPage />
-          </MaintenanceHome>
-        }
-      />
-      <Route path="/contact" element={<ContactPage />} />
-
-      <Route
-        element={
-          <PublicOnly>
-            <AuthLayout />
-          </PublicOnly>
-        }
-      >
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+    <Suspense fallback={<RouteFallback />}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route
-          path="/register"
+          path="/blog"
           element={
-            env.maintenanceMode ? <Navigate to="/" replace /> : <RegisterPage />
+            <MaintenanceHome>
+              <BlogPage />
+            </MaintenanceHome>
           }
         />
-      </Route>
+        <Route
+          path="/blog/:slug"
+          element={
+            <MaintenanceHome>
+              <BlogArticlePage />
+            </MaintenanceHome>
+          }
+        />
+        <Route
+          path="/guide"
+          element={
+            <MaintenanceHome>
+              <GuidePage />
+            </MaintenanceHome>
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+            <MaintenanceHome>
+              <PrivacyPolicyPage />
+            </MaintenanceHome>
+          }
+        />
+        <Route path="/contact" element={<ContactPage />} />
 
-      <Route element={<AuthLayout />}>
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/verify-email" element={<VerifyEmailPage />} />
-      </Route>
-
-      <Route element={<ProtectedRoute />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/tasks" element={<TasksPage />} />
-          <Route path="/forest" element={<ForestPage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/month-plan" element={<MonthPlanPage />} />
-          <Route path="/nutrition" element={<CaloriesPage />} />
-          <Route path="/calories" element={<Navigate to="/nutrition" replace />} />
-          <Route path="/habits" element={<RhythmPage />} />
-          <Route path="/rhythm" element={<Navigate to="/habits" replace />} />
-          <Route path="/notes" element={<NotesPage />} />
-          <Route path="/notes/new" element={<NoteCreatePage />} />
-          <Route path="/notes/:id" element={<NoteDetailPage />} />
-          <Route path="/notes/:id/edit" element={<NoteEditPage />} />
-          <Route path="/review" element={<ReviewPage />} />
-          <Route path="/materials" element={<MaterialsPage />} />
-          <Route path="/materials/new" element={<MaterialCreatePage />} />
-          <Route path="/materials/:id" element={<MaterialDetailPage />} />
-          <Route path="/materials/:id/edit" element={<MaterialEditPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/finance" element={<FinanceBudgetPage />} />
-          <Route path="/finance/transactions" element={<FinanceTransactionsPage />} />
-          <Route path="/finance/categories" element={<FinanceCategoriesPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/statistics" element={<StatisticsPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/admin/users/:id" element={<AdminUserPage />} />
+        <Route
+          element={
+            <PublicOnly>
+              <AuthLayout />
+            </PublicOnly>
+          }
+        >
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route
+            path="/register"
+            element={env.maintenanceMode ? <Navigate to="/" replace /> : <RegisterPage />}
+          />
         </Route>
-      </Route>
 
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route element={<AuthLayout />}>
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+        </Route>
+
+        <Route element={<ProtectedRoute />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/forest" element={<ForestPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/month-plan" element={<MonthPlanPage />} />
+            <Route path="/nutrition" element={<CaloriesPage />} />
+            <Route path="/calories" element={<Navigate to="/nutrition" replace />} />
+            <Route path="/habits" element={<RhythmPage />} />
+            <Route path="/rhythm" element={<Navigate to="/habits" replace />} />
+            <Route path="/notes" element={<NotesPage />} />
+            <Route path="/notes/new" element={<NoteCreatePage />} />
+            <Route path="/notes/:id" element={<NoteDetailPage />} />
+            <Route path="/notes/:id/edit" element={<NoteEditPage />} />
+            <Route path="/review" element={<ReviewPage />} />
+            <Route path="/materials" element={<MaterialsPage />} />
+            <Route path="/materials/new" element={<MaterialCreatePage />} />
+            <Route path="/materials/:id" element={<MaterialDetailPage />} />
+            <Route path="/materials/:id/edit" element={<MaterialEditPage />} />
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/finance" element={<FinanceBudgetPage />} />
+            <Route path="/finance/transactions" element={<FinanceTransactionsPage />} />
+            <Route path="/finance/categories" element={<FinanceCategoriesPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/statistics" element={<StatisticsPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/users/:id" element={<AdminUserPage />} />
+          </Route>
+        </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   );
 }

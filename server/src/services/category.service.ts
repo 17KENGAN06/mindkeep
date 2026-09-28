@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
 import type { CreateCategoryInput, UpdateCategoryInput } from '@/validations/category.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireDeleted, requireOwned } from '@/utils/owned.js';
 
 export class CategoryService {
   list(userId: string) {
@@ -17,23 +18,18 @@ export class CategoryService {
   }
 
   async getById(userId: string, id: string) {
-    const category = await prisma.category.findFirst({
-      where: { id, userId },
-      include: {
-        _count: {
-          select: { materials: true },
+    return requireOwned(
+      await prisma.category.findFirst({
+        where: { id, userId },
+        include: {
+          _count: {
+            select: { materials: true },
+          },
         },
-      },
-    });
-
-    if (!category) {
-      throw new AppError('Category not found', {
-        statusCode: 404,
-        code: 'CATEGORY_NOT_FOUND',
-      });
-    }
-
-    return category;
+      }),
+      'Category not found',
+      'CATEGORY_NOT_FOUND',
+    );
   }
 
   async create(userId: string, input: CreateCategoryInput) {
@@ -87,11 +83,10 @@ export class CategoryService {
   }
 
   async remove(userId: string, id: string) {
-    await this.getById(userId, id);
-
-    await prisma.category.delete({
-      where: { id },
+    const result = await prisma.category.deleteMany({
+      where: { id, userId },
     });
+    requireDeleted(result.count, 'Category not found', 'CATEGORY_NOT_FOUND');
 
     return { success: true as const };
   }

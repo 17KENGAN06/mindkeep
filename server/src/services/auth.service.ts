@@ -2,6 +2,7 @@ import { EmailTokenType, Prisma, UserRole } from '@prisma/client';
 import { OAuth2Client } from 'google-auth-library';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
+import { resetPasswordEmail, resolveAppLocale, verifyAccountEmail } from '@/services/emailCopy.js';
 import { sendEmail } from '@/services/email.service.js';
 import {
   consumeEmailToken,
@@ -161,17 +162,15 @@ export class AuthService {
     });
 
     try {
+      const mail = verifyAccountEmail(
+        resolveAppLocale(input.locale),
+        input.name,
+        appLink('/verify-email', token),
+      );
       await sendEmail({
         to: email,
-        subject: 'Confirm your MindKeep account',
-        text: [
-          `Hi ${input.name},`,
-          '',
-          'Confirm this email to finish creating your MindKeep account:',
-          appLink('/verify-email', token),
-          '',
-          'This link expires in 24 hours. If you did not sign up, you can ignore this message.',
-        ].join('\n'),
+        subject: mail.subject,
+        text: mail.text,
       });
     } catch (error) {
       await deleteEmailTokens(email, EmailTokenType.VERIFY_EMAIL);
@@ -361,17 +360,15 @@ export class AuthService {
     });
 
     try {
+      const mail = resetPasswordEmail(
+        resolveAppLocale(input.locale),
+        user.name,
+        appLink('/reset-password', token),
+      );
       await sendEmail({
         to: email,
-        subject: 'Reset your MindKeep password',
-        text: [
-          `Hi ${user.name},`,
-          '',
-          'Use this link to choose a new password:',
-          appLink('/reset-password', token),
-          '',
-          'This link expires in 1 hour. If you did not ask for a reset, you can ignore this message.',
-        ].join('\n'),
+        subject: mail.subject,
+        text: mail.text,
       });
     } catch {
       // Same response either way so this path cannot be used to probe emails.

@@ -4,7 +4,7 @@ import type {
   ListNotesQuery,
   UpdateNoteInput,
 } from '@/validations/note.schemas.js';
-import { AppError } from '@/utils/AppError.js';
+import { requireDeleted, requireOwned } from '@/utils/owned.js';
 
 export class NoteService {
   async list(userId: string, query: ListNotesQuery) {
@@ -27,18 +27,13 @@ export class NoteService {
   }
 
   async getById(userId: string, id: string) {
-    const note = await prisma.note.findFirst({
-      where: { id, userId },
-    });
-
-    if (!note) {
-      throw new AppError('Note not found', {
-        statusCode: 404,
-        code: 'NOTE_NOT_FOUND',
-      });
-    }
-
-    return note;
+    return requireOwned(
+      await prisma.note.findFirst({
+        where: { id, userId },
+      }),
+      'Note not found',
+      'NOTE_NOT_FOUND',
+    );
   }
 
   async create(userId: string, input: CreateNoteInput) {
@@ -66,8 +61,8 @@ export class NoteService {
   }
 
   async remove(userId: string, id: string) {
-    await this.getById(userId, id);
-    await prisma.note.delete({ where: { id } });
+    const result = await prisma.note.deleteMany({ where: { id, userId } });
+    requireDeleted(result.count, 'Note not found', 'NOTE_NOT_FOUND');
     return { success: true };
   }
 }

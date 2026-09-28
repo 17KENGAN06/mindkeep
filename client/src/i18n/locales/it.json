@@ -563,6 +563,19 @@
       "completed": "ha completato",
       "logged": "ha registrato",
       "checked": "ha fatto check-in"
+    },
+    "auditTitle": "Registro di accessi e moderazione",
+    "auditHint": "Chi ha effettuato l'accesso e quali recensioni sono state approvate o rifiutate. Email e password non vengono salvate qui.",
+    "auditEmpty": "Nessun evento ancora",
+    "auditAnonymous": "Account sconosciuto",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Accesso effettuato",
+      "LOGIN_FAILURE": "Accesso non riuscito",
+      "GOOGLE_LOGIN": "Accesso con Google",
+      "PASSWORD_CHANGED": "Password modificata",
+      "PASSWORD_RESET": "Password reimpostata",
+      "REVIEW_APPROVED": "Recensione approvata",
+      "REVIEW_REJECTED": "Recensione rifiutata"
     }
   },
   "auth": {

@@ -9,6 +9,7 @@ import type {
   UpsertWeightInput,
 } from '@/validations/nutrition.schemas.js';
 import { AppError } from '@/utils/AppError.js';
+import { requireDeleted, requireOwned } from '@/utils/owned.js';
 
 function rethrowNutritionError(error: unknown): never {
   if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2021') {
@@ -185,10 +186,11 @@ export class NutritionService {
   }
 
   async updateMeal(userId: string, id: string, input: UpdateMealInput) {
-    const existing = await prisma.meal.findFirst({ where: { id, userId } });
-    if (!existing) {
-      throw new AppError('Meal not found', { statusCode: 404, code: 'MEAL_NOT_FOUND' });
-    }
+    requireOwned(
+      await prisma.meal.findFirst({ where: { id, userId } }),
+      'Meal not found',
+      'MEAL_NOT_FOUND',
+    );
 
     return serializeMeal(
       await prisma.meal.update({
@@ -202,11 +204,8 @@ export class NutritionService {
   }
 
   async removeMeal(userId: string, id: string) {
-    const existing = await prisma.meal.findFirst({ where: { id, userId } });
-    if (!existing) {
-      throw new AppError('Meal not found', { statusCode: 404, code: 'MEAL_NOT_FOUND' });
-    }
-    await prisma.meal.delete({ where: { id } });
+    const result = await prisma.meal.deleteMany({ where: { id, userId } });
+    requireDeleted(result.count, 'Meal not found', 'MEAL_NOT_FOUND');
     return { success: true };
   }
 

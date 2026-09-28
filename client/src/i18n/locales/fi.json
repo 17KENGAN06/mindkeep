@@ -563,6 +563,19 @@
       "completed": "valmisti",
       "logged": "kirjasi",
       "checked": "merkitsi"
+    },
+    "auditTitle": "Kirjautumisten ja moderoinnin loki",
+    "auditHint": "Kuka kirjautui ja mitkä arvostelut hyväksyttiin tai hylättiin. Sähköposteja ja salasanoja ei tallenneta tähän.",
+    "auditEmpty": "Ei tapahtumia vielä",
+    "auditAnonymous": "Tuntematon tili",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Kirjautui sisään",
+      "LOGIN_FAILURE": "Kirjautuminen epäonnistui",
+      "GOOGLE_LOGIN": "Kirjautui Googlella",
+      "PASSWORD_CHANGED": "Vaihtoi salasanan",
+      "PASSWORD_RESET": "Nollasi salasanan",
+      "REVIEW_APPROVED": "Hyväksyi arvostelun",
+      "REVIEW_REJECTED": "Hylkäsi arvostelun"
     }
   },
   "auth": {

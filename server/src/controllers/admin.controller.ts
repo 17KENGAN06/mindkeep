@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { adminService } from '@/services/admin.service.js';
+import { AppError } from '@/utils/AppError.js';
 import type { ModerateReviewInput } from '@/validations/admin.schemas.js';
 
 export class AdminController {
@@ -23,11 +24,23 @@ export class AdminController {
   }
 
   async moderateReview(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
     const review = await adminService.moderateReview(
       req.params.id as string,
       req.body as ModerateReviewInput,
+      req.user.id,
     );
     res.json({ review });
+  }
+
+  async listAudit(_req: Request, res: Response): Promise<void> {
+    res.json({ events: await adminService.listAuditEvents() });
   }
 }
 

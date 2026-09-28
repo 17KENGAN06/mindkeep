@@ -2,6 +2,7 @@ import { BudgetOperationType, ReminderStatus } from '@prisma/client';
 import { eachDayOfInterval, endOfDay, format, startOfDay, subDays } from 'date-fns';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { prisma } from '@/config/prisma.js';
+import { recordAdminAudit } from '@/services/audit.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type { ModerateReviewInput } from '@/validations/admin.schemas.js';
 
@@ -536,12 +537,36 @@ export class AdminService {
     });
   }
 
-  async moderateReview(id: string, input: ModerateReviewInput) {
-    return prisma.userReview.update({
+  async moderateReview(id: string, input: ModerateReviewInput, actorUserId: string) {
+    const review = await prisma.userReview.update({
       where: { id },
       data: { status: input.status },
       include: {
         user: { select: { name: true, email: true } },
+      },
+    });
+
+    await recordAdminAudit({
+      action: input.status === 'APPROVED' ? 'REVIEW_APPROVED' : 'REVIEW_REJECTED',
+      actorUserId,
+      targetType: 'review',
+      targetId: id,
+    });
+
+    return review;
+  }
+
+  async listAuditEvents() {
+    return prisma.adminAuditEvent.findMany({
+      take: 80,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        action: true,
+        targetType: true,
+        targetId: true,
+        createdAt: true,
+        actor: { select: { id: true, name: true } },
       },
     });
   }

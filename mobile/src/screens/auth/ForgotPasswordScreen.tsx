@@ -25,7 +25,7 @@ type ForgotPasswordScreenProps = {
 };
 
 export function ForgotPasswordScreen({ onGoLogin }: ForgotPasswordScreenProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +41,12 @@ export function ForgotPasswordScreen({ onGoLogin }: ForgotPasswordScreenProps) {
     setBusy(true);
     try {
       const botToken = await issueBotToken();
-      await authApi.forgotPassword({ email: email.trim(), botToken, website: '' });
+      await authApi.forgotPassword({
+        email: email.trim(),
+        locale: i18n.resolvedLanguage ?? i18n.language,
+        botToken,
+        website: '',
+      });
       setSent(true);
     } catch (caught) {
       setError(mapAuthError(caught, t));

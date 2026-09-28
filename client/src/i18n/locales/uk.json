@@ -563,6 +563,19 @@
       "completed": "закрив",
       "logged": "записав",
       "checked": "позначив"
+    },
+    "auditTitle": "Журнал входів і модерації",
+    "auditHint": "Хто входив і які відгуки схвалили або відхилили. Пошта і паролі сюди не пишуться.",
+    "auditEmpty": "Поки немає подій",
+    "auditAnonymous": "Невідомий акаунт",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Увійшов",
+      "LOGIN_FAILURE": "Невдалий вхід",
+      "GOOGLE_LOGIN": "Увійшов через Google",
+      "PASSWORD_CHANGED": "Змінив пароль",
+      "PASSWORD_RESET": "Скинув пароль",
+      "REVIEW_APPROVED": "Схвалив відгук",
+      "REVIEW_REJECTED": "Відхилив відгук"
     }
   },
   "auth": {

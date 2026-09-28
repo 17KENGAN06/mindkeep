@@ -10,6 +10,7 @@ import {
   googleCallbackPageHtml,
   issueGoogleSignInTicket,
 } from '@/services/googleOAuth.service.js';
+import { recordAdminAudit } from '@/services/audit.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
   ChangePasswordInput,
@@ -39,13 +40,22 @@ export class AuthController {
   async login(req: Request, res: Response): Promise<void> {
     const input = req.body as LoginInput;
     assertBotProtection(input);
-    const { user, token } = await authService.login(input);
-    sendAuthSession(req, res, 200, user, token);
+    try {
+      const { user, token } = await authService.login(input);
+      await recordAdminAudit({ action: 'LOGIN_SUCCESS', actorUserId: user.id });
+      sendAuthSession(req, res, 200, user, token);
+    } catch (error) {
+      if (error instanceof AppError && error.code === 'INVALID_CREDENTIALS') {
+        await recordAdminAudit({ action: 'LOGIN_FAILURE' });
+      }
+      throw error;
+    }
   }
 
   async googleLogin(req: Request, res: Response): Promise<void> {
     const input = req.body as GoogleLoginInput;
     const { user, token } = await authService.googleLogin(input);
+    await recordAdminAudit({ action: 'GOOGLE_LOGIN', actorUserId: user.id });
     sendAuthSession(req, res, 200, user, token);
   }
 
@@ -121,6 +131,7 @@ export class AuthController {
 
   async resetPassword(req: Request, res: Response): Promise<void> {
     const { user, token } = await authService.resetPassword(req.body as ResetPasswordInput);
+    await recordAdminAudit({ action: 'PASSWORD_RESET', actorUserId: user.id });
     sendAuthSession(req, res, 200, user, token);
   }
 
@@ -133,6 +144,7 @@ export class AuthController {
     }
 
     const user = await authService.changePassword(req.user.id, req.body as ChangePasswordInput);
+    await recordAdminAudit({ action: 'PASSWORD_CHANGED', actorUserId: user.id });
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ user });
   }
