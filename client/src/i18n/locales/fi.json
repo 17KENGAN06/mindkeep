@@ -1233,6 +1233,8 @@
       "financeCategories": "Free: 5 budjettikategoriaa. Tilaus Tilillä poistaa rajan.",
       "meals": "Free tallentaa ateriat tältä päivältä ja 7 päivältä. Tilaus avaa koko päiväkirjan.",
       "sessions": "Free: 2 laitetta. Tilaus Tilillä poistaa rajan."
-    }
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Tämä tili on adminina rajaton. Napit alla ovat vain Stripe-testiä varten."
   }
 }

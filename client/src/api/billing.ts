@@ -12,6 +12,8 @@ export type BillingStatus = {
   planInterval: 'MONTH' | 'YEAR' | null;
   planExpiresAt: string | null;
   cancelAtPeriodEnd: boolean;
+  hasStripeCustomer: boolean;
+  subscribed: boolean;
   usage: {
     materials: BillingUsageItem;
     reviewCategories: BillingUsageItem;

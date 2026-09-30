@@ -1233,6 +1233,8 @@
       "financeCategories": "Free includes 5 finance categories. Subscribe on Account for more.",
       "meals": "Free can log meals for today and the last 7 days. Subscribe on Account for the full diary.",
       "sessions": "Free includes 2 signed-in devices. Subscribe on Account for more."
-    }
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "This account is unlimited as admin. Use the buttons below only to test Stripe."
   }
 }

@@ -9,7 +9,6 @@ import {
   isStripeWebhookConfigured,
   priceIdForInterval,
 } from '@/config/stripe.js';
-import { isProUser } from '@/services/entitlements.service.js';
 import { AppError } from '@/utils/AppError.js';
 
 const PRO_STATUSES = new Set(['active', 'trialing', 'past_due']);
@@ -199,6 +198,17 @@ export async function handleStripeWebhook(rawBody: Buffer, signature: string | u
   }
 }
 
+export async function getBillingFlags(userId: string) {
+  const row = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { stripeCustomerId: true, stripeSubscriptionId: true },
+  });
+  return {
+    hasStripeCustomer: Boolean(row?.stripeCustomerId),
+    subscribed: Boolean(row?.stripeSubscriptionId),
+  };
+}
+
 async function ensureCustomer(user: { id: string; email: string; name: string; stripeCustomerId: string | null }) {
   const stripe = getStripe();
   if (user.stripeCustomerId) {
@@ -242,6 +252,7 @@ export async function createCheckoutSession(
       plan: true,
       planExpiresAt: true,
       stripeCustomerId: true,
+      stripeSubscriptionId: true,
     },
   });
 
@@ -249,7 +260,7 @@ export async function createCheckoutSession(
     throw new AppError('User not found', { statusCode: 401, code: 'UNAUTHORIZED' });
   }
 
-  if (isProUser(user) && user.role !== 'ADMIN') {
+  if (user.stripeSubscriptionId) {
     throw new AppError('This account already has Pro', {
       statusCode: 409,
       code: 'ALREADY_PRO',

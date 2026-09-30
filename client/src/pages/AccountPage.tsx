@@ -193,7 +193,11 @@ function BillingSection() {
   };
 
   const status = statusQuery.data;
+  const billed = Boolean(status?.hasStripeCustomer);
+  const subscribed = Boolean(status?.subscribed);
   const isPro = status?.plan === 'PRO';
+  const showSubscribe = Boolean(status?.configured && !subscribed);
+  const showManage = Boolean(status?.configured && billed);
   const expires = status?.planExpiresAt
     ? new Date(status.planExpiresAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
     : null;
@@ -210,8 +214,8 @@ function BillingSection() {
 
       {status ? (
         <p className="text-sm text-ink">
-          {isPro ? t('billing.proLabel') : t('billing.freeLabel')}
-          {expires
+          {subscribed ? t('billing.proLabel') : isPro ? t('billing.adminUnlimited') : t('billing.freeLabel')}
+          {subscribed && expires
             ? ` · ${t(status.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })}`
             : ''}
         </p>
@@ -221,11 +225,13 @@ function BillingSection() {
         <p className="text-sm text-muted">{t('billing.cancelScheduled')}</p>
       ) : null}
 
+      {isPro && !subscribed ? <p className="text-sm text-muted">{t('billing.adminHint')}</p> : null}
+
       {status && !status.configured ? (
         <p className="text-sm text-muted">{t('billing.unavailable')}</p>
       ) : null}
 
-      {status?.configured && !isPro ? (
+      {showSubscribe ? (
         <div className="flex flex-col gap-2 sm:flex-row">
           <Button
             type="button"
@@ -247,11 +253,11 @@ function BillingSection() {
         </div>
       ) : null}
 
-      {status?.configured && !isPro ? (
+      {showSubscribe ? (
         <p className="text-sm text-muted">{t('billing.yearlyHint')}</p>
       ) : null}
 
-      {status?.configured && isPro ? (
+      {showManage ? (
         <Button
           type="button"
           variant="secondary"
@@ -263,7 +269,7 @@ function BillingSection() {
         </Button>
       ) : null}
 
-      {status && !isPro ? (
+      {status && !subscribed ? (
         <UsageList usage={status.usage} />
       ) : null}
     </div>

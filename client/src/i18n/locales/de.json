@@ -1233,6 +1233,8 @@
       "financeCategories": "Free: 5 Budgetkategorien. Abo im Konto hebt das Limit auf.",
       "meals": "Free speichert Mahlzeiten für heute und 7 Tage. Abo öffnet das ganze Tagebuch.",
       "sessions": "Free: 2 Geräte. Abo im Konto hebt das Limit auf."
-    }
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Dieses Konto ist als Admin unbegrenzt. Die Buttons unten nur zum Stripe-Test."
   }
 }

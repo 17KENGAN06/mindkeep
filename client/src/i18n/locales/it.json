@@ -1233,6 +1233,8 @@
       "financeCategories": "Free: 5 categorie budget. L’abbonamento in Account toglie il limite.",
       "meals": "Free registra i pasti di oggi e degli ultimi 7 giorni. L’abbonamento apre tutto il diario.",
       "sessions": "Free: 2 dispositivi. L’abbonamento in Account toglie il limite."
-    }
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Questo account è illimitato da admin. I pulsanti sotto servono solo a testare Stripe."
   }
 }

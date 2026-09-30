@@ -1233,6 +1233,8 @@
       "financeCategories": "Free: 5 kategorii budżetu. Subskrypcja w Koncie zdejmuje limit.",
       "meals": "Free zapisuje posiłki z dziś i 7 dni. Subskrypcja otwiera cały dziennik.",
       "sessions": "Free: 2 urządzenia. Subskrypcja w Koncie zdejmuje limit."
-    }
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "To konto nie ma limitów jako admin. Przyciski poniżej tylko do testu Stripe."
   }
 }

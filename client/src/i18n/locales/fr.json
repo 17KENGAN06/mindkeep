@@ -1233,6 +1233,8 @@
       "financeCategories": "Free : 5 catégories budget. L’abonnement dans Compte enlève le plafond.",
       "meals": "Free enregistre les repas d’aujourd’hui et des 7 derniers jours. L’abonnement ouvre tout le journal.",
       "sessions": "Free : 2 appareils. L’abonnement dans Compte enlève le plafond."
-    }
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Ce compte est illimité en tant qu’admin. Les boutons ci-dessous servent seulement à tester Stripe."
   }
 }

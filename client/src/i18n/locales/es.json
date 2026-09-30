@@ -1233,6 +1233,8 @@
       "financeCategories": "Free: 5 categorías de presupuesto. La suscripción en Cuenta quita el límite.",
       "meals": "Free guarda comidas de hoy y 7 días. La suscripción abre todo el diario.",
       "sessions": "Free: 2 dispositivos. La suscripción en Cuenta quita el límite."
-    }
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Esta cuenta no tiene límites como admin. Los botones de abajo son solo para probar Stripe."
   }
 }

@@ -4,6 +4,7 @@ import { authService } from '@/services/auth.service.js';
 import {
   createCheckoutSession,
   createPortalSession,
+  getBillingFlags,
   handleStripeWebhook,
   syncCheckoutSession,
 } from '@/services/billing.service.js';
@@ -24,13 +25,18 @@ function requireUserId(req: Request): string {
 export class BillingController {
   async status(req: Request, res: Response): Promise<void> {
     const userId = requireUserId(req);
-    const [user, usage] = await Promise.all([authService.me(userId), getUsageSnapshot(userId)]);
+    const [user, usage, flags] = await Promise.all([
+      authService.me(userId),
+      getUsageSnapshot(userId),
+      getBillingFlags(userId),
+    ]);
     res.status(200).json({
       configured: isStripeConfigured(),
       plan: user.plan,
       planInterval: user.planInterval,
       planExpiresAt: user.planExpiresAt,
       cancelAtPeriodEnd: user.cancelAtPeriodEnd,
+      ...flags,
       ...usage,
     });
   }
