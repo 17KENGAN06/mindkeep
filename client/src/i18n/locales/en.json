@@ -1067,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "updated": "Updated: 28 September 2026",
+    "updated": "Updated: 30 September 2026",
     "intro": "This policy explains what data Mindkeep collects, why we need it, and how we protect it. By using the service, you agree to the practices described below.",
     "contactLabel": "Data questions:",
     "sections": [
@@ -1106,7 +1106,8 @@
         "title": "5. Sharing with third parties",
         "body": [
           "We do not sell personal data.",
-          "Hosting and database providers may process data only to run Mindkeep under agreement with the operator."
+          "Hosting and database providers may process data only to run Mindkeep under agreement with the operator.",
+          "If you subscribe, Stripe processes the payment and receives email and billing details needed to charge the card."
         ]
       },
       {
@@ -1188,6 +1189,50 @@
           "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
         ]
       }
+    }
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Every feature stays open. Free has quantity limits; Pro removes them.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / month",
+    "subscribeYear": "€39.99 / year",
+    "yearlyHint": "Yearly is about two months free compared with paying monthly.",
+    "manage": "Manage subscription",
+    "renews": "Renews {{date}}",
+    "ends": "Access until {{date}}",
+    "cancelScheduled": "Cancellation is scheduled. Pro stays until the period ends.",
+    "success": "Payment received. Pro is on.",
+    "canceled": "Checkout was cancelled. Nothing was charged.",
+    "unavailable": "Payments are not connected yet.",
+    "alreadyPro": "This account already has Pro.",
+    "customerMissing": "No Stripe customer yet. Subscribe first.",
+    "checkoutFailed": "Could not start checkout. Try again.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Unlimited",
+    "limitReached": "Free limit reached. Open Account to subscribe.",
+    "mealsHint": "Meals: today plus 7 days. Weight chart: 30 days.",
+    "features": {
+      "materials": "Materials",
+      "reviewCategories": "Review categories",
+      "habits": "Habits",
+      "notes": "Notes",
+      "tasks": "Tasks this month",
+      "financeOperations": "Finance operations this month",
+      "financeCategories": "Finance categories",
+      "sessions": "Signed-in devices"
+    },
+    "limits": {
+      "materials": "Free includes 20 active materials. Subscribe on Account for more.",
+      "reviewCategories": "Free includes 3 review categories. Subscribe on Account for more.",
+      "habits": "Free includes 3 habits. Subscribe on Account for more.",
+      "notes": "Free includes 20 notes. Subscribe on Account for more.",
+      "tasks": "Free includes 15 tasks per month. Subscribe on Account for more.",
+      "financeOperations": "Free includes 25 finance operations per month. Subscribe on Account for more.",
+      "financeCategories": "Free includes 5 finance categories. Subscribe on Account for more.",
+      "meals": "Free can log meals for today and the last 7 days. Subscribe on Account for the full diary.",
+      "sessions": "Free includes 2 signed-in devices. Subscribe on Account for more."
     }
   }
 }

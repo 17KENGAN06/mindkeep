@@ -3,6 +3,7 @@ import { prisma } from '@/config/prisma.js';
 import type { CreateCategoryInput, UpdateCategoryInput } from '@/validations/category.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
+import { assertCreateLimit } from '@/services/entitlements.service.js';
 
 export class CategoryService {
   list(userId: string) {
@@ -33,6 +34,7 @@ export class CategoryService {
   }
 
   async create(userId: string, input: CreateCategoryInput) {
+    await assertCreateLimit(userId, 'reviewCategories');
     try {
       return await prisma.category.create({
         data: {

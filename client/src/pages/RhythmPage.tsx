@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { HabitMonthCard } from '@/components/habits/HabitMonthCard';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -81,7 +82,7 @@ export function RhythmPage() {
       await createHabit.mutateAsync(next);
       setTitle('');
     } catch (error) {
-      setFormError(error instanceof ApiError ? error.message : t('auth.errors.generic'));
+      setFormError(mutationErrorMessage(error, t));
     }
   };
 

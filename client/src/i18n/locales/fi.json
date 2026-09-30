@@ -1067,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Oikeudellinen",
     "title": "Tietosuojaseloste",
-    "updated": "Päivitetty: 28 September 2026",
+    "updated": "Päivitetty: 30 September 2026",
     "intro": "Tämä seloste kertoo, mitä tietoja Mindkeep kerää, miksi niitä tarvitaan ja miten suojaamme niitä. Käyttämällä palvelua hyväksyt alla kuvatut käytännöt.",
     "contactLabel": "Tietopyynnöt:",
     "sections": [
@@ -1106,7 +1106,8 @@
         "title": "5. Luovutus kolmansille",
         "body": [
           "Emme myy henkilötietoja.",
-          "Hosting- ja tietokantapalvelut voivat käsitellä tietoja vain Mindkeepin ylläpitoa varten operaattorin sopimuksen mukaisesti."
+          "Hosting- ja tietokantapalvelut voivat käsitellä tietoja vain Mindkeepin ylläpitoa varten operaattorin sopimuksen mukaisesti.",
+          "Jos tilaat, Stripe käsittelee maksun ja saa sähköpostin sekä laskutustiedot, joita korttiveloitus vaatii."
         ]
       },
       {
@@ -1188,6 +1189,50 @@
           "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
         ]
       }
+    }
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Kaikki toiminnot pysyvät auki. Freellä on määrärajoja, Pro poistaa ne.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / kk",
+    "subscribeYear": "€39.99 / vuosi",
+    "yearlyHint": "Vuosi on noin kaksi kuukautta edullisempi kuin kuukausimaksu.",
+    "manage": "Hallinnoi tilausta",
+    "renews": "Uusitaan {{date}}",
+    "ends": "Käyttö {{date}} asti",
+    "cancelScheduled": "Peruutus on ajastettu. Pro pysyy jakson loppuun.",
+    "success": "Maksu vastaanotettu. Pro on päällä.",
+    "canceled": "Maksu peruutettiin. Mitään ei veloitettu.",
+    "unavailable": "Maksuja ei ole vielä kytketty.",
+    "alreadyPro": "Tällä tilillä on jo Pro.",
+    "customerMissing": "Tilaa ensin.",
+    "checkoutFailed": "Maksua ei voitu avata. Yritä uudelleen.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Rajaton",
+    "limitReached": "Free-raja täynnä. Avaa Tili tilataksesi.",
+    "mealsHint": "Ateriat: tänään plus 7 päivää. Painokäyrä: 30 päivää.",
+    "features": {
+      "materials": "Materiaalit",
+      "reviewCategories": "Kertauskategoriat",
+      "habits": "Tavat",
+      "notes": "Muistiinpanot",
+      "tasks": "Tämän kuun tehtävät",
+      "financeOperations": "Tämän kuun tapahtumat",
+      "financeCategories": "Budjettikategoriat",
+      "sessions": "Laitteet"
+    },
+    "limits": {
+      "materials": "Free: 20 aktiivista materiaalia. Tilaus Tilillä poistaa rajan.",
+      "reviewCategories": "Free: 3 kertauskategoriaa. Tilaus Tilillä poistaa rajan.",
+      "habits": "Free: 3 tapaa. Tilaus Tilillä poistaa rajan.",
+      "notes": "Free: 20 muistiinpanoa. Tilaus Tilillä poistaa rajan.",
+      "tasks": "Free: 15 tehtävää kuukaudessa. Tilaus Tilillä poistaa rajan.",
+      "financeOperations": "Free: 25 tapahtumaa kuukaudessa. Tilaus Tilillä poistaa rajan.",
+      "financeCategories": "Free: 5 budjettikategoriaa. Tilaus Tilillä poistaa rajan.",
+      "meals": "Free tallentaa ateriat tältä päivältä ja 7 päivältä. Tilaus avaa koko päiväkirjan.",
+      "sessions": "Free: 2 laitetta. Tilaus Tilillä poistaa rajan."
     }
   }
 }

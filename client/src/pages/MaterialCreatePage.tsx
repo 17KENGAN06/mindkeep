@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MaterialForm } from '@/components/materials/MaterialForm';
 import { Button } from '@/components/ui/Button';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { useCategories } from '@/features/categories/useCategories';
 import { useCreateMaterial } from '@/features/materials/useMaterials';
 
@@ -36,8 +37,8 @@ export function MaterialCreatePage() {
             try {
               const result = await createMaterial.mutateAsync(payload);
               void navigate(`/materials/${result.material.id}`);
-            } catch {
-              setErrorMessage(t('auth.errors.generic'));
+            } catch (error) {
+              setErrorMessage(mutationErrorMessage(error, t));
             }
           }}
         />

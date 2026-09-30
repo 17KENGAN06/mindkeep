@@ -1,4 +1,4 @@
-import { EmailTokenType, Prisma, UserRole } from '@prisma/client';
+import { EmailTokenType, PlanInterval, Prisma, UserPlan, UserRole } from '@prisma/client';
 import { OAuth2Client } from 'google-auth-library';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
@@ -22,6 +22,8 @@ import type {
   VerifyEmailInput,
 } from '@/validations/auth.schemas.js';
 import { issueAuthSession, revokeAuthSessionsForUser, type AuthSessionIssue } from '@/services/session.service.js';
+import { cancelStripeForDeletedUser } from '@/services/billing.service.js';
+import { isProUser } from '@/services/entitlements.service.js';
 import { AppError } from '@/utils/AppError.js';
 import { hashPassword, verifyPassword } from '@/utils/password.js';
 
@@ -32,6 +34,10 @@ const userRecordSelect = {
   timezone: true,
   role: true,
   passwordHash: true,
+  plan: true,
+  planInterval: true,
+  planExpiresAt: true,
+  cancelAtPeriodEnd: true,
   createdAt: true,
   updatedAt: true,
 } as const;
@@ -48,6 +54,10 @@ export type PublicUser = {
   timezone: string;
   role: UserRole;
   hasPassword: boolean;
+  plan: UserPlan;
+  planInterval: PlanInterval | null;
+  planExpiresAt: Date | null;
+  cancelAtPeriodEnd: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -59,11 +69,16 @@ type UserRecord = {
   timezone: string;
   role: UserRole;
   passwordHash: string | null;
+  plan: UserPlan;
+  planInterval: PlanInterval | null;
+  planExpiresAt: Date | null;
+  cancelAtPeriodEnd: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
 
 function toPublicUser(user: UserRecord): PublicUser {
+  const entitled = isProUser(user);
   return {
     id: user.id,
     name: user.name,
@@ -71,6 +86,10 @@ function toPublicUser(user: UserRecord): PublicUser {
     timezone: user.timezone,
     role: user.role,
     hasPassword: Boolean(user.passwordHash),
+    plan: entitled ? UserPlan.PRO : UserPlan.FREE,
+    planInterval: entitled ? user.planInterval : null,
+    planExpiresAt: entitled ? user.planExpiresAt : null,
+    cancelAtPeriodEnd: entitled ? user.cancelAtPeriodEnd : false,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };
@@ -480,6 +499,7 @@ export class AuthService {
       }
     }
 
+    await cancelStripeForDeletedUser(user.id);
     await prisma.emailToken.deleteMany({ where: { email: user.email } });
     await prisma.user.delete({ where: { id: user.id } });
   }

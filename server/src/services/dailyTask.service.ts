@@ -8,6 +8,7 @@ import type {
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
 import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
+import { assertCreateLimit } from '@/services/entitlements.service.js';
 
 function parseDateOnly(value: string): Date {
   const [y, m, d] = value.split('-').map(Number);
@@ -219,6 +220,7 @@ export class DailyTaskService {
   }
 
   async create(userId: string, input: CreateDailyTaskInput) {
+    await assertCreateLimit(userId, 'tasks', { dateKey: input.date });
     const task = await prisma.dailyTask.create({
       data: {
         userId,

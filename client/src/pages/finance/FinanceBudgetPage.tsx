@@ -1,7 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { Banknote, WalletCards } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ApiError } from '@/api/client';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { FinanceOperationsList } from '@/components/finance/FinanceOperationsList';
 import { FinancePeriodControls } from '@/components/finance/FinancePeriodControls';
 import { Button } from '@/components/ui/Button';
@@ -159,11 +159,7 @@ export function FinanceBudgetPage() {
       setComment('');
       setCategoryId('');
     } catch (error) {
-      if (error instanceof ApiError) {
-        setFormError(error.message || t('auth.errors.generic'));
-        return;
-      }
-      setFormError(t('auth.errors.generic'));
+      setFormError(mutationErrorMessage(error, t));
     }
   };
 

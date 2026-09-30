@@ -1067,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Política de privacidad",
-    "updated": "Actualizada: 28 September 2026",
+    "updated": "Actualizada: 30 September 2026",
     "intro": "Esta política explica qué datos recopila Mindkeep, por qué los necesitamos y cómo los protegemos. Al usar el servicio, usted acepta las prácticas descritas a continuación.",
     "contactLabel": "Preguntas sobre datos:",
     "sections": [
@@ -1106,7 +1106,8 @@
         "title": "5. Cesión a terceros",
         "body": [
           "No vendemos datos personales.",
-          "Los proveedores de alojamiento y bases de datos pueden tratar los datos solo para operar Mindkeep, según un acuerdo con el operador."
+          "Los proveedores de alojamiento y bases de datos pueden tratar los datos solo para operar Mindkeep, según un acuerdo con el operador.",
+          "Si te suscribes, Stripe procesa el pago y recibe el email y los datos de facturación necesarios para cobrar la tarjeta."
         ]
       },
       {
@@ -1188,6 +1189,50 @@
           "Plantilla para futuras notas 80/20: nombra el esfuerzo abarrotado → presenta a Pareto → da un ejemplo concreto de aprendizaje → muestra cómo Mindkeep protege lo esencial con regresos 3 · 7 · 30."
         ]
       }
+    }
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Todas las funciones siguen abiertas. Free tiene límites de cantidad; Pro los quita.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / mes",
+    "subscribeYear": "€39.99 / año",
+    "yearlyHint": "El año ahorra unos dos meses frente al pago mensual.",
+    "manage": "Gestionar suscripción",
+    "renews": "Se renueva el {{date}}",
+    "ends": "Acceso hasta el {{date}}",
+    "cancelScheduled": "La cancelación está programada. Pro sigue hasta el fin del periodo.",
+    "success": "Pago recibido. Pro está activo.",
+    "canceled": "Pago cancelado. No se cobró nada.",
+    "unavailable": "Los pagos aún no están conectados.",
+    "alreadyPro": "Esta cuenta ya tiene Pro.",
+    "customerMissing": "Suscríbete primero.",
+    "checkoutFailed": "No se pudo abrir el pago. Inténtalo de nuevo.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Ilimitado",
+    "limitReached": "Límite Free. Abre Cuenta para suscribirte.",
+    "mealsHint": "Comidas: hoy más 7 días. Gráfico de peso: 30 días.",
+    "features": {
+      "materials": "Materiales",
+      "reviewCategories": "Categorías de repaso",
+      "habits": "Hábitos",
+      "notes": "Notas",
+      "tasks": "Tareas de este mes",
+      "financeOperations": "Operaciones de este mes",
+      "financeCategories": "Categorías de presupuesto",
+      "sessions": "Dispositivos"
+    },
+    "limits": {
+      "materials": "Free: 20 materiales activos. La suscripción en Cuenta quita el límite.",
+      "reviewCategories": "Free: 3 categorías de repaso. La suscripción en Cuenta quita el límite.",
+      "habits": "Free: 3 hábitos. La suscripción en Cuenta quita el límite.",
+      "notes": "Free: 20 notas. La suscripción en Cuenta quita el límite.",
+      "tasks": "Free: 15 tareas al mes. La suscripción en Cuenta quita el límite.",
+      "financeOperations": "Free: 25 operaciones al mes. La suscripción en Cuenta quita el límite.",
+      "financeCategories": "Free: 5 categorías de presupuesto. La suscripción en Cuenta quita el límite.",
+      "meals": "Free guarda comidas de hoy y 7 días. La suscripción abre todo el diario.",
+      "sessions": "Free: 2 dispositivos. La suscripción en Cuenta quita el límite."
     }
   }
 }

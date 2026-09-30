@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import {
   useCreateDailyTask,
   useDailyTasksPeriod,
@@ -118,8 +119,8 @@ export function TasksPage() {
       });
       setTitle('');
       setMinutes('30');
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (error) {
+      setFormError(mutationErrorMessage(error, t));
     }
   };
 

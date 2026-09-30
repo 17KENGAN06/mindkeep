@@ -19,7 +19,7 @@ export function requireSameOrigin(req: Request, _res: Response, next: NextFuncti
   }
 
   const path = req.originalUrl.split('?')[0] ?? req.path;
-  if (path.startsWith('/api/internal/cron')) {
+  if (path.startsWith('/api/internal/cron') || path === '/api/billing/webhook') {
     next();
     return;
   }

@@ -4,6 +4,7 @@ import { ACCESS_TOKEN_TTL_MS } from '@/config/cookies.js';
 import { AppError } from '@/utils/AppError.js';
 import { signAccessToken } from '@/utils/jwt.js';
 import { requireDeleted } from '@/utils/owned.js';
+import { enforceSessionLimit } from '@/services/entitlements.service.js';
 
 export type AuthSessionKind = 'browser' | 'native';
 
@@ -44,6 +45,7 @@ export async function issueAuthSession(
   options: AuthSessionIssue = {},
 ): Promise<IssuedAuthSession> {
   const kind: AuthSessionKind = options.kind === 'native' ? 'native' : 'browser';
+  await enforceSessionLimit(user.id);
   const refreshToken = kind === 'native' ? newRefreshToken() : undefined;
   const expiresAt = new Date(Date.now() + ACCESS_TOKEN_TTL_MS);
 

@@ -8,6 +8,7 @@ import type {
 } from '@/validations/material.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
+import { assertCreateLimit } from '@/services/entitlements.service.js';
 
 const materialInclude = {
   category: {
@@ -93,6 +94,7 @@ export class MaterialService {
   }
 
   async create(userId: string, input: CreateMaterialInput) {
+    await assertCreateLimit(userId, 'materials');
     await assertCategoryOwnership(userId, input.categoryId);
 
     const learnedAt = new Date(input.learnedAt);

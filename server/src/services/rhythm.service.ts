@@ -9,6 +9,7 @@ import { HABIT_CYCLE_DAYS, MAX_HABITS } from '@/validations/rhythm.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireOwned } from '@/utils/owned.js';
 import { todayKeyInTimeZone } from '@/utils/timezone.js';
+import { assertCreateLimit } from '@/services/entitlements.service.js';
 
 function parseDateOnly(value: string): Date {
   const [y, m, d] = value.split('-').map(Number);
@@ -117,6 +118,7 @@ export class RhythmService {
   }
 
   async createHabit(userId: string, input: CreateHabitInput) {
+    await assertCreateLimit(userId, 'habits');
     const count = await prisma.habit.count({ where: { userId, isActive: true } });
     if (count >= MAX_HABITS) {
       throw new AppError(`You can track up to ${MAX_HABITS} habits.`, {

@@ -1,7 +1,9 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '@/api/auth';
+import { billingApi, type BillingStatus } from '@/api/billing';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -102,9 +104,188 @@ export function AccountPage() {
         </Button>
       </form>
 
+      <BillingSection />
       <DeviceList />
       <DeleteAccount hasPassword={hasPassword} />
     </section>
+  );
+}
+
+const USAGE_KEYS = [
+  'materials',
+  'reviewCategories',
+  'habits',
+  'notes',
+  'tasks',
+  'financeOperations',
+  'financeCategories',
+  'sessions',
+] as const;
+
+function BillingSection() {
+  const { t, i18n } = useTranslation();
+  const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [notice, setNotice] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState<'month' | 'year' | 'portal' | 'sync' | null>(null);
+
+  const statusQuery = useQuery({
+    queryKey: ['billing', 'status'],
+    queryFn: () => billingApi.status(),
+  });
+
+  useEffect(() => {
+    const billing = searchParams.get('billing');
+    const sessionId = searchParams.get('session_id');
+    if (!billing) return;
+
+    if (billing === 'canceled') {
+      setNotice(t('billing.canceled'));
+      setSearchParams({}, { replace: true });
+      return;
+    }
+
+    if (billing === 'success' && sessionId) {
+      setBusy('sync');
+      void billingApi
+        .sync(sessionId)
+        .then((result) => {
+          queryClient.setQueryData(['auth', 'me'], result.user);
+          void queryClient.invalidateQueries({ queryKey: ['billing'] });
+          setNotice(t('billing.success'));
+        })
+        .catch((caught) => {
+          setError(mapAuthError(caught, t));
+        })
+        .finally(() => {
+          setBusy(null);
+          setSearchParams({}, { replace: true });
+        });
+      return;
+    }
+
+    setSearchParams({}, { replace: true });
+  }, [queryClient, searchParams, setSearchParams, t]);
+
+  const startCheckout = async (interval: 'month' | 'year') => {
+    setError(null);
+    setBusy(interval);
+    try {
+      const result = await billingApi.checkout(interval);
+      window.location.assign(result.url);
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+      setBusy(null);
+    }
+  };
+
+  const openPortal = async () => {
+    setError(null);
+    setBusy('portal');
+    try {
+      const result = await billingApi.portal();
+      window.location.assign(result.url);
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+      setBusy(null);
+    }
+  };
+
+  const status = statusQuery.data;
+  const isPro = status?.plan === 'PRO';
+  const expires = status?.planExpiresAt
+    ? new Date(status.planExpiresAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
+    : null;
+
+  return (
+    <div className="space-y-4 rounded-3xl border border-line bg-panel/80 p-5">
+      <div>
+        <h2 className="text-base font-semibold text-ink">{t('billing.title')}</h2>
+        <p className="mt-1 text-sm text-muted">{t('billing.subtitle')}</p>
+      </div>
+      {notice ? <p className="text-sm text-brand-700">{notice}</p> : null}
+      <ErrorMessage message={error ?? undefined} />
+      {statusQuery.isError ? <ErrorMessage message={t('auth.errors.generic')} /> : null}
+
+      {status ? (
+        <p className="text-sm text-ink">
+          {isPro ? t('billing.proLabel') : t('billing.freeLabel')}
+          {expires
+            ? ` · ${t(status.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })}`
+            : ''}
+        </p>
+      ) : null}
+
+      {status?.cancelAtPeriodEnd ? (
+        <p className="text-sm text-muted">{t('billing.cancelScheduled')}</p>
+      ) : null}
+
+      {status && !status.configured ? (
+        <p className="text-sm text-muted">{t('billing.unavailable')}</p>
+      ) : null}
+
+      {status?.configured && !isPro ? (
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Button
+            type="button"
+            isLoading={busy === 'month'}
+            disabled={busy !== null}
+            onClick={() => void startCheckout('month')}
+          >
+            {t('billing.subscribeMonth')}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            isLoading={busy === 'year'}
+            disabled={busy !== null}
+            onClick={() => void startCheckout('year')}
+          >
+            {t('billing.subscribeYear')}
+          </Button>
+        </div>
+      ) : null}
+
+      {status?.configured && !isPro ? (
+        <p className="text-sm text-muted">{t('billing.yearlyHint')}</p>
+      ) : null}
+
+      {status?.configured && isPro ? (
+        <Button
+          type="button"
+          variant="secondary"
+          isLoading={busy === 'portal'}
+          disabled={busy !== null}
+          onClick={() => void openPortal()}
+        >
+          {t('billing.manage')}
+        </Button>
+      ) : null}
+
+      {status && !isPro ? (
+        <UsageList usage={status.usage} />
+      ) : null}
+    </div>
+  );
+}
+
+function UsageList({ usage }: { usage: BillingStatus['usage'] }) {
+  const { t } = useTranslation();
+  return (
+    <ul className="space-y-1 text-sm text-muted">
+      {USAGE_KEYS.map((key) => {
+        const item = usage[key];
+        const count =
+          item.limit == null ? t('billing.unlimited') : t('billing.of', { used: item.used, limit: item.limit });
+        return (
+          <li key={key}>
+            {t(`billing.features.${key}`)}: {count}
+          </li>
+        );
+      })}
+      <li>{t('billing.mealsHint')}</li>
+    </ul>
   );
 }
 

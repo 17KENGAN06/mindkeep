@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { NoteForm } from '@/components/notes/NoteForm';
 import { Button } from '@/components/ui/Button';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { useCreateNote } from '@/features/notes/useNotes';
 
 export function NoteCreatePage() {
@@ -40,8 +41,8 @@ export function NoteCreatePage() {
             try {
               const result = await createNote.mutateAsync(payload);
               void navigate(`/notes/${result.note.id}`);
-            } catch {
-              setErrorMessage(t('auth.errors.generic'));
+            } catch (error) {
+              setErrorMessage(mutationErrorMessage(error, t));
             }
           }}
         />

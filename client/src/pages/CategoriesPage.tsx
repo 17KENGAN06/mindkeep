@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -51,7 +52,7 @@ export function CategoriesPage() {
         setFormError(t('categories.errors.nameTaken'));
         return;
       }
-      setFormError(t('auth.errors.generic'));
+      setFormError(mutationErrorMessage(error, t));
     }
   });
 

@@ -1067,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Mentions légales",
     "title": "Politique de confidentialité",
-    "updated": "Mise à jour : 28 September 2026",
+    "updated": "Mise à jour : 30 September 2026",
     "intro": "Cette politique explique quelles données Mindkeep collecte, pourquoi nous en avons besoin et comment nous les protégeons. En utilisant le service, vous acceptez les pratiques décrites ci-dessous.",
     "contactLabel": "Questions relatives aux données :",
     "sections": [
@@ -1106,7 +1106,8 @@
         "title": "5. Partage avec des tiers",
         "body": [
           "Nous ne vendons pas de données personnelles.",
-          "Les prestataires d'hébergement et de bases de données peuvent traiter les données uniquement pour faire fonctionner Mindkeep, dans le cadre d'un accord avec l'opérateur."
+          "Les prestataires d'hébergement et de bases de données peuvent traiter les données uniquement pour faire fonctionner Mindkeep, dans le cadre d'un accord avec l'opérateur.",
+          "Si tu t’abonnes, Stripe traite le paiement et reçoit l’e-mail et les données de facturation nécessaires au débit de la carte."
         ]
       },
       {
@@ -1188,6 +1189,50 @@
           "Canevas pour de futures notes 80/20 : nomme l'effort trop chargé → présente Pareto → donne un exemple d'apprentissage concret → montre comment Mindkeep protège l'essentiel avec des retours 3 · 7 · 30."
         ]
       }
+    }
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Toutes les fonctions restent ouvertes. Free a des plafonds, Pro les enlève.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "4,99 € / mois",
+    "subscribeYear": "39,99 € / an",
+    "yearlyHint": "L’année équivaut à environ deux mois offerts par rapport au mois.",
+    "manage": "Gérer l’abonnement",
+    "renews": "Renouvellement le {{date}}",
+    "ends": "Accès jusqu’au {{date}}",
+    "cancelScheduled": "L’annulation est prévue. Pro reste jusqu’à la fin de la période.",
+    "success": "Paiement reçu. Pro est actif.",
+    "canceled": "Paiement annulé. Rien n’a été débité.",
+    "unavailable": "Les paiements ne sont pas encore branchés.",
+    "alreadyPro": "Ce compte a déjà Pro.",
+    "customerMissing": "Abonnez-vous d’abord.",
+    "checkoutFailed": "Impossible d’ouvrir le paiement. Réessayez.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Illimité",
+    "limitReached": "Plafond Free atteint. Ouvrez Compte pour vous abonner.",
+    "mealsHint": "Repas : aujourd’hui plus 7 jours. Courbe de poids : 30 jours.",
+    "features": {
+      "materials": "Matériaux",
+      "reviewCategories": "Catégories de révision",
+      "habits": "Habitudes",
+      "notes": "Notes",
+      "tasks": "Tâches ce mois-ci",
+      "financeOperations": "Opérations ce mois-ci",
+      "financeCategories": "Catégories budget",
+      "sessions": "Appareils"
+    },
+    "limits": {
+      "materials": "Free : 20 matériaux actifs. L’abonnement dans Compte enlève le plafond.",
+      "reviewCategories": "Free : 3 catégories de révision. L’abonnement dans Compte enlève le plafond.",
+      "habits": "Free : 3 habitudes. L’abonnement dans Compte enlève le plafond.",
+      "notes": "Free : 20 notes. L’abonnement dans Compte enlève le plafond.",
+      "tasks": "Free : 15 tâches par mois. L’abonnement dans Compte enlève le plafond.",
+      "financeOperations": "Free : 25 opérations par mois. L’abonnement dans Compte enlève le plafond.",
+      "financeCategories": "Free : 5 catégories budget. L’abonnement dans Compte enlève le plafond.",
+      "meals": "Free enregistre les repas d’aujourd’hui et des 7 derniers jours. L’abonnement ouvre tout le journal.",
+      "sessions": "Free : 2 appareils. L’abonnement dans Compte enlève le plafond."
     }
   }
 }

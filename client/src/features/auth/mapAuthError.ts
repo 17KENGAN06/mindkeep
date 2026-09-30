@@ -34,6 +34,18 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.maintenanceAdminOnly');
     case 'CSRF_REJECTED':
       return t('auth.errors.csrf');
+    case 'PLAN_LIMIT':
+      return t('billing.limitReached');
+    case 'BILLING_UNAVAILABLE':
+    case 'BILLING_PORTAL_UNAVAILABLE':
+      return t('billing.unavailable');
+    case 'ALREADY_PRO':
+      return t('billing.alreadyPro');
+    case 'BILLING_CUSTOMER_MISSING':
+      return t('billing.customerMissing');
+    case 'STRIPE_CHECKOUT_FAILED':
+    case 'STRIPE_SESSION_MISMATCH':
+      return t('billing.checkoutFailed');
     case 'RATE_LIMITED':
       return t('auth.errors.rateLimited');
     case 'VALIDATION_ERROR':

@@ -5,6 +5,10 @@ export type User = {
   timezone: string;
   role: 'USER' | 'ADMIN';
   hasPassword?: boolean;
+  plan?: 'FREE' | 'PRO';
+  planInterval?: 'MONTH' | 'YEAR' | null;
+  planExpiresAt?: string | null;
+  cancelAtPeriodEnd?: boolean;
   createdAt: string;
   updatedAt: string;
 };

@@ -1067,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Note legali",
     "title": "Informativa sulla privacy",
-    "updated": "Aggiornata: 28 September 2026",
+    "updated": "Aggiornata: 30 September 2026",
     "intro": "Questa informativa spiega quali dati Mindkeep raccoglie, perché ci servono e come li proteggiamo. Usando il servizio, accetti le pratiche descritte di seguito.",
     "contactLabel": "Domande sui dati:",
     "sections": [
@@ -1106,7 +1106,8 @@
         "title": "5. Condivisione con terze parti",
         "body": [
           "Non vendiamo dati personali.",
-          "I fornitori di hosting e database possono trattare i dati solo per far funzionare Mindkeep, in base a un accordo con l'operatore."
+          "I fornitori di hosting e database possono trattare i dati solo per far funzionare Mindkeep, in base a un accordo con l'operatore.",
+          "Se ti abboni, Stripe elabora il pagamento e riceve email e dati di fatturazione necessari per addebitare la carta."
         ]
       },
       {
@@ -1188,6 +1189,50 @@
           "Schema per future note 80/20: nomina lo sforzo troppo affollato → introduci Pareto → dai un esempio concreto di apprendimento → mostra come Mindkeep protegge l'essenziale con ritorni 3 · 7 · 30."
         ]
       }
+    }
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Tutte le funzioni restano aperte. Free ha limiti di quantità, Pro li toglie.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / mese",
+    "subscribeYear": "€39.99 / anno",
+    "yearlyHint": "L’anno vale circa due mesi in meno rispetto al mese.",
+    "manage": "Gestisci abbonamento",
+    "renews": "Rinnovo il {{date}}",
+    "ends": "Accesso fino al {{date}}",
+    "cancelScheduled": "La disdetta è pianificata. Pro resta fino alla fine del periodo.",
+    "success": "Pagamento ricevuto. Pro è attivo.",
+    "canceled": "Pagamento annullato. Nessun addebito.",
+    "unavailable": "I pagamenti non sono ancora collegati.",
+    "alreadyPro": "Questo account ha già Pro.",
+    "customerMissing": "Prima attiva un abbonamento.",
+    "checkoutFailed": "Impossibile aprire il pagamento. Riprova.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Illimitato",
+    "limitReached": "Limite Free raggiunto. Apri Account per abbonarti.",
+    "mealsHint": "Pasti: oggi più 7 giorni. Grafico peso: 30 giorni.",
+    "features": {
+      "materials": "Materiali",
+      "reviewCategories": "Categorie di ripasso",
+      "habits": "Abitudini",
+      "notes": "Note",
+      "tasks": "Attività di questo mese",
+      "financeOperations": "Operazioni di questo mese",
+      "financeCategories": "Categorie budget",
+      "sessions": "Dispositivi"
+    },
+    "limits": {
+      "materials": "Free: 20 materiali attivi. L’abbonamento in Account toglie il limite.",
+      "reviewCategories": "Free: 3 categorie di ripasso. L’abbonamento in Account toglie il limite.",
+      "habits": "Free: 3 abitudini. L’abbonamento in Account toglie il limite.",
+      "notes": "Free: 20 note. L’abbonamento in Account toglie il limite.",
+      "tasks": "Free: 15 attività al mese. L’abbonamento in Account toglie il limite.",
+      "financeOperations": "Free: 25 operazioni al mese. L’abbonamento in Account toglie il limite.",
+      "financeCategories": "Free: 5 categorie budget. L’abbonamento in Account toglie il limite.",
+      "meals": "Free registra i pasti di oggi e degli ultimi 7 giorni. L’abbonamento apre tutto il diario.",
+      "sessions": "Free: 2 dispositivi. L’abbonamento in Account toglie il limite."
     }
   }
 }

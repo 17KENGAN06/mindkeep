@@ -5,6 +5,7 @@ import type {
   UpdateNoteInput,
 } from '@/validations/note.schemas.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
+import { assertCreateLimit } from '@/services/entitlements.service.js';
 
 export class NoteService {
   async list(userId: string, query: ListNotesQuery) {
@@ -37,6 +38,7 @@ export class NoteService {
   }
 
   async create(userId: string, input: CreateNoteInput) {
+    await assertCreateLimit(userId, 'notes');
     return prisma.note.create({
       data: {
         title: input.title,

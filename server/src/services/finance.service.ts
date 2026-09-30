@@ -10,6 +10,7 @@ import type {
 } from '@/validations/finance.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
+import { assertCreateLimit, dateKeyOf } from '@/services/entitlements.service.js';
 
 const DEFAULT_CURRENCY = BudgetCurrency.EUR;
 
@@ -79,6 +80,7 @@ export class FinanceService {
   }
 
   async createCategory(userId: string, input: CreateFinanceCategoryInput) {
+    await assertCreateLimit(userId, 'financeCategories');
     try {
       return await prisma.budgetCategory.create({
         data: { name: input.name, userId },
@@ -143,6 +145,7 @@ export class FinanceService {
 
   async createOperation(userId: string, input: CreateFinanceOperationInput) {
     await this.getOrCreateSettings(userId);
+    await assertCreateLimit(userId, 'financeOperations', { dateKey: dateKeyOf(input.date) });
 
     if (input.categoryId) {
       requireOwned(

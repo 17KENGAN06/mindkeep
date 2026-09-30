@@ -36,6 +36,16 @@ enum UserRole {
   ADMIN
 }
 
+enum UserPlan {
+  FREE
+  PRO
+}
+
+enum PlanInterval {
+  MONTH
+  YEAR
+}
+
 enum UserReviewStatus {
   PENDING
   APPROVED
@@ -76,6 +86,12 @@ model User {
   timezone     String   @default("Europe/Helsinki")
   role         UserRole @default(USER)
   emailVerified Boolean @default(true)
+  stripeCustomerId     String?       @unique
+  stripeSubscriptionId String?       @unique
+  plan                 UserPlan      @default(FREE)
+  planInterval         PlanInterval?
+  planExpiresAt        DateTime?
+  cancelAtPeriodEnd    Boolean       @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -113,6 +129,12 @@ model AuthSession {
 
   @@index([userId])
   @@index([refreshTokenHash])
+}
+
+model StripeEvent {
+  id        String   @id
+  type      String
+  createdAt DateTime @default(now())
 }
 
 enum AdminAuditAction {

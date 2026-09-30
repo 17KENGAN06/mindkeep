@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
+import { useAuth } from '@/features/auth/useAuth';
 import {
   useCreateMeal,
   useDeleteMeal,
@@ -41,6 +43,7 @@ function currentDefaults() {
 
 export function CaloriesPage() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const defaults = useMemo(() => currentDefaults(), []);
   const [year, setYear] = useState(defaults.year);
   const [month, setMonth] = useState(defaults.month);
@@ -176,8 +179,8 @@ export function CaloriesPage() {
       });
       setTitle('');
       setKcal('');
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (error) {
+      setFormError(mutationErrorMessage(error, t));
     }
   };
 
@@ -237,6 +240,7 @@ export function CaloriesPage() {
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('calories.title')}</h1>
         <p className="mt-1 text-sm text-muted">{t('calories.subtitle')}</p>
+        {user?.plan !== 'PRO' ? <p className="mt-2 text-sm text-muted">{t('billing.mealsHint')}</p> : null}
       </section>
 
       <Calendar

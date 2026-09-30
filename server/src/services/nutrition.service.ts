@@ -10,6 +10,7 @@ import type {
 } from '@/validations/nutrition.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
+import { assertMealDateAllowed, mealHistoryFrom, weightHistoryFrom } from '@/services/entitlements.service.js';
 
 function rethrowNutritionError(error: unknown): never {
   if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2021') {
@@ -96,19 +97,21 @@ export class NutritionService {
   async listPeriod(userId: string, query: NutritionPeriodQuery) {
     const settings = await this.getSettings(userId);
     const { from, to } = periodRange(query);
-
-    const trendFrom = new Date(Date.UTC(query.year, query.month - 12, 1, 0, 0, 0));
+    const mealFrom = await mealHistoryFrom(userId, from);
+    const trendFromRequested = new Date(Date.UTC(query.year, query.month - 12, 1, 0, 0, 0));
+    const trendFrom = await weightHistoryFrom(userId, trendFromRequested);
+    const weightFrom = await weightHistoryFrom(userId, from);
 
     const [meals, waterDays, weightDays, weightTrendDays] = await Promise.all([
       prisma.meal.findMany({
-        where: { userId, date: { gte: from, lt: to } },
+        where: { userId, date: { gte: mealFrom, lt: to } },
         orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
       }),
       prisma.waterDay.findMany({
         where: { userId, date: { gte: from, lt: to } },
       }),
       prisma.weightDay.findMany({
-        where: { userId, date: { gte: from, lt: to } },
+        where: { userId, date: { gte: weightFrom, lt: to } },
       }),
       prisma.weightDay.findMany({
         where: { userId, date: { gte: trendFrom, lt: to } },
@@ -173,6 +176,7 @@ export class NutritionService {
   }
 
   async createMeal(userId: string, input: CreateMealInput) {
+    await assertMealDateAllowed(userId, input.date);
     return serializeMeal(
       await prisma.meal.create({
         data: {

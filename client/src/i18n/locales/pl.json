@@ -1067,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Informacje prawne",
     "title": "Polityka prywatności",
-    "updated": "Aktualizacja: 28 September 2026",
+    "updated": "Aktualizacja: 30 September 2026",
     "intro": "Niniejsza polityka wyjaśnia, jakie dane zbiera Mindkeep, dlaczego ich potrzebujemy i jak je chronimy. Korzystając z usługi, akceptują Państwo praktyki opisane poniżej.",
     "contactLabel": "Pytania o dane:",
     "sections": [
@@ -1106,7 +1106,8 @@
         "title": "5. Udostępnianie stronom trzecim",
         "body": [
           "Nie sprzedajemy danych osobowych.",
-          "Dostawcy hostingu i baz danych mogą przetwarzać dane wyłącznie w celu działania Mindkeep, na podstawie umowy z operatorem."
+          "Dostawcy hostingu i baz danych mogą przetwarzać dane wyłącznie w celu działania Mindkeep, na podstawie umowy z operatorem.",
+          "Jeśli wykupisz subskrypcję, płatność obsługuje Stripe i otrzymuje email oraz dane rozliczeniowe potrzebne do obciążenia karty."
         ]
       },
       {
@@ -1188,6 +1189,50 @@
           "Szablon na przyszłe notatki 80/20: nazwij przeładowany wysiłek → wprowadź Pareto → podaj jeden konkretny przykład z nauki → pokaż, jak Mindkeep chroni to, co naprawdę ważne, powrotami 3 · 7 · 30."
         ]
       }
+    }
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Wszystkie funkcje są otwarte. Free ma limity ilości, Pro je zdejmuje.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / miesiąc",
+    "subscribeYear": "€39.99 / rok",
+    "yearlyHint": "Rok to około dwa miesiące taniej niż płatność miesięczna.",
+    "manage": "Zarządzaj subskrypcją",
+    "renews": "Odnawia się {{date}}",
+    "ends": "Dostęp do {{date}}",
+    "cancelScheduled": "Anulowanie jest zaplanowane. Pro działa do końca okresu.",
+    "success": "Płatność przyjęta. Pro włączone.",
+    "canceled": "Płatność anulowana. Nic nie pobrano.",
+    "unavailable": "Płatności nie są jeszcze podłączone.",
+    "alreadyPro": "To konto ma już Pro.",
+    "customerMissing": "Najpierw wykup subskrypcję.",
+    "checkoutFailed": "Nie udało się otworzyć płatności. Spróbuj ponownie.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Bez limitu",
+    "limitReached": "Limit Free. Otwórz Konto, aby wykupić subskrypcję.",
+    "mealsHint": "Posiłki: dziś i 7 dni. Wykres wagi: 30 dni.",
+    "features": {
+      "materials": "Materiały",
+      "reviewCategories": "Kategorie powtórek",
+      "habits": "Nawyki",
+      "notes": "Notatki",
+      "tasks": "Zadania w tym miesiącu",
+      "financeOperations": "Operacje w tym miesiącu",
+      "financeCategories": "Kategorie budżetu",
+      "sessions": "Urządzenia"
+    },
+    "limits": {
+      "materials": "Free: 20 aktywnych materiałów. Subskrypcja w Koncie zdejmuje limit.",
+      "reviewCategories": "Free: 3 kategorie powtórek. Subskrypcja w Koncie zdejmuje limit.",
+      "habits": "Free: 3 nawyki. Subskrypcja w Koncie zdejmuje limit.",
+      "notes": "Free: 20 notatek. Subskrypcja w Koncie zdejmuje limit.",
+      "tasks": "Free: 15 zadań miesięcznie. Subskrypcja w Koncie zdejmuje limit.",
+      "financeOperations": "Free: 25 operacji miesięcznie. Subskrypcja w Koncie zdejmuje limit.",
+      "financeCategories": "Free: 5 kategorii budżetu. Subskrypcja w Koncie zdejmuje limit.",
+      "meals": "Free zapisuje posiłki z dziś i 7 dni. Subskrypcja otwiera cały dziennik.",
+      "sessions": "Free: 2 urządzenia. Subskrypcja w Koncie zdejmuje limit."
     }
   }
 }

@@ -42,6 +42,10 @@ const envSchema = z.object({
     .enum(['true', 'false'])
     .default('false')
     .transform((value) => value === 'true'),
+  STRIPE_SECRET_KEY: z.string().trim().min(1).optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().trim().min(1).optional(),
+  STRIPE_PRICE_MONTHLY: z.string().trim().min(1).optional(),
+  STRIPE_PRICE_YEARLY: z.string().trim().min(1).optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);

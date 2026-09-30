@@ -1067,7 +1067,7 @@
   "privacy": {
     "eyebrow": "Rechtliches",
     "title": "Datenschutzerklärung",
-    "updated": "Aktualisiert: 28 September 2026",
+    "updated": "Aktualisiert: 30 September 2026",
     "intro": "Diese Erklärung beschreibt, welche Daten Mindkeep erhebt, warum wir sie benötigen und wie wir sie schützen. Mit der Nutzung des Dienstes stimmen Sie den nachfolgend beschriebenen Praktiken zu.",
     "contactLabel": "Fragen zu Daten:",
     "sections": [
@@ -1106,7 +1106,8 @@
         "title": "5. Weitergabe an Dritte",
         "body": [
           "Wir verkaufen keine personenbezogenen Daten.",
-          "Hosting- und Datenbankanbieter dürfen Daten nur verarbeiten, um Mindkeep im Auftrag des Betreibers zu betreiben."
+          "Hosting- und Datenbankanbieter dürfen Daten nur verarbeiten, um Mindkeep im Auftrag des Betreibers zu betreiben.",
+          "Wenn du ein Abo abschließt, verarbeitet Stripe die Zahlung und erhält E-Mail- und Rechnungsdaten, die für die Kartenzahlung nötig sind."
         ]
       },
       {
@@ -1188,6 +1189,50 @@
           "Vorlage für künftige 80/20-Notizen: benenne die überfüllte Anstrengung → führe Pareto ein → gib ein konkretes Lernbeispiel → zeige, wie Mindkeep das Wesentliche mit 3 · 7 · 30-Rückkehren schützt."
         ]
       }
+    }
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Alle Funktionen bleiben offen. Free hat Mengenlimits, Pro hebt sie auf.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / Monat",
+    "subscribeYear": "€39.99 / Jahr",
+    "yearlyHint": "Jährlich spart etwa zwei Monate gegenüber monatlicher Zahlung.",
+    "manage": "Abo verwalten",
+    "renews": "Verlängert am {{date}}",
+    "ends": "Zugang bis {{date}}",
+    "cancelScheduled": "Kündigung ist geplant. Pro gilt bis Periodenende.",
+    "success": "Zahlung erhalten. Pro ist aktiv.",
+    "canceled": "Checkout abgebrochen. Es wurde nichts berechnet.",
+    "unavailable": "Zahlungen sind noch nicht verbunden.",
+    "alreadyPro": "Dieses Konto hat bereits Pro.",
+    "customerMissing": "Zuerst ein Abo abschließen.",
+    "checkoutFailed": "Checkout konnte nicht starten. Bitte erneut versuchen.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Unbegrenzt",
+    "limitReached": "Free-Limit erreicht. Öffne Konto, um zu abonnieren.",
+    "mealsHint": "Mahlzeiten: heute plus 7 Tage. Gewichtskurve: 30 Tage.",
+    "features": {
+      "materials": "Materialien",
+      "reviewCategories": "Wiederholungskategorien",
+      "habits": "Gewohnheiten",
+      "notes": "Notizen",
+      "tasks": "Aufgaben in diesem Monat",
+      "financeOperations": "Finanzbuchungen in diesem Monat",
+      "financeCategories": "Budgetkategorien",
+      "sessions": "Geräte"
+    },
+    "limits": {
+      "materials": "Free: 20 aktive Materialien. Abo im Konto hebt das Limit auf.",
+      "reviewCategories": "Free: 3 Wiederholungskategorien. Abo im Konto hebt das Limit auf.",
+      "habits": "Free: 3 Gewohnheiten. Abo im Konto hebt das Limit auf.",
+      "notes": "Free: 20 Notizen. Abo im Konto hebt das Limit auf.",
+      "tasks": "Free: 15 Aufgaben pro Monat. Abo im Konto hebt das Limit auf.",
+      "financeOperations": "Free: 25 Buchungen pro Monat. Abo im Konto hebt das Limit auf.",
+      "financeCategories": "Free: 5 Budgetkategorien. Abo im Konto hebt das Limit auf.",
+      "meals": "Free speichert Mahlzeiten für heute und 7 Tage. Abo öffnet das ganze Tagebuch.",
+      "sessions": "Free: 2 Geräte. Abo im Konto hebt das Limit auf."
     }
   }
 }

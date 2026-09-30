@@ -5,6 +5,8 @@ import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { isAllowedBrowserOrigin, env } from '@/config/env.js';
+import { billingController } from '@/controllers/billing.controller.js';
+import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { getAccessTokenFromRequest } from '@/utils/accessToken.js';
 import { errorHandler } from '@/middleware/errorHandler.js';
 import { notFoundHandler } from '@/middleware/notFoundHandler.js';
@@ -26,6 +28,7 @@ const RATE_LIMIT_SKIP_PATHS = new Set([
   '/api/auth/forgot-password',
   '/api/auth/verify-email',
   '/api/auth/reset-password',
+  '/api/billing/webhook',
 ]);
 
 function normalizePath(req: Request): string {
@@ -63,6 +66,11 @@ app.use(
     },
     credentials: true,
   }),
+);
+app.post(
+  '/api/billing/webhook',
+  express.raw({ type: 'application/json' }),
+  asyncHandler((req, res) => billingController.webhook(req, res)),
 );
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
