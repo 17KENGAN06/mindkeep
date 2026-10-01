@@ -1309,6 +1309,8 @@
     "adminHint": "This account is unlimited as admin. Use the buttons below only to test Stripe.",
     "monthCard": "Monthly",
     "yearCard": "Yearly",
+    "ctaYear": "Choose yearly",
+    "ctaMonth": "Choose monthly",
     "usageTitle": "Free plan limits",
     "usageLead": "These caps apply until you subscribe. Pro removes them.",
     "proUnlocked": "Quantity limits are off on this account."

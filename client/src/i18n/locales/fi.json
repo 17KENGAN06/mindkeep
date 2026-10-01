@@ -1309,6 +1309,8 @@
     "adminHint": "Tämä tili on adminina rajaton. Napit alla ovat vain Stripe-testiä varten.",
     "monthCard": "Kuukausi",
     "yearCard": "Vuosi",
+    "ctaYear": "Valitse vuosi",
+    "ctaMonth": "Valitse kuukausi",
     "usageTitle": "Free-suunnitelman rajat",
     "usageLead": "Nämä katot ovat voimassa kunnes tilaat. Pro poistaa ne.",
     "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä."

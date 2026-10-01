@@ -1309,6 +1309,8 @@
     "adminHint": "To konto nie ma limitów jako admin. Przyciski poniżej tylko do testu Stripe.",
     "monthCard": "Miesiąc",
     "yearCard": "Rok",
+    "ctaYear": "Wybierz rok",
+    "ctaMonth": "Wybierz miesiąc",
     "usageTitle": "Limity planu Free",
     "usageLead": "Te limity obowiązują do subskrypcji. Pro je zdejmuje.",
     "proUnlocked": "Limity ilościowe na tym koncie są wyłączone."

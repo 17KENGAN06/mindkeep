@@ -1309,6 +1309,8 @@
     "adminHint": "Ce compte est illimité en tant qu’admin. Les boutons ci-dessous servent seulement à tester Stripe.",
     "monthCard": "Mois",
     "yearCard": "An",
+    "ctaYear": "Choisir l’année",
+    "ctaMonth": "Choisir le mois",
     "usageTitle": "Limites du plan Free",
     "usageLead": "Ces plafonds s’appliquent tant que vous n’êtes pas abonné. Pro les retire.",
     "proUnlocked": "Les plafonds de quantité sont désactivés sur ce compte."

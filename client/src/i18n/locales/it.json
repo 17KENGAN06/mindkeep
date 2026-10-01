@@ -1309,6 +1309,8 @@
     "adminHint": "Questo account è illimitato da admin. I pulsanti sotto servono solo a testare Stripe.",
     "monthCard": "Mese",
     "yearCard": "Anno",
+    "ctaYear": "Scegli l’anno",
+    "ctaMonth": "Scegli il mese",
     "usageTitle": "Limiti del piano Free",
     "usageLead": "Questi tetti valgono finché non ti abboni. Pro li toglie.",
     "proUnlocked": "I limiti di quantità su questo account sono disattivati."
