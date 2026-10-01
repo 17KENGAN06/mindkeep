@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { ArrowRight, ArrowUp, CheckSquare, GraduationCap, Wallet } from 'lucide-react';
+import { ArrowRight, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { AnimatedSnapSection } from '@/components/home/AnimatedSnapSection';
 import { HeroStage } from '@/components/home/HeroStage';
+import { HomePricing } from '@/components/home/HomePricing';
+import { HomeServices } from '@/components/home/HomeServices';
 import { SectionNav } from '@/components/home/SectionNav';
 import { MobileHomeNav } from '@/components/home/MobileHomeNav';
 import { SnapReveal } from '@/components/home/SnapReveal';
@@ -16,19 +18,7 @@ import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
 
-const intervals = [
-  { key: 'three', days: '3' },
-  { key: 'seven', days: '7' },
-  { key: 'thirty', days: '30' },
-] as const;
-
-const pillars = [
-  { key: 'tasks', icon: CheckSquare },
-  { key: 'repetition', icon: GraduationCap },
-  { key: 'finance', icon: Wallet },
-] as const;
-
-const SECTION_IDS = ['hero', 'pillars', 'rhythm', 'testimonials'] as const;
+const SECTION_IDS = ['hero', 'services', 'pricing', 'testimonials'] as const;
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -39,8 +29,8 @@ export function HomePage() {
 
   const labels = [
     t('home.sections.hero'),
-    t('home.sections.pillars'),
-    t('home.sections.rhythm'),
+    t('home.sections.services'),
+    t('home.sections.pricing'),
     t('home.sections.testimonials'),
   ];
 
@@ -178,75 +168,12 @@ export function HomePage() {
           </div>
         </AnimatedSnapSection>
 
-        <AnimatedSnapSection id="pillars" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-[1400px] flex-col justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
-            <SnapReveal direction="left">
-              <h2 className="font-display max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-                {t('home.pillarsTitle')}
-              </h2>
-            </SnapReveal>
-            <SnapReveal direction="left" delay={0.08}>
-              <p className="mt-4 max-w-3xl text-base text-muted sm:text-lg">
-                {t('home.pillarsSubtitle')}
-              </p>
-            </SnapReveal>
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {pillars.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <SnapReveal key={item.key} direction="scale" delay={0.12 + index * 0.08}>
-                    <article className="glass-panel relative h-full overflow-hidden rounded-[1.75rem] p-7">
-                      <div
-                        aria-hidden
-                        className="animate-pulse-soft pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-brand-500/15 blur-2xl"
-                      />
-                      <Icon className="h-8 w-8 text-brand-500" aria-hidden />
-                      <h3 className="mt-5 text-xl font-semibold text-ink sm:text-2xl">
-                        {t(`home.pillars.${item.key}.title`)}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                        {t(`home.pillars.${item.key}.text`)}
-                      </p>
-                    </article>
-                  </SnapReveal>
-                );
-              })}
-            </div>
-          </div>
+        <AnimatedSnapSection id="services" activeId={activeId} className="border-t border-line/70">
+          <HomeServices />
         </AnimatedSnapSection>
 
-        <AnimatedSnapSection id="rhythm" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-[1400px] flex-col justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
-            <SnapReveal direction="left">
-              <h2 className="font-display max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-                {t('home.rhythmTitle')}
-              </h2>
-            </SnapReveal>
-            <SnapReveal direction="left" delay={0.08}>
-              <p className="mt-4 max-w-3xl text-base text-muted sm:text-lg">
-                {t('home.rhythmSubtitle')}
-              </p>
-            </SnapReveal>
-            <div className="mt-12 grid gap-5 sm:grid-cols-3">
-              {intervals.map((item, index) => (
-                <SnapReveal key={item.key} direction="scale" delay={0.12 + index * 0.08}>
-                  <div className="glass-panel relative h-full overflow-hidden rounded-[1.75rem] p-7">
-                    <div
-                      aria-hidden
-                      className="animate-pulse-soft pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-brand-500/15 blur-2xl"
-                    />
-                    <p className="font-display text-6xl font-semibold text-brand-500">{item.days}</p>
-                    <p className="mt-2 text-xs tracking-[0.2em] text-muted uppercase">
-                      {t('home.daysLabel')}
-                    </p>
-                    <p className="mt-5 text-base font-medium leading-relaxed text-ink">
-                      {t(`home.intervals.${item.key}`)}
-                    </p>
-                  </div>
-                </SnapReveal>
-              ))}
-            </div>
-          </div>
+        <AnimatedSnapSection id="pricing" activeId={activeId} className="border-t border-line/70">
+          <HomePricing />
         </AnimatedSnapSection>
 
         <AnimatedSnapSection
@@ -254,38 +181,13 @@ export function HomePage() {
           activeId={activeId}
           className="border-t border-line/70"
         >
-          <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col justify-between overflow-y-auto px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-            <div className="min-h-0 flex-1">
-              <SnapReveal>
-                <TestimonialsSection animated />
-              </SnapReveal>
-              <SnapReveal delay={0.12} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                {isAuthenticated ? (
-                  <Link to="/dashboard" className="w-full sm:w-auto">
-                    <Button className="min-w-44 gap-2">
-                      {t('nav.dashboard')}
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                ) : (
-                  <Link to="/register" className="w-full sm:w-auto">
-                    <Button className="min-w-44 gap-2">
-                      {t('home.ctaRegister')}
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                )}
-                <Link
-                  to="/blog"
-                  className="inline-flex min-h-11 items-center justify-center rounded-xl border border-line px-4 text-sm font-semibold text-ink no-underline"
-                >
-                  {t('nav.blog')}
-                </Link>
-              </SnapReveal>
+          <div className="mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col overflow-hidden px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
+            <div className="min-h-0 flex-1 overflow-hidden">
+              <TestimonialsSection animated compact />
             </div>
-            <SnapReveal delay={0.18} className="mt-8">
+            <div className="shrink-0">
               <SiteFooter compact embedded />
-            </SnapReveal>
+            </div>
           </div>
         </AnimatedSnapSection>
       </div>

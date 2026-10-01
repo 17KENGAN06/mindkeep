@@ -389,7 +389,9 @@
       "apps": "Apps",
       "testimonials": "Reviews",
       "blog": "Blog",
-      "cta": "Try it"
+      "cta": "Try it",
+      "services": "Services",
+      "pricing": "Plans"
     },
     "heroHighlights": {
       "tasks": "Daily plans without mental clutter",
@@ -418,7 +420,58 @@
       "closeFull": "Close menu"
     },
     "heroLead": "One workspace: daily tasks, 3·7·30 reviews, and a euro budget — without hopping between apps.",
-    "heroBrowse": "Browse sections below"
+    "heroBrowse": "Browse sections below",
+    "services": {
+      "eyebrow": "What you get",
+      "title": "Six services, one calm workspace",
+      "subtitle": "Tasks, learning, money, habits, notes, and the body — together, so progress does not scatter.",
+      "items": {
+        "tasks": {
+          "title": "Daily tasks",
+          "text": "Plan today and the month, check things off, and see the week without noise in your head."
+        },
+        "learning": {
+          "title": "Learning & review",
+          "text": "Save what mattered and return on a 3 · 7 · 30 beat — knowledge stays after a busy stretch."
+        },
+        "finance": {
+          "title": "Budget",
+          "text": "Income, expenses, and a clear period balance, so money does not disappear behind the studies."
+        },
+        "habits": {
+          "title": "Habits",
+          "text": "A simple monthly rhythm you can keep — one check a day, without a noisy streak theatre."
+        },
+        "notes": {
+          "title": "Notes",
+          "text": "Capture thoughts next to the work, not in another app that you will forget to open."
+        },
+        "nutrition": {
+          "title": "Nutrition & body",
+          "text": "Meals, water, and weight in the same cabinet — enough to stay honest, not another dashboard."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Plans",
+      "title": "Start free. Grow when you need more room.",
+      "subtitle": "All features open from day one. Free has calm quantity limits. Pro removes them — yearly saves about two months.",
+      "freePrice": "€0",
+      "freeHint": "Enough to build the habit. Caps on materials, tasks, habits, and notes.",
+      "yearHint": "about two months free versus monthly",
+      "recommended": "Best value",
+      "cta": "Get Pro",
+      "freePoints": {
+        "open": "All modules open from the first day",
+        "caps": "Calm quantity limits — not locked features",
+        "start": "Register in a minute and start today"
+      },
+      "proPoints": {
+        "unlimited": "Room to grow: more materials, habits, notes, and history",
+        "history": "Longer charts and more devices, without monthly walls",
+        "devices": "The same Pro on the website after checkout"
+      }
+    }
   },
   "guide": {
     "eyebrow": "Simple guide",

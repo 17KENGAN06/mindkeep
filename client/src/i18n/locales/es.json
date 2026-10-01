@@ -389,7 +389,9 @@
       "apps": "Apps",
       "testimonials": "Reseñas",
       "blog": "Blog",
-      "cta": "Probar"
+      "cta": "Probar",
+      "services": "Servicios",
+      "pricing": "Planes"
     },
     "heroHighlights": {
       "tasks": "Planes del día sin ruido mental",
@@ -418,7 +420,58 @@
       "closeFull": "Cerrar menú"
     },
     "heroLead": "Un solo espacio: tareas del día, repasos 3·7·30 y presupuesto en euros — sin saltar de una app a otra.",
-    "heroBrowse": "Explora las secciones de abajo"
+    "heroBrowse": "Explora las secciones de abajo",
+    "services": {
+      "eyebrow": "Qué incluye",
+      "title": "Seis servicios, un espacio tranquilo",
+      "subtitle": "Tareas, estudio, dinero, hábitos, notas y cuerpo — juntos, para que el progreso no se disperse.",
+      "items": {
+        "tasks": {
+          "title": "Tareas del día",
+          "text": "Planifica hoy y el mes, marca lo hecho y ve la semana sin ruido en la cabeza."
+        },
+        "learning": {
+          "title": "Estudio y retorno",
+          "text": "Guarda lo importante y vuelve en el ritmo 3 · 7 · 30 — el conocimiento no tiene que desaparecer tras una semana densa."
+        },
+        "finance": {
+          "title": "Presupuesto",
+          "text": "Ingresos, gastos y un saldo de periodo claro, para que el dinero no se pierda detrás del estudio."
+        },
+        "habits": {
+          "title": "Hábitos",
+          "text": "Un ritmo mensual simple de mantener — una marca al día, sin teatro de rachas."
+        },
+        "notes": {
+          "title": "Notas",
+          "text": "Los pensamientos junto al trabajo, no en otra app que luego no abres."
+        },
+        "nutrition": {
+          "title": "Nutrición y cuerpo",
+          "text": "Comidas, agua y peso en el mismo espacio — suficiente para ser honesto, sin otro panel."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Planes",
+      "title": "Empieza gratis. Pro cuando necesites más espacio.",
+      "subtitle": "Todas las funciones desde el primer día. Free tiene límites de cantidad calmos. Pro los quita — el anual ahorra unos dos meses.",
+      "freePrice": "0 €",
+      "freeHint": "Bastante para entrar en el ritmo. Límites en materiales, tareas, hábitos y notas.",
+      "yearHint": "unos dos meses de regalo frente al pago mensual",
+      "recommended": "Mejor valor",
+      "cta": "Pasar a Pro",
+      "freePoints": {
+        "open": "Todos los módulos abiertos desde el primer día",
+        "caps": "Límites de cantidad calmos — no funciones bloqueadas",
+        "start": "Regístrate en un minuto y empieza hoy"
+      },
+      "proPoints": {
+        "unlimited": "Más espacio: materiales, hábitos, notas e historial",
+        "history": "Gráficos más largos y más dispositivos, sin muros mensuales",
+        "devices": "El mismo Pro en el sitio justo después del pago"
+      }
+    }
   },
   "guide": {
     "eyebrow": "Guía sencilla",

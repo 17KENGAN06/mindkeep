@@ -389,7 +389,9 @@
       "apps": "Sovellukset",
       "testimonials": "Arviot",
       "blog": "Blogi",
-      "cta": "Kokeile"
+      "cta": "Kokeile",
+      "services": "Palvelut",
+      "pricing": "Paketit"
     },
     "heroHighlights": {
       "tasks": "Päivän suunnitelmat ilman kaaosta",
@@ -418,7 +420,58 @@
       "closeFull": "Sulje valikko"
     },
     "heroLead": "Yksi työpöytä: päivän tehtävät, 3·7·30-kertaukset ja eurobudjetti — ilman hyppelyä sovellusten välillä.",
-    "heroBrowse": "Selaa osioita alla"
+    "heroBrowse": "Selaa osioita alla",
+    "services": {
+      "eyebrow": "Mitä saat",
+      "title": "Kuusi palvelua, yksi rauhallinen tila",
+      "subtitle": "Tehtävät, oppiminen, raha, tavat, muistiinpanot ja keho — yhdessä, jotta edistys ei hajoa.",
+      "items": {
+        "tasks": {
+          "title": "Päivän tehtävät",
+          "text": "Suunnittele tänään ja kuukausi, merkitse valmista ja näe viikko ilman meteliä päässä."
+        },
+        "learning": {
+          "title": "Oppiminen ja paluu",
+          "text": "Tallenna tärkeä ja palaa rytmissä 3 · 7 · 30 — tiedon ei tarvitse kadota tiiviin viikon jälkeen."
+        },
+        "finance": {
+          "title": "Budjetti",
+          "text": "Tulot, menot ja selkeä jakson saldo, jotta raha ei katoa oppimisen taakse."
+        },
+        "habits": {
+          "title": "Tavat",
+          "text": "Yksinkertainen kuukausirytmi, jota voi pitää — yksi merkintä päivässä, ilman putkiesitystä."
+        },
+        "notes": {
+          "title": "Muistiinpanot",
+          "text": "Ajatukset työn vieressä, ei toisessa sovelluksessa, jota et enää avaa."
+        },
+        "nutrition": {
+          "title": "Ravinto ja keho",
+          "text": "Ateriat, vesi ja paino samassa tilassa — tarpeeksi rehellisyyteen, ilman uutta kojittymispaneelia."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Paketit",
+      "title": "Aloita ilmaiseksi. Pro, kun tarvitset lisää tilaa.",
+      "subtitle": "Kaikki ominaisuudet ensimmäisestä päivästä. Freessä on rauhalliset määrärajoitukset. Pro poistaa ne — vuosi säästää noin kaksi kuukautta.",
+      "freePrice": "0 €",
+      "freeHint": "Riittää rytmiin pääsyyn. Rajat materiaaleille, tehtäville, tavoille ja muistiinpanoille.",
+      "yearHint": "noin kaksi kuukautta kaupan päälle kuukausimaksuun verrattuna",
+      "recommended": "Parempi arvo",
+      "cta": "Ota Pro",
+      "freePoints": {
+        "open": "Kaikki moduulit auki ensimmäisestä päivästä",
+        "caps": "Rauhalliset määrärajoitukset — ei lukittuja ominaisuuksia",
+        "start": "Rekisteröidy minuutissa ja aloita tänään"
+      },
+      "proPoints": {
+        "unlimited": "Lisää tilaa: materiaalit, tavat, muistiinpanot ja historia",
+        "history": "Pidemmät kaaviot ja lisää laitteita ilman kuukausiseiniä",
+        "devices": "Sama Pro sivustolla heti maksun jälkeen"
+      }
+    }
   },
   "guide": {
     "eyebrow": "Yksinkertainen opas",

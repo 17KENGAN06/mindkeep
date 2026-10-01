@@ -11,9 +11,10 @@ import { useAuth } from '@/features/auth/useAuth';
 
 type TestimonialsSectionProps = {
   animated?: boolean;
+  compact?: boolean;
 };
 
-export function TestimonialsSection({ animated = false }: TestimonialsSectionProps) {
+export function TestimonialsSection({ animated = false, compact = false }: TestimonialsSectionProps) {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
@@ -32,7 +33,7 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
   const eligibilityQuery = useQuery({
     queryKey: ['reviews', 'eligibility'],
     queryFn: async () => (await reviewsApi.eligibility()).eligibility,
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !compact,
   });
   const submitMutation = useMutation({
     mutationFn: reviewsApi.submit,
@@ -84,38 +85,46 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
     (eligibility.reviewStatus === null || eligibility.reviewStatus === 'REJECTED');
 
   return (
-    <div>
+    <div className={compact ? 'flex min-h-0 flex-col' : ''}>
       <div className={reveal('snap-reveal-left')}>
         <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
           {t('home.testimonials.eyebrow')}
         </p>
-        <h2 className="font-display mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+        <h2
+          className={`font-display mt-2 max-w-3xl font-semibold tracking-tight text-ink ${
+            compact ? 'text-2xl sm:text-4xl' : 'mt-3 text-3xl sm:text-5xl'
+          }`}
+        >
           {t('home.testimonials.title')}
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-          {t('home.testimonials.subtitle')}
-        </p>
+        {compact ? null : (
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+            {t('home.testimonials.subtitle')}
+          </p>
+        )}
       </div>
 
-      <div className={`${reveal('snap-reveal-d2')} mt-5 flex flex-wrap items-center gap-2`}>
-        {(['all', 5, 4] as const).map((filter) => (
-          <button
-            key={filter}
-            type="button"
-            onClick={() => selectRating(filter)}
-            className={`inline-flex min-h-10 items-center rounded-full border px-4 text-xs font-semibold transition ${
-              ratingFilter === filter
-                ? 'border-brand-500 bg-brand-100 text-brand-700'
-                : 'border-line bg-panel/70 text-muted hover:border-brand-400 hover:text-ink'
-            }`}
-            aria-pressed={ratingFilter === filter}
-          >
-            {filter === 'all' ? t('home.testimonials.all') : `${filter}★`}
-          </button>
-        ))}
-      </div>
+      {compact ? null : (
+        <div className={`${reveal('snap-reveal-d2')} mt-5 flex flex-wrap items-center gap-2`}>
+          {(['all', 5, 4] as const).map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => selectRating(filter)}
+              className={`inline-flex min-h-10 items-center rounded-full border px-4 text-xs font-semibold transition ${
+                ratingFilter === filter
+                  ? 'border-brand-500 bg-brand-100 text-brand-700'
+                  : 'border-line bg-panel/70 text-muted hover:border-brand-400 hover:text-ink'
+              }`}
+              aria-pressed={ratingFilter === filter}
+            >
+              {filter === 'all' ? t('home.testimonials.all') : `${filter}★`}
+            </button>
+          ))}
+        </div>
+      )}
 
-      <div className={`${reveal('snap-reveal-d3 snap-reveal-scale')} mt-5`}>
+      <div className={`${reveal('snap-reveal-d3 snap-reveal-scale')} ${compact ? 'mt-4' : 'mt-5'}`}>
         {current ? (
           <div className="flex items-stretch gap-3">
             <button
@@ -126,10 +135,14 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
             >
               <ChevronLeft className="h-5 w-5" aria-hidden />
             </button>
-            <article className="glass-panel flex min-h-64 min-w-0 flex-1 flex-col rounded-[1.75rem] p-5 sm:p-6">
+            <article
+              className={`glass-panel flex min-w-0 flex-1 flex-col rounded-[1.75rem] p-4 sm:p-5 ${
+                compact ? '' : 'min-h-64 p-5 sm:p-6'
+              }`}
+            >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <Quote className="h-6 w-6 text-brand-500" aria-hidden />
+                  <Quote className="h-5 w-5 text-brand-500 sm:h-6 sm:w-6" aria-hidden />
                   <div
                     className="flex gap-1"
                     aria-label={t('home.testimonials.rating', { count: current.rating })}
@@ -151,10 +164,14 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
                   {t('home.testimonials.beta')}
                 </span>
               </div>
-              <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-ink/90 sm:text-base">
+              <blockquote
+                className={`mt-3 text-sm leading-relaxed text-ink/90 sm:text-base ${
+                  compact ? 'line-clamp-4' : 'mt-4 flex-1'
+                }`}
+              >
                 “{current.quote}”
               </blockquote>
-              <footer className="mt-5 border-t border-line/80 pt-4">
+              <footer className={`border-t border-line/80 ${compact ? 'mt-3 pt-3' : 'mt-5 pt-4'}`}>
                 <p className="font-semibold text-ink">{current.name}</p>
                 <p className="mt-1 flex items-center gap-1.5 text-xs text-muted">
                   <MapPin className="h-3.5 w-3.5 shrink-0 text-brand-500" aria-hidden />
@@ -174,83 +191,85 @@ export function TestimonialsSection({ animated = false }: TestimonialsSectionPro
         ) : null}
       </div>
 
-      <div className={`${reveal('snap-reveal-d4')} mt-5 rounded-2xl border border-line bg-panel/65 p-4`}>
-        {!isAuthenticated ? (
-          <p className="text-sm text-muted">
-            {t('home.testimonials.loginHint')}{' '}
-            <Link to="/login" className="font-semibold text-brand-500 no-underline">
-              {t('nav.login')}
-            </Link>
-          </p>
-        ) : eligibility?.reviewStatus === 'PENDING' ? (
-          <p className="text-sm text-muted">{t('home.testimonials.pending')}</p>
-        ) : eligibility?.reviewStatus === 'APPROVED' ? (
-          <p className="text-sm text-muted">{t('home.testimonials.approved')}</p>
-        ) : canSubmit ? (
-          <div className="grid gap-3 md:grid-cols-[auto_1fr_1fr_auto] md:items-end">
-            <Select
-              label={t('home.testimonials.yourRating')}
-              value={String(rating)}
-              onChange={(event) => setRating(Number(event.target.value))}
-              options={[
-                { value: '5', label: '5★' },
-                { value: '4', label: '4★' },
-                { value: '3', label: '3★' },
-                { value: '2', label: '2★' },
-                { value: '1', label: '1★' },
-              ]}
-            />
-            <label className="text-xs font-medium text-muted">
-              {t('home.testimonials.yourReview')}
-              <textarea
-                value={text}
-                onChange={(event) => setText(event.target.value)}
-                minLength={20}
-                maxLength={1000}
-                className="mt-1 block min-h-20 w-full resize-y rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink"
-              />
-            </label>
-            <label className="text-xs font-medium text-muted">
-              {t('home.testimonials.yourLocation')}
-              <input
-                value={location}
-                onChange={(event) => setLocation(event.target.value)}
-                maxLength={120}
-                className="mt-1 block min-h-11 w-full rounded-xl border border-line bg-surface px-3 text-sm text-ink"
-              />
-            </label>
-            <Button
-              type="button"
-              onClick={() => void submitReview()}
-              isLoading={submitMutation.isPending}
-              disabled={text.trim().length < 20}
-            >
-              {t('home.testimonials.submit')}
-            </Button>
-            {submitError ? <p className="text-sm text-red-600 md:col-span-4">{submitError}</p> : null}
-          </div>
-        ) : eligibility ? (
-          <div>
+      {compact ? null : (
+        <div className={`${reveal('snap-reveal-d4')} mt-5 rounded-2xl border border-line bg-panel/65 p-4`}>
+          {!isAuthenticated ? (
             <p className="text-sm text-muted">
-              {t('home.testimonials.progressHint', {
-                count: eligibility.completedCount,
-                required: eligibility.requiredCount,
-              })}
+              {t('home.testimonials.loginHint')}{' '}
+              <Link to="/login" className="font-semibold text-brand-500 no-underline">
+                {t('nav.login')}
+              </Link>
             </p>
-            <div className="mt-3 h-2 overflow-hidden rounded-full bg-line/70">
-              <div
-                className="h-full rounded-full bg-brand-500 transition-[width]"
-                style={{
-                  width: `${Math.min(
-                    100,
-                    (eligibility.completedCount / eligibility.requiredCount) * 100,
-                  )}%`,
-                }}
+          ) : eligibility?.reviewStatus === 'PENDING' ? (
+            <p className="text-sm text-muted">{t('home.testimonials.pending')}</p>
+          ) : eligibility?.reviewStatus === 'APPROVED' ? (
+            <p className="text-sm text-muted">{t('home.testimonials.approved')}</p>
+          ) : canSubmit ? (
+            <div className="grid gap-3 md:grid-cols-[auto_1fr_1fr_auto] md:items-end">
+              <Select
+                label={t('home.testimonials.yourRating')}
+                value={String(rating)}
+                onChange={(event) => setRating(Number(event.target.value))}
+                options={[
+                  { value: '5', label: '5★' },
+                  { value: '4', label: '4★' },
+                  { value: '3', label: '3★' },
+                  { value: '2', label: '2★' },
+                  { value: '1', label: '1★' },
+                ]}
               />
+              <label className="text-xs font-medium text-muted">
+                {t('home.testimonials.yourReview')}
+                <textarea
+                  value={text}
+                  onChange={(event) => setText(event.target.value)}
+                  minLength={20}
+                  maxLength={1000}
+                  className="mt-1 block min-h-20 w-full resize-y rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink"
+                />
+              </label>
+              <label className="text-xs font-medium text-muted">
+                {t('home.testimonials.yourLocation')}
+                <input
+                  value={location}
+                  onChange={(event) => setLocation(event.target.value)}
+                  maxLength={120}
+                  className="mt-1 block min-h-11 w-full rounded-xl border border-line bg-surface px-3 text-sm text-ink"
+                />
+              </label>
+              <Button
+                type="button"
+                onClick={() => void submitReview()}
+                isLoading={submitMutation.isPending}
+                disabled={text.trim().length < 20}
+              >
+                {t('home.testimonials.submit')}
+              </Button>
+              {submitError ? <p className="text-sm text-red-600 md:col-span-4">{submitError}</p> : null}
             </div>
-          </div>
-        ) : null}
-      </div>
+          ) : eligibility ? (
+            <div>
+              <p className="text-sm text-muted">
+                {t('home.testimonials.progressHint', {
+                  count: eligibility.completedCount,
+                  required: eligibility.requiredCount,
+                })}
+              </p>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-line/70">
+                <div
+                  className="h-full rounded-full bg-brand-500 transition-[width]"
+                  style={{
+                    width: `${Math.min(
+                      100,
+                      (eligibility.completedCount / eligibility.requiredCount) * 100,
+                    )}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ) : null}
+        </div>
+      )}
     </div>
   );
 }

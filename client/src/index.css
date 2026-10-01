@@ -245,6 +245,10 @@ html[data-theme='light'] {
       max-height: 100dvh;
       padding-bottom: 0;
     }
+
+    .home-snap-section#testimonials {
+      min-height: 0;
+    }
   }
 
   /* Tablet: section dots sit at the bottom instead of overlapping the right column. */

@@ -389,7 +389,9 @@
       "apps": "Aplikacje",
       "testimonials": "Opinie",
       "blog": "Blog",
-      "cta": "Wypróbuj"
+      "cta": "Wypróbuj",
+      "services": "Usługi",
+      "pricing": "Plany"
     },
     "heroHighlights": {
       "tasks": "Plany dnia bez chaosu w głowie",
@@ -418,7 +420,58 @@
       "closeFull": "Zamknij menu"
     },
     "heroLead": "Jedno miejsce: zadania dnia, powtórki 3·7·30 i budżet w euro — bez skakania między aplikacjami.",
-    "heroBrowse": "Przeglądaj sekcje poniżej"
+    "heroBrowse": "Przeglądaj sekcje poniżej",
+    "services": {
+      "eyebrow": "Co dostajesz",
+      "title": "Sześć usług, jedno spokojne miejsce",
+      "subtitle": "Zadania, nauka, pieniądze, nawyki, notatki i ciało — razem, żeby postęp się nie rozjeżdżał.",
+      "items": {
+        "tasks": {
+          "title": "Zadania dnia",
+          "text": "Plan na dziś i na miesiąc, odhaczanie i jasny tydzień — bez hałasu w głowie."
+        },
+        "learning": {
+          "title": "Nauka i powrót",
+          "text": "Zapisz to, co ważne, i wróć w rytmie 3 · 7 · 30 — wiedza nie musi znikać po intensywnym tygodniu."
+        },
+        "finance": {
+          "title": "Budżet",
+          "text": "Przychody, wydatki i czytelne saldo okresu, żeby pieniądze nie ginęły za nauką."
+        },
+        "habits": {
+          "title": "Nawyki",
+          "text": "Prosty miesięczny rytm, który da się utrzymać — jedno odhaczenie dziennie, bez teatru serii."
+        },
+        "notes": {
+          "title": "Notatki",
+          "text": "Myśli obok pracy, a nie w kolejnej aplikacji, której potem nie otwierasz."
+        },
+        "nutrition": {
+          "title": "Odżywianie i ciało",
+          "text": "Posiłki, woda i waga w tym samym gabinecie — dość, by być szczerym, bez kolejnego dashboardu."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Plany",
+      "title": "Zacznij za darmo. Pro, gdy potrzebujesz więcej miejsca.",
+      "subtitle": "Wszystkie funkcje od pierwszego dnia. Free ma spokojne limity ilości. Pro je zdejmuje, a rok oszczędza około dwóch miesięcy.",
+      "freePrice": "0 €",
+      "freeHint": "Wystarczy, by wejść w rytm. Limity na materiały, zadania, nawyki i notatki.",
+      "yearHint": "około dwóch miesięcy w prezencie wobec płatności miesięcznej",
+      "recommended": "Najlepsza wartość",
+      "cta": "Weź Pro",
+      "freePoints": {
+        "open": "Wszystkie moduły otwarte od pierwszego dnia",
+        "caps": "Spokojne limity ilości — nie zablokowane funkcje",
+        "start": "Rejestracja w minutę, możesz zacząć dziś"
+      },
+      "proPoints": {
+        "unlimited": "Więcej miejsca: materiały, nawyki, notatki i historia",
+        "history": "Dłuższe wykresy i więcej urządzeń, bez miesięcznych ścian",
+        "devices": "To samo Pro na stronie zaraz po płatności"
+      }
+    }
   },
   "guide": {
     "eyebrow": "Prosty przewodnik",

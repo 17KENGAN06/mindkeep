@@ -389,7 +389,9 @@
       "apps": "Apps",
       "testimonials": "Avis",
       "blog": "Blog",
-      "cta": "Essayer"
+      "cta": "Essayer",
+      "services": "Services",
+      "pricing": "Offres"
     },
     "heroHighlights": {
       "tasks": "Plans du jour sans encombrement mental",
@@ -418,7 +420,58 @@
       "closeFull": "Fermer le menu"
     },
     "heroLead": "Un seul espace : tâches du jour, révisions 3·7·30 et budget en euros — sans sauter d'une app à l'autre.",
-    "heroBrowse": "Parcourir les sections ci-dessous"
+    "heroBrowse": "Parcourir les sections ci-dessous",
+    "services": {
+      "eyebrow": "Ce que vous avez",
+      "title": "Six services, un espace calme",
+      "subtitle": "Tâches, études, argent, habitudes, notes et corps — ensemble, pour que le progrès ne se disperse pas.",
+      "items": {
+        "tasks": {
+          "title": "Tâches du jour",
+          "text": "Planifiez aujourd’hui et le mois, cochez, et voyez la semaine sans bruit dans la tête."
+        },
+        "learning": {
+          "title": "Études et retour",
+          "text": "Gardez l’essentiel et revenez au rythme 3 · 7 · 30 — le savoir n’a pas à disparaître après une semaine dense."
+        },
+        "finance": {
+          "title": "Budget",
+          "text": "Revenus, dépenses et un solde de période clair, pour que l’argent ne disparaisse pas derrière les études."
+        },
+        "habits": {
+          "title": "Habitudes",
+          "text": "Un rythme mensuel simple à tenir — une case par jour, sans théâtre de séries."
+        },
+        "notes": {
+          "title": "Notes",
+          "text": "Les pensées à côté du travail, pas dans une autre appli que vous n’ouvrirez plus."
+        },
+        "nutrition": {
+          "title": "Nutrition et corps",
+          "text": "Repas, eau et poids dans le même espace — assez pour rester honnête, sans un autre tableau de bord."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Offres",
+      "title": "Commencez gratuitement. Pro quand il faut plus de place.",
+      "subtitle": "Toutes les fonctions dès le premier jour. Free a des plafonds calmes. Pro les lève — l’annuel économise environ deux mois.",
+      "freePrice": "0 €",
+      "freeHint": "Assez pour entrer dans le rythme. Plafonds sur les matériaux, tâches, habitudes et notes.",
+      "yearHint": "environ deux mois offerts par rapport au paiement mensuel",
+      "recommended": "Meilleure valeur",
+      "cta": "Passer à Pro",
+      "freePoints": {
+        "open": "Tous les modules ouverts dès le premier jour",
+        "caps": "Plafonds de quantité calmes — pas de fonctions verrouillées",
+        "start": "Inscription en une minute, on peut commencer aujourd’hui"
+      },
+      "proPoints": {
+        "unlimited": "Plus de place : matériaux, habitudes, notes et historique",
+        "history": "Graphiques plus longs et plus d’appareils, sans murs mensuels",
+        "devices": "Le même Pro sur le site dès le paiement"
+      }
+    }
   },
   "guide": {
     "eyebrow": "Guide simple",

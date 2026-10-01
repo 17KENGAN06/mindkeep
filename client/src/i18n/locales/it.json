@@ -389,7 +389,9 @@
       "apps": "App",
       "testimonials": "Recensioni",
       "blog": "Blog",
-      "cta": "Provalo"
+      "cta": "Provalo",
+      "services": "Servizi",
+      "pricing": "Piani"
     },
     "heroHighlights": {
       "tasks": "Piani del giorno senza rumore mentale",
@@ -418,7 +420,58 @@
       "closeFull": "Chiudi menu"
     },
     "heroLead": "Un solo spazio: attività del giorno, ripassi 3·7·30 e budget in euro — senza saltare da un'app all'altra.",
-    "heroBrowse": "Scorri le sezioni qui sotto"
+    "heroBrowse": "Scorri le sezioni qui sotto",
+    "services": {
+      "eyebrow": "Cosa ottieni",
+      "title": "Sei servizi, un spazio calmo",
+      "subtitle": "Compiti, studio, soldi, abitudini, note e corpo — insieme, così i progressi non si disperdono.",
+      "items": {
+        "tasks": {
+          "title": "Compiti del giorno",
+          "text": "Pianifica oggi e il mese, spunta e vedi la settimana senza rumore in testa."
+        },
+        "learning": {
+          "title": "Studio e ritorno",
+          "text": "Salva ciò che conta e torna nel ritmo 3 · 7 · 30 — la conoscenza non deve svanire dopo una settimana piena."
+        },
+        "finance": {
+          "title": "Budget",
+          "text": "Entrate, uscite e un saldo di periodo chiaro, così i soldi non spariscono dietro lo studio."
+        },
+        "habits": {
+          "title": "Abitudini",
+          "text": "Un ritmo mensile semplice da tenere — un segno al giorno, senza teatro di serie."
+        },
+        "notes": {
+          "title": "Note",
+          "text": "I pensieri accanto al lavoro, non in un’altra app che poi non apri."
+        },
+        "nutrition": {
+          "title": "Nutrizione e corpo",
+          "text": "Pasti, acqua e peso nello stesso spazio — abbastanza per essere onesti, senza un altro cruscotto."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Piani",
+      "title": "Inizia gratis. Pro quando serve più spazio.",
+      "subtitle": "Tutte le funzioni dal primo giorno. Free ha limiti di quantità calmi. Pro li toglie — l’annuale risparmia circa due mesi.",
+      "freePrice": "0 €",
+      "freeHint": "Abbastanza per entrare nel ritmo. Limiti su materiali, compiti, abitudini e note.",
+      "yearHint": "circa due mesi in omaggio rispetto al pagamento mensile",
+      "recommended": "Più conveniente",
+      "cta": "Prendi Pro",
+      "freePoints": {
+        "open": "Tutti i moduli aperti dal primo giorno",
+        "caps": "Limiti di quantità calmi — non funzioni bloccate",
+        "start": "Registrati in un minuto e inizia oggi"
+      },
+      "proPoints": {
+        "unlimited": "Più spazio: materiali, abitudini, note e cronologia",
+        "history": "Grafici più lunghi e più dispositivi, senza muri mensili",
+        "devices": "Lo stesso Pro sul sito subito dopo il pagamento"
+      }
+    }
   },
   "guide": {
     "eyebrow": "Guida semplice",

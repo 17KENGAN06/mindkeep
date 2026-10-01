@@ -389,7 +389,9 @@
       "apps": "Apps",
       "testimonials": "Stimmen",
       "blog": "Blog",
-      "cta": "Ausprobieren"
+      "cta": "Ausprobieren",
+      "services": "Leistungen",
+      "pricing": "Tarife"
     },
     "heroHighlights": {
       "tasks": "Tagespläne ohne Kopflärm",
@@ -418,7 +420,58 @@
       "closeFull": "Menü schließen"
     },
     "heroLead": "Ein Arbeitsraum: Tagesaufgaben, 3·7·30-Wiederholungen und ein Euro-Budget — ohne zwischen Apps zu wechseln.",
-    "heroBrowse": "Abschnitte unten durchsehen"
+    "heroBrowse": "Abschnitte unten durchsehen",
+    "services": {
+      "eyebrow": "Was du bekommst",
+      "title": "Sechs Leistungen, ein ruhiger Arbeitsraum",
+      "subtitle": "Aufgaben, Lernen, Geld, Gewohnheiten, Notizen und Körper — zusammen, damit Fortschritt nicht auseinanderläuft.",
+      "items": {
+        "tasks": {
+          "title": "Tagesaufgaben",
+          "text": "Plane heute und den Monat, hak ab und sieh die Woche ohne Lärm im Kopf."
+        },
+        "learning": {
+          "title": "Lernen & Rückkehr",
+          "text": "Speichere, was zählt, und kehre im Takt 3 · 7 · 30 zurück — Wissen muss nach einer dichten Woche nicht verschwinden."
+        },
+        "finance": {
+          "title": "Budget",
+          "text": "Einnahmen, Ausgaben und eine klare Periodenbilanz, damit Geld nicht hinter dem Lernen verschwindet."
+        },
+        "habits": {
+          "title": "Gewohnheiten",
+          "text": "Ein einfacher Monatsrhythmus, den man halten kann — ein Häkchen am Tag, ohne Serientheater."
+        },
+        "notes": {
+          "title": "Notizen",
+          "text": "Gedanken neben der Arbeit, nicht in einer weiteren App, die du später nicht öffnest."
+        },
+        "nutrition": {
+          "title": "Ernährung & Körper",
+          "text": "Mahlzeiten, Wasser und Gewicht im selben Kabinett — ehrlich bleiben, ohne extra Dashboard."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Tarife",
+      "title": "Kostenlos starten. Pro, wenn du mehr Raum brauchst.",
+      "subtitle": "Alle Funktionen ab Tag eins. Free hat ruhige Mengenlimits. Pro hebt sie auf — jährlich spart etwa zwei Monate.",
+      "freePrice": "0 €",
+      "freeHint": "Genug, um in den Rhythmus zu kommen. Limits bei Materialien, Aufgaben, Gewohnheiten und Notizen.",
+      "yearHint": "etwa zwei Monate geschenkt gegenüber monatlicher Zahlung",
+      "recommended": "Besserer Wert",
+      "cta": "Pro holen",
+      "freePoints": {
+        "open": "Alle Module ab dem ersten Tag offen",
+        "caps": "Ruhige Mengenlimits — keine gesperrten Funktionen",
+        "start": "In einer Minute registrieren und heute starten"
+      },
+      "proPoints": {
+        "unlimited": "Mehr Raum: Materialien, Gewohnheiten, Notizen und Verlauf",
+        "history": "Längere Charts und mehr Geräte, ohne monatliche Wände",
+        "devices": "Dasselbe Pro auf der Website direkt nach dem Checkout"
+      }
+    }
   },
   "guide": {
     "eyebrow": "Einfache Anleitung",
