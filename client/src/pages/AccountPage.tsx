@@ -125,6 +125,7 @@ const USAGE_KEYS = [
 
 function BillingSection() {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const [notice, setNotice] = useState<string | null>(null);
@@ -196,22 +197,28 @@ function BillingSection() {
   const status = statusQuery.data;
   const billed = Boolean(status?.hasStripeCustomer);
   const subscribed = Boolean(status?.subscribed);
+  const isAdmin = user?.role === 'ADMIN';
+  const isBeta = Boolean((user?.betaTester || status?.betaTester) && !isAdmin);
   const isPro = status?.plan === 'PRO';
-  const showSubscribe = Boolean(status?.configured && !subscribed);
+  const showSubscribe = Boolean(status?.configured && !subscribed && !isBeta);
   const showManage = Boolean(status?.configured && billed);
   const expires = status?.planExpiresAt
     ? new Date(status.planExpiresAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
     : null;
 
-  const planName = subscribed
-    ? t('billing.proLabel')
-    : isPro
-      ? t('billing.adminUnlimited')
-      : t('billing.freeLabel');
+  const planName = isAdmin
+    ? t('billing.adminUnlimited')
+    : subscribed
+      ? t('billing.proLabel')
+      : isBeta
+        ? t('billing.betaLabel')
+        : t('billing.freeLabel');
   const planCaption =
     subscribed && expires
       ? t(status?.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })
-      : t('billing.subtitle');
+      : isBeta
+        ? t('billing.betaHint')
+        : t('billing.subtitle');
 
   return (
     <div className="overflow-hidden rounded-[1.75rem] border border-brand-500/35 bg-panel shadow-[0_18px_40px_-28px_rgba(53,111,88,0.55)] ring-1 ring-brand-500/10">
@@ -270,7 +277,8 @@ function BillingSection() {
           <p className="rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">{t('billing.cancelScheduled')}</p>
         ) : null}
 
-        {isPro && !subscribed ? <p className="text-sm text-muted">{t('billing.adminHint')}</p> : null}
+        {isAdmin && !subscribed ? <p className="text-sm text-muted">{t('billing.adminHint')}</p> : null}
+        {isBeta && !subscribed ? <p className="text-sm text-muted">{t('billing.betaHint')}</p> : null}
 
         {status && !status.configured ? (
           <p className="text-sm text-muted">{t('billing.unavailable')}</p>
@@ -346,13 +354,13 @@ function BillingSection() {
           </Button>
         ) : null}
 
-        {status && subscribed ? (
+        {status && (subscribed || isBeta) ? (
           <p className="rounded-3xl bg-brand-50/80 px-4 py-4 text-sm font-medium leading-relaxed text-ink ring-1 ring-brand-500/20">
             {t('billing.proUnlocked')}
           </p>
         ) : null}
 
-        {status && !subscribed ? <UsageGrid usage={status.usage} /> : null}
+        {status && !subscribed && !isBeta ? <UsageGrid usage={status.usage} /> : null}
       </div>
     </div>
   );

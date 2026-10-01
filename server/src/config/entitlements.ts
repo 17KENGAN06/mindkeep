@@ -5,7 +5,7 @@ export const FREE_LIMITS = {
   reviewCategories: 3,
   habits: 3,
   notes: 20,
-  tasksPerMonth: 15,
+  tasksPerMonth: 45,
   financeOperationsPerMonth: 25,
   financeCategories: 5,
   mealHistoryDays: 7,

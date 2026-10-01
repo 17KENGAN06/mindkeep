@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import { resolveAppLocale } from '@/services/emailCopy.js';
 import { reviewService } from '@/services/review.service.js';
 import type { SubmitReviewInput } from '@/validations/review.schemas.js';
 import { AppError } from '@/utils/AppError.js';
@@ -13,9 +14,14 @@ function requireUserId(req: Request): string {
   return req.user.id;
 }
 
+function requestLocale(req: Request): string {
+  const fromQuery = typeof req.query.locale === 'string' ? req.query.locale : null;
+  return resolveAppLocale(req.get('X-App-Language') ?? fromQuery);
+}
+
 export class ReviewController {
-  async listApproved(_req: Request, res: Response): Promise<void> {
-    res.json({ reviews: await reviewService.listApproved() });
+  async listApproved(req: Request, res: Response): Promise<void> {
+    res.json({ reviews: await reviewService.listApproved(requestLocale(req)) });
   }
 
   async eligibility(req: Request, res: Response): Promise<void> {
@@ -26,6 +32,7 @@ export class ReviewController {
     const review = await reviewService.submit(
       requireUserId(req),
       req.body as SubmitReviewInput,
+      requestLocale(req),
     );
     res.status(201).json({ review });
   }

@@ -7,6 +7,7 @@ import {
   adminReviewIdSchema,
   adminUserIdSchema,
   moderateReviewSchema,
+  setBetaTesterSchema,
 } from '@/validations/admin.schemas.js';
 
 export const adminRouter = Router();
@@ -21,6 +22,23 @@ adminRouter.get(
 adminRouter.get(
   '/users',
   asyncHandler((req, res) => adminController.listUsers(req, res)),
+);
+
+adminRouter.get(
+  '/subscribers',
+  asyncHandler((req, res) => adminController.listSubscribers(req, res)),
+);
+
+adminRouter.get(
+  '/beta-testers',
+  asyncHandler((req, res) => adminController.listBetaTesters(req, res)),
+);
+
+adminRouter.patch(
+  '/users/:id/beta',
+  validate(adminUserIdSchema, 'params'),
+  validate(setBetaTesterSchema),
+  asyncHandler((req, res) => adminController.setBetaTester(req, res)),
 );
 
 adminRouter.get(

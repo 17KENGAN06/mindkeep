@@ -552,6 +552,16 @@
     "loadError": "Impossible de charger les données admin.",
     "reviewsTitle": "Modération des avis",
     "reviewsEmpty": "Aucun avis soumis pour l'instant",
+    "subscribersTitle": "Abonnés payants",
+    "subscribersHint": "Comptes avec un abonnement Stripe actif.",
+    "subscribersEmpty": "Pas encore d’abonnés payants",
+    "betaTitle": "Bêta-testeurs",
+    "betaHint": "Choisissez un utilisateur actif. Il aura l’accès Pro complet, et le compte affichera Bêta-test — pas Admin.",
+    "betaEmpty": "Pas encore de bêta-testeurs",
+    "betaGrant": "Donner l’accès bêta",
+    "betaRevoke": "Retirer",
+    "betaSelect": "Utilisateur actif",
+    "betaSelectPlaceholder": "Choisir un utilisateur",
     "approveReview": "Approuver",
     "rejectReview": "Refuser",
     "reviewStatus": {
@@ -562,6 +572,8 @@
     "stats": {
       "users": "Utilisateurs",
       "admins": "Admins",
+      "subscribers": "Abonnés",
+      "beta": "Bêta-testeurs",
       "materials": "Fiches",
       "reminders": "Rappels"
     },
@@ -574,11 +586,14 @@
       "reminders": "Rappels",
       "uses": "Usages",
       "lastActivity": "Activité",
-      "created": "Créé"
+      "created": "Créé",
+      "interval": "Offre",
+      "expires": "Renouvelle"
     },
     "roles": {
       "admin": "Admin",
-      "user": "Utilisateur"
+      "user": "Utilisateur",
+      "beta": "Bêta-test"
     },
     "backToUsers": "Retour aux utilisateurs",
     "activitySubtitle": "Statistiques d'usage complètes. Textes, montants, poids et titres d'entrées restent masqués.",
@@ -638,7 +653,9 @@
       "PASSWORD_CHANGED": "Mot de passe modifié",
       "PASSWORD_RESET": "Mot de passe réinitialisé",
       "REVIEW_APPROVED": "Avis approuvé",
-      "REVIEW_REJECTED": "Avis refusé"
+      "REVIEW_REJECTED": "Avis refusé",
+      "BETA_GRANTED": "Accès bêta accordé",
+      "BETA_REVOKED": "Accès bêta retiré"
     }
   },
   "auth": {
@@ -1299,7 +1316,7 @@
       "reviewCategories": "Free : 3 catégories de révision. L’abonnement dans Compte enlève le plafond.",
       "habits": "Free : 3 habitudes. L’abonnement dans Compte enlève le plafond.",
       "notes": "Free : 20 notes. L’abonnement dans Compte enlève le plafond.",
-      "tasks": "Free : 15 tâches par mois. L’abonnement dans Compte enlève le plafond.",
+      "tasks": "Free : 45 tâches par mois. L’abonnement dans Compte enlève le plafond.",
       "financeOperations": "Free : 25 opérations par mois. L’abonnement dans Compte enlève le plafond.",
       "financeCategories": "Free : 5 catégories budget. L’abonnement dans Compte enlève le plafond.",
       "meals": "Free enregistre les repas d’aujourd’hui et des 7 derniers jours. L’abonnement ouvre tout le journal.",
@@ -1307,6 +1324,8 @@
     },
     "adminUnlimited": "Admin",
     "adminHint": "Ce compte est illimité en tant qu’admin. Les boutons ci-dessous servent seulement à tester Stripe.",
+    "betaLabel": "Bêta-test",
+    "betaHint": "Ce compte est bêta-testeur avec l’accès Pro complet — les mêmes droits qu’un abonnement payant.",
     "monthCard": "Mois",
     "yearCard": "An",
     "ctaYear": "Choisir l’année",

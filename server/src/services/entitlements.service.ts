@@ -19,6 +19,7 @@ export type EntitlementUser = {
   timezone: string;
   plan: UserPlan;
   planExpiresAt: Date | null;
+  betaTester: boolean;
 };
 
 const entitlementSelect = {
@@ -28,12 +29,16 @@ const entitlementSelect = {
   timezone: true,
   plan: true,
   planExpiresAt: true,
+  betaTester: true,
 } as const;
 
-export function isProUser(user: Pick<EntitlementUser, 'email' | 'role' | 'plan' | 'planExpiresAt'>): boolean {
+export function isProUser(
+  user: Pick<EntitlementUser, 'email' | 'role' | 'plan' | 'planExpiresAt' | 'betaTester'>,
+): boolean {
   if (user.role === UserRole.ADMIN || env.ADMIN_EMAILS.includes(user.email.toLowerCase())) {
     return true;
   }
+  if (user.betaTester) return true;
   if (user.plan !== UserPlan.PRO) return false;
   if (user.planExpiresAt && user.planExpiresAt.getTime() < Date.now()) return false;
   return true;
@@ -53,6 +58,7 @@ export async function getEntitlement(userId: string): Promise<EntitlementUser & 
       timezone: 'Europe/Helsinki',
       plan: UserPlan.FREE,
       planExpiresAt: null,
+      betaTester: false,
       pro: false,
     };
   }

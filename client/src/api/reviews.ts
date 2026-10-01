@@ -23,7 +23,10 @@ export type SubmitReviewPayload = {
 };
 
 export const reviewsApi = {
-  approved: () => apiClient.get<{ reviews: PublicReview[] }>('/api/reviews'),
+  approved: (locale?: string) =>
+    apiClient.get<{ reviews: PublicReview[] }>(
+      locale ? `/api/reviews?locale=${encodeURIComponent(locale)}` : '/api/reviews',
+    ),
   eligibility: () =>
     apiClient.get<{ eligibility: ReviewEligibility }>('/api/reviews/eligibility'),
   submit: (payload: SubmitReviewPayload) =>

@@ -6,8 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { reviewsApi } from '@/api/reviews';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
-import { testimonials } from '@/content/testimonials';
+import { getTestimonials } from '@/content/testimonials';
 import { useAuth } from '@/features/auth/useAuth';
+import type { AppLanguage } from '@/i18n';
 
 type TestimonialsSectionProps = {
   animated?: boolean;
@@ -15,7 +16,8 @@ type TestimonialsSectionProps = {
 };
 
 export function TestimonialsSection({ animated = false, compact = false }: TestimonialsSectionProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = ((i18n.resolvedLanguage ?? i18n.language ?? 'en').split('-')[0] || 'en') as AppLanguage;
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [ratingFilter, setRatingFilter] = useState<'all' | 4 | 5>('all');
@@ -27,8 +29,8 @@ export function TestimonialsSection({ animated = false, compact = false }: Testi
   const reveal = (extra = '') => (animated ? `snap-reveal ${extra}` : '');
 
   const approvedQuery = useQuery({
-    queryKey: ['reviews', 'approved'],
-    queryFn: async () => (await reviewsApi.approved()).reviews,
+    queryKey: ['reviews', 'approved', language],
+    queryFn: async () => (await reviewsApi.approved(language)).reviews,
   });
   const eligibilityQuery = useQuery({
     queryKey: ['reviews', 'eligibility'],
@@ -50,7 +52,7 @@ export function TestimonialsSection({ animated = false, compact = false }: Testi
     quote: item.text,
     rating: item.rating,
   }));
-  const allTestimonials = [...dynamic, ...testimonials];
+  const allTestimonials = [...dynamic, ...getTestimonials(language)];
   const filtered =
     ratingFilter === 'all'
       ? allTestimonials

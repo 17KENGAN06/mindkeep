@@ -6,14 +6,15 @@ import { AppError } from '@/utils/AppError.js';
 const REQUIRED_COMPLETED_REVIEWS = 20;
 
 export class ReviewService {
-  async listApproved() {
+  async listApproved(locale: string) {
     return prisma.userReview.findMany({
-      where: { status: UserReviewStatus.APPROVED },
+      where: { status: UserReviewStatus.APPROVED, locale },
       select: {
         id: true,
         rating: true,
         text: true,
         location: true,
+        locale: true,
         createdAt: true,
         user: { select: { name: true } },
       },
@@ -40,7 +41,7 @@ export class ReviewService {
     };
   }
 
-  async submit(userId: string, input: SubmitReviewInput) {
+  async submit(userId: string, input: SubmitReviewInput, locale: string) {
     const eligibility = await this.eligibility(userId);
     if (!eligibility.eligible) {
       throw new AppError('Complete more reviews before leaving feedback', {
@@ -70,11 +71,13 @@ export class ReviewService {
         rating: input.rating,
         text: input.text,
         location: input.location || null,
+        locale,
       },
       update: {
         rating: input.rating,
         text: input.text,
         location: input.location || null,
+        locale,
         status: UserReviewStatus.PENDING,
       },
     });

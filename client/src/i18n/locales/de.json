@@ -552,6 +552,16 @@
     "loadError": "Admindaten konnten nicht geladen werden.",
     "reviewsTitle": "Bewertungsfreigabe",
     "reviewsEmpty": "Noch keine eingereichten Bewertungen",
+    "subscribersTitle": "Zahlende Abonnenten",
+    "subscribersHint": "Konten mit aktivem Stripe-Abo.",
+    "subscribersEmpty": "Noch keine zahlenden Abonnenten",
+    "betaTitle": "Beta-Tester",
+    "betaHint": "Wählen Sie einen aktiven Nutzer. Er bekommt vollen Pro-Zugang, und im Konto steht Beta-Test — nicht Admin.",
+    "betaEmpty": "Noch keine Beta-Tester",
+    "betaGrant": "Beta-Zugang geben",
+    "betaRevoke": "Entziehen",
+    "betaSelect": "Aktiver Nutzer",
+    "betaSelectPlaceholder": "Nutzer wählen",
     "approveReview": "Freigeben",
     "rejectReview": "Ablehnen",
     "reviewStatus": {
@@ -562,6 +572,8 @@
     "stats": {
       "users": "Nutzer",
       "admins": "Admins",
+      "subscribers": "Abonnenten",
+      "beta": "Beta-Tester",
       "materials": "Materialien",
       "reminders": "Erinnerungen"
     },
@@ -574,11 +586,14 @@
       "reminders": "Erinnerungen",
       "uses": "Nutzungen",
       "lastActivity": "Aktivität",
-      "created": "Erstellt"
+      "created": "Erstellt",
+      "interval": "Plan",
+      "expires": "Verlängert"
     },
     "roles": {
       "admin": "Admin",
-      "user": "Nutzer"
+      "user": "Nutzer",
+      "beta": "Beta-Test"
     },
     "backToUsers": "Zurück zu den Nutzern",
     "activitySubtitle": "Vollständige Nutzungsstatistik. Texte, Beträge, Gewichtswerte und Eintragstitel bleiben verborgen.",
@@ -638,7 +653,9 @@
       "PASSWORD_CHANGED": "Passwort geändert",
       "PASSWORD_RESET": "Passwort zurückgesetzt",
       "REVIEW_APPROVED": "Bewertung freigegeben",
-      "REVIEW_REJECTED": "Bewertung abgelehnt"
+      "REVIEW_REJECTED": "Bewertung abgelehnt",
+      "BETA_GRANTED": "Beta-Zugang vergeben",
+      "BETA_REVOKED": "Beta-Zugang entzogen"
     }
   },
   "auth": {
@@ -1299,7 +1316,7 @@
       "reviewCategories": "Free: 3 Wiederholungskategorien. Abo im Konto hebt das Limit auf.",
       "habits": "Free: 3 Gewohnheiten. Abo im Konto hebt das Limit auf.",
       "notes": "Free: 20 Notizen. Abo im Konto hebt das Limit auf.",
-      "tasks": "Free: 15 Aufgaben pro Monat. Abo im Konto hebt das Limit auf.",
+      "tasks": "Free: 45 Aufgaben pro Monat. Abo im Konto hebt das Limit auf.",
       "financeOperations": "Free: 25 Buchungen pro Monat. Abo im Konto hebt das Limit auf.",
       "financeCategories": "Free: 5 Budgetkategorien. Abo im Konto hebt das Limit auf.",
       "meals": "Free speichert Mahlzeiten für heute und 7 Tage. Abo öffnet das ganze Tagebuch.",
@@ -1307,6 +1324,8 @@
     },
     "adminUnlimited": "Admin",
     "adminHint": "Dieses Konto ist als Admin unbegrenzt. Die Buttons unten nur zum Stripe-Test.",
+    "betaLabel": "Beta-Test",
+    "betaHint": "Dieses Konto ist Beta-Tester mit vollem Pro-Zugang — dieselben Rechte wie ein bezahlter Plan.",
     "monthCard": "Monat",
     "yearCard": "Jahr",
     "ctaYear": "Jährlich wählen",

@@ -1,6 +1,7 @@
 import { BudgetOperationType, ReminderStatus } from '@prisma/client';
 import { eachDayOfInterval, endOfDay, format, startOfDay, subDays } from 'date-fns';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
+import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { recordAdminAudit } from '@/services/audit.service.js';
 import { AppError } from '@/utils/AppError.js';
@@ -47,6 +48,12 @@ export class AdminService {
         email: true,
         timezone: true,
         role: true,
+        betaTester: true,
+        plan: true,
+        planInterval: true,
+        planExpiresAt: true,
+        cancelAtPeriodEnd: true,
+        stripeSubscriptionId: true,
         createdAt: true,
         updatedAt: true,
         _count: {
@@ -114,6 +121,12 @@ export class AdminService {
         email: user.email,
         timezone: user.timezone,
         role: user.role,
+        betaTester: user.betaTester,
+        plan: user.plan,
+        planInterval: user.planInterval,
+        planExpiresAt: user.planExpiresAt,
+        cancelAtPeriodEnd: user.cancelAtPeriodEnd,
+        subscribed: Boolean(user.stripeSubscriptionId),
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         materialsCount: counts.materials,
@@ -141,7 +154,9 @@ export class AdminService {
       select: {
         id: true,
         name: true,
+        email: true,
         role: true,
+        betaTester: true,
         createdAt: true,
         timezone: true,
       },
@@ -495,7 +510,9 @@ export class AdminService {
       user: {
         id: user.id,
         name: user.name,
+        email: user.email,
         role: user.role,
+        betaTester: user.betaTester,
         createdAt: user.createdAt,
       },
       lastActivityAt: latestIso(...modules.map((item) => item.lastAt)),
@@ -513,19 +530,112 @@ export class AdminService {
   }
 
   async getOverview() {
-    const [usersTotal, materialsTotal, remindersTotal, adminsTotal] = await Promise.all([
-      prisma.user.count(),
-      prisma.learningMaterial.count(),
-      prisma.reviewReminder.count(),
-      prisma.user.count({ where: { role: 'ADMIN' } }),
-    ]);
+    const now = new Date();
+    const [usersTotal, materialsTotal, remindersTotal, adminsTotal, subscribersTotal, betaTestersTotal] =
+      await Promise.all([
+        prisma.user.count(),
+        prisma.learningMaterial.count(),
+        prisma.reviewReminder.count(),
+        prisma.user.count({ where: { role: 'ADMIN' } }),
+        prisma.user.count({
+          where: {
+            stripeSubscriptionId: { not: null },
+            plan: 'PRO',
+            OR: [{ planExpiresAt: null }, { planExpiresAt: { gt: now } }],
+          },
+        }),
+        prisma.user.count({ where: { betaTester: true } }),
+      ]);
 
     return {
       usersTotal,
       adminsTotal,
       materialsTotal,
       remindersTotal,
+      subscribersTotal,
+      betaTestersTotal,
     };
+  }
+
+  async listSubscribers() {
+    const now = new Date();
+    return prisma.user.findMany({
+      where: {
+        stripeSubscriptionId: { not: null },
+        plan: 'PRO',
+        OR: [{ planExpiresAt: null }, { planExpiresAt: { gt: now } }],
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        planInterval: true,
+        planExpiresAt: true,
+        cancelAtPeriodEnd: true,
+        createdAt: true,
+      },
+      orderBy: { planExpiresAt: 'asc' },
+    });
+  }
+
+  async listBetaTesters() {
+    return prisma.user.findMany({
+      where: { betaTester: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
+  }
+
+  async setBetaTester(id: string, betaTester: boolean, actorUserId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: { id: true, email: true, role: true, betaTester: true },
+    });
+
+    if (!user) {
+      throw new AppError('User not found', { statusCode: 404, code: 'ADMIN_USER_NOT_FOUND' });
+    }
+
+    if (user.role === 'ADMIN' || env.ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+      throw new AppError('Admin accounts already have full access', {
+        statusCode: 400,
+        code: 'ADMIN_ALREADY_ENTITLED',
+      });
+    }
+
+    if (user.betaTester === betaTester) {
+      return user;
+    }
+
+    const updated = await prisma.user.update({
+      where: { id },
+      data: { betaTester },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        betaTester: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    await recordAdminAudit({
+      action: betaTester ? 'BETA_GRANTED' : 'BETA_REVOKED',
+      actorUserId,
+      targetType: 'user',
+      targetId: id,
+    });
+
+    return updated;
   }
 
   async listReviews() {

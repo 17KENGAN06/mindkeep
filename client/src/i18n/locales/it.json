@@ -552,6 +552,16 @@
     "loadError": "Impossibile caricare i dati admin.",
     "reviewsTitle": "Moderazione recensioni",
     "reviewsEmpty": "Nessuna recensione inviata per ora",
+    "subscribersTitle": "Abbonati a pagamento",
+    "subscribersHint": "Account con abbonamento Stripe attivo.",
+    "subscribersEmpty": "Nessun abbonato a pagamento per ora",
+    "betaTitle": "Beta tester",
+    "betaHint": "Scegli un utente attivo. Avrà l’accesso Pro completo e in Account vedrà Beta test — non Admin.",
+    "betaEmpty": "Nessun beta tester per ora",
+    "betaGrant": "Concedi accesso beta",
+    "betaRevoke": "Revoca",
+    "betaSelect": "Utente attivo",
+    "betaSelectPlaceholder": "Scegli un utente",
     "approveReview": "Approva",
     "rejectReview": "Rifiuta",
     "reviewStatus": {
@@ -562,6 +572,8 @@
     "stats": {
       "users": "Utenti",
       "admins": "Admin",
+      "subscribers": "Abbonati",
+      "beta": "Beta tester",
       "materials": "Materiali",
       "reminders": "Promemoria"
     },
@@ -574,11 +586,14 @@
       "reminders": "Promemoria",
       "uses": "Usi",
       "lastActivity": "Attività",
-      "created": "Creato"
+      "created": "Creato",
+      "interval": "Piano",
+      "expires": "Rinnovo"
     },
     "roles": {
       "admin": "Admin",
-      "user": "Utente"
+      "user": "Utente",
+      "beta": "Beta test"
     },
     "backToUsers": "Torna agli utenti",
     "activitySubtitle": "Statistiche d'uso complete. Testi, importi, valori di peso e titoli delle voci restano nascosti.",
@@ -638,7 +653,9 @@
       "PASSWORD_CHANGED": "Password modificata",
       "PASSWORD_RESET": "Password reimpostata",
       "REVIEW_APPROVED": "Recensione approvata",
-      "REVIEW_REJECTED": "Recensione rifiutata"
+      "REVIEW_REJECTED": "Recensione rifiutata",
+      "BETA_GRANTED": "Accesso beta concesso",
+      "BETA_REVOKED": "Accesso beta revocato"
     }
   },
   "auth": {
@@ -1299,7 +1316,7 @@
       "reviewCategories": "Free: 3 categorie di ripasso. L’abbonamento in Account toglie il limite.",
       "habits": "Free: 3 abitudini. L’abbonamento in Account toglie il limite.",
       "notes": "Free: 20 note. L’abbonamento in Account toglie il limite.",
-      "tasks": "Free: 15 attività al mese. L’abbonamento in Account toglie il limite.",
+      "tasks": "Free: 45 attività al mese. L’abbonamento in Account toglie il limite.",
       "financeOperations": "Free: 25 operazioni al mese. L’abbonamento in Account toglie il limite.",
       "financeCategories": "Free: 5 categorie budget. L’abbonamento in Account toglie il limite.",
       "meals": "Free registra i pasti di oggi e degli ultimi 7 giorni. L’abbonamento apre tutto il diario.",
@@ -1307,6 +1324,8 @@
     },
     "adminUnlimited": "Admin",
     "adminHint": "Questo account è illimitato da admin. I pulsanti sotto servono solo a testare Stripe.",
+    "betaLabel": "Beta test",
+    "betaHint": "Questo account è beta tester con accesso Pro completo — gli stessi diritti di un piano a pagamento.",
     "monthCard": "Mese",
     "yearCard": "Anno",
     "ctaYear": "Scegli l’anno",

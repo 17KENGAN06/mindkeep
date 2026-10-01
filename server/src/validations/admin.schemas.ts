@@ -13,4 +13,9 @@ export const moderateReviewSchema = z.object({
   status: z.enum([UserReviewStatus.APPROVED, UserReviewStatus.REJECTED]),
 });
 
+export const setBetaTesterSchema = z.object({
+  betaTester: z.boolean(),
+});
+
 export type ModerateReviewInput = z.infer<typeof moderateReviewSchema>;
+export type SetBetaTesterInput = z.infer<typeof setBetaTesterSchema>;

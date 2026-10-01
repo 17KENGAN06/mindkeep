@@ -552,6 +552,16 @@
     "loadError": "Nie udało się wczytać danych administratora.",
     "reviewsTitle": "Moderacja opinii",
     "reviewsEmpty": "Nie przesłano jeszcze żadnych opinii",
+    "subscribersTitle": "Płatni subskrybenci",
+    "subscribersHint": "Konta z aktywną subskrypcją Stripe.",
+    "subscribersEmpty": "Nie ma jeszcze płatnych subskrybentów",
+    "betaTitle": "Testerzy beta",
+    "betaHint": "Wybierz aktywnego użytkownika. Dostanie pełny dostęp jak Pro, a w Koncie zobaczy Beta test — nie Admin.",
+    "betaEmpty": "Nie ma jeszcze testerów beta",
+    "betaGrant": "Nadaj dostęp beta",
+    "betaRevoke": "Odbierz",
+    "betaSelect": "Aktywny użytkownik",
+    "betaSelectPlaceholder": "Wybierz użytkownika",
     "approveReview": "Zatwierdź",
     "rejectReview": "Odrzuć",
     "reviewStatus": {
@@ -562,6 +572,8 @@
     "stats": {
       "users": "Użytkownicy",
       "admins": "Administratorzy",
+      "subscribers": "Subskrybenci",
+      "beta": "Testerzy beta",
       "materials": "Materiały",
       "reminders": "Przypomnienia"
     },
@@ -574,11 +586,14 @@
       "reminders": "Przypomnienia",
       "uses": "Użycia",
       "lastActivity": "Aktywność",
-      "created": "Utworzono"
+      "created": "Utworzono",
+      "interval": "Plan",
+      "expires": "Odnawia się"
     },
     "roles": {
       "admin": "Admin",
-      "user": "Użytkownik"
+      "user": "Użytkownik",
+      "beta": "Beta test"
     },
     "backToUsers": "Wróć do użytkowników",
     "activitySubtitle": "Pełne statystyki użycia. Teksty, kwoty, waga i tytuły wpisów pozostają ukryte.",
@@ -638,7 +653,9 @@
       "PASSWORD_CHANGED": "Zmienił hasło",
       "PASSWORD_RESET": "Zresetował hasło",
       "REVIEW_APPROVED": "Zatwierdził opinię",
-      "REVIEW_REJECTED": "Odrzucił opinię"
+      "REVIEW_REJECTED": "Odrzucił opinię",
+      "BETA_GRANTED": "Przyznał dostęp beta",
+      "BETA_REVOKED": "Odebrał dostęp beta"
     }
   },
   "auth": {
@@ -1299,7 +1316,7 @@
       "reviewCategories": "Free: 3 kategorie powtórek. Subskrypcja w Koncie zdejmuje limit.",
       "habits": "Free: 3 nawyki. Subskrypcja w Koncie zdejmuje limit.",
       "notes": "Free: 20 notatek. Subskrypcja w Koncie zdejmuje limit.",
-      "tasks": "Free: 15 zadań miesięcznie. Subskrypcja w Koncie zdejmuje limit.",
+      "tasks": "Free: 45 zadań miesięcznie. Subskrypcja w Koncie zdejmuje limit.",
       "financeOperations": "Free: 25 operacji miesięcznie. Subskrypcja w Koncie zdejmuje limit.",
       "financeCategories": "Free: 5 kategorii budżetu. Subskrypcja w Koncie zdejmuje limit.",
       "meals": "Free zapisuje posiłki z dziś i 7 dni. Subskrypcja otwiera cały dziennik.",
@@ -1307,6 +1324,8 @@
     },
     "adminUnlimited": "Admin",
     "adminHint": "To konto nie ma limitów jako admin. Przyciski poniżej tylko do testu Stripe.",
+    "betaLabel": "Beta test",
+    "betaHint": "To konto jest testerem beta z pełnym dostępem Pro — takimi samymi prawami jak płatny plan.",
     "monthCard": "Miesiąc",
     "yearCard": "Rok",
     "ctaYear": "Wybierz rok",

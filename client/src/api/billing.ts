@@ -14,6 +14,7 @@ export type BillingStatus = {
   cancelAtPeriodEnd: boolean;
   hasStripeCustomer: boolean;
   subscribed: boolean;
+  betaTester: boolean;
   usage: {
     materials: BillingUsageItem;
     reviewCategories: BillingUsageItem;

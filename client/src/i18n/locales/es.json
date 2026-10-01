@@ -552,6 +552,16 @@
     "loadError": "No se pudieron cargar los datos de admin.",
     "reviewsTitle": "Moderación de reseñas",
     "reviewsEmpty": "Aún no hay reseñas enviadas",
+    "subscribersTitle": "Suscriptores de pago",
+    "subscribersHint": "Cuentas con una suscripción Stripe activa.",
+    "subscribersEmpty": "Aún no hay suscriptores de pago",
+    "betaTitle": "Beta testers",
+    "betaHint": "Elige un usuario activo. Tendrá acceso Pro completo, y en Cuenta verá Beta test — no Admin.",
+    "betaEmpty": "Aún no hay beta testers",
+    "betaGrant": "Dar acceso beta",
+    "betaRevoke": "Quitar",
+    "betaSelect": "Usuario activo",
+    "betaSelectPlaceholder": "Elige un usuario",
     "approveReview": "Aprobar",
     "rejectReview": "Rechazar",
     "reviewStatus": {
@@ -562,6 +572,8 @@
     "stats": {
       "users": "Usuarios",
       "admins": "Admins",
+      "subscribers": "Suscriptores",
+      "beta": "Beta testers",
       "materials": "Materiales",
       "reminders": "Recordatorios"
     },
@@ -574,11 +586,14 @@
       "reminders": "Recordatorios",
       "uses": "Usos",
       "lastActivity": "Actividad",
-      "created": "Creado"
+      "created": "Creado",
+      "interval": "Plan",
+      "expires": "Renueva"
     },
     "roles": {
       "admin": "Admin",
-      "user": "Usuario"
+      "user": "Usuario",
+      "beta": "Beta test"
     },
     "backToUsers": "Volver a usuarios",
     "activitySubtitle": "Estadísticas de uso completas. Textos, importes, valores de peso y títulos de entradas permanecen ocultos.",
@@ -638,7 +653,9 @@
       "PASSWORD_CHANGED": "Cambió la contraseña",
       "PASSWORD_RESET": "Restableció la contraseña",
       "REVIEW_APPROVED": "Aprobó una reseña",
-      "REVIEW_REJECTED": "Rechazó una reseña"
+      "REVIEW_REJECTED": "Rechazó una reseña",
+      "BETA_GRANTED": "Concedió acceso beta",
+      "BETA_REVOKED": "Retiró acceso beta"
     }
   },
   "auth": {
@@ -1299,7 +1316,7 @@
       "reviewCategories": "Free: 3 categorías de repaso. La suscripción en Cuenta quita el límite.",
       "habits": "Free: 3 hábitos. La suscripción en Cuenta quita el límite.",
       "notes": "Free: 20 notas. La suscripción en Cuenta quita el límite.",
-      "tasks": "Free: 15 tareas al mes. La suscripción en Cuenta quita el límite.",
+      "tasks": "Free: 45 tareas al mes. La suscripción en Cuenta quita el límite.",
       "financeOperations": "Free: 25 operaciones al mes. La suscripción en Cuenta quita el límite.",
       "financeCategories": "Free: 5 categorías de presupuesto. La suscripción en Cuenta quita el límite.",
       "meals": "Free guarda comidas de hoy y 7 días. La suscripción abre todo el diario.",
@@ -1307,6 +1324,8 @@
     },
     "adminUnlimited": "Admin",
     "adminHint": "Esta cuenta no tiene límites como admin. Los botones de abajo son solo para probar Stripe.",
+    "betaLabel": "Beta test",
+    "betaHint": "Esta cuenta es beta tester con acceso Pro completo — los mismos derechos que un plan de pago.",
     "monthCard": "Mes",
     "yearCard": "Año",
     "ctaYear": "Elegir año",

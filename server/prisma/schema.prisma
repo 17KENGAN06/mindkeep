@@ -92,6 +92,7 @@ model User {
   planInterval         PlanInterval?
   planExpiresAt        DateTime?
   cancelAtPeriodEnd    Boolean       @default(false)
+  betaTester           Boolean       @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -145,6 +146,8 @@ enum AdminAuditAction {
   PASSWORD_RESET
   REVIEW_APPROVED
   REVIEW_REJECTED
+  BETA_GRANTED
+  BETA_REVOKED
 }
 
 model AdminAuditEvent {
@@ -166,6 +169,7 @@ model UserReview {
   rating    Int
   text      String
   location  String?
+  locale    String           @default("en")
   status    UserReviewStatus @default(PENDING)
   userId    String           @unique
   createdAt DateTime         @default(now())
@@ -174,6 +178,7 @@ model UserReview {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([status, createdAt])
+  @@index([status, locale, createdAt])
 }
 
 model Category {

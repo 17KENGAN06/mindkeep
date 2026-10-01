@@ -552,6 +552,16 @@
     "loadError": "Could not load admin data.",
     "reviewsTitle": "Review moderation",
     "reviewsEmpty": "No submitted reviews yet",
+    "subscribersTitle": "Paid subscribers",
+    "subscribersHint": "Accounts with an active Stripe subscription.",
+    "subscribersEmpty": "No paid subscribers yet",
+    "betaTitle": "Beta testers",
+    "betaHint": "Choose an active user. They get full Pro access without paying, and Account will show Beta test instead of Admin.",
+    "betaEmpty": "No beta testers yet",
+    "betaGrant": "Grant beta access",
+    "betaRevoke": "Revoke",
+    "betaSelect": "Active user",
+    "betaSelectPlaceholder": "Choose a user",
     "approveReview": "Approve",
     "rejectReview": "Reject",
     "reviewStatus": {
@@ -562,6 +572,8 @@
     "stats": {
       "users": "Users",
       "admins": "Admins",
+      "subscribers": "Subscribers",
+      "beta": "Beta testers",
       "materials": "Materials",
       "reminders": "Reminders"
     },
@@ -574,11 +586,14 @@
       "reminders": "Reminders",
       "uses": "Uses",
       "lastActivity": "Activity",
-      "created": "Created"
+      "created": "Created",
+      "interval": "Plan",
+      "expires": "Renews"
     },
     "roles": {
       "admin": "Admin",
-      "user": "User"
+      "user": "User",
+      "beta": "Beta test"
     },
     "backToUsers": "Back to users",
     "activitySubtitle": "Full usage statistics. Texts, amounts, weight values, and entry titles stay hidden.",
@@ -638,7 +653,9 @@
       "PASSWORD_CHANGED": "Changed password",
       "PASSWORD_RESET": "Reset password",
       "REVIEW_APPROVED": "Approved a review",
-      "REVIEW_REJECTED": "Rejected a review"
+      "REVIEW_REJECTED": "Rejected a review",
+      "BETA_GRANTED": "Granted beta access",
+      "BETA_REVOKED": "Revoked beta access"
     }
   },
   "auth": {
@@ -1299,7 +1316,7 @@
       "reviewCategories": "Free includes 3 review categories. Subscribe on Account for more.",
       "habits": "Free includes 3 habits. Subscribe on Account for more.",
       "notes": "Free includes 20 notes. Subscribe on Account for more.",
-      "tasks": "Free includes 15 tasks per month. Subscribe on Account for more.",
+      "tasks": "Free includes 45 tasks per month. Subscribe on Account for more.",
       "financeOperations": "Free includes 25 finance operations per month. Subscribe on Account for more.",
       "financeCategories": "Free includes 5 finance categories. Subscribe on Account for more.",
       "meals": "Free can log meals for today and the last 7 days. Subscribe on Account for the full diary.",
@@ -1307,6 +1324,8 @@
     },
     "adminUnlimited": "Admin",
     "adminHint": "This account is unlimited as admin. Use the buttons below only to test Stripe.",
+    "betaLabel": "Beta test",
+    "betaHint": "This account is a beta tester with full Pro access — the same rights as a paid plan.",
     "monthCard": "Monthly",
     "yearCard": "Yearly",
     "ctaYear": "Choose yearly",

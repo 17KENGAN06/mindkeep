@@ -36,6 +36,7 @@ export class BillingController {
       planInterval: user.planInterval,
       planExpiresAt: user.planExpiresAt,
       cancelAtPeriodEnd: user.cancelAtPeriodEnd,
+      betaTester: user.betaTester,
       ...flags,
       ...usage,
     });

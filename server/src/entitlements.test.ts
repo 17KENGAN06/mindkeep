@@ -23,6 +23,7 @@ test('expired Pro falls back to free', () => {
       role: UserRole.USER,
       plan: UserPlan.PRO,
       planExpiresAt: new Date(Date.now() - 60_000),
+      betaTester: false,
     }),
     false,
   );
@@ -35,6 +36,7 @@ test('active Pro stays entitled', () => {
       role: UserRole.USER,
       plan: UserPlan.PRO,
       planExpiresAt: new Date(Date.now() + 86_400_000),
+      betaTester: false,
     }),
     true,
   );
@@ -47,6 +49,20 @@ test('admins are always Pro', () => {
       role: UserRole.ADMIN,
       plan: UserPlan.FREE,
       planExpiresAt: null,
+      betaTester: false,
+    }),
+    true,
+  );
+});
+
+test('beta testers are entitled without a paid plan', () => {
+  assert.equal(
+    isProUser({
+      email: 'beta@mindkeep.test',
+      role: UserRole.USER,
+      plan: UserPlan.FREE,
+      planExpiresAt: null,
+      betaTester: true,
     }),
     true,
   );

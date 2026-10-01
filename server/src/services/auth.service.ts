@@ -38,6 +38,7 @@ const userRecordSelect = {
   planInterval: true,
   planExpiresAt: true,
   cancelAtPeriodEnd: true,
+  betaTester: true,
   createdAt: true,
   updatedAt: true,
 } as const;
@@ -58,6 +59,7 @@ export type PublicUser = {
   planInterval: PlanInterval | null;
   planExpiresAt: Date | null;
   cancelAtPeriodEnd: boolean;
+  betaTester: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -73,6 +75,7 @@ type UserRecord = {
   planInterval: PlanInterval | null;
   planExpiresAt: Date | null;
   cancelAtPeriodEnd: boolean;
+  betaTester: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -90,6 +93,7 @@ function toPublicUser(user: UserRecord): PublicUser {
     planInterval: entitled ? user.planInterval : null,
     planExpiresAt: entitled ? user.planExpiresAt : null,
     cancelAtPeriodEnd: entitled ? user.cancelAtPeriodEnd : false,
+    betaTester: user.betaTester,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };

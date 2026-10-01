@@ -1,7 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { adminApi, type AdminActivityModuleId } from '@/api/admin';
+import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { useAuth } from '@/features/auth/useAuth';
@@ -59,11 +60,19 @@ export function AdminUserPage() {
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const { user } = useAuth();
   const { id } = useParams<{ id: string }>();
+  const queryClient = useQueryClient();
 
   const activityQuery = useQuery({
     queryKey: ['admin', 'users', id],
     queryFn: async () => (await adminApi.userActivity(id!)).activity,
     enabled: user?.role === 'ADMIN' && Boolean(id),
+  });
+
+  const setBeta = useMutation({
+    mutationFn: (betaTester: boolean) => adminApi.setBetaTester(id!, betaTester),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['admin'] });
+    },
   });
 
   if (user?.role !== 'ADMIN') {
@@ -92,8 +101,25 @@ export function AdminUserPage() {
         <p className="mt-2 text-xs text-muted">
           {t('admin.registered', { date: formatDateLong(profile.createdAt, language) })}
           {' · '}
-          {profile.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')}
+          {profile.role === 'ADMIN'
+            ? t('admin.roles.admin')
+            : profile.betaTester
+              ? t('admin.roles.beta')
+              : t('admin.roles.user')}
         </p>
+        {profile.role !== 'ADMIN' ? (
+          <div className="mt-4">
+            <Button
+              type="button"
+              variant={profile.betaTester ? 'secondary' : 'primary'}
+              disabled={setBeta.isPending}
+              isLoading={setBeta.isPending}
+              onClick={() => setBeta.mutate(!profile.betaTester)}
+            >
+              {profile.betaTester ? t('admin.betaRevoke') : t('admin.betaGrant')}
+            </Button>
+          </div>
+        ) : null}
       </div>
 
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

@@ -552,6 +552,16 @@
     "loadError": "Admin-tietojen lataus epäonnistui.",
     "reviewsTitle": "Arvioiden moderointi",
     "reviewsEmpty": "Lähetettyjä arvioita ei vielä ole",
+    "subscribersTitle": "Maksavat tilaajat",
+    "subscribersHint": "Tilit, joilla on aktiivinen Stripe-tilaus.",
+    "subscribersEmpty": "Ei vielä maksavia tilaajia",
+    "betaTitle": "Beta-testaajat",
+    "betaHint": "Valitse aktiivinen käyttäjä. Hän saa täyden Pro-oikeuden, ja Tilillä näkyy Beta-testi — ei Admin.",
+    "betaEmpty": "Ei vielä beta-testaajia",
+    "betaGrant": "Anna beta-oikeus",
+    "betaRevoke": "Poista",
+    "betaSelect": "Aktiivinen käyttäjä",
+    "betaSelectPlaceholder": "Valitse käyttäjä",
     "approveReview": "Hyväksy",
     "rejectReview": "Hylkää",
     "reviewStatus": {
@@ -562,6 +572,8 @@
     "stats": {
       "users": "Käyttäjät",
       "admins": "Adminit",
+      "subscribers": "Tilaajat",
+      "beta": "Beta-testaajat",
       "materials": "Materiaalit",
       "reminders": "Muistutukset"
     },
@@ -574,11 +586,14 @@
       "reminders": "Muistutukset",
       "uses": "Käyttää",
       "lastActivity": "Aktiivisuus",
-      "created": "Luotu"
+      "created": "Luotu",
+      "interval": "Paketti",
+      "expires": "Uusiutuu"
     },
     "roles": {
       "admin": "Admin",
-      "user": "Käyttäjä"
+      "user": "Käyttäjä",
+      "beta": "Beta-testi"
     },
     "backToUsers": "Takaisin käyttäjiin",
     "activitySubtitle": "Täysi käyttötilasto. Tekstit, summat, painoarvot ja otsikot pysyvät piilossa.",
@@ -638,7 +653,9 @@
       "PASSWORD_CHANGED": "Vaihtoi salasanan",
       "PASSWORD_RESET": "Nollasi salasanan",
       "REVIEW_APPROVED": "Hyväksyi arvostelun",
-      "REVIEW_REJECTED": "Hylkäsi arvostelun"
+      "REVIEW_REJECTED": "Hylkäsi arvostelun",
+      "BETA_GRANTED": "Antoi beta-oikeuden",
+      "BETA_REVOKED": "Poisti beta-oikeuden"
     }
   },
   "auth": {
@@ -1299,7 +1316,7 @@
       "reviewCategories": "Free: 3 kertauskategoriaa. Tilaus Tilillä poistaa rajan.",
       "habits": "Free: 3 tapaa. Tilaus Tilillä poistaa rajan.",
       "notes": "Free: 20 muistiinpanoa. Tilaus Tilillä poistaa rajan.",
-      "tasks": "Free: 15 tehtävää kuukaudessa. Tilaus Tilillä poistaa rajan.",
+      "tasks": "Free: 45 tehtävää kuukaudessa. Tilaus Tilillä poistaa rajan.",
       "financeOperations": "Free: 25 tapahtumaa kuukaudessa. Tilaus Tilillä poistaa rajan.",
       "financeCategories": "Free: 5 budjettikategoriaa. Tilaus Tilillä poistaa rajan.",
       "meals": "Free tallentaa ateriat tältä päivältä ja 7 päivältä. Tilaus avaa koko päiväkirjan.",
@@ -1307,6 +1324,8 @@
     },
     "adminUnlimited": "Admin",
     "adminHint": "Tämä tili on adminina rajaton. Napit alla ovat vain Stripe-testiä varten.",
+    "betaLabel": "Beta-testi",
+    "betaHint": "Tämä tili on beta-testaaja täydellä Pro-oikeudella — samat oikeudet kuin maksullisella paketilla.",
     "monthCard": "Kuukausi",
     "yearCard": "Vuosi",
     "ctaYear": "Valitse vuosi",

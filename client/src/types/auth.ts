@@ -9,6 +9,7 @@ export type User = {
   planInterval?: 'MONTH' | 'YEAR' | null;
   planExpiresAt?: string | null;
   cancelAtPeriodEnd?: boolean;
+  betaTester?: boolean;
   createdAt: string;
   updatedAt: string;
 };
