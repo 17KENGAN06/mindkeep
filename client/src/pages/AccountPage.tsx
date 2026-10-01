@@ -330,9 +330,10 @@ function UsageGrid({ usage }: { usage: BillingStatus['usage'] }) {
       <ul className="grid gap-3 sm:grid-cols-2">
         {USAGE_KEYS.map((key) => {
           const item = usage[key];
-          const unlimited = item.limit == null;
-          const percent = usagePercent(item.used, item.limit);
-          const full = !unlimited && item.used >= item.limit;
+          const limit = item.limit;
+          const unlimited = limit == null;
+          const percent = usagePercent(item.used, limit);
+          const full = limit != null && item.used >= limit;
           const tight = !unlimited && !full && percent >= 75;
           return (
             <li key={key} className="rounded-2xl bg-panel px-4 py-3.5 ring-1 ring-line/80">
@@ -343,9 +344,9 @@ function UsageGrid({ usage }: { usage: BillingStatus['usage'] }) {
                     full ? 'text-red-500' : tight ? 'text-brand-600' : 'text-brand-500'
                   }`}
                 >
-                  {unlimited
+                  {unlimited || limit == null
                     ? t('billing.unlimited')
-                    : t('billing.of', { used: item.used, limit: item.limit })}
+                    : t('billing.of', { used: item.used, limit })}
                 </p>
               </div>
               <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-line/70">
