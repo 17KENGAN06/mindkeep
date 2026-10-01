@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { AnimatedSnapSection } from '@/components/home/AnimatedSnapSection';
 import { HeroStage } from '@/components/home/HeroStage';
+import { HomeFooter } from '@/components/home/HomeFooter';
 import { HomePricing } from '@/components/home/HomePricing';
 import { HomeServices } from '@/components/home/HomeServices';
 import { SectionNav } from '@/components/home/SectionNav';
@@ -13,12 +14,11 @@ import { SnapReveal } from '@/components/home/SnapReveal';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
-import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
 
-const SECTION_IDS = ['hero', 'services', 'pricing', 'testimonials'] as const;
+const SECTION_IDS = ['hero', 'services', 'pricing', 'testimonials', 'footer'] as const;
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -32,6 +32,7 @@ export function HomePage() {
     t('home.sections.services'),
     t('home.sections.pricing'),
     t('home.sections.testimonials'),
+    t('home.sections.footer'),
   ];
 
   return (
@@ -181,14 +182,13 @@ export function HomePage() {
           activeId={activeId}
           className="border-t border-line/70"
         >
-          <div className="flex min-h-full flex-col">
-            <div className="mx-auto flex min-h-dvh w-full max-w-[1400px] flex-col justify-center px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-              <TestimonialsSection animated compact />
-            </div>
-            <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
-              <SiteFooter embedded />
-            </div>
+          <div className="mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col justify-center overflow-y-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8 xl:pr-28">
+            <TestimonialsSection animated compact />
           </div>
+        </AnimatedSnapSection>
+
+        <AnimatedSnapSection id="footer" activeId={activeId} className="border-t border-line/70">
+          <HomeFooter />
         </AnimatedSnapSection>
       </div>
     </div>

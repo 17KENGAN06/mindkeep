@@ -223,10 +223,29 @@ function BillingSection() {
               <Sparkles className="h-3.5 w-3.5" aria-hidden />
               {t('billing.title')}
             </p>
-            <p className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-              {status ? planName : '…'}
-            </p>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">{planCaption}</p>
+            {showSubscribe ? (
+              <>
+                <div className="mt-3 flex items-end gap-2">
+                  <p className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+                    {t('home.pricing.yearPerMonth')}
+                  </p>
+                  <p className="mb-1.5 text-sm font-medium text-muted">{t('home.pricing.perMonth')}</p>
+                </div>
+                <p className="mt-2 text-sm font-semibold text-brand-500">
+                  {t('home.pricing.onlyIfYearly')}
+                </p>
+                <p className="mt-1 text-sm text-muted">{t('home.pricing.yearCharged')}</p>
+                <p className="mt-1 text-xs text-muted">{t('home.pricing.yearHint')}</p>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">{planCaption}</p>
+              </>
+            ) : (
+              <>
+                <p className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+                  {status ? planName : '…'}
+                </p>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">{planCaption}</p>
+              </>
+            )}
           </div>
           {status ? (
             <span
@@ -262,33 +281,48 @@ function BillingSection() {
             <button
               type="button"
               disabled={busy !== null}
-              onClick={() => void startCheckout('month')}
-              className="flex min-h-24 flex-col items-start justify-center rounded-2xl bg-brand-500 px-5 py-4 text-left text-[#07110d] shadow-sm transition hover:bg-brand-400 disabled:opacity-60"
+              onClick={() => void startCheckout('year')}
+              className="relative flex min-h-24 flex-col items-start rounded-2xl border border-brand-500/50 bg-gradient-to-br from-brand-500/20 via-panel to-panel px-5 py-4 text-left shadow-sm transition hover:border-brand-500 disabled:opacity-60"
             >
-              <span className="text-[11px] font-semibold tracking-[0.16em] uppercase opacity-80">
-                {t('billing.monthCard')}
+              <span className="absolute top-3 right-3 rounded-full bg-brand-500 px-2.5 py-0.5 text-[10px] font-bold tracking-[0.12em] text-[#07110d] uppercase">
+                {t('home.pricing.recommended')}
               </span>
-              <span className="mt-1 text-xl font-semibold">
-                {busy === 'month' ? t('common.loading') : t('billing.subscribeMonth')}
+              <span className="text-[11px] font-semibold tracking-[0.16em] text-brand-500 uppercase">
+                {t('billing.yearCard')}
               </span>
+              <span className="mt-2 flex items-end gap-1.5">
+                <span className="font-display text-3xl font-semibold tracking-tight text-ink">
+                  {busy === 'year' ? t('common.loading') : t('home.pricing.yearPerMonth')}
+                </span>
+                {busy === 'year' ? null : (
+                  <span className="mb-1 text-sm text-muted">{t('home.pricing.perMonth')}</span>
+                )}
+              </span>
+              <span className="mt-1.5 text-sm font-semibold text-brand-500">
+                {t('home.pricing.onlyIfYearly')}
+              </span>
+              <span className="mt-0.5 text-xs text-muted">{t('home.pricing.yearCharged')}</span>
             </button>
             <button
               type="button"
               disabled={busy !== null}
-              onClick={() => void startCheckout('year')}
+              onClick={() => void startCheckout('month')}
               className="flex min-h-24 flex-col items-start justify-center rounded-2xl bg-panel px-5 py-4 text-left ring-1 ring-line transition hover:ring-brand-400 disabled:opacity-60"
             >
-              <span className="text-[11px] font-semibold tracking-[0.16em] text-brand-500 uppercase">
-                {t('billing.yearCard')}
+              <span className="text-[11px] font-semibold tracking-[0.16em] text-muted uppercase">
+                {t('home.pricing.orMonthly')}
               </span>
-              <span className="mt-1 text-xl font-semibold text-ink">
-                {busy === 'year' ? t('common.loading') : t('billing.subscribeYear')}
+              <span className="mt-2 flex items-end gap-1.5">
+                <span className="font-display text-2xl font-semibold tracking-tight text-ink">
+                  {busy === 'month' ? t('common.loading') : t('home.pricing.monthPrice')}
+                </span>
+                {busy === 'month' ? null : (
+                  <span className="mb-0.5 text-sm text-muted">{t('home.pricing.monthBilled')}</span>
+                )}
               </span>
             </button>
           </div>
         ) : null}
-
-        {showSubscribe ? <p className="text-sm text-muted">{t('billing.yearlyHint')}</p> : null}
 
         {showManage ? (
           <Button

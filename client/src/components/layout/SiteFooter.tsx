@@ -66,11 +66,14 @@ type SiteFooterProps = {
   compact?: boolean;
   /** Fill parent width — use when footer sits inside the same container as the header. */
   embedded?: boolean;
+  /** Homepage snap section: no extra outer chrome, content only. */
+  screen?: boolean;
 };
 
-export function SiteFooter({ compact = false, embedded = false }: SiteFooterProps) {
+export function SiteFooter({ compact = false, embedded = false, screen = false }: SiteFooterProps) {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
+  const tight = compact || screen;
 
   const studioLink = (
     <a
@@ -85,21 +88,27 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
 
   return (
     <footer
-      className={`relative w-full border-t border-line ${
-        compact ? 'pt-10 sm:pt-12' : 'pt-16 sm:pt-20'
-      } ${embedded ? (compact ? 'mt-8 sm:mt-10' : 'mt-20 sm:mt-28') : ''}`}
+      className={
+        screen
+          ? 'relative w-full'
+          : `relative w-full border-t border-line ${
+              tight ? 'pt-10 sm:pt-12' : 'pt-16 sm:pt-20'
+            } ${embedded ? (tight ? 'mt-8 sm:mt-10' : 'mt-20 sm:mt-28') : ''}`
+      }
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500/55 to-transparent"
-      />
+      {screen ? null : (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500/55 to-transparent"
+        />
+      )}
 
       <div
         className={
-          embedded
-            ? `flex w-full flex-col ${compact ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'}`
+          screen || embedded
+            ? `flex w-full flex-col ${screen ? '' : tight ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'}`
             : `mx-auto flex w-full max-w-[1400px] flex-col px-4 sm:px-6 lg:px-8 ${
-                compact ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'
+                tight ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'
               }`
         }
       >
@@ -111,23 +120,25 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
                 {t('common.appName')}
               </p>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">{t('footer.tagline')}</p>
-            {!compact ? (
+            {screen ? null : (
+              <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">{t('footer.tagline')}</p>
+            )}
+            {!tight ? (
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{t('footer.about')}</p>
             ) : null}
-            <div className="mt-5 flex flex-wrap gap-3">
+            <div className={`${screen ? 'mt-6' : 'mt-5'} flex flex-wrap gap-3`}>
               <SocialLink
                 href={INSTAGRAM_URL}
                 label={t('footer.instagram')}
                 handle={t('footer.instagramHandle')}
-                compact={compact}
+                compact={tight}
                 icon={<InstagramMark className="h-[18px] w-[18px]" />}
               />
               <SocialLink
                 href={TIKTOK_URL}
                 label={t('footer.tiktok')}
                 handle={t('footer.tiktokHandle')}
-                compact={compact}
+                compact={tight}
                 icon={<TikTokMark className="h-[18px] w-[18px]" />}
               />
             </div>
@@ -135,7 +146,7 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
 
           <div className="md:text-right">
             <p className="text-[11px] tracking-[0.24em] text-muted uppercase">{t('footer.linksLabel')}</p>
-            <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-2.5 text-sm font-medium md:justify-end">
+            <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-2.5 text-sm font-medium md:max-w-md md:justify-end md:justify-self-end">
               <Link
                 to="/"
                 className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
@@ -184,7 +195,11 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
           </div>
         </div>
 
-        <div className="mt-12 border-t border-line/80 pt-8 sm:mt-16 sm:pt-12">
+        <div
+          className={`${
+            screen ? 'mt-10 pt-6 sm:mt-12 sm:pt-8' : 'mt-12 pt-8 sm:mt-16 sm:pt-12'
+          } border-t border-line/80`}
+        >
           <p className="text-sm leading-relaxed text-muted sm:text-base">
             <Trans
               i18nKey="footer.ownership"

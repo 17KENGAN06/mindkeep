@@ -391,7 +391,8 @@
       "blog": "Blog",
       "cta": "Try it",
       "services": "Services",
-      "pricing": "Plans"
+      "pricing": "Plans",
+      "footer": "Connect"
     },
     "heroHighlights": {
       "tasks": "Daily plans without mental clutter",

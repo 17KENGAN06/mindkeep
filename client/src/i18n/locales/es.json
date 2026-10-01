@@ -391,7 +391,8 @@
       "blog": "Blog",
       "cta": "Probar",
       "services": "Servicios",
-      "pricing": "Planes"
+      "pricing": "Planes",
+      "footer": "Contacto"
     },
     "heroHighlights": {
       "tasks": "Planes del día sin ruido mental",

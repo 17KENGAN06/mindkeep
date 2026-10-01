@@ -391,7 +391,8 @@
       "blog": "Blog",
       "cta": "Essayer",
       "services": "Services",
-      "pricing": "Offres"
+      "pricing": "Offres",
+      "footer": "Contact"
     },
     "heroHighlights": {
       "tasks": "Plans du jour sans encombrement mental",
