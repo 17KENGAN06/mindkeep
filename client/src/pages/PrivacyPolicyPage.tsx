@@ -15,7 +15,7 @@ export function PrivacyPolicyPage() {
 
   return (
     <div className="min-h-dvh overflow-x-hidden">
-      <div className="mx-auto w-full max-w-3xl px-4 py-5 sm:px-6 sm:py-6">
+      <div className="mx-auto w-full max-w-[1400px] px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
         <header className="flex items-center justify-between gap-3">
           <BrandLockup to="/" size="md" />
           <div className="flex items-center gap-2">
@@ -24,7 +24,7 @@ export function PrivacyPolicyPage() {
           </div>
         </header>
 
-        <Reveal className="mt-10">
+        <Reveal className="mt-10 max-w-4xl">
           <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
             {t('privacy.eyebrow')}
           </p>
@@ -35,10 +35,14 @@ export function PrivacyPolicyPage() {
           <p className="mt-5 text-base leading-relaxed text-ink/90 sm:text-lg">{t('privacy.intro')}</p>
         </Reveal>
 
-        <div className="mt-10 space-y-8">
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
           {Array.isArray(sections)
             ? sections.map((section, index) => (
-                <Reveal key={section.title} delayMs={60 + index * 50} className="glass-panel rounded-2xl p-5 sm:p-6">
+                <Reveal
+                  key={section.title}
+                  delayMs={60 + index * 50}
+                  className="glass-panel h-full rounded-2xl p-5 sm:p-6 lg:p-7"
+                >
                   <h2 className="font-display text-xl font-semibold text-ink sm:text-2xl">
                     {section.title}
                   </h2>

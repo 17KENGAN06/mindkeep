@@ -2,6 +2,8 @@
   "common": {
     "appName": "Mindkeep",
     "loading": "Loading...",
+    "loadError": "This page did not finish loading.",
+    "reload": "Reload",
     "save": "Save",
     "cancel": "Cancel",
     "back": "Back",
@@ -282,25 +284,25 @@
     }
   },
   "home": {
-    "title": "Learn. Act. Steer.",
-    "subtitle": "Mindkeep brings daily tasks, personal finance, and spaced review into one calm workspace.",
+    "title": "Keep learning on a steady beat.",
+    "subtitle": "Mindkeep holds the day, the studies, and the money in one calm place — so progress does not slip when life gets loud.",
     "ctaRegister": "Start free",
     "ctaLogin": "Log in",
-    "eyebrow": "Tasks · Review · Finance",
-    "pillarsTitle": "Three pillars of a steady rhythm",
-    "pillarsSubtitle": "Plan the day, lock in what you learn, and keep money visible — without juggling separate apps.",
+    "eyebrow": "Study · Day · Balance",
+    "pillarsTitle": "A stable base for learning",
+    "pillarsSubtitle": "Not another pile of notes. A quiet system so study, the day, and money stop drifting apart.",
     "pillars": {
       "tasks": {
-        "title": "Daily tasks",
-        "text": "Set goals for the day and month, check them off, and see progress without noise."
+        "title": "The day stays in order",
+        "text": "Plan today and the month, check things off, and see the week without noise in your head."
       },
       "repetition": {
-        "title": "Review at 3 · 7 · 30",
-        "text": "Save materials and revisit them on a fixed schedule so knowledge lasts longer."
+        "title": "What you learn stays with you",
+        "text": "Save what mattered and return to it later — knowledge does not have to fade after a busy stretch."
       },
       "finance": {
-        "title": "Personal finance",
-        "text": "Income and expenses in euros, categories, and a clear period balance."
+        "title": "Money stays visible",
+        "text": "Income, expenses, and a clear period balance, so the budget does not disappear behind the studies."
       }
     },
     "howTitle": "How it works",
@@ -320,13 +322,13 @@
         "text": "Log income or expense in euros — the period summary stays honest and clear."
       }
     },
-    "rhythmTitle": "A memory rhythm without complex algorithms",
-    "rhythmSubtitle": "For review, intervals are fixed. Dates are counted from the learning day and do not shift when you mark a review done.",
+    "rhythmTitle": "A calm return, not a grind",
+    "rhythmSubtitle": "When you save something you studied, Mindkeep brings it back on a simple 3 · 7 · 30 beat. Enough structure to stay stable — without a noisy algorithm.",
     "daysLabel": "days",
     "intervals": {
-      "three": "First review — lock in a fresh trace",
-      "seven": "Second review — keep the meaning",
-      "thirty": "Third review — move toward long-term memory"
+      "three": "Come back while it is still warm — the week does not wipe the trace.",
+      "seven": "A second look so the meaning stays, even after other tasks take over.",
+      "thirty": "A later return so learning becomes part of the long rhythm, not a one-off sprint."
     },
     "featuresTitle": "Everything you need in one place",
     "featuresSubtitle": "Mindkeep covers planning, learning, and budget — calmly and predictably.",
@@ -348,8 +350,8 @@
         "text": "Reviews, tasks, and finance gather into clear slices on the dashboard."
       }
     },
-    "ctaTitle": "Build your rhythm in Mindkeep",
-    "ctaSubtitle": "Create an account and start with one task, one material, or one budget entry.",
+    "ctaTitle": "Start a steadier week",
+    "ctaSubtitle": "One account. Tasks, learning that returns, and a clear budget.",
     "apps": {
       "eyebrow": "Mobile",
       "title": "Apps for iPhone and Android",
@@ -359,9 +361,9 @@
       "readBlog": "Read learning notes"
     },
     "testimonials": {
-      "eyebrow": "Voices from the beta",
-      "title": "Tested by our first users",
-      "subtitle": "People from different countries tried Mindkeep before launch and shared their honest impressions.",
+      "eyebrow": "From people who tried it",
+      "title": "A calmer way to keep going",
+      "subtitle": "They wanted study, the day, and money in one place — without extra noise.",
       "beta": "Beta testing participant",
       "all": "All reviews",
       "rating": "Rating: {{count}} out of 5",
@@ -380,9 +382,9 @@
     },
     "sections": {
       "hero": "Start",
-      "pillars": "Capabilities",
+      "pillars": "Foundation",
       "how": "How it works",
-      "rhythm": "3·7·30 rhythm",
+      "rhythm": "Steady return",
       "features": "Inside",
       "apps": "Apps",
       "testimonials": "Reviews",
@@ -395,14 +397,14 @@
       "finance": "Euro budget — clear and calm"
     },
     "heroVisual": {
-      "tasksTitle": "Tasks today",
-      "tasksItem1": "Review Finnish vocabulary",
-      "tasksItem2": "Close the weekly budget",
-      "reviewTitle": "Review",
-      "reviewQuestion": "How do you say thank you in Finnish?",
-      "reviewHint": "Tap to reveal the answer",
-      "financeTitle": "Finance",
-      "financeLabel": "Period balance",
+      "tasksTitle": "Today",
+      "tasksItem1": "Study block — 25 minutes",
+      "tasksItem2": "Close the week without leftover chaos",
+      "reviewTitle": "Learning",
+      "reviewQuestion": "What from this week should stay?",
+      "reviewHint": "It comes back before it fades",
+      "financeTitle": "Balance",
+      "financeLabel": "This period",
       "financeValue": "+€420"
     },
     "mobileNav": {
@@ -970,7 +972,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — tasks, review, and finance",
+      "home": "Mindkeep — a steady place for learning",
       "login": "Sign in · Mindkeep",
       "register": "Start free · Mindkeep",
       "dashboard": "Overview · Mindkeep",
@@ -1005,8 +1007,8 @@
   },
   "footer": {
     "craftedLabel": "Property of",
-    "tagline": "Where the day finds order — and knowledge and money stay in view.",
-    "about": "Mindkeep brings together daily tasks, personal finance in euros, and knowledge review on a 3 · 7 · 30 rhythm — calmly, without extra noise.",
+    "tagline": "Where learning stays steady — and the day and money stay in view.",
+    "about": "Mindkeep brings together daily tasks, study that does not fade, and personal finance — calmly, in one workspace.",
     "linksLabel": "Navigate",
     "follow": "On Instagram",
     "instagram": "Instagram",

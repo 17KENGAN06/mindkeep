@@ -2,6 +2,8 @@
   "common": {
     "appName": "Mindkeep",
     "loading": "Ladataan...",
+    "loadError": "Sivu ei ehtinyt latautua.",
+    "reload": "Lataa uudelleen",
     "save": "Tallenna",
     "cancel": "Peruuta",
     "back": "Takaisin",
@@ -282,25 +284,25 @@
     }
   },
   "home": {
-    "title": "Opi. Toimi. Hallitse.",
-    "subtitle": "Mindkeep kokoaa päivittäiset tehtävät, talouden ja kertauksen yhteen rauhalliseen työtilaan.",
+    "title": "Pidä oppiminen tasaisessa rytmissä.",
+    "subtitle": "Mindkeep kokoaa päivän, opin ja rahan yhteen rauhalliseen paikkaan — jotta edistys ei murene, kun elämä kiihtyy.",
     "ctaRegister": "Aloita ilmaiseksi",
     "ctaLogin": "Kirjaudu",
-    "eyebrow": "Tehtävät · Kertaus · Talous",
-    "pillarsTitle": "Kolme pilaria tasaiselle rytmille",
-    "pillarsSubtitle": "Suunnittele päivä, kiinnitä opittu ja pidä raha näkyvissä — ilman erillisten sovellusten kaaosta.",
+    "eyebrow": "Oppiminen · Päivä · Tasapaino",
+    "pillarsTitle": "Vakaa perusta oppimiselle",
+    "pillarsSubtitle": "Ei enää yhtä muistilappupinoa. Rauhallinen järjestelmä, jotta oppiminen, päivä ja raha eivät karkaa eri suuntiin.",
     "pillars": {
       "tasks": {
-        "title": "Päivittäiset tehtävät",
-        "text": "Aseta tavoitteita päivälle ja kuukaudelle, merkitse valmiiksi ja näe edistyminen ilman melua."
+        "title": "Päivä pysyy järjestyksessä",
+        "text": "Suunnitelma tälle päivälle ja kuukaudelle, rastit ja selkeä viikko — ilman meteliä päässä."
       },
       "repetition": {
-        "title": "Kertaus 3 · 7 · 30",
-        "text": "Tallenna materiaalit ja palaa niihin kiinteällä aikataululla — muisti pysyy pidempään."
+        "title": "Opittu jää luoksesi",
+        "text": "Tallenna se mikä merkitsi ja palaa myöhemmin — tiedon ei tarvitse kadota kiireisen viikon jälkeen."
       },
       "finance": {
-        "title": "Henkilökohtainen talous",
-        "text": "Tulot ja menot euroissa, kategoriat ja selkeä jakson saldo."
+        "title": "Raha pysyy näkyvissä",
+        "text": "Tulot, menot ja selkeä jakson saldo, jotta budjetti ei katoa opintojen taakse."
       }
     },
     "howTitle": "Näin se toimii",
@@ -320,13 +322,13 @@
         "text": "Kirjaa tulo tai meno euroissa — jakson yhteenveto pysyy rehellisenä ja selkeänä."
       }
     },
-    "rhythmTitle": "Muistin rytmi ilman monimutkaisia algoritmeja",
-    "rhythmSubtitle": "Kertauksessa välit ovat kiinteät. Päivämäärät lasketaan oppimispäivästä eivätkä siirry, kun merkitset kertauksen tehdyksi.",
+    "rhythmTitle": "Rauhallinen paluu, ei kiri",
+    "rhythmSubtitle": "Kun tallennat opitun, Mindkeep tuo sen takaisin rytmissä 3 · 7 · 30. Tarpeeksi rakennetta pysyä vakaana — ilman meluisaa algoritmia.",
     "daysLabel": "päivää",
     "intervals": {
-      "three": "Ensimmäinen kertaus — kiinnitä tuore jälki",
-      "seven": "Toinen kertaus — pidä merkitys",
-      "thirty": "Kolmas kertaus — kohti pitkäaikaista muistia"
+      "three": "Palaa kun jälki on vielä lämmin — viikko ei pyyhi sitä.",
+      "seven": "Toinen katse, jotta merkitys jää, vaikka päivä täyttyy muusta.",
+      "thirty": "Myöhempi paluu, jotta oppiminen on pitkä rytmi, ei kertarykäisy."
     },
     "featuresTitle": "Kaikki tarvittava yhdessä paikassa",
     "featuresSubtitle": "Mindkeep kattaa suunnittelun, oppimisen ja budjetin — rauhallisesti ja ennakoitavasti.",
@@ -348,8 +350,8 @@
         "text": "Kertaukset, tehtävät ja talous kokoontuvat selkeiksi näkymiksi koontinäytöllä."
       }
     },
-    "ctaTitle": "Kokoa rytmisi Mindkeepissä",
-    "ctaSubtitle": "Luo tili ja aloita yhdellä tehtävällä, yhdellä materiaalilla tai yhdellä budjettimerkinnällä.",
+    "ctaTitle": "Aloita tasaisempi viikko",
+    "ctaSubtitle": "Yksi tili. Tehtävät, oppiminen joka palaa, ja selkeä budjetti.",
     "apps": {
       "eyebrow": "Mobiili",
       "title": "Sovellukset iPhonelle ja Androidille",
@@ -359,9 +361,9 @@
       "readBlog": "Lue oppimisesta"
     },
     "testimonials": {
-      "eyebrow": "Betatestaajien kokemuksia",
-      "title": "Ensimmäisten käyttäjien testaama",
-      "subtitle": "Eri maissa asuvat ihmiset kokeilivat Mindkeepia ennen julkaisua ja kertoivat rehelliset kokemuksensa.",
+      "eyebrow": "Ne jotka kokeilivat",
+      "title": "Jatkaa rauhallisemmin",
+      "subtitle": "He halusivat opin, päivän ja rahan samaan paikkaan — ilman ylimääräistä meteliä.",
       "beta": "Betatestaukseen osallistunut",
       "all": "Kaikki arviot",
       "rating": "Arvosana: {{count}} / 5",
@@ -380,9 +382,9 @@
     },
     "sections": {
       "hero": "Alku",
-      "pillars": "Mahdollisuudet",
+      "pillars": "Perusta",
       "how": "Miten toimii",
-      "rhythm": "3·7·30-rytmi",
+      "rhythm": "Tasaiseen paluuseen",
       "features": "Sisällä",
       "apps": "Sovellukset",
       "testimonials": "Arviot",
@@ -395,14 +397,14 @@
       "finance": "Eurobudjetti — selkeästi ja rauhallisesti"
     },
     "heroVisual": {
-      "tasksTitle": "Tehtävät tänään",
-      "tasksItem1": "Kertaa suomen sanasto",
-      "tasksItem2": "Sulje viikon budjetti",
-      "reviewTitle": "Kertaus",
-      "reviewQuestion": "Miten sanotaan kiitos suomeksi?",
-      "reviewHint": "Napauta nähdäksesi vastauksen",
-      "financeTitle": "Talous",
-      "financeLabel": "Jakson saldo",
+      "tasksTitle": "Tänään",
+      "tasksItem1": "Opiskelujakso — 25 minuuttia",
+      "tasksItem2": "Sulje viikko ilman häntiä",
+      "reviewTitle": "Oppiminen",
+      "reviewQuestion": "Mikä tästä viikosta saa jäädä?",
+      "reviewHint": "Se palaa ennen kuin haalistuu",
+      "financeTitle": "Saldo",
+      "financeLabel": "Tämä jakso",
       "financeValue": "+€420"
     },
     "mobileNav": {
@@ -970,7 +972,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — tehtävät, kertaus ja talous",
+      "home": "Mindkeep — tasainen rytmi oppimiselle",
       "login": "Kirjaudu · Mindkeep",
       "register": "Aloita · Mindkeep",
       "dashboard": "Yhteenveto · Mindkeep",
@@ -1005,8 +1007,8 @@
   },
   "footer": {
     "craftedLabel": "Omistaja",
-    "tagline": "Missä päivä löytää järjestyksen — ja tieto sekä raha pysyvät näkyvissä.",
-    "about": "Mindkeep yhdistää päivittäiset tehtävät, henkilökohtaisen talouden euroissa ja tiedon kertauksen rytmillä 3 · 7 · 30 — rauhallisesti, ilman ylimääräistä melua.",
+    "tagline": "Missä oppiminen pysyy vakaana — ja päivä ja raha näkyvissä.",
+    "about": "Mindkeep yhdistää päivän tehtävät, oppimisen joka ei haalistu, ja henkilökohtaisen talouden — rauhallisesti, yhdessä tilassa.",
     "linksLabel": "Navigointi",
     "follow": "Instagramissa",
     "instagram": "Instagram",

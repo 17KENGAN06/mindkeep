@@ -37,18 +37,42 @@ export function Reveal({
     const node = ref.current;
     if (!node) return;
 
+    const inView = () => {
+      const rect = node.getBoundingClientRect();
+      return rect.bottom > 40 && rect.top < window.innerHeight - 40;
+    };
+
+    const show = () => setVisible(true);
+
+    if (inView()) {
+      show();
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setVisible(true);
+          show();
           observer.disconnect();
         }
       },
-      { threshold: 0.16, rootMargin: '0px 0px -6% 0px' },
+      { threshold: 0, rootMargin: '80px 0px 80px 0px' },
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    const fallback = window.setTimeout(() => {
+      if (inView()) show();
+    }, 450);
+    const onPageShow = () => {
+      if (inView()) show();
+    };
+    window.addEventListener('pageshow', onPageShow);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallback);
+      window.removeEventListener('pageshow', onPageShow);
+    };
   }, [trigger]);
 
   if (reduceMotion) {

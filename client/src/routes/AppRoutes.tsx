@@ -1,12 +1,43 @@
 import { lazy, Suspense, type ComponentType, type ReactNode } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { RouteErrorBoundary } from '@/components/layout/RouteErrorBoundary';
 import { env } from '@/config/env';
 import { useAuth } from '@/features/auth/useAuth';
 import { HomePage } from '@/pages/HomePage';
 
 function lazyNamed(importer: () => Promise<Record<string, ComponentType>>, exportName: string) {
-  return lazy(() => importer().then((mod) => ({ default: mod[exportName]! })));
+  const load = () =>
+    importer().then((mod) => {
+      const Page = mod[exportName];
+      if (!Page) {
+        throw new Error(`Missing export ${exportName}`);
+      }
+      return { default: Page };
+    });
+
+  return lazy(() =>
+    load().catch(() =>
+      new Promise<{ default: ComponentType }>((resolve, reject) => {
+        window.setTimeout(() => {
+          void load()
+            .then(resolve)
+            .catch((error: unknown) => {
+              const text = String(error instanceof Error ? error.message : error);
+              if (
+                /Failed to fetch|Loading chunk|dynamically imported|Importing a module script failed|error loading dynamically imported module/i.test(
+                  text,
+                )
+              ) {
+                window.location.reload();
+                return;
+              }
+              reject(error);
+            });
+        }, 280);
+      }),
+    ),
+  );
 }
 
 const AuthLayout = lazyNamed(() => import('@/layouts/AuthLayout'), 'AuthLayout');
@@ -95,8 +126,9 @@ function MaintenanceHome({ children }: { children: ReactNode }) {
 
 export function AppRoutes() {
   return (
-    <Suspense fallback={<RouteFallback />}>
-      <Routes>
+    <RouteErrorBoundary>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
           path="/blog"
@@ -186,6 +218,7 @@ export function AppRoutes() {
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </Suspense>
+      </Suspense>
+    </RouteErrorBoundary>
   );
 }

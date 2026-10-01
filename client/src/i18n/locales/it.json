@@ -2,6 +2,8 @@
   "common": {
     "appName": "Mindkeep",
     "loading": "Caricamento...",
+    "loadError": "La pagina non ha finito di caricarsi.",
+    "reload": "Ricarica",
     "save": "Salva",
     "cancel": "Annulla",
     "back": "Indietro",
@@ -282,25 +284,25 @@
     }
   },
   "home": {
-    "title": "Impara. Agisci. Orienta.",
-    "subtitle": "Mindkeep unisce attività quotidiane, finanze personali e ripasso dilazionato in uno spazio di lavoro calmo.",
+    "title": "Tieni lo studio su un ritmo stabile.",
+    "subtitle": "Mindkeep raccoglie il giorno, lo studio e i soldi in un posto calmo — così i progressi non si sfarinano quando la vita accelera.",
     "ctaRegister": "Inizia gratis",
     "ctaLogin": "Accedi",
-    "eyebrow": "Attività · Ripasso · Finanze",
-    "pillarsTitle": "Tre pilastri di un ritmo stabile",
-    "pillarsSubtitle": "Pianifica la giornata, fissa ciò che impari e tieni i soldi in vista — senza destreggiarti tra app diverse.",
+    "eyebrow": "Studio · Giorno · Equilibrio",
+    "pillarsTitle": "Una base stabile per imparare",
+    "pillarsSubtitle": "Non un altro mucchio di note. Un sistema quieto perché studio, giorno e soldi non vadano ciascuno per conto suo.",
     "pillars": {
       "tasks": {
-        "title": "Attività del giorno",
-        "text": "Imposta gli obiettivi del giorno e del mese, spuntali e vedi i progressi senza rumore."
+        "title": "Il giorno resta in ordine",
+        "text": "Piano per oggi e per il mese, spunte e una settimana chiara — senza rumore in testa."
       },
       "repetition": {
-        "title": "Ripasso a 3 · 7 · 30",
-        "text": "Salva i materiali e tornaci sopra secondo un calendario fisso, così la conoscenza dura di più."
+        "title": "Quello che impari resta con te",
+        "text": "Salva ciò che contava e torna più tardi — la conoscenza non deve sparire dopo una settimana piena."
       },
       "finance": {
-        "title": "Finanze personali",
-        "text": "Entrate e uscite in euro, categorie e un saldo di periodo chiaro."
+        "title": "I soldi restano visibili",
+        "text": "Entrate, uscite e un saldo di periodo chiaro, così il budget non scompare dietro allo studio."
       }
     },
     "howTitle": "Come funziona",
@@ -320,13 +322,13 @@
         "text": "Registra un'entrata o un'uscita in euro — il riepilogo del periodo resta onesto e chiaro."
       }
     },
-    "rhythmTitle": "Un ritmo di memoria senza algoritmi complessi",
-    "rhythmSubtitle": "Per il ripasso, gli intervalli sono fissi. Le date si contano dal giorno di apprendimento e non si spostano quando segni un ripasso come fatto.",
+    "rhythmTitle": "Un ritorno calmo, non una corsa",
+    "rhythmSubtitle": "Quando salvi ciò che hai studiato, Mindkeep te lo riporta nel ritmo 3 · 7 · 30. Abbastanza struttura per restare stabili — senza un algoritmo rumoroso.",
     "daysLabel": "giorni",
     "intervals": {
-      "three": "Primo ripasso — fissa una traccia ancora fresca",
-      "seven": "Secondo ripasso — tieni il significato",
-      "thirty": "Terzo ripasso — verso la memoria a lungo termine"
+      "three": "Tornare mentre la traccia è ancora calda — la settimana non la cancella.",
+      "seven": "Un secondo sguardo perché il senso resti, anche quando il giorno è pieno dʼaltro.",
+      "thirty": "Un ritorno più tardi, perché lo studio diventi un ritmo lungo, non uno scatto isolato."
     },
     "featuresTitle": "Tutto ciò che ti serve, in un solo posto",
     "featuresSubtitle": "Mindkeep copre pianificazione, apprendimento e budget — con calma e prevedibilità.",
@@ -348,8 +350,8 @@
         "text": "Ripassi, attività e finanze si raccolgono in sezioni chiare sulla dashboard."
       }
     },
-    "ctaTitle": "Costruisci il tuo ritmo in Mindkeep",
-    "ctaSubtitle": "Crea un account e inizia con un'attività, un materiale o una voce di budget.",
+    "ctaTitle": "Inizia una settimana più ferma",
+    "ctaSubtitle": "Un account. Compiti, studio che torna, e un budget chiaro.",
     "apps": {
       "eyebrow": "Mobile",
       "title": "App per iPhone e Android",
@@ -359,9 +361,9 @@
       "readBlog": "Leggi le note di apprendimento"
     },
     "testimonials": {
-      "eyebrow": "Voci dalla beta",
-      "title": "Provato dai nostri primi utenti",
-      "subtitle": "Persone di diversi paesi hanno provato Mindkeep prima del lancio e hanno condiviso impressioni sincere.",
+      "eyebrow": "Chi lʼha già provato",
+      "title": "Continuare con più calma",
+      "subtitle": "Volevano tenere studio, giorno e soldi nello stesso posto — senza rumore extra.",
       "beta": "Partecipante al test beta",
       "all": "Tutte le recensioni",
       "rating": "Valutazione: {{count}} su 5",
@@ -380,9 +382,9 @@
     },
     "sections": {
       "hero": "Inizio",
-      "pillars": "Funzionalità",
+      "pillars": "Base",
       "how": "Come funziona",
-      "rhythm": "Ritmo 3·7·30",
+      "rhythm": "Ritorno fermo",
       "features": "Dentro",
       "apps": "App",
       "testimonials": "Recensioni",
@@ -395,14 +397,14 @@
       "finance": "Budget in euro — chiaro e calmo"
     },
     "heroVisual": {
-      "tasksTitle": "Attività di oggi",
-      "tasksItem1": "Ripassare il vocabolario finlandese",
-      "tasksItem2": "Chiudere il budget della settimana",
-      "reviewTitle": "Ripasso",
-      "reviewQuestion": "Come si dice grazie in finlandese?",
-      "reviewHint": "Tocca per rivelare la risposta",
-      "financeTitle": "Finanze",
-      "financeLabel": "Saldo del periodo",
+      "tasksTitle": "Oggi",
+      "tasksItem1": "Blocco di studio — 25 minuti",
+      "tasksItem2": "Chiudere la settimana senza code",
+      "reviewTitle": "Studio",
+      "reviewQuestion": "Cosa di questa settimana deve restare?",
+      "reviewHint": "Torna prima di sbiadire",
+      "financeTitle": "Saldo",
+      "financeLabel": "Questo periodo",
       "financeValue": "+€420"
     },
     "mobileNav": {
@@ -970,7 +972,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — attività, ripasso e finanze",
+      "home": "Mindkeep — un ritmo stabile per lo studio",
       "login": "Accedi · Mindkeep",
       "register": "Inizia gratis · Mindkeep",
       "dashboard": "Panoramica · Mindkeep",
@@ -1005,8 +1007,8 @@
   },
   "footer": {
     "craftedLabel": "Proprietà di",
-    "tagline": "Dove la giornata trova ordine — e conoscenza e denaro restano in vista.",
-    "about": "Mindkeep unisce attività quotidiane, finanze personali in euro e ripasso delle conoscenze su un ritmo 3 · 7 · 30 — con calma, senza rumore extra.",
+    "tagline": "Dove lo studio resta stabile — e giorno e soldi restano in vista.",
+    "about": "Mindkeep unisce compiti quotidiani, studio che non sbiadisce e finanze personali — con calma, in un solo spazio.",
     "linksLabel": "Naviga",
     "follow": "Su Instagram",
     "instagram": "Instagram",

@@ -2,6 +2,8 @@
   "common": {
     "appName": "Mindkeep",
     "loading": "Wird geladen...",
+    "loadError": "Die Seite wurde nicht vollständig geladen.",
+    "reload": "Neu laden",
     "save": "Speichern",
     "cancel": "Abbrechen",
     "back": "Zurück",
@@ -282,25 +284,25 @@
     }
   },
   "home": {
-    "title": "Lernen. Handeln. Steuern.",
-    "subtitle": "Mindkeep bringt Tagesaufgaben, persönliche Finanzen und verteiltes Wiederholen in einen ruhigen Arbeitsraum.",
+    "title": "Lerne in einem ruhigen Takt.",
+    "subtitle": "Mindkeep hält Tag, Lernen und Geld an einem stillen Ort — damit Fortschritt nicht bröckelt, wenn das Leben lauter wird.",
     "ctaRegister": "Kostenlos starten",
     "ctaLogin": "Anmelden",
-    "eyebrow": "Aufgaben · Wiederholen · Finanzen",
-    "pillarsTitle": "Drei Säulen eines ruhigen Rhythmus",
-    "pillarsSubtitle": "Plane den Tag, festige, was du lernst, und halte Geld sichtbar — ohne zwischen Apps zu jonglieren.",
+    "eyebrow": "Lernen · Tag · Balance",
+    "pillarsTitle": "Ein stabiles Fundament fürs Lernen",
+    "pillarsSubtitle": "Kein weiterer Notizstapel. Ein ruhiges System, damit Lernen, Tag und Geld nicht auseinanderlaufen.",
     "pillars": {
       "tasks": {
-        "title": "Tagesaufgaben",
-        "text": "Setze Ziele für Tag und Monat, hak sie ab und sieh den Fortschritt ohne Lärm."
+        "title": "Der Tag bleibt in Ordnung",
+        "text": "Plan für heute und den Monat, abhaken und die Woche sehen — ohne Lärm im Kopf."
       },
       "repetition": {
-        "title": "Wiederholen bei 3 · 7 · 30",
-        "text": "Speichere Materialien und kehre nach festem Zeitplan zurück, damit Wissen länger bleibt."
+        "title": "Gelerntes bleibt bei dir",
+        "text": "Halte fest, was zählte, und komm später zurück — Wissen muss nach einer vollen Woche nicht verschwinden."
       },
       "finance": {
-        "title": "Persönliche Finanzen",
-        "text": "Einnahmen und Ausgaben in Euro, Kategorien und ein klares Periodensaldo."
+        "title": "Geld bleibt sichtbar",
+        "text": "Einnahmen, Ausgaben und eine klare Periodenbilanz, damit das Budget hinter dem Lernen nicht verschwindet."
       }
     },
     "howTitle": "So funktioniert’s",
@@ -320,13 +322,13 @@
         "text": "Erfasse Einnahme oder Ausgabe in Euro — die Periodenübersicht bleibt ehrlich und klar."
       }
     },
-    "rhythmTitle": "Ein Gedächtnisrhythmus ohne komplexe Algorithmen",
-    "rhythmSubtitle": "Beim Wiederholen sind die Abstände fest. Daten werden vom Lerntag gezählt und verschieben sich nicht, wenn du eine Wiederholung als erledigt markierst.",
+    "rhythmTitle": "Eine ruhige Rückkehr, kein Drill",
+    "rhythmSubtitle": "Wenn du Gelerntes speicherst, holt Mindkeep es im Takt 3 · 7 · 30 zurück. Genug Struktur zum Stabilbleiben — ohne lautem Algorithmus.",
     "daysLabel": "Tage",
     "intervals": {
-      "three": "Erste Wiederholung — eine frische Spur festigen",
-      "seven": "Zweite Wiederholung — die Bedeutung halten",
-      "thirty": "Dritte Wiederholung — Richtung Langzeitgedächtnis"
+      "three": "Zurück, solange die Spur noch warm ist — die Woche wischt sie nicht weg.",
+      "seven": "Ein zweiter Blick, damit die Bedeutung bleibt, auch wenn der Tag anders füllt.",
+      "thirty": "Eine spätere Rückkehr, damit Lernen ein langer Rhythmus wird, kein einmaliger Sprint."
     },
     "featuresTitle": "Alles, was du brauchst, an einem Ort",
     "featuresSubtitle": "Mindkeep umfasst Planung, Lernen und Budget — ruhig und vorhersehbar.",
@@ -348,8 +350,8 @@
         "text": "Wiederholungen, Aufgaben und Finanzen sammeln sich auf dem Dashboard in klaren Ausschnitten."
       }
     },
-    "ctaTitle": "Baue deinen Rhythmus in Mindkeep",
-    "ctaSubtitle": "Erstelle ein Konto und starte mit einer Aufgabe, einem Material oder einem Budgeteintrag.",
+    "ctaTitle": "Starte eine ruhigere Woche",
+    "ctaSubtitle": "Ein Konto. Aufgaben, Lernen, das wiederkommt, und ein klares Budget.",
     "apps": {
       "eyebrow": "Mobil",
       "title": "Apps für iPhone und Android",
@@ -359,9 +361,9 @@
       "readBlog": "Lernnotizen lesen"
     },
     "testimonials": {
-      "eyebrow": "Stimmen aus der Beta",
-      "title": "Getestet von unseren ersten Nutzerinnen und Nutzern",
-      "subtitle": "Menschen aus verschiedenen Ländern haben Mindkeep vor dem Start ausprobiert und ehrliche Eindrücke geteilt.",
+      "eyebrow": "Von Menschen, die es versucht haben",
+      "title": "Ruhiger weitermachen",
+      "subtitle": "Sie wollten Lernen, Tag und Geld an einem Ort — ohne Extra-Lärm.",
       "beta": "Teilnehmerin / Teilnehmer am Betatest",
       "all": "Alle Stimmen",
       "rating": "Bewertung: {{count}} von 5",
@@ -380,9 +382,9 @@
     },
     "sections": {
       "hero": "Start",
-      "pillars": "Möglichkeiten",
+      "pillars": "Fundament",
       "how": "So funktioniert’s",
-      "rhythm": "3·7·30-Rhythmus",
+      "rhythm": "Ruhige Rückkehr",
       "features": "Innen",
       "apps": "Apps",
       "testimonials": "Stimmen",
@@ -395,14 +397,14 @@
       "finance": "Euro-Budget — klar und ruhig"
     },
     "heroVisual": {
-      "tasksTitle": "Aufgaben heute",
-      "tasksItem1": "Finnischen Wortschatz wiederholen",
-      "tasksItem2": "Wochenbudget abschließen",
-      "reviewTitle": "Wiederholen",
-      "reviewQuestion": "Wie sagt man danke auf Finnisch?",
-      "reviewHint": "Tippen, um die Antwort zu zeigen",
-      "financeTitle": "Finanzen",
-      "financeLabel": "Periodensaldo",
+      "tasksTitle": "Heute",
+      "tasksItem1": "Lernblock — 25 Minuten",
+      "tasksItem2": "Die Woche ohne offene Enden schließen",
+      "reviewTitle": "Lernen",
+      "reviewQuestion": "Was aus dieser Woche soll bleiben?",
+      "reviewHint": "Es kommt zurück, bevor es verblasst",
+      "financeTitle": "Saldo",
+      "financeLabel": "Diese Periode",
       "financeValue": "+€420"
     },
     "mobileNav": {
@@ -970,7 +972,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — Aufgaben, Wiederholen und Finanzen",
+      "home": "Mindkeep — ein ruhiger Takt fürs Lernen",
       "login": "Anmelden · Mindkeep",
       "register": "Kostenlos starten · Mindkeep",
       "dashboard": "Übersicht · Mindkeep",
@@ -1005,8 +1007,8 @@
   },
   "footer": {
     "craftedLabel": "Eigentum von",
-    "tagline": "Wo der Tag Ordnung findet — und Wissen und Geld im Blick bleiben.",
-    "about": "Mindkeep verbindet Tagesaufgaben, persönliche Finanzen in Euro und Wissenswiederholung im 3 · 7 · 30-Rhythmus — ruhig, ohne Extra-Lärm.",
+    "tagline": "Wo Lernen stabil bleibt — und Tag und Geld im Blick.",
+    "about": "Mindkeep verbindet tägliche Aufgaben, Lernen, das nicht verblasst, und persönliche Finanzen — ruhig, in einem Arbeitsraum.",
     "linksLabel": "Navigation",
     "follow": "Auf Instagram",
     "instagram": "Instagram",

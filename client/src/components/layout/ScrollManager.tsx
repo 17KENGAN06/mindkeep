@@ -37,6 +37,16 @@ export function ScrollManager() {
     }
   }, []);
 
+  useEffect(() => {
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (!event.persisted) return;
+      // iPad/Safari often restores a frozen SPA from back-forward cache.
+      window.location.reload();
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, []);
+
   useLayoutEffect(() => {
     if (location.hash) {
       // Wait a frame so the destination route has painted.

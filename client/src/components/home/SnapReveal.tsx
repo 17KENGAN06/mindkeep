@@ -32,7 +32,8 @@ export function SnapReveal({
 
   useEffect(() => {
     if (!play) return;
-    if (window.matchMedia('(max-width: 767px)').matches) {
+    // Phones and tablets: once shown, stay shown. Desktop snap can replay.
+    if (window.matchMedia('(max-width: 1279px)').matches) {
       setStayVisible(true);
     }
   }, [play]);

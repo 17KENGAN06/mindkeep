@@ -100,7 +100,7 @@ function CompactLanguageMenu({
           id={listId}
           role="listbox"
           aria-label={t('common.language')}
-          className="absolute right-0 z-50 mt-2 w-[min(16.5rem,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-panel p-1.5 shadow-lg ring-1 ring-line"
+          className="absolute right-0 z-[80] mt-2 max-h-[min(20rem,calc(100dvh-5.5rem))] w-[min(16.5rem,calc(100vw-2rem))] overflow-y-auto overflow-x-hidden rounded-2xl bg-panel p-1.5 shadow-lg ring-1 ring-line"
         >
           <div
             aria-hidden

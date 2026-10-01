@@ -2,6 +2,8 @@
   "common": {
     "appName": "Mindkeep",
     "loading": "Chargement...",
+    "loadError": "La page n’a pas fini de se charger.",
+    "reload": "Recharger",
     "save": "Enregistrer",
     "cancel": "Annuler",
     "back": "Retour",
@@ -282,25 +284,25 @@
     }
   },
   "home": {
-    "title": "Apprendre. Agir. Diriger.",
-    "subtitle": "Mindkeep réunit les tâches du jour, les finances personnelles et les révisions espacées dans un espace calme.",
+    "title": "Gardez lʼapprentissage sur un rythme stable.",
+    "subtitle": "Mindkeep rassemble le jour, les études et lʼargent dans un lieu calme — pour que le progrès ne sʼeffrite pas quand la vie accélère.",
     "ctaRegister": "Commencer gratuitement",
     "ctaLogin": "Connexion",
-    "eyebrow": "Tâches · Révision · Finances",
-    "pillarsTitle": "Trois piliers d'un rythme stable",
-    "pillarsSubtitle": "Planifie la journée, ancre ce que tu apprends et garde l'argent visible — sans jongler entre plusieurs apps.",
+    "eyebrow": "Études · Jour · Équilibre",
+    "pillarsTitle": "Une base stable pour apprendre",
+    "pillarsSubtitle": "Pas une pile de notes de plus. Un système calme pour que études, jour et argent cessent de partir chacun de leur côté.",
     "pillars": {
       "tasks": {
-        "title": "Tâches du jour",
-        "text": "Fixe tes objectifs du jour et du mois, coche-les, et vois tes progrès sans bruit."
+        "title": "Le jour reste en ordre",
+        "text": "Plan du jour et du mois, cases cochées et une semaine lisible — sans bruit dans la tête."
       },
       "repetition": {
-        "title": "Révision à 3 · 7 · 30",
-        "text": "Enregistre tes fiches et reviens-y selon un calendrier fixe, pour que le savoir tienne plus longtemps."
+        "title": "Ce que vous apprenez reste",
+        "text": "Gardez ce qui comptait et y revenir plus tard — le savoir nʼa pas à sʼeffacer après une semaine dense."
       },
       "finance": {
-        "title": "Finances personnelles",
-        "text": "Revenus et dépenses en euros, catégories, et un solde de période limpide."
+        "title": "Lʼargent reste visible",
+        "text": "Revenus, dépenses et un solde de période clair, pour que le budget ne disparaisse pas derrière les études."
       }
     },
     "howTitle": "Comment ça marche",
@@ -320,13 +322,13 @@
         "text": "Note un revenu ou une dépense en euros — le résumé de période reste honnête et clair."
       }
     },
-    "rhythmTitle": "Un rythme de mémoire sans algorithmes complexes",
-    "rhythmSubtitle": "Pour la révision, les intervalles sont fixes. Les dates se comptent depuis le jour d'apprentissage et ne bougent pas quand tu marques une révision comme faite.",
+    "rhythmTitle": "Un retour calme, pas une course",
+    "rhythmSubtitle": "Quand vous enregistrez ce que vous avez étudié, Mindkeep le ramène sur le rythme 3 · 7 · 30. Assez de structure pour rester stable — sans algorithme bruyant.",
     "daysLabel": "jours",
     "intervals": {
-      "three": "Première révision — ancre une trace encore fraîche",
-      "seven": "Deuxième révision — garde le sens",
-      "thirty": "Troisième révision — vers la mémoire à long terme"
+      "three": "Revenir tant que la trace est chaude — la semaine ne lʼefface pas.",
+      "seven": "Un second regard pour que le sens reste, même si le jour est pris ailleurs.",
+      "thirty": "Un retour plus tard, pour que lʼétude devienne un long rythme, pas un sprint isolé."
     },
     "featuresTitle": "Tout ce qu'il te faut, au même endroit",
     "featuresSubtitle": "Mindkeep couvre la planification, l'apprentissage et le budget — calmement et de façon prévisible.",
@@ -348,8 +350,8 @@
         "text": "Révisions, tâches et finances se rassemblent en tranches claires sur le tableau de bord."
       }
     },
-    "ctaTitle": "Construis ton rythme dans Mindkeep",
-    "ctaSubtitle": "Crée un compte et commence par une tâche, une fiche ou une entrée de budget.",
+    "ctaTitle": "Commencez une semaine plus régulière",
+    "ctaSubtitle": "Un compte. Tâches, apprentissage qui revient, et un budget clair.",
     "apps": {
       "eyebrow": "Mobile",
       "title": "Apps pour iPhone et Android",
@@ -359,9 +361,9 @@
       "readBlog": "Lire les notes d'apprentissage"
     },
     "testimonials": {
-      "eyebrow": "Voix de la bêta",
-      "title": "Testé par nos premiers utilisateurs",
-      "subtitle": "Des personnes de différents pays ont essayé Mindkeep avant le lancement et ont partagé leurs impressions sincères.",
+      "eyebrow": "Ceux qui ont essayé",
+      "title": "Continuer plus calmement",
+      "subtitle": "Ils voulaient garder études, jour et argent au même endroit — sans bruit en trop.",
       "beta": "Participant au test bêta",
       "all": "Tous les avis",
       "rating": "Note : {{count}} sur 5",
@@ -380,9 +382,9 @@
     },
     "sections": {
       "hero": "Début",
-      "pillars": "Capacités",
+      "pillars": "Base",
       "how": "Comment ça marche",
-      "rhythm": "Rythme 3·7·30",
+      "rhythm": "Retour régulier",
       "features": "À l'intérieur",
       "apps": "Apps",
       "testimonials": "Avis",
@@ -395,14 +397,14 @@
       "finance": "Budget en euros — clair et calme"
     },
     "heroVisual": {
-      "tasksTitle": "Tâches aujourd'hui",
-      "tasksItem1": "Réviser le vocabulaire finnois",
-      "tasksItem2": "Clôturer le budget de la semaine",
-      "reviewTitle": "Révision",
-      "reviewQuestion": "Comment dit-on merci en finnois ?",
-      "reviewHint": "Appuie pour voir la réponse",
-      "financeTitle": "Finances",
-      "financeLabel": "Solde de la période",
+      "tasksTitle": "Aujourdʼhui",
+      "tasksItem1": "Bloc dʼétude — 25 minutes",
+      "tasksItem2": "Clore la semaine sans restes",
+      "reviewTitle": "Études",
+      "reviewQuestion": "Que faut-il garder de cette semaine ?",
+      "reviewHint": "Ça revient avant de sʼeffacer",
+      "financeTitle": "Solde",
+      "financeLabel": "Cette période",
       "financeValue": "+€420"
     },
     "mobileNav": {
@@ -970,7 +972,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — tâches, révision et finances",
+      "home": "Mindkeep — un rythme stable pour apprendre",
       "login": "Connexion · Mindkeep",
       "register": "Commencer gratuitement · Mindkeep",
       "dashboard": "Vue d'ensemble · Mindkeep",
@@ -1005,8 +1007,8 @@
   },
   "footer": {
     "craftedLabel": "Propriété de",
-    "tagline": "Là où la journée trouve de l'ordre — et où le savoir et l'argent restent en vue.",
-    "about": "Mindkeep réunit les tâches du jour, les finances personnelles en euros et la révision des connaissances sur un rythme 3 · 7 · 30 — calmement, sans bruit superflu.",
+    "tagline": "Là où lʼapprentissage reste stable — et le jour et lʼargent restent en vue.",
+    "about": "Mindkeep réunit les tâches du jour, un apprentissage qui ne sʼefface pas, et les finances perso — calmement, dans un seul espace.",
     "linksLabel": "Naviguer",
     "follow": "Sur Instagram",
     "instagram": "Instagram",

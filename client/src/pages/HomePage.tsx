@@ -1,24 +1,14 @@
 import { useState } from 'react';
-import {
-  ArrowRight,
-  ArrowUp,
-  CalendarDays,
-  CheckSquare,
-  GraduationCap,
-  Layers3,
-  Wallet,
-} from 'lucide-react';
+import { ArrowRight, ArrowUp, CheckSquare, GraduationCap, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
-import { BlogPreview } from '@/components/blog/ArticleCard';
 import { AnimatedSnapSection } from '@/components/home/AnimatedSnapSection';
 import { HeroStage } from '@/components/home/HeroStage';
 import { SectionNav } from '@/components/home/SectionNav';
 import { MobileHomeNav } from '@/components/home/MobileHomeNav';
 import { SnapReveal } from '@/components/home/SnapReveal';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
-import { StoreComingSoon } from '@/components/home/StoreComingSoon';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -38,24 +28,7 @@ const pillars = [
   { key: 'finance', icon: Wallet },
 ] as const;
 
-const features = [
-  { key: 'planning', icon: CheckSquare },
-  { key: 'memory', icon: Layers3 },
-  { key: 'money', icon: Wallet },
-  { key: 'calendar', icon: CalendarDays },
-] as const;
-
-const SECTION_IDS = [
-  'hero',
-  'pillars',
-  'how',
-  'rhythm',
-  'features',
-  'apps',
-  'testimonials',
-  'blog',
-  'cta',
-] as const;
+const SECTION_IDS = ['hero', 'pillars', 'rhythm', 'testimonials'] as const;
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -67,13 +40,8 @@ export function HomePage() {
   const labels = [
     t('home.sections.hero'),
     t('home.sections.pillars'),
-    t('home.sections.how'),
     t('home.sections.rhythm'),
-    t('home.sections.features'),
-    t('home.sections.apps'),
     t('home.sections.testimonials'),
-    t('home.sections.blog'),
-    t('home.sections.cta'),
   ];
 
   return (
@@ -109,15 +77,15 @@ export function HomePage() {
         data-section-snap="true"
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-6">
+          <div className="relative mx-auto flex h-full w-full max-w-[1400px] flex-col px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
             <SnapReveal
-              className="z-10 flex items-center justify-between gap-2 sm:gap-3"
+              className="relative z-50 flex items-center justify-between gap-2 sm:gap-3"
               delay={0.02}
             >
               <BrandLockup to="/" size="lg" className="min-w-0 max-w-[55%] sm:max-w-none" />
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
                 <nav
-                  className="hidden items-center gap-1 lg:flex"
+                  className="hidden items-center gap-1 xl:flex"
                   aria-label={t('footer.linksLabel')}
                 >
                   <Link
@@ -144,13 +112,13 @@ export function HomePage() {
               </div>
             </SnapReveal>
 
-            <div className="relative grid flex-1 items-center gap-8 pb-20 pt-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12 lg:pb-10 lg:pt-6">
+            <div className="relative grid min-h-0 flex-1 items-center gap-8 pb-24 pt-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)] xl:gap-16 xl:pb-10 xl:pt-8">
               <div
                 aria-hidden
-                className="hero-glow pointer-events-none absolute inset-x-[-12%] top-[5%] -z-10 h-[60%] rounded-[45%] bg-[radial-gradient(circle_at_center,var(--app-accent-soft),transparent_70%)] lg:left-[-8%] lg:w-[70%]"
+                className="hero-glow pointer-events-none absolute inset-x-[-12%] top-[5%] -z-10 h-[60%] rounded-[45%] bg-[radial-gradient(circle_at_center,var(--app-accent-soft),transparent_70%)] xl:left-[-8%] xl:w-[70%]"
               />
 
-              <div className="relative">
+              <div className="relative min-w-0">
                 <SnapReveal direction="left" delay={0.08}>
                   <p className="font-display text-sm font-medium tracking-[0.28em] text-brand-500 uppercase">
                     {t('home.eyebrow')}
@@ -158,49 +126,19 @@ export function HomePage() {
                 </SnapReveal>
 
                 <SnapReveal direction="scale" delay={0.16}>
-                  <h1 className="font-display mt-4 max-w-3xl text-[2.35rem] leading-[1.05] font-semibold tracking-tight text-ink sm:mt-5 sm:text-6xl lg:text-[3.6rem] xl:text-7xl">
+                  <h1 className="font-display mt-4 max-w-5xl text-[2.5rem] leading-[1.05] font-semibold tracking-tight text-ink sm:mt-5 sm:text-6xl lg:text-[3.4rem] xl:text-[4.25rem]">
                     {t('home.title')}
                   </h1>
                 </SnapReveal>
 
                 <SnapReveal direction="right" delay={0.26}>
-                  <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
+                  <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted sm:mt-6 sm:text-lg lg:text-xl">
                     {t('home.subtitle')}
                   </p>
                 </SnapReveal>
 
-                <SnapReveal delay={0.32}>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink/80 sm:text-base">
-                    {t('home.heroLead')}
-                  </p>
-                </SnapReveal>
-
-                <SnapReveal delay={0.36}>
-                  <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4 lg:gap-6 lg:border-y lg:border-line/70 lg:py-4">
-                    {pillars.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <div
-                          key={item.key}
-                          className="min-w-0 rounded-2xl border border-line/70 bg-panel/50 px-3.5 py-3 lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:py-0"
-                        >
-                          <div className="flex items-center gap-2 text-brand-500">
-                            <Icon className="h-4 w-4 shrink-0" aria-hidden />
-                            <p className="truncate text-xs font-semibold tracking-wide uppercase">
-                              {t(`home.pillars.${item.key}.title`)}
-                            </p>
-                          </div>
-                          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted sm:text-[13px]">
-                            {t(`home.heroHighlights.${item.key}`)}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </SnapReveal>
-
-                <SnapReveal delay={0.46}>
-                  <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap">
+                <SnapReveal delay={0.4}>
+                  <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap">
                     {isAuthenticated ? (
                       <Link to="/dashboard" className="w-full sm:w-auto">
                         <Button className="min-w-44 gap-2">
@@ -231,20 +169,9 @@ export function HomePage() {
                     </Link>
                   </div>
                 </SnapReveal>
-
-                <SnapReveal delay={0.52} className="mt-5 lg:hidden">
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-brand-500"
-                    onClick={() => goToSection('pillars')}
-                  >
-                    {t('home.heroBrowse')}
-                    <ArrowRight className="h-4 w-4" aria-hidden />
-                  </button>
-                </SnapReveal>
               </div>
 
-              <SnapReveal direction="right" delay={0.28} className="h-full">
+              <SnapReveal direction="right" delay={0.28} className="min-w-0 xl:pr-10">
                 <HeroStage />
               </SnapReveal>
             </div>
@@ -252,14 +179,14 @@ export function HomePage() {
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="pillars" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
+          <div className="relative mx-auto flex h-full w-full max-w-[1400px] flex-col justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
             <SnapReveal direction="left">
-              <h2 className="font-display max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+              <h2 className="font-display max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
                 {t('home.pillarsTitle')}
               </h2>
             </SnapReveal>
             <SnapReveal direction="left" delay={0.08}>
-              <p className="mt-4 max-w-2xl text-base text-muted sm:text-lg">
+              <p className="mt-4 max-w-3xl text-base text-muted sm:text-lg">
                 {t('home.pillarsSubtitle')}
               </p>
             </SnapReveal>
@@ -288,49 +215,15 @@ export function HomePage() {
           </div>
         </AnimatedSnapSection>
 
-        <AnimatedSnapSection id="how" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
-            <SnapReveal direction="right">
-              <h2 className="font-display max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-                {t('home.howTitle')}
-              </h2>
-            </SnapReveal>
-            <SnapReveal direction="right" delay={0.08}>
-              <p className="mt-4 max-w-2xl text-base text-muted sm:text-lg">{t('home.howSubtitle')}</p>
-            </SnapReveal>
-            <ol className="mt-12 grid gap-8 md:grid-cols-3">
-              {[1, 2, 3].map((step) => (
-                <SnapReveal
-                  key={step}
-                  direction={step % 2 === 0 ? 'right' : 'left'}
-                  delay={0.1 + step * 0.08}
-                >
-                  <li className="glass-panel h-full rounded-[1.75rem] border-l-2 border-l-brand-500 p-6">
-                    <p className="font-display text-sm font-semibold tracking-wide text-brand-500">
-                      {t('home.stepLabel', { n: step })}
-                    </p>
-                    <h3 className="mt-3 text-xl font-semibold text-ink sm:text-2xl">
-                      {t(`home.steps.${step}.title`)}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                      {t(`home.steps.${step}.text`)}
-                    </p>
-                  </li>
-                </SnapReveal>
-              ))}
-            </ol>
-          </div>
-        </AnimatedSnapSection>
-
         <AnimatedSnapSection id="rhythm" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
+          <div className="relative mx-auto flex h-full w-full max-w-[1400px] flex-col justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
             <SnapReveal direction="left">
-              <h2 className="font-display max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+              <h2 className="font-display max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
                 {t('home.rhythmTitle')}
               </h2>
             </SnapReveal>
             <SnapReveal direction="left" delay={0.08}>
-              <p className="mt-4 max-w-2xl text-base text-muted sm:text-lg">
+              <p className="mt-4 max-w-3xl text-base text-muted sm:text-lg">
                 {t('home.rhythmSubtitle')}
               </p>
             </SnapReveal>
@@ -356,97 +249,41 @@ export function HomePage() {
           </div>
         </AnimatedSnapSection>
 
-        <AnimatedSnapSection id="features" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
-            <SnapReveal direction="scale">
-              <h2 className="font-display max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-                {t('home.featuresTitle')}
-              </h2>
-            </SnapReveal>
-            <SnapReveal direction="scale" delay={0.08}>
-              <p className="mt-4 max-w-2xl text-base text-muted sm:text-lg">
-                {t('home.featuresSubtitle')}
-              </p>
-            </SnapReveal>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2">
-              {features.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <SnapReveal key={item.key} delay={0.12 + index * 0.07}>
-                    <article className="glass-panel h-full rounded-[1.75rem] p-7">
-                      <Icon className="h-7 w-7 text-brand-500" aria-hidden />
-                      <h3 className="mt-5 text-xl font-semibold text-ink">
-                        {t(`home.features.${item.key}.title`)}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                        {t(`home.features.${item.key}.text`)}
-                      </p>
-                    </article>
-                  </SnapReveal>
-                );
-              })}
-            </div>
-          </div>
-        </AnimatedSnapSection>
-
-        <AnimatedSnapSection id="apps" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
-            <SnapReveal>
-              <StoreComingSoon animated />
-            </SnapReveal>
-          </div>
-        </AnimatedSnapSection>
-
         <AnimatedSnapSection
           id="testimonials"
           activeId={activeId}
           className="border-t border-line/70"
         >
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
-            <SnapReveal>
-              <TestimonialsSection animated />
-            </SnapReveal>
-          </div>
-        </AnimatedSnapSection>
-
-        <AnimatedSnapSection id="blog" activeId={activeId} className="border-t border-line/70">
-          <div className="relative mx-auto flex h-full w-full max-w-6xl flex-col justify-center px-4 py-10 sm:px-6 sm:py-16">
-            <SnapReveal>
-              <BlogPreview animated />
-            </SnapReveal>
-          </div>
-        </AnimatedSnapSection>
-
-        <AnimatedSnapSection id="cta" activeId={activeId} className="border-t border-line/70">
-          <div className="mx-auto flex h-full w-full max-w-6xl flex-col justify-between overflow-y-auto px-4 py-6 sm:px-6 sm:py-10">
-            <div className="mb-5 flex flex-1 flex-col items-stretch justify-center gap-6 md:mb-10 md:flex-row md:items-end md:justify-between">
-              <SnapReveal direction="left" className="max-w-xl">
-                <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-                  {t('home.ctaTitle')}
-                </h2>
-                <p className="mt-4 text-base text-muted sm:text-lg">{t('home.ctaSubtitle')}</p>
+          <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col justify-between overflow-y-auto px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+            <div className="min-h-0 flex-1">
+              <SnapReveal>
+                <TestimonialsSection animated />
               </SnapReveal>
-              <SnapReveal direction="right" delay={0.12}>
-                <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                  {isAuthenticated ? (
-                    <Link to="/dashboard" className="w-full sm:w-auto">
-                      <Button className="min-w-44 gap-2">
-                        {t('nav.dashboard')}
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Link to="/register" className="w-full sm:w-auto">
-                      <Button className="min-w-44 gap-2">
-                        {t('home.ctaRegister')}
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
-                    </Link>
-                  )}
-                </div>
+              <SnapReveal delay={0.12} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                {isAuthenticated ? (
+                  <Link to="/dashboard" className="w-full sm:w-auto">
+                    <Button className="min-w-44 gap-2">
+                      {t('nav.dashboard')}
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/register" className="w-full sm:w-auto">
+                    <Button className="min-w-44 gap-2">
+                      {t('home.ctaRegister')}
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                )}
+                <Link
+                  to="/blog"
+                  className="inline-flex min-h-11 items-center justify-center rounded-xl border border-line px-4 text-sm font-semibold text-ink no-underline"
+                >
+                  {t('nav.blog')}
+                </Link>
               </SnapReveal>
             </div>
-            <SnapReveal delay={0.18}>
+            <SnapReveal delay={0.18} className="mt-8">
               <SiteFooter compact embedded />
             </SnapReveal>
           </div>

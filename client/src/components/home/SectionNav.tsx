@@ -56,9 +56,7 @@ function useAutoHideNav(activeId: string) {
     const nearNav = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse') return false;
       const width = window.innerWidth;
-      const height = window.innerHeight;
       if (width >= 1280) return event.clientX > width - 80;
-      if (width >= 768) return event.clientY > height - 96;
       return false;
     };
 
@@ -175,7 +173,6 @@ export function SectionNav({ sectionIds, labels, activeId, onSelect }: SectionNa
   const count = sectionIds.length;
   const last = Math.max(count - 1, 1);
   const progress = activeIndex / last;
-  const activeLabel = labels[activeIndex] ?? '';
   const { visible, chromeProps } = useAutoHideNav(activeId);
   const dots = {
     sectionIds,
@@ -186,31 +183,6 @@ export function SectionNav({ sectionIds, labels, activeId, onSelect }: SectionNa
 
   return (
     <>
-      <NavShell
-        visible={visible}
-        chromeProps={chromeProps}
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-40 hidden justify-center px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:flex xl:hidden"
-        hiddenClassName="translate-y-3"
-      >
-        <div className="relative flex flex-col items-center rounded-[1.5rem] border border-line/70 bg-panel/70 px-4 pt-2 pb-2.5 shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-xl">
-          <p className="font-display mb-0.5 max-w-[16rem] truncate text-[10px] tracking-[0.18em] text-brand-500 uppercase">
-            {activeLabel}
-          </p>
-          <div className="relative">
-            <div
-              className="pointer-events-none absolute top-1/2 right-3 left-3 h-0.5 -translate-y-1/2 overflow-hidden rounded-full bg-line/50"
-              aria-hidden
-            >
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-brand-300 via-brand-500 to-brand-600 transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{ width: `${Math.max(progress * 100, 6)}%` }}
-              />
-            </div>
-            <SectionDots {...dots} showSideLabels={false} />
-          </div>
-        </div>
-      </NavShell>
-
       <NavShell
         visible={visible}
         chromeProps={chromeProps}

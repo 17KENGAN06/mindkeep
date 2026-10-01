@@ -87,7 +87,7 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
     <footer
       className={`relative w-full border-t border-line ${
         compact ? 'pt-10 sm:pt-12' : 'pt-16 sm:pt-20'
-      }`}
+      } ${embedded ? (compact ? 'mt-8 sm:mt-10' : 'mt-20 sm:mt-28') : ''}`}
     >
       <div
         aria-hidden

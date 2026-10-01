@@ -23,24 +23,19 @@ export function AnimatedSnapSection({
   children,
 }: AnimatedSnapSectionProps) {
   const active = activeId === id;
-  const [play, setPlay] = useState(false);
+  const [play, setPlay] = useState(() => active || (typeof window !== 'undefined' && !isDesktopSnap()));
 
   useEffect(() => {
     const desktop = isDesktopSnap();
-
-    if (!active) {
-      if (desktop) setPlay(false);
-      return;
-    }
 
     if (!desktop) {
       setPlay(true);
       return;
     }
 
-    setPlay(false);
-    const timerId = window.setTimeout(() => setPlay(true), 40);
-    return () => window.clearTimeout(timerId);
+    // Keep the active section visible immediately. A false→timeout→true
+    // flip often never fires after iPad/Safari back-forward cache restore.
+    setPlay(active);
   }, [active]);
 
   return (

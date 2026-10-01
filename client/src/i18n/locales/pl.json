@@ -2,6 +2,8 @@
   "common": {
     "appName": "Mindkeep",
     "loading": "Ładowanie...",
+    "loadError": "Strona nie zdążyła się wczytać.",
+    "reload": "Odśwież",
     "save": "Zapisz",
     "cancel": "Anuluj",
     "back": "Wstecz",
@@ -282,25 +284,25 @@
     }
   },
   "home": {
-    "title": "Ucz się. Działaj. Steruj.",
-    "subtitle": "Mindkeep łączy zadania dnia, finanse osobiste i powtórki w jednym spokojnym miejscu.",
+    "title": "Ucz się w równym rytmie.",
+    "subtitle": "Mindkeep zbiera dzień, naukę i pieniądze w jednym spokojnym miejscu — żeby postęp nie osypywał się, gdy życie przyspiesza.",
     "ctaRegister": "Zacznij za darmo",
     "ctaLogin": "Zaloguj się",
-    "eyebrow": "Zadania · Powtórki · Finanse",
-    "pillarsTitle": "Trzy filary spokojnego rytmu",
-    "pillarsSubtitle": "Zaplanuj dzień, utrwal to, czego się uczysz, i miej pieniądze w zasięgu wzroku — bez żonglowania osobnymi aplikacjami.",
+    "eyebrow": "Nauka · Dzień · Balans",
+    "pillarsTitle": "Stabilna podstawa do nauki",
+    "pillarsSubtitle": "Nie kolejny stos notatek. Spokojny system, by nauka, dzień i pieniądze nie rozjeżdżały się w różne strony.",
     "pillars": {
       "tasks": {
-        "title": "Zadania dnia",
-        "text": "Ustal cele na dzień i miesiąc, odhaczaj je i patrz na postęp bez zbędnego hałasu."
+        "title": "Dzień zostaje w porządku",
+        "text": "Plan na dziś i na miesiąc, odhaczanie i jasny tydzień — bez hałasu w głowie."
       },
       "repetition": {
-        "title": "Powtórki 3 · 7 · 30",
-        "text": "Zapisuj materiały i wracaj do nich według stałego harmonogramu, żeby wiedza zostawała dłużej."
+        "title": "To, czego się uczysz, zostaje",
+        "text": "Zapisz to, co było ważne, i wróć później — wiedza nie musi znikać po intensywnym tygodniu."
       },
       "finance": {
-        "title": "Finanse osobiste",
-        "text": "Przychody i wydatki w euro, kategorie i czytelne saldo okresu."
+        "title": "Pieniądze zostają w polu widzenia",
+        "text": "Przychody, wydatki i czytelne saldo okresu, żeby budżet nie ginął za nauką."
       }
     },
     "howTitle": "Jak to działa",
@@ -320,13 +322,13 @@
         "text": "Zapisz przychód albo wydatek w euro — podsumowanie okresu zostaje szczere i czytelne."
       }
     },
-    "rhythmTitle": "Rytm pamięci bez skomplikowanych algorytmów",
-    "rhythmSubtitle": "W powtórkach odstępy są stałe. Daty liczone są od dnia nauki i nie przesuwają się, gdy oznaczysz powtórkę jako zrobioną.",
+    "rhythmTitle": "Spokojny powrót, nie wyścig",
+    "rhythmSubtitle": "Gdy zapiszesz to, czego się uczyłeś, Mindkeep wraca do tego w rytmie 3 · 7 · 30. Wystarczy struktury, by trzymać się kursu — bez hałaśliwego algorytmu.",
     "daysLabel": "dni",
     "intervals": {
-      "three": "Pierwsza powtórka — utrwal świeży ślad",
-      "seven": "Druga powtórka — zatrzymaj znaczenie",
-      "thirty": "Trzecia powtórka — w stronę pamięci długoterminowej"
+      "three": "Wróć, póki ślad jest ciepły — tydzień go nie ściera.",
+      "seven": "Drugie spojrzenie, by sens został, nawet gdy dzień zajmuje coś innego.",
+      "thirty": "Późniejszy powrót, by nauka stała się długim rytmem, a nie jednorazowym zrywem."
     },
     "featuresTitle": "Wszystko, czego potrzebujesz, w jednym miejscu",
     "featuresSubtitle": "Mindkeep obejmuje planowanie, naukę i budżet — spokojnie i przewidywalnie.",
@@ -348,8 +350,8 @@
         "text": "Powtórki, zadania i finanse zbierają się w czytelne wycinki na pulpicie."
       }
     },
-    "ctaTitle": "Zbuduj swój rytm w Mindkeep",
-    "ctaSubtitle": "Utwórz konto i zacznij od jednego zadania, jednego materiału albo jednego wpisu w budżecie.",
+    "ctaTitle": "Zacznij równiejszy tydzień",
+    "ctaSubtitle": "Jedno konto. Zadania, nauka, która wraca, i czytelny budżet.",
     "apps": {
       "eyebrow": "Mobile",
       "title": "Aplikacje na iPhone’a i Androida",
@@ -359,9 +361,9 @@
       "readBlog": "Czytaj notatki o nauce"
     },
     "testimonials": {
-      "eyebrow": "Głosy z bety",
-      "title": "Przetestowane przez pierwszych użytkowników",
-      "subtitle": "Osoby z różnych krajów wypróbowały Mindkeep przed startem i podzieliły się szczerymi wrażeniami.",
+      "eyebrow": "Kto już spróbował",
+      "title": "Spokojniej iść dalej",
+      "subtitle": "Chcieli trzymać naukę, dzień i pieniądze w jednym miejscu — bez zbędnego hałasu.",
       "beta": "Uczestnik testów beta",
       "all": "Wszystkie opinie",
       "rating": "Ocena: {{count}} na 5",
@@ -380,9 +382,9 @@
     },
     "sections": {
       "hero": "Start",
-      "pillars": "Możliwości",
+      "pillars": "Fundament",
       "how": "Jak to działa",
-      "rhythm": "Rytm 3·7·30",
+      "rhythm": "Równy powrót",
       "features": "W środku",
       "apps": "Aplikacje",
       "testimonials": "Opinie",
@@ -395,14 +397,14 @@
       "finance": "Budżet w euro — czytelny i spokojny"
     },
     "heroVisual": {
-      "tasksTitle": "Zadania na dziś",
-      "tasksItem1": "Powtórka słówek fińskich",
-      "tasksItem2": "Zamknąć tygodniowy budżet",
-      "reviewTitle": "Powtórka",
-      "reviewQuestion": "Jak powiedzieć dziękuję po fińsku?",
-      "reviewHint": "Dotknij, aby pokazać odpowiedź",
-      "financeTitle": "Finanse",
-      "financeLabel": "Saldo okresu",
+      "tasksTitle": "Dziś",
+      "tasksItem1": "Blok nauki — 25 minut",
+      "tasksItem2": "Zamknąć tydzień bez ogonków",
+      "reviewTitle": "Nauka",
+      "reviewQuestion": "Co z tego tygodnia ma zostać?",
+      "reviewHint": "Wróci, zanim wyblaknie",
+      "financeTitle": "Saldo",
+      "financeLabel": "Ten okres",
       "financeValue": "+€420"
     },
     "mobileNav": {
@@ -970,7 +972,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — zadania, powtórki i finanse",
+      "home": "Mindkeep — stabilna podstawa do nauki",
       "login": "Zaloguj się · Mindkeep",
       "register": "Zacznij za darmo · Mindkeep",
       "dashboard": "Przegląd · Mindkeep",
@@ -1005,8 +1007,8 @@
   },
   "footer": {
     "craftedLabel": "Własność",
-    "tagline": "Gdzie dzień znajduje porządek — a wiedza i pieniądze zostają w polu widzenia.",
-    "about": "Mindkeep łączy zadania dnia, finanse osobiste w euro i powtórki wiedzy w rytmie 3 · 7 · 30 — spokojnie, bez zbędnego hałasu.",
+    "tagline": "Gdzie nauka zostaje stabilna — a dzień i pieniądze w polu widzenia.",
+    "about": "Mindkeep łączy codzienne zadania, naukę, która nie blaknie, i finanse osobiste — spokojnie, w jednym miejscu.",
     "linksLabel": "Nawigacja",
     "follow": "Na Instagramie",
     "instagram": "Instagram",

@@ -9,8 +9,8 @@ export function HeroStage() {
 
   return (
     <>
-      {/* Mobile / tablet: readable product strip */}
-      <div className="relative mt-2 space-y-3 lg:hidden">
+      {/* Phones and tablets: full-width product strip so header menus never cover a right column */}
+      <div className="relative mt-2 space-y-3 xl:hidden">
         <div className="grid gap-3 sm:grid-cols-3">
           <article className="rounded-2xl border border-line/80 bg-panel/80 p-4 backdrop-blur-md">
             <div className="flex items-center gap-2 text-brand-500">
@@ -58,7 +58,7 @@ export function HeroStage() {
       </div>
 
       {/* Desktop floating stage */}
-      <div className="relative mx-auto hidden h-full min-h-[30rem] w-full max-w-xl lg:block">
+      <div className="relative mx-auto hidden h-full min-h-[30rem] w-full max-w-none xl:block">
         <div
           aria-hidden
           className="absolute inset-0 rounded-[2.5rem] bg-[radial-gradient(circle_at_30%_20%,var(--app-accent-soft),transparent_55%),linear-gradient(160deg,var(--app-brand-50),transparent_70%)]"
