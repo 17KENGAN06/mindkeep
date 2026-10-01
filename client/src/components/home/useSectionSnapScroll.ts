@@ -4,6 +4,19 @@ const WHEEL_THRESHOLD = 40;
 const TOUCH_THRESHOLD = 48;
 const LOCK_MS = 900;
 
+function lastSectionRange(root: HTMLElement, lastId: string) {
+  const el = root.querySelector(`#${CSS.escape(lastId)}`) as HTMLElement | null;
+  if (!el) return null;
+  const start = el.offsetTop;
+  const end = start + el.offsetHeight;
+  const view = root.clientHeight;
+  return {
+    start,
+    overflow: end > start + view + 8,
+    maxScroll: Math.max(start, end - view),
+  };
+}
+
 /**
  * Full-page section snap: one section per wheel/swipe/key gesture.
  * Native CSS scroll-snap alone often fails on Windows trackpads.
@@ -152,6 +165,18 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       const target = event.target as HTMLElement | null;
       if (target?.closest('[data-allow-scroll="true"]')) return;
 
+      const ids = idsRef.current;
+      const lastIndex = ids.length - 1;
+      const lastId = ids[lastIndex];
+      if (indexRef.current === lastIndex && lastId) {
+        const range = lastSectionRange(root, lastId);
+        if (range?.overflow) {
+          const top = root.scrollTop;
+          if (event.deltaY > 0 && top < range.maxScroll - 4) return;
+          if (event.deltaY < 0 && top > range.start + 4) return;
+        }
+      }
+
       event.preventDefault();
       if (lockedRef.current) return;
 
@@ -169,6 +194,19 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
 
     const onTouchMove = (event: TouchEvent) => {
       if (touchStartY.current == null) return;
+      const ids = idsRef.current;
+      const lastIndex = ids.length - 1;
+      const lastId = ids[lastIndex];
+      if (indexRef.current === lastIndex && lastId) {
+        const range = lastSectionRange(root, lastId);
+        if (range?.overflow) {
+          const top = root.scrollTop;
+          const y = event.touches[0]?.clientY ?? 0;
+          const goingDown = touchStartY.current - y > 0;
+          if (goingDown && top < range.maxScroll - 4) return;
+          if (!goingDown && top > range.start + 4) return;
+        }
+      }
       if (Math.abs((event.touches[0]?.clientY ?? 0) - touchStartY.current) > 8) {
         event.preventDefault();
       }
@@ -186,6 +224,15 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       }
       const delta = touchStartY.current - endY;
       touchStartY.current = null;
+
+      const ids = idsRef.current;
+      const lastIndex = ids.length - 1;
+      const lastId = ids[lastIndex];
+      if (indexRef.current === lastIndex && lastId) {
+        const range = lastSectionRange(root, lastId);
+        if (range?.overflow && root.scrollTop > range.start + 4) return;
+      }
+
       if (Math.abs(delta) < TOUCH_THRESHOLD) return;
       step(delta > 0 ? 1 : -1);
     };
@@ -195,10 +242,19 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       const tag = (event.target as HTMLElement | null)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
 
+      const ids = idsRef.current;
+      const lastIndex = ids.length - 1;
+      const lastId = ids[lastIndex];
+      const range = lastId ? lastSectionRange(root, lastId) : null;
+      const inLastOverflow =
+        indexRef.current === lastIndex && range?.overflow && root.scrollTop > range.start + 4;
+
       if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === ' ') {
+        if (inLastOverflow) return;
         event.preventDefault();
         step(1);
       } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        if (inLastOverflow) return;
         event.preventDefault();
         step(-1);
       } else if (event.key === 'Home') {
@@ -213,6 +269,17 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
     let scrollIdle: number | null = null;
     const onScroll = () => {
       if (lockedRef.current) return;
+      const ids = idsRef.current;
+      const lastIndex = ids.length - 1;
+      const lastId = ids[lastIndex];
+      if (lastId) {
+        const range = lastSectionRange(root, lastId);
+        if (range && root.scrollTop > range.start + 40) {
+          indexRef.current = lastIndex;
+          setActiveId(lastId);
+          return;
+        }
+      }
       if (scrollIdle != null) window.clearTimeout(scrollIdle);
       scrollIdle = window.setTimeout(() => {
         if (lockedRef.current) return;

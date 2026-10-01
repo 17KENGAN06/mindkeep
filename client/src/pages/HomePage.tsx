@@ -181,12 +181,12 @@ export function HomePage() {
           activeId={activeId}
           className="border-t border-line/70"
         >
-          <div className="mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col overflow-hidden px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
-            <div className="min-h-0 flex-1 overflow-hidden">
+          <div className="flex min-h-full flex-col">
+            <div className="mx-auto flex min-h-dvh w-full max-w-[1400px] flex-col justify-center px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
               <TestimonialsSection animated compact />
             </div>
-            <div className="shrink-0">
-              <SiteFooter compact embedded />
+            <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+              <SiteFooter embedded />
             </div>
           </div>
         </AnimatedSnapSection>

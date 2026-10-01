@@ -83,17 +83,11 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
     </a>
   );
 
-  const homeBar = compact && embedded;
-
   return (
     <footer
-      className={`relative w-full ${
-        homeBar
-          ? 'mt-0 border-0 pt-0'
-          : `border-t border-line ${compact ? 'pt-10 sm:pt-12' : 'pt-16 sm:pt-20'} ${
-              embedded ? (compact ? 'mt-8 sm:mt-10' : 'mt-20 sm:mt-28') : ''
-            }`
-      }`}
+      className={`relative w-full border-t border-line ${
+        compact ? 'pt-10 sm:pt-12' : 'pt-16 sm:pt-20'
+      } ${embedded ? (compact ? 'mt-8 sm:mt-10' : 'mt-20 sm:mt-28') : ''}`}
     >
       <div
         aria-hidden
@@ -103,31 +97,25 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
       <div
         className={
           embedded
-            ? `flex w-full flex-col ${homeBar ? 'pb-1' : compact ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'}`
+            ? `flex w-full flex-col ${compact ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'}`
             : `mx-auto flex w-full max-w-[1400px] flex-col px-4 sm:px-6 lg:px-8 ${
                 compact ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'
               }`
         }
       >
-        <div
-          className={`flex flex-col md:flex-row md:items-start md:justify-between ${
-            homeBar ? 'gap-4 md:items-center md:gap-8' : 'gap-8 md:gap-12'
-          }`}
-        >
-          <div className={homeBar ? 'min-w-0' : 'max-w-lg'}>
+        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
+          <div className="max-w-lg">
             <div className="flex items-center gap-2.5">
-              <BrandMark className={`shrink-0 animate-float-slow ${homeBar ? 'h-7 w-7' : 'h-9 w-9'}`} />
+              <BrandMark className="h-9 w-9 shrink-0 animate-float-slow" />
               <p className="font-display text-lg font-semibold tracking-tight text-ink">
                 {t('common.appName')}
               </p>
             </div>
-            {homeBar ? null : (
-              <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">{t('footer.tagline')}</p>
-            )}
+            <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">{t('footer.tagline')}</p>
             {!compact ? (
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{t('footer.about')}</p>
             ) : null}
-            <div className={`flex flex-wrap gap-3 ${homeBar ? 'mt-3' : 'mt-5'}`}>
+            <div className="mt-5 flex flex-wrap gap-3">
               <SocialLink
                 href={INSTAGRAM_URL}
                 label={t('footer.instagram')}
@@ -145,60 +133,42 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
             </div>
           </div>
 
-          <div className={homeBar ? 'min-w-0 md:text-right' : 'md:text-right'}>
-            {homeBar ? null : (
-              <p className="text-[11px] tracking-[0.24em] text-muted uppercase">{t('footer.linksLabel')}</p>
-            )}
-            <nav
-              className={`flex flex-wrap gap-x-4 text-sm font-medium md:justify-end ${
-                homeBar ? 'gap-y-1' : 'mt-3 gap-y-2.5'
-              }`}
-            >
+          <div className="md:text-right">
+            <p className="text-[11px] tracking-[0.24em] text-muted uppercase">{t('footer.linksLabel')}</p>
+            <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-2.5 text-sm font-medium md:justify-end">
               <Link
                 to="/"
-                className={`inline-flex items-center text-ink no-underline transition hover:text-brand-500 ${
-                  homeBar ? 'min-h-8' : 'min-h-11 md:min-h-0'
-                }`}
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('nav.home')}
               </Link>
               <Link
                 to="/guide"
-                className={`inline-flex items-center text-ink no-underline transition hover:text-brand-500 ${
-                  homeBar ? 'min-h-8' : 'min-h-11 md:min-h-0'
-                }`}
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('nav.guide')}
               </Link>
               <Link
                 to="/blog"
-                className={`inline-flex items-center text-ink no-underline transition hover:text-brand-500 ${
-                  homeBar ? 'min-h-8' : 'min-h-11 md:min-h-0'
-                }`}
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('nav.blog')}
               </Link>
               <Link
                 to="/login"
-                className={`inline-flex items-center text-ink no-underline transition hover:text-brand-500 ${
-                  homeBar ? 'min-h-8' : 'min-h-11 md:min-h-0'
-                }`}
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('nav.login')}
               </Link>
               <Link
                 to="/contact"
-                className={`inline-flex items-center text-ink no-underline transition hover:text-brand-500 ${
-                  homeBar ? 'min-h-8' : 'min-h-11 md:min-h-0'
-                }`}
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('nav.contact')}
               </Link>
               <Link
                 to="/privacy"
-                className={`inline-flex items-center text-ink no-underline transition hover:text-brand-500 ${
-                  homeBar ? 'min-h-8' : 'min-h-11 md:min-h-0'
-                }`}
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('footer.privacy')}
               </Link>
@@ -206,9 +176,7 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
                 href={STUDIO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center text-ink no-underline transition hover:text-brand-500 ${
-                  homeBar ? 'min-h-8' : 'min-h-11 md:min-h-0'
-                }`}
+                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
               >
                 {t('footer.visitStudio')}
               </a>
@@ -216,23 +184,15 @@ export function SiteFooter({ compact = false, embedded = false }: SiteFooterProp
           </div>
         </div>
 
-        <div
-          className={
-            homeBar
-              ? 'mt-4 border-t border-line/80 pt-3'
-              : 'mt-12 border-t border-line/80 pt-8 sm:mt-16 sm:pt-12'
-          }
-        >
-          <p className={`leading-relaxed text-muted ${homeBar ? 'text-xs' : 'text-sm sm:text-base'}`}>
+        <div className="mt-12 border-t border-line/80 pt-8 sm:mt-16 sm:pt-12">
+          <p className="text-sm leading-relaxed text-muted sm:text-base">
             <Trans
               i18nKey="footer.ownership"
               values={{ year }}
               components={{ studio: studioLink }}
             />
           </p>
-          {homeBar ? null : (
-            <p className="mt-4 text-xs leading-relaxed text-muted/80">{t('footer.rights')}</p>
-          )}
+          <p className="mt-4 text-xs leading-relaxed text-muted/80">{t('footer.rights')}</p>
         </div>
       </div>
     </footer>

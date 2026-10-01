@@ -247,7 +247,11 @@ html[data-theme='light'] {
     }
 
     .home-snap-section#testimonials {
-      min-height: 0;
+      height: auto;
+      min-height: 100dvh;
+      max-height: none;
+      overflow: visible;
+      scroll-snap-stop: normal;
     }
   }
 

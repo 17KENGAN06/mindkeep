@@ -79,7 +79,7 @@ export function ContactPage() {
 
   return (
     <div className="min-h-dvh overflow-x-hidden">
-      <div className="mx-auto w-full max-w-6xl px-4 py-5 sm:px-6 sm:py-6">
+      <div className="mx-auto w-full max-w-[1400px] px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
         <header className="flex items-center justify-between gap-3">
           <BrandLockup to="/" size="md" />
           <div className="flex items-center gap-2">
@@ -98,108 +98,108 @@ export function ContactPage() {
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">{t('contact.intro')}</p>
         </Reveal>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-2">
-          <a
-            href={`mailto:${CONTACT_INBOX.partnership}`}
-            className="glass-panel rounded-2xl p-5 no-underline transition hover:ring-1 hover:ring-brand-300"
-          >
-            <p className="text-sm font-semibold text-ink">{t('contact.partnershipTitle')}</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{t('contact.partnershipBody')}</p>
-            <p className="mt-3 break-all text-sm font-medium text-brand-500">{CONTACT_INBOX.partnership}</p>
-          </a>
-          <a
-            href={`mailto:${CONTACT_INBOX.support}`}
-            className="glass-panel rounded-2xl p-5 no-underline transition hover:ring-1 hover:ring-brand-300"
-          >
-            <p className="text-sm font-semibold text-ink">{t('contact.supportTitle')}</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{t('contact.supportBody')}</p>
-            <p className="mt-3 break-all text-sm font-medium text-brand-500">{CONTACT_INBOX.support}</p>
-          </a>
+        <div className="mt-10 grid items-start gap-8 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:gap-12">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            <a
+              href={`mailto:${CONTACT_INBOX.partnership}`}
+              className="glass-panel rounded-2xl p-5 no-underline transition hover:ring-1 hover:ring-brand-300"
+            >
+              <p className="text-sm font-semibold text-ink">{t('contact.partnershipTitle')}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{t('contact.partnershipBody')}</p>
+              <p className="mt-3 break-all text-sm font-medium text-brand-500">{CONTACT_INBOX.partnership}</p>
+            </a>
+            <a
+              href={`mailto:${CONTACT_INBOX.support}`}
+              className="glass-panel rounded-2xl p-5 no-underline transition hover:ring-1 hover:ring-brand-300"
+            >
+              <p className="text-sm font-semibold text-ink">{t('contact.supportTitle')}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{t('contact.supportBody')}</p>
+              <p className="mt-3 break-all text-sm font-medium text-brand-500">{CONTACT_INBOX.support}</p>
+            </a>
+          </div>
+
+          <Reveal delayMs={80}>
+            {sent ? (
+              <div className="glass-panel rounded-3xl p-5 sm:p-6">
+                <h2 className="text-xl font-semibold text-ink">{t('contact.successTitle')}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted sm:text-base">
+                  {t('contact.successBody')}
+                </p>
+                <Link
+                  to="/"
+                  className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline"
+                >
+                  ← {t('nav.home')}
+                </Link>
+              </div>
+            ) : (
+              <form className="relative space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line sm:p-6" onSubmit={onSubmit} noValidate>
+                <Select
+                  label={t('contact.fields.topic')}
+                  placeholder={t('contact.placeholders.topic')}
+                  error={errors.topic?.message}
+                  options={[
+                    { value: 'partnership', label: t('contact.topics.partnership') },
+                    { value: 'bug', label: t('contact.topics.bug') },
+                    { value: 'question', label: t('contact.topics.question') },
+                  ]}
+                  {...register('topic')}
+                />
+                {destination ? (
+                  <p className="text-xs text-muted">{t('contact.destination', { email: destination })}</p>
+                ) : null}
+
+                <Input
+                  label={t('contact.fields.name')}
+                  autoComplete="name"
+                  error={errors.name?.message}
+                  {...register('name')}
+                />
+                <Input
+                  label={t('contact.fields.email')}
+                  type="email"
+                  autoComplete="email"
+                  error={errors.email?.message}
+                  {...register('email')}
+                />
+                <Textarea
+                  label={t('contact.fields.message')}
+                  placeholder={t('contact.placeholders.message')}
+                  rows={8}
+                  className="min-h-40"
+                  error={errors.message?.message}
+                  {...register('message')}
+                />
+
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden
+                  className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
+                  {...register('website')}
+                />
+
+                <BotGuard
+                  onReady={setBotToken}
+                  humanChecked={humanChecked}
+                  onHumanCheckedChange={setHumanChecked}
+                  error={botError}
+                />
+
+                <ErrorMessage message={formError} />
+
+                <Button type="submit" isLoading={isSubmitting} disabled={!challengeReady} className="w-full">
+                  {t('contact.send')}
+                </Button>
+              </form>
+            )}
+          </Reveal>
         </div>
-
-        <Reveal className="mt-8" delayMs={80}>
-          {sent ? (
-            <div className="glass-panel rounded-3xl p-5 sm:p-6">
-              <h2 className="text-xl font-semibold text-ink">{t('contact.successTitle')}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted sm:text-base">
-                {t('contact.successBody')}
-              </p>
-              <Link
-                to="/"
-                className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline"
-              >
-                ← {t('nav.home')}
-              </Link>
-            </div>
-          ) : (
-            <form className="relative space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line sm:p-6" onSubmit={onSubmit} noValidate>
-              <Select
-                label={t('contact.fields.topic')}
-                placeholder={t('contact.placeholders.topic')}
-                error={errors.topic?.message}
-                options={[
-                  { value: 'partnership', label: t('contact.topics.partnership') },
-                  { value: 'bug', label: t('contact.topics.bug') },
-                  { value: 'question', label: t('contact.topics.question') },
-                ]}
-                {...register('topic')}
-              />
-              {destination ? (
-                <p className="text-xs text-muted">{t('contact.destination', { email: destination })}</p>
-              ) : null}
-
-              <Input
-                label={t('contact.fields.name')}
-                autoComplete="name"
-                error={errors.name?.message}
-                {...register('name')}
-              />
-              <Input
-                label={t('contact.fields.email')}
-                type="email"
-                autoComplete="email"
-                error={errors.email?.message}
-                {...register('email')}
-              />
-              <Textarea
-                label={t('contact.fields.message')}
-                placeholder={t('contact.placeholders.message')}
-                rows={8}
-                className="min-h-40"
-                error={errors.message?.message}
-                {...register('message')}
-              />
-
-              <input
-                type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden
-                className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
-                {...register('website')}
-              />
-
-              <BotGuard
-                onReady={setBotToken}
-                humanChecked={humanChecked}
-                onHumanCheckedChange={setHumanChecked}
-                error={botError}
-              />
-
-              <ErrorMessage message={formError} />
-
-              <Button type="submit" isLoading={isSubmitting} disabled={!challengeReady} className="w-full">
-                {t('contact.send')}
-              </Button>
-            </form>
-          )}
-        </Reveal>
 
         <Link to="/" className="mt-8 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline">
           ← {t('nav.home')}
         </Link>
-      </div>
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         <SiteFooter embedded />
       </div>
     </div>

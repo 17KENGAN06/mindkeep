@@ -49,7 +49,7 @@ export function NotFoundPage() {
           </Reveal>
         </div>
 
-        <SiteFooter compact embedded />
+        <SiteFooter embedded />
       </div>
     </div>
   );

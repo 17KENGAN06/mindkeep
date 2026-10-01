@@ -90,18 +90,12 @@ export function TestimonialsSection({ animated = false, compact = false }: Testi
         <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
           {t('home.testimonials.eyebrow')}
         </p>
-        <h2
-          className={`font-display mt-2 max-w-3xl font-semibold tracking-tight text-ink ${
-            compact ? 'text-2xl sm:text-4xl' : 'mt-3 text-3xl sm:text-5xl'
-          }`}
-        >
+        <h2 className="font-display mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
           {t('home.testimonials.title')}
         </h2>
-        {compact ? null : (
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-            {t('home.testimonials.subtitle')}
-          </p>
-        )}
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+          {t('home.testimonials.subtitle')}
+        </p>
       </div>
 
       {compact ? null : (
@@ -135,11 +129,7 @@ export function TestimonialsSection({ animated = false, compact = false }: Testi
             >
               <ChevronLeft className="h-5 w-5" aria-hidden />
             </button>
-            <article
-              className={`glass-panel flex min-w-0 flex-1 flex-col rounded-[1.75rem] p-4 sm:p-5 ${
-                compact ? '' : 'min-h-64 p-5 sm:p-6'
-              }`}
-            >
+            <article className="glass-panel flex min-h-48 min-w-0 flex-1 flex-col rounded-[1.75rem] p-5 sm:min-h-56 sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <Quote className="h-5 w-5 text-brand-500 sm:h-6 sm:w-6" aria-hidden />
@@ -164,14 +154,10 @@ export function TestimonialsSection({ animated = false, compact = false }: Testi
                   {t('home.testimonials.beta')}
                 </span>
               </div>
-              <blockquote
-                className={`mt-3 text-sm leading-relaxed text-ink/90 sm:text-base ${
-                  compact ? 'line-clamp-4' : 'mt-4 flex-1'
-                }`}
-              >
+              <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-ink/90 sm:text-base">
                 “{current.quote}”
               </blockquote>
-              <footer className={`border-t border-line/80 ${compact ? 'mt-3 pt-3' : 'mt-5 pt-4'}`}>
+              <footer className="mt-5 border-t border-line/80 pt-4">
                 <p className="font-semibold text-ink">{current.name}</p>
                 <p className="mt-1 flex items-center gap-1.5 text-xs text-muted">
                   <MapPin className="h-3.5 w-3.5 shrink-0 text-brand-500" aria-hidden />
