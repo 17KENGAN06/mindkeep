@@ -3,15 +3,16 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { adminApi } from '@/api/admin';
+import { adminApi, type AdminUser } from '@/api/admin';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { Button } from '@/components/ui/Button';
-import { Select } from '@/components/ui/Select';
 import { useAuth } from '@/features/auth/useAuth';
 import type { AppLanguage } from '@/i18n';
 import { formatDate } from '@/utils/date';
+
+const BETA_SEARCH_LIMIT = 8;
 
 export function AdminPage() {
   const { t, i18n } = useTranslation();
@@ -20,6 +21,7 @@ export function AdminPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [betaUserId, setBetaUserId] = useState('');
+  const [betaQuery, setBetaQuery] = useState('');
 
   const overviewQuery = useQuery({
     queryKey: ['admin', 'overview'],
@@ -77,6 +79,7 @@ export function AdminPage() {
       adminApi.setBetaTester(id, betaTester),
     onSuccess: () => {
       setBetaUserId('');
+      setBetaQuery('');
       void queryClient.invalidateQueries({ queryKey: ['admin'] });
     },
   });
@@ -113,8 +116,10 @@ export function AdminPage() {
   const testers = testersQuery.data ?? [];
   const reviews = reviewsQuery.data ?? [];
   const auditEvents = auditQuery.data ?? [];
-  const betaCandidates = users.filter(
-    (item) => item.role !== 'ADMIN' && !item.betaTester && Boolean(item.lastActivityAt),
+  const betaMatches = matchBetaUsers(
+    users.filter((item) => item.role !== 'ADMIN' && !item.betaTester),
+    betaQuery,
+    BETA_SEARCH_LIMIT,
   );
 
   return (
@@ -188,26 +193,65 @@ export function AdminPage() {
         )}
       </section>
 
-      <section className="overflow-hidden rounded-3xl border border-line bg-panel">
+      <section className="rounded-3xl border border-line bg-panel">
         <div className="border-b border-line px-4 py-3">
           <h2 className="text-sm font-semibold text-ink">{t('admin.betaTitle')}</h2>
           <p className="mt-1 text-xs text-muted">{t('admin.betaHint')}</p>
         </div>
-        <div className="flex flex-col gap-3 border-b border-line px-4 py-4 sm:flex-row sm:items-end">
-          <div className="min-w-0 flex-1">
-            <Select
-              label={t('admin.betaSelect')}
+        <div className="flex flex-col gap-3 border-b border-line px-4 py-4 sm:flex-row sm:items-start">
+          <div className="min-w-0 flex-1 space-y-1.5">
+            <label className="block text-sm font-medium text-ink" htmlFor="admin-beta-search">
+              {t('admin.betaSelect')}
+            </label>
+            <input
+              id="admin-beta-search"
+              type="search"
+              autoComplete="off"
+              spellCheck={false}
+              value={betaQuery}
               placeholder={t('admin.betaSelectPlaceholder')}
-              value={betaUserId}
-              onChange={(event) => setBetaUserId(event.target.value)}
-              options={betaCandidates.map((item) => ({
-                value: item.id,
-                label: `${item.name} · ${item.email}`,
-              }))}
+              onChange={(event) => {
+                setBetaQuery(event.target.value);
+                setBetaUserId('');
+              }}
+              className="h-11 w-full min-w-0 rounded-xl border border-line bg-panel px-3 text-sm text-ink outline-none transition placeholder:text-muted hover:border-brand-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
             />
+            {betaQuery.trim() && !betaUserId ? (
+              <ul className="rounded-2xl bg-brand-50/40 p-1.5 ring-1 ring-line">
+                {betaMatches.length === 0 ? (
+                  <li className="px-3 py-2.5 text-sm text-muted">{t('admin.betaSearchEmpty')}</li>
+                ) : (
+                  betaMatches.map((item) => {
+                    const active = item.id === betaUserId;
+                    return (
+                      <li key={item.id}>
+                        <button
+                          type="button"
+                          className={`flex w-full min-w-0 flex-col rounded-xl px-3 py-2 text-left transition ${
+                            active
+                              ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                              : 'text-ink hover:bg-panel'
+                          }`}
+                          onClick={() => {
+                            setBetaUserId(item.id);
+                            setBetaQuery(`${item.name} · ${item.email}`);
+                          }}
+                        >
+                          <span className="truncate text-sm font-semibold">{item.name}</span>
+                          <span className={`truncate text-xs ${active ? 'text-[#07110d]/80' : 'text-muted'}`}>
+                            {item.email}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })
+                )}
+              </ul>
+            ) : null}
           </div>
           <Button
             type="button"
+            className="sm:mt-7"
             disabled={!betaUserId || setBeta.isPending}
             isLoading={setBeta.isPending && Boolean(betaUserId)}
             onClick={() => setBeta.mutate({ id: betaUserId, betaTester: true })}
@@ -403,6 +447,28 @@ export function AdminPage() {
       </section>
     </div>
   );
+}
+
+function matchBetaUsers(users: AdminUser[], query: string, limit: number): AdminUser[] {
+  const needle = query.trim().toLowerCase();
+  if (!needle) return [];
+
+  return users
+    .map((user) => {
+      const name = user.name.toLowerCase();
+      const email = user.email.toLowerCase();
+      const haystack = `${name} ${email}`;
+      let score = 99;
+      if (name === needle || email === needle) score = 0;
+      else if (name.startsWith(needle) || email.startsWith(needle)) score = 1;
+      else if (email.split('@')[0]?.startsWith(needle)) score = 2;
+      else if (haystack.includes(needle)) score = 3;
+      return { user, score };
+    })
+    .filter((item) => item.score < 99)
+    .sort((a, b) => a.score - b.score || a.user.name.localeCompare(b.user.name))
+    .slice(0, limit)
+    .map((item) => item.user);
 }
 
 function StatCard({ label, value }: { label: string; value: number }) {
