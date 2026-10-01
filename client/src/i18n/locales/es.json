@@ -1235,6 +1235,11 @@
       "sessions": "Free: 2 dispositivos. La suscripción en Cuenta quita el límite."
     },
     "adminUnlimited": "Admin",
-    "adminHint": "Esta cuenta no tiene límites como admin. Los botones de abajo son solo para probar Stripe."
+    "adminHint": "Esta cuenta no tiene límites como admin. Los botones de abajo son solo para probar Stripe.",
+    "monthCard": "Mes",
+    "yearCard": "Año",
+    "usageTitle": "Límites del plan Free",
+    "usageLead": "Estos tope aplican hasta que te suscribas. Pro los quita.",
+    "proUnlocked": "Los límites de cantidad están desactivados en esta cuenta."
   }
 }

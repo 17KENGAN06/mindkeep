@@ -292,7 +292,7 @@ export function DashboardPage() {
               todayTasks.slice(0, 6).map((task) => (
                 <li
                   key={task.id}
-                  className={`flex items-center gap-3 rounded-2xl px-3 py-3 ring-1 transition ${
+                  className={`flex items-start gap-3 rounded-2xl px-3 py-3 ring-1 transition ${
                     task.completed
                       ? 'bg-emerald-500/10 ring-emerald-500/25'
                       : 'bg-brand-50/30 ring-line/70'
@@ -300,7 +300,7 @@ export function DashboardPage() {
                 >
                   <button
                     type="button"
-                    className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition ${
+                    className={`mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition ${
                       task.completed
                         ? 'border-brand-500 bg-brand-500 text-[#07110d]'
                         : 'border-line bg-transparent text-transparent hover:border-brand-400'
@@ -311,24 +311,28 @@ export function DashboardPage() {
                   >
                     <Check className="h-4 w-4" aria-hidden />
                   </button>
-                  <p
-                    className={`min-w-0 flex-1 truncate text-sm font-medium ${
-                      task.completed ? 'text-emerald-400 line-through' : 'text-ink'
-                    }`}
-                  >
-                    {task.title}
-                  </p>
-                  {(task.splitCount ?? 1) > 1 ? (
-                    <span className="shrink-0 rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-500">
-                      {t('tasks.splitProgress', {
-                        done: task.splitDone ?? 0,
-                        count: task.splitCount,
-                      })}
-                    </span>
-                  ) : null}
-                  <span className="shrink-0 text-xs text-muted">
-                    {task.minutes} {t('tasks.minShort')}
-                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className={`break-words text-sm leading-snug font-medium ${
+                        task.completed ? 'text-emerald-400 line-through' : 'text-ink'
+                      }`}
+                    >
+                      {task.title}
+                    </p>
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      {(task.splitCount ?? 1) > 1 ? (
+                        <span className="rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-500">
+                          {t('tasks.splitProgress', {
+                            done: task.splitDone ?? 0,
+                            count: task.splitCount,
+                          })}
+                        </span>
+                      ) : null}
+                      <span className="text-xs text-muted">
+                        {task.minutes} {t('tasks.minShort')}
+                      </span>
+                    </div>
+                  </div>
                 </li>
               ))
             )}

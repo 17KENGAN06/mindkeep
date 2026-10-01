@@ -1235,6 +1235,11 @@
       "sessions": "Free includes 2 signed-in devices. Subscribe on Account for more."
     },
     "adminUnlimited": "Admin",
-    "adminHint": "This account is unlimited as admin. Use the buttons below only to test Stripe."
+    "adminHint": "This account is unlimited as admin. Use the buttons below only to test Stripe.",
+    "monthCard": "Monthly",
+    "yearCard": "Yearly",
+    "usageTitle": "Free plan limits",
+    "usageLead": "These caps apply until you subscribe. Pro removes them.",
+    "proUnlocked": "Quantity limits are off on this account."
   }
 }

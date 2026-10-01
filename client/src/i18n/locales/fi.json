@@ -1235,6 +1235,11 @@
       "sessions": "Free: 2 laitetta. Tilaus Tilillä poistaa rajan."
     },
     "adminUnlimited": "Admin",
-    "adminHint": "Tämä tili on adminina rajaton. Napit alla ovat vain Stripe-testiä varten."
+    "adminHint": "Tämä tili on adminina rajaton. Napit alla ovat vain Stripe-testiä varten.",
+    "monthCard": "Kuukausi",
+    "yearCard": "Vuosi",
+    "usageTitle": "Free-suunnitelman rajat",
+    "usageLead": "Nämä katot ovat voimassa kunnes tilaat. Pro poistaa ne.",
+    "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä."
   }
 }

@@ -262,24 +262,27 @@ export function TodayScreen() {
                 >
                   {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
                 </View>
-                <Text
-                  style={[
-                    styles.taskTitle,
-                    { color: colors.ink },
-                    task.completed && { color: colors.muted, textDecorationLine: 'line-through' },
-                  ]}
-                  numberOfLines={2}
-                >
-                  {task.title}
-                </Text>
-                {(task.splitCount ?? 1) > 1 ? (
-                  <Text style={[styles.splitBadge, { color: colors.brand }]}>
-                    {t('tasks.splitProgress', { done: task.splitDone ?? 0, count: task.splitCount })}
+                <View style={styles.taskCopy}>
+                  <Text
+                    style={[
+                      styles.taskTitle,
+                      { color: colors.ink },
+                      task.completed && { color: colors.muted, textDecorationLine: 'line-through' },
+                    ]}
+                  >
+                    {task.title}
                   </Text>
-                ) : null}
-                <Text style={[styles.minutes, { color: colors.muted }]}>
-                  {task.minutes} {t('today.min')}
-                </Text>
+                  <View style={styles.taskMeta}>
+                    {(task.splitCount ?? 1) > 1 ? (
+                      <Text style={[styles.splitBadge, { color: colors.brand }]}>
+                        {t('tasks.splitProgress', { done: task.splitDone ?? 0, count: task.splitCount })}
+                      </Text>
+                    ) : null}
+                    <Text style={[styles.minutes, { color: colors.muted }]}>
+                      {task.minutes} {t('today.min')}
+                    </Text>
+                  </View>
+                </View>
               </Pressable>
             ))
           )}
@@ -532,7 +535,7 @@ const styles = StyleSheet.create({
   link: { fontSize: 13, fontWeight: '600', marginBottom: 10, flexShrink: 0 },
   empty: { fontSize: 14, paddingVertical: 8 },
   taskRow: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     borderRadius: 16,
     borderWidth: 1,
     flexDirection: 'row',
@@ -551,8 +554,10 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   checkMark: { fontWeight: '800' },
-  taskTitle: { flex: 1, flexShrink: 1, fontSize: 15, fontWeight: '600', minWidth: 0 },
-  minutes: { fontSize: 13, flexShrink: 0 },
+  taskTitle: { fontSize: 15, fontWeight: '600' },
+  taskCopy: { flex: 1, gap: 4, minWidth: 0, paddingTop: 2 },
+  taskMeta: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  minutes: { fontSize: 13 },
   splitBadge: { fontSize: 12, fontWeight: '700', flexShrink: 0 },
   reviewCount: { fontSize: 20, fontWeight: '700', marginTop: 4 },
   over: { fontSize: 13, fontWeight: '700', marginBottom: 8 },

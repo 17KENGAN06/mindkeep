@@ -1235,6 +1235,11 @@
       "sessions": "Free: 2 Geräte. Abo im Konto hebt das Limit auf."
     },
     "adminUnlimited": "Admin",
-    "adminHint": "Dieses Konto ist als Admin unbegrenzt. Die Buttons unten nur zum Stripe-Test."
+    "adminHint": "Dieses Konto ist als Admin unbegrenzt. Die Buttons unten nur zum Stripe-Test.",
+    "monthCard": "Monat",
+    "yearCard": "Jahr",
+    "usageTitle": "Limits im Free-Plan",
+    "usageLead": "Diese Caps gelten bis zum Abo. Pro hebt sie auf.",
+    "proUnlocked": "Mengenlimits sind auf diesem Konto aus."
   }
 }

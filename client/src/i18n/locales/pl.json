@@ -1235,6 +1235,11 @@
       "sessions": "Free: 2 urządzenia. Subskrypcja w Koncie zdejmuje limit."
     },
     "adminUnlimited": "Admin",
-    "adminHint": "To konto nie ma limitów jako admin. Przyciski poniżej tylko do testu Stripe."
+    "adminHint": "To konto nie ma limitów jako admin. Przyciski poniżej tylko do testu Stripe.",
+    "monthCard": "Miesiąc",
+    "yearCard": "Rok",
+    "usageTitle": "Limity planu Free",
+    "usageLead": "Te limity obowiązują do subskrypcji. Pro je zdejmuje.",
+    "proUnlocked": "Limity ilościowe na tym koncie są wyłączone."
   }
 }

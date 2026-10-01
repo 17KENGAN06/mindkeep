@@ -28,6 +28,29 @@ function splitOf(task: DailyTask) {
   return { count, done, split: count > 1 };
 }
 
+function TaskTitle({
+  title,
+  completed,
+  note,
+}: {
+  title: string;
+  completed: boolean;
+  note?: string;
+}) {
+  return (
+    <div className="min-w-0">
+      <p
+        className={`break-words text-base leading-snug font-medium ${
+          completed ? 'text-emerald-400 line-through' : 'text-ink'
+        }`}
+      >
+        {title}
+      </p>
+      {note ? <p className="mt-0.5 break-words text-xs leading-relaxed text-muted">{note}</p> : null}
+    </div>
+  );
+}
+
 export function DailyTaskList({
   tasks,
   onToggle,
@@ -62,7 +85,7 @@ export function DailyTaskList({
               task.completed ? 'bg-emerald-500/10 ring-emerald-500/30' : 'bg-panel ring-line'
             }`}
           >
-            <div className="flex items-stretch gap-3">
+            <div className="flex items-start gap-3">
               <button
                 type="button"
                 className={`mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
@@ -78,24 +101,17 @@ export function DailyTaskList({
                 <Check className="h-5 w-5" aria-hidden />
               </button>
 
-              <div className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                <div className="min-w-0">
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                  <TaskTitle title={task.title} completed={task.completed} note={task.note} />
                   <p
-                    className={`truncate text-base font-medium ${
-                      task.completed ? 'text-emerald-400 line-through' : 'text-ink'
+                    className={`shrink-0 text-sm font-semibold sm:pt-0.5 sm:text-right ${
+                      task.completed ? 'text-emerald-400' : 'text-brand-500'
                     }`}
                   >
-                    {task.title}
+                    {formatMinutes(task.minutes, t)}
                   </p>
-                  {task.note ? <p className="mt-0.5 truncate text-xs text-muted">{task.note}</p> : null}
                 </div>
-                <p
-                  className={`shrink-0 text-sm font-semibold sm:text-right ${
-                    task.completed ? 'text-emerald-400' : 'text-brand-500'
-                  }`}
-                >
-                  {formatMinutes(task.minutes, t)}
-                </p>
               </div>
 
               <button

@@ -1,3 +1,4 @@
+import { Sparkles } from 'lucide-react';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
@@ -58,7 +59,7 @@ export function AccountPage() {
   };
 
   return (
-    <section className="mx-auto max-w-xl space-y-6">
+    <section className="mx-auto w-full max-w-4xl space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-ink">{t('auth.accountTitle')}</h1>
         <p className="mt-2 text-sm text-muted">{t('auth.accountSubtitle')}</p>
@@ -202,96 +203,165 @@ function BillingSection() {
     ? new Date(status.planExpiresAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
     : null;
 
+  const planName = subscribed
+    ? t('billing.proLabel')
+    : isPro
+      ? t('billing.adminUnlimited')
+      : t('billing.freeLabel');
+  const planCaption =
+    subscribed && expires
+      ? t(status?.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })
+      : t('billing.subtitle');
+
   return (
-    <div className="space-y-4 rounded-3xl border border-line bg-panel/80 p-5">
-      <div>
-        <h2 className="text-base font-semibold text-ink">{t('billing.title')}</h2>
-        <p className="mt-1 text-sm text-muted">{t('billing.subtitle')}</p>
+    <div className="overflow-hidden rounded-[1.75rem] border border-brand-500/35 bg-panel shadow-[0_18px_40px_-28px_rgba(53,111,88,0.55)] ring-1 ring-brand-500/10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-brand-500/25 via-brand-50/80 to-panel px-5 py-6 sm:px-7 sm:py-7">
+        <div className="pointer-events-none absolute -top-16 -right-10 h-40 w-40 rounded-full bg-brand-500/25 blur-3xl" />
+        <div className="relative flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.2em] text-brand-500 uppercase">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden />
+              {t('billing.title')}
+            </p>
+            <p className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+              {status ? planName : '…'}
+            </p>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">{planCaption}</p>
+          </div>
+          {status ? (
+            <span
+              className={`rounded-full px-4 py-1.5 text-sm font-bold ${
+                isPro ? 'bg-brand-500 text-[#07110d]' : 'bg-panel/90 text-ink ring-1 ring-line'
+              }`}
+            >
+              {planName}
+            </span>
+          ) : null}
+        </div>
       </div>
-      {notice ? <p className="text-sm text-brand-700">{notice}</p> : null}
-      <ErrorMessage message={error ?? undefined} />
-      {statusQuery.isError ? <ErrorMessage message={t('auth.errors.generic')} /> : null}
 
-      {status ? (
-        <p className="text-sm text-ink">
-          {subscribed ? t('billing.proLabel') : isPro ? t('billing.adminUnlimited') : t('billing.freeLabel')}
-          {subscribed && expires
-            ? ` · ${t(status.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })}`
-            : ''}
-        </p>
-      ) : null}
+      <div className="space-y-5 px-5 py-5 sm:px-7 sm:py-6">
+        {notice ? (
+          <p className="rounded-2xl bg-brand-50 px-4 py-3 text-sm font-medium text-brand-700">{notice}</p>
+        ) : null}
+        <ErrorMessage message={error ?? undefined} />
+        {statusQuery.isError ? <ErrorMessage message={t('auth.errors.generic')} /> : null}
 
-      {status?.cancelAtPeriodEnd ? (
-        <p className="text-sm text-muted">{t('billing.cancelScheduled')}</p>
-      ) : null}
+        {status?.cancelAtPeriodEnd ? (
+          <p className="rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">{t('billing.cancelScheduled')}</p>
+        ) : null}
 
-      {isPro && !subscribed ? <p className="text-sm text-muted">{t('billing.adminHint')}</p> : null}
+        {isPro && !subscribed ? <p className="text-sm text-muted">{t('billing.adminHint')}</p> : null}
 
-      {status && !status.configured ? (
-        <p className="text-sm text-muted">{t('billing.unavailable')}</p>
-      ) : null}
+        {status && !status.configured ? (
+          <p className="text-sm text-muted">{t('billing.unavailable')}</p>
+        ) : null}
 
-      {showSubscribe ? (
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <Button
-            type="button"
-            isLoading={busy === 'month'}
-            disabled={busy !== null}
-            onClick={() => void startCheckout('month')}
-          >
-            {t('billing.subscribeMonth')}
-          </Button>
+        {showSubscribe ? (
+          <div className="grid gap-3 sm:grid-cols-2">
+            <button
+              type="button"
+              disabled={busy !== null}
+              onClick={() => void startCheckout('month')}
+              className="flex min-h-24 flex-col items-start justify-center rounded-2xl bg-brand-500 px-5 py-4 text-left text-[#07110d] shadow-sm transition hover:bg-brand-400 disabled:opacity-60"
+            >
+              <span className="text-[11px] font-semibold tracking-[0.16em] uppercase opacity-80">
+                {t('billing.monthCard')}
+              </span>
+              <span className="mt-1 text-xl font-semibold">
+                {busy === 'month' ? t('common.loading') : t('billing.subscribeMonth')}
+              </span>
+            </button>
+            <button
+              type="button"
+              disabled={busy !== null}
+              onClick={() => void startCheckout('year')}
+              className="flex min-h-24 flex-col items-start justify-center rounded-2xl bg-panel px-5 py-4 text-left ring-1 ring-line transition hover:ring-brand-400 disabled:opacity-60"
+            >
+              <span className="text-[11px] font-semibold tracking-[0.16em] text-brand-500 uppercase">
+                {t('billing.yearCard')}
+              </span>
+              <span className="mt-1 text-xl font-semibold text-ink">
+                {busy === 'year' ? t('common.loading') : t('billing.subscribeYear')}
+              </span>
+            </button>
+          </div>
+        ) : null}
+
+        {showSubscribe ? <p className="text-sm text-muted">{t('billing.yearlyHint')}</p> : null}
+
+        {showManage ? (
           <Button
             type="button"
             variant="secondary"
-            isLoading={busy === 'year'}
+            isLoading={busy === 'portal'}
             disabled={busy !== null}
-            onClick={() => void startCheckout('year')}
+            onClick={() => void openPortal()}
           >
-            {t('billing.subscribeYear')}
+            {t('billing.manage')}
           </Button>
-        </div>
-      ) : null}
+        ) : null}
 
-      {showSubscribe ? (
-        <p className="text-sm text-muted">{t('billing.yearlyHint')}</p>
-      ) : null}
+        {status && subscribed ? (
+          <p className="rounded-3xl bg-brand-50/80 px-4 py-4 text-sm font-medium leading-relaxed text-ink ring-1 ring-brand-500/20">
+            {t('billing.proUnlocked')}
+          </p>
+        ) : null}
 
-      {showManage ? (
-        <Button
-          type="button"
-          variant="secondary"
-          isLoading={busy === 'portal'}
-          disabled={busy !== null}
-          onClick={() => void openPortal()}
-        >
-          {t('billing.manage')}
-        </Button>
-      ) : null}
-
-      {status && !subscribed ? (
-        <UsageList usage={status.usage} />
-      ) : null}
+        {status && !subscribed ? <UsageGrid usage={status.usage} /> : null}
+      </div>
     </div>
   );
 }
 
-function UsageList({ usage }: { usage: BillingStatus['usage'] }) {
+function usagePercent(used: number, limit: number | null): number {
+  if (limit == null || limit <= 0) return 100;
+  return Math.min(100, Math.round((used / limit) * 100));
+}
+
+function UsageGrid({ usage }: { usage: BillingStatus['usage'] }) {
   const { t } = useTranslation();
   return (
-    <ul className="space-y-1 text-sm text-muted">
-      {USAGE_KEYS.map((key) => {
-        const item = usage[key];
-        const count =
-          item.limit == null ? t('billing.unlimited') : t('billing.of', { used: item.used, limit: item.limit });
-        return (
-          <li key={key}>
-            {t(`billing.features.${key}`)}: {count}
-          </li>
-        );
-      })}
-      <li>{t('billing.mealsHint')}</li>
-    </ul>
+    <div className="rounded-3xl bg-brand-50/50 p-4 ring-1 ring-brand-500/15 sm:p-5">
+      <div className="mb-4">
+        <h3 className="text-base font-semibold text-ink">{t('billing.usageTitle')}</h3>
+        <p className="mt-1 text-sm text-muted">{t('billing.usageLead')}</p>
+      </div>
+      <ul className="grid gap-3 sm:grid-cols-2">
+        {USAGE_KEYS.map((key) => {
+          const item = usage[key];
+          const unlimited = item.limit == null;
+          const percent = usagePercent(item.used, item.limit);
+          const full = !unlimited && item.used >= item.limit;
+          const tight = !unlimited && !full && percent >= 75;
+          return (
+            <li key={key} className="rounded-2xl bg-panel px-4 py-3.5 ring-1 ring-line/80">
+              <div className="flex items-start justify-between gap-3">
+                <p className="text-sm font-medium text-ink">{t(`billing.features.${key}`)}</p>
+                <p
+                  className={`shrink-0 text-sm font-semibold tabular-nums ${
+                    full ? 'text-red-500' : tight ? 'text-brand-600' : 'text-brand-500'
+                  }`}
+                >
+                  {unlimited
+                    ? t('billing.unlimited')
+                    : t('billing.of', { used: item.used, limit: item.limit })}
+                </p>
+              </div>
+              <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-line/70">
+                <div
+                  className={`h-full rounded-full ${full ? 'bg-red-400' : 'bg-brand-500'}`}
+                  style={{ width: `${unlimited ? 100 : percent}%` }}
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="mt-4 rounded-2xl bg-panel px-4 py-3 text-sm leading-relaxed text-ink ring-1 ring-line/80">
+        {t('billing.mealsHint')}
+      </p>
+    </div>
   );
 }
 

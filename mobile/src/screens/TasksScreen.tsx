@@ -298,32 +298,35 @@ export function TasksScreen() {
                       >
                         {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
                       </View>
-                      <Text
-                        style={[
-                          styles.taskTitle,
-                          { color: colors.ink },
-                          task.completed && { color: colors.muted, textDecorationLine: 'line-through' },
-                        ]}
-                        numberOfLines={2}
-                      >
-                        {task.title}
-                      </Text>
-                      <Text style={[styles.minutes, { color: colors.muted }]}>
-                        {task.minutes} {t('today.min')}
-                      </Text>
+                      <View style={styles.taskCopy}>
+                        <Text
+                          style={[
+                            styles.taskTitle,
+                            { color: colors.ink },
+                            task.completed && { color: colors.muted, textDecorationLine: 'line-through' },
+                          ]}
+                        >
+                          {task.title}
+                        </Text>
+                        <Text style={[styles.minutes, { color: colors.muted }]}>
+                          {task.minutes} {t('today.min')}
+                        </Text>
+                      </View>
                     </Pressable>
-                    <AppButton
-                      variant="ghost"
-                      label={t('common.edit')}
-                      disabled={busyId === task.id}
-                      onPress={() => onStartEdit(task)}
-                    />
-                    <AppButton
-                      variant="ghost"
-                      label={t('common.delete')}
-                      disabled={busyId === task.id || deleteTask.isPending}
-                      onPress={() => onDelete(task)}
-                    />
+                    <View style={styles.taskActions}>
+                      <AppButton
+                        variant="ghost"
+                        label={t('common.edit')}
+                        disabled={busyId === task.id}
+                        onPress={() => onStartEdit(task)}
+                      />
+                      <AppButton
+                        variant="ghost"
+                        label={t('common.delete')}
+                        disabled={busyId === task.id || deleteTask.isPending}
+                        onPress={() => onDelete(task)}
+                      />
+                    </View>
                   </View>
                   {splitCount > 1 ? (
                     <View style={styles.splitRow}>
@@ -452,10 +455,29 @@ const styles = StyleSheet.create({
     paddingRight: 4,
   },
   taskRow: {
+    gap: 8,
+  },
+  taskMain: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    gap: 10,
+    minHeight: 52,
+    padding: 10,
+    paddingBottom: 4,
+  },
+  taskCopy: {
+    flex: 1,
+    gap: 4,
+    minWidth: 0,
+    paddingTop: 2,
+  },
+  taskActions: {
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 4,
+    paddingBottom: 8,
+    paddingHorizontal: 10,
   },
   splitRow: {
     alignItems: 'center',
@@ -487,14 +509,6 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   splitBtnText: { fontSize: 13, fontWeight: '700' },
-  taskMain: {
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    minHeight: 52,
-    padding: 10,
-  },
   check: {
     alignItems: 'center',
     borderRadius: 10,
@@ -502,9 +516,10 @@ const styles = StyleSheet.create({
     height: 36,
     justifyContent: 'center',
     width: 36,
+    flexShrink: 0,
   },
   checkMark: { fontWeight: '800' },
-  taskTitle: { flex: 1, fontSize: 15, fontWeight: '600' },
+  taskTitle: { fontSize: 15, fontWeight: '600' },
   minutes: { fontSize: 13 },
   form: {
     borderRadius: 20,
