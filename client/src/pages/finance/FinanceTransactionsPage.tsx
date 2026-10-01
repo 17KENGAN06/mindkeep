@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import { FinanceOperationsList } from '@/components/finance/FinanceOperationsList';
 import { FinancePeriodControls } from '@/components/finance/FinancePeriodControls';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -63,6 +64,7 @@ export function FinanceTransactionsPage() {
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('finance.transactionsTitle')}</h1>
         <p className="mt-1 text-sm text-muted">{t('finance.transactionsSubtitle')}</p>
+        <PlanRemain feature="financeOperations" />
       </section>
 
       <FinancePeriodControls

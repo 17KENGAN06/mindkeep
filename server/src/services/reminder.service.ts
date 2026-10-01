@@ -5,6 +5,7 @@ import { prisma } from '@/config/prisma.js';
 import type { CalendarQuery, ListRemindersQuery } from '@/validations/reminder.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireOwned } from '@/utils/owned.js';
+import { freeVisibleIds } from '@/services/entitlements.service.js';
 import { getCalendarDaysOverdue, getDayBoundsInTimeZone } from '@/utils/timezone.js';
 
 const reminderInclude = {
@@ -44,6 +45,11 @@ async function getUserTimezone(userId: string): Promise<string> {
   return user.timezone || 'Europe/Helsinki';
 }
 
+async function visibleMaterialWhere(userId: string) {
+  const ids = await freeVisibleIds(userId, 'materials');
+  return ids ? { materialId: { in: ids } } : {};
+}
+
 function assertReminderIsDue(scheduledAt: Date, timezone: string): void {
   const { endUtc } = getDayBoundsInTimeZone(timezone);
   if (scheduledAt > endUtc) {
@@ -81,6 +87,7 @@ export class ReminderService {
     const reminders = await prisma.reviewReminder.findMany({
       where: {
         userId,
+        ...(await visibleMaterialWhere(userId)),
         ...(query.status ? { status: query.status } : {}),
       },
       include: reminderInclude,
@@ -98,6 +105,7 @@ export class ReminderService {
     const reminders = await prisma.reviewReminder.findMany({
       where: {
         userId,
+        ...(await visibleMaterialWhere(userId)),
         scheduledAt: {
           gte: startUtc,
           lte: endUtc,
@@ -120,6 +128,7 @@ export class ReminderService {
     const reminders = await prisma.reviewReminder.findMany({
       where: {
         userId,
+        ...(await visibleMaterialWhere(userId)),
         scheduledAt: {
           lt: startUtc,
         },
@@ -155,6 +164,7 @@ export class ReminderService {
     const reminders = await prisma.reviewReminder.findMany({
       where: {
         userId,
+        ...(await visibleMaterialWhere(userId)),
         scheduledAt: {
           gt: endUtc,
         },
@@ -181,6 +191,7 @@ export class ReminderService {
     const reminders = await prisma.reviewReminder.findMany({
       where: {
         userId,
+        ...(await visibleMaterialWhere(userId)),
         scheduledAt: {
           gte: rangeStartUtc,
           lte: rangeEndUtc,

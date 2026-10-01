@@ -502,7 +502,9 @@
       "completedReviews": "Erledigte Wiederholungen"
     },
     "activityTitle": "Erledigte Wiederholungen (7 Tage)",
-    "activitySubtitle": "Wie viele Wiederholungen du jeden Tag in deiner Zeitzone abgeschlossen hast."
+    "activitySubtitle": "Wie viele Wiederholungen du jeden Tag in deiner Zeitzone abgeschlossen hast.",
+    "planPro": "Pro",
+    "planFree": "Free-Plan"
   },
   "contact": {
     "title": "Kontakt",

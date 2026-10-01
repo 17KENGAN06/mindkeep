@@ -218,7 +218,9 @@ function BillingSection() {
       ? t(status?.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })
       : isBeta
         ? t('billing.betaHint')
-        : t('billing.subtitle');
+        : isAdmin
+          ? t('billing.adminHint')
+          : t('billing.subtitle');
 
   return (
     <div className="overflow-hidden rounded-[1.75rem] border border-brand-500/35 bg-panel shadow-[0_18px_40px_-28px_rgba(53,111,88,0.55)] ring-1 ring-brand-500/10">
@@ -276,9 +278,6 @@ function BillingSection() {
         {status?.cancelAtPeriodEnd ? (
           <p className="rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">{t('billing.cancelScheduled')}</p>
         ) : null}
-
-        {isAdmin && !subscribed ? <p className="text-sm text-muted">{t('billing.adminHint')}</p> : null}
-        {isBeta && !subscribed ? <p className="text-sm text-muted">{t('billing.betaHint')}</p> : null}
 
         {status && !status.configured ? (
           <p className="text-sm text-muted">{t('billing.unavailable')}</p>
@@ -354,7 +353,7 @@ function BillingSection() {
           </Button>
         ) : null}
 
-        {status && (subscribed || isBeta) ? (
+        {status && subscribed ? (
           <p className="rounded-3xl bg-brand-50/80 px-4 py-4 text-sm font-medium leading-relaxed text-ink ring-1 ring-brand-500/20">
             {t('billing.proUnlocked')}
           </p>

@@ -3,12 +3,13 @@ import { prisma } from '@/config/prisma.js';
 import type { CreateCategoryInput, UpdateCategoryInput } from '@/validations/category.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
-import { assertCreateLimit } from '@/services/entitlements.service.js';
+import { assertCreateLimit, freeVisibleIds, idIn } from '@/services/entitlements.service.js';
 
 export class CategoryService {
-  list(userId: string) {
+  async list(userId: string) {
+    const visibleIds = await freeVisibleIds(userId, 'reviewCategories');
     return prisma.category.findMany({
-      where: { userId },
+      where: { userId, ...idIn(visibleIds) },
       orderBy: { name: 'asc' },
       include: {
         _count: {

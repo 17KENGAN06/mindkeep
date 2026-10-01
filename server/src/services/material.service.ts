@@ -8,7 +8,7 @@ import type {
 } from '@/validations/material.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
-import { assertCreateLimit } from '@/services/entitlements.service.js';
+import { assertCreateLimit, freeVisibleIds, idIn } from '@/services/entitlements.service.js';
 
 const materialInclude = {
   category: {
@@ -52,9 +52,14 @@ async function assertCategoryOwnership(userId: string, categoryId: string | null
 
 export class MaterialService {
   async list(userId: string, query: ListMaterialsQuery) {
+    const visibleIds =
+      !query.status || query.status === MaterialStatus.ACTIVE
+        ? await freeVisibleIds(userId, 'materials')
+        : null;
     const materials = await prisma.learningMaterial.findMany({
       where: {
         userId,
+        ...idIn(visibleIds),
         ...(query.status ? { status: query.status } : {}),
         ...(query.categoryId ? { categoryId: query.categoryId } : {}),
         ...(query.search

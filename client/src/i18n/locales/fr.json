@@ -458,7 +458,7 @@
       "title": "Commencez gratuitement. Pro quand il faut plus de place.",
       "subtitle": "Toutes les fonctions dès le premier jour. Free a des plafonds calmes. Pro les lève — l’annuel économise environ deux mois.",
       "freePrice": "0 €",
-      "freeHint": "Assez pour entrer dans le rythme. Plafonds sur les matériaux, tâches, habitudes et notes.",
+      "freeHint": "Ce qu’inclut Free :",
       "yearHint": "environ deux mois offerts par rapport au paiement mensuel",
       "recommended": "Meilleure valeur",
       "cta": "Passer à Pro",
@@ -478,7 +478,12 @@
       "yearCharged": "39,99 € prélevés une fois par an",
       "orMonthly": "Ou mois par mois",
       "monthPrice": "4,99 €",
-      "monthBilled": "prélevé chaque mois"
+      "monthBilled": "prélevé chaque mois",
+      "freeCaps": {
+        "study": "20 matériaux · 45 tâches / mois · 3 catégories de révision",
+        "life": "3 habitudes · 20 notes · 5 catégories budget",
+        "body": "25 opérations / mois · repas 7 jours · 2 appareils"
+      }
     }
   },
   "guide": {
@@ -871,7 +876,9 @@
     "activityTitle": "Révisions terminées (7 jours)",
     "activitySubtitle": "Combien de révisions tu as terminées chaque jour dans ton fuseau horaire.",
     "recentTitle": "Fiches récentes",
-    "viewAllMaterials": "Toutes les fiches"
+    "viewAllMaterials": "Toutes les fiches",
+    "planPro": "Pro",
+    "planFree": "Offre Free"
   },
   "categories": {
     "title": "Catégories",
@@ -1326,13 +1333,15 @@
     "adminUnlimited": "Admin",
     "adminHint": "Ce compte est illimité en tant qu’admin. Les boutons ci-dessous servent seulement à tester Stripe.",
     "betaLabel": "Bêta-test",
-    "betaHint": "Ce compte est bêta-testeur avec l’accès Pro complet — les mêmes droits qu’un abonnement payant.",
+    "betaHint": "Accès Pro complet — les mêmes droits qu’un abonnement payant.",
     "monthCard": "Mois",
     "yearCard": "An",
     "ctaYear": "Choisir l’année",
     "ctaMonth": "Choisir le mois",
     "usageTitle": "Limites du plan Free",
     "usageLead": "Ces plafonds s’appliquent tant que vous n’êtes pas abonné. Pro les retire.",
-    "proUnlocked": "Les plafonds de quantité sont désactivés sur ce compte."
+    "proUnlocked": "Les plafonds de quantité sont désactivés sur ce compte.",
+    "remain": "{{left}} sur {{limit}} restants",
+    "remainDays": "Derniers {{count}} jours"
   }
 }

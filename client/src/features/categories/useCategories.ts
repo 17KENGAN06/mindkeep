@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { categoriesApi, type CategoryPayload } from '@/api/categories';
+import { touchPlanUsage } from '@/features/billing/planLimit';
 
 const categoriesKey = ['categories'] as const;
 
@@ -20,6 +21,7 @@ export function useCreateCategory() {
     mutationFn: (payload: CategoryPayload) => categoriesApi.create(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: categoriesKey });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -43,6 +45,7 @@ export function useDeleteCategory() {
     mutationFn: (id: string) => categoriesApi.remove(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: categoriesKey });
+      touchPlanUsage(queryClient);
     },
   });
 }

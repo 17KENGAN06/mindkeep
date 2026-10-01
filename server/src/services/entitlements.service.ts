@@ -216,28 +216,23 @@ export async function getUsageSnapshot(userId: string) {
   ]);
 
   const unlimited = entitlement.pro;
+  const shown = (item: { used: number; limit: number }) => ({
+    used: unlimited ? item.used : Math.min(item.used, item.limit),
+    limit: unlimited ? null : item.limit,
+  });
 
   return {
     pro: entitlement.pro,
     timezone: entitlement.timezone,
     usage: {
-      materials: { used: materials.used, limit: unlimited ? null : materials.limit },
-      reviewCategories: {
-        used: reviewCategories.used,
-        limit: unlimited ? null : reviewCategories.limit,
-      },
-      habits: { used: habits.used, limit: unlimited ? null : habits.limit },
-      notes: { used: notes.used, limit: unlimited ? null : notes.limit },
-      tasks: { used: tasks.used, limit: unlimited ? null : tasks.limit },
-      financeOperations: {
-        used: financeOperations.used,
-        limit: unlimited ? null : financeOperations.limit,
-      },
-      financeCategories: {
-        used: financeCategories.used,
-        limit: unlimited ? null : financeCategories.limit,
-      },
-      sessions: { used: sessions.used, limit: unlimited ? null : sessions.limit },
+      materials: shown(materials),
+      reviewCategories: shown(reviewCategories),
+      habits: shown(habits),
+      notes: shown(notes),
+      tasks: shown(tasks),
+      financeOperations: shown(financeOperations),
+      financeCategories: shown(financeCategories),
+      sessions: shown(sessions),
       meals: {
         used: 0,
         limit: unlimited ? null : FREE_LIMITS.mealHistoryDays,
@@ -248,4 +243,139 @@ export async function getUsageSnapshot(userId: string) {
 
 export function dateKeyOf(value: string): string {
   return dateKeyFromInput(value);
+}
+
+export async function freeVisibleIds(
+  userId: string,
+  feature: Exclude<PlanFeature, 'meals' | 'sessions'>,
+  extra?: { dateKey?: string },
+): Promise<string[] | null> {
+  const entitlement = await getEntitlement(userId);
+  if (entitlement.pro) return null;
+
+  const { used, limit } = await usedFor(userId, feature, extra);
+  if (used <= limit) return null;
+
+  switch (feature) {
+    case 'materials':
+      return (
+        await prisma.learningMaterial.findMany({
+          where: { userId, status: MaterialStatus.ACTIVE },
+          orderBy: { updatedAt: 'desc' },
+          take: limit,
+          select: { id: true },
+        })
+      ).map((row) => row.id);
+    case 'notes':
+      return (
+        await prisma.note.findMany({
+          where: { userId },
+          orderBy: { updatedAt: 'desc' },
+          take: limit,
+          select: { id: true },
+        })
+      ).map((row) => row.id);
+    case 'habits':
+      return (
+        await prisma.habit.findMany({
+          where: { userId, isActive: true },
+          orderBy: { updatedAt: 'desc' },
+          take: limit,
+          select: { id: true },
+        })
+      ).map((row) => row.id);
+    case 'reviewCategories':
+      return (
+        await prisma.category.findMany({
+          where: { userId },
+          orderBy: { updatedAt: 'desc' },
+          take: limit,
+          select: { id: true },
+        })
+      ).map((row) => row.id);
+    case 'financeCategories':
+      return (
+        await prisma.budgetCategory.findMany({
+          where: { userId },
+          orderBy: { updatedAt: 'desc' },
+          take: limit,
+          select: { id: true },
+        })
+      ).map((row) => row.id);
+    case 'tasks': {
+      const dateKey = extra?.dateKey ?? new Date().toISOString().slice(0, 10);
+      const { from, to } = utcMonthRangeFromDateKey(dateKey);
+      return (
+        await prisma.dailyTask.findMany({
+          where: { userId, date: { gte: from, lt: to } },
+          orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
+          take: limit,
+          select: { id: true },
+        })
+      ).map((row) => row.id);
+    }
+    case 'financeOperations': {
+      const dateKey = extra?.dateKey ?? new Date().toISOString().slice(0, 10);
+      const { from, to } = utcMonthRangeFromDateKey(dateKey);
+      return (
+        await prisma.budgetOperation.findMany({
+          where: { userId, date: { gte: from, lt: to } },
+          orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
+          take: limit,
+          select: { id: true },
+        })
+      ).map((row) => row.id);
+    }
+    default:
+      return null;
+  }
+}
+
+export function idIn(ids: string[] | null): { id: { in: string[] } } | Record<string, never> {
+  return ids ? { id: { in: ids } } : {};
+}
+
+export async function capFreeRows<T>(
+  userId: string,
+  limit: number,
+  rows: T[],
+  recency: (row: T) => number,
+): Promise<T[]> {
+  const entitlement = await getEntitlement(userId);
+  if (entitlement.pro || rows.length <= limit) return rows;
+  return [...rows].sort((left, right) => recency(right) - recency(left)).slice(0, limit);
+}
+
+export function keepLatestPerUtcMonth<T>(
+  rows: T[],
+  limit: number,
+  dateOf: (row: T) => Date,
+  recency: (row: T) => number,
+): T[] {
+  const buckets = new Map<string, T[]>();
+  for (const row of rows) {
+    const date = dateOf(row);
+    const key = `${date.getUTCFullYear()}-${date.getUTCMonth()}`;
+    const list = buckets.get(key) ?? [];
+    list.push(row);
+    buckets.set(key, list);
+  }
+  const kept = new Set<T>();
+  for (const list of buckets.values()) {
+    list.sort((left, right) => recency(right) - recency(left));
+    for (const row of list.slice(0, limit)) kept.add(row);
+  }
+  return rows.filter((row) => kept.has(row));
+}
+
+export async function maybeCapMonthly<T>(
+  userId: string,
+  limit: number,
+  rows: T[],
+  dateOf: (row: T) => Date,
+  recency: (row: T) => number,
+): Promise<T[]> {
+  const entitlement = await getEntitlement(userId);
+  if (entitlement.pro) return rows;
+  return keepLatestPerUtcMonth(rows, limit, dateOf, recency);
 }

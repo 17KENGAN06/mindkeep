@@ -458,7 +458,7 @@
       "title": "Empieza gratis. Pro cuando necesites más espacio.",
       "subtitle": "Todas las funciones desde el primer día. Free tiene límites de cantidad calmos. Pro los quita — el anual ahorra unos dos meses.",
       "freePrice": "0 €",
-      "freeHint": "Bastante para entrar en el ritmo. Límites en materiales, tareas, hábitos y notas.",
+      "freeHint": "Qué incluye Free:",
       "yearHint": "unos dos meses de regalo frente al pago mensual",
       "recommended": "Mejor valor",
       "cta": "Pasar a Pro",
@@ -478,7 +478,12 @@
       "yearCharged": "€39.99 cobrados una vez al año",
       "orMonthly": "O mes a mes",
       "monthPrice": "€4.99",
-      "monthBilled": "cobrado cada mes"
+      "monthBilled": "cobrado cada mes",
+      "freeCaps": {
+        "study": "20 materiales · 45 tareas / mes · 3 categorías de repaso",
+        "life": "3 hábitos · 20 notas · 5 categorías de presupuesto",
+        "body": "25 movimientos / mes · comidas 7 días · 2 dispositivos"
+      }
     }
   },
   "guide": {
@@ -871,7 +876,9 @@
     "activityTitle": "Repasos completados (7 días)",
     "activitySubtitle": "Cuántos repasos completaste cada día en tu zona horaria.",
     "recentTitle": "Materiales recientes",
-    "viewAllMaterials": "Todos los materiales"
+    "viewAllMaterials": "Todos los materiales",
+    "planPro": "Pro",
+    "planFree": "Plan Free"
   },
   "categories": {
     "title": "Categorías",
@@ -1326,13 +1333,15 @@
     "adminUnlimited": "Admin",
     "adminHint": "Esta cuenta no tiene límites como admin. Los botones de abajo son solo para probar Stripe.",
     "betaLabel": "Beta test",
-    "betaHint": "Esta cuenta es beta tester con acceso Pro completo — los mismos derechos que un plan de pago.",
+    "betaHint": "Acceso Pro completo — los mismos derechos que un plan de pago.",
     "monthCard": "Mes",
     "yearCard": "Año",
     "ctaYear": "Elegir año",
     "ctaMonth": "Elegir mes",
     "usageTitle": "Límites del plan Free",
     "usageLead": "Estos tope aplican hasta que te suscribas. Pro los quita.",
-    "proUnlocked": "Los límites de cantidad están desactivados en esta cuenta."
+    "proUnlocked": "Los límites de cantidad están desactivados en esta cuenta.",
+    "remain": "quedan {{left}} de {{limit}}",
+    "remainDays": "Últimos {{count}} días"
   }
 }

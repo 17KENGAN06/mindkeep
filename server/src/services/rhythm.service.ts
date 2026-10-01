@@ -9,7 +9,7 @@ import { HABIT_CYCLE_DAYS, MAX_HABITS } from '@/validations/rhythm.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireOwned } from '@/utils/owned.js';
 import { todayKeyInTimeZone } from '@/utils/timezone.js';
-import { assertCreateLimit } from '@/services/entitlements.service.js';
+import { assertCreateLimit, freeVisibleIds, idIn } from '@/services/entitlements.service.js';
 
 function parseDateOnly(value: string): Date {
   const [y, m, d] = value.split('-').map(Number);
@@ -53,9 +53,10 @@ export class RhythmService {
     const { from, to, daysInMonth } = periodRange(query);
     const today = todayKeyInTimeZone(await userTimezone(userId));
     const streakFrom = addUtcDays(parseDateOnly(today), -(HABIT_CYCLE_DAYS + 2));
+    const visibleIds = await freeVisibleIds(userId, 'habits');
     const [habits, monthDays, recentDays, lifetimeGroups] = await Promise.all([
       prisma.habit.findMany({
-        where: { userId, isActive: true },
+        where: { userId, isActive: true, ...idIn(visibleIds) },
         orderBy: { createdAt: 'asc' },
       }),
       prisma.habitLog.findMany({

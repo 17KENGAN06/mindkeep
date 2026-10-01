@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -96,6 +97,7 @@ export function CategoriesPage() {
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('categories.title')}</h1>
         <p className="mt-1 text-sm text-muted">{t('categories.subtitle')}</p>
+        <PlanRemain feature="reviewCategories" />
       </section>
 
       <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">

@@ -8,6 +8,7 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import { useCategories } from '@/features/categories/useCategories';
 import { useMaterials } from '@/features/materials/useMaterials';
 import type { MaterialStatus } from '@/types/material';
@@ -36,6 +37,7 @@ export function MaterialsPage() {
         <div>
           <h1 className="text-2xl font-semibold text-ink">{t('materials.title')}</h1>
           <p className="mt-1 text-sm text-muted">{t('materials.subtitle')}</p>
+          <PlanRemain feature="materials" />
         </div>
         <Link to="/materials/new">
           <Button>{t('materials.create')}</Button>

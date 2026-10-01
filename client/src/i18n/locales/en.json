@@ -458,7 +458,7 @@
       "title": "Start free. Grow when you need more room.",
       "subtitle": "All features open from day one. Free has calm quantity limits. Pro removes them — yearly saves about two months.",
       "freePrice": "€0",
-      "freeHint": "Enough to build the habit. Caps on materials, tasks, habits, and notes.",
+      "freeHint": "What you get on Free:",
       "yearHint": "about two months free versus monthly",
       "recommended": "Best value",
       "cta": "Get Pro",
@@ -478,7 +478,12 @@
       "yearCharged": "€39.99 billed once a year",
       "orMonthly": "Or month by month",
       "monthPrice": "€4.99",
-      "monthBilled": "billed every month"
+      "monthBilled": "billed every month",
+      "freeCaps": {
+        "study": "20 materials · 45 tasks / month · 3 review categories",
+        "life": "3 habits · 20 notes · 5 budget categories",
+        "body": "25 finance records / month · meals 7 days · 2 devices"
+      }
     }
   },
   "guide": {
@@ -871,7 +876,9 @@
     "activityTitle": "Completed reviews (7 days)",
     "activitySubtitle": "How many reviews you completed each day in your timezone.",
     "recentTitle": "Recent materials",
-    "viewAllMaterials": "All materials"
+    "viewAllMaterials": "All materials",
+    "planPro": "Pro",
+    "planFree": "Free plan"
   },
   "categories": {
     "title": "Categories",
@@ -1326,13 +1333,15 @@
     "adminUnlimited": "Admin",
     "adminHint": "This account is unlimited as admin. Use the buttons below only to test Stripe.",
     "betaLabel": "Beta test",
-    "betaHint": "This account is a beta tester with full Pro access — the same rights as a paid plan.",
+    "betaHint": "Full Pro access — the same rights as a paid plan.",
     "monthCard": "Monthly",
     "yearCard": "Yearly",
     "ctaYear": "Choose yearly",
     "ctaMonth": "Choose monthly",
     "usageTitle": "Free plan limits",
     "usageLead": "These caps apply until you subscribe. Pro removes them.",
-    "proUnlocked": "Quantity limits are off on this account."
+    "proUnlocked": "Quantity limits are off on this account.",
+    "remain": "{{left}} of {{limit}} left",
+    "remainDays": "Last {{count}} days"
   }
 }

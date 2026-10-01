@@ -502,7 +502,9 @@
       "completedReviews": "Ripassi completati"
     },
     "activityTitle": "Ripassi completati (7 giorni)",
-    "activitySubtitle": "Quanti ripassi hai completato ogni giorno nel tuo fuso orario."
+    "activitySubtitle": "Quanti ripassi hai completato ogni giorno nel tuo fuso orario.",
+    "planPro": "Pro",
+    "planFree": "Piano Free"
   },
   "contact": {
     "title": "Contatti",

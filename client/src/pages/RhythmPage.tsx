@@ -3,6 +3,7 @@ import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import { HabitMonthCard } from '@/components/habits/HabitMonthCard';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -110,6 +111,7 @@ export function RhythmPage() {
         <div className="min-w-0">
           <h1 className="text-2xl font-semibold text-ink">{t('rhythm.title')}</h1>
           <p className="mt-1 max-w-2xl text-sm text-muted">{t('rhythm.subtitle', { days: cycleDays })}</p>
+          <PlanRemain feature="habits" />
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <Button type="button" variant="secondary" onClick={() => shiftMonth(-1)} className="!w-auto !px-3">

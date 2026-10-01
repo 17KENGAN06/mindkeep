@@ -502,7 +502,9 @@
       "completedReviews": "Valmiit kertaukset"
     },
     "activityTitle": "Valmiit kertaukset (7 pv)",
-    "activitySubtitle": "Kuinka monta kertausta valmistui kunakin päivänä aikavyöhykkeelläsi."
+    "activitySubtitle": "Kuinka monta kertausta valmistui kunakin päivänä aikavyöhykkeelläsi.",
+    "planPro": "Pro",
+    "planFree": "Free-paketti"
   },
   "contact": {
     "title": "Yhteystiedot",

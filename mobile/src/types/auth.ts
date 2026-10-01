@@ -5,6 +5,8 @@ export type User = {
   timezone: string;
   role: 'USER' | 'ADMIN';
   hasPassword?: boolean;
+  plan?: 'FREE' | 'PRO';
+  betaTester?: boolean;
   createdAt: string;
   updatedAt: string;
 };

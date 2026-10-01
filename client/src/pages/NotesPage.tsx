@@ -9,6 +9,7 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import { useNotes } from '@/features/notes/useNotes';
 import type { NotesQuery } from '@/api/notes';
 
@@ -35,6 +36,7 @@ export function NotesPage() {
         <div>
           <h1 className="text-2xl font-semibold text-ink">{t('notes.title')}</h1>
           <p className="mt-1 max-w-2xl text-sm text-muted">{t('notes.subtitle')}</p>
+          <PlanRemain feature="notes" />
         </div>
         <Link to="/notes/new" className="sm:shrink-0">
           <Button className="w-full sm:w-auto">{t('notes.create')}</Button>

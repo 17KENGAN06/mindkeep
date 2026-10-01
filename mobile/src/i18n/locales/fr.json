@@ -502,7 +502,9 @@
       "completedReviews": "Révisions terminées"
     },
     "activityTitle": "Révisions terminées (7 jours)",
-    "activitySubtitle": "Combien de révisions tu as terminées chaque jour dans ton fuseau horaire."
+    "activitySubtitle": "Combien de révisions tu as terminées chaque jour dans ton fuseau horaire.",
+    "planPro": "Pro",
+    "planFree": "Offre Free"
   },
   "contact": {
     "title": "Contact",

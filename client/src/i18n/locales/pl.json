@@ -458,7 +458,7 @@
       "title": "Zacznij za darmo. Pro, gdy potrzebujesz więcej miejsca.",
       "subtitle": "Wszystkie funkcje od pierwszego dnia. Free ma spokojne limity ilości. Pro je zdejmuje, a rok oszczędza około dwóch miesięcy.",
       "freePrice": "0 €",
-      "freeHint": "Wystarczy, by wejść w rytm. Limity na materiały, zadania, nawyki i notatki.",
+      "freeHint": "Co obejmuje Free:",
       "yearHint": "około dwóch miesięcy w prezencie wobec płatności miesięcznej",
       "recommended": "Najlepsza wartość",
       "cta": "Weź Pro",
@@ -478,7 +478,12 @@
       "yearCharged": "€39.99 pobierane raz w roku",
       "orMonthly": "Albo miesiąc po miesiącu",
       "monthPrice": "€4.99",
-      "monthBilled": "płatność co miesiąc"
+      "monthBilled": "płatność co miesiąc",
+      "freeCaps": {
+        "study": "20 materiałów · 45 zadań / miesiąc · 3 kategorie powtórek",
+        "life": "3 nawyki · 20 notatek · 5 kategorii budżetu",
+        "body": "25 wpisów finansów / miesiąc · posiłki 7 dni · 2 urządzenia"
+      }
     }
   },
   "guide": {
@@ -871,7 +876,9 @@
     "activityTitle": "Ukończone powtórki (7 dni)",
     "activitySubtitle": "Ile powtórek ukończyłeś każdego dnia w swojej strefie czasowej.",
     "recentTitle": "Ostatnie materiały",
-    "viewAllMaterials": "Wszystkie materiały"
+    "viewAllMaterials": "Wszystkie materiały",
+    "planPro": "Pro",
+    "planFree": "Plan Free"
   },
   "categories": {
     "title": "Kategorie",
@@ -1326,13 +1333,15 @@
     "adminUnlimited": "Admin",
     "adminHint": "To konto nie ma limitów jako admin. Przyciski poniżej tylko do testu Stripe.",
     "betaLabel": "Beta test",
-    "betaHint": "To konto jest testerem beta z pełnym dostępem Pro — takimi samymi prawami jak płatny plan.",
+    "betaHint": "Pełny dostęp Pro — te same prawa co w płatnym planie.",
     "monthCard": "Miesiąc",
     "yearCard": "Rok",
     "ctaYear": "Wybierz rok",
     "ctaMonth": "Wybierz miesiąc",
     "usageTitle": "Limity planu Free",
     "usageLead": "Te limity obowiązują do subskrypcji. Pro je zdejmuje.",
-    "proUnlocked": "Limity ilościowe na tym koncie są wyłączone."
+    "proUnlocked": "Limity ilościowe na tym koncie są wyłączone.",
+    "remain": "zostało {{left}} z {{limit}}",
+    "remainDays": "ostatnie {{count}} dni"
   }
 }

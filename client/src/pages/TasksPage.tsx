@@ -10,6 +10,7 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import {
   useCreateDailyTask,
   useDailyTasksPeriod,
@@ -186,6 +187,7 @@ export function TasksPage() {
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('tasks.title')}</h1>
         <p className="mt-1 text-sm text-muted">{t('tasks.subtitle')}</p>
+        <PlanRemain feature="tasks" />
       </section>
 
       <TaskPeriodControls

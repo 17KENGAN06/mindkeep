@@ -5,7 +5,7 @@ import { SnapReveal } from '@/components/home/SnapReveal';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
 
-const FREE_POINTS = ['open', 'caps', 'start'] as const;
+const FREE_CAPS = ['study', 'life', 'body'] as const;
 const PRO_POINTS = ['unlimited', 'history', 'devices'] as const;
 
 export function HomePricing() {
@@ -38,10 +38,10 @@ export function HomePricing() {
             </p>
             <p className="mt-2 text-sm text-muted">{t('home.pricing.freeHint')}</p>
             <ul className="mt-6 flex-1 space-y-3">
-              {FREE_POINTS.map((key) => (
+              {FREE_CAPS.map((key) => (
                 <li key={key} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" aria-hidden />
-                  {t(`home.pricing.freePoints.${key}`)}
+                  {t(`home.pricing.freeCaps.${key}`)}
                 </li>
               ))}
             </ul>

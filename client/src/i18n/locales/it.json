@@ -458,7 +458,7 @@
       "title": "Inizia gratis. Pro quando serve più spazio.",
       "subtitle": "Tutte le funzioni dal primo giorno. Free ha limiti di quantità calmi. Pro li toglie — l’annuale risparmia circa due mesi.",
       "freePrice": "0 €",
-      "freeHint": "Abbastanza per entrare nel ritmo. Limiti su materiali, compiti, abitudini e note.",
+      "freeHint": "Cosa include Free:",
       "yearHint": "circa due mesi in omaggio rispetto al pagamento mensile",
       "recommended": "Più conveniente",
       "cta": "Prendi Pro",
@@ -478,7 +478,12 @@
       "yearCharged": "€39.99 addebitati una volta all’anno",
       "orMonthly": "Oppure mese per mese",
       "monthPrice": "€4.99",
-      "monthBilled": "addebito ogni mese"
+      "monthBilled": "addebito ogni mese",
+      "freeCaps": {
+        "study": "20 materiali · 45 compiti / mese · 3 categorie di ripasso",
+        "life": "3 abitudini · 20 note · 5 categorie di budget",
+        "body": "25 movimenti / mese · pasti 7 giorni · 2 dispositivi"
+      }
     }
   },
   "guide": {
@@ -871,7 +876,9 @@
     "activityTitle": "Ripassi completati (7 giorni)",
     "activitySubtitle": "Quanti ripassi hai completato ogni giorno nel tuo fuso orario.",
     "recentTitle": "Materiali recenti",
-    "viewAllMaterials": "Tutti i materiali"
+    "viewAllMaterials": "Tutti i materiali",
+    "planPro": "Pro",
+    "planFree": "Piano Free"
   },
   "categories": {
     "title": "Categorie",
@@ -1326,13 +1333,15 @@
     "adminUnlimited": "Admin",
     "adminHint": "Questo account è illimitato da admin. I pulsanti sotto servono solo a testare Stripe.",
     "betaLabel": "Beta test",
-    "betaHint": "Questo account è beta tester con accesso Pro completo — gli stessi diritti di un piano a pagamento.",
+    "betaHint": "Accesso Pro completo — gli stessi diritti di un piano a pagamento.",
     "monthCard": "Mese",
     "yearCard": "Anno",
     "ctaYear": "Scegli l’anno",
     "ctaMonth": "Scegli il mese",
     "usageTitle": "Limiti del piano Free",
     "usageLead": "Questi tetti valgono finché non ti abboni. Pro li toglie.",
-    "proUnlocked": "I limiti di quantità su questo account sono disattivati."
+    "proUnlocked": "I limiti di quantità su questo account sono disattivati.",
+    "remain": "{{left}} di {{limit}} rimasti",
+    "remainDays": "Ultimi {{count}} giorni"
   }
 }

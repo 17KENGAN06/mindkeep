@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { financeApi, type CreateOperationPayload } from '@/api/finance';
 import type { FinanceCurrency } from '@/features/finance/currencies';
 import type { FinancePeriodParams } from '@/types/finance';
+import { touchPlanUsage } from '@/features/billing/planLimit';
 
 const financeKey = ['finance'] as const;
 
@@ -43,6 +44,7 @@ export function useCreateFinanceCategory() {
     mutationFn: (payload: { name: string }) => financeApi.createCategory(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [...financeKey, 'categories'] });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -64,6 +66,7 @@ export function useDeleteFinanceCategory() {
     mutationFn: (id: string) => financeApi.removeCategory(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -74,6 +77,7 @@ export function useCreateFinanceOperation() {
     mutationFn: (payload: CreateOperationPayload) => financeApi.createOperation(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -84,6 +88,7 @@ export function useDeleteFinanceOperation() {
     mutationFn: (id: string) => financeApi.removeOperation(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
     },
   });
 }

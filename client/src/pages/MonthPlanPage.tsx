@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import { TaskPeriodControls } from '@/components/tasks/TaskPeriodControls';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -38,6 +39,7 @@ export function MonthPlanPage() {
         <div>
           <h1 className="text-2xl font-semibold text-ink">{t('tasks.planTitle')}</h1>
           <p className="mt-1 text-sm text-muted">{t('tasks.planSubtitle')}</p>
+          <PlanRemain feature="tasks" />
         </div>
         <Link to="/tasks">
           <Button variant="secondary">{t('tasks.openDaily')}</Button>

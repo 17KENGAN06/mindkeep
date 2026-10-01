@@ -8,7 +8,13 @@ import type {
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
 import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
-import { assertCreateLimit } from '@/services/entitlements.service.js';
+import { FREE_LIMITS } from '@/config/entitlements.js';
+import {
+  assertCreateLimit,
+  freeVisibleIds,
+  idIn,
+  maybeCapMonthly,
+} from '@/services/entitlements.service.js';
 
 function parseDateOnly(value: string): Date {
   const [y, m, d] = value.split('-').map(Number);
@@ -63,10 +69,16 @@ export class DailyTaskService {
 
   async listByPeriod(userId: string, query: DailyTaskPeriodQuery) {
     const { from, to } = periodRange(query);
-    const tasks = await prisma.dailyTask.findMany({
-      where: { userId, date: { gte: from, lt: to } },
-      orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
-    });
+    const tasks = await maybeCapMonthly(
+      userId,
+      FREE_LIMITS.tasksPerMonth,
+      await prisma.dailyTask.findMany({
+        where: { userId, date: { gte: from, lt: to } },
+        orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
+      }),
+      (task) => task.date,
+      (task) => task.createdAt.getTime(),
+    );
 
     const today = todayKey();
     const daysMap = new Map<
@@ -159,8 +171,9 @@ export class DailyTaskService {
     const next = new Date(day);
     next.setUTCDate(next.getUTCDate() + 1);
 
+    const visibleIds = await freeVisibleIds(userId, 'tasks', { dateKey: date });
     const tasks = await prisma.dailyTask.findMany({
-      where: { userId, date: { gte: day, lt: next } },
+      where: { userId, date: { gte: day, lt: next }, ...idIn(visibleIds) },
       orderBy: [{ completed: 'asc' }, { createdAt: 'asc' }],
     });
 
@@ -200,7 +213,10 @@ export class DailyTaskService {
       month: query.month,
     });
 
-    const monthFilter = { userId, completed: true, date: { gte: from, lt: to } };
+    const visibleIds = await freeVisibleIds(userId, 'tasks', {
+      dateKey: `${query.year}-${String(query.month).padStart(2, '0')}-01`,
+    });
+    const monthFilter = { userId, completed: true, date: { gte: from, lt: to }, ...idIn(visibleIds) };
     const [totalCompleted, completedToday] = await Promise.all([
       prisma.dailyTask.count({ where: monthFilter }),
       prisma.dailyTask.count({

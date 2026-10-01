@@ -1,4 +1,7 @@
+import { useQuery, type QueryClient } from '@tanstack/react-query';
 import { ApiError } from '@/api/client';
+import { billingApi, type BillingStatus } from '@/api/billing';
+import type { User } from '@/types/auth';
 
 type Translate = (key: string) => string;
 
@@ -41,4 +44,23 @@ export function planLimitMessage(error: unknown, t: Translate): string | null {
 
 export function mutationErrorMessage(error: unknown, t: Translate, fallbackKey = 'auth.errors.generic'): string {
   return planLimitMessage(error, t) ?? t(fallbackKey);
+}
+
+export function touchPlanUsage(queryClient: QueryClient): void {
+  void queryClient.invalidateQueries({ queryKey: ['billing'] });
+}
+
+export function usePlanUsage() {
+  return useQuery({
+    queryKey: ['billing', 'status'],
+    queryFn: () => billingApi.status(),
+    staleTime: 12_000,
+  });
+}
+
+export type PlanUsageFeature = keyof BillingStatus['usage'];
+
+export function isProAccount(user?: Pick<User, 'plan' | 'role' | 'betaTester'> | null): boolean {
+  if (!user) return false;
+  return user.plan === 'PRO' || user.role === 'ADMIN' || Boolean(user.betaTester);
 }

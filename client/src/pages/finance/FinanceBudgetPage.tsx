@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { Banknote, WalletCards } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
+import { PlanRemain } from '@/components/billing/PlanRemain';
 import { FinanceOperationsList } from '@/components/finance/FinanceOperationsList';
 import { FinancePeriodControls } from '@/components/finance/FinancePeriodControls';
 import { Button } from '@/components/ui/Button';
@@ -180,6 +181,7 @@ export function FinanceBudgetPage() {
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('finance.budgetTitle')}</h1>
         <p className="mt-1 text-sm text-muted">{t('finance.budgetSubtitle')}</p>
+        <PlanRemain feature="financeOperations" />
       </section>
 
       <FinancePeriodControls

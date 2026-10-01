@@ -502,7 +502,9 @@
       "completedReviews": "Ukończone powtórki"
     },
     "activityTitle": "Ukończone powtórki (7 dni)",
-    "activitySubtitle": "Ile powtórek ukończyłeś każdego dnia w swojej strefie czasowej."
+    "activitySubtitle": "Ile powtórek ukończyłeś każdego dnia w swojej strefie czasowej.",
+    "planPro": "Pro",
+    "planFree": "Plan Free"
   },
   "contact": {
     "title": "Kontakt",

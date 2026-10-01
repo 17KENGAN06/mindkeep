@@ -10,7 +10,14 @@ import type {
 } from '@/validations/finance.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
-import { assertCreateLimit, dateKeyOf } from '@/services/entitlements.service.js';
+import { FREE_LIMITS } from '@/config/entitlements.js';
+import {
+  assertCreateLimit,
+  dateKeyOf,
+  freeVisibleIds,
+  idIn,
+  maybeCapMonthly,
+} from '@/services/entitlements.service.js';
 
 const DEFAULT_CURRENCY = BudgetCurrency.EUR;
 
@@ -71,9 +78,10 @@ export class FinanceService {
     });
   }
 
-  listCategories(userId: string) {
+  async listCategories(userId: string) {
+    const visibleIds = await freeVisibleIds(userId, 'financeCategories');
     return prisma.budgetCategory.findMany({
-      where: { userId },
+      where: { userId, ...idIn(visibleIds) },
       orderBy: { name: 'asc' },
       include: { _count: { select: { operations: true } } },
     });
@@ -131,14 +139,20 @@ export class FinanceService {
     const { from, to } = periodRange(query);
     const settings = await this.getOrCreateSettings(userId);
 
-    const operations = await prisma.budgetOperation.findMany({
-      where: {
-        userId,
-        date: { gte: from, lt: to },
-      },
-      include: { category: true },
-      orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
-    });
+    const operations = await maybeCapMonthly(
+      userId,
+      FREE_LIMITS.financeOperationsPerMonth,
+      await prisma.budgetOperation.findMany({
+        where: {
+          userId,
+          date: { gte: from, lt: to },
+        },
+        include: { category: true },
+        orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
+      }),
+      (row) => row.date,
+      (row) => row.createdAt.getTime(),
+    );
 
     return { settings, operations };
   }
@@ -182,14 +196,20 @@ export class FinanceService {
     const { from, to } = periodRange(query);
     const settings = await this.getOrCreateSettings(userId);
 
-    const operations = await prisma.budgetOperation.findMany({
-      where: {
-        userId,
-        date: { gte: from, lt: to },
-      },
-      include: { category: true },
-      orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
-    });
+    const operations = await maybeCapMonthly(
+      userId,
+      FREE_LIMITS.financeOperationsPerMonth,
+      await prisma.budgetOperation.findMany({
+        where: {
+          userId,
+          date: { gte: from, lt: to },
+        },
+        include: { category: true },
+        orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
+      }),
+      (row) => row.date,
+      (row) => row.createdAt.getTime(),
+    );
 
     const display = settings.displayCurrency;
     let rates: Awaited<ReturnType<typeof getRateMap>>['rates'] | null = null;

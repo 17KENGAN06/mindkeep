@@ -4,6 +4,7 @@ import type { AppLocale } from '@/services/emailCopy.js';
 import { reminderNotificationCopy } from '@/services/notificationCopy.js';
 import { AppError } from '@/utils/AppError.js';
 import { getCalendarDaysOverdue, getDayBoundsInTimeZone } from '@/utils/timezone.js';
+import { freeVisibleIds } from '@/services/entitlements.service.js';
 
 const notificationInclude = {
   material: {
@@ -80,9 +81,11 @@ export class NotificationService {
     const timezone = user?.timezone || 'Europe/Helsinki';
     const { endUtc } = getDayBoundsInTimeZone(timezone);
 
+    const visibleIds = await freeVisibleIds(userId, 'materials');
     const reminders = await prisma.reviewReminder.findMany({
       where: {
         userId,
+        ...(visibleIds ? { materialId: { in: visibleIds } } : {}),
         status: { in: [ReminderStatus.PENDING, ReminderStatus.OVERDUE] },
         scheduledAt: { lte: endUtc },
       },

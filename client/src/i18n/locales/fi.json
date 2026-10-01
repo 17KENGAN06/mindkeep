@@ -458,7 +458,7 @@
       "title": "Aloita ilmaiseksi. Pro, kun tarvitset lisää tilaa.",
       "subtitle": "Kaikki ominaisuudet ensimmäisestä päivästä. Freessä on rauhalliset määrärajoitukset. Pro poistaa ne — vuosi säästää noin kaksi kuukautta.",
       "freePrice": "0 €",
-      "freeHint": "Riittää rytmiin pääsyyn. Rajat materiaaleille, tehtäville, tavoille ja muistiinpanoille.",
+      "freeHint": "Free-pakettiin kuuluu:",
       "yearHint": "noin kaksi kuukautta kaupan päälle kuukausimaksuun verrattuna",
       "recommended": "Parempi arvo",
       "cta": "Ota Pro",
@@ -478,7 +478,12 @@
       "yearCharged": "€39.99 veloitetaan kerran vuodessa",
       "orMonthly": "Tai kuukausittain",
       "monthPrice": "€4.99",
-      "monthBilled": "veloitetaan joka kuukausi"
+      "monthBilled": "veloitetaan joka kuukausi",
+      "freeCaps": {
+        "study": "20 materiaalia · 45 tehtävää / kk · 3 kertauskategoriaa",
+        "life": "3 tapaa · 20 muistiinpanoa · 5 budjettikategoriaa",
+        "body": "25 talousmerkintää / kk · ateriat 7 pv · 2 laitetta"
+      }
     }
   },
   "guide": {
@@ -871,7 +876,9 @@
     "activityTitle": "Valmiit kertaukset (7 pv)",
     "activitySubtitle": "Kuinka monta kertausta valmistui kunakin päivänä aikavyöhykkeelläsi.",
     "recentTitle": "Viimeisimmät materiaalit",
-    "viewAllMaterials": "Kaikki materiaalit"
+    "viewAllMaterials": "Kaikki materiaalit",
+    "planPro": "Pro",
+    "planFree": "Free-paketti"
   },
   "categories": {
     "title": "Kategoriat",
@@ -1326,13 +1333,15 @@
     "adminUnlimited": "Admin",
     "adminHint": "Tämä tili on adminina rajaton. Napit alla ovat vain Stripe-testiä varten.",
     "betaLabel": "Beta-testi",
-    "betaHint": "Tämä tili on beta-testaaja täydellä Pro-oikeudella — samat oikeudet kuin maksullisella paketilla.",
+    "betaHint": "Täysi Pro-oikeus — samat oikeudet kuin maksullisella paketilla.",
     "monthCard": "Kuukausi",
     "yearCard": "Vuosi",
     "ctaYear": "Valitse vuosi",
     "ctaMonth": "Valitse kuukausi",
     "usageTitle": "Free-suunnitelman rajat",
     "usageLead": "Nämä katot ovat voimassa kunnes tilaat. Pro poistaa ne.",
-    "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä."
+    "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä.",
+    "remain": "{{left}} / {{limit}} jäljellä",
+    "remainDays": "Viimeiset {{count}} pv"
   }
 }

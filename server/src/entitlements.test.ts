@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { UserPlan, UserRole } from '@prisma/client';
 import { throwPlanLimit } from '@/config/entitlements.js';
-import { isProUser } from '@/services/entitlements.service.js';
+import { isProUser, keepLatestPerUtcMonth } from '@/services/entitlements.service.js';
 import { AppError } from '@/utils/AppError.js';
 
 test('throwPlanLimit returns PLAN_LIMIT with counts', () => {
@@ -65,5 +65,24 @@ test('beta testers are entitled without a paid plan', () => {
       betaTester: true,
     }),
     true,
+  );
+});
+
+test('keepLatestPerUtcMonth keeps the newest rows per month', () => {
+  const rows = [
+    { id: 'old', date: new Date('2026-09-02T12:00:00Z'), createdAt: new Date('2026-09-02T12:00:00Z') },
+    { id: 'mid', date: new Date('2026-09-10T12:00:00Z'), createdAt: new Date('2026-09-10T12:00:00Z') },
+    { id: 'new', date: new Date('2026-09-20T12:00:00Z'), createdAt: new Date('2026-09-20T12:00:00Z') },
+    { id: 'oct', date: new Date('2026-10-01T12:00:00Z'), createdAt: new Date('2026-10-01T12:00:00Z') },
+  ];
+  const kept = keepLatestPerUtcMonth(
+    rows,
+    2,
+    (row) => row.date,
+    (row) => row.createdAt.getTime(),
+  );
+  assert.deepEqual(
+    kept.map((row) => row.id),
+    ['mid', 'new', 'oct'],
   );
 });

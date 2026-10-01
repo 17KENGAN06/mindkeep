@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { notesApi, type NotePayload, type NotesQuery } from '@/api/notes';
+import { touchPlanUsage } from '@/features/billing/planLimit';
 
 export function useNotes(params: NotesQuery = {}) {
   return useQuery({
@@ -28,6 +29,7 @@ export function useCreateNote() {
     mutationFn: (payload: NotePayload) => notesApi.create(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['notes'] });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -50,6 +52,7 @@ export function useDeleteNote() {
     mutationFn: (id: string) => notesApi.remove(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['notes'] });
+      touchPlanUsage(queryClient);
     },
   });
 }

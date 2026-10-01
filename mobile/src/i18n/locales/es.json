@@ -502,7 +502,9 @@
       "completedReviews": "Repasos completados"
     },
     "activityTitle": "Repasos completados (7 días)",
-    "activitySubtitle": "Cuántos repasos completaste cada día en tu zona horaria."
+    "activitySubtitle": "Cuántos repasos completaste cada día en tu zona horaria.",
+    "planPro": "Pro",
+    "planFree": "Plan Free"
   },
   "contact": {
     "title": "Contacto",

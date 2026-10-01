@@ -458,7 +458,7 @@
       "title": "Kostenlos starten. Pro, wenn du mehr Raum brauchst.",
       "subtitle": "Alle Funktionen ab Tag eins. Free hat ruhige Mengenlimits. Pro hebt sie auf — jährlich spart etwa zwei Monate.",
       "freePrice": "0 €",
-      "freeHint": "Genug, um in den Rhythmus zu kommen. Limits bei Materialien, Aufgaben, Gewohnheiten und Notizen.",
+      "freeHint": "Das ist im Free-Plan:",
       "yearHint": "etwa zwei Monate geschenkt gegenüber monatlicher Zahlung",
       "recommended": "Besserer Wert",
       "cta": "Pro holen",
@@ -478,7 +478,12 @@
       "yearCharged": "€39.99 einmal im Jahr",
       "orMonthly": "Oder monatlich",
       "monthPrice": "€4.99",
-      "monthBilled": "jeden Monat abgerechnet"
+      "monthBilled": "jeden Monat abgerechnet",
+      "freeCaps": {
+        "study": "20 Materialien · 45 Aufgaben / Monat · 3 Wiederholungskategorien",
+        "life": "3 Gewohnheiten · 20 Notizen · 5 Budgetkategorien",
+        "body": "25 Finanzeinträge / Monat · Mahlzeiten 7 Tage · 2 Geräte"
+      }
     }
   },
   "guide": {
@@ -871,7 +876,9 @@
     "activityTitle": "Erledigte Wiederholungen (7 Tage)",
     "activitySubtitle": "Wie viele Wiederholungen du jeden Tag in deiner Zeitzone abgeschlossen hast.",
     "recentTitle": "Letzte Materialien",
-    "viewAllMaterials": "Alle Materialien"
+    "viewAllMaterials": "Alle Materialien",
+    "planPro": "Pro",
+    "planFree": "Free-Plan"
   },
   "categories": {
     "title": "Kategorien",
@@ -1326,13 +1333,15 @@
     "adminUnlimited": "Admin",
     "adminHint": "Dieses Konto ist als Admin unbegrenzt. Die Buttons unten nur zum Stripe-Test.",
     "betaLabel": "Beta-Test",
-    "betaHint": "Dieses Konto ist Beta-Tester mit vollem Pro-Zugang — dieselben Rechte wie ein bezahlter Plan.",
+    "betaHint": "Voller Pro-Zugang — dieselben Rechte wie ein bezahlter Plan.",
     "monthCard": "Monat",
     "yearCard": "Jahr",
     "ctaYear": "Jährlich wählen",
     "ctaMonth": "Monatlich wählen",
     "usageTitle": "Limits im Free-Plan",
     "usageLead": "Diese Caps gelten bis zum Abo. Pro hebt sie auf.",
-    "proUnlocked": "Mengenlimits sind auf diesem Konto aus."
+    "proUnlocked": "Mengenlimits sind auf diesem Konto aus.",
+    "remain": "{{left}} von {{limit}} übrig",
+    "remainDays": "Letzte {{count}} Tage"
   }
 }

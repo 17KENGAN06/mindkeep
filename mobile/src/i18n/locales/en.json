@@ -502,7 +502,9 @@
       "completedReviews": "Completed reviews"
     },
     "activityTitle": "Completed reviews (7 days)",
-    "activitySubtitle": "How many reviews you completed each day in your timezone."
+    "activitySubtitle": "How many reviews you completed each day in your timezone.",
+    "planPro": "Pro",
+    "planFree": "Free plan"
   },
   "contact": {
     "title": "Contact",

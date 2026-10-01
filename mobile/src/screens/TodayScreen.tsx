@@ -170,6 +170,8 @@ export function TodayScreen() {
     }
   };
 
+  const entitled = user?.plan === 'PRO' || user?.role === 'ADMIN' || Boolean(user?.betaTester);
+
   if (loading && !tasksQuery.data && !nutritionQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
@@ -196,7 +198,29 @@ export function TodayScreen() {
         <View style={styles.helloRow}>
           <BrandMark size={44} />
           <View style={styles.helloCopy}>
-            <Text style={[styles.hello, { color: colors.ink }]}>{t('today.hello', { name: user?.name ?? '' })}</Text>
+            <View style={styles.helloTitleRow}>
+              <Text style={[styles.hello, { color: colors.ink, flexShrink: 1 }]} numberOfLines={1}>
+                {t('today.hello', { name: user?.name ?? '' })}
+              </Text>
+              <Pressable
+                onPress={() => navigation.navigate('More', { screen: 'Account' })}
+                style={[
+                  styles.planChip,
+                  entitled
+                    ? { backgroundColor: colors.brand }
+                    : { backgroundColor: colors.panel, borderColor: colors.line, borderWidth: 1 },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.planChipText,
+                    { color: entitled ? colors.onBrand : colors.muted },
+                  ]}
+                >
+                  {entitled ? t('dashboard.planPro') : t('dashboard.planFree')}
+                </Text>
+              </Pressable>
+            </View>
             <Text style={[styles.tagline, { color: colors.muted }]}>{t('dashboard.tagline')}</Text>
           </View>
         </View>
@@ -499,9 +523,12 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: { padding: 20, paddingBottom: 40, width: '100%' },
-  helloRow: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 4, maxWidth: '100%' },
+  helloRow: { alignItems: 'flex-start', flexDirection: 'row', gap: 12, marginBottom: 4, maxWidth: '100%' },
   helloCopy: { flex: 1, minWidth: 0 },
+  helloTitleRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   hello: { fontSize: 28, fontWeight: '700' },
+  planChip: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 5 },
+  planChipText: { fontSize: 10, fontWeight: '800', letterSpacing: 1.2, textTransform: 'uppercase' },
   tagline: { fontSize: 14, marginTop: 6, marginBottom: 16 },
   error: { marginBottom: 12 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 14, maxWidth: '100%' },

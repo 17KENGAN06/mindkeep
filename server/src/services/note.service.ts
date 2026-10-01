@@ -5,15 +5,17 @@ import type {
   UpdateNoteInput,
 } from '@/validations/note.schemas.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
-import { assertCreateLimit } from '@/services/entitlements.service.js';
+import { assertCreateLimit, freeVisibleIds, idIn } from '@/services/entitlements.service.js';
 
 export class NoteService {
   async list(userId: string, query: ListNotesQuery) {
     const search = query.search?.trim();
+    const visibleIds = await freeVisibleIds(userId, 'notes');
 
     return prisma.note.findMany({
       where: {
         userId,
+        ...idIn(visibleIds),
         ...(search
           ? {
               OR: [

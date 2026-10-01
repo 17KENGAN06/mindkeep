@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { materialsApi, type MaterialPayload, type MaterialsQuery } from '@/api/materials';
 import type { MaterialStatus } from '@/types/material';
+import { touchPlanUsage } from '@/features/billing/planLimit';
 
 export function useMaterials(params: MaterialsQuery = {}) {
   return useQuery({
@@ -30,6 +31,7 @@ export function useCreateMaterial() {
     mutationFn: (payload: MaterialPayload) => materialsApi.create(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['materials'] });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -59,6 +61,7 @@ export function useDeleteMaterial() {
     mutationFn: (id: string) => materialsApi.remove(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['materials'] });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -71,6 +74,7 @@ export function useArchiveMaterial() {
     onSuccess: (_data, id) => {
       void queryClient.invalidateQueries({ queryKey: ['materials'] });
       void queryClient.invalidateQueries({ queryKey: ['materials', id] });
+      touchPlanUsage(queryClient);
     },
   });
 }

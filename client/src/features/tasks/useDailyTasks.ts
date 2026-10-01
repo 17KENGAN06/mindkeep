@@ -5,6 +5,7 @@ import {
   type UpdateDailyTaskPayload,
 } from '@/api/dailyTasks';
 import type { DailyTaskPeriodParams } from '@/types/dailyTask';
+import { touchPlanUsage } from '@/features/billing/planLimit';
 
 const tasksKey = ['daily-tasks'] as const;
 
@@ -37,6 +38,7 @@ export function useCreateDailyTask() {
     mutationFn: (payload: CreateDailyTaskPayload) => dailyTasksApi.create(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: tasksKey });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -58,6 +60,7 @@ export function useDeleteDailyTask() {
     mutationFn: (id: string) => dailyTasksApi.remove(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: tasksKey });
+      touchPlanUsage(queryClient);
     },
   });
 }
