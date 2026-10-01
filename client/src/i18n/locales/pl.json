@@ -470,7 +470,14 @@
         "unlimited": "Więcej miejsca: materiały, nawyki, notatki i historia",
         "history": "Dłuższe wykresy i więcej urządzeń, bez miesięcznych ścian",
         "devices": "To samo Pro na stronie zaraz po płatności"
-      }
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ miesiąc",
+      "onlyIfYearly": "Tylko przy płatności za rok",
+      "yearCharged": "€39.99 pobierane raz w roku",
+      "orMonthly": "Albo miesiąc po miesiącu",
+      "monthPrice": "€4.99",
+      "monthBilled": "płatność co miesiąc"
     }
   },
   "guide": {
@@ -964,20 +971,28 @@
   },
   "notifications": {
     "title": "Powiadomienia",
-    "subtitle": "Przypomnienia w aplikacji tworzone przez serwer, gdy nadchodzi czas powtórki.",
+    "subtitle": "Powtórki na dziś i wszystko zaległe — dzwonek trzyma je w polu widzenia.",
     "unreadCount": "Nieprzeczytane: {{count}}",
     "markAllRead": "Oznacz wszystkie jako przeczytane",
     "markRead": "Oznacz jako przeczytane",
     "openMaterial": "Otwórz materiał",
     "unread": "Nieprzeczytane",
     "emptyTitle": "Nie ma jeszcze powiadomień",
-    "emptyDescription": "Gdy nadejdzie czas powtórki, pojawi się tutaj.",
-    "bellLabel": "Powiadomienia, nieprzeczytane: {{count}}",
+    "emptyDescription": "Gdy powtórka przypada na dziś albo jest zaległa, pojawi się tutaj.",
+    "bellLabel": "Oczekujące powtórki: {{count}}",
     "types": {
       "REVIEW_DUE": "Na dziś",
       "REVIEW_OVERDUE": "Zaległe",
       "SYSTEM": "System"
-    }
+    },
+    "bellToday": "Dziś",
+    "bellOverdue": "Zaległe",
+    "bellEmpty": "Nie ma teraz powtórek",
+    "bellEmptyOverdue": "Brak zaległych",
+    "openReviews": "Do powtórek",
+    "seeAll": "Wszystkie powiadomienia",
+    "dueCount": "{{count}} dziś",
+    "overdueCount": "{{count}} zaległych"
   },
   "statistics": {
     "title": "Statystyki",

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BotGuard } from '@/components/auth/BotGuard';
@@ -134,16 +134,24 @@ export function ContactPage() {
               </div>
             ) : (
               <form className="relative space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line sm:p-6" onSubmit={onSubmit} noValidate>
-                <Select
-                  label={t('contact.fields.topic')}
-                  placeholder={t('contact.placeholders.topic')}
-                  error={errors.topic?.message}
-                  options={[
-                    { value: 'partnership', label: t('contact.topics.partnership') },
-                    { value: 'bug', label: t('contact.topics.bug') },
-                    { value: 'question', label: t('contact.topics.question') },
-                  ]}
-                  {...register('topic')}
+                <Controller
+                  name="topic"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      label={t('contact.fields.topic')}
+                      placeholder={t('contact.placeholders.topic')}
+                      error={errors.topic?.message}
+                      options={[
+                        { value: 'partnership', label: t('contact.topics.partnership') },
+                        { value: 'bug', label: t('contact.topics.bug') },
+                        { value: 'question', label: t('contact.topics.question') },
+                      ]}
+                      name={field.name}
+                      value={field.value ?? ''}
+                      onChange={field.onChange}
+                    />
+                  )}
                 />
                 {destination ? (
                   <p className="text-xs text-muted">{t('contact.destination', { email: destination })}</p>

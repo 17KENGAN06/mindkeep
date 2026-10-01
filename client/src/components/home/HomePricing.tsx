@@ -33,7 +33,9 @@ export function HomePricing() {
             <p className="text-[11px] font-semibold tracking-[0.18em] text-muted uppercase">
               {t('billing.freeLabel')}
             </p>
-            <p className="font-display mt-3 text-4xl font-semibold text-ink">{t('home.pricing.freePrice')}</p>
+            <p className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+              {t('home.pricing.freePrice')}
+            </p>
             <p className="mt-2 text-sm text-muted">{t('home.pricing.freeHint')}</p>
             <ul className="mt-6 flex-1 space-y-3">
               {FREE_POINTS.map((key) => (
@@ -53,16 +55,39 @@ export function HomePricing() {
 
         <SnapReveal delay={0.14}>
           <article className="relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-brand-500/50 bg-gradient-to-br from-brand-500/20 via-panel to-panel p-5 shadow-[0_20px_50px_-32px_rgba(53,111,88,0.7)] sm:p-7">
-            <span className="absolute top-5 right-5 rounded-full bg-brand-500 px-3 py-1 text-[10px] font-bold tracking-[0.14em] text-[#07110d] uppercase">
-              {t('home.pricing.recommended')}
-            </span>
-            <p className="text-[11px] font-semibold tracking-[0.18em] text-brand-500 uppercase">
-              {t('billing.proLabel')}
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[11px] font-semibold tracking-[0.18em] text-brand-500 uppercase">
+                {t('billing.proLabel')}
+              </p>
+              <span className="rounded-full bg-brand-500 px-3 py-1 text-[10px] font-bold tracking-[0.14em] text-[#07110d] uppercase">
+                {t('home.pricing.recommended')}
+              </span>
+            </div>
+
+            <div className="mt-3 flex items-end gap-2">
+              <p className="font-display text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
+                {t('home.pricing.yearPerMonth')}
+              </p>
+              <p className="mb-1.5 text-sm font-medium text-muted">{t('home.pricing.perMonth')}</p>
+            </div>
+            <p className="mt-2 text-sm font-semibold text-brand-500">
+              {t('home.pricing.onlyIfYearly')}
             </p>
-            <p className="font-display mt-3 text-4xl font-semibold text-ink">{t('billing.subscribeYear')}</p>
-            <p className="mt-2 text-sm text-muted">
-              {t('billing.subscribeMonth')} · {t('home.pricing.yearHint')}
-            </p>
+            <p className="mt-1 text-sm text-muted">{t('home.pricing.yearCharged')}</p>
+            <p className="mt-1 text-xs text-muted">{t('home.pricing.yearHint')}</p>
+
+            <div className="mt-5 rounded-2xl border border-line/80 bg-panel/60 px-4 py-3">
+              <p className="text-[10px] font-semibold tracking-[0.16em] text-muted uppercase">
+                {t('home.pricing.orMonthly')}
+              </p>
+              <p className="mt-1 flex items-baseline gap-2">
+                <span className="font-display text-xl font-semibold text-ink">
+                  {t('home.pricing.monthPrice')}
+                </span>
+                <span className="text-sm text-muted">{t('home.pricing.monthBilled')}</span>
+              </p>
+            </div>
+
             <ul className="mt-6 flex-1 space-y-3">
               {PRO_POINTS.map((key) => (
                 <li key={key} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink">

@@ -17,6 +17,15 @@ function lastSectionRange(root: HTMLElement, lastId: string) {
   };
 }
 
+function setSnapLock(root: HTMLElement, locked: boolean) {
+  root.style.scrollSnapType = locked ? 'none' : '';
+}
+
+function inLastSection(root: HTMLElement, lastId: string) {
+  const range = lastSectionRange(root, lastId);
+  return Boolean(range && root.scrollTop >= range.start - 2);
+}
+
 /**
  * Full-page section snap: one section per wheel/swipe/key gesture.
  * Native CSS scroll-snap alone often fails on Windows trackpads.
@@ -82,7 +91,8 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
         typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches;
 
       if (desktopSnap) {
-        // Desktop: sections live inside the snap scroller.
+        const lastId = ids[ids.length - 1];
+        setSnapLock(root, Boolean(lastId && id === lastId));
         root.scrollTo({ top: el.offsetTop, behavior });
       } else {
         // Mobile: the document scrolls — always align the block to the top of the viewport.
@@ -168,13 +178,15 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       const ids = idsRef.current;
       const lastIndex = ids.length - 1;
       const lastId = ids[lastIndex];
-      if (indexRef.current === lastIndex && lastId) {
+      if (lastId && inLastSection(root, lastId)) {
         const range = lastSectionRange(root, lastId);
-        if (range?.overflow) {
-          const top = root.scrollTop;
-          if (event.deltaY > 0 && top < range.maxScroll - 4) return;
-          if (event.deltaY < 0 && top > range.start + 4) return;
+        setSnapLock(root, true);
+        indexRef.current = lastIndex;
+        if (event.deltaY < 0 && range && root.scrollTop <= range.start + 8) {
+          event.preventDefault();
+          if (!lockedRef.current) step(-1);
         }
+        return;
       }
 
       event.preventDefault();
@@ -195,17 +207,10 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
     const onTouchMove = (event: TouchEvent) => {
       if (touchStartY.current == null) return;
       const ids = idsRef.current;
-      const lastIndex = ids.length - 1;
-      const lastId = ids[lastIndex];
-      if (indexRef.current === lastIndex && lastId) {
-        const range = lastSectionRange(root, lastId);
-        if (range?.overflow) {
-          const top = root.scrollTop;
-          const y = event.touches[0]?.clientY ?? 0;
-          const goingDown = touchStartY.current - y > 0;
-          if (goingDown && top < range.maxScroll - 4) return;
-          if (!goingDown && top > range.start + 4) return;
-        }
+      const lastId = ids[ids.length - 1];
+      if (lastId && inLastSection(root, lastId)) {
+        setSnapLock(root, true);
+        return;
       }
       if (Math.abs((event.touches[0]?.clientY ?? 0) - touchStartY.current) > 8) {
         event.preventDefault();
@@ -226,12 +231,8 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       touchStartY.current = null;
 
       const ids = idsRef.current;
-      const lastIndex = ids.length - 1;
-      const lastId = ids[lastIndex];
-      if (indexRef.current === lastIndex && lastId) {
-        const range = lastSectionRange(root, lastId);
-        if (range?.overflow && root.scrollTop > range.start + 4) return;
-      }
+      const lastId = ids[ids.length - 1];
+      if (lastId && inLastSection(root, lastId)) return;
 
       if (Math.abs(delta) < TOUCH_THRESHOLD) return;
       step(delta > 0 ? 1 : -1);
@@ -243,18 +244,16 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
 
       const ids = idsRef.current;
-      const lastIndex = ids.length - 1;
-      const lastId = ids[lastIndex];
-      const range = lastId ? lastSectionRange(root, lastId) : null;
-      const inLastOverflow =
-        indexRef.current === lastIndex && range?.overflow && root.scrollTop > range.start + 4;
+      const lastId = ids[ids.length - 1];
+      const lastRange = lastId ? lastSectionRange(root, lastId) : null;
+      const restingInLast = Boolean(lastId && inLastSection(root, lastId));
 
       if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === ' ') {
-        if (inLastOverflow) return;
+        if (restingInLast) return;
         event.preventDefault();
         step(1);
       } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
-        if (inLastOverflow) return;
+        if (restingInLast && lastRange && root.scrollTop > lastRange.start + 8) return;
         event.preventDefault();
         step(-1);
       } else if (event.key === 'Home') {
@@ -272,17 +271,17 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       const ids = idsRef.current;
       const lastIndex = ids.length - 1;
       const lastId = ids[lastIndex];
-      if (lastId) {
-        const range = lastSectionRange(root, lastId);
-        if (range && root.scrollTop > range.start + 40) {
-          indexRef.current = lastIndex;
-          setActiveId(lastId);
-          return;
-        }
+      if (lastId && inLastSection(root, lastId)) {
+        setSnapLock(root, true);
+        indexRef.current = lastIndex;
+        setActiveId(lastId);
+        return;
       }
+      setSnapLock(root, false);
       if (scrollIdle != null) window.clearTimeout(scrollIdle);
       scrollIdle = window.setTimeout(() => {
         if (lockedRef.current) return;
+        if (lastId && inLastSection(root, lastId)) return;
         goToIndex(nearestIndex());
       }, 80);
     };
@@ -296,6 +295,7 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
 
     return () => {
       clearLockTimer();
+      setSnapLock(root, false);
       if (scrollIdle != null) window.clearTimeout(scrollIdle);
       root.removeEventListener('wheel', onWheel);
       root.removeEventListener('touchstart', onTouchStart);

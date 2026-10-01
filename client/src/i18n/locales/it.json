@@ -470,7 +470,14 @@
         "unlimited": "Più spazio: materiali, abitudini, note e cronologia",
         "history": "Grafici più lunghi e più dispositivi, senza muri mensili",
         "devices": "Lo stesso Pro sul sito subito dopo il pagamento"
-      }
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ mese",
+      "onlyIfYearly": "Solo se paghi per l’anno",
+      "yearCharged": "€39.99 addebitati una volta all’anno",
+      "orMonthly": "Oppure mese per mese",
+      "monthPrice": "€4.99",
+      "monthBilled": "addebito ogni mese"
     }
   },
   "guide": {
@@ -964,20 +971,28 @@
   },
   "notifications": {
     "title": "Notifiche",
-    "subtitle": "Promemoria in-app creati dal server quando i ripassi diventano dovuti.",
+    "subtitle": "I ripassi di oggi e quelli in ritardo — la campana li tiene in vista.",
     "unreadCount": "Non lette: {{count}}",
     "markAllRead": "Segna tutte come lette",
     "markRead": "Segna come letta",
     "openMaterial": "Apri materiale",
     "unread": "Non letta",
     "emptyTitle": "Nessuna notifica per ora",
-    "emptyDescription": "Quando un ripasso diventa dovuto, apparirà qui.",
-    "bellLabel": "Notifiche, non lette: {{count}}",
+    "emptyDescription": "Quando un ripasso è per oggi o in ritardo, compare qui.",
+    "bellLabel": "Ripassi in attesa: {{count}}",
     "types": {
       "REVIEW_DUE": "In scadenza oggi",
       "REVIEW_OVERDUE": "In ritardo",
       "SYSTEM": "Sistema"
-    }
+    },
+    "bellToday": "Oggi",
+    "bellOverdue": "In ritardo",
+    "bellEmpty": "Nessun ripasso in attesa",
+    "bellEmptyOverdue": "Niente in ritardo",
+    "openReviews": "Apri i ripassi",
+    "seeAll": "Tutte le notifiche",
+    "dueCount": "{{count}} oggi",
+    "overdueCount": "{{count}} in ritardo"
   },
   "statistics": {
     "title": "Statistiche",

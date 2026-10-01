@@ -75,11 +75,6 @@ export async function runReminderJob(now: Date = new Date()): Promise<ReminderJo
       result.overdueMarked += 1;
     }
 
-    if (reminder.notificationCreatedAt) {
-      result.skippedAlreadyNotified += 1;
-      continue;
-    }
-
     const created = await notificationService.createReminderNotification(reminder.id);
     if (created.created) {
       result.notificationsCreated += 1;

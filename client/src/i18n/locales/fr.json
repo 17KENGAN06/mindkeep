@@ -470,7 +470,14 @@
         "unlimited": "Plus de place : matériaux, habitudes, notes et historique",
         "history": "Graphiques plus longs et plus d’appareils, sans murs mensuels",
         "devices": "Le même Pro sur le site dès le paiement"
-      }
+      },
+      "yearPerMonth": "3,33 €",
+      "perMonth": "/ mois",
+      "onlyIfYearly": "Uniquement si vous payez à l’année",
+      "yearCharged": "39,99 € prélevés une fois par an",
+      "orMonthly": "Ou mois par mois",
+      "monthPrice": "4,99 €",
+      "monthBilled": "prélevé chaque mois"
     }
   },
   "guide": {
@@ -964,20 +971,28 @@
   },
   "notifications": {
     "title": "Notifications",
-    "subtitle": "Rappels dans l'app, créés par le serveur lorsque les révisions deviennent dues.",
+    "subtitle": "Les révisions du jour et les retards — la cloche les garde en vue.",
     "unreadCount": "Non lues : {{count}}",
     "markAllRead": "Tout marquer comme lu",
     "markRead": "Marquer comme lu",
     "openMaterial": "Ouvrir la fiche",
     "unread": "Non lu",
     "emptyTitle": "Aucune notification pour l'instant",
-    "emptyDescription": "Lorsqu'une révision devient due, elle apparaîtra ici.",
-    "bellLabel": "Notifications, non lues : {{count}}",
+    "emptyDescription": "Quand une révision est due aujourd’hui ou en retard, elle apparaît ici.",
+    "bellLabel": "Révisions en attente : {{count}}",
     "types": {
       "REVIEW_DUE": "Dû aujourd'hui",
       "REVIEW_OVERDUE": "En retard",
       "SYSTEM": "Système"
-    }
+    },
+    "bellToday": "Aujourd’hui",
+    "bellOverdue": "En retard",
+    "bellEmpty": "Aucune révision en attente",
+    "bellEmptyOverdue": "Rien en retard",
+    "openReviews": "Ouvrir les révisions",
+    "seeAll": "Toutes les notifications",
+    "dueCount": "{{count}} aujourd’hui",
+    "overdueCount": "{{count}} en retard"
   },
   "statistics": {
     "title": "Statistiques",

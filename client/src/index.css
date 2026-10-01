@@ -204,6 +204,25 @@ html[data-theme='light'] {
     animation: pulse-soft 3.5s ease-in-out infinite;
   }
 
+  .notif-bell-live {
+    transform-origin: 50% 12%;
+    animation: bell-nudge 3.2s ease-in-out infinite;
+  }
+
+  .notif-badge-ping {
+    position: absolute;
+  }
+
+  .notif-badge-ping::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 999px;
+    border: 1.5px solid currentColor;
+    opacity: 0.45;
+    animation: notif-ping 1.8s ease-out infinite;
+  }
+
   .animate-shimmer {
     background-size: 200% 100%;
     animation: shimmer 4s linear infinite;
@@ -251,6 +270,7 @@ html[data-theme='light'] {
       min-height: 100dvh;
       max-height: none;
       overflow: visible;
+      scroll-snap-align: none;
       scroll-snap-stop: normal;
     }
   }
@@ -382,7 +402,9 @@ html[data-theme='light'] .ambient-aurora-b {
 
   .hero-glow,
   .desktop-motion-line,
-  .desktop-motion-glow {
+  .desktop-motion-glow,
+  .notif-bell-live,
+  .notif-badge-ping::before {
     animation: none !important;
   }
 }
@@ -446,6 +468,38 @@ html[data-theme='light'] .ambient-aurora-b {
   50% {
     opacity: 1;
     transform: scale(1.04);
+  }
+}
+
+@keyframes bell-nudge {
+  0%,
+  82%,
+  100% {
+    transform: rotate(0deg);
+  }
+  86% {
+    transform: rotate(12deg);
+  }
+  90% {
+    transform: rotate(-10deg);
+  }
+  94% {
+    transform: rotate(6deg);
+  }
+  97% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes notif-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70%,
+  100% {
+    transform: scale(2.15);
+    opacity: 0;
   }
 }
 

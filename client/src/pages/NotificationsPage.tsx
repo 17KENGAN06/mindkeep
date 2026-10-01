@@ -63,8 +63,14 @@ export function NotificationsPage() {
           {notifications.map((notification) => (
             <li
               key={notification.id}
-              className={`rounded-2xl p-4 shadow-sm ring-1 ring-line ${
-                notification.isRead ? 'bg-panel' : 'bg-brand-50/70'
+              className={`rounded-2xl p-4 shadow-sm ring-1 ${
+                notification.type === 'REVIEW_OVERDUE'
+                  ? notification.isRead
+                    ? 'bg-panel ring-red-400/25'
+                    : 'bg-red-50/55 ring-red-400/40'
+                  : notification.isRead
+                    ? 'bg-panel ring-line'
+                    : 'bg-brand-50/70 ring-brand-500/30'
               }`}
             >
               <div className="flex flex-wrap items-start justify-between gap-2">

@@ -470,7 +470,14 @@
         "unlimited": "Mehr Raum: Materialien, Gewohnheiten, Notizen und Verlauf",
         "history": "Längere Charts und mehr Geräte, ohne monatliche Wände",
         "devices": "Dasselbe Pro auf der Website direkt nach dem Checkout"
-      }
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ Monat",
+      "onlyIfYearly": "Nur bei Zahlung fürs Jahr",
+      "yearCharged": "€39.99 einmal im Jahr",
+      "orMonthly": "Oder monatlich",
+      "monthPrice": "€4.99",
+      "monthBilled": "jeden Monat abgerechnet"
     }
   },
   "guide": {
@@ -964,20 +971,28 @@
   },
   "notifications": {
     "title": "Benachrichtigungen",
-    "subtitle": "In-App-Erinnerungen, die der Server erstellt, wenn Wiederholungen fällig werden.",
+    "subtitle": "Heutige Wiederholungen und Überfälliges — die Glocke hält sie im Blick.",
     "unreadCount": "Ungelesen: {{count}}",
     "markAllRead": "Alle als gelesen markieren",
     "markRead": "Als gelesen markieren",
     "openMaterial": "Material öffnen",
     "unread": "Ungelesen",
     "emptyTitle": "Noch keine Benachrichtigungen",
-    "emptyDescription": "Wenn eine Wiederholung fällig wird, erscheint sie hier.",
-    "bellLabel": "Benachrichtigungen, ungelesen: {{count}}",
+    "emptyDescription": "Wenn eine Wiederholung heute fällig oder überfällig ist, erscheint sie hier.",
+    "bellLabel": "Offene Wiederholungen: {{count}}",
     "types": {
       "REVIEW_DUE": "Heute fällig",
       "REVIEW_OVERDUE": "Überfällig",
       "SYSTEM": "System"
-    }
+    },
+    "bellToday": "Heute",
+    "bellOverdue": "Überfällig",
+    "bellEmpty": "Gerade keine Wiederholungen",
+    "bellEmptyOverdue": "Nichts überfällig",
+    "openReviews": "Zu den Wiederholungen",
+    "seeAll": "Alle Hinweise",
+    "dueCount": "{{count}} heute",
+    "overdueCount": "{{count}} überfällig"
   },
   "statistics": {
     "title": "Statistik",

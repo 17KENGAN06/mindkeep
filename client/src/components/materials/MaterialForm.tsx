@@ -99,15 +99,23 @@ export function MaterialForm({
         error={errors.learnedAt?.message}
         {...register('learnedAt')}
       />
-      <Select
-        label={t('materials.fields.category')}
-        placeholder={t('materials.fields.noCategory')}
-        options={categories.map((category) => ({
-          value: category.id,
-          label: category.name,
-        }))}
-        error={errors.categoryId?.message}
-        {...register('categoryId')}
+      <Controller
+        name="categoryId"
+        control={control}
+        render={({ field }) => (
+          <Select
+            label={t('materials.fields.category')}
+            placeholder={t('materials.fields.noCategory')}
+            options={categories.map((category) => ({
+              value: category.id,
+              label: category.name,
+            }))}
+            error={errors.categoryId?.message}
+            name={field.name}
+            value={field.value ?? ''}
+            onChange={field.onChange}
+          />
+        )}
       />
 
       <ErrorMessage message={errorMessage} />

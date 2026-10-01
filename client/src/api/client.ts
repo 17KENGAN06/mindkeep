@@ -1,4 +1,5 @@
 import { env } from '@/config/env';
+import i18n from '@/i18n';
 import type { ApiErrorBody } from '@/types/auth';
 
 export class ApiError extends Error {
@@ -28,6 +29,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
   // Used by server CSRF middleware when Origin is absent.
   headers.set('X-Requested-With', 'learning-reminder');
+  headers.set('X-App-Language', i18n.resolvedLanguage ?? i18n.language ?? 'en');
 
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 12_000);

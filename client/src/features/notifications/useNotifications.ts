@@ -16,15 +16,24 @@ export function useNotifications() {
   });
 }
 
-export function useUnreadNotificationsCount() {
+export function useNotificationSummary() {
   return useQuery({
     queryKey: notificationKeys.unread,
     queryFn: async () => {
       const response = await notificationsApi.unreadCount();
-      return response.unreadCount;
+      return {
+        unreadCount: response.unreadCount ?? 0,
+        dueToday: response.dueToday ?? 0,
+        overdue: response.overdue ?? 0,
+      };
     },
     refetchInterval: 60_000,
   });
+}
+
+export function useUnreadNotificationsCount() {
+  const query = useNotificationSummary();
+  return { ...query, data: query.data?.unreadCount ?? 0 };
 }
 
 export function useMarkNotificationRead() {

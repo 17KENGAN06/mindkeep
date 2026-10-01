@@ -15,6 +15,7 @@ export function useTodayReminders() {
       const response = await remindersApi.today();
       return response.reminders;
     },
+    refetchInterval: 60_000,
   });
 }
 
@@ -25,6 +26,7 @@ export function useOverdueReminders() {
       const response = await remindersApi.overdue();
       return response.reminders;
     },
+    refetchInterval: 60_000,
   });
 }
 
@@ -41,6 +43,7 @@ export function useUpcomingReminders() {
 function invalidateReminderQueries(queryClient: ReturnType<typeof useQueryClient>) {
   void queryClient.invalidateQueries({ queryKey: reminderKeys.all });
   void queryClient.invalidateQueries({ queryKey: ['materials'] });
+  void queryClient.invalidateQueries({ queryKey: ['notifications'] });
 }
 
 export function useCompleteReminder() {

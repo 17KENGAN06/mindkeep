@@ -1,5 +1,11 @@
 export type NotificationType = 'REVIEW_DUE' | 'REVIEW_OVERDUE' | 'SYSTEM';
 
+export type NotificationInboxSummary = {
+  unreadCount: number;
+  dueToday: number;
+  overdue: number;
+};
+
 export type AppNotification = {
   id: string;
   title: string;

@@ -470,7 +470,14 @@
         "unlimited": "Más espacio: materiales, hábitos, notas e historial",
         "history": "Gráficos más largos y más dispositivos, sin muros mensuales",
         "devices": "El mismo Pro en el sitio justo después del pago"
-      }
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ mes",
+      "onlyIfYearly": "Solo si pagas el año",
+      "yearCharged": "€39.99 cobrados una vez al año",
+      "orMonthly": "O mes a mes",
+      "monthPrice": "€4.99",
+      "monthBilled": "cobrado cada mes"
     }
   },
   "guide": {
@@ -964,20 +971,28 @@
   },
   "notifications": {
     "title": "Notificaciones",
-    "subtitle": "Recordatorios en la app creados por el servidor cuando los repasos vencen.",
+    "subtitle": "Los repasos de hoy y lo atrasado — la campana los mantiene a la vista.",
     "unreadCount": "Sin leer: {{count}}",
     "markAllRead": "Marcar todas como leídas",
     "markRead": "Marcar como leída",
     "openMaterial": "Abrir material",
     "unread": "Sin leer",
     "emptyTitle": "Aún no hay notificaciones",
-    "emptyDescription": "Cuando un repaso venza, aparecerá aquí.",
-    "bellLabel": "Notificaciones, sin leer: {{count}}",
+    "emptyDescription": "Cuando un repaso toque hoy o esté atrasado, aparecerá aquí.",
+    "bellLabel": "Repasos pendientes: {{count}}",
     "types": {
       "REVIEW_DUE": "Para hoy",
       "REVIEW_OVERDUE": "Atrasado",
       "SYSTEM": "Sistema"
-    }
+    },
+    "bellToday": "Hoy",
+    "bellOverdue": "Atrasado",
+    "bellEmpty": "No hay repasos esperando",
+    "bellEmptyOverdue": "Nada atrasado",
+    "openReviews": "Abrir repasos",
+    "seeAll": "Todas las notificaciones",
+    "dueCount": "{{count}} hoy",
+    "overdueCount": "{{count}} atrasados"
   },
   "statistics": {
     "title": "Estadísticas",

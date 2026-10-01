@@ -470,7 +470,14 @@
         "unlimited": "Lisää tilaa: materiaalit, tavat, muistiinpanot ja historia",
         "history": "Pidemmät kaaviot ja lisää laitteita ilman kuukausiseiniä",
         "devices": "Sama Pro sivustolla heti maksun jälkeen"
-      }
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ kk",
+      "onlyIfYearly": "Vain jos maksat vuodeksi",
+      "yearCharged": "€39.99 veloitetaan kerran vuodessa",
+      "orMonthly": "Tai kuukausittain",
+      "monthPrice": "€4.99",
+      "monthBilled": "veloitetaan joka kuukausi"
     }
   },
   "guide": {
@@ -964,20 +971,28 @@
   },
   "notifications": {
     "title": "Ilmoitukset",
-    "subtitle": "Sovelluksen sisäiset muistutukset, jotka palvelin luo kertauksen erääntyessä.",
+    "subtitle": "Tämän päivän kertaukset ja myöhässä olevat — kello pitää ne näkyvillä.",
     "unreadCount": "Lukemattomia: {{count}}",
     "markAllRead": "Merkitse kaikki luetuiksi",
     "markRead": "Merkitse luetuksi",
     "openMaterial": "Avaa materiaali",
     "unread": "Lukematon",
     "emptyTitle": "Ei vielä ilmoituksia",
-    "emptyDescription": "Kun kertaus erääntyy, ilmoitus ilmestyy tänne.",
-    "bellLabel": "Ilmoitukset, lukemattomia: {{count}}",
+    "emptyDescription": "Kun kertaus on tänään tai myöhässä, se näkyy täällä.",
+    "bellLabel": "Odottavia kertauksia: {{count}}",
     "types": {
       "REVIEW_DUE": "Tänään",
       "REVIEW_OVERDUE": "Myöhässä",
       "SYSTEM": "Järjestelmä"
-    }
+    },
+    "bellToday": "Tänään",
+    "bellOverdue": "Myöhässä",
+    "bellEmpty": "Ei odottavia kertauksia",
+    "bellEmptyOverdue": "Ei myöhässä olevia",
+    "openReviews": "Avaa kertaukset",
+    "seeAll": "Kaikki ilmoitukset",
+    "dueCount": "{{count}} tänään",
+    "overdueCount": "{{count}} myöhässä"
   },
   "statistics": {
     "title": "Tilastot",

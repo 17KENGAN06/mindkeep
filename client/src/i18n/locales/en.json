@@ -470,7 +470,14 @@
         "unlimited": "Room to grow: more materials, habits, notes, and history",
         "history": "Longer charts and more devices, without monthly walls",
         "devices": "The same Pro on the website after checkout"
-      }
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ month",
+      "onlyIfYearly": "Only if you pay for the year",
+      "yearCharged": "€39.99 billed once a year",
+      "orMonthly": "Or month by month",
+      "monthPrice": "€4.99",
+      "monthBilled": "billed every month"
     }
   },
   "guide": {
@@ -964,20 +971,28 @@
   },
   "notifications": {
     "title": "Notifications",
-    "subtitle": "In-app reminders created by the server when reviews become due.",
+    "subtitle": "Today’s reviews and anything you missed — the bell keeps them in view.",
     "unreadCount": "Unread: {{count}}",
     "markAllRead": "Mark all as read",
     "markRead": "Mark as read",
     "openMaterial": "Open material",
     "unread": "Unread",
     "emptyTitle": "No notifications yet",
-    "emptyDescription": "When a review becomes due, it will appear here.",
-    "bellLabel": "Notifications, unread: {{count}}",
+    "emptyDescription": "When a review is due today or overdue, it will appear here.",
+    "bellLabel": "Reviews waiting: {{count}}",
     "types": {
       "REVIEW_DUE": "Due today",
       "REVIEW_OVERDUE": "Overdue",
       "SYSTEM": "System"
-    }
+    },
+    "bellToday": "Today",
+    "bellOverdue": "Overdue",
+    "bellEmpty": "No reviews waiting right now",
+    "bellEmptyOverdue": "Nothing overdue",
+    "openReviews": "Open reviews",
+    "seeAll": "All notifications",
+    "dueCount": "{{count}} today",
+    "overdueCount": "{{count}} overdue"
   },
   "statistics": {
     "title": "Statistics",

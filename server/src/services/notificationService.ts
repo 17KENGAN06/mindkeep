@@ -1,51 +1,55 @@
-import { NotificationType, Prisma, ReminderStatus } from '@prisma/client';
+import { NotificationType, ReminderStatus } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
+import type { AppLocale } from '@/services/emailCopy.js';
+import { reminderNotificationCopy } from '@/services/notificationCopy.js';
 import { AppError } from '@/utils/AppError.js';
-import { requireOwned } from '@/utils/owned.js';
-import { getCalendarDaysOverdue } from '@/utils/timezone.js';
+import { getCalendarDaysOverdue, getDayBoundsInTimeZone } from '@/utils/timezone.js';
 
-type ReminderForNotification = {
+const notificationInclude = {
+  material: {
+    select: {
+      id: true,
+      title: true,
+    },
+  },
+} as const;
+
+type ReminderForNotify = {
   id: string;
   userId: string;
   materialId: string;
   sequenceNumber: number;
   scheduledAt: Date;
-  status: ReminderStatus;
   notificationCreatedAt: Date | null;
-  material: {
-    title: string;
-  };
-  user: {
-    timezone: string;
-  };
+  material: { title: string } | null;
+  user: { timezone: string };
 };
 
-export type CreateSystemNotificationInput = {
-  userId: string;
-  title: string;
-  message: string;
-  materialId?: string | null;
+export type NotificationInboxSummary = {
+  unreadCount: number;
+  dueToday: number;
+  overdue: number;
 };
 
-/**
- * Central notification gateway.
- * MVP: persists in-app notifications.
- * Future: email / Telegram / push can plug in here.
- */
+function copyForReminder(
+  reminder: ReminderForNotify,
+  locale: AppLocale,
+  daysOverdue: number,
+) {
+  return reminderNotificationCopy(locale, daysOverdue > 0 ? 'overdue' : 'due', {
+    title: reminder.material?.title ?? 'Material',
+    sequence: reminder.sequenceNumber,
+    daysOverdue,
+  });
+}
+
 export class NotificationService {
   async list(userId: string) {
     return prisma.notification.findMany({
       where: { userId },
+      include: notificationInclude,
       orderBy: { createdAt: 'desc' },
-      take: 100,
-      include: {
-        material: {
-          select: {
-            id: true,
-            title: true,
-          },
-        },
-      },
+      take: 50,
     });
   }
 
@@ -55,26 +59,197 @@ export class NotificationService {
     });
   }
 
-  async markRead(userId: string, id: string) {
-    const notification = requireOwned(
-      await prisma.notification.findFirst({
-        where: { id, userId },
-      }),
-      'Notification not found',
-      'NOTIFICATION_NOT_FOUND',
+  async inboxSummary(userId: string, locale: AppLocale = 'en'): Promise<NotificationInboxSummary> {
+    const counts = await this.syncUserReviewNotifications(userId, locale);
+    const unreadCount = await this.unreadCount(userId);
+    return { unreadCount, ...counts };
+  }
+
+  /**
+   * Create or refresh due/overdue review notifications for this user.
+   * Runs on list/unread so the website does not wait for hourly cron.
+   */
+  async syncUserReviewNotifications(
+    userId: string,
+    locale: AppLocale = 'en',
+  ): Promise<{ dueToday: number; overdue: number }> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { timezone: true },
+    });
+    const timezone = user?.timezone || 'Europe/Helsinki';
+    const { endUtc } = getDayBoundsInTimeZone(timezone);
+
+    const reminders = await prisma.reviewReminder.findMany({
+      where: {
+        userId,
+        status: { in: [ReminderStatus.PENDING, ReminderStatus.OVERDUE] },
+        scheduledAt: { lte: endUtc },
+      },
+      include: {
+        material: { select: { title: true } },
+        user: { select: { timezone: true } },
+      },
+    });
+
+    const pendingOverdueIds = reminders
+      .filter((reminder) => {
+        const daysOverdue = getCalendarDaysOverdue(reminder.scheduledAt, timezone);
+        return daysOverdue > 0 && reminder.status === ReminderStatus.PENDING;
+      })
+      .map((reminder) => reminder.id);
+
+    if (pendingOverdueIds.length > 0) {
+      await prisma.reviewReminder.updateMany({
+        where: { id: { in: pendingOverdueIds }, userId },
+        data: { status: ReminderStatus.OVERDUE },
+      });
+    }
+
+    const existing = reminders.length
+      ? await prisma.notification.findMany({
+          where: { reminderId: { in: reminders.map((reminder) => reminder.id) } },
+        })
+      : [];
+    const byReminderId = new Map(
+      existing.map((notification) => [notification.reminderId, notification]),
     );
 
-    return prisma.notification.update({
-      where: { id: notification.id },
-      data: { isRead: true },
-      include: {
-        material: {
-          select: {
-            id: true,
-            title: true,
+    let dueToday = 0;
+    let overdue = 0;
+    const stampIds: string[] = [];
+
+    for (const reminder of reminders) {
+      const daysOverdue = getCalendarDaysOverdue(reminder.scheduledAt, timezone);
+      if (daysOverdue > 0) overdue += 1;
+      else dueToday += 1;
+
+      const type = daysOverdue > 0 ? NotificationType.REVIEW_OVERDUE : NotificationType.REVIEW_DUE;
+      const { title, message } = copyForReminder(reminder, locale, daysOverdue);
+      const found = byReminderId.get(reminder.id);
+
+      if (!found) {
+        await this.upsertReminderNotification(reminder, locale, daysOverdue);
+        continue;
+      }
+
+      const becameOverdue =
+        found.type === NotificationType.REVIEW_DUE && type === NotificationType.REVIEW_OVERDUE;
+      const needsUpdate =
+        becameOverdue || found.type !== type || found.title !== title || found.message !== message;
+
+      if (needsUpdate) {
+        await prisma.notification.update({
+          where: { id: found.id },
+          data: {
+            type,
+            title,
+            message,
+            ...(becameOverdue ? { isRead: false } : {}),
           },
-        },
+        });
+      }
+
+      if (!reminder.notificationCreatedAt) {
+        stampIds.push(reminder.id);
+      }
+    }
+
+    if (stampIds.length > 0) {
+      await prisma.reviewReminder.updateMany({
+        where: { id: { in: stampIds }, userId },
+        data: { notificationCreatedAt: new Date() },
+      });
+    }
+
+    return { dueToday, overdue };
+  }
+
+  async createReminderNotification(reminderId: string, locale: AppLocale = 'en') {
+    const reminder = await prisma.reviewReminder.findUnique({
+      where: { id: reminderId },
+      include: {
+        material: { select: { title: true } },
+        user: { select: { timezone: true } },
       },
+    });
+
+    if (!reminder) {
+      return { created: false as const };
+    }
+
+    const timezone = reminder.user.timezone || 'Europe/Helsinki';
+    const daysOverdue = getCalendarDaysOverdue(reminder.scheduledAt, timezone);
+    const created = await this.upsertReminderNotification(reminder, locale, daysOverdue);
+    return { created };
+  }
+
+  private async upsertReminderNotification(
+    reminder: ReminderForNotify,
+    locale: AppLocale,
+    daysOverdue: number,
+  ): Promise<boolean> {
+    const type = daysOverdue > 0 ? NotificationType.REVIEW_OVERDUE : NotificationType.REVIEW_DUE;
+    const { title, message } = copyForReminder(reminder, locale, daysOverdue);
+
+    return prisma.$transaction(async (tx) => {
+      const existing = await tx.notification.findUnique({
+        where: { reminderId: reminder.id },
+      });
+
+      if (existing) {
+        const becameOverdue =
+          existing.type === NotificationType.REVIEW_DUE && type === NotificationType.REVIEW_OVERDUE;
+
+        await tx.notification.update({
+          where: { id: existing.id },
+          data: {
+            type,
+            title,
+            message,
+            ...(becameOverdue ? { isRead: false } : {}),
+          },
+        });
+      } else {
+        await tx.notification.create({
+          data: {
+            userId: reminder.userId,
+            materialId: reminder.materialId,
+            reminderId: reminder.id,
+            type,
+            title,
+            message,
+          },
+        });
+      }
+
+      if (!reminder.notificationCreatedAt) {
+        await tx.reviewReminder.update({
+          where: { id: reminder.id },
+          data: { notificationCreatedAt: new Date() },
+        });
+      }
+
+      return !existing;
+    });
+  }
+
+  async markRead(userId: string, id: string) {
+    const existing = await prisma.notification.findFirst({
+      where: { id, userId },
+    });
+
+    if (!existing) {
+      throw new AppError('Notification not found', {
+        statusCode: 404,
+        code: 'NOT_FOUND',
+      });
+    }
+
+    return prisma.notification.update({
+      where: { id },
+      data: { isRead: true },
+      include: notificationInclude,
     });
   }
 
@@ -85,125 +260,6 @@ export class NotificationService {
     });
 
     return { updated: result.count };
-  }
-
-  async createSystemNotification(input: CreateSystemNotificationInput) {
-    return prisma.notification.create({
-      data: {
-        userId: input.userId,
-        title: input.title,
-        message: input.message,
-        type: NotificationType.SYSTEM,
-        materialId: input.materialId ?? null,
-        isRead: false,
-      },
-    });
-  }
-
-  /**
-   * Creates an in-app notification for a due/overdue reminder exactly once.
-   * Uses notificationCreatedAt + unique reminderId as idempotency guards.
-   */
-  async createReminderNotification(reminderId: string) {
-    const reminder = await prisma.reviewReminder.findUnique({
-      where: { id: reminderId },
-      include: {
-        material: { select: { title: true } },
-        user: { select: { timezone: true } },
-      },
-    });
-
-    if (!reminder) {
-      throw new AppError('Reminder not found', {
-        statusCode: 404,
-        code: 'REMINDER_NOT_FOUND',
-      });
-    }
-
-    if (reminder.notificationCreatedAt) {
-      return { created: false as const, notification: null };
-    }
-
-    if (
-      reminder.status === ReminderStatus.COMPLETED ||
-      reminder.status === ReminderStatus.SKIPPED
-    ) {
-      return { created: false as const, notification: null };
-    }
-
-    const daysOverdue = getCalendarDaysOverdue(
-      reminder.scheduledAt,
-      reminder.user.timezone || 'Europe/Helsinki',
-    );
-    const type = daysOverdue > 0 ? NotificationType.REVIEW_OVERDUE : NotificationType.REVIEW_DUE;
-    const payload = this.buildReminderCopy(reminder, type, daysOverdue);
-
-    try {
-      const notification = await prisma.$transaction(async (tx) => {
-        const locked = await tx.reviewReminder.findUnique({
-          where: { id: reminder.id },
-          select: { notificationCreatedAt: true },
-        });
-
-        if (locked?.notificationCreatedAt) {
-          return null;
-        }
-
-        const created = await tx.notification.create({
-          data: {
-            userId: reminder.userId,
-            materialId: reminder.materialId,
-            reminderId: reminder.id,
-            type,
-            title: payload.title,
-            message: payload.message,
-            isRead: false,
-          },
-        });
-
-        await tx.reviewReminder.update({
-          where: { id: reminder.id },
-          data: { notificationCreatedAt: new Date() },
-        });
-
-        return created;
-      });
-
-      if (!notification) {
-        return { created: false as const, notification: null };
-      }
-
-      // Extension point for future channels:
-      // await this.sendEmail(notification)
-      // await this.sendTelegram(notification)
-      // await this.sendPush(notification)
-
-      return { created: true as const, notification };
-    } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-        return { created: false as const, notification: null };
-      }
-
-      throw error;
-    }
-  }
-
-  private buildReminderCopy(
-    reminder: ReminderForNotification,
-    type: NotificationType,
-    daysOverdue: number,
-  ) {
-    if (type === NotificationType.REVIEW_OVERDUE) {
-      return {
-        title: 'Overdue review',
-        message: `"${reminder.material.title}" is ${daysOverdue} day(s) overdue (review #${reminder.sequenceNumber}).`,
-      };
-    }
-
-    return {
-      title: 'Review due today',
-      message: `Time to review "${reminder.material.title}" (review #${reminder.sequenceNumber}).`,
-    };
   }
 }
 
