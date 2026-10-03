@@ -22,13 +22,14 @@ export function OnboardingPage() {
   const { t } = useTranslation();
   const { completeOnboarding, logout } = useAuth();
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(-1);
   const [picked, setPicked] = useState<AppModule[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   const total = APP_MODULES.length;
-  const asking = step < total;
+  const intro = step < 0;
+  const asking = step >= 0 && step < total;
   const module = asking ? APP_MODULES[step] : null;
   const Icon = module ? MODULE_ICONS[module] : null;
   const homeKey = module ? MODULE_HOME_KEY[module] : null;
@@ -78,15 +79,32 @@ export function OnboardingPage() {
         {APP_MODULES.map((item, index) => (
           <span
             key={item}
-            className={`h-1.5 flex-1 rounded-full ${index <= step ? 'bg-brand-500' : 'bg-line'}`}
+            className={`h-1.5 flex-1 rounded-full ${!intro && index <= step ? 'bg-brand-500' : 'bg-line'}`}
           />
         ))}
       </div>
       <p className="mt-3 text-xs tracking-[0.18em] text-muted uppercase">
-        {t('onboarding.progress', { current: Math.min(step + 1, total), total })}
+        {intro
+          ? t('onboarding.introProgress')
+          : t('onboarding.progress', { current: Math.min(step + 1, total), total })}
       </p>
 
-      {asking && module && Icon && homeKey ? (
+      {intro ? (
+        <>
+          <p className="mt-8 font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
+            {t('onboarding.eyebrow')}
+          </p>
+          <h1 className="font-display mt-5 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+            {t('onboarding.introTitle')}
+          </h1>
+          <p className="mt-3 text-base leading-relaxed text-muted">{t('onboarding.introBody')}</p>
+          <div className="mt-auto pt-10">
+            <Button type="button" className="w-full" onClick={() => setStep(0)}>
+              {t('onboarding.introStart')}
+            </Button>
+          </div>
+        </>
+      ) : asking && module && Icon && homeKey ? (
         <>
           <p className="mt-8 font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
             {t('onboarding.eyebrow')}
@@ -113,15 +131,13 @@ export function OnboardingPage() {
               {t('onboarding.skipThis')}
             </Button>
           </div>
-          {step > 0 ? (
-            <button
-              type="button"
-              className="mt-4 text-sm font-medium text-brand-700"
-              onClick={() => setStep((value) => Math.max(0, value - 1))}
-            >
-              {t('common.back')}
-            </button>
-          ) : null}
+          <button
+            type="button"
+            className="mt-4 text-sm font-medium text-brand-700"
+            onClick={() => setStep((value) => value - 1)}
+          >
+            {t('common.back')}
+          </button>
         </>
       ) : (
         <>

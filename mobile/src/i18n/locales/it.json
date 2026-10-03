@@ -809,6 +809,10 @@
   },
   "onboarding": {
     "eyebrow": "Setup rapido",
+    "introProgress": "Prima in breve",
+    "introTitle": "Prepareremo lo spazio",
+    "introBody": "Scegli i servizi che vuoi avere a portata di mano. Gli altri restano fuori dal menu e dalla panoramica, per non ingombrare. Potrai cambiarli in qualsiasi momento in Altro → Impostazioni.",
+    "introStart": "Scegli i servizi",
     "progress": "{{current}} di {{total}}",
     "wantThis": "Lo voglio",
     "skipThis": "Non ora",

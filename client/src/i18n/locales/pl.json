@@ -1357,6 +1357,10 @@
   },
   "onboarding": {
     "eyebrow": "Krótka konfiguracja",
+    "introProgress": "Najpierw krótko",
+    "introTitle": "Ułożymy gabinet",
+    "introBody": "Zaznacz, z czego chcesz korzystać. Reszta nie pojawi się w menu ani w przeglądzie, żeby nie zajmować miejsca. Później wszystko zmienisz w Więcej → Ustawienia.",
+    "introStart": "Wybierz usługi",
     "progress": "{{current}} z {{total}}",
     "wantThis": "Chcę to",
     "skipThis": "Na razie nie",

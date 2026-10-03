@@ -1357,6 +1357,10 @@
   },
   "onboarding": {
     "eyebrow": "Réglage rapide",
+    "introProgress": "D’abord en bref",
+    "introTitle": "On prépare le bureau",
+    "introBody": "Coche les services dont tu as besoin. Les autres n’apparaissent ni dans le menu ni dans l’aperçu, pour laisser de la place. Tu pourras tout changer plus tard dans Plus → Réglages.",
+    "introStart": "Choisir les services",
     "progress": "{{current}} sur {{total}}",
     "wantThis": "Je veux ça",
     "skipThis": "Pas maintenant",

@@ -1357,6 +1357,10 @@
   },
   "onboarding": {
     "eyebrow": "Quick setup",
+    "introProgress": "Before we begin",
+    "introTitle": "Shape your workspace",
+    "introBody": "Pick the services you want at hand. The rest stay out of the menu and overview, so the desk stays clear. You can change this anytime in More → Settings.",
+    "introStart": "Choose services",
     "progress": "{{current}} of {{total}}",
     "wantThis": "I want this",
     "skipThis": "Not now",

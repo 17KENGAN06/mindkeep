@@ -1357,6 +1357,10 @@
   },
   "onboarding": {
     "eyebrow": "Kurzes Setup",
+    "introProgress": "Zuerst kurz",
+    "introTitle": "Wir richten den Schreibtisch ein",
+    "introBody": "Wähle, welche Dienste du nutzen möchtest. Der Rest bleibt aus dem Menü und der Übersicht, damit nichts stört. Später änderst du das unter Mehr → Einstellungen.",
+    "introStart": "Dienste wählen",
     "progress": "{{current}} von {{total}}",
     "wantThis": "Das will ich",
     "skipThis": "Jetzt nicht",

@@ -12,12 +12,13 @@ export function OnboardingScreen() {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { completeOnboarding, logout } = useAuth();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(-1);
   const [picked, setPicked] = useState<AppModule[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const total = APP_MODULES.length;
-  const asking = step < total;
+  const intro = step < 0;
+  const asking = step >= 0 && step < total;
   const module = asking ? APP_MODULES[step] : null;
   const selected = useMemo(() => new Set(picked), [picked]);
 
@@ -61,17 +62,33 @@ export function OnboardingScreen() {
             key={item}
             style={[
               styles.dot,
-              { backgroundColor: index <= step ? colors.brand : colors.line },
+              { backgroundColor: !intro && index <= step ? colors.brand : colors.line },
             ]}
           />
         ))}
       </View>
       <Text style={[styles.progress, { color: colors.muted }]}>
-        {t('onboarding.progress', { current: Math.min(step + 1, total), total })}
+        {intro
+          ? t('onboarding.introProgress')
+          : t('onboarding.progress', { current: Math.min(step + 1, total), total })}
       </Text>
 
       <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
-      {asking && module ? (
+      {intro ? (
+        <View>
+          <Text style={[styles.eyebrow, { color: colors.brand }]}>{t('onboarding.eyebrow')}</Text>
+          <Text style={[styles.title, { color: colors.ink }]}>{t('onboarding.introTitle')}</Text>
+          <Text style={[styles.text, { color: colors.muted }]}>{t('onboarding.introBody')}</Text>
+          <Pressable
+            onPress={() => setStep(0)}
+            style={[styles.button, { backgroundColor: colors.brand }]}
+          >
+            <Text style={[styles.buttonText, { color: colors.onBrand }]}>
+              {t('onboarding.introStart')}
+            </Text>
+          </Pressable>
+        </View>
+      ) : asking && module ? (
         <View>
           <Text style={[styles.eyebrow, { color: colors.brand }]}>{t('onboarding.eyebrow')}</Text>
           <Text style={[styles.title, { color: colors.ink }]}>
@@ -94,11 +111,9 @@ export function OnboardingScreen() {
           >
             <Text style={[styles.buttonText, { color: colors.ink }]}>{t('onboarding.skipThis')}</Text>
           </Pressable>
-          {step > 0 ? (
-            <Pressable onPress={() => setStep((value) => Math.max(0, value - 1))}>
-              <Text style={[styles.back, { color: colors.brand }]}>{t('common.back')}</Text>
-            </Pressable>
-          ) : null}
+          <Pressable onPress={() => setStep((value) => value - 1)}>
+            <Text style={[styles.back, { color: colors.brand }]}>{t('common.back')}</Text>
+          </Pressable>
         </View>
       ) : (
         <View>

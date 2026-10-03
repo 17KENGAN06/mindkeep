@@ -809,6 +809,10 @@
   },
   "onboarding": {
     "eyebrow": "Pika-asetus",
+    "introProgress": "Ensin lyhyesti",
+    "introTitle": "Kootaan työpöytä",
+    "introBody": "Valitse palvelut, joita haluat käyttää. Muut pysyvät pois valikosta ja yleiskuvasta, jotta tila pysyy selkeänä. Voit muuttaa tätä myöhemmin kohdassa Lisää → Asetukset.",
+    "introStart": "Valitse palvelut",
     "progress": "{{current}} / {{total}}",
     "wantThis": "Haluan tämän",
     "skipThis": "Ei nyt",
