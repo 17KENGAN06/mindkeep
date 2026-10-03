@@ -1,0 +1,1 @@
+ALTER TYPE "EmailTokenType" ADD VALUE 'LOGIN_CODE';

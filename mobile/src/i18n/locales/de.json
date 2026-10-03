@@ -398,6 +398,12 @@
     "password": "Passwort",
     "confirmPassword": "Passwort bestätigen",
     "submitLogin": "Anmelden",
+    "loginCodeTitle": "Anmeldecode eingeben",
+    "loginCodeSubtitle": "Wir haben einen 6-stelligen Code an {{email}} gesendet. Er ist 10 Minuten gültig.",
+    "loginCodeLabel": "Code",
+    "submitLoginCode": "Weiter",
+    "resendLoginCode": "Neuen Code senden",
+    "backToLogin": "Zurück",
     "submitRegister": "Registrieren",
     "noAccount": "Noch kein Konto?",
     "hasAccount": "Schon ein Konto?",
@@ -427,7 +433,8 @@
       "googleEmailInUse": "Zu dieser E-Mail gibt es schon ein Konto. Melde dich mit dem Passwort an.",
       "botRejected": "Der Bot-Schutz hat die Anfrage abgelehnt. Bitte aktualisieren und erneut versuchen.",
       "emailUnavailable": "E-Mail konnte nicht gesendet werden. Später erneut versuchen.",
-      "invalidEmailToken": "Dieser Link ist ungültig oder abgelaufen."
+      "invalidEmailToken": "Dieser Link ist ungültig oder abgelaufen.",
+      "invalidLoginCode": "Dieser Code ist falsch oder abgelaufen."
     },
     "checkEmailTitle": "Prüfe deine E-Mail",
     "checkEmailBody": "Wir haben einen Link an {{email}} gesendet. Das Konto entsteht erst nach der Bestätigung.",

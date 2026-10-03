@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient, type QueryClient } from '@tansta
 import {
   authApi,
   type GoogleLoginPayload,
+  type LoginCodePayload,
   type LoginPayload,
   type RegisterPayload,
 } from '@/api/auth';
@@ -45,6 +46,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const loginMutation = useMutation({
     mutationFn: authApi.login,
+  });
+
+  const confirmLoginMutation = useMutation({
+    mutationFn: authApi.confirmLogin,
     onSuccess: (data) => {
       applySession(data.user);
     },
@@ -64,10 +69,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(
     async (payload: LoginPayload) => {
-      const result = await loginMutation.mutateAsync(payload);
-      return result.user;
+      return loginMutation.mutateAsync(payload);
     },
     [loginMutation],
+  );
+
+  const confirmLogin = useCallback(
+    async (payload: LoginCodePayload) => {
+      const result = await confirmLoginMutation.mutateAsync(payload);
+      return result.user;
+    },
+    [confirmLoginMutation],
   );
 
   const register = useCallback(
@@ -120,13 +132,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: Boolean(meQuery.data),
       isReady: !meQuery.isPending,
       login,
+      confirmLogin,
       googleLogin,
       register,
       verifyEmail,
       resetPassword,
       logout,
     }),
-    [googleLogin, login, logout, meQuery.data, meQuery.isPending, register, resetPassword, verifyEmail],
+    [confirmLogin, googleLogin, login, logout, meQuery.data, meQuery.isPending, register, resetPassword, verifyEmail],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

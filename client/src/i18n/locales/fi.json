@@ -648,8 +648,8 @@
       "logged": "kirjasi",
       "checked": "merkitsi"
     },
-    "auditTitle": "Kirjautumisten ja moderoinnin loki",
-    "auditHint": "Kuka kirjautui ja mitkä arvostelut hyväksyttiin tai hylättiin. Sähköposteja ja salasanoja ei tallenneta tähän.",
+    "auditTitle": "Kirjautumisloki",
+    "auditHint": "Kuka kirjautui. Sähköposteja ja salasanoja ei tallenneta tähän.",
     "auditEmpty": "Ei tapahtumia vielä",
     "auditAnonymous": "Tuntematon tili",
     "auditActions": {
@@ -675,6 +675,12 @@
     "confirmPassword": "Vahvista salasana",
     "timezone": "Aikavyöhyke",
     "submitLogin": "Kirjaudu",
+    "loginCodeTitle": "Syötä kirjautumiskoodi",
+    "loginCodeSubtitle": "Lähetimme 6-numeroisen koodin osoitteeseen {{email}}. Se vanhenee 10 minuutissa.",
+    "loginCodeLabel": "Koodi",
+    "submitLoginCode": "Jatka",
+    "resendLoginCode": "Lähetä uusi koodi",
+    "backToLogin": "Takaisin",
     "submitRegister": "Rekisteröidy",
     "noAccount": "Ei vielä tiliä?",
     "hasAccount": "Onko sinulla jo tili?",
@@ -709,7 +715,8 @@
       "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla.",
       "maintenanceAdminOnly": "Tällä hetkellä vain ylläpitäjän kirjautuminen on käytössä.",
       "emailUnavailable": "Sähköpostia ei voitu lähettää. Yritä myöhemmin.",
-      "invalidEmailToken": "Linkki on virheellinen tai vanhentunut."
+      "invalidEmailToken": "Linkki on virheellinen tai vanhentunut.",
+      "invalidLoginCode": "Koodi on väärä tai vanhentunut."
     },
     "checkEmailTitle": "Tarkista sähköposti",
     "checkEmailBody": "Lähetimme linkin osoitteeseen {{email}}. Tili syntyy vasta vahvistuksen jälkeen.",

@@ -27,6 +27,7 @@ type RequestOptions = Omit<RequestInit, 'body'> & {
 
 const SKIP_REFRESH = new Set([
   '/api/auth/login',
+  '/api/auth/login/code',
   '/api/auth/register',
   '/api/auth/google',
   '/api/auth/refresh',

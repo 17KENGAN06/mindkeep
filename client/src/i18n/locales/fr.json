@@ -648,8 +648,8 @@
       "logged": "a consigné",
       "checked": "s'est pointé"
     },
-    "auditTitle": "Journal des connexions et de la modération",
-    "auditHint": "Qui s'est connecté et quels avis ont été approuvés ou refusés. Les e-mails et mots de passe n'y figurent pas.",
+    "auditTitle": "Journal des connexions",
+    "auditHint": "Qui s'est connecté. Les e-mails et mots de passe n'y figurent pas.",
     "auditEmpty": "Aucun événement pour l'instant",
     "auditAnonymous": "Compte inconnu",
     "auditActions": {
@@ -675,6 +675,12 @@
     "confirmPassword": "Confirmer le mot de passe",
     "timezone": "Fuseau horaire",
     "submitLogin": "Connexion",
+    "loginCodeTitle": "Entre le code de connexion",
+    "loginCodeSubtitle": "Nous avons envoyé un code à 6 chiffres à {{email}}. Il expire dans 10 minutes.",
+    "loginCodeLabel": "Code",
+    "submitLoginCode": "Continuer",
+    "resendLoginCode": "Envoyer un nouveau code",
+    "backToLogin": "Retour",
     "submitRegister": "S'inscrire",
     "noAccount": "Pas encore de compte ?",
     "hasAccount": "Tu as déjà un compte ?",
@@ -709,7 +715,8 @@
       "googleEmailInUse": "Un compte existe déjà pour cet e-mail. Connecte-toi avec le mot de passe.",
       "maintenanceAdminOnly": "Seule la connexion administrateur est disponible pour le moment.",
       "emailUnavailable": "Impossible d’envoyer l’e-mail. Réessaie plus tard.",
-      "invalidEmailToken": "Ce lien est invalide ou a expiré."
+      "invalidEmailToken": "Ce lien est invalide ou a expiré.",
+      "invalidLoginCode": "Ce code est incorrect ou a expiré."
     },
     "checkEmailTitle": "Vérifie tes e-mails",
     "checkEmailBody": "Nous avons envoyé un lien à {{email}}. Le compte n’existe qu’après confirmation.",

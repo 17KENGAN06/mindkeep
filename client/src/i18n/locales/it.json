@@ -648,8 +648,8 @@
       "logged": "ha registrato",
       "checked": "ha fatto check-in"
     },
-    "auditTitle": "Registro di accessi e moderazione",
-    "auditHint": "Chi ha effettuato l'accesso e quali recensioni sono state approvate o rifiutate. Email e password non vengono salvate qui.",
+    "auditTitle": "Registro di accessi",
+    "auditHint": "Chi ha effettuato l'accesso. Email e password non vengono salvate qui.",
     "auditEmpty": "Nessun evento ancora",
     "auditAnonymous": "Account sconosciuto",
     "auditActions": {
@@ -675,6 +675,12 @@
     "confirmPassword": "Conferma password",
     "timezone": "Fuso orario",
     "submitLogin": "Accedi",
+    "loginCodeTitle": "Inserisci il codice",
+    "loginCodeSubtitle": "Abbiamo inviato un codice a 6 cifre a {{email}}. Scade tra 10 minuti.",
+    "loginCodeLabel": "Codice",
+    "submitLoginCode": "Continua",
+    "resendLoginCode": "Invia un nuovo codice",
+    "backToLogin": "Indietro",
     "submitRegister": "Registrati",
     "noAccount": "Non hai ancora un account?",
     "hasAccount": "Hai già un account?",
@@ -709,7 +715,8 @@
       "googleEmailInUse": "Esiste già un account con questa email. Accedi con la password.",
       "maintenanceAdminOnly": "Al momento è disponibile solo l'accesso amministratore.",
       "emailUnavailable": "Impossibile inviare l’email. Riprova più tardi.",
-      "invalidEmailToken": "Questo link non è valido o è scaduto."
+      "invalidEmailToken": "Questo link non è valido o è scaduto.",
+      "invalidLoginCode": "Il codice non è corretto o è scaduto."
     },
     "checkEmailTitle": "Controlla l’email",
     "checkEmailBody": "Abbiamo inviato un link a {{email}}. L’account nasce solo dopo la conferma.",

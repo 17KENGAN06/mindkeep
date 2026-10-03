@@ -398,6 +398,12 @@
     "password": "Password",
     "confirmPassword": "Confirm password",
     "submitLogin": "Log in",
+    "loginCodeTitle": "Enter the sign-in code",
+    "loginCodeSubtitle": "We sent a 6-digit code to {{email}}. It expires in 10 minutes.",
+    "loginCodeLabel": "Code",
+    "submitLoginCode": "Continue",
+    "resendLoginCode": "Send a new code",
+    "backToLogin": "Back",
     "submitRegister": "Sign up",
     "noAccount": "No account yet?",
     "hasAccount": "Already have an account?",
@@ -427,7 +433,8 @@
       "googleEmailInUse": "This email already has an account. Sign in with your password.",
       "botRejected": "Request blocked by bot protection. Refresh and try again.",
       "emailUnavailable": "Could not send email. Try again later.",
-      "invalidEmailToken": "This link is invalid or has expired."
+      "invalidEmailToken": "This link is invalid or has expired.",
+      "invalidLoginCode": "That code is incorrect or has expired."
     },
     "checkEmailTitle": "Check your email",
     "checkEmailBody": "We sent a confirmation link to {{email}}. The account is created only after you open it.",

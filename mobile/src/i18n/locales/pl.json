@@ -398,6 +398,12 @@
     "password": "Hasło",
     "confirmPassword": "Potwierdź hasło",
     "submitLogin": "Zaloguj się",
+    "loginCodeTitle": "Kod logowania",
+    "loginCodeSubtitle": "Wysłaliśmy 6-cyfrowy kod na {{email}}. Wygasa po 10 minutach.",
+    "loginCodeLabel": "Kod",
+    "submitLoginCode": "Dalej",
+    "resendLoginCode": "Wyślij nowy kod",
+    "backToLogin": "Wstecz",
     "submitRegister": "Zarejestruj się",
     "noAccount": "Nie masz jeszcze konta?",
     "hasAccount": "Masz już konto?",
@@ -427,7 +433,8 @@
       "googleEmailInUse": "Konto z tym e-mailem już istnieje. Zaloguj się hasłem.",
       "botRejected": "Ochrona przed botami odrzuciła żądanie. Odśwież i spróbuj ponownie.",
       "emailUnavailable": "Nie udało się wysłać e-maila. Spróbuj później.",
-      "invalidEmailToken": "Ten link jest nieważny lub wygasł."
+      "invalidEmailToken": "Ten link jest nieważny lub wygasł.",
+      "invalidLoginCode": "Ten kod jest niepoprawny lub wygasł."
     },
     "checkEmailTitle": "Sprawdź e-mail",
     "checkEmailBody": "Wysłaliśmy link na {{email}}. Konto powstanie dopiero po potwierdzeniu.",

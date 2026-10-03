@@ -1,13 +1,31 @@
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash, createHmac, randomBytes, randomInt, timingSafeEqual } from 'node:crypto';
 import { EmailTokenType } from '@prisma/client';
+import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { AppError } from '@/utils/AppError.js';
 
 const VERIFY_TTL_MS = 24 * 60 * 60 * 1000;
 const RESET_TTL_MS = 60 * 60 * 1000;
+const LOGIN_CODE_TTL_MS = 10 * 60 * 1000;
+const LOGIN_CODE_MAX_ATTEMPTS = 5;
 
 function hashToken(token: string): string {
   return createHash('sha256').update(token).digest('hex');
+}
+
+function loginCodePepper(): string {
+  return env.JWT_SECRET?.trim() || 'mindkeep-login-code';
+}
+
+function hashLoginCode(email: string, code: string): string {
+  return createHmac('sha256', loginCodePepper()).update(`${email}:${code}`).digest('hex');
+}
+
+function hashesMatch(left: string, right: string): boolean {
+  const a = Buffer.from(left);
+  const b = Buffer.from(right);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
 }
 
 export async function issueEmailToken(input: {
@@ -34,6 +52,74 @@ export async function issueEmailToken(input: {
     },
   });
   return token;
+}
+
+export async function issueLoginCode(email: string): Promise<string> {
+  const normalized = email.toLowerCase();
+  await prisma.emailToken.deleteMany({
+    where: {
+      OR: [{ email: normalized, type: EmailTokenType.LOGIN_CODE }, { expiresAt: { lt: new Date() } }],
+    },
+  });
+
+  const code = String(randomInt(0, 1_000_000)).padStart(6, '0');
+  await prisma.emailToken.create({
+    data: {
+      type: EmailTokenType.LOGIN_CODE,
+      email: normalized,
+      codeHash: hashLoginCode(normalized, code),
+      payload: JSON.stringify({ attempts: 0 }),
+      expiresAt: new Date(Date.now() + LOGIN_CODE_TTL_MS),
+    },
+  });
+  return code;
+}
+
+export async function consumeLoginCode(email: string, code: string): Promise<void> {
+  const normalized = email.toLowerCase();
+  const digits = code.replace(/\s/g, '');
+  const row = await prisma.emailToken.findFirst({
+    where: { email: normalized, type: EmailTokenType.LOGIN_CODE },
+  });
+
+  const invalid = () => {
+    throw new AppError('That code is incorrect or has expired', {
+      statusCode: 400,
+      code: 'INVALID_LOGIN_CODE',
+    });
+  };
+
+  if (!row || row.expiresAt.getTime() < Date.now()) {
+    if (row) {
+      await prisma.emailToken.delete({ where: { id: row.id } }).catch(() => undefined);
+    }
+    invalid();
+  }
+
+  let attempts = 0;
+  try {
+    const parsed = JSON.parse(row!.payload ?? '{}') as { attempts?: unknown };
+    attempts = typeof parsed.attempts === 'number' ? parsed.attempts : 0;
+  } catch {
+    attempts = 0;
+  }
+
+  if (!hashesMatch(row!.codeHash, hashLoginCode(normalized, digits))) {
+    attempts += 1;
+    if (attempts >= LOGIN_CODE_MAX_ATTEMPTS) {
+      await prisma.emailToken.delete({ where: { id: row!.id } }).catch(() => undefined);
+    } else {
+      await prisma.emailToken
+        .update({
+          where: { id: row!.id },
+          data: { payload: JSON.stringify({ attempts }) },
+        })
+        .catch(() => undefined);
+    }
+    invalid();
+  }
+
+  await prisma.emailToken.delete({ where: { id: row!.id } }).catch(() => undefined);
 }
 
 export async function findValidEmailToken(

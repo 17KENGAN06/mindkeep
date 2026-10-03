@@ -648,8 +648,8 @@
       "logged": "записав",
       "checked": "позначив"
     },
-    "auditTitle": "Журнал входів і модерації",
-    "auditHint": "Хто входив і які відгуки схвалили або відхилили. Пошта і паролі сюди не пишуться.",
+    "auditTitle": "Журнал входів",
+    "auditHint": "Хто входив. Пошта і паролі сюди не пишуться.",
     "auditEmpty": "Поки немає подій",
     "auditAnonymous": "Невідомий акаунт",
     "auditActions": {
@@ -675,6 +675,12 @@
     "confirmPassword": "Підтвердження пароля",
     "timezone": "Часовий пояс",
     "submitLogin": "Увійти",
+    "loginCodeTitle": "Код входу",
+    "loginCodeSubtitle": "Ми надіслали 6-значний код на {{email}}. Він діє 10 хвилин.",
+    "loginCodeLabel": "Код",
+    "submitLoginCode": "Продовжити",
+    "resendLoginCode": "Надіслати код ще раз",
+    "backToLogin": "Назад",
     "submitRegister": "Зареєструватися",
     "noAccount": "Ще немає акаунта?",
     "hasAccount": "Уже є акаунт?",
@@ -709,7 +715,8 @@
       "googleEmailInUse": "На цю пошту вже є акаунт. Увійдіть з паролем.",
       "maintenanceAdminOnly": "Зараз доступний лише вхід для адміністратора.",
       "emailUnavailable": "Не вдалося надіслати лист. Спробуйте пізніше.",
-      "invalidEmailToken": "Це посилання недійсне або прострочене."
+      "invalidEmailToken": "Це посилання недійсне або прострочене.",
+      "invalidLoginCode": "Код неправильний або вже не діє."
     },
     "checkEmailTitle": "Перевірте пошту",
     "checkEmailBody": "Ми надіслали посилання на {{email}}. Акаунт зʼявиться лише після підтвердження.",

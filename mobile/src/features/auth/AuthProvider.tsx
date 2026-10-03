@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { AppState } from 'react-native';
-import { authApi, type GoogleLoginPayload, type LoginPayload, type RegisterPayload } from '../../api/auth';
+import { authApi, type GoogleLoginPayload, type LoginCodePayload, type LoginPayload, type RegisterPayload } from '../../api/auth';
 import { ApiError, refreshAccessToken } from '../../api/client';
 import { detectDeviceTimezone } from '../../config/timezones';
 import type { User } from '../../types/auth';
@@ -88,7 +88,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(
     async (payload: LoginPayload) => {
-      const result = await authApi.login(payload);
+      return authApi.login(payload);
+    },
+    [],
+  );
+
+  const confirmLogin = useCallback(
+    async (payload: LoginCodePayload) => {
+      const result = await authApi.confirmLogin(payload);
       return persistUser(result.user, result.token, result.refreshToken);
     },
     [persistUser],
@@ -155,12 +162,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: Boolean(user),
       isLoading: meQuery.isLoading,
       login,
+      confirmLogin,
       register,
       googleLogin,
       updateTimezone,
       logout,
     }),
-    [googleLogin, login, logout, meQuery.isLoading, register, updateTimezone, user],
+    [confirmLogin, googleLogin, login, logout, meQuery.isLoading, register, updateTimezone, user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

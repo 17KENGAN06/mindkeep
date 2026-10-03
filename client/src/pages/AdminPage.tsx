@@ -13,6 +13,7 @@ import type { AppLanguage } from '@/i18n';
 import { formatDate } from '@/utils/date';
 
 const BETA_SEARCH_LIMIT = 8;
+const HIDDEN_AUDIT_ACTIONS = new Set(['REVIEW_APPROVED', 'REVIEW_REJECTED']);
 
 export function AdminPage() {
   const { t, i18n } = useTranslation();
@@ -47,31 +48,10 @@ export function AdminPage() {
     enabled: user?.role === 'ADMIN',
   });
 
-  const reviewsQuery = useQuery({
-    queryKey: ['admin', 'reviews'],
-    queryFn: async () => (await adminApi.reviews()).reviews,
-    enabled: user?.role === 'ADMIN',
-  });
-
   const auditQuery = useQuery({
     queryKey: ['admin', 'audit'],
     queryFn: async () => (await adminApi.audit()).events,
     enabled: user?.role === 'ADMIN',
-  });
-
-  const moderateReview = useMutation({
-    mutationFn: ({
-      id,
-      status,
-    }: {
-      id: string;
-      status: 'APPROVED' | 'REJECTED';
-    }) => adminApi.moderateReview(id, status),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['admin', 'reviews'] });
-      void queryClient.invalidateQueries({ queryKey: ['admin', 'audit'] });
-      void queryClient.invalidateQueries({ queryKey: ['reviews', 'approved'] });
-    },
   });
 
   const setBeta = useMutation({
@@ -93,7 +73,6 @@ export function AdminPage() {
     usersQuery.isLoading ||
     subscribersQuery.isLoading ||
     testersQuery.isLoading ||
-    reviewsQuery.isLoading ||
     auditQuery.isLoading
   ) {
     return <Loader />;
@@ -104,7 +83,6 @@ export function AdminPage() {
     usersQuery.isError ||
     subscribersQuery.isError ||
     testersQuery.isError ||
-    reviewsQuery.isError ||
     auditQuery.isError
   ) {
     return <ErrorMessage message={t('admin.loadError')} />;
@@ -114,8 +92,9 @@ export function AdminPage() {
   const users = usersQuery.data ?? [];
   const subscribers = subscribersQuery.data ?? [];
   const testers = testersQuery.data ?? [];
-  const reviews = reviewsQuery.data ?? [];
-  const auditEvents = auditQuery.data ?? [];
+  const auditEvents = (auditQuery.data ?? []).filter(
+    (event) => !HIDDEN_AUDIT_ACTIONS.has(event.action),
+  );
   const betaMatches = matchBetaUsers(
     users.filter((item) => item.role !== 'ADMIN' && !item.betaTester),
     betaQuery,
@@ -312,58 +291,6 @@ export function AdminPage() {
               </li>
             ))}
           </ul>
-        )}
-      </section>
-
-      <section className="overflow-hidden rounded-3xl border border-line bg-panel">
-        <div className="border-b border-line px-4 py-3">
-          <h2 className="text-sm font-semibold text-ink">{t('admin.reviewsTitle')}</h2>
-        </div>
-        {reviews.length === 0 ? (
-          <div className="p-4">
-            <EmptyState title={t('admin.reviewsEmpty')} />
-          </div>
-        ) : (
-          <div className="divide-y divide-line">
-            {reviews.map((review) => (
-              <article key={review.id} className="p-4">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <p className="font-semibold text-ink">{review.user.name}</p>
-                    <p className="text-xs text-muted">{review.user.email}</p>
-                  </div>
-                  <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-700">
-                    {review.rating}★ · {t(`admin.reviewStatus.${review.status}`)}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-ink">{review.text}</p>
-                {review.location ? (
-                  <p className="mt-2 text-xs text-muted">{review.location}</p>
-                ) : null}
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Button
-                    type="button"
-                    onClick={() =>
-                      moderateReview.mutate({ id: review.id, status: 'APPROVED' })
-                    }
-                    disabled={review.status === 'APPROVED' || moderateReview.isPending}
-                  >
-                    {t('admin.approveReview')}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={() =>
-                      moderateReview.mutate({ id: review.id, status: 'REJECTED' })
-                    }
-                    disabled={review.status === 'REJECTED' || moderateReview.isPending}
-                  >
-                    {t('admin.rejectReview')}
-                  </Button>
-                </div>
-              </article>
-            ))}
-          </div>
         )}
       </section>
 

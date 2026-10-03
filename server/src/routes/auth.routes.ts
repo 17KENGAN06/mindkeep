@@ -19,6 +19,7 @@ import {
   forgotPasswordSchema,
   googleFinishSchema,
   googleLoginSchema,
+  loginCodeSchema,
   loginSchema,
   refreshSchema,
   registerSchema,
@@ -48,6 +49,13 @@ authRouter.post(
   loginRateLimit,
   validate(loginSchema),
   asyncHandler((req, res) => authController.login(req, res)),
+);
+
+authRouter.post(
+  '/login/code',
+  emailTokenRateLimit,
+  validate(loginCodeSchema),
+  asyncHandler((req, res) => authController.confirmLogin(req, res)),
 );
 
 authRouter.get(

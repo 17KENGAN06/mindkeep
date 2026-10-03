@@ -58,7 +58,17 @@ export const registerSchema = z
 export const loginSchema = z.object({
   email: z.email('Invalid email'),
   password: z.string().min(1, 'Password is required').max(72),
+  locale: localeSchema,
   ...botFields,
+});
+
+export const loginCodeSchema = z.object({
+  email: z.email('Invalid email'),
+  code: z
+    .string()
+    .trim()
+    .transform((value) => value.replace(/\s/g, ''))
+    .pipe(z.string().regex(/^\d{6}$/, 'Enter the 6-digit code')),
 });
 
 export const googleLoginSchema = z
@@ -128,6 +138,7 @@ export const deleteAccountSchema = z.object({
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
+export type LoginCodeInput = z.infer<typeof loginCodeSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
 export type GoogleFinishInput = z.infer<typeof googleFinishSchema>;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;

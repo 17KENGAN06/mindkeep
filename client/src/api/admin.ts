@@ -64,16 +64,6 @@ export type AdminOverview = {
   betaTestersTotal: number;
 };
 
-export type AdminReview = {
-  id: string;
-  rating: number;
-  text: string;
-  location: string | null;
-  status: 'PENDING' | 'APPROVED' | 'REJECTED';
-  createdAt: string;
-  user: { name: string; email: string };
-};
-
 export type AdminAuditAction =
   | 'LOGIN_SUCCESS'
   | 'LOGIN_FAILURE'
@@ -122,8 +112,5 @@ export const adminApi = {
   userActivity: (id: string) => apiClient.get<{ activity: AdminUserActivity }>(`/api/admin/users/${id}`),
   setBetaTester: (id: string, betaTester: boolean) =>
     apiClient.patch<{ user: AdminBetaTester }>(`/api/admin/users/${id}/beta`, { betaTester }),
-  reviews: () => apiClient.get<{ reviews: AdminReview[] }>('/api/admin/reviews'),
   audit: () => apiClient.get<{ events: AdminAuditEvent[] }>('/api/admin/audit'),
-  moderateReview: (id: string, status: 'APPROVED' | 'REJECTED') =>
-    apiClient.patch<{ review: AdminReview }>(`/api/admin/reviews/${id}`, { status }),
 };

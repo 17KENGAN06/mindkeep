@@ -14,14 +14,18 @@ import { useAuth } from '@/features/auth/useAuth';
 import { createLoginSchema, type LoginFormValues } from '@/schemas/auth';
 
 export function LoginPage() {
-  const { t } = useTranslation();
-  const { googleLogin, login } = useAuth();
+  const { t, i18n } = useTranslation();
+  const { googleLogin, login, confirmLogin } = useAuth();
   const navigate = useNavigate();
   const [formError, setFormError] = useState<string | null>(null);
   const [botToken, setBotToken] = useState<string | null>(null);
   const [humanChecked, setHumanChecked] = useState(false);
   const [botError, setBotError] = useState<string | undefined>();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [loginCode, setLoginCode] = useState('');
+  const [codeBusy, setCodeBusy] = useState(false);
+  const [savedLogin, setSavedLogin] = useState<LoginFormValues | null>(null);
   const challengeReady = botToken !== null;
   const maintenance = env.maintenanceMode;
 
@@ -56,14 +60,50 @@ export function LoginPage() {
       await login({
         email: values.email,
         password: values.password,
+        locale: i18n.resolvedLanguage ?? i18n.language,
         botToken,
         website: values.website ?? '',
       });
-      void navigate('/dashboard');
+      setSavedLogin(values);
+      setPendingEmail(values.email);
+      setLoginCode('');
     } catch (error) {
       setFormError(mapAuthError(error, t));
     }
   });
+
+  const onConfirmCode = async () => {
+    if (!pendingEmail) return;
+    setFormError(null);
+    setCodeBusy(true);
+    try {
+      await confirmLogin({ email: pendingEmail, code: loginCode });
+      void navigate('/dashboard');
+    } catch (error) {
+      setFormError(mapAuthError(error, t));
+    } finally {
+      setCodeBusy(false);
+    }
+  };
+
+  const onResend = async () => {
+    if (!savedLogin || !botToken) return;
+    setFormError(null);
+    setCodeBusy(true);
+    try {
+      await login({
+        email: savedLogin.email,
+        password: savedLogin.password,
+        locale: i18n.resolvedLanguage ?? i18n.language,
+        botToken,
+        website: savedLogin.website ?? '',
+      });
+    } catch (error) {
+      setFormError(mapAuthError(error, t));
+    } finally {
+      setCodeBusy(false);
+    }
+  };
 
   const handleGoogleCredential = async (credential: string) => {
     setFormError(null);
@@ -78,6 +118,64 @@ export function LoginPage() {
       setIsGoogleLoading(false);
     }
   };
+
+  if (pendingEmail) {
+    return (
+      <div className="space-y-5 sm:space-y-6">
+        <div>
+          <h1 className="text-xl font-semibold text-ink sm:text-2xl">{t('auth.loginCodeTitle')}</h1>
+          <p className="mt-1 text-sm text-muted">
+            {t('auth.loginCodeSubtitle', { email: pendingEmail })}
+          </p>
+        </div>
+
+        <form
+          className="space-y-4"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void onConfirmCode();
+          }}
+        >
+          <Input
+            label={t('auth.loginCodeLabel')}
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            maxLength={6}
+            value={loginCode}
+            onChange={(event) => setLoginCode(event.target.value.replace(/\D/g, '').slice(0, 6))}
+          />
+          <ErrorMessage message={formError ?? undefined} />
+          <Button type="submit" className="w-full" isLoading={codeBusy} disabled={loginCode.length !== 6}>
+            {t('auth.submitLoginCode')}
+          </Button>
+        </form>
+
+        <p className="text-sm text-muted">
+          <button
+            type="button"
+            className="font-medium text-brand-700"
+            disabled={codeBusy}
+            onClick={() => void onResend()}
+          >
+            {t('auth.resendLoginCode')}
+          </button>
+        </p>
+        <p className="text-sm text-muted">
+          <button
+            type="button"
+            className="font-medium text-brand-700"
+            onClick={() => {
+              setPendingEmail(null);
+              setLoginCode('');
+              setFormError(null);
+            }}
+          >
+            {t('auth.backToLogin')}
+          </button>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-5 sm:space-y-6">

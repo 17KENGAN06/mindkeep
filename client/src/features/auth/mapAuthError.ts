@@ -26,6 +26,8 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.googleEmailInUse');
     case 'EMAIL_UNAVAILABLE':
       return t('auth.errors.emailUnavailable');
+    case 'INVALID_LOGIN_CODE':
+      return t('auth.errors.invalidLoginCode');
     case 'INVALID_EMAIL_TOKEN':
       return t('auth.errors.invalidEmailToken');
     case 'BOT_REJECTED':

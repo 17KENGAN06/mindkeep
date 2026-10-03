@@ -4,8 +4,14 @@ import type { AuthDevice, AuthResponse, User } from '../types/auth';
 export type LoginPayload = {
   email: string;
   password: string;
+  locale?: string;
   botToken?: string;
   website?: string;
+};
+
+export type LoginCodePayload = {
+  email: string;
+  code: string;
 };
 
 export type RegisterPayload = {
@@ -27,7 +33,9 @@ export type GoogleLoginPayload = {
 
 export const authApi = {
   challenge: () => apiClient.get<{ botToken: string }>('/api/auth/challenge'),
-  login: (payload: LoginPayload) => apiClient.post<AuthResponse>('/api/auth/login', payload),
+  login: (payload: LoginPayload) => apiClient.post<{ pending: true }>('/api/auth/login', payload),
+  confirmLogin: (payload: LoginCodePayload) =>
+    apiClient.post<AuthResponse>('/api/auth/login/code', payload),
   register: (payload: RegisterPayload) =>
     apiClient.post<{ pending: true }>('/api/auth/register', payload),
   googleLogin: (payload: GoogleLoginPayload) =>

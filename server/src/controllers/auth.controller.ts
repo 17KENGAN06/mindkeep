@@ -27,6 +27,7 @@ import type {
   ForgotPasswordInput,
   GoogleFinishInput,
   GoogleLoginInput,
+  LoginCodeInput,
   LoginInput,
   RegisterInput,
   RefreshInput,
@@ -53,16 +54,23 @@ export class AuthController {
     const input = req.body as LoginInput;
     assertBotProtection(input);
     try {
-      const issue = authSessionIssueFrom(req);
-      const { user, token, refreshToken } = await authService.login(input, issue);
-      await recordAdminAudit({ action: 'LOGIN_SUCCESS', actorUserId: user.id });
-      sendAuthSession(req, res, 200, user, token, refreshToken);
+      await authService.login(input);
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(200).json({ pending: true });
     } catch (error) {
       if (error instanceof AppError && error.code === 'INVALID_CREDENTIALS') {
         await recordAdminAudit({ action: 'LOGIN_FAILURE' });
       }
       throw error;
     }
+  }
+
+  async confirmLogin(req: Request, res: Response): Promise<void> {
+    const input = req.body as LoginCodeInput;
+    const issue = authSessionIssueFrom(req);
+    const { user, token, refreshToken } = await authService.confirmLogin(input, issue);
+    await recordAdminAudit({ action: 'LOGIN_SUCCESS', actorUserId: user.id });
+    sendAuthSession(req, res, 200, user, token, refreshToken);
   }
 
   async googleLogin(req: Request, res: Response): Promise<void> {

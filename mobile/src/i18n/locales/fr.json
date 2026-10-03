@@ -398,6 +398,12 @@
     "password": "Mot de passe",
     "confirmPassword": "Confirmer le mot de passe",
     "submitLogin": "Connexion",
+    "loginCodeTitle": "Entre le code de connexion",
+    "loginCodeSubtitle": "Nous avons envoyé un code à 6 chiffres à {{email}}. Il expire dans 10 minutes.",
+    "loginCodeLabel": "Code",
+    "submitLoginCode": "Continuer",
+    "resendLoginCode": "Envoyer un nouveau code",
+    "backToLogin": "Retour",
     "submitRegister": "S'inscrire",
     "noAccount": "Pas encore de compte ?",
     "hasAccount": "Tu as déjà un compte ?",
@@ -427,7 +433,8 @@
       "googleEmailInUse": "Un compte existe déjà pour cet e-mail. Connecte-toi avec le mot de passe.",
       "botRejected": "La protection anti-bot a bloqué la requête. Actualise et réessaie.",
       "emailUnavailable": "Impossible d’envoyer l’e-mail. Réessaie plus tard.",
-      "invalidEmailToken": "Ce lien est invalide ou a expiré."
+      "invalidEmailToken": "Ce lien est invalide ou a expiré.",
+      "invalidLoginCode": "Ce code est incorrect ou a expiré."
     },
     "checkEmailTitle": "Vérifie tes e-mails",
     "checkEmailBody": "Nous avons envoyé un lien à {{email}}. Le compte n’existe qu’après confirmation.",

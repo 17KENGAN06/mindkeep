@@ -648,8 +648,8 @@
       "logged": "logged",
       "checked": "checked in"
     },
-    "auditTitle": "Sign-in and moderation log",
-    "auditHint": "Who signed in and which reviews were approved or rejected. Emails and passwords are not stored here.",
+    "auditTitle": "Sign-in log",
+    "auditHint": "Who signed in. Emails and passwords are not stored here.",
     "auditEmpty": "No audit events yet",
     "auditAnonymous": "Unknown account",
     "auditActions": {
@@ -675,6 +675,12 @@
     "confirmPassword": "Confirm password",
     "timezone": "Timezone",
     "submitLogin": "Log in",
+    "loginCodeTitle": "Enter the sign-in code",
+    "loginCodeSubtitle": "We sent a 6-digit code to {{email}}. It expires in 10 minutes.",
+    "loginCodeLabel": "Code",
+    "submitLoginCode": "Continue",
+    "resendLoginCode": "Send a new code",
+    "backToLogin": "Back",
     "submitRegister": "Sign up",
     "noAccount": "No account yet?",
     "hasAccount": "Already have an account?",
@@ -709,7 +715,8 @@
       "googleEmailInUse": "This email already has an account. Sign in with your password.",
       "maintenanceAdminOnly": "Only administrator sign-in is available right now.",
       "emailUnavailable": "Could not send email. Try again later.",
-      "invalidEmailToken": "This link is invalid or has expired."
+      "invalidEmailToken": "This link is invalid or has expired.",
+      "invalidLoginCode": "That code is incorrect or has expired."
     },
     "checkEmailTitle": "Check your email",
     "checkEmailBody": "We sent a confirmation link to {{email}}. The account is created only after you open it.",

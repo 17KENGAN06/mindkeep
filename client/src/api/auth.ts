@@ -18,7 +18,13 @@ export type RegisterPayload = {
 export type LoginPayload = {
   email: string;
   password: string;
+  locale?: string;
 } & BotPayload;
+
+export type LoginCodePayload = {
+  email: string;
+  code: string;
+};
 
 export type GoogleLoginPayload = {
   credential: string;
@@ -29,7 +35,9 @@ export const authApi = {
   challenge: () => apiClient.get<{ botToken: string }>('/api/auth/challenge'),
   register: (payload: RegisterPayload) =>
     apiClient.post<{ pending: true }>('/api/auth/register', payload),
-  login: (payload: LoginPayload) => apiClient.post<AuthResponse>('/api/auth/login', payload),
+  login: (payload: LoginPayload) => apiClient.post<{ pending: true }>('/api/auth/login', payload),
+  confirmLogin: (payload: LoginCodePayload) =>
+    apiClient.post<AuthResponse>('/api/auth/login/code', payload),
   googleLogin: (payload: GoogleLoginPayload) =>
     apiClient.post<AuthResponse>('/api/auth/google', payload),
   verifyEmail: (payload: { token: string }) =>

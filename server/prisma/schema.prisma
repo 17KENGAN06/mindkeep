@@ -462,6 +462,7 @@ model GoogleSignInTicket {
 enum EmailTokenType {
   VERIFY_EMAIL
   RESET_PASSWORD
+  LOGIN_CODE
 }
 
 model EmailToken {

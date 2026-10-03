@@ -648,8 +648,8 @@
       "logged": "zapisał",
       "checked": "odhaczył"
     },
-    "auditTitle": "Dziennik logowań i moderacji",
-    "auditHint": "Kto się logował i które opinie zatwierdzono lub odrzucono. E-maile i hasła tu nie trafiają.",
+    "auditTitle": "Dziennik logowań",
+    "auditHint": "Kto się logował. E-maile i hasła tu nie trafiają.",
     "auditEmpty": "Brak zdarzeń",
     "auditAnonymous": "Nieznane konto",
     "auditActions": {
@@ -675,6 +675,12 @@
     "confirmPassword": "Potwierdź hasło",
     "timezone": "Strefa czasowa",
     "submitLogin": "Zaloguj się",
+    "loginCodeTitle": "Kod logowania",
+    "loginCodeSubtitle": "Wysłaliśmy 6-cyfrowy kod na {{email}}. Wygasa po 10 minutach.",
+    "loginCodeLabel": "Kod",
+    "submitLoginCode": "Dalej",
+    "resendLoginCode": "Wyślij nowy kod",
+    "backToLogin": "Wstecz",
     "submitRegister": "Zarejestruj się",
     "noAccount": "Nie masz jeszcze konta?",
     "hasAccount": "Masz już konto?",
@@ -709,7 +715,8 @@
       "googleEmailInUse": "Konto z tym e-mailem już istnieje. Zaloguj się hasłem.",
       "maintenanceAdminOnly": "W tej chwili dostępne jest tylko logowanie administratora.",
       "emailUnavailable": "Nie udało się wysłać e-maila. Spróbuj później.",
-      "invalidEmailToken": "Ten link jest nieważny lub wygasł."
+      "invalidEmailToken": "Ten link jest nieważny lub wygasł.",
+      "invalidLoginCode": "Ten kod jest niepoprawny lub wygasł."
     },
     "checkEmailTitle": "Sprawdź e-mail",
     "checkEmailBody": "Wysłaliśmy link na {{email}}. Konto powstanie dopiero po potwierdzeniu.",

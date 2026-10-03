@@ -398,6 +398,12 @@
     "password": "Пароль",
     "confirmPassword": "Подтверждение пароля",
     "submitLogin": "Войти",
+    "loginCodeTitle": "Код входа",
+    "loginCodeSubtitle": "Мы отправили 6-значный код на {{email}}. Он действует 10 минут.",
+    "loginCodeLabel": "Код",
+    "submitLoginCode": "Продолжить",
+    "resendLoginCode": "Отправить код ещё раз",
+    "backToLogin": "Назад",
     "submitRegister": "Зарегистрироваться",
     "noAccount": "Ещё нет аккаунта?",
     "hasAccount": "Уже есть аккаунт?",
@@ -427,7 +433,8 @@
       "googleEmailInUse": "На эту почту уже есть аккаунт. Войдите с паролем.",
       "botRejected": "Запрос отклонён защитой от ботов. Обновите экран и попробуйте снова.",
       "emailUnavailable": "Не удалось отправить письмо. Попробуйте позже.",
-      "invalidEmailToken": "Эта ссылка недействительна или устарела."
+      "invalidEmailToken": "Эта ссылка недействительна или устарела.",
+      "invalidLoginCode": "Код неверный или уже не действует."
     },
     "checkEmailTitle": "Проверьте почту",
     "checkEmailBody": "Мы отправили ссылку на {{email}}. Аккаунт появится только после подтверждения.",

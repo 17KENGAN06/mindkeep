@@ -398,6 +398,12 @@
     "password": "Salasana",
     "confirmPassword": "Vahvista salasana",
     "submitLogin": "Kirjaudu",
+    "loginCodeTitle": "Syötä kirjautumiskoodi",
+    "loginCodeSubtitle": "Lähetimme 6-numeroisen koodin osoitteeseen {{email}}. Se vanhenee 10 minuutissa.",
+    "loginCodeLabel": "Koodi",
+    "submitLoginCode": "Jatka",
+    "resendLoginCode": "Lähetä uusi koodi",
+    "backToLogin": "Takaisin",
     "submitRegister": "Rekisteröidy",
     "noAccount": "Ei vielä tiliä?",
     "hasAccount": "Onko sinulla jo tiliä?",
@@ -427,7 +433,8 @@
       "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla.",
       "botRejected": "Bottisuoja hylkäsi pyynnön. Päivitä ja yritä uudelleen.",
       "emailUnavailable": "Sähköpostia ei voitu lähettää. Yritä myöhemmin.",
-      "invalidEmailToken": "Linkki on virheellinen tai vanhentunut."
+      "invalidEmailToken": "Linkki on virheellinen tai vanhentunut.",
+      "invalidLoginCode": "Koodi on väärä tai vanhentunut."
     },
     "checkEmailTitle": "Tarkista sähköposti",
     "checkEmailBody": "Lähetimme linkin osoitteeseen {{email}}. Tili syntyy vasta vahvistuksen jälkeen.",

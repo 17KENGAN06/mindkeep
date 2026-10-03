@@ -213,10 +213,98 @@ const resetCopy: Record<AppLocale, (name: string, link: string) => MailCopy> = {
   }),
 };
 
+const loginCodeCopy: Record<AppLocale, (name: string, code: string) => MailCopy> = {
+  en: (name, code) => ({
+    subject: 'Your MindKeep sign-in code',
+    text: [
+      `Hi ${name},`,
+      '',
+      `Your sign-in code is ${code}.`,
+      'It expires in 10 minutes. If you did not try to sign in, you can ignore this message.',
+    ].join('\n'),
+  }),
+  ru: (name, code) => ({
+    subject: 'Код входа в MindKeep',
+    text: [
+      `Здравствуйте, ${name}!`,
+      '',
+      `Код для входа: ${code}.`,
+      'Он действует 10 минут. Если вы не входили, просто проигнорируйте это письмо.',
+    ].join('\n'),
+  }),
+  uk: (name, code) => ({
+    subject: 'Код входу в MindKeep',
+    text: [
+      `Вітаємо, ${name}!`,
+      '',
+      `Код для входу: ${code}.`,
+      'Він діє 10 хвилин. Якщо ви не входили, просто ігноруйте цей лист.',
+    ].join('\n'),
+  }),
+  pl: (name, code) => ({
+    subject: 'Kod logowania MindKeep',
+    text: [
+      `Cześć ${name},`,
+      '',
+      `Twój kod logowania: ${code}.`,
+      'Wygasa po 10 minutach. Jeśli to nie Ty się logowałeś, zignoruj tę wiadomość.',
+    ].join('\n'),
+  }),
+  de: (name, code) => ({
+    subject: 'Dein MindKeep-Anmeldecode',
+    text: [
+      `Hallo ${name},`,
+      '',
+      `Dein Anmeldecode ist ${code}.`,
+      'Er ist 10 Minuten gültig. Wenn du dich nicht angemeldet hast, ignoriere diese Nachricht.',
+    ].join('\n'),
+  }),
+  fr: (name, code) => ({
+    subject: 'Ton code de connexion MindKeep',
+    text: [
+      `Bonjour ${name},`,
+      '',
+      `Ton code de connexion est ${code}.`,
+      'Il expire dans 10 minutes. Si tu n’as pas essayé de te connecter, ignore ce message.',
+    ].join('\n'),
+  }),
+  it: (name, code) => ({
+    subject: 'Il tuo codice di accesso MindKeep',
+    text: [
+      `Ciao ${name},`,
+      '',
+      `Il codice di accesso è ${code}.`,
+      'Scade tra 10 minuti. Se non hai provato ad accedere, ignora questo messaggio.',
+    ].join('\n'),
+  }),
+  es: (name, code) => ({
+    subject: 'Tu código de acceso a MindKeep',
+    text: [
+      `Hola ${name},`,
+      '',
+      `Tu código de acceso es ${code}.`,
+      'Caduca en 10 minutos. Si no intentaste entrar, ignora este mensaje.',
+    ].join('\n'),
+  }),
+  fi: (name, code) => ({
+    subject: 'MindKeep-kirjautumiskoodisi',
+    text: [
+      `Hei ${name},`,
+      '',
+      `Kirjautumiskoodisi on ${code}.`,
+      'Se vanhenee 10 minuutissa. Jos et yrittänyt kirjautua, voit jättää viestin huomiotta.',
+    ].join('\n'),
+  }),
+};
+
 export function verifyAccountEmail(locale: AppLocale, name: string, link: string): MailCopy {
   return verifyCopy[locale](name, link);
 }
 
 export function resetPasswordEmail(locale: AppLocale, name: string, link: string): MailCopy {
   return resetCopy[locale](name, link);
+}
+
+export function loginCodeEmail(locale: AppLocale, name: string, code: string): MailCopy {
+  return loginCodeCopy[locale](name, code);
 }

@@ -1,12 +1,13 @@
 import { createContext } from 'react';
-import type { GoogleLoginPayload, LoginPayload, RegisterPayload } from '@/api/auth';
+import type { GoogleLoginPayload, LoginCodePayload, LoginPayload, RegisterPayload } from '@/api/auth';
 import type { User } from '@/types/auth';
 
 export type AuthContextValue = {
   user: User | null;
   isAuthenticated: boolean;
   isReady: boolean;
-  login: (payload: LoginPayload) => Promise<User>;
+  login: (payload: LoginPayload) => Promise<{ pending: true }>;
+  confirmLogin: (payload: LoginCodePayload) => Promise<User>;
   googleLogin: (payload: GoogleLoginPayload) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<{ pending: true }>;
   verifyEmail: (token: string) => Promise<User>;

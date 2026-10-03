@@ -648,8 +648,8 @@
       "logged": "registró",
       "checked": "marcó asistencia"
     },
-    "auditTitle": "Registro de accesos y moderación",
-    "auditHint": "Quién inició sesión y qué reseñas se aprobaron o rechazaron. Aquí no se guardan correos ni contraseñas.",
+    "auditTitle": "Registro de accesos",
+    "auditHint": "Quién inició sesión. Aquí no se guardan correos ni contraseñas.",
     "auditEmpty": "Aún no hay eventos",
     "auditAnonymous": "Cuenta desconocida",
     "auditActions": {
@@ -675,6 +675,12 @@
     "confirmPassword": "Confirmar contraseña",
     "timezone": "Zona horaria",
     "submitLogin": "Iniciar sesión",
+    "loginCodeTitle": "Introduce el código",
+    "loginCodeSubtitle": "Enviamos un código de 6 dígitos a {{email}}. Caduca en 10 minutos.",
+    "loginCodeLabel": "Código",
+    "submitLoginCode": "Continuar",
+    "resendLoginCode": "Enviar un código nuevo",
+    "backToLogin": "Atrás",
     "submitRegister": "Registrarse",
     "noAccount": "¿Aún no tienes cuenta?",
     "hasAccount": "¿Ya tienes una cuenta?",
@@ -709,7 +715,8 @@
       "googleEmailInUse": "Ya hay una cuenta con este correo. Entra con tu contraseña.",
       "maintenanceAdminOnly": "Por ahora solo está disponible el inicio de sesión de administrador.",
       "emailUnavailable": "No se pudo enviar el correo. Inténtalo más tarde.",
-      "invalidEmailToken": "Este enlace no es válido o ha caducado."
+      "invalidEmailToken": "Este enlace no es válido o ha caducado.",
+      "invalidLoginCode": "Ese código es incorrecto o ha caducado."
     },
     "checkEmailTitle": "Revisa tu correo",
     "checkEmailBody": "Enviamos un enlace a {{email}}. La cuenta se crea solo al confirmarlo.",

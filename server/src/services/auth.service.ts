@@ -2,13 +2,15 @@ import { EmailTokenType, PlanInterval, Prisma, UserPlan, UserRole } from '@prism
 import { OAuth2Client } from 'google-auth-library';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
-import { resetPasswordEmail, resolveAppLocale, verifyAccountEmail } from '@/services/emailCopy.js';
+import { loginCodeEmail, resetPasswordEmail, resolveAppLocale, verifyAccountEmail } from '@/services/emailCopy.js';
 import { sendEmail } from '@/services/email.service.js';
 import {
   consumeEmailToken,
+  consumeLoginCode,
   deleteEmailTokens,
   findValidEmailToken,
   issueEmailToken,
+  issueLoginCode,
 } from '@/services/emailToken.service.js';
 import { consumeGoogleSignInTicket } from '@/services/googleOAuth.service.js';
 import type {
@@ -16,6 +18,7 @@ import type {
   DeleteAccountInput,
   ForgotPasswordInput,
   GoogleLoginInput,
+  LoginCodeInput,
   LoginInput,
   RegisterInput,
   ResetPasswordInput,
@@ -260,10 +263,7 @@ export class AuthService {
     }
   }
 
-  async login(
-    input: LoginInput,
-    issue?: AuthSessionIssue,
-  ): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
+  async login(input: LoginInput): Promise<{ pending: true }> {
     const email = input.email.toLowerCase();
 
     const user = await prisma.user.findUnique({
@@ -277,6 +277,45 @@ export class AuthService {
       throw new AppError('Invalid email or password', {
         statusCode: 401,
         code: 'INVALID_CREDENTIALS',
+      });
+    }
+
+    const withRole = await ensureAdminRole(user);
+    const publicUser = toPublicUser(withRole);
+    assertMaintenanceAccess(publicUser);
+
+    const code = await issueLoginCode(email);
+    try {
+      const mail = loginCodeEmail(resolveAppLocale(input.locale), user.name, code);
+      await sendEmail({
+        to: email,
+        subject: mail.subject,
+        text: mail.text,
+      });
+    } catch (error) {
+      await deleteEmailTokens(email, EmailTokenType.LOGIN_CODE);
+      throw error;
+    }
+
+    return { pending: true };
+  }
+
+  async confirmLogin(
+    input: LoginCodeInput,
+    issue?: AuthSessionIssue,
+  ): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
+    const email = input.email.toLowerCase();
+    await consumeLoginCode(email, input.code);
+
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: userRecordSelect,
+    });
+
+    if (!user?.passwordHash) {
+      throw new AppError('That code is incorrect or has expired', {
+        statusCode: 400,
+        code: 'INVALID_LOGIN_CODE',
       });
     }
 

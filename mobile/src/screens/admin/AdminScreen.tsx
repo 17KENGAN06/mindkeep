@@ -10,14 +10,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { AppButton } from '../../components/ui';
 import { useAuth } from '../../features/auth/useAuth';
-import {
-  useAdminOverview,
-  useAdminReviews,
-  useAdminUsers,
-  useModerateReview,
-} from '../../features/admin/useAdmin';
+import { useAdminOverview, useAdminUsers } from '../../features/admin/useAdmin';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
@@ -32,13 +26,9 @@ export function AdminScreen() {
   const enabled = user?.role === 'ADMIN';
   const overviewQuery = useAdminOverview(enabled);
   const usersQuery = useAdminUsers(enabled);
-  const reviewsQuery = useAdminReviews(enabled);
-  const moderate = useModerateReview();
   const loading =
     enabled &&
-    ((overviewQuery.isLoading && !overviewQuery.data) ||
-      (usersQuery.isLoading && !usersQuery.data) ||
-      (reviewsQuery.isLoading && !reviewsQuery.data));
+    ((overviewQuery.isLoading && !overviewQuery.data) || (usersQuery.isLoading && !usersQuery.data));
 
   if (!enabled) {
     return (
@@ -58,28 +48,23 @@ export function AdminScreen() {
 
   const overview = overviewQuery.data;
   const users = usersQuery.data ?? [];
-  const reviews = reviewsQuery.data ?? [];
 
   return (
     <ScrollView
       contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl
-          refreshing={
-            (overviewQuery.isRefetching || usersQuery.isRefetching || reviewsQuery.isRefetching) &&
-            !loading
-          }
+          refreshing={(overviewQuery.isRefetching || usersQuery.isRefetching) && !loading}
           onRefresh={() => {
             void overviewQuery.refetch();
             void usersQuery.refetch();
-            void reviewsQuery.refetch();
           }}
           tintColor={colors.brand}
         />
       }
     >
       <Text style={[styles.subtitle, { color: colors.muted }]}>{t('admin.subtitle')}</Text>
-      {overviewQuery.isError || usersQuery.isError || reviewsQuery.isError ? (
+      {overviewQuery.isError || usersQuery.isError ? (
         <Text style={[styles.error, { color: colors.danger }]}>{t('admin.loadError')}</Text>
       ) : null}
 
@@ -100,36 +85,6 @@ export function AdminScreen() {
           ))}
         </View>
       ) : null}
-
-      <Text style={[styles.section, { color: colors.ink }]}>{t('admin.reviewsTitle')}</Text>
-      {reviews.length === 0 ? (
-        <Text style={[styles.empty, { color: colors.muted }]}>{t('admin.reviewsEmpty')}</Text>
-      ) : (
-        reviews.map((review) => (
-          <View key={review.id} style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{review.user.name}</Text>
-            <Text style={[styles.meta, { color: colors.muted }]}>{review.user.email}</Text>
-            <Text style={[styles.meta, { color: colors.brand }]}>
-              {review.rating}★ · {t(`admin.reviewStatus.${review.status}`)}
-            </Text>
-            <Text style={[styles.body, { color: colors.ink }]}>{review.text}</Text>
-            {review.location ? <Text style={[styles.meta, { color: colors.muted }]}>{review.location}</Text> : null}
-            <View style={styles.actions}>
-              <AppButton
-                label={t('admin.approveReview')}
-                disabled={review.status === 'APPROVED' || moderate.isPending}
-                onPress={() => moderate.mutate({ id: review.id, status: 'APPROVED' })}
-              />
-              <AppButton
-                variant="secondary"
-                label={t('admin.rejectReview')}
-                disabled={review.status === 'REJECTED' || moderate.isPending}
-                onPress={() => moderate.mutate({ id: review.id, status: 'REJECTED' })}
-              />
-            </View>
-          </View>
-        ))
-      )}
 
       <Text style={[styles.section, { color: colors.ink }]}>{t('admin.usersTitle')}</Text>
       {users.length === 0 ? (
@@ -187,6 +142,4 @@ const styles = StyleSheet.create({
   card: { borderRadius: 16, borderWidth: 1, gap: 6, padding: 14 },
   cardTitle: { fontSize: 16, fontWeight: '700' },
   meta: { fontSize: 13 },
-  body: { fontSize: 14, lineHeight: 20 },
-  actions: { gap: 8, marginTop: 8 },
 });
