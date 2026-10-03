@@ -1367,7 +1367,33 @@
     "finishTitle": "Valmista",
     "finishBody": "Voit myöhemmin kytkeä palvelut päälle tai pois kohdassa Lisää → Asetukset.",
     "finish": "Työtilaan",
-    "needOne": "Valitse vähintään yksi palvelu jatkaaksesi."
+    "needOne": "Valitse vähintään yksi palvelu jatkaaksesi.",
+    "modules": {
+      "tasks": {
+        "title": "Päivän tehtävät",
+        "text": "Kirjoitat, mitä tänään pitää tehdä — ja montako minuuttia se vie, jos sillä on väliä. Merkitset valmista ja näet päivän, viikon ja kuukauden samassa paikassa. On erillinen kuukausisuunnitelma: montako tehtävää oli ja montako suljit. Tehdyistä tehtävistä kasvaa metsä — näet, miten työ eteni päivä päivältä."
+      },
+      "review": {
+        "title": "Oppiminen ja paluu",
+        "text": "Tallennat sen, mitä et halua unohtaa: muistiinpanon, linkin, omat sanat. Tila asettaa paluut 3., 7. ja 30. päivälle — kun tieto on vielä tallella. Materiaaleja voi järjestää aiheittain, avata kertauskalenterin ja listan «kertaa tänään». Ohitetut päivät näkyvät myös."
+      },
+      "notes": {
+        "title": "Muistiinpanot",
+        "text": "Tavallisia merkintöjä työn vieressä: idea, luonnos, lista. Tämä ei ole oppimateriaali eikä tehtävä — vain paikka kirjoittaa nopeasti ja löytää myöhemmin."
+      },
+      "habits": {
+        "title": "Tavat",
+        "text": "Lista asioista, joita haluat tehdä joka päivä. Kerran päivässä merkitset «tehty». Kuukausikalenterista näet, mitkä päivät onnistuivat ja mitkä eivät."
+      },
+      "finance": {
+        "title": "Budjetti",
+        "text": "Kirjaat tulot ja menot kategorioittain, omassa valuutassa. Näet jakson saldon, rajan jos asetit sen, ja tapahtumalistan."
+      },
+      "nutrition": {
+        "title": "Ravinto ja keho",
+        "text": "Ateriat kaloreineen, päivän vesi ja paino käyrällä. Näet, miten syöt ja miten keho muuttuu, ilman erillistä sovellusta."
+      }
+    }
   },
   "settings": {
     "title": "Asetukset",

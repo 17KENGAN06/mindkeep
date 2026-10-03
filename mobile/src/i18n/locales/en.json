@@ -823,27 +823,27 @@
     "modules": {
       "tasks": {
         "title": "Daily tasks",
-        "text": "Plan today and the month, check things off, and see the week without noise in your head."
+        "text": "Write what you need to do today — and how many minutes it takes, if that matters. Check things off and see the day, the week, and the month in one place. There is a separate month plan: how many tasks you had and how many you closed. Completed tasks grow a forest, so you can see how the work went day by day."
       },
       "review": {
         "title": "Learning & review",
-        "text": "Save what mattered and return on a 3 · 7 · 30 beat — knowledge stays after a busy stretch."
+        "text": "Save what you do not want to forget: a note, a link, your own words. The workspace sets returns on day 3, 7, and 30 — while the knowledge is still there. You can group materials by topic, open a review calendar, and see a list of what to repeat today. Missed days stay visible too."
       },
       "notes": {
         "title": "Notes",
-        "text": "Capture thoughts next to the work, not in another app that you will forget to open."
+        "text": "Ordinary writing next to the work: an idea, a draft, a list. It is not a study card and not a task — just a place to jot something down and find it later."
       },
       "habits": {
         "title": "Habits",
-        "text": "A simple monthly rhythm you can keep — one check a day, without a noisy streak theatre."
+        "text": "A list of things you want to do every day. Once a day you mark “done”. The month calendar shows which days you kept and which you missed."
       },
       "finance": {
         "title": "Budget",
-        "text": "Income, expenses, and a clear period balance, so money does not disappear behind the studies."
+        "text": "Log income and expenses by category, in your own currency. You see the period balance, a limit if you set one, and the list of operations."
       },
       "nutrition": {
         "title": "Nutrition & body",
-        "text": "Meals, water, and weight in the same cabinet — enough to stay honest, not another dashboard."
+        "text": "Meals with calories, water for the day, and weight on a chart. Enough to see how you eat and how the body changes, without a separate app."
       }
     }
   },

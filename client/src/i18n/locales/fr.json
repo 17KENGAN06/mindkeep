@@ -1367,7 +1367,33 @@
     "finishTitle": "C’est prêt",
     "finishBody": "Tu pourras tout activer ou désactiver plus tard dans Plus → Réglages.",
     "finish": "Aller à l’espace",
-    "needOne": "Choisis au moins un service pour continuer."
+    "needOne": "Choisis au moins un service pour continuer.",
+    "modules": {
+      "tasks": {
+        "title": "Tâches du jour",
+        "text": "Tu écris ce qu’il faut faire aujourd’hui — et combien de minutes ça prend, si c’est important. Tu coches le fait et tu vois le jour, la semaine et le mois au même endroit. Il y a un plan du mois à part : combien de tâches il y avait et combien tu as fermées. Les tâches faites font pousser une forêt — on voit comment le travail a avancé, jour après jour."
+      },
+      "review": {
+        "title": "Études et retour",
+        "text": "Tu gardes ce que tu ne veux pas oublier : une note, un lien, tes mots. Le bureau pose les retours au 3e, 7e et 30e jour — tant que le savoir est encore là. Tu peux ranger les fiches par thème, ouvrir le calendrier des révisions et la liste « réviser aujourd’hui ». Les jours manqués restent visibles."
+      },
+      "notes": {
+        "title": "Notes",
+        "text": "Des écritures ordinaires à côté du travail : une idée, un brouillon, une liste. Ce n’est pas une fiche d’étude et ce n’est pas une tâche — juste un endroit pour noter vite et retrouver plus tard."
+      },
+      "habits": {
+        "title": "Habitudes",
+        "text": "Une liste de choses que tu veux faire chaque jour. Une fois par jour, tu marques « fait ». Le calendrier du mois montre les jours tenus et les jours manqués."
+      },
+      "finance": {
+        "title": "Budget",
+        "text": "Tu notes les revenus et les dépenses par catégorie, dans ta monnaie. Tu vois le solde de la période, une limite si tu en as mis une, et la liste des opérations."
+      },
+      "nutrition": {
+        "title": "Nutrition et corps",
+        "text": "Les repas avec calories, l’eau du jour et le poids sur un graphique. Pour voir comment tu manges et comment le corps change, sans une autre appli."
+      }
+    }
   },
   "settings": {
     "title": "Réglages",

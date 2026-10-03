@@ -1367,7 +1367,33 @@
     "finishTitle": "Tutto pronto",
     "finishBody": "Più tardi puoi accendere o spegnere i servizi in Altro → Impostazioni.",
     "finish": "Vai allo spazio",
-    "needOne": "Scegli almeno un servizio per continuare."
+    "needOne": "Scegli almeno un servizio per continuare.",
+    "modules": {
+      "tasks": {
+        "title": "Compiti del giorno",
+        "text": "Scrivi cosa va fatto oggi — e quanti minuti richiede, se conta. Spunti il fatto e vedi il giorno, la settimana e il mese in un unico posto. C’è un piano del mese a parte: quanti compiti c’erano e quanti hai chiuso. Dai compiti fatti cresce una foresta: si vede come è andato il lavoro, giorno per giorno."
+      },
+      "review": {
+        "title": "Studio e ritorno",
+        "text": "Salvi ciò che non vuoi dimenticare: un appunto, un link, le tue parole. Lo spazio imposta i ritorni al 3°, 7° e 30° giorno — finché la conoscenza c’è ancora. Puoi ordinare i materiali per tema, aprire il calendario dei ripassi e la lista «ripassa oggi». I giorni saltati restano visibili."
+      },
+      "notes": {
+        "title": "Note",
+        "text": "Appunti normali accanto al lavoro: un’idea, una bozza, una lista. Non è materiale di studio e non è un compito — solo un posto per scrivere in fretta e ritrovare dopo."
+      },
+      "habits": {
+        "title": "Abitudini",
+        "text": "Una lista di cose che vuoi fare ogni giorno. Una volta al giorno segni «fatto». Sul calendario del mese vedi quali giorni sono andati e quali no."
+      },
+      "finance": {
+        "title": "Budget",
+        "text": "Registri entrate e uscite per categoria, nella tua valuta. Vedi il saldo del periodo, un limite se lo imposti, e l’elenco delle operazioni."
+      },
+      "nutrition": {
+        "title": "Nutrizione e corpo",
+        "text": "Pasti con calorie, acqua della giornata e peso sul grafico. Per vedere come mangi e come cambia il corpo, senza un’altra app."
+      }
+    }
   },
   "settings": {
     "title": "Impostazioni",

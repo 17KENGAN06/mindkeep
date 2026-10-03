@@ -1367,7 +1367,33 @@
     "finishTitle": "Gotowe",
     "finishBody": "Później włączysz lub wyłączysz usługi w Więcej → Ustawienia.",
     "finish": "Do przestrzeni",
-    "needOne": "Wybierz przynajmniej jedną usługę, aby kontynuować."
+    "needOne": "Wybierz przynajmniej jedną usługę, aby kontynuować.",
+    "modules": {
+      "tasks": {
+        "title": "Zadania dnia",
+        "text": "Zapisujesz, co trzeba zrobić dzisiaj — i ile minut to zajmie, jeśli to ważne. Odhaczasz zrobione i widzisz dzień, tydzień i miesiąc w jednym miejscu. Jest osobny plan miesiąca: ile zadań było i ile zamknięto. Za wykonane zadania rośnie las — widać, jak szła praca z dnia na dzień."
+      },
+      "review": {
+        "title": "Nauka i powrót",
+        "text": "Zapisujesz to, czego nie chcesz zapomnieć: notatkę, link, własne słowa. Gabinet sam ustawia powroty na 3., 7. i 30. dzień — zanim wiedza zblednie. Materiały można poukładać w tematy, otworzyć kalendarz powtórek i listę „powtórz dzisiaj”. Pominięte dni też są widoczne."
+      },
+      "notes": {
+        "title": "Notatki",
+        "text": "Zwykłe zapiski obok pracy: pomysł, szkic, lista. To nie materiał do nauki i nie zadanie — po prostu miejsce, by szybko coś zapisać i potem znaleźć."
+      },
+      "habits": {
+        "title": "Nawyki",
+        "text": "Lista rzeczy, które chcesz robić codziennie. Raz dziennie odhaczasz „zrobione”. Na kalendarzu miesiąca widać, które dni wyszły, a które nie."
+      },
+      "finance": {
+        "title": "Budżet",
+        "text": "Zapisujesz przychody i wydatki według kategorii, w swojej walucie. Widać saldo okresu, limit, jeśli go ustawisz, i listę operacji."
+      },
+      "nutrition": {
+        "title": "Odżywianie i ciało",
+        "text": "Posiłki z kaloriami, woda w ciągu dnia i waga na wykresie. Żeby widzieć, jak jesz i jak zmienia się ciało, bez osobnej aplikacji."
+      }
+    }
   },
   "settings": {
     "title": "Ustawienia",

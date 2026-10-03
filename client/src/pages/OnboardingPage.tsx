@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
-import { APP_MODULES, MODULE_HOME_KEY, type AppModule } from '@/config/appModules';
+import { APP_MODULES, type AppModule } from '@/config/appModules';
 import { mapAuthError } from '@/features/auth/mapAuthError';
 import { useAuth } from '@/features/auth/useAuth';
 
@@ -32,7 +32,6 @@ export function OnboardingPage() {
   const asking = step >= 0 && step < total;
   const module = asking ? APP_MODULES[step] : null;
   const Icon = module ? MODULE_ICONS[module] : null;
-  const homeKey = module ? MODULE_HOME_KEY[module] : null;
   const selected = useMemo(() => new Set(picked), [picked]);
 
   const choose = (want: boolean) => {
@@ -104,7 +103,7 @@ export function OnboardingPage() {
             </Button>
           </div>
         </>
-      ) : asking && module && Icon && homeKey ? (
+      ) : asking && module && Icon ? (
         <>
           <p className="mt-8 font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
             {t('onboarding.eyebrow')}
@@ -113,10 +112,10 @@ export function OnboardingPage() {
             <Icon className="h-7 w-7" aria-hidden />
           </div>
           <h1 className="font-display mt-5 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-            {t(`home.services.items.${homeKey}.title`)}
+            {t(`onboarding.modules.${module}.title`)}
           </h1>
           <p className="mt-3 text-base leading-relaxed text-muted">
-            {t(`home.services.items.${homeKey}.text`)}
+            {t(`onboarding.modules.${module}.text`)}
           </p>
           <div className="mt-auto flex flex-col gap-3 pt-10 sm:flex-row">
             <Button type="button" className="w-full sm:flex-1" onClick={() => choose(true)}>
@@ -151,7 +150,7 @@ export function OnboardingPage() {
             <ul className="mt-6 space-y-2">
               {APP_MODULES.filter((item) => selected.has(item)).map((item) => (
                 <li key={item} className="rounded-2xl bg-brand-50/50 px-4 py-3 text-sm font-medium text-ink">
-                  {t(`home.services.items.${MODULE_HOME_KEY[item]}.title`)}
+                  {t(`onboarding.modules.${item}.title`)}
                 </li>
               ))}
             </ul>
@@ -186,7 +185,7 @@ export function OnboardingPage() {
       <div
         role="dialog"
         aria-modal="true"
-        className="flex min-h-dvh w-full flex-col overflow-y-auto bg-surface px-5 py-6 sm:px-8 md:min-h-0 md:max-h-[90dvh] md:max-w-lg md:rounded-[2rem] md:border md:border-line md:p-8 md:shadow-[0_28px_80px_rgba(0,0,0,0.28)]"
+        className="flex min-h-dvh w-full flex-col overflow-y-auto bg-surface px-5 py-6 sm:px-8 md:min-h-0 md:max-h-[90dvh] md:max-w-xl md:rounded-[2rem] md:border md:border-line md:p-8 md:shadow-[0_28px_80px_rgba(0,0,0,0.28)]"
       >
         {card}
       </div>

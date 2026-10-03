@@ -1367,7 +1367,33 @@
     "finishTitle": "Listo",
     "finishBody": "Más tarde puedes activar o desactivar servicios en Más → Ajustes.",
     "finish": "Ir al espacio",
-    "needOne": "Elige al menos un servicio para continuar."
+    "needOne": "Elige al menos un servicio para continuar.",
+    "modules": {
+      "tasks": {
+        "title": "Tareas del día",
+        "text": "Escribes qué hay que hacer hoy — y cuántos minutos lleva, si importa. Marcas lo hecho y ves el día, la semana y el mes en un solo sitio. Hay un plan del mes aparte: cuántas tareas había y cuántas cerraste. Por las tareas hechas crece un bosque: se ve cómo fue el trabajo, día a día."
+      },
+      "review": {
+        "title": "Estudio y retorno",
+        "text": "Guardas lo que no quieres olvidar: una nota, un enlace, tus palabras. El espacio pone los retornos el día 3, 7 y 30 — mientras el conocimiento sigue ahí. Puedes agrupar materiales por tema, abrir el calendario de repasos y la lista «repasar hoy». Los días saltados también se ven."
+      },
+      "notes": {
+        "title": "Notas",
+        "text": "Apuntes normales junto al trabajo: una idea, un borrador, una lista. No es material de estudio ni una tarea — solo un sitio para apuntar rápido y encontrarlo después."
+      },
+      "habits": {
+        "title": "Hábitos",
+        "text": "Una lista de cosas que quieres hacer cada día. Una vez al día marcas «hecho». En el calendario del mes se ve qué días salieron y cuáles no."
+      },
+      "finance": {
+        "title": "Presupuesto",
+        "text": "Anotas ingresos y gastos por categoría, en tu moneda. Ves el saldo del periodo, un límite si lo pusiste, y la lista de operaciones."
+      },
+      "nutrition": {
+        "title": "Nutrición y cuerpo",
+        "text": "Comidas con calorías, agua del día y peso en un gráfico. Para ver cómo comes y cómo cambia el cuerpo, sin otra app."
+      }
+    }
   },
   "settings": {
     "title": "Ajustes",

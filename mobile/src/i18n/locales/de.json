@@ -823,27 +823,27 @@
     "modules": {
       "tasks": {
         "title": "Tagesaufgaben",
-        "text": "Plane heute und den Monat, hak ab und sieh die Woche ohne Lärm im Kopf."
+        "text": "Du schreibst, was heute zu tun ist — und wie viele Minuten es dauert, wenn das zählt. Erledigtes hakst du ab und siehst Tag, Woche und Monat an einem Ort. Es gibt einen eigenen Monatsplan: wie viele Aufgaben da waren und wie viele du geschlossen hast. Aus erledigten Aufgaben wächst ein Wald — Tag für Tag sichtbar."
       },
       "review": {
         "title": "Lernen & Rückkehr",
-        "text": "Speichere, was zählt, und kehre im Takt 3 · 7 · 30 zurück — Wissen muss nach einer dichten Woche nicht verschwinden."
+        "text": "Du speicherst, was du nicht vergessen willst: Notiz, Link, eigene Worte. Der Schreibtisch setzt Rückkehren auf den 3., 7. und 30. Tag — solange das Wissen noch da ist. Materialien lassen sich nach Themen ordnen, es gibt einen Wiederholungskalender und die Liste „heute wiederholen“. Verpasste Tage bleiben sichtbar."
       },
       "notes": {
         "title": "Notizen",
-        "text": "Gedanken neben der Arbeit, nicht in einer weiteren App, die du später nicht öffnest."
+        "text": "Normale Aufzeichnungen neben der Arbeit: Idee, Entwurf, Liste. Das ist keine Lernkarte und keine Aufgabe — nur ein Ort, um schnell etwas festzuhalten und später wiederzufinden."
       },
       "habits": {
         "title": "Gewohnheiten",
-        "text": "Ein einfacher Monatsrhythmus, den man halten kann — ein Häkchen am Tag, ohne Serientheater."
+        "text": "Eine Liste von Dingen, die du jeden Tag tun willst. Einmal am Tag hakst du „erledigt“ ab. Im Monatskalender siehst du, welche Tage geklappt haben und welche nicht."
       },
       "finance": {
         "title": "Budget",
-        "text": "Einnahmen, Ausgaben und eine klare Periodenbilanz, damit Geld nicht hinter dem Lernen verschwindet."
+        "text": "Du trägst Einnahmen und Ausgaben nach Kategorien ein, in deiner Währung. Du siehst die Periodenbilanz, ein Limit falls gesetzt, und die Liste der Buchungen."
       },
       "nutrition": {
         "title": "Ernährung & Körper",
-        "text": "Mahlzeiten, Wasser und Gewicht im selben Kabinett — ehrlich bleiben, ohne extra Dashboard."
+        "text": "Mahlzeiten mit Kalorien, Wasser am Tag und Gewicht auf einer Kurve. Damit du siehst, wie du isst und wie sich der Körper ändert — ohne extra App."
       }
     }
   },

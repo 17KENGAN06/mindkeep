@@ -153,12 +153,6 @@ export const dashboardNav: DashboardNavEntry[] = [
       },
       {
         type: 'link',
-        id: 'notifications',
-        labelKey: 'nav.notifications',
-        to: '/notifications',
-      },
-      {
-        type: 'link',
         id: 'account',
         labelKey: 'nav.account',
         to: '/account',

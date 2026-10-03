@@ -823,27 +823,27 @@
     "modules": {
       "tasks": {
         "title": "Päivän tehtävät",
-        "text": "Suunnittele tänään ja kuukausi, merkitse valmista ja näe viikko ilman meteliä päässä."
+        "text": "Kirjoitat, mitä tänään pitää tehdä — ja montako minuuttia se vie, jos sillä on väliä. Merkitset valmista ja näet päivän, viikon ja kuukauden samassa paikassa. On erillinen kuukausisuunnitelma: montako tehtävää oli ja montako suljit. Tehdyistä tehtävistä kasvaa metsä — näet, miten työ eteni päivä päivältä."
       },
       "review": {
         "title": "Oppiminen ja paluu",
-        "text": "Tallenna tärkeä ja palaa rytmissä 3 · 7 · 30 — tiedon ei tarvitse kadota tiiviin viikon jälkeen."
+        "text": "Tallennat sen, mitä et halua unohtaa: muistiinpanon, linkin, omat sanat. Tila asettaa paluut 3., 7. ja 30. päivälle — kun tieto on vielä tallella. Materiaaleja voi järjestää aiheittain, avata kertauskalenterin ja listan «kertaa tänään». Ohitetut päivät näkyvät myös."
       },
       "notes": {
         "title": "Muistiinpanot",
-        "text": "Ajatukset työn vieressä, ei toisessa sovelluksessa, jota et enää avaa."
+        "text": "Tavallisia merkintöjä työn vieressä: idea, luonnos, lista. Tämä ei ole oppimateriaali eikä tehtävä — vain paikka kirjoittaa nopeasti ja löytää myöhemmin."
       },
       "habits": {
         "title": "Tavat",
-        "text": "Yksinkertainen kuukausirytmi, jota voi pitää — yksi merkintä päivässä, ilman putkiesitystä."
+        "text": "Lista asioista, joita haluat tehdä joka päivä. Kerran päivässä merkitset «tehty». Kuukausikalenterista näet, mitkä päivät onnistuivat ja mitkä eivät."
       },
       "finance": {
         "title": "Budjetti",
-        "text": "Tulot, menot ja selkeä jakson saldo, jotta raha ei katoa oppimisen taakse."
+        "text": "Kirjaat tulot ja menot kategorioittain, omassa valuutassa. Näet jakson saldon, rajan jos asetit sen, ja tapahtumalistan."
       },
       "nutrition": {
         "title": "Ravinto ja keho",
-        "text": "Ateriat, vesi ja paino samassa tilassa — tarpeeksi rehellisyyteen, ilman uutta kojittymispaneelia."
+        "text": "Ateriat kaloreineen, päivän vesi ja paino käyrällä. Näet, miten syöt ja miten keho muuttuu, ilman erillistä sovellusta."
       }
     }
   },

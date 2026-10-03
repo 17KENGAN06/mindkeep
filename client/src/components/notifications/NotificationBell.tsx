@@ -1,6 +1,6 @@
 import { Bell } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useNotificationSummary } from '@/features/notifications/useNotifications';
 import { useOverdueReminders, useTodayReminders } from '@/features/reminders/useReminders';
@@ -39,6 +39,7 @@ function ReminderRows({
 
 export function NotificationBell() {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
@@ -83,7 +84,7 @@ export function NotificationBell() {
         className={`relative inline-flex h-10 w-10 items-center justify-center rounded-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
           hasOverdue
             ? 'bg-red-500/10 text-red-600 ring-1 ring-red-400/35 hover:bg-red-500/15'
-            : hasDue
+            : hasDue || pathname === '/notifications'
               ? 'bg-brand-500/15 text-brand-500 ring-1 ring-brand-500/40 hover:bg-brand-500/25'
               : 'text-muted hover:bg-brand-50 hover:text-brand-500'
         }`}
@@ -110,14 +111,18 @@ export function NotificationBell() {
           aria-label={t('notifications.title')}
           className="absolute top-full right-0 z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-panel shadow-xl ring-1 ring-line"
         >
-          <div className="border-b border-line px-4 py-3">
+          <Link
+            to="/notifications"
+            onClick={() => setOpen(false)}
+            className="block border-b border-line px-4 py-3 hover:bg-brand-50"
+          >
             <p className="text-sm font-semibold text-ink">{t('notifications.title')}</p>
             <p className="mt-0.5 text-xs text-muted">
               {waiting > 0
                 ? `${t('notifications.dueCount', { count: dueToday })} · ${t('notifications.overdueCount', { count: overdue })}`
                 : t('notifications.bellEmpty')}
             </p>
-          </div>
+          </Link>
 
           <div className="max-h-80 space-y-3 overflow-y-auto p-3">
             <section>
@@ -150,20 +155,20 @@ export function NotificationBell() {
             </section>
           </div>
 
-          <div className="grid grid-cols-2 gap-px border-t border-line bg-line">
-            <Link
-              to="/review"
-              onClick={() => setOpen(false)}
-              className="bg-panel px-3 py-2.5 text-center text-sm font-semibold text-brand-500 hover:bg-brand-50"
-            >
-              {t('notifications.openReviews')}
-            </Link>
+          <div className="border-t border-line">
             <Link
               to="/notifications"
               onClick={() => setOpen(false)}
-              className="bg-panel px-3 py-2.5 text-center text-sm font-medium text-muted hover:bg-brand-50 hover:text-ink"
+              className="block bg-panel px-3 py-2.5 text-center text-sm font-semibold text-brand-500 hover:bg-brand-50"
             >
               {t('notifications.seeAll')}
+            </Link>
+            <Link
+              to="/review"
+              onClick={() => setOpen(false)}
+              className="block border-t border-line bg-panel px-3 py-2 text-center text-xs font-medium text-muted hover:bg-brand-50 hover:text-ink"
+            >
+              {t('notifications.openReviews')}
             </Link>
           </div>
         </div>

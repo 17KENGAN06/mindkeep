@@ -241,9 +241,14 @@ html[data-theme='light'] {
 
   .home-snap-section {
     @apply relative flex flex-col overflow-visible;
-    /* Keep section content above the mobile bottom nav */
-    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
     scroll-margin-top: 0;
+  }
+
+  @media (max-width: 767px) {
+    /* Only the last screen needs room for the mobile bottom nav. */
+    .home-snap-section:last-child {
+      padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
+    }
   }
 
   @media (min-width: 768px) {

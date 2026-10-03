@@ -101,7 +101,7 @@ export function HomePage() {
               </div>
             </SnapReveal>
 
-            <div className="relative grid min-h-0 flex-1 items-center gap-8 pb-24 pt-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)] xl:gap-16 xl:pb-10 xl:pt-8">
+            <div className="relative grid min-h-0 flex-1 items-center gap-6 pb-8 pt-5 md:gap-8 md:pb-24 md:pt-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)] xl:gap-16 xl:pb-10 xl:pt-8">
               <div
                 aria-hidden
                 className="hero-glow pointer-events-none absolute inset-x-[-12%] top-[5%] -z-10 h-[60%] rounded-[45%] bg-[radial-gradient(circle_at_center,var(--app-accent-soft),transparent_70%)] xl:left-[-8%] xl:w-[70%]"
