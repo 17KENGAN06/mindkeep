@@ -290,7 +290,7 @@ You can also host the client on Railway (`client/` root). Prefer Hostinger stati
 | `PORT` | server / client | Listen port (Railway injects) |
 | `CRON_SECRET` | server | Protect cron endpoint |
 | `ENABLE_NODE_CRON` | server | Optional local hourly job |
-| `EMAIL_FROM`, `RESEND_API_KEY` | server | Resend. `EMAIL_FROM` must be a verified sender, e.g. `MindKeep <contact@mindkeep.cloud>`. |
+| `EMAIL_FROM`, `RESEND_API_KEY` | server | Resend. `EMAIL_FROM` is the user-facing verify/reset sender, e.g. `MindKeep <contact@mindkeep.cloud>`. The contact form is sent from `hello@mindkeep.cloud` so Hostinger inboxes are not treated as spoofed mail. |
 | `TELEGRAM_BOT_TOKEN` | server | Future Telegram |
 | `ADMIN_EMAILS` | server | Comma-separated admin emails |
 | `VITE_API_URL` | client (build) | API base URL |

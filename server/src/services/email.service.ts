@@ -4,9 +4,11 @@ import { AppError } from '@/utils/AppError.js';
 
 type SendEmailInput = {
   to: string;
+  from?: string;
   replyTo?: string;
   subject: string;
   text: string;
+  html?: string;
 };
 
 function emailUnavailable(): never {
@@ -17,7 +19,7 @@ function emailUnavailable(): never {
 }
 
 export async function sendEmail(input: SendEmailInput): Promise<void> {
-  const from = env.EMAIL_FROM?.trim();
+  const from = input.from?.trim() || env.EMAIL_FROM?.trim();
   const apiKey = env.RESEND_API_KEY?.trim();
 
   if (!from || !apiKey) {
@@ -47,6 +49,7 @@ export async function sendEmail(input: SendEmailInput): Promise<void> {
       ...(input.replyTo ? { reply_to: input.replyTo } : {}),
       subject: input.subject,
       text: input.text,
+      ...(input.html ? { html: input.html } : {}),
     }),
   });
 

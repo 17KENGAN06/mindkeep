@@ -4,6 +4,12 @@ export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 export const MINDKEEP_CONTACT = 'contact@mindkeep.cloud';
 export const MINDKEEP_ADMIN = 'admin@mindkeep.cloud';
+/** Resend From for the contact form. Not a Hostinger mailbox — same-domain From→inbox is treated as spoofed. */
+export const MINDKEEP_MAILER = 'hello@mindkeep.cloud';
+
+export function contactMailFrom(): string {
+  return `MindKeep <${MINDKEEP_MAILER}>`;
+}
 
 export const CONTACT_INBOX = {
   partnership: MINDKEEP_CONTACT,
