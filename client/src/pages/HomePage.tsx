@@ -12,13 +12,12 @@ import { SectionNav } from '@/components/home/SectionNav';
 import { MobileHomeNav } from '@/components/home/MobileHomeNav';
 import { SnapReveal } from '@/components/home/SnapReveal';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
-import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
 
-const SECTION_IDS = ['hero', 'services', 'pricing', 'testimonials', 'footer'] as const;
+const SECTION_IDS = ['hero', 'services', 'pricing', 'footer'] as const;
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -31,7 +30,6 @@ export function HomePage() {
     t('home.sections.hero'),
     t('home.sections.services'),
     t('home.sections.pricing'),
-    t('home.sections.testimonials'),
     t('home.sections.footer'),
   ];
 
@@ -175,16 +173,6 @@ export function HomePage() {
 
         <AnimatedSnapSection id="pricing" activeId={activeId} className="border-t border-line/70">
           <HomePricing />
-        </AnimatedSnapSection>
-
-        <AnimatedSnapSection
-          id="testimonials"
-          activeId={activeId}
-          className="border-t border-line/70"
-        >
-          <div className="mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col justify-center overflow-y-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8 xl:pr-28">
-            <TestimonialsSection animated compact />
-          </div>
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="footer" activeId={activeId} className="border-t border-line/70">
