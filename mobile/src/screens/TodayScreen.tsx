@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { WaterGlasses } from '../components/WaterGlasses';
 import { AppIcon } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
+import { userHasModule } from '../config/appModules';
 import { useAuth } from '../features/auth/useAuth';
 import { currencyLabel } from '../features/finance/currencies';
 import { currentPeriodDefaults, formatSignedMoney, summarizeByCurrency } from '../features/finance/financeUtils';
@@ -69,19 +70,25 @@ export function TodayScreen() {
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const { user } = useAuth();
+  const showTasks = userHasModule(user, 'tasks');
+  const showReview = userHasModule(user, 'review');
+  const showNutrition = userHasModule(user, 'nutrition');
+  const showFinance = userHasModule(user, 'finance');
   const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
   const today = todayDateKey();
   const period = currentPeriodDefaults();
-  const [weekTab, setWeekTab] = useState<WeekTab>('tasks');
+  const [weekTab, setWeekTab] = useState<WeekTab>(showTasks ? 'tasks' : 'reviews');
+  const weekTabId: WeekTab =
+    showTasks && (!showReview || weekTab === 'tasks') ? 'tasks' : 'reviews';
   const weekDays = useMemo(() => lastNDateKeys(7), []);
 
-  const tasksQuery = useTodayTasks(today);
-  const monthTasksQuery = useTasksPeriod(period.year, period.month);
+  const tasksQuery = useTodayTasks(today, showTasks);
+  const monthTasksQuery = useTasksPeriod(period.year, period.month, showTasks);
   const prevMonth = period.month === 1 ? 12 : period.month - 1;
   const prevYear = period.month === 1 ? period.year - 1 : period.year;
-  const prevTasksQuery = useTasksPeriod(prevYear, prevMonth);
-  const nutritionQuery = useNutritionPeriod(period.year, period.month);
-  const financeQuery = useFinanceSummary(period);
+  const prevTasksQuery = useTasksPeriod(prevYear, prevMonth, showTasks);
+  const nutritionQuery = useNutritionPeriod(period.year, period.month, showNutrition);
+  const financeQuery = useFinanceSummary(period, showFinance);
   const dashboardQuery = useDashboardStatistics();
   const activityQuery = useActivityStatistics();
   const unreadQuery = useUnreadNotificationsCount();
@@ -125,26 +132,26 @@ export function TodayScreen() {
   const chartMax = Math.max(
     1,
     ...weekSeries.map((day) => {
-      if (weekTab === 'tasks') return Math.max(day.tasksPlanned, day.tasksDone);
+      if (weekTabId === 'tasks') return Math.max(day.tasksPlanned, day.tasksDone);
       return day.reviewsDone;
     }),
   );
 
   const loading =
-    tasksQuery.isLoading ||
-    nutritionQuery.isLoading ||
-    dashboardQuery.isLoading;
+    dashboardQuery.isLoading ||
+    (showTasks && tasksQuery.isLoading) ||
+    (showNutrition && nutritionQuery.isLoading);
   const refreshing =
+    dashboardQuery.isRefetching ||
     tasksQuery.isRefetching ||
     nutritionQuery.isRefetching ||
-    dashboardQuery.isRefetching ||
     financeQuery.isRefetching ||
     activityQuery.isRefetching;
   const error =
     actionError ||
-    tasksQuery.isError ||
-    nutritionQuery.isError ||
-    dashboardQuery.isError;
+    dashboardQuery.isError ||
+    (showTasks && tasksQuery.isError) ||
+    (showNutrition && nutritionQuery.isError);
 
   const onRefresh = () => {
     setActionError(false);
@@ -227,12 +234,15 @@ export function TodayScreen() {
         {error ? <Text style={[styles.error, { color: colors.danger }]}>{t('today.error')}</Text> : null}
 
         <View style={styles.grid}>
+          {showTasks ? (
           <ProgressCard
             title={t('dashboard.cards.tasksToday')}
             valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
             percent={todayTotal > 0 ? (todayDone / todayTotal) * 100 : 0}
             onPress={() => navigation.navigate('Tasks', { screen: 'TasksHome' })}
           />
+          ) : null}
+          {showReview ? (
           <ProgressCard
             title={t('dashboard.cards.reviews')}
             valueText={t('dashboard.cards.ofPlanned', {
@@ -242,20 +252,26 @@ export function TodayScreen() {
             percent={reviewsPlanned > 0 ? (completedReviews / reviewsPlanned) * 100 : 0}
             onPress={() => navigation.navigate('Review', { screen: 'ReviewInbox' })}
           />
+          ) : null}
+          {showNutrition ? (
           <ProgressCard
             title={t('dashboard.cards.caloriesToday')}
             valueText={`${eaten} / ${calorieGoal}`}
             percent={(eaten / Math.max(calorieGoal, 1)) * 100}
             onPress={() => navigation.navigate('Fuel')}
           />
+          ) : null}
+          {showNutrition ? (
           <ProgressCard
             title={t('dashboard.cards.waterToday')}
             valueText={`${glasses} / ${waterGoal} ${t('fuel.glasses')}`}
             percent={(glasses / Math.max(waterGoal, 1)) * 100}
             onPress={() => navigation.navigate('Fuel')}
           />
+          ) : null}
         </View>
 
+        {showTasks ? (
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.upcomingTasks')}</Text>
@@ -311,7 +327,9 @@ export function TodayScreen() {
             ))
           )}
         </View>
+        ) : null}
 
+        {showReview ? (
         <Pressable
           onPress={() => navigation.navigate('Review', { screen: 'ReviewInbox' })}
           style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
@@ -328,6 +346,7 @@ export function TodayScreen() {
             </Text>
           )}
         </Pressable>
+        ) : null}
 
         <Pressable
           onPress={() => navigation.navigate('More', { screen: 'Notifications' })}
@@ -342,6 +361,7 @@ export function TodayScreen() {
           </Text>
         </Pressable>
 
+        {showNutrition ? (
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.fuelTitle')}</Text>
@@ -392,11 +412,14 @@ export function TodayScreen() {
             />
           </View>
         </View>
+        ) : null}
 
+        {(showTasks || showReview) ? (
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.weekTitle')}</Text>
           </View>
+          {showTasks && showReview ? (
           <View style={styles.tabs}>
             {(['tasks', 'reviews'] as const).map((id) => (
               <Pressable
@@ -405,13 +428,13 @@ export function TodayScreen() {
                 style={[
                   styles.tab,
                   { borderColor: colors.line },
-                  weekTab === id && { backgroundColor: colors.brand, borderColor: colors.brand },
+                  weekTabId === id && { backgroundColor: colors.brand, borderColor: colors.brand },
                 ]}
               >
                 <Text
                   style={[
                     { color: colors.muted, fontSize: 12, fontWeight: '700' },
-                    weekTab === id && { color: colors.onBrand },
+                    weekTabId === id && { color: colors.onBrand },
                   ]}
                 >
                   {t(`dashboard.weekTabs.${id}`)}
@@ -419,10 +442,11 @@ export function TodayScreen() {
               </Pressable>
             ))}
           </View>
+          ) : null}
           <View style={styles.chartRow}>
             {weekSeries.map((day) => {
-              const planned = weekTab === 'tasks' ? day.tasksPlanned : day.reviewsDone;
-              const done = weekTab === 'tasks' ? day.tasksDone : day.reviewsDone;
+              const planned = weekTabId === 'tasks' ? day.tasksPlanned : day.reviewsDone;
+              const done = weekTabId === 'tasks' ? day.tasksDone : day.reviewsDone;
               const plannedHeight = Math.max((planned / chartMax) * 100, planned > 0 ? 8 : 4);
               const doneHeight = Math.max((done / chartMax) * 100, done > 0 ? 8 : 0);
               return (
@@ -451,7 +475,9 @@ export function TodayScreen() {
             <Text style={[styles.legendMuted, { color: colors.muted }]}>● {t('dashboard.legendPlanned')}</Text>
           </View>
         </View>
+        ) : null}
 
+        {showReview ? (
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.recentTitle')}</Text>
@@ -483,7 +509,9 @@ export function TodayScreen() {
             ))
           )}
         </View>
+        ) : null}
 
+        {showFinance ? (
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.financeTitle')}</Text>
@@ -513,6 +541,7 @@ export function TodayScreen() {
             ))
           )}
         </View>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );

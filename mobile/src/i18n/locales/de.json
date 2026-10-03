@@ -420,6 +420,8 @@
       "passwordMax": "Das Passwort darf höchstens 72 Zeichen haben",
       "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
       "invalidCredentials": "Ungültige E-Mail oder ungültiges Passwort",
+      "wrongPassword": "Falsches Passwort",
+      "deleteFailed": "Konto konnte nicht gelöscht werden. Bitte erneut versuchen.",
       "emailTaken": "Diese E-Mail ist bereits registriert",
       "network": "Der Server ist nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
       "csrf": "Die Sicherheitsprüfung hat diese Anfrage abgelehnt.",
@@ -804,5 +806,51 @@
   },
   "nav": {
     "account": "Konto"
+  },
+  "onboarding": {
+    "eyebrow": "Kurzes Setup",
+    "progress": "{{current}} von {{total}}",
+    "wantThis": "Das will ich",
+    "skipThis": "Jetzt nicht",
+    "finishTitle": "Fertig",
+    "finishBody": "Später kannst du Dienste unter Mehr → Einstellungen an- und ausschalten.",
+    "finish": "Zum Arbeitsbereich",
+    "needOne": "Wähle mindestens einen Dienst, um fortzufahren.",
+    "modules": {
+      "tasks": {
+        "title": "Tagesaufgaben",
+        "text": "Plane heute und den Monat, hak ab und sieh die Woche ohne Lärm im Kopf."
+      },
+      "review": {
+        "title": "Lernen & Rückkehr",
+        "text": "Speichere, was zählt, und kehre im Takt 3 · 7 · 30 zurück — Wissen muss nach einer dichten Woche nicht verschwinden."
+      },
+      "notes": {
+        "title": "Notizen",
+        "text": "Gedanken neben der Arbeit, nicht in einer weiteren App, die du später nicht öffnest."
+      },
+      "habits": {
+        "title": "Gewohnheiten",
+        "text": "Ein einfacher Monatsrhythmus, den man halten kann — ein Häkchen am Tag, ohne Serientheater."
+      },
+      "finance": {
+        "title": "Budget",
+        "text": "Einnahmen, Ausgaben und eine klare Periodenbilanz, damit Geld nicht hinter dem Lernen verschwindet."
+      },
+      "nutrition": {
+        "title": "Ernährung & Körper",
+        "text": "Mahlzeiten, Wasser und Gewicht im selben Kabinett — ehrlich bleiben, ohne extra Dashboard."
+      }
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Wähle, was im Menü und in der Übersicht erscheint. Das kannst du jederzeit ändern.",
+    "modulesTitle": "Dienste",
+    "modulesHint": "Ausgeschaltete Dienste verschwinden aus Kopfzeile und Übersicht. Daten bleiben.",
+    "appearanceTitle": "Darstellung",
+    "saved": "Gespeichert.",
+    "needOne": "Lass mindestens einen Dienst an.",
+    "menuHint": "Dienste, Sprache, Design, Zeitzone."
   }
 }

@@ -1,3 +1,6 @@
+import type { AppModule } from '@/config/appModules';
+import { userHasModule } from '@/config/appModules';
+
 export type DashboardNavLink = {
   type: 'link';
   id: string;
@@ -5,6 +8,7 @@ export type DashboardNavLink = {
   to: string;
   end?: boolean;
   adminOnly?: boolean;
+  module?: AppModule;
   /** Paths that mark this link (and its parent group) as active */
   matchPrefixes?: string[];
 };
@@ -31,6 +35,7 @@ export const dashboardNav: DashboardNavEntry[] = [
     id: 'notes',
     labelKey: 'nav.notes',
     to: '/notes',
+    module: 'notes',
     matchPrefixes: ['/notes'],
   },
   {
@@ -38,6 +43,7 @@ export const dashboardNav: DashboardNavEntry[] = [
     id: 'nutrition',
     labelKey: 'nav.nutrition',
     to: '/nutrition',
+    module: 'nutrition',
     matchPrefixes: ['/nutrition', '/calories'],
   },
   {
@@ -45,6 +51,7 @@ export const dashboardNav: DashboardNavEntry[] = [
     id: 'rhythm',
     labelKey: 'nav.rhythm',
     to: '/habits',
+    module: 'habits',
     matchPrefixes: ['/habits', '/rhythm'],
   },
   {
@@ -57,12 +64,14 @@ export const dashboardNav: DashboardNavEntry[] = [
         id: 'tasks',
         labelKey: 'nav.tasks',
         to: '/tasks',
+        module: 'tasks',
       },
       {
         type: 'link',
         id: 'month-plan',
         labelKey: 'nav.monthPlan',
         to: '/month-plan',
+        module: 'tasks',
       },
     ],
   },
@@ -76,18 +85,21 @@ export const dashboardNav: DashboardNavEntry[] = [
         id: 'review',
         labelKey: 'nav.review',
         to: '/review',
+        module: 'review',
       },
       {
         type: 'link',
         id: 'calendar',
         labelKey: 'nav.reviewCalendar',
         to: '/calendar',
+        module: 'review',
       },
       {
         type: 'link',
         id: 'materials',
         labelKey: 'nav.materials',
         to: '/materials',
+        module: 'review',
         matchPrefixes: ['/materials'],
       },
       {
@@ -95,6 +107,7 @@ export const dashboardNav: DashboardNavEntry[] = [
         id: 'categories',
         labelKey: 'nav.categories',
         to: '/categories',
+        module: 'review',
       },
     ],
   },
@@ -108,6 +121,7 @@ export const dashboardNav: DashboardNavEntry[] = [
         id: 'budget',
         labelKey: 'nav.budget',
         to: '/finance',
+        module: 'finance',
         end: true,
       },
       {
@@ -115,12 +129,14 @@ export const dashboardNav: DashboardNavEntry[] = [
         id: 'transactions',
         labelKey: 'nav.transactions',
         to: '/finance/transactions',
+        module: 'finance',
       },
       {
         type: 'link',
         id: 'expense-categories',
         labelKey: 'nav.expenseCategories',
         to: '/finance/categories',
+        module: 'finance',
       },
     ],
   },
@@ -129,6 +145,12 @@ export const dashboardNav: DashboardNavEntry[] = [
     id: 'more',
     labelKey: 'nav.more',
     children: [
+      {
+        type: 'link',
+        id: 'settings',
+        labelKey: 'nav.settings',
+        to: '/settings',
+      },
       {
         type: 'link',
         id: 'notifications',
@@ -194,6 +216,26 @@ export function filterNavForRole(
       }
 
       const children = entry.children.filter((child) => !child.adminOnly || isAdmin);
+      if (children.length === 0) return null;
+      return { ...entry, children };
+    })
+    .filter((entry): entry is DashboardNavEntry => entry !== null);
+}
+
+export function filterNavForModules(
+  entries: DashboardNavEntry[],
+  user: { onboardingCompleted?: boolean; enabledModules?: string[] } | null,
+): DashboardNavEntry[] {
+  return entries
+    .map((entry) => {
+      if (entry.type === 'link') {
+        if (entry.module && !userHasModule(user, entry.module)) return null;
+        return entry;
+      }
+
+      const children = entry.children.filter(
+        (child) => !child.module || userHasModule(user, child.module),
+      );
       if (children.length === 0) return null;
       return { ...entry, children };
     })

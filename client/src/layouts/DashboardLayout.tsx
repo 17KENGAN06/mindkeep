@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { DesktopNav } from '@/components/layout/dashboard/DesktopNav';
 import { MobileNav } from '@/components/layout/dashboard/MobileNav';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Reveal } from '@/components/motion/Reveal';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { Button } from '@/components/ui/Button';
@@ -19,20 +17,18 @@ export function DashboardLayout() {
   const isAdmin = user?.role === 'ADMIN';
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-x-hidden">
+    <div className="flex min-h-dvh flex-col overflow-x-clip">
       <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-6 px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
         <header className="relative z-40">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
               <BrandLockup to="/dashboard" size="sm" className="min-w-0" />
-              <DesktopNav entries={dashboardNav} isAdmin={isAdmin} />
+              <DesktopNav entries={dashboardNav} isAdmin={isAdmin} user={user} />
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
               <NotificationBell />
               <div className="hidden items-center gap-2 min-[1200px]:flex">
-                <ThemeToggle />
-                <LanguageSwitcher />
                 <Button variant="secondary" type="button" onClick={() => void logout()}>
                   {t('nav.logout')}
                 </Button>
@@ -40,6 +36,7 @@ export function DashboardLayout() {
               <MobileNav
                 entries={dashboardNav}
                 isAdmin={isAdmin}
+                user={user}
                 onLogout={() => void logout()}
               />
             </div>

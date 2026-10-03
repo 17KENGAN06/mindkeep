@@ -12,6 +12,12 @@ export function mapAuthError(error: unknown, t: Translate): string {
   }
 
   switch (error.code) {
+    case 'ONBOARDING_REQUIRED':
+      return t('onboarding.needOne');
+    case 'INVALID_PASSWORD':
+      return t('auth.errors.wrongPassword');
+    case 'DELETE_FAILED':
+      return t('auth.errors.deleteFailed');
     case 'INVALID_CREDENTIALS':
       return t('auth.errors.invalidCredentials');
     case 'EMAIL_TAKEN':

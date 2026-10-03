@@ -702,6 +702,8 @@
       "passwordMatch": "Die Passwörter stimmen nicht überein",
       "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
       "invalidCredentials": "Ungültige E-Mail oder ungültiges Passwort",
+      "wrongPassword": "Falsches Passwort",
+      "deleteFailed": "Konto konnte nicht gelöscht werden. Bitte erneut versuchen.",
       "emailTaken": "Diese E-Mail ist bereits registriert",
       "registerFailed": "Mit diesen Angaben konnte kein Konto erstellt werden.",
       "passwordMax": "Das Passwort darf höchstens 72 Zeichen haben",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Passwort zurücksetzen · Mindkeep",
       "resetPassword": "Neues Passwort · Mindkeep",
       "verifyEmail": "E-Mail bestätigen · Mindkeep",
-      "account": "Konto · Mindkeep"
+      "account": "Konto · Mindkeep",
+      "onboarding": "Kurzes Setup · Mindkeep",
+      "settings": "Einstellungen · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "Mengenlimits sind auf diesem Konto aus.",
     "remain": "{{left}} von {{limit}} übrig",
     "remainDays": "Letzte {{count}} Tage"
+  },
+  "onboarding": {
+    "eyebrow": "Kurzes Setup",
+    "progress": "{{current}} von {{total}}",
+    "wantThis": "Das will ich",
+    "skipThis": "Jetzt nicht",
+    "finishTitle": "Fertig",
+    "finishBody": "Später kannst du Dienste unter Mehr → Einstellungen an- und ausschalten.",
+    "finish": "Zum Arbeitsbereich",
+    "needOne": "Wähle mindestens einen Dienst, um fortzufahren."
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Wähle, was im Menü und in der Übersicht erscheint. Das kannst du jederzeit ändern.",
+    "modulesTitle": "Dienste",
+    "modulesHint": "Ausgeschaltete Dienste verschwinden aus Kopfzeile und Übersicht. Daten bleiben.",
+    "appearanceTitle": "Darstellung",
+    "saved": "Gespeichert.",
+    "needOne": "Lass mindestens einen Dienst an."
   }
 }

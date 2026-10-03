@@ -108,6 +108,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [applySession],
   );
 
+  const completeOnboarding = useCallback(
+    async (modules: string[]) => {
+      const result = await authApi.completeOnboarding({ modules });
+      return applySession(result.user);
+    },
+    [applySession],
+  );
+
+  const updateWorkspace = useCallback(
+    async (payload: { timezone?: string; enabledModules?: string[] }) => {
+      const result = await authApi.updateMe(payload);
+      return applySession(result.user);
+    },
+    [applySession],
+  );
+
   const resetPassword = useCallback(
     async (payload: { token: string; password: string; confirmPassword: string }) => {
       const result = await authApi.resetPassword(payload);
@@ -136,10 +152,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       googleLogin,
       register,
       verifyEmail,
+      completeOnboarding,
+      updateWorkspace,
       resetPassword,
       logout,
     }),
-    [confirmLogin, googleLogin, login, logout, meQuery.data, meQuery.isPending, register, resetPassword, verifyEmail],
+    [completeOnboarding, confirmLogin, googleLogin, login, logout, meQuery.data, meQuery.isPending, register, resetPassword, updateWorkspace, verifyEmail],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

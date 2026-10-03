@@ -16,10 +16,11 @@ export function useUpdateFinanceSettings() {
   });
 }
 
-export function useFinanceSummary(params: FinancePeriodParams) {
+export function useFinanceSummary(params: FinancePeriodParams, enabled = true) {
   return useQuery({
     queryKey: [...financeKey, 'summary', params],
     queryFn: () => financeApi.getSummary(params),
+    enabled,
   });
 }
 

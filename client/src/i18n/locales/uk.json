@@ -702,6 +702,8 @@
       "passwordMatch": "Паролі не збігаються",
       "generic": "Щось пішло не так. Спробуйте ще раз.",
       "invalidCredentials": "Невірний email або пароль",
+      "wrongPassword": "Невірний пароль",
+      "deleteFailed": "Не вдалося видалити акаунт. Спробуйте ще раз.",
       "emailTaken": "Цей email уже зареєстровано",
       "registerFailed": "Не вдалося створити акаунт із цими даними.",
       "passwordMax": "Пароль не довший за 72 символи",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Скинути пароль · Mindkeep",
       "resetPassword": "Новий пароль · Mindkeep",
       "verifyEmail": "Підтвердження пошти · Mindkeep",
-      "account": "Акаунт · Mindkeep"
+      "account": "Акаунт · Mindkeep",
+      "onboarding": "Коротке налаштування · Mindkeep",
+      "settings": "Налаштування · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "Кількісні ліміти на цьому акаунті знято.",
     "remain": "залишилось {{left}} з {{limit}}",
     "remainDays": "останні {{count}} дн."
+  },
+  "onboarding": {
+    "eyebrow": "Коротке налаштування",
+    "progress": "{{current}} з {{total}}",
+    "wantThis": "Хочу це",
+    "skipThis": "Поки ні",
+    "finishTitle": "Готово",
+    "finishBody": "Пізніше все можна увімкнути або вимкнути в Ще → Налаштування.",
+    "finish": "До кабінету",
+    "needOne": "Оберіть хоча б одну послугу, щоб продовжити."
+  },
+  "settings": {
+    "title": "Налаштування",
+    "subtitle": "Оберіть, що видно в меню та огляді. Це можна змінити будь-коли.",
+    "modulesTitle": "Послуги",
+    "modulesHint": "Вимкнені послуги зникнуть з шапки та огляду. Дані залишаться.",
+    "appearanceTitle": "Оформлення",
+    "saved": "Збережено.",
+    "needOne": "Залиште хоча б одну послугу увімкненою."
   }
 }

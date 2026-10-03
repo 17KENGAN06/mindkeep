@@ -87,8 +87,17 @@ export const googleFinishSchema = z.object({
   state: z.string().min(20).max(4000),
 });
 
-export const updateMeSchema = z.object({
-  timezone: timezoneSchema,
+export const updateMeSchema = z
+  .object({
+    timezone: timezoneSchema.optional(),
+    enabledModules: z.array(z.string().trim().min(1).max(32)).max(12).optional(),
+  })
+  .refine((data) => Boolean(data.timezone || data.enabledModules), {
+    message: 'Nothing to update',
+  });
+
+export const onboardingSchema = z.object({
+  modules: z.array(z.string().trim().min(1).max(32)).min(1).max(12),
 });
 
 export const verifyEmailSchema = z.object({
@@ -142,6 +151,7 @@ export type LoginCodeInput = z.infer<typeof loginCodeSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
 export type GoogleFinishInput = z.infer<typeof googleFinishSchema>;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;
+export type OnboardingInput = z.infer<typeof onboardingSchema>;
 export type VerifyEmailInput = z.infer<typeof verifyEmailSchema>;
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;

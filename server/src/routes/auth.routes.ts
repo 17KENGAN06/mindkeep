@@ -21,6 +21,7 @@ import {
   googleLoginSchema,
   loginCodeSchema,
   loginSchema,
+  onboardingSchema,
   refreshSchema,
   registerSchema,
   resetPasswordSchema,
@@ -132,6 +133,13 @@ authRouter.patch(
   requireAuth,
   validate(updateMeSchema),
   asyncHandler((req, res) => authController.updateMe(req, res)),
+);
+
+authRouter.post(
+  '/onboarding',
+  requireAuth,
+  validate(onboardingSchema),
+  asyncHandler((req, res) => authController.completeOnboarding(req, res)),
 );
 
 authRouter.post(

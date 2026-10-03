@@ -10,6 +10,8 @@ export type User = {
   planExpiresAt?: string | null;
   cancelAtPeriodEnd?: boolean;
   betaTester?: boolean;
+  onboardingCompleted?: boolean;
+  enabledModules?: string[];
   createdAt: string;
   updatedAt: string;
 };

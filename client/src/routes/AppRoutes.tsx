@@ -1,6 +1,7 @@
 import { lazy, Suspense, type ComponentType, type ReactNode } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { RequireModule } from '@/components/RequireModule';
 import { RouteErrorBoundary } from '@/components/layout/RouteErrorBoundary';
 import { env } from '@/config/env';
 import { useAuth } from '@/features/auth/useAuth';
@@ -65,6 +66,8 @@ const FinanceTransactionsPage = lazyNamed(
 );
 const ForestPage = lazyNamed(() => import('@/pages/ForestPage'), 'ForestPage');
 const GuidePage = lazyNamed(() => import('@/pages/GuidePage'), 'GuidePage');
+const OnboardingPage = lazyNamed(() => import('@/pages/OnboardingPage'), 'OnboardingPage');
+const SettingsPage = lazyNamed(() => import('@/pages/SettingsPage'), 'SettingsPage');
 const LoginPage = lazyNamed(() => import('@/pages/LoginPage'), 'LoginPage');
 const ForgotPasswordPage = lazyNamed(() => import('@/pages/ForgotPasswordPage'), 'ForgotPasswordPage');
 const ResetPasswordPage = lazyNamed(() => import('@/pages/ResetPasswordPage'), 'ResetPasswordPage');
@@ -185,30 +188,165 @@ export function AppRoutes() {
         </Route>
 
         <Route element={<ProtectedRoute />}>
+          <Route path="/onboarding" element={<OnboardingPage />} />
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
             <Route path="/account" element={<AccountPage />} />
-            <Route path="/tasks" element={<TasksPage />} />
-            <Route path="/forest" element={<ForestPage />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/month-plan" element={<MonthPlanPage />} />
-            <Route path="/nutrition" element={<CaloriesPage />} />
+            <Route
+              path="/tasks"
+              element={
+                <RequireModule module="tasks">
+                  <TasksPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/forest"
+              element={
+                <RequireModule module="tasks">
+                  <ForestPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/calendar"
+              element={
+                <RequireModule module="review">
+                  <CalendarPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/month-plan"
+              element={
+                <RequireModule module="tasks">
+                  <MonthPlanPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/nutrition"
+              element={
+                <RequireModule module="nutrition">
+                  <CaloriesPage />
+                </RequireModule>
+              }
+            />
             <Route path="/calories" element={<Navigate to="/nutrition" replace />} />
-            <Route path="/habits" element={<RhythmPage />} />
+            <Route
+              path="/habits"
+              element={
+                <RequireModule module="habits">
+                  <RhythmPage />
+                </RequireModule>
+              }
+            />
             <Route path="/rhythm" element={<Navigate to="/habits" replace />} />
-            <Route path="/notes" element={<NotesPage />} />
-            <Route path="/notes/new" element={<NoteCreatePage />} />
-            <Route path="/notes/:id" element={<NoteDetailPage />} />
-            <Route path="/notes/:id/edit" element={<NoteEditPage />} />
-            <Route path="/review" element={<ReviewPage />} />
-            <Route path="/materials" element={<MaterialsPage />} />
-            <Route path="/materials/new" element={<MaterialCreatePage />} />
-            <Route path="/materials/:id" element={<MaterialDetailPage />} />
-            <Route path="/materials/:id/edit" element={<MaterialEditPage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/finance" element={<FinanceBudgetPage />} />
-            <Route path="/finance/transactions" element={<FinanceTransactionsPage />} />
-            <Route path="/finance/categories" element={<FinanceCategoriesPage />} />
+            <Route
+              path="/notes"
+              element={
+                <RequireModule module="notes">
+                  <NotesPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/notes/new"
+              element={
+                <RequireModule module="notes">
+                  <NoteCreatePage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/notes/:id"
+              element={
+                <RequireModule module="notes">
+                  <NoteDetailPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/notes/:id/edit"
+              element={
+                <RequireModule module="notes">
+                  <NoteEditPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/review"
+              element={
+                <RequireModule module="review">
+                  <ReviewPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/materials"
+              element={
+                <RequireModule module="review">
+                  <MaterialsPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/materials/new"
+              element={
+                <RequireModule module="review">
+                  <MaterialCreatePage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/materials/:id"
+              element={
+                <RequireModule module="review">
+                  <MaterialDetailPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/materials/:id/edit"
+              element={
+                <RequireModule module="review">
+                  <MaterialEditPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <RequireModule module="review">
+                  <CategoriesPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/finance"
+              element={
+                <RequireModule module="finance">
+                  <FinanceBudgetPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/finance/transactions"
+              element={
+                <RequireModule module="finance">
+                  <FinanceTransactionsPage />
+                </RequireModule>
+              }
+            />
+            <Route
+              path="/finance/categories"
+              element={
+                <RequireModule module="finance">
+                  <FinanceCategoriesPage />
+                </RequireModule>
+              }
+            />
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
             <Route path="/admin" element={<AdminPage />} />

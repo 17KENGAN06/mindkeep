@@ -9,7 +9,7 @@ export function AuthLayout() {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-x-hidden">
+    <div className="flex min-h-dvh flex-col overflow-x-clip">
       <div className="mx-auto w-full max-w-md flex-1 px-4 py-5 sm:px-6 sm:py-6">
         <header className="mb-6 flex items-center justify-between gap-3 sm:mb-8">
           <BrandLockup to="/" size="md" />

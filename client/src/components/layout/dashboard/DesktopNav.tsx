@@ -2,6 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { NavDropdown } from '@/components/layout/dashboard/NavDropdown';
 import {
+  filterNavForModules,
   filterNavForRole,
   isNavLinkActive,
   type DashboardNavEntry,
@@ -17,12 +18,13 @@ const linkClass = (active: boolean) =>
 type DesktopNavProps = {
   entries: DashboardNavEntry[];
   isAdmin: boolean;
+  user: { onboardingCompleted?: boolean; enabledModules?: string[] } | null;
 };
 
-export function DesktopNav({ entries, isAdmin }: DesktopNavProps) {
+export function DesktopNav({ entries, isAdmin, user }: DesktopNavProps) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
-  const visible = filterNavForRole(entries, isAdmin);
+  const visible = filterNavForModules(filterNavForRole(entries, isAdmin), user);
 
   return (
     <nav className="hidden items-center gap-1 min-[1200px]:flex" aria-label="Main">

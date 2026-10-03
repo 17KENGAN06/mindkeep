@@ -93,6 +93,8 @@ model User {
   planExpiresAt        DateTime?
   cancelAtPeriodEnd    Boolean       @default(false)
   betaTester           Boolean       @default(false)
+  onboardingCompletedAt DateTime?
+  enabledModules        String[]     @default([])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

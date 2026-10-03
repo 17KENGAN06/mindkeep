@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { env } from '@/config/env';
+import { needsOnboarding } from '@/config/appModules';
 import { useAuth } from '@/features/auth/useAuth';
 
 export function ProtectedRoute() {
@@ -26,6 +27,14 @@ export function ProtectedRoute() {
 
   if (env.maintenanceMode && user?.role !== 'ADMIN') {
     return <Navigate to="/" replace />;
+  }
+
+  if (needsOnboarding(user) && location.pathname !== '/onboarding') {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  if (!needsOnboarding(user) && location.pathname === '/onboarding') {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;

@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
+import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { MoreScreen } from '../screens/MoreScreen';
 import { RhythmScreen } from '../screens/RhythmScreen';
 import { NoteDetailScreen } from '../screens/notes/NoteDetailScreen';
@@ -36,6 +37,7 @@ export function MoreNavigator() {
       }}
     >
       <Stack.Screen name="MoreHome" component={MoreScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: t('settings.title') }} />
       <Stack.Screen name="Rhythm" component={RhythmScreen} options={{ title: t('rhythm.title') }} />
       <Stack.Screen name="Notes" component={NotesScreen} options={{ title: t('notes.title') }} />
       <Stack.Screen

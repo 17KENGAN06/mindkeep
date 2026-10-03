@@ -420,6 +420,8 @@
       "passwordMax": "La contraseña debe tener como máximo 72 caracteres",
       "generic": "Algo salió mal. Inténtalo de nuevo.",
       "invalidCredentials": "Correo o contraseña no válidos",
+      "wrongPassword": "Contraseña incorrecta",
+      "deleteFailed": "No se pudo eliminar la cuenta. Inténtalo de nuevo.",
       "emailTaken": "Este correo ya está registrado",
       "network": "No se puede alcanzar el servidor. Revisa tu conexión e inténtalo de nuevo.",
       "csrf": "La comprobación de seguridad rechazó esta solicitud.",
@@ -804,5 +806,51 @@
   },
   "nav": {
     "account": "Cuenta"
+  },
+  "onboarding": {
+    "eyebrow": "Ajuste rápido",
+    "progress": "{{current}} de {{total}}",
+    "wantThis": "Quiero esto",
+    "skipThis": "Ahora no",
+    "finishTitle": "Listo",
+    "finishBody": "Más tarde puedes activar o desactivar servicios en Más → Ajustes.",
+    "finish": "Ir al espacio",
+    "needOne": "Elige al menos un servicio para continuar.",
+    "modules": {
+      "tasks": {
+        "title": "Tareas del día",
+        "text": "Planifica hoy y el mes, marca lo hecho y ve la semana sin ruido en la cabeza."
+      },
+      "review": {
+        "title": "Estudio y retorno",
+        "text": "Guarda lo importante y vuelve en el ritmo 3 · 7 · 30 — el conocimiento no tiene que desaparecer tras una semana densa."
+      },
+      "notes": {
+        "title": "Notas",
+        "text": "Los pensamientos junto al trabajo, no en otra app que luego no abres."
+      },
+      "habits": {
+        "title": "Hábitos",
+        "text": "Un ritmo mensual simple de mantener — una marca al día, sin teatro de rachas."
+      },
+      "finance": {
+        "title": "Presupuesto",
+        "text": "Ingresos, gastos y un saldo de periodo claro, para que el dinero no se pierda detrás del estudio."
+      },
+      "nutrition": {
+        "title": "Nutrición y cuerpo",
+        "text": "Comidas, agua y peso en el mismo espacio — suficiente para ser honesto, sin otro panel."
+      }
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "subtitle": "Elige qué aparece en el menú y en el resumen. Puedes cambiarlo cuando quieras.",
+    "modulesTitle": "Servicios",
+    "modulesHint": "Los servicios apagados desaparecen de la cabecera y del resumen. Tus datos se quedan.",
+    "appearanceTitle": "Apariencia",
+    "saved": "Guardado.",
+    "needOne": "Deja al menos un servicio activado.",
+    "menuHint": "Servicios, idioma, tema, zona horaria."
   }
 }

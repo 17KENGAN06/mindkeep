@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
+import { userHasModule } from '@/config/appModules';
 import { useAuth } from '@/features/auth/useAuth';
 import { currencyLabel } from '@/features/finance/currencies';
 import {
@@ -75,32 +76,45 @@ export function DashboardPage() {
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const period = currentPeriodDefaults();
   const today = toDateInputValue();
-  const [weekTab, setWeekTab] = useState<WeekTab>('tasks');
+  const showTasks = userHasModule(user, 'tasks');
+  const showReview = userHasModule(user, 'review');
+  const showHabits = userHasModule(user, 'habits');
+  const showNutrition = userHasModule(user, 'nutrition');
+  const showFinance = userHasModule(user, 'finance');
+  const [weekTab, setWeekTab] = useState<WeekTab>(showTasks ? 'tasks' : 'reviews');
+  const weekTabId: WeekTab =
+    showTasks && (!showReview || weekTab === 'tasks') ? 'tasks' : 'reviews';
   const [busyTaskId, setBusyTaskId] = useState<string | null>(null);
 
   const dashboardQuery = useDashboardStatistics();
   const activityQuery = useActivityStatistics();
-  const tasksQuery = useDailyTasksPeriod({
-    view: 'month',
-    year: period.year,
-    month: period.month,
-  });
-  const financeQuery = useFinanceSummary({
-    view: 'month',
-    year: period.year,
-    month: period.month,
-  });
-  const nutritionQuery = useNutritionPeriod(period.year, period.month);
-  const rhythmQuery = useRhythmPeriod(period.year, period.month);
+  const tasksQuery = useDailyTasksPeriod(
+    {
+      view: 'month',
+      year: period.year,
+      month: period.month,
+    },
+    showTasks,
+  );
+  const financeQuery = useFinanceSummary(
+    {
+      view: 'month',
+      year: period.year,
+      month: period.month,
+    },
+    showFinance,
+  );
+  const nutritionQuery = useNutritionPeriod(period.year, period.month, showNutrition);
+  const rhythmQuery = useRhythmPeriod(period.year, period.month, showHabits);
   const setWater = useSetWater();
   const updateTask = useUpdateDailyTask();
 
   const loading =
     dashboardQuery.isLoading ||
     activityQuery.isLoading ||
-    tasksQuery.isLoading ||
-    financeQuery.isLoading ||
-    nutritionQuery.isLoading;
+    (showTasks && tasksQuery.isLoading) ||
+    (showFinance && financeQuery.isLoading) ||
+    (showNutrition && nutritionQuery.isLoading);
 
   const weekDays = useMemo(() => {
     const days: string[] = [];
@@ -161,7 +175,7 @@ export function DashboardPage() {
   const chartMax = Math.max(
     1,
     ...weekSeries.map((day) => {
-      if (weekTab === 'tasks') return Math.max(day.tasksPlanned, day.tasksDone);
+      if (weekTabId === 'tasks') return Math.max(day.tasksPlanned, day.tasksDone);
       return day.reviewsDone;
     }),
   );
@@ -193,14 +207,18 @@ export function DashboardPage() {
         <p className="max-w-sm text-sm text-muted italic lg:text-right">{t('dashboard.quote')}</p>
       </section>
 
+      {(showTasks || showReview || showHabits) && (
       <section className="rounded-3xl bg-panel px-4 py-4 shadow-sm ring-1 ring-line sm:px-5">
         <div className="divide-y divide-line/80">
+          {showTasks ? (
           <TodayProgressRow
             icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
             title={t('dashboard.cards.tasksToday')}
             valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
             percent={tasksPercent}
           />
+          ) : null}
+          {showReview ? (
           <TodayProgressRow
             icon={<GraduationCap className="h-5 w-5" aria-hidden />}
             title={t('dashboard.cards.reviews')}
@@ -210,6 +228,8 @@ export function DashboardPage() {
             })}
             percent={reviewsPercent}
           />
+          ) : null}
+          {showHabits ? (
           <TodayProgressRow
             icon={<Repeat className="h-5 w-5" aria-hidden />}
             title={t('dashboard.cards.rhythmToday')}
@@ -220,9 +240,12 @@ export function DashboardPage() {
             }
             percent={rhythmTotal === 0 ? 0 : (rhythmDone / rhythmTotal) * 100}
           />
+          ) : null}
         </div>
       </section>
+      )}
 
+      {showNutrition ? (
       <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
@@ -278,8 +301,11 @@ export function DashboardPage() {
           </div>
         </div>
       </section>
+      ) : null}
 
+      {(showTasks || showReview) && (
       <section className="grid min-w-0 gap-4 xl:grid-cols-2">
+        {showTasks ? (
         <article className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
             <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.upcomingTasks')}</h2>
@@ -342,10 +368,13 @@ export function DashboardPage() {
             )}
           </ul>
         </article>
+        ) : null}
 
+        {(showTasks || showReview) && (
         <article className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
             <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.weekTitle')}</h2>
+            {showTasks && showReview ? (
             <div className="flex flex-wrap gap-1 rounded-2xl bg-brand-50/40 p-1 ring-1 ring-line/60">
               {(
                 [
@@ -357,7 +386,7 @@ export function DashboardPage() {
                   key={id}
                   type="button"
                   className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
-                    weekTab === id
+                    weekTabId === id
                       ? 'bg-brand-500 text-[#07110d]'
                       : 'text-muted hover:text-ink'
                   }`}
@@ -367,12 +396,13 @@ export function DashboardPage() {
                 </button>
               ))}
             </div>
+            ) : null}
           </div>
 
           <div className="mt-5 flex h-44 min-w-0 items-end gap-1 sm:gap-2">
             {weekSeries.map((day) => {
-              const planned = weekTab === 'tasks' ? day.tasksPlanned : Math.max(day.reviewsDone, 1);
-              const done = weekTab === 'tasks' ? day.tasksDone : day.reviewsDone;
+              const planned = weekTabId === 'tasks' ? day.tasksPlanned : Math.max(day.reviewsDone, 1);
+              const done = weekTabId === 'tasks' ? day.tasksDone : day.reviewsDone;
               const plannedHeight = `${Math.max((planned / chartMax) * 100, planned > 0 ? 8 : 4)}%`;
               const doneHeight = `${Math.max((done / chartMax) * 100, done > 0 ? 8 : 0)}%`;
 
@@ -409,9 +439,13 @@ export function DashboardPage() {
             </span>
           </div>
         </article>
+        )}
       </section>
+      )}
 
+      {(showReview || showFinance) && (
       <section className="grid gap-4 xl:grid-cols-2">
+        {showReview ? (
         <article className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base font-semibold text-ink">{t('dashboard.recentTitle')}</h2>
@@ -462,7 +496,9 @@ export function DashboardPage() {
             </ul>
           )}
         </article>
+        ) : null}
 
+        {showFinance ? (
         <article className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base font-semibold text-ink">{t('dashboard.financeTitle')}</h2>
@@ -498,7 +534,9 @@ export function DashboardPage() {
             </ul>
           )}
         </article>
+        ) : null}
       </section>
+      )}
     </div>
   );
 }

@@ -420,6 +420,8 @@
       "passwordMax": "Le mot de passe doit contenir au plus 72 caractères",
       "generic": "Une erreur s'est produite. Réessaie.",
       "invalidCredentials": "E-mail ou mot de passe incorrect",
+      "wrongPassword": "Mot de passe incorrect",
+      "deleteFailed": "Impossible de supprimer le compte. Réessaie.",
       "emailTaken": "Cet e-mail est déjà enregistré",
       "network": "Impossible de joindre le serveur. Vérifie ta connexion et réessaie.",
       "csrf": "Le contrôle de sécurité a refusé cette requête.",
@@ -804,5 +806,51 @@
   },
   "nav": {
     "account": "Compte"
+  },
+  "onboarding": {
+    "eyebrow": "Réglage rapide",
+    "progress": "{{current}} sur {{total}}",
+    "wantThis": "Je veux ça",
+    "skipThis": "Pas maintenant",
+    "finishTitle": "C’est prêt",
+    "finishBody": "Tu pourras tout activer ou désactiver plus tard dans Plus → Réglages.",
+    "finish": "Aller à l’espace",
+    "needOne": "Choisis au moins un service pour continuer.",
+    "modules": {
+      "tasks": {
+        "title": "Tâches du jour",
+        "text": "Planifiez aujourd’hui et le mois, cochez, et voyez la semaine sans bruit dans la tête."
+      },
+      "review": {
+        "title": "Études et retour",
+        "text": "Gardez l’essentiel et revenez au rythme 3 · 7 · 30 — le savoir n’a pas à disparaître après une semaine dense."
+      },
+      "notes": {
+        "title": "Notes",
+        "text": "Les pensées à côté du travail, pas dans une autre appli que vous n’ouvrirez plus."
+      },
+      "habits": {
+        "title": "Habitudes",
+        "text": "Un rythme mensuel simple à tenir — une case par jour, sans théâtre de séries."
+      },
+      "finance": {
+        "title": "Budget",
+        "text": "Revenus, dépenses et un solde de période clair, pour que l’argent ne disparaisse pas derrière les études."
+      },
+      "nutrition": {
+        "title": "Nutrition et corps",
+        "text": "Repas, eau et poids dans le même espace — assez pour rester honnête, sans un autre tableau de bord."
+      }
+    }
+  },
+  "settings": {
+    "title": "Réglages",
+    "subtitle": "Choisis ce qui apparaît dans le menu et l’aperçu. Tu peux changer ça à tout moment.",
+    "modulesTitle": "Services",
+    "modulesHint": "Les services désactivés disparaissent de l’en-tête et de l’aperçu. Tes données restent.",
+    "appearanceTitle": "Apparence",
+    "saved": "Enregistré.",
+    "needOne": "Garde au moins un service activé.",
+    "menuHint": "Services, langue, thème, fuseau."
   }
 }

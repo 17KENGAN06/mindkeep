@@ -4,6 +4,7 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { needsOnboarding, userHasModule } from '../config/appModules';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useTheme } from '../features/theme/useTheme';
@@ -12,6 +13,7 @@ import { BrandMark } from '../components/BrandMark';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
+import { OnboardingScreen } from '../screens/onboarding/OnboardingScreen';
 import { FuelScreen } from '../screens/FuelScreen';
 import { TasksNavigator } from './TasksNavigator';
 import { TodayScreen } from '../screens/TodayScreen';
@@ -54,9 +56,13 @@ function AuthNavigator() {
 function AppTabs() {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const { user } = useAuth();
   const unreadQuery = useUnreadNotificationsCount();
   const unread = unreadQuery.data ?? 0;
   const badge = unread > 0 ? (unread > 99 ? '99+' : unread) : undefined;
+  const showReview = userHasModule(user, 'review');
+  const showTasks = userHasModule(user, 'tasks');
+  const showFuel = userHasModule(user, 'nutrition');
 
   return (
     <Tabs.Navigator
@@ -82,9 +88,15 @@ function AppTabs() {
         component={TodayScreen}
         options={{ tabBarLabel: t('tabs.today'), tabBarBadge: badge }}
       />
-      <Tabs.Screen name="Review" component={ReviewNavigator} options={{ tabBarLabel: t('tabs.review') }} />
-      <Tabs.Screen name="Tasks" component={TasksNavigator} options={{ tabBarLabel: t('tabs.tasks') }} />
-      <Tabs.Screen name="Fuel" component={FuelScreen} options={{ tabBarLabel: t('tabs.fuel') }} />
+      {showReview ? (
+        <Tabs.Screen name="Review" component={ReviewNavigator} options={{ tabBarLabel: t('tabs.review') }} />
+      ) : null}
+      {showTasks ? (
+        <Tabs.Screen name="Tasks" component={TasksNavigator} options={{ tabBarLabel: t('tabs.tasks') }} />
+      ) : null}
+      {showFuel ? (
+        <Tabs.Screen name="Fuel" component={FuelScreen} options={{ tabBarLabel: t('tabs.fuel') }} />
+      ) : null}
       <Tabs.Screen
         name="More"
         component={MoreNavigator}
@@ -95,7 +107,7 @@ function AppTabs() {
 }
 
 export function RootNavigator() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
   const { colors, theme } = useTheme();
   const navTheme = useMemo(
     () => ({
@@ -123,7 +135,11 @@ export function RootNavigator() {
 
   return (
     <NavigationContainer theme={navTheme}>
-      {isAuthenticated ? <AppTabs /> : <AuthNavigator />}
+      {isAuthenticated ? (
+        needsOnboarding(user) ? <OnboardingScreen /> : <AppTabs />
+      ) : (
+        <AuthNavigator />
+      )}
     </NavigationContainer>
   );
 }

@@ -420,6 +420,8 @@
       "passwordMax": "Password must be at most 72 characters",
       "generic": "Something went wrong. Please try again.",
       "invalidCredentials": "Invalid email or password",
+      "wrongPassword": "Wrong password",
+      "deleteFailed": "Could not delete the account. Try again.",
       "emailTaken": "This email is already registered",
       "network": "Cannot reach the server. Check your internet and try again.",
       "csrf": "Security check rejected this request.",
@@ -804,5 +806,51 @@
   },
   "nav": {
     "account": "Account"
+  },
+  "onboarding": {
+    "eyebrow": "Quick setup",
+    "progress": "{{current}} of {{total}}",
+    "wantThis": "I want this",
+    "skipThis": "Not now",
+    "finishTitle": "You are set",
+    "finishBody": "You can turn services on or off later in More → Settings.",
+    "finish": "Go to workspace",
+    "needOne": "Choose at least one service to continue.",
+    "modules": {
+      "tasks": {
+        "title": "Daily tasks",
+        "text": "Plan today and the month, check things off, and see the week without noise in your head."
+      },
+      "review": {
+        "title": "Learning & review",
+        "text": "Save what mattered and return on a 3 · 7 · 30 beat — knowledge stays after a busy stretch."
+      },
+      "notes": {
+        "title": "Notes",
+        "text": "Capture thoughts next to the work, not in another app that you will forget to open."
+      },
+      "habits": {
+        "title": "Habits",
+        "text": "A simple monthly rhythm you can keep — one check a day, without a noisy streak theatre."
+      },
+      "finance": {
+        "title": "Budget",
+        "text": "Income, expenses, and a clear period balance, so money does not disappear behind the studies."
+      },
+      "nutrition": {
+        "title": "Nutrition & body",
+        "text": "Meals, water, and weight in the same cabinet — enough to stay honest, not another dashboard."
+      }
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Choose what appears in the menu and overview. You can change this anytime.",
+    "modulesTitle": "Services",
+    "modulesHint": "Services you switch off disappear from the header and overview. Your data stays.",
+    "appearanceTitle": "Appearance",
+    "saved": "Saved.",
+    "needOne": "Keep at least one service on.",
+    "menuHint": "Services, language, theme, timezone."
   }
 }

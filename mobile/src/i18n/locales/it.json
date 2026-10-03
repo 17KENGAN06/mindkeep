@@ -420,6 +420,8 @@
       "passwordMax": "La password deve avere al massimo 72 caratteri",
       "generic": "Qualcosa è andato storto. Riprova.",
       "invalidCredentials": "E-mail o password non validi",
+      "wrongPassword": "Password non valida",
+      "deleteFailed": "Impossibile eliminare l'account. Riprova.",
       "emailTaken": "Questa e-mail è già registrata",
       "network": "Impossibile raggiungere il server. Controlla la connessione e riprova.",
       "csrf": "Il controllo di sicurezza ha rifiutato questa richiesta.",
@@ -804,5 +806,51 @@
   },
   "nav": {
     "account": "Account"
+  },
+  "onboarding": {
+    "eyebrow": "Setup rapido",
+    "progress": "{{current}} di {{total}}",
+    "wantThis": "Lo voglio",
+    "skipThis": "Non ora",
+    "finishTitle": "Tutto pronto",
+    "finishBody": "Più tardi puoi accendere o spegnere i servizi in Altro → Impostazioni.",
+    "finish": "Vai allo spazio",
+    "needOne": "Scegli almeno un servizio per continuare.",
+    "modules": {
+      "tasks": {
+        "title": "Compiti del giorno",
+        "text": "Pianifica oggi e il mese, spunta e vedi la settimana senza rumore in testa."
+      },
+      "review": {
+        "title": "Studio e ritorno",
+        "text": "Salva ciò che conta e torna nel ritmo 3 · 7 · 30 — la conoscenza non deve svanire dopo una settimana piena."
+      },
+      "notes": {
+        "title": "Note",
+        "text": "I pensieri accanto al lavoro, non in un’altra app che poi non apri."
+      },
+      "habits": {
+        "title": "Abitudini",
+        "text": "Un ritmo mensile semplice da tenere — un segno al giorno, senza teatro di serie."
+      },
+      "finance": {
+        "title": "Budget",
+        "text": "Entrate, uscite e un saldo di periodo chiaro, così i soldi non spariscono dietro lo studio."
+      },
+      "nutrition": {
+        "title": "Nutrizione e corpo",
+        "text": "Pasti, acqua e peso nello stesso spazio — abbastanza per essere onesti, senza un altro cruscotto."
+      }
+    }
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "subtitle": "Scegli cosa compare nel menu e nella panoramica. Puoi cambiarlo quando vuoi.",
+    "modulesTitle": "Servizi",
+    "modulesHint": "I servizi spenti spariscono dall’intestazione e dalla panoramica. I dati restano.",
+    "appearanceTitle": "Aspetto",
+    "saved": "Salvato.",
+    "needOne": "Tieni acceso almeno un servizio.",
+    "menuHint": "Servizi, lingua, tema, fuso orario."
   }
 }

@@ -7,6 +7,8 @@ export type User = {
   hasPassword?: boolean;
   plan?: 'FREE' | 'PRO';
   betaTester?: boolean;
+  onboardingCompleted?: boolean;
+  enabledModules?: string[];
   createdAt: string;
   updatedAt: string;
 };

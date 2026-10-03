@@ -10,7 +10,9 @@ export type AuthContextValue = {
   confirmLogin: (payload: LoginCodePayload) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<{ pending: true }>;
   googleLogin: (payload: GoogleLoginPayload) => Promise<User>;
+  completeOnboarding: (modules: string[]) => Promise<User>;
   updateTimezone: (timezone: string) => Promise<User>;
+  updateWorkspace: (payload: { timezone?: string; enabledModules?: string[] }) => Promise<User>;
   logout: () => Promise<void>;
 };
 

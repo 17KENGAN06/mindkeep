@@ -13,6 +13,10 @@ export function mapAuthError(error: unknown, t: Translate): string {
   }
 
   switch (error.code) {
+    case 'INVALID_PASSWORD':
+      return t('auth.errors.wrongPassword');
+    case 'DELETE_FAILED':
+      return t('auth.errors.deleteFailed');
     case 'INVALID_CREDENTIALS':
       return t('auth.errors.invalidCredentials');
     case 'EMAIL_TAKEN':
@@ -28,6 +32,8 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.emailUnavailable');
     case 'INVALID_LOGIN_CODE':
       return t('auth.errors.invalidLoginCode');
+    case 'ONBOARDING_REQUIRED':
+      return t('onboarding.needOne');
     case 'INVALID_EMAIL_TOKEN':
       return t('auth.errors.invalidEmailToken');
     case 'BOT_REJECTED':

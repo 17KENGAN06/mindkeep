@@ -420,6 +420,8 @@
       "passwordMax": "Salasana saa olla enintään 72 merkkiä",
       "generic": "Jotain meni pieleen. Yritä uudelleen.",
       "invalidCredentials": "Virheellinen sähköposti tai salasana",
+      "wrongPassword": "Väärä salasana",
+      "deleteFailed": "Tiliä ei voitu poistaa. Yritä uudelleen.",
       "emailTaken": "Tämä sähköposti on jo rekisteröity",
       "network": "Palvelimeen ei saada yhteyttä. Tarkista internet ja yritä uudelleen.",
       "csrf": "Turvatarkistus hylkäsi pyynnön.",
@@ -804,5 +806,51 @@
   },
   "nav": {
     "account": "Tili"
+  },
+  "onboarding": {
+    "eyebrow": "Pika-asetus",
+    "progress": "{{current}} / {{total}}",
+    "wantThis": "Haluan tämän",
+    "skipThis": "Ei nyt",
+    "finishTitle": "Valmista",
+    "finishBody": "Voit myöhemmin kytkeä palvelut päälle tai pois kohdassa Lisää → Asetukset.",
+    "finish": "Työtilaan",
+    "needOne": "Valitse vähintään yksi palvelu jatkaaksesi.",
+    "modules": {
+      "tasks": {
+        "title": "Päivän tehtävät",
+        "text": "Suunnittele tänään ja kuukausi, merkitse valmista ja näe viikko ilman meteliä päässä."
+      },
+      "review": {
+        "title": "Oppiminen ja paluu",
+        "text": "Tallenna tärkeä ja palaa rytmissä 3 · 7 · 30 — tiedon ei tarvitse kadota tiiviin viikon jälkeen."
+      },
+      "notes": {
+        "title": "Muistiinpanot",
+        "text": "Ajatukset työn vieressä, ei toisessa sovelluksessa, jota et enää avaa."
+      },
+      "habits": {
+        "title": "Tavat",
+        "text": "Yksinkertainen kuukausirytmi, jota voi pitää — yksi merkintä päivässä, ilman putkiesitystä."
+      },
+      "finance": {
+        "title": "Budjetti",
+        "text": "Tulot, menot ja selkeä jakson saldo, jotta raha ei katoa oppimisen taakse."
+      },
+      "nutrition": {
+        "title": "Ravinto ja keho",
+        "text": "Ateriat, vesi ja paino samassa tilassa — tarpeeksi rehellisyyteen, ilman uutta kojittymispaneelia."
+      }
+    }
+  },
+  "settings": {
+    "title": "Asetukset",
+    "subtitle": "Valitse, mitä näkyy valikossa ja yleiskatsauksessa. Voit muuttaa tätä milloin vain.",
+    "modulesTitle": "Palvelut",
+    "modulesHint": "Pois kytketyt palvelut katoavat yläpalkista ja yleiskatsauksesta. Tiedot säilyvät.",
+    "appearanceTitle": "Ulkoasu",
+    "saved": "Tallennettu.",
+    "needOne": "Jätä vähintään yksi palvelu päälle.",
+    "menuHint": "Palvelut, kieli, teema, aikavyöhyke."
   }
 }

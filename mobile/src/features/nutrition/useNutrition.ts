@@ -8,10 +8,11 @@ function invalidateNutrition(queryClient: ReturnType<typeof useQueryClient>) {
   return queryClient.invalidateQueries({ queryKey: nutritionKey });
 }
 
-export function useNutritionPeriod(year: number, month: number) {
+export function useNutritionPeriod(year: number, month: number, enabled = true) {
   return useQuery({
     queryKey: [...nutritionKey, year, month],
     queryFn: () => nutritionApi.getPeriod(year, month),
+    enabled,
   });
 }
 

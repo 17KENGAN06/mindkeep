@@ -48,8 +48,10 @@ export const authApi = {
     confirmPassword: string;
   }) => apiClient.post<{ user: User }>('/api/auth/change-password', payload),
   me: () => apiClient.get<{ user: User }>('/api/auth/me'),
-  updateMe: (payload: { timezone: string }) =>
+  updateMe: (payload: { timezone?: string; enabledModules?: string[] }) =>
     apiClient.patch<{ user: User }>('/api/auth/me', payload),
+  completeOnboarding: (payload: { modules: string[] }) =>
+    apiClient.post<{ user: User }>('/api/auth/onboarding', payload),
   logout: (payload?: { refreshToken?: string }) =>
     apiClient.post<{ success: boolean }>('/api/auth/logout', payload),
   sessions: () => apiClient.get<{ sessions: AuthDevice[] }>('/api/auth/sessions'),

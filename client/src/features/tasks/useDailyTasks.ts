@@ -9,10 +9,11 @@ import { touchPlanUsage } from '@/features/billing/planLimit';
 
 const tasksKey = ['daily-tasks'] as const;
 
-export function useDailyTasksPeriod(params: DailyTaskPeriodParams) {
+export function useDailyTasksPeriod(params: DailyTaskPeriodParams, enabled = true) {
   return useQuery({
     queryKey: [...tasksKey, 'period', params],
     queryFn: () => dailyTasksApi.getPeriod(params),
+    enabled,
   });
 }
 

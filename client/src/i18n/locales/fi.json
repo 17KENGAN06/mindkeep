@@ -702,6 +702,8 @@
       "passwordMatch": "Salasanat eivät täsmää",
       "generic": "Jotain meni pieleen. Yritä uudelleen.",
       "invalidCredentials": "Virheellinen sähköposti tai salasana",
+      "wrongPassword": "Väärä salasana",
+      "deleteFailed": "Tiliä ei voitu poistaa. Yritä uudelleen.",
       "emailTaken": "Tämä sähköposti on jo rekisteröity",
       "registerFailed": "Tilin luominen näillä tiedoilla epäonnistui.",
       "passwordMax": "Salasana saa olla enintään 72 merkkiä",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Nollaa salasana · Mindkeep",
       "resetPassword": "Uusi salasana · Mindkeep",
       "verifyEmail": "Vahvista sähköposti · Mindkeep",
-      "account": "Tili · Mindkeep"
+      "account": "Tili · Mindkeep",
+      "onboarding": "Pika-asetus · Mindkeep",
+      "settings": "Asetukset · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä.",
     "remain": "{{left}} / {{limit}} jäljellä",
     "remainDays": "Viimeiset {{count}} pv"
+  },
+  "onboarding": {
+    "eyebrow": "Pika-asetus",
+    "progress": "{{current}} / {{total}}",
+    "wantThis": "Haluan tämän",
+    "skipThis": "Ei nyt",
+    "finishTitle": "Valmista",
+    "finishBody": "Voit myöhemmin kytkeä palvelut päälle tai pois kohdassa Lisää → Asetukset.",
+    "finish": "Työtilaan",
+    "needOne": "Valitse vähintään yksi palvelu jatkaaksesi."
+  },
+  "settings": {
+    "title": "Asetukset",
+    "subtitle": "Valitse, mitä näkyy valikossa ja yleiskatsauksessa. Voit muuttaa tätä milloin vain.",
+    "modulesTitle": "Palvelut",
+    "modulesHint": "Pois kytketyt palvelut katoavat yläpalkista ja yleiskatsauksesta. Tiedot säilyvät.",
+    "appearanceTitle": "Ulkoasu",
+    "saved": "Tallennettu.",
+    "needOne": "Jätä vähintään yksi palvelu päälle."
   }
 }

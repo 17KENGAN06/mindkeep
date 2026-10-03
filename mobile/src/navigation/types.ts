@@ -33,6 +33,7 @@ export type MoreStackParamList = {
   Finance: undefined;
   Contact: undefined;
   Account: undefined;
+  Settings: undefined;
   Guide: undefined;
   Statistics: undefined;
   Blog: undefined;

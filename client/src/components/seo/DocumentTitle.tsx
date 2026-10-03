@@ -9,6 +9,8 @@ const routeTitleKeys: Record<string, string> = {
   '/forgot-password': 'seo.titles.forgotPassword',
   '/reset-password': 'seo.titles.resetPassword',
   '/verify-email': 'seo.titles.verifyEmail',
+  '/onboarding': 'seo.titles.onboarding',
+  '/settings': 'seo.titles.settings',
   '/account': 'seo.titles.account',
   '/dashboard': 'seo.titles.dashboard',
   '/tasks': 'seo.titles.tasks',

@@ -29,6 +29,7 @@ import type {
   GoogleLoginInput,
   LoginCodeInput,
   LoginInput,
+  OnboardingInput,
   RegisterInput,
   RefreshInput,
   ResetPasswordInput,
@@ -151,6 +152,18 @@ export class AuthController {
     }
 
     const user = await authService.updateMe(req.user.id, req.body as UpdateMeInput);
+    res.status(200).json({ user });
+  }
+
+  async completeOnboarding(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const user = await authService.completeOnboarding(req.user.id, req.body as OnboardingInput);
     res.status(200).json({ user });
   }
 

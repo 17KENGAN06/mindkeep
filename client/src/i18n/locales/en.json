@@ -702,6 +702,8 @@
       "passwordMatch": "Passwords do not match",
       "generic": "Something went wrong. Please try again.",
       "invalidCredentials": "Invalid email or password",
+      "wrongPassword": "Wrong password",
+      "deleteFailed": "Could not delete the account. Try again.",
       "emailTaken": "This email is already registered",
       "registerFailed": "Unable to create an account with these details.",
       "passwordMax": "Password must be at most 72 characters",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Reset password · Mindkeep",
       "resetPassword": "New password · Mindkeep",
       "verifyEmail": "Confirm email · Mindkeep",
-      "account": "Account · Mindkeep"
+      "account": "Account · Mindkeep",
+      "onboarding": "Quick setup · Mindkeep",
+      "settings": "Settings · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "Quantity limits are off on this account.",
     "remain": "{{left}} of {{limit}} left",
     "remainDays": "Last {{count}} days"
+  },
+  "onboarding": {
+    "eyebrow": "Quick setup",
+    "progress": "{{current}} of {{total}}",
+    "wantThis": "I want this",
+    "skipThis": "Not now",
+    "finishTitle": "You are set",
+    "finishBody": "You can turn services on or off later in More → Settings.",
+    "finish": "Go to workspace",
+    "needOne": "Choose at least one service to continue."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Choose what appears in the menu and overview. You can change this anytime.",
+    "modulesTitle": "Services",
+    "modulesHint": "Services you switch off disappear from the header and overview. Your data stays.",
+    "appearanceTitle": "Appearance",
+    "saved": "Saved.",
+    "needOne": "Keep at least one service on."
   }
 }

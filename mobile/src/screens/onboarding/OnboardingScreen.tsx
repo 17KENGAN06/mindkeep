@@ -1,0 +1,155 @@
+import { useMemo, useState } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
+import { BrandMark } from '../../components/BrandMark';
+import { APP_MODULES, type AppModule } from '../../config/appModules';
+import { mapAuthError } from '../../features/auth/mapAuthError';
+import { useAuth } from '../../features/auth/useAuth';
+import { useTheme } from '../../features/theme/useTheme';
+
+export function OnboardingScreen() {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const { completeOnboarding, logout } = useAuth();
+  const [step, setStep] = useState(0);
+  const [picked, setPicked] = useState<AppModule[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const total = APP_MODULES.length;
+  const asking = step < total;
+  const module = asking ? APP_MODULES[step] : null;
+  const selected = useMemo(() => new Set(picked), [picked]);
+
+  const choose = (want: boolean) => {
+    if (!module) return;
+    setError(null);
+    setPicked((current) => {
+      const next = current.filter((item) => item !== module);
+      return want ? [...next, module] : next;
+    });
+    setStep((value) => value + 1);
+  };
+
+  const onFinish = async () => {
+    if (picked.length === 0) {
+      setError(t('onboarding.needOne'));
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      await completeOnboarding(picked);
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={[styles.root, { backgroundColor: colors.bg }]}>
+      <View style={styles.top}>
+        <BrandMark size={40} />
+        <Pressable onPress={() => void logout()}>
+          <Text style={[styles.logout, { color: colors.muted }]}>{t('common.logout')}</Text>
+        </Pressable>
+      </View>
+      <View style={styles.dots}>
+        {APP_MODULES.map((item, index) => (
+          <View
+            key={item}
+            style={[
+              styles.dot,
+              { backgroundColor: index <= step ? colors.brand : colors.line },
+            ]}
+          />
+        ))}
+      </View>
+      <Text style={[styles.progress, { color: colors.muted }]}>
+        {t('onboarding.progress', { current: Math.min(step + 1, total), total })}
+      </Text>
+
+      <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
+      {asking && module ? (
+        <View>
+          <Text style={[styles.eyebrow, { color: colors.brand }]}>{t('onboarding.eyebrow')}</Text>
+          <Text style={[styles.title, { color: colors.ink }]}>
+            {t(`onboarding.modules.${module}.title`)}
+          </Text>
+          <Text style={[styles.text, { color: colors.muted }]}>
+            {t(`onboarding.modules.${module}.text`)}
+          </Text>
+          <Pressable
+            onPress={() => choose(true)}
+            style={[styles.button, { backgroundColor: colors.brand }]}
+          >
+            <Text style={[styles.buttonText, { color: colors.onBrand }]}>
+              {t('onboarding.wantThis')}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => choose(false)}
+            style={[styles.button, styles.secondary, { borderColor: colors.line }]}
+          >
+            <Text style={[styles.buttonText, { color: colors.ink }]}>{t('onboarding.skipThis')}</Text>
+          </Pressable>
+          {step > 0 ? (
+            <Pressable onPress={() => setStep((value) => Math.max(0, value - 1))}>
+              <Text style={[styles.back, { color: colors.brand }]}>{t('common.back')}</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      ) : (
+        <View>
+          <Text style={[styles.title, { color: colors.ink }]}>{t('onboarding.finishTitle')}</Text>
+          <Text style={[styles.text, { color: colors.muted }]}>{t('onboarding.finishBody')}</Text>
+          {picked.length === 0 ? (
+            <Text style={[styles.error, { color: colors.danger }]}>{t('onboarding.needOne')}</Text>
+          ) : (
+            APP_MODULES.filter((item) => selected.has(item)).map((item) => (
+              <Text key={item} style={[styles.pick, { color: colors.ink, backgroundColor: colors.panel }]}>
+                {t(`onboarding.modules.${item}.title`)}
+              </Text>
+            ))
+          )}
+          {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
+          <Pressable
+            disabled={busy || picked.length === 0}
+            onPress={() => void onFinish()}
+            style={[styles.button, { backgroundColor: colors.brand, opacity: busy ? 0.7 : 1 }]}
+          >
+            {busy ? (
+              <ActivityIndicator color={colors.onBrand} />
+            ) : (
+              <Text style={[styles.buttonText, { color: colors.onBrand }]}>{t('onboarding.finish')}</Text>
+            )}
+          </Pressable>
+          <Pressable onPress={() => setStep(total - 1)}>
+            <Text style={[styles.back, { color: colors.brand }]}>{t('common.back')}</Text>
+          </Pressable>
+        </View>
+      )}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  root: { flex: 1, padding: 24 },
+  top: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  logout: { fontSize: 14, fontWeight: '600' },
+  dots: { flexDirection: 'row', gap: 6, marginTop: 24 },
+  dot: { flex: 1, height: 6, borderRadius: 99 },
+  progress: { marginTop: 12, fontSize: 12, letterSpacing: 1, textTransform: 'uppercase' },
+  body: { flexGrow: 1, paddingTop: 28, paddingBottom: 32 },
+  eyebrow: { fontSize: 12, fontWeight: '700', letterSpacing: 1.4, textTransform: 'uppercase' },
+  title: { fontSize: 32, fontWeight: '700', marginTop: 16 },
+  text: { fontSize: 16, lineHeight: 24, marginTop: 12, marginBottom: 28 },
+  button: { alignItems: 'center', borderRadius: 16, paddingVertical: 16, marginBottom: 12 },
+  secondary: { borderWidth: 1, backgroundColor: 'transparent' },
+  buttonText: { fontSize: 16, fontWeight: '700' },
+  back: { textAlign: 'center', marginTop: 8, fontSize: 15, fontWeight: '600' },
+  error: { marginBottom: 16, fontSize: 14 },
+  pick: { borderRadius: 14, marginBottom: 8, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, fontWeight: '600' },
+});

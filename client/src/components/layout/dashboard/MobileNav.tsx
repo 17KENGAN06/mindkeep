@@ -2,9 +2,8 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
-import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import {
+  filterNavForModules,
   filterNavForRole,
   isNavGroupActive,
   isNavLinkActive,
@@ -22,6 +21,7 @@ const linkClass = (active: boolean) =>
 type MobileNavProps = {
   entries: DashboardNavEntry[];
   isAdmin: boolean;
+  user: { onboardingCompleted?: boolean; enabledModules?: string[] } | null;
   onLogout: () => void;
 };
 
@@ -82,13 +82,13 @@ function MobileAccordionGroup({
   );
 }
 
-export function MobileNav({ entries, isAdmin, onLogout }: MobileNavProps) {
+export function MobileNav({ entries, isAdmin, user, onLogout }: MobileNavProps) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const titleId = useId();
-  const visible = filterNavForRole(entries, isAdmin);
+  const visible = filterNavForModules(filterNavForRole(entries, isAdmin), user);
 
   useEffect(() => {
     setOpen(false);
@@ -178,23 +178,9 @@ export function MobileNav({ entries, isAdmin, onLogout }: MobileNavProps) {
               })}
             </nav>
 
-            <div className="mt-6 space-y-3 border-t border-line/60 pt-5">
-              <p className="text-xs tracking-[0.18em] text-muted uppercase">
-                {t('nav.settings')}
-              </p>
-              <div className="flex items-center justify-between gap-3 rounded-2xl border border-line/70 bg-brand-50/30 px-4 py-3">
-                <span className="text-sm font-medium text-ink">{t('common.theme')}</span>
-                <ThemeToggle />
-              </div>
-              <div className="space-y-2 rounded-2xl border border-line/70 bg-brand-50/30 px-4 py-3">
-                <span className="text-sm font-medium text-ink">{t('common.language')}</span>
-                <LanguageSwitcher variant="panel" />
-              </div>
-            </div>
-
             <button
               type="button"
-              className="mt-4 flex min-h-14 w-full items-center justify-center rounded-2xl border border-line text-base font-semibold text-muted transition active:bg-brand-50 active:text-ink"
+              className="mt-6 flex min-h-14 w-full items-center justify-center rounded-2xl border border-line text-base font-semibold text-muted transition active:bg-brand-50 active:text-ink"
               onClick={() => {
                 close();
                 onLogout();

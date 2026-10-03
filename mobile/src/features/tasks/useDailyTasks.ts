@@ -8,10 +8,11 @@ function invalidateTasks(queryClient: ReturnType<typeof useQueryClient>) {
   return queryClient.invalidateQueries({ queryKey: tasksKey });
 }
 
-export function useTasksPeriod(year: number, month: number) {
+export function useTasksPeriod(year: number, month: number, enabled = true) {
   return useQuery({
     queryKey: [...tasksKey, 'period', year, month],
     queryFn: () => dailyTasksApi.getPeriod(year, month),
+    enabled,
   });
 }
 
@@ -22,10 +23,11 @@ export function useTasksYear(year: number) {
   });
 }
 
-export function useTodayTasks(date: string) {
+export function useTodayTasks(date: string, enabled = true) {
   return useQuery({
     queryKey: [...tasksKey, 'day', date],
     queryFn: () => dailyTasksApi.getDay(date),
+    enabled: Boolean(date) && enabled,
   });
 }
 

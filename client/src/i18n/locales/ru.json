@@ -702,6 +702,8 @@
       "passwordMatch": "Пароли не совпадают",
       "generic": "Что-то пошло не так. Попробуйте снова.",
       "invalidCredentials": "Неверный email или пароль",
+      "wrongPassword": "Неверный пароль",
+      "deleteFailed": "Не удалось удалить аккаунт. Попробуйте ещё раз.",
       "emailTaken": "Этот email уже зарегистрирован",
       "registerFailed": "Не удалось создать аккаунт с этими данными.",
       "passwordMax": "Пароль не длиннее 72 символов",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Сброс пароля · Mindkeep",
       "resetPassword": "Новый пароль · Mindkeep",
       "verifyEmail": "Подтверждение почты · Mindkeep",
-      "account": "Аккаунт · Mindkeep"
+      "account": "Аккаунт · Mindkeep",
+      "onboarding": "Короткая настройка · Mindkeep",
+      "settings": "Настройки · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "Количественные лимиты на этом аккаунте сняты.",
     "remain": "осталось {{left}} из {{limit}}",
     "remainDays": "последние {{count}} дн."
+  },
+  "onboarding": {
+    "eyebrow": "Короткая настройка",
+    "progress": "{{current}} из {{total}}",
+    "wantThis": "Хочу это",
+    "skipThis": "Пока нет",
+    "finishTitle": "Готово",
+    "finishBody": "Позже всё можно включить или выключить в Ещё → Настройки.",
+    "finish": "В кабинет",
+    "needOne": "Выберите хотя бы одну услугу, чтобы продолжить."
+  },
+  "settings": {
+    "title": "Настройки",
+    "subtitle": "Выберите, что видно в меню и на обзоре. Это можно изменить в любой момент.",
+    "modulesTitle": "Услуги",
+    "modulesHint": "Выключенные услуги пропадут из шапки и обзора. Данные не удаляются.",
+    "appearanceTitle": "Оформление",
+    "saved": "Сохранено.",
+    "needOne": "Оставьте хотя бы одну услугу включённой."
   }
 }

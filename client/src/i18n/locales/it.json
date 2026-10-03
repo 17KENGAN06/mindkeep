@@ -702,6 +702,8 @@
       "passwordMatch": "Le password non coincidono",
       "generic": "Qualcosa è andato storto. Riprova.",
       "invalidCredentials": "E-mail o password non validi",
+      "wrongPassword": "Password non valida",
+      "deleteFailed": "Impossibile eliminare l'account. Riprova.",
       "emailTaken": "Questa e-mail è già registrata",
       "registerFailed": "Impossibile creare un account con questi dati.",
       "passwordMax": "La password deve avere al massimo 72 caratteri",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Reimposta password · Mindkeep",
       "resetPassword": "Nuova password · Mindkeep",
       "verifyEmail": "Conferma email · Mindkeep",
-      "account": "Account · Mindkeep"
+      "account": "Account · Mindkeep",
+      "onboarding": "Configurazione rapida · Mindkeep",
+      "settings": "Impostazioni · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "I limiti di quantità su questo account sono disattivati.",
     "remain": "{{left}} di {{limit}} rimasti",
     "remainDays": "Ultimi {{count}} giorni"
+  },
+  "onboarding": {
+    "eyebrow": "Setup rapido",
+    "progress": "{{current}} di {{total}}",
+    "wantThis": "Lo voglio",
+    "skipThis": "Non ora",
+    "finishTitle": "Tutto pronto",
+    "finishBody": "Più tardi puoi accendere o spegnere i servizi in Altro → Impostazioni.",
+    "finish": "Vai allo spazio",
+    "needOne": "Scegli almeno un servizio per continuare."
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "subtitle": "Scegli cosa compare nel menu e nella panoramica. Puoi cambiarlo quando vuoi.",
+    "modulesTitle": "Servizi",
+    "modulesHint": "I servizi spenti spariscono dall’intestazione e dalla panoramica. I dati restano.",
+    "appearanceTitle": "Aspetto",
+    "saved": "Salvato.",
+    "needOne": "Tieni acceso almeno un servizio."
   }
 }

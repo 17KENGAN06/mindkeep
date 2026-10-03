@@ -702,6 +702,8 @@
       "passwordMatch": "Hasła nie są takie same",
       "generic": "Coś poszło nie tak. Spróbuj ponownie.",
       "invalidCredentials": "Nieprawidłowy e-mail lub hasło",
+      "wrongPassword": "Nieprawidłowe hasło",
+      "deleteFailed": "Nie udało się usunąć konta. Spróbuj ponownie.",
       "emailTaken": "Ten e-mail jest już zarejestrowany",
       "registerFailed": "Nie udało się utworzyć konta z tymi danymi.",
       "passwordMax": "Hasło może mieć najwyżej 72 znaki",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Reset hasła · Mindkeep",
       "resetPassword": "Nowe hasło · Mindkeep",
       "verifyEmail": "Potwierdzenie e-maila · Mindkeep",
-      "account": "Konto · Mindkeep"
+      "account": "Konto · Mindkeep",
+      "onboarding": "Szybka konfiguracja · Mindkeep",
+      "settings": "Ustawienia · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "Limity ilościowe na tym koncie są wyłączone.",
     "remain": "zostało {{left}} z {{limit}}",
     "remainDays": "ostatnie {{count}} dni"
+  },
+  "onboarding": {
+    "eyebrow": "Krótka konfiguracja",
+    "progress": "{{current}} z {{total}}",
+    "wantThis": "Chcę to",
+    "skipThis": "Na razie nie",
+    "finishTitle": "Gotowe",
+    "finishBody": "Później włączysz lub wyłączysz usługi w Więcej → Ustawienia.",
+    "finish": "Do przestrzeni",
+    "needOne": "Wybierz przynajmniej jedną usługę, aby kontynuować."
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "subtitle": "Wybierz, co widać w menu i przeglądzie. Możesz to zmienić w każdej chwili.",
+    "modulesTitle": "Usługi",
+    "modulesHint": "Wyłączone usługi znikną z nagłówka i przeglądu. Dane zostaną.",
+    "appearanceTitle": "Wygląd",
+    "saved": "Zapisano.",
+    "needOne": "Zostaw włączoną przynajmniej jedną usługę."
   }
 }

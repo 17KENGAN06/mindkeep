@@ -702,6 +702,8 @@
       "passwordMatch": "Les mots de passe ne correspondent pas",
       "generic": "Une erreur s'est produite. Réessaie.",
       "invalidCredentials": "E-mail ou mot de passe incorrect",
+      "wrongPassword": "Mot de passe incorrect",
+      "deleteFailed": "Impossible de supprimer le compte. Réessaie.",
       "emailTaken": "Cet e-mail est déjà enregistré",
       "registerFailed": "Impossible de créer un compte avec ces informations.",
       "passwordMax": "Le mot de passe doit contenir au plus 72 caractères",
@@ -1103,7 +1105,9 @@
       "forgotPassword": "Mot de passe oublié · Mindkeep",
       "resetPassword": "Nouveau mot de passe · Mindkeep",
       "verifyEmail": "Confirmation e-mail · Mindkeep",
-      "account": "Compte · Mindkeep"
+      "account": "Compte · Mindkeep",
+      "onboarding": "Réglage rapide · Mindkeep",
+      "settings": "Réglages · Mindkeep"
     }
   },
   "footer": {
@@ -1350,5 +1354,24 @@
     "proUnlocked": "Les plafonds de quantité sont désactivés sur ce compte.",
     "remain": "{{left}} sur {{limit}} restants",
     "remainDays": "Derniers {{count}} jours"
+  },
+  "onboarding": {
+    "eyebrow": "Réglage rapide",
+    "progress": "{{current}} sur {{total}}",
+    "wantThis": "Je veux ça",
+    "skipThis": "Pas maintenant",
+    "finishTitle": "C’est prêt",
+    "finishBody": "Tu pourras tout activer ou désactiver plus tard dans Plus → Réglages.",
+    "finish": "Aller à l’espace",
+    "needOne": "Choisis au moins un service pour continuer."
+  },
+  "settings": {
+    "title": "Réglages",
+    "subtitle": "Choisis ce qui apparaît dans le menu et l’aperçu. Tu peux changer ça à tout moment.",
+    "modulesTitle": "Services",
+    "modulesHint": "Les services désactivés disparaissent de l’en-tête et de l’aperçu. Tes données restent.",
+    "appearanceTitle": "Apparence",
+    "saved": "Enregistré.",
+    "needOne": "Garde au moins un service activé."
   }
 }

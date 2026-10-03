@@ -5,11 +5,10 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { AppIcon, type AppIconName } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
-import { detectDeviceTimezone } from '../config/timezones';
+import { userHasModule } from '../config/appModules';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useTheme } from '../features/theme/useTheme';
-import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import type { MoreStackParamList } from '../navigation/types';
 
 const SITE_URLS = {
@@ -63,12 +62,11 @@ function MenuCard({
 
 export function MoreScreen() {
   const { t } = useTranslation();
-  const { theme, colors, setTheme } = useTheme();
+  const { colors } = useTheme();
   const { user, logout } = useAuth();
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
   const unreadQuery = useUnreadNotificationsCount();
   const unread = unreadQuery.data ?? 0;
-  const timezone = user?.timezone || detectDeviceTimezone();
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
@@ -84,17 +82,27 @@ export function MoreScreen() {
 
         <MenuCard
           first
+          icon="settings-outline"
+          title={t('settings.title')}
+          hint={t('settings.menuHint')}
+          onPress={() => navigation.navigate('Settings')}
+        />
+        {userHasModule(user, 'habits') ? (
+        <MenuCard
           icon="repeat-outline"
           title={t('rhythm.title')}
           hint={t('rhythm.menuHint')}
           onPress={() => navigation.navigate('Rhythm')}
         />
+        ) : null}
+        {userHasModule(user, 'notes') ? (
         <MenuCard
           icon="document-text-outline"
           title={t('notes.title')}
           hint={t('notes.menuHint')}
           onPress={() => navigation.navigate('Notes')}
         />
+        ) : null}
         <MenuCard
           icon="notifications-outline"
           title={t('notifications.title')}
@@ -102,12 +110,14 @@ export function MoreScreen() {
           badge={unread > 0 ? (unread > 99 ? '99+' : unread) : undefined}
           onPress={() => navigation.navigate('Notifications')}
         />
+        {userHasModule(user, 'finance') ? (
         <MenuCard
           icon="wallet-outline"
           title={t('finance.title')}
           hint={t('finance.menuHint')}
           onPress={() => navigation.navigate('Finance')}
         />
+        ) : null}
         <MenuCard
           icon="stats-chart-outline"
           title={t('statistics.title')}
@@ -152,46 +162,6 @@ export function MoreScreen() {
           hint={t('common.safariHint')}
           onPress={() => void Linking.openURL(SITE_URLS.privacy)}
         />
-
-        <Text style={[styles.section, { color: colors.muted }]}>{t('common.timezone')}</Text>
-        <Text style={[styles.sectionHint, { color: colors.muted }]}>{t('common.timezoneHint')}</Text>
-        <Text style={[styles.currentZone, { color: colors.ink }]}>
-          {t('common.timezoneCurrent', { timezone })}
-        </Text>
-
-        <Text style={[styles.section, { color: colors.muted }]}>{t('common.theme')}</Text>
-        <View style={styles.row}>
-          {([
-            { mode: 'light' as const, label: t('common.themeLight'), icon: 'sunny-outline' as const },
-            { mode: 'dark' as const, label: t('common.themeDark'), icon: 'moon-outline' as const },
-          ]).map((option) => {
-            const active = theme === option.mode;
-            return (
-              <Pressable
-                key={option.mode}
-                onPress={() => setTheme(option.mode)}
-                style={[
-                  styles.chip,
-                  { borderColor: colors.line },
-                  active && { backgroundColor: colors.brand, borderColor: colors.brand },
-                ]}
-              >
-                <AppIcon name={option.icon} color={active ? colors.onBrand : colors.ink} size={16} />
-                <Text
-                  style={[
-                    { color: colors.ink, fontSize: 14 },
-                    active && { color: colors.onBrand, fontWeight: '700' },
-                  ]}
-                >
-                  {option.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-
-        <Text style={[styles.section, { color: colors.muted }]}>{t('common.language')}</Text>
-        <LanguageSwitcher />
 
         <Pressable onPress={() => void logout()} style={[styles.logout, { borderColor: colors.line }]}>
           <AppIcon name="log-out-outline" color={colors.danger} size={18} />

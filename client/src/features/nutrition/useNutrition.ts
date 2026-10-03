@@ -8,10 +8,11 @@ import type { NutritionSettings } from '@/types/nutrition';
 
 const nutritionKey = ['nutrition'] as const;
 
-export function useNutritionPeriod(year: number, month: number) {
+export function useNutritionPeriod(year: number, month: number, enabled = true) {
   return useQuery({
     queryKey: [...nutritionKey, year, month],
     queryFn: () => nutritionApi.getPeriod(year, month),
+    enabled,
   });
 }
 

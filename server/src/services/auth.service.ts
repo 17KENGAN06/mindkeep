@@ -20,10 +20,13 @@ import type {
   GoogleLoginInput,
   LoginCodeInput,
   LoginInput,
+  OnboardingInput,
   RegisterInput,
   ResetPasswordInput,
+  UpdateMeInput,
   VerifyEmailInput,
 } from '@/validations/auth.schemas.js';
+import { ALL_APP_MODULES, normalizeAppModules, type AppModule } from '@/config/appModules.js';
 import { issueAuthSession, revokeAuthSessionsForUser, type AuthSessionIssue } from '@/services/session.service.js';
 import { cancelStripeForDeletedUser } from '@/services/billing.service.js';
 import { isProUser } from '@/services/entitlements.service.js';
@@ -42,6 +45,8 @@ const userRecordSelect = {
   planExpiresAt: true,
   cancelAtPeriodEnd: true,
   betaTester: true,
+  onboardingCompletedAt: true,
+  enabledModules: true,
   createdAt: true,
   updatedAt: true,
 } as const;
@@ -63,6 +68,8 @@ export type PublicUser = {
   planExpiresAt: Date | null;
   cancelAtPeriodEnd: boolean;
   betaTester: boolean;
+  onboardingCompleted: boolean;
+  enabledModules: AppModule[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -79,6 +86,8 @@ type UserRecord = {
   planExpiresAt: Date | null;
   cancelAtPeriodEnd: boolean;
   betaTester: boolean;
+  onboardingCompletedAt: Date | null;
+  enabledModules: string[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -97,6 +106,12 @@ function toPublicUser(user: UserRecord): PublicUser {
     planExpiresAt: entitled ? user.planExpiresAt : null,
     cancelAtPeriodEnd: entitled ? user.cancelAtPeriodEnd : false,
     betaTester: user.betaTester,
+    onboardingCompleted: Boolean(user.onboardingCompletedAt),
+    enabledModules: user.onboardingCompletedAt
+      ? normalizeAppModules(user.enabledModules).length > 0
+        ? normalizeAppModules(user.enabledModules)
+        : [...ALL_APP_MODULES]
+      : [],
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };
@@ -243,6 +258,8 @@ export class AuthService {
           timezone: payload.timezone,
           role: payload.role,
           emailVerified: true,
+          onboardingCompletedAt: null,
+          enabledModules: [],
         },
         select: userRecordSelect,
       });
@@ -407,6 +424,8 @@ export class AuthService {
           timezone: input.timezone,
           role,
           emailVerified: true,
+          onboardingCompletedAt: null,
+          enabledModules: [],
         },
         select: userRecordSelect,
       });
@@ -504,7 +523,7 @@ export class AuthService {
       if (!ok) {
         throw new AppError('Current password is incorrect', {
           statusCode: 401,
-          code: 'INVALID_CREDENTIALS',
+          code: 'INVALID_PASSWORD',
         });
       }
     }
@@ -537,14 +556,38 @@ export class AuthService {
       if (!ok) {
         throw new AppError('Current password is incorrect', {
           statusCode: 401,
-          code: 'INVALID_CREDENTIALS',
+          code: 'INVALID_PASSWORD',
         });
       }
     }
 
     await cancelStripeForDeletedUser(user.id);
-    await prisma.emailToken.deleteMany({ where: { email: user.email } });
-    await prisma.user.delete({ where: { id: user.id } });
+    try {
+      await prisma.$transaction(
+        async (tx) => {
+          await tx.emailToken.deleteMany({ where: { email: user.email } });
+          await tx.authSession.deleteMany({ where: { userId: user.id } });
+          await tx.user.delete({ where: { id: user.id } });
+        },
+        { timeout: 20_000, maxWait: 10_000 },
+      );
+    } catch {
+      throw new AppError('Could not delete this account', {
+        statusCode: 500,
+        code: 'DELETE_FAILED',
+      });
+    }
+
+    const leftover = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { id: true },
+    });
+    if (leftover) {
+      throw new AppError('Could not delete this account', {
+        statusCode: 500,
+        code: 'DELETE_FAILED',
+      });
+    }
   }
 
   async me(userId: string): Promise<PublicUser> {
@@ -563,14 +606,76 @@ export class AuthService {
     return toPublicUser(await ensureAdminRole(user));
   }
 
-  async updateMe(userId: string, input: { timezone: string }): Promise<PublicUser> {
-    await this.me(userId);
+  async completeOnboarding(userId: string, input: OnboardingInput): Promise<PublicUser> {
+    const current = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { onboardingCompletedAt: true },
+    });
+    if (!current) {
+      throw new AppError('User not found', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const modules = normalizeAppModules(input.modules);
+    if (modules.length === 0) {
+      throw new AppError('Choose at least one service', {
+        statusCode: 400,
+        code: 'ONBOARDING_REQUIRED',
+      });
+    }
+
     const updated = await prisma.user.update({
       where: { id: userId },
-      data: { timezone: input.timezone },
+      data: {
+        onboardingCompletedAt: current.onboardingCompletedAt ?? new Date(),
+        enabledModules: modules,
+      },
       select: userRecordSelect,
     });
-    return toPublicUser(updated);
+    return toPublicUser(await ensureAdminRole(updated));
+  }
+
+  async updateMe(userId: string, input: UpdateMeInput): Promise<PublicUser> {
+    const current = await prisma.user.findUnique({
+      where: { id: userId },
+      select: userRecordSelect,
+    });
+    if (!current) {
+      throw new AppError('User not found', {
+        statusCode: 401,
+        code: 'UNAUTHORIZED',
+      });
+    }
+
+    const data: Prisma.UserUpdateInput = {};
+    if (input.timezone) {
+      data.timezone = input.timezone;
+    }
+    if (input.enabledModules) {
+      if (!current.onboardingCompletedAt) {
+        throw new AppError('Finish the setup quiz first', {
+          statusCode: 400,
+          code: 'ONBOARDING_REQUIRED',
+        });
+      }
+      const modules = normalizeAppModules(input.enabledModules);
+      if (modules.length === 0) {
+        throw new AppError('Keep at least one service on', {
+          statusCode: 400,
+          code: 'ONBOARDING_REQUIRED',
+        });
+      }
+      data.enabledModules = modules;
+    }
+
+    const updated = await prisma.user.update({
+      where: { id: userId },
+      data,
+      select: userRecordSelect,
+    });
+    return toPublicUser(await ensureAdminRole(updated));
   }
 }
 

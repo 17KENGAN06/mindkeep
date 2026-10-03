@@ -42,9 +42,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     staleTime: 60_000,
   });
 
-  const updateTimezone = useCallback(
-    async (timezone: string) => {
-      const result = await authApi.updateMe({ timezone });
+  const updateWorkspace = useCallback(
+    async (payload: { timezone?: string; enabledModules?: string[] }) => {
+      const result = await authApi.updateMe(payload);
       queryClient.setQueryData(['auth', 'me'], result.user);
       await queryClient.invalidateQueries({
         predicate: (query) => query.queryKey[0] !== 'auth',
@@ -52,6 +52,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return result.user;
     },
     [queryClient],
+  );
+
+  const completeOnboarding = useCallback(
+    async (modules: string[]) => {
+      const result = await authApi.completeOnboarding({ modules });
+      queryClient.removeQueries({
+        predicate: (query) => query.queryKey[0] !== 'auth',
+      });
+      queryClient.setQueryData(['auth', 'me'], result.user);
+      return result.user;
+    },
+    [queryClient],
+  );
+
+  const updateTimezone = useCallback(
+    async (timezone: string) => updateWorkspace({ timezone }),
+    [updateWorkspace],
   );
 
   const applyDeviceTimezone = useCallback(
@@ -165,10 +182,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       confirmLogin,
       register,
       googleLogin,
+      completeOnboarding,
       updateTimezone,
+      updateWorkspace,
       logout,
     }),
-    [confirmLogin, googleLogin, login, logout, meQuery.isLoading, register, updateTimezone, user],
+    [completeOnboarding, confirmLogin, googleLogin, login, logout, meQuery.isLoading, register, updateTimezone, updateWorkspace, user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
