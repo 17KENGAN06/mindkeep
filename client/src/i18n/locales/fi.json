@@ -1120,9 +1120,9 @@
     "title": "Yhteystiedot",
     "intro": "Valitse aihe, niin viesti menee oikeaan postilaatikkoon. Voit myös kirjoittaa suoraan.",
     "partnershipTitle": "Yhteistyö",
-    "partnershipBody": "Kumppanuudet, media ja yhteiset projektit studion kanssa.",
-    "supportTitle": "Bugit ja kysymykset",
-    "supportBody": "Jos jokin on rikki, epäselvää tai tarvitset ihmisen vastauksen.",
+    "partnershipBody": "Yhteistyö, media ja muut MindKeep-kysymykset.",
+    "supportTitle": "Virheet",
+    "supportBody": "Jos tuotteessa jokin on rikki: kaatuminen, väärä luku, näyttö ei aukea.",
     "fields": {
       "topic": "Mistä on kyse?",
       "name": "Nimi",

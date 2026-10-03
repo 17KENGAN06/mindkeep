@@ -1120,9 +1120,9 @@
     "title": "Contact",
     "intro": "Choose a topic and the message goes to the right inbox. You can also write us directly.",
     "partnershipTitle": "Partnership",
-    "partnershipBody": "Collaborations, press and studio work.",
-    "supportTitle": "Bugs and questions",
-    "supportBody": "Something broken, unclear, or you just need a human answer.",
+    "partnershipBody": "Collaborations, press, and other questions about MindKeep.",
+    "supportTitle": "Bugs",
+    "supportBody": "Something broken in the product — a crash, a wrong number, a screen that will not load.",
     "fields": {
       "topic": "What is this about?",
       "name": "Name",

@@ -1120,9 +1120,9 @@
     "title": "Kontakt",
     "intro": "Wähle ein Thema, dann geht die Nachricht an das richtige Postfach. Du kannst uns auch direkt schreiben.",
     "partnershipTitle": "Partnerschaft",
-    "partnershipBody": "Zusammenarbeit, Presse und Studioarbeit.",
-    "supportTitle": "Fehler und Fragen",
-    "supportBody": "Etwas ist kaputt, unklar, oder du brauchst einfach eine menschliche Antwort.",
+    "partnershipBody": "Zusammenarbeit, Presse und andere Fragen zu MindKeep.",
+    "supportTitle": "Fehler",
+    "supportBody": "Wenn im Produkt etwas kaputt ist: Absturz, falsche Zahl, ein Bildschirm lädt nicht.",
     "fields": {
       "topic": "Worum geht es?",
       "name": "Name",

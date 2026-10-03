@@ -511,9 +511,9 @@
     "menuHint": "Écris depuis l'app. La même boîte que sur le site.",
     "intro": "Choisis un sujet et le message ira dans la bonne boîte. Tu peux aussi nous écrire directement.",
     "partnershipTitle": "Partenariat",
-    "partnershipBody": "Collaborations, presse et travail du studio.",
-    "supportTitle": "Bugs et questions",
-    "supportBody": "Quelque chose est cassé, peu clair, ou tu as simplement besoin d'une réponse humaine.",
+    "partnershipBody": "Collaborations, presse et autres questions sur MindKeep.",
+    "supportTitle": "Bugs",
+    "supportBody": "Si quelque chose casse dans le produit : plantage, mauvais chiffre, écran qui ne s’ouvre pas.",
     "fields": {
       "topic": "De quoi s'agit-il ?",
       "name": "Nom",

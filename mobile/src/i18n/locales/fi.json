@@ -511,9 +511,9 @@
     "menuHint": "Kirjoita sovelluksesta. Sama postilaatikko kuin sivustolla.",
     "intro": "Valitse aihe, niin viesti menee oikeaan laatikkoon. Voit myös kirjoittaa suoraan.",
     "partnershipTitle": "Kumppanuus",
-    "partnershipBody": "Yhteistyö, media ja studioprojektit.",
-    "supportTitle": "Virheet ja kysymykset",
-    "supportBody": "Jokin on rikki, epäselvää, tai tarvitset ihmisen vastauksen.",
+    "partnershipBody": "Yhteistyö, media ja muut MindKeep-kysymykset.",
+    "supportTitle": "Virheet",
+    "supportBody": "Jos tuotteessa jokin on rikki: kaatuminen, väärä luku, näyttö ei aukea.",
     "fields": {
       "topic": "Mistä on kyse?",
       "name": "Nimi",

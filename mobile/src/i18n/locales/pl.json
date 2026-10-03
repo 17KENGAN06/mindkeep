@@ -511,9 +511,9 @@
     "menuHint": "Napisz z aplikacji. Ta sama skrzynka co na stronie.",
     "intro": "Wybierz temat, a wiadomość trafi do właściwej skrzynki. Możesz też napisać do nas bezpośrednio.",
     "partnershipTitle": "Współpraca",
-    "partnershipBody": "Partnerstwa, prasa i prace studia.",
-    "supportTitle": "Błędy i pytania",
-    "supportBody": "Coś nie działa, jest niejasne albo po prostu potrzebujesz odpowiedzi od człowieka.",
+    "partnershipBody": "Partnerstwa, prasa i inne pytania o MindKeep.",
+    "supportTitle": "Błędy",
+    "supportBody": "Gdy w produkcie coś nie działa: awaria, zła liczba, ekran się nie otwiera.",
     "fields": {
       "topic": "O co chodzi?",
       "name": "Imię",

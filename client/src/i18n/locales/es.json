@@ -1120,9 +1120,9 @@
     "title": "Contacto",
     "intro": "Elige un tema y el mensaje irá a la bandeja correcta. También puedes escribirnos directamente.",
     "partnershipTitle": "Colaboración",
-    "partnershipBody": "Colaboraciones, prensa y trabajo del estudio.",
-    "supportTitle": "Errores y preguntas",
-    "supportBody": "Algo está roto, no queda claro, o simplemente necesitas una respuesta humana.",
+    "partnershipBody": "Colaboraciones, prensa y otras preguntas sobre MindKeep.",
+    "supportTitle": "Errores",
+    "supportBody": "Si algo se rompe en el producto: fallo, un número incorrecto, una pantalla que no carga.",
     "fields": {
       "topic": "¿De qué se trata?",
       "name": "Nombre",

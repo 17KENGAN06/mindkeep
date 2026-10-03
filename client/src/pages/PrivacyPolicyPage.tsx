@@ -5,6 +5,7 @@ import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Reveal } from '@/components/motion/Reveal';
+import { MINDKEEP_CONTACT } from '@/config/contact';
 
 export function PrivacyPolicyPage() {
   const { t } = useTranslation();
@@ -59,8 +60,8 @@ export function PrivacyPolicyPage() {
         <Reveal className="mt-10" delayMs={120}>
           <p className="text-sm text-muted">
             {t('privacy.contactLabel')}{' '}
-            <a href="mailto:kengangenkay@gmail.com" className="font-medium text-brand-500 no-underline">
-              kengangenkay@gmail.com
+            <a href={`mailto:${MINDKEEP_CONTACT}`} className="font-medium text-brand-500 no-underline">
+              {MINDKEEP_CONTACT}
             </a>
           </p>
           <Link to="/" className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline">

@@ -142,4 +142,4 @@ Educational / productivity, no social network, no user-to-user chat, no location
 
 ## Review notes (attach if asked)
 
-MindKeep is a personal productivity app. Accounts are email or Google. There is no public feed. Support: https://mindkeep.cloud/contact and kengangenkay@gmail.com. Test account: create one before submit (App Review cannot use your Google login easily — leave a review email+password).
+MindKeep is a personal productivity app. Accounts are email or Google. There is no public feed. Support: https://mindkeep.cloud/contact, contact@mindkeep.cloud (questions and partnership), admin@mindkeep.cloud (bugs). Test account: create one before submit (App Review cannot use your Google login easily — leave a review email+password).

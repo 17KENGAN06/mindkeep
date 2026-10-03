@@ -511,9 +511,9 @@
     "menuHint": "Scrivi dall'app. La stessa casella del sito.",
     "intro": "Scegli un argomento e il messaggio arriverà nella casella giusta. Puoi anche scriverci direttamente.",
     "partnershipTitle": "Partnership",
-    "partnershipBody": "Collaborazioni, stampa e lavoro dello studio.",
-    "supportTitle": "Bug e domande",
-    "supportBody": "Qualcosa è rotto, poco chiaro, o ti serve semplicemente una risposta umana.",
+    "partnershipBody": "Collaborazioni, stampa e altre domande su MindKeep.",
+    "supportTitle": "Bug",
+    "supportBody": "Se nel prodotto qualcosa è rotto: crash, un numero sbagliato, una schermata che non si apre.",
     "fields": {
       "topic": "Di cosa si tratta?",
       "name": "Nome",
