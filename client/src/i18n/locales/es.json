@@ -1144,7 +1144,11 @@
     "ownership": "Mindkeep es propiedad de <studio />. © {{year}}",
     "lineCompact": "Mindkeep es propiedad de WEISEZAHOY © {{year}}",
     "tiktok": "TikTok",
-    "tiktokHandle": "@mindkeep.cloud"
+    "tiktokHandle": "@mindkeep.cloud",
+    "paymentsLabel": "Pagos",
+    "paymentsVia": "Pago con tarjeta a través de Stripe.",
+    "paymentsAria": "Tarjetas aceptadas: Visa, Mastercard y American Express. Los pagos los procesa Stripe.",
+    "paymentsStripe": "Stripe"
   },
   "contact": {
     "eyebrow": "Estudio",

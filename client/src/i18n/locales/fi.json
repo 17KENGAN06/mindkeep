@@ -1144,7 +1144,11 @@
     "ownership": "Mindkeep on yhtiön <studio /> omaisuutta. © {{year}}",
     "lineCompact": "Mindkeep on WEISEZAHOYn omaisuutta © {{year}}",
     "tiktok": "TikTok",
-    "tiktokHandle": "@mindkeep.cloud"
+    "tiktokHandle": "@mindkeep.cloud",
+    "paymentsLabel": "Maksut",
+    "paymentsVia": "Korttimaksu Stripen kautta.",
+    "paymentsAria": "Hyväksytyt kortit: Visa, Mastercard ja American Express. Maksut käsittelee Stripe.",
+    "paymentsStripe": "Stripe"
   },
   "contact": {
     "eyebrow": "Studio",

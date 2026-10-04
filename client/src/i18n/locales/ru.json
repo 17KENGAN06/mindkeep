@@ -1144,7 +1144,11 @@
     "ownership": "Mindkeep является собственностью <studio />. © {{year}}",
     "lineCompact": "Mindkeep является собственностью WEISEZAHOY © {{year}}",
     "tiktok": "TikTok",
-    "tiktokHandle": "@mindkeep.cloud"
+    "tiktokHandle": "@mindkeep.cloud",
+    "paymentsLabel": "Оплата",
+    "paymentsVia": "Оплата картой через Stripe.",
+    "paymentsAria": "Принимаем Visa, Mastercard и American Express. Платежи обрабатывает Stripe.",
+    "paymentsStripe": "Stripe"
   },
   "contact": {
     "eyebrow": "Студия",

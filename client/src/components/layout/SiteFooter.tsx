@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { BrandMark } from '@/components/brand/BrandMark';
+import { PaymentMarks } from '@/components/layout/PaymentMarks';
 
 const STUDIO_URL = 'https://weisezahoy.com/';
 const STUDIO_NAME = 'WEISEZAHOY';
@@ -198,16 +199,27 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
         <div
           className={`${
             screen ? 'mt-10 pt-6 sm:mt-12 sm:pt-8' : 'mt-12 pt-8 sm:mt-16 sm:pt-12'
-          } border-t border-line/80`}
+          } flex flex-col gap-6 border-t border-line/80 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-x-10 sm:gap-y-5`}
         >
-          <p className="text-sm leading-relaxed text-muted sm:text-base">
-            <Trans
-              i18nKey="footer.ownership"
-              values={{ year }}
-              components={{ studio: studioLink }}
+          <div className="min-w-0">
+            <p className="text-sm leading-relaxed text-muted sm:text-base">
+              <Trans
+                i18nKey="footer.ownership"
+                values={{ year }}
+                components={{ studio: studioLink }}
+              />
+            </p>
+            <p className="mt-4 text-xs leading-relaxed text-muted/80">{t('footer.rights')}</p>
+          </div>
+          {embedded && compact ? null : (
+            <PaymentMarks
+              compact={compact}
+              label={t('footer.paymentsLabel')}
+              via={t('footer.paymentsVia')}
+              ariaLabel={t('footer.paymentsAria')}
+              stripeLabel={t('footer.paymentsStripe')}
             />
-          </p>
-          <p className="mt-4 text-xs leading-relaxed text-muted/80">{t('footer.rights')}</p>
+          )}
         </div>
       </div>
     </footer>
