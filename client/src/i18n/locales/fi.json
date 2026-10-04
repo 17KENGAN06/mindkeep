@@ -808,6 +808,8 @@
       "button": "Skannaa ruoka",
       "hint": "Ota kuva annoksesta. Tarkista tulos ja lisää vasta sitten.",
       "proOnly": "Ruokaskannaus sisältyy Prohon.",
+      "phoneOnly": "Käytettävissä vain puhelimella.",
+      "phoneBadge": "Vain puhelin",
       "upgrade": "Siirry Prohon",
       "analyzing": "Luetaan kuvaa…",
       "reviewTitle": "Tarkista ennen lisäämistä",

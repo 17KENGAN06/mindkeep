@@ -808,6 +808,8 @@
       "button": "Skanuj jedzenie",
       "hint": "Zrób zdjęcie dania. Sprawdź wynik, a potem dopiero dodaj.",
       "proOnly": "Skan jedzenia jest w Pro.",
+      "phoneOnly": "Dostępne tylko na telefonie.",
+      "phoneBadge": "Tylko telefon",
       "upgrade": "Przejdź na Pro",
       "analyzing": "Czytamy zdjęcie…",
       "reviewTitle": "Sprawdź przed dodaniem",

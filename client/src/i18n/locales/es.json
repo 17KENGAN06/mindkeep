@@ -808,6 +808,8 @@
       "button": "Escanear comida",
       "hint": "Fotografía el plato. Revisa el resultado y luego añádelo.",
       "proOnly": "El escaneo de comida está en Pro.",
+      "phoneOnly": "Disponible solo en el teléfono.",
+      "phoneBadge": "Solo móvil",
       "upgrade": "Pasar a Pro",
       "analyzing": "Leyendo la foto…",
       "reviewTitle": "Revisa antes de añadir",

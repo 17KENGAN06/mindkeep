@@ -808,6 +808,8 @@
       "button": "Scan food",
       "hint": "Photo a dish. Check the result, then add it.",
       "proOnly": "Food scan is included in Pro.",
+      "phoneOnly": "Available only on a phone.",
+      "phoneBadge": "Phone only",
       "upgrade": "Upgrade to Pro",
       "analyzing": "Reading the photo…",
       "reviewTitle": "Check before adding",

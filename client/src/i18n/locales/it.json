@@ -808,6 +808,8 @@
       "button": "Scansiona il cibo",
       "hint": "Fotografa il piatto. Controlla il risultato e solo allora aggiungilo.",
       "proOnly": "La scansione cibo è inclusa in Pro.",
+      "phoneOnly": "Disponibile solo sul telefono.",
+      "phoneBadge": "Solo telefono",
       "upgrade": "Passa a Pro",
       "analyzing": "Lettura della foto…",
       "reviewTitle": "Controlla prima di aggiungere",

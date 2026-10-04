@@ -808,6 +808,8 @@
       "button": "Essen scannen",
       "hint": "Fotografiere das Gericht. Prüfe das Ergebnis und füge es dann hinzu.",
       "proOnly": "Essensscan ist in Pro enthalten.",
+      "phoneOnly": "Nur auf dem Handy verfügbar.",
+      "phoneBadge": "Nur Handy",
       "upgrade": "Zu Pro wechseln",
       "analyzing": "Foto wird gelesen…",
       "reviewTitle": "Vor dem Hinzufügen prüfen",

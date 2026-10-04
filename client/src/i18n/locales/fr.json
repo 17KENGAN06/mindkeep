@@ -808,6 +808,8 @@
       "button": "Scanner le plat",
       "hint": "Photographie le plat. Vérifie le résultat, puis ajoute-le.",
       "proOnly": "Le scan alimentaire est inclus dans Pro.",
+      "phoneOnly": "Disponible uniquement sur téléphone.",
+      "phoneBadge": "Uniquement téléphone",
       "upgrade": "Passer à Pro",
       "analyzing": "Lecture de la photo…",
       "reviewTitle": "Vérifier avant d’ajouter",

@@ -64,13 +64,12 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ReviewState | null>(null);
-
-  if (!phone) return null;
-
   const pro = isProAccount(user);
+  const canScan = phone && pro;
 
   const onPickPhoto = () => {
     setError(null);
+    if (!phone) return;
     if (!pro) {
       navigate('/account');
       return;
@@ -125,34 +124,48 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
     }
   };
 
+  const hint = !phone
+    ? t('calories.scan.phoneOnly')
+    : pro
+      ? t('calories.scan.hint')
+      : t('calories.scan.proOnly');
+
   return (
-    <div className="space-y-3 md:hidden">
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/jpeg,image/png,image/webp,image/*"
-        capture="environment"
-        className="sr-only"
-        onChange={(event) => void onFile(event)}
-      />
+    <div className="space-y-3">
+      {phone ? (
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/*"
+          capture="environment"
+          className="sr-only"
+          onChange={(event) => void onFile(event)}
+        />
+      ) : null}
 
       <Button
         type="button"
-        variant={pro ? 'secondary' : 'ghost'}
+        variant={canScan ? 'secondary' : 'ghost'}
         className="w-full"
+        disabled={!phone}
         isLoading={analyzing}
         loadingText={t('calories.scan.analyzing')}
+        title={!phone ? t('calories.scan.phoneOnly') : undefined}
         onClick={onPickPhoto}
       >
         <Camera className="mr-2 h-4 w-4 shrink-0" aria-hidden />
         {t('calories.scan.button')}
-        {!pro ? (
+        {!phone ? (
+          <span className="ml-2">
+            <Badge tone="neutral">{t('calories.scan.phoneBadge')}</Badge>
+          </span>
+        ) : !pro ? (
           <span className="ml-2">
             <Badge>Pro</Badge>
           </span>
         ) : null}
       </Button>
-      <p className="text-xs text-muted">{pro ? t('calories.scan.hint') : t('calories.scan.proOnly')}</p>
+      <p className="text-xs text-muted">{hint}</p>
       <ErrorMessage message={error ?? undefined} />
 
       {review ? (
