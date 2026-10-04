@@ -15,6 +15,7 @@ import { FoodScanMeal } from '@/features/nutrition/FoodScanMeal';
 import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
 import { MealRow } from '@/features/nutrition/MealRow';
 import { StepsCheck } from '@/features/nutrition/StepsCheck';
+import { canTrackSteps, StepsMonthGrid } from '@/features/nutrition/StepsMonthGrid';
 import { type MealKind } from '@/features/nutrition/mealKinds';
 import { useAuth } from '@/features/auth/useAuth';
 import {
@@ -48,20 +49,8 @@ function currentDefaults() {
   };
 }
 
-function stepsMonthWindow(year: number, month: number, todayKey: string) {
-  const daysInMonth = new Date(year, month, 0).getDate();
-  const parts = todayKey.split('-');
-  const todayYear = Number(parts[0]);
-  const todayMonth = Number(parts[1]);
-  const todayDay = Number(parts[2]);
-  const pad = (value: number) => String(value).padStart(2, '0');
-  if (year < todayYear || (year === todayYear && month < todayMonth)) {
-    return { elapsed: daysInMonth, cutoff: `${year}-${pad(month)}-${pad(daysInMonth)}` };
-  }
-  if (year === todayYear && month === todayMonth && Number.isFinite(todayDay) && todayDay > 0) {
-    return { elapsed: todayDay, cutoff: todayKey };
-  }
-  return { elapsed: 0, cutoff: `${year}-${pad(month)}-00` };
+function yearMonthKey(year: number, month: number) {
+  return `${year}-${String(month).padStart(2, '0')}`;
 }
 
 export function CaloriesPage() {
@@ -144,12 +133,13 @@ export function CaloriesPage() {
   const stepsGoal = settings.stepsGoal ?? 10000;
   const stepsDone = stepsDays.find((row) => row.date === selectedDate)?.done ?? false;
   const todayKey = toDateInputValue();
-  const stepsWindow = stepsMonthWindow(year, month, todayKey);
-  const stepsMonthDone = stepsDays.filter((row) => row.done && row.date <= stepsWindow.cutoff).length;
-  const stepsMonthPercent =
-    stepsWindow.elapsed <= 0
-      ? 0
-      : Math.min(100, Math.round((stepsMonthDone / stepsWindow.elapsed) * 100));
+  const joinKey = user?.createdAt ? toDateInputValue(user.createdAt) : todayKey;
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const viewingCurrentMonth = todayKey.startsWith(`${yearMonthKey(year, month)}-`);
+  const todayDay = Number(todayKey.slice(8, 10));
+  const stepsDoneDates = new Set(stepsDays.filter((row) => row.done).map((row) => row.date));
+  const stepsMonthDone = stepsDoneDates.size;
+  const stepsLocked = !canTrackSteps(selectedDate, joinKey, todayKey);
   const dayWeight = weight.find((row) => row.date === selectedDate)?.kg ?? null;
   const overeating = eaten > settings.calorieGoal;
   const remaining = settings.calorieGoal - eaten;
@@ -295,10 +285,10 @@ export function CaloriesPage() {
     }
   };
 
-  const onStepsChange = async (done: boolean) => {
+  const onStepsChange = async (date: string, done: boolean) => {
     setFormError(null);
     try {
-      await setSteps.mutateAsync({ date: selectedDate, done });
+      await setSteps.mutateAsync({ date, done });
     } catch {
       setFormError(t('auth.errors.generic'));
     }
@@ -505,22 +495,34 @@ export function CaloriesPage() {
               <StepsCheck
                 done={stepsDone}
                 goal={stepsGoal}
-                disabled={setSteps.isPending}
+                disabled={setSteps.isPending || stepsLocked}
                 label={t('calories.stepsCheck')}
                 hint={t('calories.stepsGoal')}
-                onChange={(done) => void onStepsChange(done)}
+                onChange={(done) => void onStepsChange(selectedDate, done)}
               />
 
-              <div>
+              <div className="space-y-2">
                 <div className="flex items-center justify-between gap-3 text-sm">
-                  <span className="text-muted">{t('calories.stepsMonth')}</span>
+                  <span className="text-muted">
+                    {viewingCurrentMonth
+                      ? t('calories.stepsDayOfMonth', { day: todayDay, days: daysInMonth })
+                      : t('calories.stepsMonthLength', { days: daysInMonth })}
+                  </span>
                   <span className="font-semibold tabular-nums text-ink">
-                    {stepsMonthDone} / {stepsWindow.elapsed}
+                    {t('calories.stepsMarked', { count: stepsMonthDone })}
                   </span>
                 </div>
-                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/70">
-                  <div className="h-full rounded-full bg-brand-500" style={{ width: `${stepsMonthPercent}%` }} />
-                </div>
+                <StepsMonthGrid
+                  year={year}
+                  month={month}
+                  today={todayKey}
+                  startedOn={joinKey}
+                  selectedDate={selectedDate}
+                  doneDates={stepsDoneDates}
+                  disabled={setSteps.isPending}
+                  onSelectDate={setSelectedDate}
+                  onToggle={(date, done) => void onStepsChange(date, done)}
+                />
               </div>
             </div>
           </section>
