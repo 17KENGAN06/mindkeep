@@ -8,6 +8,7 @@ import {
   isStripeConfigured,
   isStripeWebhookConfigured,
   priceIdForInterval,
+  stripeCheckoutLocale,
 } from '@/config/stripe.js';
 import { AppError } from '@/utils/AppError.js';
 
@@ -17,6 +18,29 @@ function billingUnavailable(): never {
   throw new AppError('Billing is not configured', {
     statusCode: 503,
     code: 'BILLING_UNAVAILABLE',
+  });
+}
+
+function isMissingStripeObject(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    (error as { code?: string }).code === 'resource_missing'
+  );
+}
+
+async function clearDeadSubscription(userId: string, alsoCustomer: boolean): Promise<void> {
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      stripeSubscriptionId: null,
+      ...(alsoCustomer ? { stripeCustomerId: null } : {}),
+      plan: UserPlan.FREE,
+      planInterval: null,
+      planExpiresAt: null,
+      cancelAtPeriodEnd: false,
+    },
   });
 }
 
@@ -215,9 +239,13 @@ async function ensureCustomer(user: { id: string; email: string; name: string; s
     try {
       const customer = await stripe.customers.retrieve(user.stripeCustomerId);
       if (!customer.deleted) return user.stripeCustomerId;
-    } catch {
-      // Create a replacement customer below.
+    } catch (error) {
+      if (!isMissingStripeObject(error)) throw error;
     }
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { stripeCustomerId: null },
+    });
   }
 
   const customer = await stripe.customers.create({
@@ -237,6 +265,7 @@ async function ensureCustomer(user: { id: string; email: string; name: string; s
 export async function createCheckoutSession(
   userId: string,
   interval: 'month' | 'year',
+  localeHeader?: string | null,
 ): Promise<{ url: string }> {
   if (!isStripeConfigured()) billingUnavailable();
   const priceId = priceIdForInterval(interval);
@@ -260,20 +289,40 @@ export async function createCheckoutSession(
     throw new AppError('User not found', { statusCode: 401, code: 'UNAUTHORIZED' });
   }
 
+  const stripe = getStripe();
+
   if (user.stripeSubscriptionId) {
-    throw new AppError('This account already has Pro', {
-      statusCode: 409,
-      code: 'ALREADY_PRO',
-    });
+    try {
+      const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+      if (PRO_STATUSES.has(subscription.status)) {
+        throw new AppError('This account already has Pro', {
+          statusCode: 409,
+          code: 'ALREADY_PRO',
+        });
+      }
+      await clearDeadSubscription(user.id, false);
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      if (isMissingStripeObject(error)) {
+        await clearDeadSubscription(user.id, false);
+      } else {
+        throw error;
+      }
+    }
   }
 
-  const customerId = await ensureCustomer(user);
-  const stripe = getStripe();
+  const customerId = await ensureCustomer({
+    ...user,
+    stripeCustomerId: user.stripeCustomerId,
+  });
   const session = await stripe.checkout.sessions.create({
     mode: 'subscription',
     customer: customerId,
     client_reference_id: user.id,
     line_items: [{ price: priceId, quantity: 1 }],
+    locale: stripeCheckoutLocale(localeHeader),
+    billing_address_collection: 'auto',
+    customer_update: { name: 'auto' },
     success_url: `${env.CLIENT_URL}/account?billing=success&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${env.CLIENT_URL}/account?billing=canceled`,
     metadata: { userId: user.id },

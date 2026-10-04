@@ -44,7 +44,11 @@ export class BillingController {
 
   async checkout(req: Request, res: Response): Promise<void> {
     const input = req.body as CheckoutInput;
-    const result = await createCheckoutSession(requireUserId(req), input.interval);
+    const result = await createCheckoutSession(
+      requireUserId(req),
+      input.interval,
+      req.header('x-app-language') ?? req.header('accept-language'),
+    );
     res.status(200).json(result);
   }
 
