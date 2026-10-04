@@ -873,5 +873,103 @@
     "saved": "Tallennettu.",
     "needOne": "Jätä vähintään yksi palvelu päälle.",
     "menuHint": "Palvelut, kieli, teema, aikavyöhyke."
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Kaikki toiminnot pysyvät auki. Freellä on määrärajoja, Pro poistaa ne.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / kk",
+    "subscribeYear": "€39.99 / vuosi",
+    "yearlyHint": "Vuosi on noin kaksi kuukautta edullisempi kuin kuukausimaksu.",
+    "manage": "Hallinnoi tilausta",
+    "renews": "Uusitaan {{date}}",
+    "ends": "Käyttö {{date}} asti",
+    "cancelScheduled": "Peruutus on ajastettu. Pro pysyy jakson loppuun.",
+    "success": "Maksu vastaanotettu. Pro on päällä.",
+    "canceled": "Maksu peruutettiin. Mitään ei veloitettu.",
+    "unavailable": "Maksuja ei ole vielä kytketty.",
+    "alreadyPro": "Tällä tilillä on jo Pro.",
+    "customerMissing": "Tilaa ensin.",
+    "checkoutFailed": "Maksua ei voitu avata. Yritä uudelleen.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Rajaton",
+    "limitReached": "Free-raja täynnä. Avaa Tili tilataksesi.",
+    "mealsHint": "Ateriat: tänään plus 7 päivää. Painokäyrä: 30 päivää.",
+    "features": {
+      "materials": "Materiaalit",
+      "reviewCategories": "Kertauskategoriat",
+      "habits": "Tavat",
+      "notes": "Muistiinpanot",
+      "tasks": "Tämän kuun tehtävät",
+      "financeOperations": "Tämän kuun tapahtumat",
+      "financeCategories": "Budjettikategoriat",
+      "sessions": "Laitteet"
+    },
+    "limits": {
+      "materials": "Free: 20 aktiivista materiaalia. Tilaus Tilillä poistaa rajan.",
+      "reviewCategories": "Free: 3 kertauskategoriaa. Tilaus Tilillä poistaa rajan.",
+      "habits": "Free: 3 tapaa. Tilaus Tilillä poistaa rajan.",
+      "notes": "Free: 20 muistiinpanoa. Tilaus Tilillä poistaa rajan.",
+      "tasks": "Free: 45 tehtävää kuukaudessa. Tilaus Tilillä poistaa rajan.",
+      "financeOperations": "Free: 25 tapahtumaa kuukaudessa. Tilaus Tilillä poistaa rajan.",
+      "financeCategories": "Free: 5 budjettikategoriaa. Tilaus Tilillä poistaa rajan.",
+      "meals": "Free tallentaa ateriat tältä päivältä ja 7 päivältä. Tilaus avaa koko päiväkirjan.",
+      "sessions": "Free: 2 laitetta. Tilaus Tilillä poistaa rajan."
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Tämä tili on adminina rajaton. Napit alla ovat vain Stripe-testiä varten.",
+    "betaLabel": "Beta-testi",
+    "betaHint": "Täysi Pro-oikeus — samat oikeudet kuin maksullisella paketilla.",
+    "monthCard": "Kuukausi",
+    "yearCard": "Vuosi",
+    "ctaYear": "Valitse vuosi",
+    "ctaMonth": "Valitse kuukausi",
+    "usageTitle": "Free-suunnitelman rajat",
+    "usageLead": "Nämä katot ovat voimassa kunnes tilaat. Pro poistaa ne.",
+    "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä.",
+    "remain": "{{left}} / {{limit}} jäljellä",
+    "remainDays": "Viimeiset {{count}} pv",
+    "paidInBrowser": "Korttimaksu avautuu selaimessa. Sama Pro toimii sen jälkeen sovelluksessa ja sivustolla.",
+    "returnTitle": "Takaisin MindKeepiin",
+    "returnSuccess": "Maksu vastaanotettu. Pro on tällä tilillä — sovelluksessa ja sivustolla.",
+    "returnCanceled": "Maksu peruttu. Mitään ei veloitettu.",
+    "returnPortal": "Tilauksen muutokset on tallennettu. Voit palata sovellukseen.",
+    "openApp": "Avaa sovellus",
+    "stayOnSite": "Jää sivustolle"
+  },
+  "home": {
+    "pricing": {
+      "eyebrow": "Paketit",
+      "title": "Free rajoittaa määrää. Pro poistaa rajat.",
+      "subtitle": "Kaikki toiminnot ovat auki ensimmäisestä päivästä. Vuosittainen Pro on noin kaksi kuukautta edullisempi kuin kuukausimaksu.",
+      "freePrice": "0 €",
+      "freeHint": "Free-pakettiin kuuluu:",
+      "yearHint": "noin kaksi kuukautta kaupan päälle kuukausimaksuun verrattuna",
+      "recommended": "Parempi arvo",
+      "cta": "Ota Pro",
+      "freePoints": {
+        "open": "Kaikki moduulit auki ensimmäisestä päivästä",
+        "caps": "Rauhalliset määrärajoitukset — ei lukittuja ominaisuuksia",
+        "start": "Rekisteröidy minuutissa ja aloita tänään"
+      },
+      "proPoints": {
+        "unlimited": "Lisää tilaa: materiaalit, tavat, muistiinpanot ja historia",
+        "history": "Pidemmät kaaviot ja lisää laitteita ilman kuukausiseiniä",
+        "devices": "Sama Pro sovelluksessa ja sivustolla heti maksun jälkeen"
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ kk",
+      "onlyIfYearly": "Vain jos maksat vuodeksi",
+      "yearCharged": "€39.99 veloitetaan kerran vuodessa",
+      "orMonthly": "Tai kuukausittain",
+      "monthPrice": "€4.99",
+      "monthBilled": "veloitetaan joka kuukausi",
+      "freeCaps": {
+        "study": "20 materiaalia · 45 tehtävää / kk · 3 kertauskategoriaa",
+        "life": "3 tapaa · 20 muistiinpanoa · 5 budjettikategoriaa",
+        "body": "25 talousmerkintää / kk · ateriat 7 pv · 2 laitetta"
+      }
+    }
   }
 }

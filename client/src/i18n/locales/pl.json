@@ -476,7 +476,7 @@
       "proPoints": {
         "unlimited": "Więcej miejsca: materiały, nawyki, notatki i historia",
         "history": "Dłuższe wykresy i więcej urządzeń, bez miesięcznych ścian",
-        "devices": "To samo Pro na stronie zaraz po płatności"
+        "devices": "To samo Pro w aplikacji i na stronie zaraz po płatności"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ miesiąc",
@@ -1129,7 +1129,8 @@
       "verifyEmail": "Potwierdzenie e-maila · Mindkeep",
       "account": "Konto · Mindkeep",
       "onboarding": "Szybka konfiguracja · Mindkeep",
-      "settings": "Ustawienia · Mindkeep"
+      "settings": "Ustawienia · Mindkeep",
+      "billingReturn": "Powrót do MindKeep · Mindkeep"
     }
   },
   "footer": {
@@ -1379,7 +1380,14 @@
     "usageLead": "Te limity obowiązują do subskrypcji. Pro je zdejmuje.",
     "proUnlocked": "Limity ilościowe na tym koncie są wyłączone.",
     "remain": "zostało {{left}} z {{limit}}",
-    "remainDays": "ostatnie {{count}} dni"
+    "remainDays": "ostatnie {{count}} dni",
+    "paidInBrowser": "Płatność kartą otwiera się w przeglądarce. To samo Pro działa potem w aplikacji i na stronie.",
+    "returnTitle": "Powrót do MindKeep",
+    "returnSuccess": "Płatność przyjęta. Pro jest na tym koncie — w aplikacji i na stronie.",
+    "returnCanceled": "Płatność anulowana. Nic nie pobrano.",
+    "returnPortal": "Zmiany subskrypcji zapisane. Możesz wrócić do aplikacji.",
+    "openApp": "Otwórz aplikację",
+    "stayOnSite": "Zostań na stronie"
   },
   "onboarding": {
     "eyebrow": "Krótka konfiguracja",

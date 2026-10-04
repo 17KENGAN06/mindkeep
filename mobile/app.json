@@ -18,6 +18,8 @@
       "privacyPolicyUrl": "https://mindkeep.cloud/privacy",
       "supportUrl": "https://mindkeep.cloud/contact",
       "marketingUrl": "https://mindkeep.cloud",
+      "termsOfServiceUrl": "https://mindkeep.cloud/privacy",
+      "billingUrl": "https://mindkeep.cloud/account",
       "eas": {
         "projectId": "e3304cc5-f62e-4cd8-b580-ed47b2b6c118"
       }

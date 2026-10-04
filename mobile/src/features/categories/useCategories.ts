@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { categoriesApi, type CategoryPayload } from '../../api/categories';
+import { touchPlanUsage } from '../billing/planLimit';
 
 const categoriesKey = ['categories'] as const;
 
@@ -19,6 +20,7 @@ export function useCreateCategory() {
     mutationFn: (payload: CategoryPayload) => categoriesApi.create(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: categoriesKey });
+      touchPlanUsage(queryClient);
     },
   });
 }

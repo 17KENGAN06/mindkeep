@@ -15,6 +15,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { MaterialContentEditor } from '../../components/MaterialContentEditor';
 import { AppButton } from '../../components/ui';
+import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useCategories } from '../../features/categories/useCategories';
 import {
   useCreateMaterial,
@@ -100,8 +101,8 @@ export function MaterialFormScreen() {
       }
       const result = await createMaterial.mutateAsync(payload);
       navigation.replace('MaterialDetail', { id: result.material.id });
-    } catch {
-      setError(t('auth.errors.generic'));
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
     }
   };
 

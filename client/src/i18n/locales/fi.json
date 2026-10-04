@@ -476,7 +476,7 @@
       "proPoints": {
         "unlimited": "Lisää tilaa: materiaalit, tavat, muistiinpanot ja historia",
         "history": "Pidemmät kaaviot ja lisää laitteita ilman kuukausiseiniä",
-        "devices": "Sama Pro sivustolla heti maksun jälkeen"
+        "devices": "Sama Pro sovelluksessa ja sivustolla heti maksun jälkeen"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ kk",
@@ -1129,7 +1129,8 @@
       "verifyEmail": "Vahvista sähköposti · Mindkeep",
       "account": "Tili · Mindkeep",
       "onboarding": "Pika-asetus · Mindkeep",
-      "settings": "Asetukset · Mindkeep"
+      "settings": "Asetukset · Mindkeep",
+      "billingReturn": "Takaisin MindKeepiin · Mindkeep"
     }
   },
   "footer": {
@@ -1379,7 +1380,14 @@
     "usageLead": "Nämä katot ovat voimassa kunnes tilaat. Pro poistaa ne.",
     "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä.",
     "remain": "{{left}} / {{limit}} jäljellä",
-    "remainDays": "Viimeiset {{count}} pv"
+    "remainDays": "Viimeiset {{count}} pv",
+    "paidInBrowser": "Korttimaksu avautuu selaimessa. Sama Pro toimii sen jälkeen sovelluksessa ja sivustolla.",
+    "returnTitle": "Takaisin MindKeepiin",
+    "returnSuccess": "Maksu vastaanotettu. Pro on tällä tilillä — sovelluksessa ja sivustolla.",
+    "returnCanceled": "Maksu peruttu. Mitään ei veloitettu.",
+    "returnPortal": "Tilauksen muutokset on tallennettu. Voit palata sovellukseen.",
+    "openApp": "Avaa sovellus",
+    "stayOnSite": "Jää sivustolle"
   },
   "onboarding": {
     "eyebrow": "Pika-asetus",

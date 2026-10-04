@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { AppIcon, type AppIconName } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
 import { userHasModule } from '../config/appModules';
+import { isProAccount } from '../features/billing/planLimit';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useTheme } from '../features/theme/useTheme';
@@ -141,7 +142,11 @@ export function MoreScreen() {
         <MenuCard
           icon="person-outline"
           title={t('auth.accountTitle')}
-          hint={t('auth.accountSubtitle')}
+          hint={
+            isProAccount(user)
+              ? t('billing.proLabel')
+              : t('billing.freeLabel')
+          }
           onPress={() => navigation.navigate('Account')}
         />
         <MenuCard

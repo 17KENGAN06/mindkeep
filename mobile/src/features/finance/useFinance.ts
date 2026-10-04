@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { financeApi, type CreateOperationPayload } from '../../api/finance';
+import { touchPlanUsage } from '../billing/planLimit';
 import type { FinanceCurrency } from './currencies';
 import type { FinancePeriodParams } from '../../types/finance';
 
@@ -38,6 +39,7 @@ export function useCreateFinanceCategory() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [...financeKey, 'categories'] });
       void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -69,6 +71,7 @@ export function useCreateFinanceOperation() {
     mutationFn: (payload: CreateOperationPayload) => financeApi.createOperation(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
     },
   });
 }

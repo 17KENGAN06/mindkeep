@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { nutritionApi } from '../../api/nutrition';
+import { touchPlanUsage } from '../billing/planLimit';
 import type { CreateMealPayload, NutritionSettings, UpdateMealPayload } from '../../types/nutrition';
 
 const nutritionKey = ['nutrition'] as const;
@@ -32,6 +33,7 @@ export function useCreateMeal() {
     mutationFn: (payload: CreateMealPayload) => nutritionApi.createMeal(payload),
     onSuccess: () => {
       void invalidateNutrition(queryClient);
+      touchPlanUsage(queryClient);
     },
   });
 }
@@ -74,6 +76,7 @@ export function useSetWeight() {
     mutationFn: ({ date, kg }: { date: string; kg: number }) => nutritionApi.setWeight(date, kg),
     onSuccess: () => {
       void invalidateNutrition(queryClient);
+      touchPlanUsage(queryClient);
     },
   });
 }

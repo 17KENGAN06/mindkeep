@@ -15,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton, Badge } from '../../components/ui';
+import { mapAuthError } from '../../features/auth/mapAuthError';
 import {
   currencyLabel,
   FINANCE_CURRENCIES,
@@ -159,7 +160,7 @@ export function FinanceScreen() {
         setFormError(t('finance.errors.categoryTaken'));
         return;
       }
-      setFormError(t('auth.errors.generic'));
+      setFormError(mapAuthError(error, t));
     }
   };
 
@@ -177,7 +178,7 @@ export function FinanceScreen() {
         setFormError(t('finance.errors.categoryTaken'));
         return;
       }
-      setFormError(t('auth.errors.generic'));
+      setFormError(mapAuthError(error, t));
     }
   };
 
@@ -189,8 +190,8 @@ export function FinanceScreen() {
         style: 'destructive',
         onPress: () => {
           setFormError(null);
-          void deleteCategory.mutateAsync(id).catch(() => {
-            setFormError(t('auth.errors.generic'));
+          void deleteCategory.mutateAsync(id).catch((caught) => {
+            setFormError(mapAuthError(caught, t));
           });
           if (categoryId === id) setCategoryId('');
           if (editingCategoryId === id) {
@@ -225,8 +226,8 @@ export function FinanceScreen() {
       });
       setAmount('');
       setComment('');
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 
@@ -238,8 +239,8 @@ export function FinanceScreen() {
         style: 'destructive',
         onPress: () => {
           setFormError(null);
-          void deleteOperation.mutateAsync(operation.id).catch(() => {
-            setFormError(t('auth.errors.generic'));
+          void deleteOperation.mutateAsync(operation.id).catch((caught) => {
+            setFormError(mapAuthError(caught, t));
           });
         },
       },

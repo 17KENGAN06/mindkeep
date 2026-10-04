@@ -35,6 +35,7 @@ const routeTitleKeys: Record<string, string> = {
   '/guide': 'seo.titles.guide',
   '/privacy': 'seo.titles.privacy',
   '/contact': 'seo.titles.contact',
+  '/billing/return': 'seo.titles.billingReturn',
 };
 
 export function DocumentTitle() {

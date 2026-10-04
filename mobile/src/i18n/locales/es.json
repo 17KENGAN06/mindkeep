@@ -873,5 +873,103 @@
     "saved": "Guardado.",
     "needOne": "Deja al menos un servicio activado.",
     "menuHint": "Servicios, idioma, tema, zona horaria."
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Todas las funciones siguen abiertas. Free tiene límites de cantidad; Pro los quita.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / mes",
+    "subscribeYear": "€39.99 / año",
+    "yearlyHint": "El año ahorra unos dos meses frente al pago mensual.",
+    "manage": "Gestionar suscripción",
+    "renews": "Se renueva el {{date}}",
+    "ends": "Acceso hasta el {{date}}",
+    "cancelScheduled": "La cancelación está programada. Pro sigue hasta el fin del periodo.",
+    "success": "Pago recibido. Pro está activo.",
+    "canceled": "Pago cancelado. No se cobró nada.",
+    "unavailable": "Los pagos aún no están conectados.",
+    "alreadyPro": "Esta cuenta ya tiene Pro.",
+    "customerMissing": "Suscríbete primero.",
+    "checkoutFailed": "No se pudo abrir el pago. Inténtalo de nuevo.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Ilimitado",
+    "limitReached": "Límite Free. Abre Cuenta para suscribirte.",
+    "mealsHint": "Comidas: hoy más 7 días. Gráfico de peso: 30 días.",
+    "features": {
+      "materials": "Materiales",
+      "reviewCategories": "Categorías de repaso",
+      "habits": "Hábitos",
+      "notes": "Notas",
+      "tasks": "Tareas de este mes",
+      "financeOperations": "Operaciones de este mes",
+      "financeCategories": "Categorías de presupuesto",
+      "sessions": "Dispositivos"
+    },
+    "limits": {
+      "materials": "Free: 20 materiales activos. La suscripción en Cuenta quita el límite.",
+      "reviewCategories": "Free: 3 categorías de repaso. La suscripción en Cuenta quita el límite.",
+      "habits": "Free: 3 hábitos. La suscripción en Cuenta quita el límite.",
+      "notes": "Free: 20 notas. La suscripción en Cuenta quita el límite.",
+      "tasks": "Free: 45 tareas al mes. La suscripción en Cuenta quita el límite.",
+      "financeOperations": "Free: 25 operaciones al mes. La suscripción en Cuenta quita el límite.",
+      "financeCategories": "Free: 5 categorías de presupuesto. La suscripción en Cuenta quita el límite.",
+      "meals": "Free guarda comidas de hoy y 7 días. La suscripción abre todo el diario.",
+      "sessions": "Free: 2 dispositivos. La suscripción en Cuenta quita el límite."
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Esta cuenta no tiene límites como admin. Los botones de abajo son solo para probar Stripe.",
+    "betaLabel": "Beta test",
+    "betaHint": "Acceso Pro completo — los mismos derechos que un plan de pago.",
+    "monthCard": "Mes",
+    "yearCard": "Año",
+    "ctaYear": "Elegir año",
+    "ctaMonth": "Elegir mes",
+    "usageTitle": "Límites del plan Free",
+    "usageLead": "Estos tope aplican hasta que te suscribas. Pro los quita.",
+    "proUnlocked": "Los límites de cantidad están desactivados en esta cuenta.",
+    "remain": "quedan {{left}} de {{limit}}",
+    "remainDays": "Últimos {{count}} días",
+    "paidInBrowser": "El pago con tarjeta se abre en el navegador. El mismo Pro vale luego en la app y en el sitio.",
+    "returnTitle": "Volver a MindKeep",
+    "returnSuccess": "Pago recibido. Pro está en esta cuenta — en la app y en el sitio.",
+    "returnCanceled": "Pago cancelado. No se cobró nada.",
+    "returnPortal": "Los cambios de suscripción están guardados. Puedes volver a la app.",
+    "openApp": "Abrir la app",
+    "stayOnSite": "Seguir en el sitio"
+  },
+  "home": {
+    "pricing": {
+      "eyebrow": "Planes",
+      "title": "Free tiene límites de cantidad. Pro los quita.",
+      "subtitle": "Todas las funciones están abiertas desde el primer día. El Pro anual sale unos dos meses más barato que el mensual.",
+      "freePrice": "0 €",
+      "freeHint": "Qué incluye Free:",
+      "yearHint": "unos dos meses de regalo frente al pago mensual",
+      "recommended": "Mejor valor",
+      "cta": "Pasar a Pro",
+      "freePoints": {
+        "open": "Todos los módulos abiertos desde el primer día",
+        "caps": "Límites de cantidad calmos — no funciones bloqueadas",
+        "start": "Regístrate en un minuto y empieza hoy"
+      },
+      "proPoints": {
+        "unlimited": "Más espacio: materiales, hábitos, notas e historial",
+        "history": "Gráficos más largos y más dispositivos, sin muros mensuales",
+        "devices": "El mismo Pro en la app y en el sitio justo después del pago"
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ mes",
+      "onlyIfYearly": "Solo si pagas el año",
+      "yearCharged": "€39.99 cobrados una vez al año",
+      "orMonthly": "O mes a mes",
+      "monthPrice": "€4.99",
+      "monthBilled": "cobrado cada mes",
+      "freeCaps": {
+        "study": "20 materiales · 45 tareas / mes · 3 categorías de repaso",
+        "life": "3 hábitos · 20 notas · 5 categorías de presupuesto",
+        "body": "25 movimientos / mes · comidas 7 días · 2 dispositivos"
+      }
+    }
   }
 }

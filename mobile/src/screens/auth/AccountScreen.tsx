@@ -4,6 +4,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { authApi } from '../../api/auth';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
+import { BillingCard } from '../../features/billing/BillingCard';
+import { isProAccount } from '../../features/billing/planLimit';
 import { useAuth } from '../../features/auth/useAuth';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AuthDevice } from '../../types/auth';
@@ -36,11 +39,23 @@ export function AccountScreen() {
   const [deleteConfirm, setDeleteConfirm] = useState('');
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [deleteBusy, setDeleteBusy] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const sessionsQuery = useQuery({
     queryKey: ['auth', 'sessions'],
     queryFn: async () => (await authApi.sessions()).sessions,
   });
   const sessions = sessionsQuery.data ?? [];
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+      await queryClient.invalidateQueries({ queryKey: ['billing'] });
+      await queryClient.invalidateQueries({ queryKey: ['auth', 'sessions'] });
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const onRevoke = async (session: AuthDevice) => {
     setDeviceError(null);
@@ -127,9 +142,19 @@ export function AccountScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={() => void onRefresh()} tintColor={colors.brand} />
+        }
+      >
         <Text style={[styles.lead, { color: colors.muted }]}>{t('auth.accountSubtitle')}</Text>
         {user ? <Text style={[styles.email, { color: colors.ink }]}>{user.email}</Text> : null}
+        {user && isProAccount(user) ? (
+          <Text style={[styles.plan, { color: colors.brand }]}>{t('billing.proLabel')}</Text>
+        ) : null}
+        <BillingCard />
         <Text style={[styles.section, { color: colors.ink }]}>
           {hasPassword ? t('auth.changePassword') : t('auth.setPassword')}
         </Text>
@@ -254,7 +279,8 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { padding: 24, paddingBottom: 40 },
   lead: { fontSize: 15, marginBottom: 8 },
-  email: { fontSize: 16, fontWeight: '600', marginBottom: 24 },
+  email: { fontSize: 16, fontWeight: '600', marginBottom: 8 },
+  plan: { fontSize: 14, fontWeight: '700', marginBottom: 16 },
   section: { fontSize: 18, fontWeight: '700', marginBottom: 8 },
   hint: { fontSize: 13, marginBottom: 16 },
   label: { fontSize: 13, marginBottom: 6 },

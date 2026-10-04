@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useMemo, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   ActivityIndicator,
   Pressable,
@@ -17,6 +18,7 @@ import { AppIcon } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
 import { userHasModule } from '../config/appModules';
 import { useAuth } from '../features/auth/useAuth';
+import { isProAccount } from '../features/billing/planLimit';
 import { currencyLabel } from '../features/finance/currencies';
 import { currentPeriodDefaults, formatSignedMoney, summarizeByCurrency } from '../features/finance/financeUtils';
 import { useFinanceSummary } from '../features/finance/useFinance';
@@ -70,6 +72,7 @@ export function TodayScreen() {
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const showTasks = userHasModule(user, 'tasks');
   const showReview = userHasModule(user, 'review');
   const showNutrition = userHasModule(user, 'nutrition');
@@ -155,6 +158,8 @@ export function TodayScreen() {
 
   const onRefresh = () => {
     setActionError(false);
+    void queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+    void queryClient.invalidateQueries({ queryKey: ['billing'] });
     void tasksQuery.refetch();
     void nutritionQuery.refetch();
     void dashboardQuery.refetch();
@@ -177,7 +182,7 @@ export function TodayScreen() {
     }
   };
 
-  const entitled = user?.plan === 'PRO' || user?.role === 'ADMIN' || Boolean(user?.betaTester);
+  const entitled = isProAccount(user);
 
   if (loading && !tasksQuery.data && !nutritionQuery.data) {
     return (

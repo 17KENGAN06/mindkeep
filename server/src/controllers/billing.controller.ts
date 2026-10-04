@@ -22,6 +22,10 @@ function requireUserId(req: Request): string {
   return req.user.id;
 }
 
+function isNativeClient(req: Request): boolean {
+  return req.get('x-mindkeep-client')?.toLowerCase() === 'native';
+}
+
 export class BillingController {
   async status(req: Request, res: Response): Promise<void> {
     const userId = requireUserId(req);
@@ -48,12 +52,13 @@ export class BillingController {
       requireUserId(req),
       input.interval,
       req.header('x-app-language') ?? req.header('accept-language'),
+      isNativeClient(req),
     );
     res.status(200).json(result);
   }
 
   async portal(req: Request, res: Response): Promise<void> {
-    const result = await createPortalSession(requireUserId(req));
+    const result = await createPortalSession(requireUserId(req), isNativeClient(req));
     res.status(200).json(result);
   }
 

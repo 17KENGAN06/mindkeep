@@ -43,6 +43,7 @@ function lazyNamed(importer: () => Promise<Record<string, ComponentType>>, expor
 
 const AuthLayout = lazyNamed(() => import('@/layouts/AuthLayout'), 'AuthLayout');
 const DashboardLayout = lazyNamed(() => import('@/layouts/DashboardLayout'), 'DashboardLayout');
+const BillingReturnPage = lazyNamed(() => import('@/pages/BillingReturnPage'), 'BillingReturnPage');
 const BlogPage = lazyNamed(() => import('@/pages/BlogPage'), 'BlogPage');
 const BlogArticlePage = lazyNamed(() => import('@/pages/BlogPage'), 'BlogArticlePage');
 const CalendarPage = lazyNamed(() => import('@/pages/CalendarPage'), 'CalendarPage');
@@ -166,6 +167,7 @@ export function AppRoutes() {
           }
         />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/billing/return" element={<BillingReturnPage />} />
 
         <Route
           element={

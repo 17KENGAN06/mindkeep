@@ -1,4 +1,5 @@
 import { env } from '../config/env';
+import i18n from '../i18n';
 import {
   clearStoredToken,
   getStoredRefreshToken,
@@ -86,6 +87,7 @@ async function request<T>(path: string, options: RequestOptions = {}, retried = 
 
   headers.set('X-Requested-With', 'learning-reminder');
   headers.set('X-Mindkeep-Client', 'native');
+  headers.set('X-App-Language', i18n.language || 'en');
 
   const token = await getStoredToken();
   if (token) {

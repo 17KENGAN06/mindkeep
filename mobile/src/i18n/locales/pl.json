@@ -873,5 +873,103 @@
     "saved": "Zapisano.",
     "needOne": "Zostaw włączoną przynajmniej jedną usługę.",
     "menuHint": "Usługi, język, motyw, strefa czasowa."
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Wszystkie funkcje są otwarte. Free ma limity ilości, Pro je zdejmuje.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / miesiąc",
+    "subscribeYear": "€39.99 / rok",
+    "yearlyHint": "Rok to około dwa miesiące taniej niż płatność miesięczna.",
+    "manage": "Zarządzaj subskrypcją",
+    "renews": "Odnawia się {{date}}",
+    "ends": "Dostęp do {{date}}",
+    "cancelScheduled": "Anulowanie jest zaplanowane. Pro działa do końca okresu.",
+    "success": "Płatność przyjęta. Pro włączone.",
+    "canceled": "Płatność anulowana. Nic nie pobrano.",
+    "unavailable": "Płatności nie są jeszcze podłączone.",
+    "alreadyPro": "To konto ma już Pro.",
+    "customerMissing": "Najpierw wykup subskrypcję.",
+    "checkoutFailed": "Nie udało się otworzyć płatności. Spróbuj ponownie.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Bez limitu",
+    "limitReached": "Limit Free. Otwórz Konto, aby wykupić subskrypcję.",
+    "mealsHint": "Posiłki: dziś i 7 dni. Wykres wagi: 30 dni.",
+    "features": {
+      "materials": "Materiały",
+      "reviewCategories": "Kategorie powtórek",
+      "habits": "Nawyki",
+      "notes": "Notatki",
+      "tasks": "Zadania w tym miesiącu",
+      "financeOperations": "Operacje w tym miesiącu",
+      "financeCategories": "Kategorie budżetu",
+      "sessions": "Urządzenia"
+    },
+    "limits": {
+      "materials": "Free: 20 aktywnych materiałów. Subskrypcja w Koncie zdejmuje limit.",
+      "reviewCategories": "Free: 3 kategorie powtórek. Subskrypcja w Koncie zdejmuje limit.",
+      "habits": "Free: 3 nawyki. Subskrypcja w Koncie zdejmuje limit.",
+      "notes": "Free: 20 notatek. Subskrypcja w Koncie zdejmuje limit.",
+      "tasks": "Free: 45 zadań miesięcznie. Subskrypcja w Koncie zdejmuje limit.",
+      "financeOperations": "Free: 25 operacji miesięcznie. Subskrypcja w Koncie zdejmuje limit.",
+      "financeCategories": "Free: 5 kategorii budżetu. Subskrypcja w Koncie zdejmuje limit.",
+      "meals": "Free zapisuje posiłki z dziś i 7 dni. Subskrypcja otwiera cały dziennik.",
+      "sessions": "Free: 2 urządzenia. Subskrypcja w Koncie zdejmuje limit."
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "To konto nie ma limitów jako admin. Przyciski poniżej tylko do testu Stripe.",
+    "betaLabel": "Beta test",
+    "betaHint": "Pełny dostęp Pro — te same prawa co w płatnym planie.",
+    "monthCard": "Miesiąc",
+    "yearCard": "Rok",
+    "ctaYear": "Wybierz rok",
+    "ctaMonth": "Wybierz miesiąc",
+    "usageTitle": "Limity planu Free",
+    "usageLead": "Te limity obowiązują do subskrypcji. Pro je zdejmuje.",
+    "proUnlocked": "Limity ilościowe na tym koncie są wyłączone.",
+    "remain": "zostało {{left}} z {{limit}}",
+    "remainDays": "ostatnie {{count}} dni",
+    "paidInBrowser": "Płatność kartą otwiera się w przeglądarce. To samo Pro działa potem w aplikacji i na stronie.",
+    "returnTitle": "Powrót do MindKeep",
+    "returnSuccess": "Płatność przyjęta. Pro jest na tym koncie — w aplikacji i na stronie.",
+    "returnCanceled": "Płatność anulowana. Nic nie pobrano.",
+    "returnPortal": "Zmiany subskrypcji zapisane. Możesz wrócić do aplikacji.",
+    "openApp": "Otwórz aplikację",
+    "stayOnSite": "Zostań na stronie"
+  },
+  "home": {
+    "pricing": {
+      "eyebrow": "Plany",
+      "title": "Free ma limity ilości. Pro je zdejmuje.",
+      "subtitle": "Wszystkie funkcje są otwarte od pierwszego dnia. Roczny Pro jest o ok. dwa miesiące tańszy niż płatność miesięczna.",
+      "freePrice": "0 €",
+      "freeHint": "Co obejmuje Free:",
+      "yearHint": "około dwóch miesięcy w prezencie wobec płatności miesięcznej",
+      "recommended": "Najlepsza wartość",
+      "cta": "Weź Pro",
+      "freePoints": {
+        "open": "Wszystkie moduły otwarte od pierwszego dnia",
+        "caps": "Spokojne limity ilości — nie zablokowane funkcje",
+        "start": "Rejestracja w minutę, możesz zacząć dziś"
+      },
+      "proPoints": {
+        "unlimited": "Więcej miejsca: materiały, nawyki, notatki i historia",
+        "history": "Dłuższe wykresy i więcej urządzeń, bez miesięcznych ścian",
+        "devices": "To samo Pro w aplikacji i na stronie zaraz po płatności"
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ miesiąc",
+      "onlyIfYearly": "Tylko przy płatności za rok",
+      "yearCharged": "€39.99 pobierane raz w roku",
+      "orMonthly": "Albo miesiąc po miesiącu",
+      "monthPrice": "€4.99",
+      "monthBilled": "płatność co miesiąc",
+      "freeCaps": {
+        "study": "20 materiałów · 45 zadań / miesiąc · 3 kategorie powtórek",
+        "life": "3 nawyki · 20 notatek · 5 kategorii budżetu",
+        "body": "25 wpisów finansów / miesiąc · posiłki 7 dni · 2 urządzenia"
+      }
+    }
   }
 }

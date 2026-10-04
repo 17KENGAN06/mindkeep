@@ -476,7 +476,7 @@
       "proPoints": {
         "unlimited": "Room to grow: more materials, habits, notes, and history",
         "history": "Longer charts and more devices, without monthly walls",
-        "devices": "The same Pro on the website after checkout"
+        "devices": "The same Pro in the app and on the website after checkout"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ month",
@@ -1129,7 +1129,8 @@
       "verifyEmail": "Confirm email · Mindkeep",
       "account": "Account · Mindkeep",
       "onboarding": "Quick setup · Mindkeep",
-      "settings": "Settings · Mindkeep"
+      "settings": "Settings · Mindkeep",
+      "billingReturn": "Back to MindKeep · Mindkeep"
     }
   },
   "footer": {
@@ -1379,7 +1380,14 @@
     "usageLead": "These caps apply until you subscribe. Pro removes them.",
     "proUnlocked": "Quantity limits are off on this account.",
     "remain": "{{left}} of {{limit}} left",
-    "remainDays": "Last {{count}} days"
+    "remainDays": "Last {{count}} days",
+    "paidInBrowser": "Card payment opens in the browser. The same Pro then works in the app and on the website.",
+    "returnTitle": "Back to MindKeep",
+    "returnSuccess": "Payment received. Pro is on this account — in the app and on the website.",
+    "returnCanceled": "Checkout was cancelled. Nothing was charged.",
+    "returnPortal": "Subscription changes are saved. You can return to the app.",
+    "openApp": "Open the app",
+    "stayOnSite": "Continue on the website"
   },
   "onboarding": {
     "eyebrow": "Quick setup",

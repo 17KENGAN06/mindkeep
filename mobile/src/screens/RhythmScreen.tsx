@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../components/AppIcon';
 import { AppButton, Badge } from '../components/ui';
+import { mapAuthError } from '../features/auth/mapAuthError';
 import {
   useCreateHabit,
   useDeleteHabit,
@@ -157,8 +158,8 @@ export function RhythmScreen() {
     try {
       await createHabit.mutateAsync(next);
       setTitle('');
-    } catch {
-      setError(t('auth.errors.generic'));
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
     }
   };
 

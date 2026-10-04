@@ -873,5 +873,103 @@
     "saved": "Enregistré.",
     "needOne": "Garde au moins un service activé.",
     "menuHint": "Services, langue, thème, fuseau."
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Toutes les fonctions restent ouvertes. Free a des plafonds, Pro les enlève.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "4,99 € / mois",
+    "subscribeYear": "39,99 € / an",
+    "yearlyHint": "L’année équivaut à environ deux mois offerts par rapport au mois.",
+    "manage": "Gérer l’abonnement",
+    "renews": "Renouvellement le {{date}}",
+    "ends": "Accès jusqu’au {{date}}",
+    "cancelScheduled": "L’annulation est prévue. Pro reste jusqu’à la fin de la période.",
+    "success": "Paiement reçu. Pro est actif.",
+    "canceled": "Paiement annulé. Rien n’a été débité.",
+    "unavailable": "Les paiements ne sont pas encore branchés.",
+    "alreadyPro": "Ce compte a déjà Pro.",
+    "customerMissing": "Abonnez-vous d’abord.",
+    "checkoutFailed": "Impossible d’ouvrir le paiement. Réessayez.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Illimité",
+    "limitReached": "Plafond Free atteint. Ouvrez Compte pour vous abonner.",
+    "mealsHint": "Repas : aujourd’hui plus 7 jours. Courbe de poids : 30 jours.",
+    "features": {
+      "materials": "Matériaux",
+      "reviewCategories": "Catégories de révision",
+      "habits": "Habitudes",
+      "notes": "Notes",
+      "tasks": "Tâches ce mois-ci",
+      "financeOperations": "Opérations ce mois-ci",
+      "financeCategories": "Catégories budget",
+      "sessions": "Appareils"
+    },
+    "limits": {
+      "materials": "Free : 20 matériaux actifs. L’abonnement dans Compte enlève le plafond.",
+      "reviewCategories": "Free : 3 catégories de révision. L’abonnement dans Compte enlève le plafond.",
+      "habits": "Free : 3 habitudes. L’abonnement dans Compte enlève le plafond.",
+      "notes": "Free : 20 notes. L’abonnement dans Compte enlève le plafond.",
+      "tasks": "Free : 45 tâches par mois. L’abonnement dans Compte enlève le plafond.",
+      "financeOperations": "Free : 25 opérations par mois. L’abonnement dans Compte enlève le plafond.",
+      "financeCategories": "Free : 5 catégories budget. L’abonnement dans Compte enlève le plafond.",
+      "meals": "Free enregistre les repas d’aujourd’hui et des 7 derniers jours. L’abonnement ouvre tout le journal.",
+      "sessions": "Free : 2 appareils. L’abonnement dans Compte enlève le plafond."
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Ce compte est illimité en tant qu’admin. Les boutons ci-dessous servent seulement à tester Stripe.",
+    "betaLabel": "Bêta-test",
+    "betaHint": "Accès Pro complet — les mêmes droits qu’un abonnement payant.",
+    "monthCard": "Mois",
+    "yearCard": "An",
+    "ctaYear": "Choisir l’année",
+    "ctaMonth": "Choisir le mois",
+    "usageTitle": "Limites du plan Free",
+    "usageLead": "Ces plafonds s’appliquent tant que vous n’êtes pas abonné. Pro les retire.",
+    "proUnlocked": "Les plafonds de quantité sont désactivés sur ce compte.",
+    "remain": "{{left}} sur {{limit}} restants",
+    "remainDays": "Derniers {{count}} jours",
+    "paidInBrowser": "Le paiement par carte s’ouvre dans le navigateur. Le même Pro marche ensuite dans l’app et sur le site.",
+    "returnTitle": "Retour à MindKeep",
+    "returnSuccess": "Paiement reçu. Pro est sur ce compte — dans l’app et sur le site.",
+    "returnCanceled": "Paiement annulé. Rien n’a été débité.",
+    "returnPortal": "Les changements d’abonnement sont enregistrés. Vous pouvez revenir à l’app.",
+    "openApp": "Ouvrir l’app",
+    "stayOnSite": "Rester sur le site"
+  },
+  "home": {
+    "pricing": {
+      "eyebrow": "Offres",
+      "title": "Free a des plafonds de quantité. Pro les enlève.",
+      "subtitle": "Toutes les fonctions sont ouvertes dès le premier jour. L’abonnement annuel revient à environ deux mois de moins que le mensuel.",
+      "freePrice": "0 €",
+      "freeHint": "Ce qu’inclut Free :",
+      "yearHint": "environ deux mois offerts par rapport au paiement mensuel",
+      "recommended": "Meilleure valeur",
+      "cta": "Passer à Pro",
+      "freePoints": {
+        "open": "Tous les modules ouverts dès le premier jour",
+        "caps": "Plafonds de quantité calmes — pas de fonctions verrouillées",
+        "start": "Inscription en une minute, on peut commencer aujourd’hui"
+      },
+      "proPoints": {
+        "unlimited": "Plus de place : matériaux, habitudes, notes et historique",
+        "history": "Graphiques plus longs et plus d’appareils, sans murs mensuels",
+        "devices": "Le même Pro dans l’app et sur le site dès le paiement"
+      },
+      "yearPerMonth": "3,33 €",
+      "perMonth": "/ mois",
+      "onlyIfYearly": "Uniquement si vous payez à l’année",
+      "yearCharged": "39,99 € prélevés une fois par an",
+      "orMonthly": "Ou mois par mois",
+      "monthPrice": "4,99 €",
+      "monthBilled": "prélevé chaque mois",
+      "freeCaps": {
+        "study": "20 matériaux · 45 tâches / mois · 3 catégories de révision",
+        "life": "3 habitudes · 20 notes · 5 catégories budget",
+        "body": "25 opérations / mois · repas 7 jours · 2 appareils"
+      }
+    }
   }
 }

@@ -6,6 +6,9 @@ export type User = {
   role: 'USER' | 'ADMIN';
   hasPassword?: boolean;
   plan?: 'FREE' | 'PRO';
+  planInterval?: 'MONTH' | 'YEAR' | null;
+  planExpiresAt?: string | null;
+  cancelAtPeriodEnd?: boolean;
   betaTester?: boolean;
   onboardingCompleted?: boolean;
   enabledModules?: string[];

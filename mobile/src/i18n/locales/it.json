@@ -873,5 +873,103 @@
     "saved": "Salvato.",
     "needOne": "Tieni acceso almeno un servizio.",
     "menuHint": "Servizi, lingua, tema, fuso orario."
+  },
+  "billing": {
+    "title": "MindKeep Pro",
+    "subtitle": "Tutte le funzioni restano aperte. Free ha limiti di quantità, Pro li toglie.",
+    "freeLabel": "Free",
+    "proLabel": "Pro",
+    "subscribeMonth": "€4.99 / mese",
+    "subscribeYear": "€39.99 / anno",
+    "yearlyHint": "L’anno vale circa due mesi in meno rispetto al mese.",
+    "manage": "Gestisci abbonamento",
+    "renews": "Rinnovo il {{date}}",
+    "ends": "Accesso fino al {{date}}",
+    "cancelScheduled": "La disdetta è pianificata. Pro resta fino alla fine del periodo.",
+    "success": "Pagamento ricevuto. Pro è attivo.",
+    "canceled": "Pagamento annullato. Nessun addebito.",
+    "unavailable": "I pagamenti non sono ancora collegati.",
+    "alreadyPro": "Questo account ha già Pro.",
+    "customerMissing": "Prima attiva un abbonamento.",
+    "checkoutFailed": "Impossibile aprire il pagamento. Riprova.",
+    "of": "{{used}} / {{limit}}",
+    "unlimited": "Illimitato",
+    "limitReached": "Limite Free raggiunto. Apri Account per abbonarti.",
+    "mealsHint": "Pasti: oggi più 7 giorni. Grafico peso: 30 giorni.",
+    "features": {
+      "materials": "Materiali",
+      "reviewCategories": "Categorie di ripasso",
+      "habits": "Abitudini",
+      "notes": "Note",
+      "tasks": "Attività di questo mese",
+      "financeOperations": "Operazioni di questo mese",
+      "financeCategories": "Categorie budget",
+      "sessions": "Dispositivi"
+    },
+    "limits": {
+      "materials": "Free: 20 materiali attivi. L’abbonamento in Account toglie il limite.",
+      "reviewCategories": "Free: 3 categorie di ripasso. L’abbonamento in Account toglie il limite.",
+      "habits": "Free: 3 abitudini. L’abbonamento in Account toglie il limite.",
+      "notes": "Free: 20 note. L’abbonamento in Account toglie il limite.",
+      "tasks": "Free: 45 attività al mese. L’abbonamento in Account toglie il limite.",
+      "financeOperations": "Free: 25 operazioni al mese. L’abbonamento in Account toglie il limite.",
+      "financeCategories": "Free: 5 categorie budget. L’abbonamento in Account toglie il limite.",
+      "meals": "Free registra i pasti di oggi e degli ultimi 7 giorni. L’abbonamento apre tutto il diario.",
+      "sessions": "Free: 2 dispositivi. L’abbonamento in Account toglie il limite."
+    },
+    "adminUnlimited": "Admin",
+    "adminHint": "Questo account è illimitato da admin. I pulsanti sotto servono solo a testare Stripe.",
+    "betaLabel": "Beta test",
+    "betaHint": "Accesso Pro completo — gli stessi diritti di un piano a pagamento.",
+    "monthCard": "Mese",
+    "yearCard": "Anno",
+    "ctaYear": "Scegli l’anno",
+    "ctaMonth": "Scegli il mese",
+    "usageTitle": "Limiti del piano Free",
+    "usageLead": "Questi tetti valgono finché non ti abboni. Pro li toglie.",
+    "proUnlocked": "I limiti di quantità su questo account sono disattivati.",
+    "remain": "{{left}} di {{limit}} rimasti",
+    "remainDays": "Ultimi {{count}} giorni",
+    "paidInBrowser": "Il pagamento con carta si apre nel browser. Lo stesso Pro vale poi nell’app e sul sito.",
+    "returnTitle": "Torna a MindKeep",
+    "returnSuccess": "Pagamento ricevuto. Pro è su questo account — nell’app e sul sito.",
+    "returnCanceled": "Checkout annullato. Non è stato addebitato nulla.",
+    "returnPortal": "Modifiche all’abbonamento salvate. Puoi tornare all’app.",
+    "openApp": "Apri l’app",
+    "stayOnSite": "Resta sul sito"
+  },
+  "home": {
+    "pricing": {
+      "eyebrow": "Piani",
+      "title": "Free ha limiti di quantità. Pro li toglie.",
+      "subtitle": "Tutte le funzioni sono aperte dal primo giorno. Il Pro annuale costa circa due mesi in meno rispetto al mensile.",
+      "freePrice": "0 €",
+      "freeHint": "Cosa include Free:",
+      "yearHint": "circa due mesi in omaggio rispetto al pagamento mensile",
+      "recommended": "Più conveniente",
+      "cta": "Prendi Pro",
+      "freePoints": {
+        "open": "Tutti i moduli aperti dal primo giorno",
+        "caps": "Limiti di quantità calmi — non funzioni bloccate",
+        "start": "Registrati in un minuto e inizia oggi"
+      },
+      "proPoints": {
+        "unlimited": "Più spazio: materiali, abitudini, note e cronologia",
+        "history": "Grafici più lunghi e più dispositivi, senza muri mensili",
+        "devices": "Lo stesso Pro nell’app e sul sito subito dopo il pagamento"
+      },
+      "yearPerMonth": "€3.33",
+      "perMonth": "/ mese",
+      "onlyIfYearly": "Solo se paghi per l’anno",
+      "yearCharged": "€39.99 addebitati una volta all’anno",
+      "orMonthly": "Oppure mese per mese",
+      "monthPrice": "€4.99",
+      "monthBilled": "addebito ogni mese",
+      "freeCaps": {
+        "study": "20 materiali · 45 compiti / mese · 3 categorie di ripasso",
+        "life": "3 abitudini · 20 note · 5 categorie di budget",
+        "body": "25 movimenti / mese · pasti 7 giorni · 2 dispositivi"
+      }
+    }
   }
 }

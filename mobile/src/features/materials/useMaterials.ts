@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { materialsApi } from '../../api/materials';
+import { touchPlanUsage } from '../billing/planLimit';
 import type { MaterialPayload, MaterialStatus, MaterialsQuery } from '../../types/material';
 
 export function useMaterials(params: MaterialsQuery = {}) {
@@ -31,6 +32,7 @@ export function useCreateMaterial() {
       void queryClient.invalidateQueries({ queryKey: ['materials'] });
       void queryClient.invalidateQueries({ queryKey: ['reminders'] });
       void queryClient.invalidateQueries({ queryKey: ['statistics'] });
+      touchPlanUsage(queryClient);
     },
   });
 }

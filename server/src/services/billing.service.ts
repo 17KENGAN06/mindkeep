@@ -9,6 +9,7 @@ import {
   isStripeWebhookConfigured,
   priceIdForInterval,
   stripeCheckoutLocale,
+  stripeReturnUrls,
 } from '@/config/stripe.js';
 import { AppError } from '@/utils/AppError.js';
 
@@ -266,6 +267,7 @@ export async function createCheckoutSession(
   userId: string,
   interval: 'month' | 'year',
   localeHeader?: string | null,
+  nativeClient = false,
 ): Promise<{ url: string }> {
   if (!isStripeConfigured()) billingUnavailable();
   const priceId = priceIdForInterval(interval);
@@ -315,6 +317,7 @@ export async function createCheckoutSession(
     ...user,
     stripeCustomerId: user.stripeCustomerId,
   });
+  const returns = stripeReturnUrls(env.CLIENT_URL, nativeClient);
   const session = await stripe.checkout.sessions.create({
     mode: 'subscription',
     customer: customerId,
@@ -323,8 +326,8 @@ export async function createCheckoutSession(
     locale: stripeCheckoutLocale(localeHeader),
     billing_address_collection: 'auto',
     customer_update: { name: 'auto' },
-    success_url: `${env.CLIENT_URL}/account?billing=success&session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${env.CLIENT_URL}/account?billing=canceled`,
+    success_url: returns.success,
+    cancel_url: returns.cancel,
     metadata: { userId: user.id },
     subscription_data: {
       metadata: { userId: user.id },
@@ -341,7 +344,7 @@ export async function createCheckoutSession(
   return { url: session.url };
 }
 
-export async function createPortalSession(userId: string): Promise<{ url: string }> {
+export async function createPortalSession(userId: string, nativeClient = false): Promise<{ url: string }> {
   if (!isStripeConfigured()) billingUnavailable();
 
   const user = await prisma.user.findUnique({
@@ -359,7 +362,7 @@ export async function createPortalSession(userId: string): Promise<{ url: string
   try {
     const session = await getStripe().billingPortal.sessions.create({
       customer: user.stripeCustomerId,
-      return_url: `${env.CLIENT_URL}/account`,
+      return_url: stripeReturnUrls(env.CLIENT_URL, nativeClient).portal,
     });
     return { url: session.url };
   } catch {

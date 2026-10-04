@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
 import { AppButton, Badge } from '../components/ui';
+import { mapAuthError } from '../features/auth/mapAuthError';
 import { WaterGlasses } from '../components/WaterGlasses';
 import { WeightTrendChart } from '../components/WeightTrendChart';
 import {
@@ -178,8 +179,8 @@ export function FuelScreen() {
     }
     try {
       await updateSettings.mutateAsync({ calorieGoal: Math.round(next) });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 
@@ -192,8 +193,8 @@ export function FuelScreen() {
     }
     try {
       await updateSettings.mutateAsync({ waterGoal: Math.round(next) });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 
@@ -236,8 +237,8 @@ export function FuelScreen() {
         });
       }
       resetMealForm();
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 
@@ -255,7 +256,7 @@ export function FuelScreen() {
             .then(() => {
               if (editingId === meal.id) resetMealForm();
             })
-            .catch(() => setFormError(t('auth.errors.generic')))
+            .catch((caught) => setFormError(mapAuthError(caught, t)))
             .finally(() => setBusyId(null));
         },
       },
@@ -271,8 +272,8 @@ export function FuelScreen() {
     }
     try {
       await updateSettings.mutateAsync({ weightGoal: next });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 
@@ -285,8 +286,8 @@ export function FuelScreen() {
     }
     try {
       await setWeight.mutateAsync({ date: selectedDate, kg });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 
@@ -294,8 +295,8 @@ export function FuelScreen() {
     setFormError(null);
     try {
       await setWater.mutateAsync({ date: selectedDate, glasses: next });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 

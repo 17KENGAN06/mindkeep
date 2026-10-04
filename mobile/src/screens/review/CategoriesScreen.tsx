@@ -12,6 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton } from '../../components/ui';
+import { mapAuthError } from '../../features/auth/mapAuthError';
 import {
   useCategories,
   useCreateCategory,
@@ -51,7 +52,7 @@ export function CategoriesScreen() {
       setError(
         caught instanceof ApiError && caught.code === 'CATEGORY_NAME_TAKEN'
           ? t('categories.errors.nameTaken')
-          : t('auth.errors.generic'),
+          : mapAuthError(caught, t),
       );
     }
   };

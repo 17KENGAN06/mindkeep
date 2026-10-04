@@ -162,7 +162,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const sub = AppState.addEventListener('change', (state) => {
       if (state !== 'active') return;
       const current = userRef.current;
-      if (!current || syncingRef.current) return;
+      if (!current) return;
+      void queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+      void queryClient.invalidateQueries({ queryKey: ['billing'] });
+      if (syncingRef.current) return;
       const timezone = detectDeviceTimezone();
       if (!timezone || timezone === current.timezone) return;
       syncingRef.current = true;
@@ -171,7 +174,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
     });
     return () => sub.remove();
-  }, [applyDeviceTimezone]);
+  }, [applyDeviceTimezone, queryClient]);
 
   const value = useMemo(
     () => ({

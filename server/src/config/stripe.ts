@@ -73,6 +73,22 @@ export function intervalForPriceId(priceId: string | null | undefined): 'MONTH' 
   return null;
 }
 
+export function stripeReturnUrls(clientUrl: string, native: boolean) {
+  const origin = clientUrl.replace(/\/$/, '');
+  if (native) {
+    return {
+      success: `${origin}/billing/return?status=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel: `${origin}/billing/return?status=canceled`,
+      portal: `${origin}/billing/return?status=portal`,
+    };
+  }
+  return {
+    success: `${origin}/account?billing=success&session_id={CHECKOUT_SESSION_ID}`,
+    cancel: `${origin}/account?billing=canceled`,
+    portal: `${origin}/account`,
+  };
+}
+
 export function stripeCheckoutLocale(
   header?: string | null,
 ): Stripe.Checkout.SessionCreateParams.Locale {

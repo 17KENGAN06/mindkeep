@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { rhythmApi } from '../../api/rhythm';
+import { touchPlanUsage } from '../billing/planLimit';
 
 const rhythmKey = ['rhythm'] as const;
 
@@ -35,6 +36,7 @@ export function useCreateHabit() {
     mutationFn: (title: string) => rhythmApi.createHabit(title),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: rhythmKey });
+      touchPlanUsage(queryClient);
     },
   });
 }

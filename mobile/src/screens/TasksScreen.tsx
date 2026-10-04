@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
 import { AppIcon } from '../components/AppIcon';
 import { AppButton } from '../components/ui';
+import { mapAuthError } from '../features/auth/mapAuthError';
 import { ForestCard } from '../components/forest/ForestCard';
 import {
   useCreateTask,
@@ -148,8 +149,8 @@ export function TasksScreen() {
         });
       }
       resetForm();
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     }
   };
 
@@ -158,8 +159,8 @@ export function TasksScreen() {
     setFormError(null);
     try {
       await toggleTask.mutateAsync({ id: task.id, completed: !task.completed });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     } finally {
       setBusyId(null);
     }
@@ -173,8 +174,8 @@ export function TasksScreen() {
         id: task.id,
         payload: { important: !task.important },
       });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     } finally {
       setBusyId(null);
     }
@@ -186,8 +187,8 @@ export function TasksScreen() {
     setFormError(null);
     try {
       await updateTask.mutateAsync({ id: task.id, payload: { splitCount, splitDone: 0 } });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     } finally {
       setBusyId(null);
     }
@@ -198,8 +199,8 @@ export function TasksScreen() {
     setFormError(null);
     try {
       await updateTask.mutateAsync({ id: task.id, payload: { splitDone } });
-    } catch {
-      setFormError(t('auth.errors.generic'));
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
     } finally {
       setBusyId(null);
     }
@@ -219,7 +220,7 @@ export function TasksScreen() {
             .then(() => {
               if (editingId === task.id) resetForm();
             })
-            .catch(() => setFormError(t('auth.errors.generic')))
+            .catch((caught) => setFormError(mapAuthError(caught, t)))
             .finally(() => setBusyId(null));
         },
       },

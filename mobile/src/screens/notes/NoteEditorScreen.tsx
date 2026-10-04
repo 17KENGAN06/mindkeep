@@ -13,6 +13,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { AppButton } from '../../components/ui';
+import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useCreateNote, useNote, useUpdateNote } from '../../features/notes/useNotes';
 import { useTheme } from '../../features/theme/useTheme';
 import type { MoreStackParamList } from '../../navigation/types';
@@ -90,8 +91,8 @@ export function NoteEditorScreen() {
       }
       const result = await createNote.mutateAsync(payload);
       navigation.replace('NoteDetail', { id: result.note.id });
-    } catch {
-      setError(t('auth.errors.generic'));
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
     }
   };
 

@@ -1,4 +1,5 @@
 import { ApiError } from '../../api/client';
+import { planLimitMessage } from '../billing/planLimit';
 
 type Translate = (key: string) => string;
 
@@ -7,11 +8,24 @@ export function mapAuthError(error: unknown, t: Translate): string {
     return t('auth.errors.network');
   }
 
+  const limit = planLimitMessage(error, t);
+  if (limit) return limit;
+
   if (!(error instanceof ApiError)) {
     return t('auth.errors.generic');
   }
 
   switch (error.code) {
+    case 'BILLING_UNAVAILABLE':
+    case 'BILLING_PORTAL_UNAVAILABLE':
+      return t('billing.unavailable');
+    case 'ALREADY_PRO':
+      return t('billing.alreadyPro');
+    case 'BILLING_CUSTOMER_MISSING':
+      return t('billing.customerMissing');
+    case 'STRIPE_CHECKOUT_FAILED':
+    case 'STRIPE_SESSION_MISMATCH':
+      return t('billing.checkoutFailed');
     case 'ONBOARDING_REQUIRED':
       return t('onboarding.needOne');
     case 'INVALID_PASSWORD':

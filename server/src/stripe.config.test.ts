@@ -5,6 +5,7 @@ import {
   stripeBillingReady,
   stripeCheckoutLocale,
   stripePricesLookValid,
+  stripeReturnUrls,
 } from '@/config/stripe.js';
 
 test('live secret prefix is required in production', () => {
@@ -63,4 +64,21 @@ test('checkout locale maps known languages and falls back', () => {
   assert.equal(stripeCheckoutLocale('ru-RU'), 'ru');
   assert.equal(stripeCheckoutLocale('uk'), 'auto');
   assert.equal(stripeCheckoutLocale('de,en;q=0.8'), 'de');
+});
+
+test('native checkout returns to a public https page, not cookie /account', () => {
+  const native = stripeReturnUrls('https://mindkeep.cloud', true);
+  assert.equal(
+    native.success,
+    'https://mindkeep.cloud/billing/return?status=success&session_id={CHECKOUT_SESSION_ID}',
+  );
+  assert.equal(native.cancel, 'https://mindkeep.cloud/billing/return?status=canceled');
+  assert.equal(native.portal, 'https://mindkeep.cloud/billing/return?status=portal');
+
+  const web = stripeReturnUrls('https://mindkeep.cloud/', false);
+  assert.equal(
+    web.success,
+    'https://mindkeep.cloud/account?billing=success&session_id={CHECKOUT_SESSION_ID}',
+  );
+  assert.equal(web.portal, 'https://mindkeep.cloud/account');
 });

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { dailyTasksApi } from '../../api/dailyTasks';
+import { touchPlanUsage } from '../billing/planLimit';
 import type { CreateDailyTaskPayload, UpdateDailyTaskPayload } from '../../types/dailyTask';
 
 const tasksKey = ['tasks'] as const;
@@ -75,6 +76,7 @@ export function useCreateTask() {
     mutationFn: (payload: CreateDailyTaskPayload) => dailyTasksApi.create(payload),
     onSuccess: () => {
       void invalidateTasks(queryClient);
+      touchPlanUsage(queryClient);
     },
   });
 }

@@ -476,7 +476,7 @@
       "proPoints": {
         "unlimited": "Plus de place : matériaux, habitudes, notes et historique",
         "history": "Graphiques plus longs et plus d’appareils, sans murs mensuels",
-        "devices": "Le même Pro sur le site dès le paiement"
+        "devices": "Le même Pro dans l’app et sur le site dès le paiement"
       },
       "yearPerMonth": "3,33 €",
       "perMonth": "/ mois",
@@ -1129,7 +1129,8 @@
       "verifyEmail": "Confirmation e-mail · Mindkeep",
       "account": "Compte · Mindkeep",
       "onboarding": "Réglage rapide · Mindkeep",
-      "settings": "Réglages · Mindkeep"
+      "settings": "Réglages · Mindkeep",
+      "billingReturn": "Retour à MindKeep · Mindkeep"
     }
   },
   "footer": {
@@ -1379,7 +1380,14 @@
     "usageLead": "Ces plafonds s’appliquent tant que vous n’êtes pas abonné. Pro les retire.",
     "proUnlocked": "Les plafonds de quantité sont désactivés sur ce compte.",
     "remain": "{{left}} sur {{limit}} restants",
-    "remainDays": "Derniers {{count}} jours"
+    "remainDays": "Derniers {{count}} jours",
+    "paidInBrowser": "Le paiement par carte s’ouvre dans le navigateur. Le même Pro marche ensuite dans l’app et sur le site.",
+    "returnTitle": "Retour à MindKeep",
+    "returnSuccess": "Paiement reçu. Pro est sur ce compte — dans l’app et sur le site.",
+    "returnCanceled": "Paiement annulé. Rien n’a été débité.",
+    "returnPortal": "Les changements d’abonnement sont enregistrés. Vous pouvez revenir à l’app.",
+    "openApp": "Ouvrir l’app",
+    "stayOnSite": "Rester sur le site"
   },
   "onboarding": {
     "eyebrow": "Réglage rapide",
