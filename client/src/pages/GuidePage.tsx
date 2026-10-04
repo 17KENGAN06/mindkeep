@@ -6,6 +6,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/ui/Button';
+import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { useAuth } from '@/features/auth/useAuth';
 
 type GuideStep = {
@@ -27,7 +28,7 @@ export function GuidePage() {
 
   return (
     <div className="min-h-dvh overflow-x-hidden">
-      <div className="mx-auto w-full max-w-[1400px] px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+      <div className={`${PAGE_SHELL} ${PAGE_SHELL_Y}`}>
         <header className="flex items-center justify-between gap-3">
           <BrandLockup to="/" size="md" />
           <div className="flex items-center gap-2">

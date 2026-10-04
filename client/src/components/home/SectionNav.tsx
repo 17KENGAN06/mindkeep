@@ -186,7 +186,7 @@ export function SectionNav({ sectionIds, labels, activeId, onSelect }: SectionNa
       <NavShell
         visible={visible}
         chromeProps={chromeProps}
-        className="pointer-events-none fixed top-1/2 right-4 z-40 hidden -translate-y-1/2 xl:flex"
+        className="pointer-events-none fixed top-1/2 right-[max(1rem,calc((100vw-1400px)/2-5.25rem))] z-40 hidden -translate-y-1/2 xl:flex"
         hiddenClassName="translate-x-3"
       >
         <div className="relative rounded-[1.75rem] border border-line/70 bg-panel/60 px-3 py-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-xl">

@@ -16,6 +16,7 @@ import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
+import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 
 const SECTION_IDS = ['hero', 'services', 'pricing', 'footer'] as const;
 
@@ -66,7 +67,7 @@ export function HomePage() {
         data-section-snap="true"
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
-          <div className="relative mx-auto flex h-full w-full max-w-[1400px] flex-col px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+          <div className={`relative ${PAGE_SHELL} ${PAGE_SHELL_Y} flex h-full w-full flex-col`}>
             <SnapReveal
               className="relative z-50 flex items-center justify-between gap-2 sm:gap-3"
               delay={0.02}
@@ -160,7 +161,7 @@ export function HomePage() {
                 </SnapReveal>
               </div>
 
-              <SnapReveal direction="right" delay={0.28} className="min-w-0 xl:pr-10">
+              <SnapReveal direction="right" delay={0.28} className="min-w-0">
                 <HeroStage />
               </SnapReveal>
             </div>

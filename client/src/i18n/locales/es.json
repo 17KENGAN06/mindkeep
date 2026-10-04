@@ -398,6 +398,8 @@
       "pricing": "Planes",
       "footer": "Sobre nosotros"
     },
+    "footerTitle": "Una app personal, para una persona.",
+    "footerLead": "Entras y activas solo lo que usas — el resto no aparece en el menú. Una cuenta en el sitio: el día, el dinero, las notas y los hábitos en un solo lugar.",
     "heroHighlights": {
       "tasks": "Planes del día sin ruido mental",
       "repetition": "Memoria con un ritmo 3 · 7 · 30",
@@ -1132,8 +1134,8 @@
   },
   "footer": {
     "craftedLabel": "Propiedad de",
-    "tagline": "Un espacio para tareas, repasos 3·7·30 y presupuesto.",
-    "about": "Tras registrarte eliges los servicios. El resto queda oculto hasta que los actives en Ajustes. Una cuenta en el sitio.",
+    "tagline": "Una app personal, para una persona.",
+    "about": "Entras, eliges lo que usas y trabajas con una cuenta en el sitio. Los servicios que no usas quedan ocultos hasta que los actives.",
     "linksLabel": "Navegar",
     "follow": "En Instagram",
     "instagram": "Instagram",

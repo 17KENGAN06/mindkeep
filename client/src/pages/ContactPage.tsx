@@ -17,6 +17,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { contactApi } from '@/api/contact';
 import { CONTACT_INBOX, inboxForTopic, type ContactTopic } from '@/config/contact';
 import { mapContactError } from '@/features/contact/mapContactError';
+import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { createContactFormSchema, type ContactFormValues } from '@/schemas/contact';
 
 export function ContactPage() {
@@ -79,7 +80,7 @@ export function ContactPage() {
 
   return (
     <div className="min-h-dvh overflow-x-hidden">
-      <div className="mx-auto w-full max-w-[1400px] px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+      <div className={`${PAGE_SHELL} ${PAGE_SHELL_Y}`}>
         <header className="flex items-center justify-between gap-3">
           <BrandLockup to="/" size="md" />
           <div className="flex items-center gap-2">

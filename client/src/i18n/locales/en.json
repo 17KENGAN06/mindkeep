@@ -398,6 +398,8 @@
       "pricing": "Plans",
       "footer": "About"
     },
+    "footerTitle": "A personal app for one person.",
+    "footerLead": "You sign in, switch on only what you use, and the rest stays out of the menu. One account on the website — the day, money, notes, and habits in one place.",
     "heroHighlights": {
       "tasks": "Daily plans without mental clutter",
       "repetition": "Memory on a 3 · 7 · 30 rhythm",
@@ -1132,8 +1134,8 @@
   },
   "footer": {
     "craftedLabel": "Property of",
-    "tagline": "A workspace for tasks, 3·7·30 review, and budget.",
-    "about": "After signup you choose the services. The rest stay hidden until you turn them on in Settings. One account on the website.",
+    "tagline": "A personal app for one person.",
+    "about": "Sign in, choose what you use, and work from one account on the website. Unused services stay hidden until you turn them on.",
     "linksLabel": "Navigate",
     "follow": "On Instagram",
     "instagram": "Instagram",

@@ -398,6 +398,8 @@
       "pricing": "Tarife",
       "footer": "Über uns"
     },
+    "footerTitle": "Eine persönliche App für einen Menschen.",
+    "footerLead": "Du meldest dich an und schaltest nur ein, was du brauchst — der Rest bleibt aus dem Menü. Ein Konto auf der Website: Tag, Geld, Notizen und Gewohnheiten an einem Ort.",
     "heroHighlights": {
       "tasks": "Tagespläne ohne Kopflärm",
       "repetition": "Gedächtnis im 3 · 7 · 30-Rhythmus",
@@ -1132,8 +1134,8 @@
   },
   "footer": {
     "craftedLabel": "Eigentum von",
-    "tagline": "Arbeitsbereich für Aufgaben, 3·7·30-Wiederholung und Budget.",
-    "about": "Nach der Anmeldung wählst du die Dienste. Der Rest bleibt verborgen, bis du ihn in den Einstellungen einschaltest. Ein Konto auf der Website.",
+    "tagline": "Eine persönliche App für einen Menschen.",
+    "about": "Melde dich an, wähle, was du nutzt, und arbeite mit einem Konto auf der Website. Ungenutzte Dienste bleiben verborgen, bis du sie einschaltest.",
     "linksLabel": "Navigation",
     "follow": "Auf Instagram",
     "instagram": "Instagram",

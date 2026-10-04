@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { PaymentMarks } from '@/components/layout/PaymentMarks';
+import { PAGE_SHELL } from '@/config/layout';
 
 const STUDIO_URL = 'https://weisezahoy.com/';
 const STUDIO_NAME = 'WEISEZAHOY';
@@ -108,9 +109,7 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
         className={
           screen || embedded
             ? `flex w-full flex-col ${screen ? '' : tight ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'}`
-            : `mx-auto flex w-full max-w-[1400px] flex-col px-4 sm:px-6 lg:px-8 ${
-                tight ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'
-              }`
+            : `${PAGE_SHELL} flex flex-col ${tight ? 'pb-8 sm:pb-10' : 'pb-16 sm:pb-20'}`
         }
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">

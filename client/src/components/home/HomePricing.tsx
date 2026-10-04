@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SnapReveal } from '@/components/home/SnapReveal';
 import { Button } from '@/components/ui/Button';
+import { HOME_SNAP_SHELL } from '@/config/layout';
 import { useAuth } from '@/features/auth/useAuth';
 
 const FREE_CAPS = ['study', 'life', 'body'] as const;
@@ -14,7 +15,7 @@ export function HomePricing() {
   const proHref = isAuthenticated ? '/account' : '/register';
 
   return (
-    <div className="relative mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col justify-center overflow-y-auto px-4 py-4 sm:px-6 sm:py-8 lg:px-8 xl:pr-28">
+    <div className={HOME_SNAP_SHELL}>
       <SnapReveal direction="left">
         <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
           {t('home.pricing.eyebrow')}

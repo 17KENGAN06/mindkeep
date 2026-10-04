@@ -398,6 +398,8 @@
       "pricing": "Paketit",
       "footer": "Meistä"
     },
+    "footerTitle": "Henkilökohtainen sovellus yhdelle ihmiselle.",
+    "footerLead": "Kirjaudut sisään ja kytket päälle vain tarvitsemasi — muu pysyy poissa valikosta. Sama tili sivustolla: päivä, raha, muistiinpanot ja tavat yhdessä paikassa.",
     "heroHighlights": {
       "tasks": "Päivän suunnitelmat ilman kaaosta",
       "repetition": "Muisti rytmillä 3 · 7 · 30",
@@ -1132,8 +1134,8 @@
   },
   "footer": {
     "craftedLabel": "Omistaja",
-    "tagline": "Tila tehtäville, 3·7·30-kertaukselle ja budjetille.",
-    "about": "Rekisteröinnin jälkeen valitset palvelut. Muut pysyvät piilossa, kunnes kytket ne Asetuksissa. Yksi tili sivustolla.",
+    "tagline": "Henkilökohtainen sovellus yhdelle ihmiselle.",
+    "about": "Kirjaudu, valitse mitä käytät ja työskentele yhdellä tilillä sivustolla. Käyttämättömät palvelut pysyvät piilossa, kunnes kytket ne päälle.",
     "linksLabel": "Navigointi",
     "follow": "Instagramissa",
     "instagram": "Instagram",

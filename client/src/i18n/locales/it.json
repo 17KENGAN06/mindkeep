@@ -398,6 +398,8 @@
       "pricing": "Piani",
       "footer": "Chi siamo"
     },
+    "footerTitle": "Un’app personale, per una persona.",
+    "footerLead": "Accedi e attivi solo i servizi che usi — il resto resta fuori dal menu. Un account sul sito: giornata, soldi, note e abitudini in un unico posto.",
     "heroHighlights": {
       "tasks": "Piani del giorno senza rumore mentale",
       "repetition": "Memoria su un ritmo 3 · 7 · 30",
@@ -1132,8 +1134,8 @@
   },
   "footer": {
     "craftedLabel": "Proprietà di",
-    "tagline": "Uno spazio per compiti, ripassi 3·7·30 e budget.",
-    "about": "Dopo la registrazione scegli i servizi. Gli altri restano nascosti finché non li attivi in Impostazioni. Un account sul sito.",
+    "tagline": "Un’app personale, per una persona.",
+    "about": "Accedi, scegli cosa usi e lavori con un account sul sito. I servizi non usati restano nascosti finché non li attivi.",
     "linksLabel": "Naviga",
     "follow": "Su Instagram",
     "instagram": "Instagram",

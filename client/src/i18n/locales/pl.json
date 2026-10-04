@@ -398,6 +398,8 @@
       "pricing": "Plany",
       "footer": "O nas"
     },
+    "footerTitle": "Aplikacja osobista — dla jednej osoby.",
+    "footerLead": "Logujesz się i włączasz tylko to, czego potrzebujesz — reszta nie wchodzi do menu. Jedno konto na stronie: dzień, pieniądze, notatki i nawyki w jednym miejscu.",
     "heroHighlights": {
       "tasks": "Plany dnia bez chaosu w głowie",
       "repetition": "Pamięć w rytmie 3 · 7 · 30",
@@ -1132,8 +1134,8 @@
   },
   "footer": {
     "craftedLabel": "Własność",
-    "tagline": "Przestrzeń na zadania, powtórki 3·7·30 i budżet.",
-    "about": "Po rejestracji wybierasz usługi. Reszta zostaje ukryta, aż włączysz ją w Ustawieniach. Jedno konto na stronie.",
+    "tagline": "Aplikacja osobista — dla jednej osoby.",
+    "about": "Logujesz się, wybierasz, z czego korzystasz, i pracujesz z jednego konta na stronie. Nieużywane usługi zostają ukryte, aż je włączysz.",
     "linksLabel": "Nawigacja",
     "follow": "Na Instagramie",
     "instagram": "Instagram",

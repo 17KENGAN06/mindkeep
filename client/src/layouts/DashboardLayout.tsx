@@ -7,6 +7,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { Button } from '@/components/ui/Button';
+import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { dashboardNav } from '@/config/dashboardNav';
 import { useAuth } from '@/features/auth/useAuth';
 
@@ -18,7 +19,7 @@ export function DashboardLayout() {
 
   return (
     <div className="flex min-h-dvh flex-col overflow-x-clip">
-      <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-6 px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+      <div className={`${PAGE_SHELL} ${PAGE_SHELL_Y} flex flex-1 flex-col gap-6`}>
         <header className="relative z-40">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">

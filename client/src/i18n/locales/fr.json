@@ -398,6 +398,8 @@
       "pricing": "Offres",
       "footer": "À propos"
     },
+    "footerTitle": "Une appli personnelle, pour une personne.",
+    "footerLead": "Vous vous connectez et n’activez que ce dont vous avez besoin — le reste reste hors du menu. Un compte sur le site : la journée, l’argent, les notes et les habitudes au même endroit.",
     "heroHighlights": {
       "tasks": "Plans du jour sans encombrement mental",
       "repetition": "Mémoire sur un rythme 3 · 7 · 30",
@@ -1132,8 +1134,8 @@
   },
   "footer": {
     "craftedLabel": "Propriété de",
-    "tagline": "Un espace pour les tâches, les révisions 3·7·30 et le budget.",
-    "about": "Après l’inscription, vous choisissez les services. Les autres restent cachés jusqu’à ce que vous les activiez dans Réglages. Un compte sur le site.",
+    "tagline": "Une appli personnelle, pour une personne.",
+    "about": "Connectez-vous, choisissez ce que vous utilisez et travaillez avec un compte sur le site. Les services inutilisés restent cachés jusqu’à ce que vous les activiez.",
     "linksLabel": "Naviguer",
     "follow": "Sur Instagram",
     "instagram": "Instagram",
