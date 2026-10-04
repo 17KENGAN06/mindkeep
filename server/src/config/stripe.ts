@@ -15,7 +15,7 @@ const CHECKOUT_LOCALES = new Set<Stripe.Checkout.SessionCreateParams.Locale>([
 ]);
 
 export function isLiveStripeSecret(key: string | undefined): boolean {
-  return Boolean(key?.startsWith('sk_live_'));
+  return Boolean(key?.startsWith('sk_live_') || key?.startsWith('rk_live_'));
 }
 
 export function stripePricesLookValid(monthly?: string, yearly?: string): boolean {

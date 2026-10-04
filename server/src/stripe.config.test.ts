@@ -9,7 +9,9 @@ import {
 
 test('live secret prefix is required in production', () => {
   assert.equal(isLiveStripeSecret('sk_live_abc'), true);
+  assert.equal(isLiveStripeSecret('rk_live_abc'), true);
   assert.equal(isLiveStripeSecret('sk_test_abc'), false);
+  assert.equal(isLiveStripeSecret('rk_test_abc'), false);
   assert.equal(
     stripeBillingReady({
       nodeEnv: 'production',
@@ -23,6 +25,15 @@ test('live secret prefix is required in production', () => {
     stripeBillingReady({
       nodeEnv: 'production',
       secret: 'sk_live_abc',
+      monthly: 'price_month',
+      yearly: 'price_year',
+    }),
+    true,
+  );
+  assert.equal(
+    stripeBillingReady({
+      nodeEnv: 'production',
+      secret: 'rk_live_abc',
       monthly: 'price_month',
       yearly: 'price_year',
     }),
