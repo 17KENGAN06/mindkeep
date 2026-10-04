@@ -28,6 +28,7 @@ enum ReminderIntervalType {
 enum NotificationType {
   REVIEW_DUE
   REVIEW_OVERDUE
+  TASK_IMPORTANT
   SYSTEM
 }
 
@@ -248,19 +249,21 @@ model ReviewReminder {
 }
 
 model Notification {
-  id         String           @id @default(cuid())
-  title      String
-  message    String
-  type       NotificationType
-  isRead     Boolean          @default(false)
-  materialId String?
-  reminderId String?          @unique
-  userId     String
-  createdAt  DateTime         @default(now())
+  id          String           @id @default(cuid())
+  title       String
+  message     String
+  type        NotificationType
+  isRead      Boolean          @default(false)
+  materialId  String?
+  reminderId  String?          @unique
+  dailyTaskId String?          @unique
+  userId      String
+  createdAt   DateTime         @default(now())
 
-  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  material LearningMaterial? @relation(fields: [materialId], references: [id], onDelete: Cascade)
-  reminder ReviewReminder?   @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material  LearningMaterial? @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  reminder  ReviewReminder?   @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  dailyTask DailyTask?        @relation(fields: [dailyTaskId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([isRead])
@@ -353,15 +356,18 @@ model DailyTask {
   note        String    @default("")
   splitCount  Int       @default(1)
   splitDone   Int       @default(0)
+  important   Boolean   @default(false)
   userId      String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notifications Notification[]
 
   @@index([userId])
   @@index([userId, date])
   @@index([userId, completed, date])
+  @@index([userId, important])
 }
 
 model NutritionSettings {

@@ -197,7 +197,10 @@
     "errors": {
       "title": "Inserisci un titolo per l'attività",
       "minutes": "Inserisci il tempo in minuti"
-    }
+    },
+    "markImportant": "Segna come molto importante",
+    "unmarkImportant": "Rimuovi importanza",
+    "important": "Importante"
   },
   "forest": {
     "title": "La tua foresta",
@@ -1006,19 +1009,20 @@
   },
   "notifications": {
     "title": "Notifiche",
-    "subtitle": "I ripassi di oggi e quelli in ritardo — la campana li tiene in vista.",
+    "subtitle": "Attività importanti, ripassi di oggi e ritardi — la campanella li tiene in vista.",
     "unreadCount": "Non lette: {{count}}",
     "markAllRead": "Segna tutte come lette",
     "markRead": "Segna come letta",
     "openMaterial": "Apri materiale",
     "unread": "Non letta",
     "emptyTitle": "Nessuna notifica per ora",
-    "emptyDescription": "Quando un ripasso è per oggi o in ritardo, compare qui.",
+    "emptyDescription": "Le attività importanti e i ripassi dovuti compaiono qui subito.",
     "bellLabel": "Ripassi in attesa: {{count}}",
     "types": {
       "REVIEW_DUE": "In scadenza oggi",
       "REVIEW_OVERDUE": "In ritardo",
-      "SYSTEM": "Sistema"
+      "SYSTEM": "Sistema",
+      "TASK_IMPORTANT": "Importante"
     },
     "bellToday": "Oggi",
     "bellOverdue": "In ritardo",
@@ -1027,7 +1031,11 @@
     "openReviews": "Apri i ripassi",
     "seeAll": "Tutte le notifiche",
     "dueCount": "{{count}} oggi",
-    "overdueCount": "{{count}} in ritardo"
+    "overdueCount": "{{count}} in ritardo",
+    "openTask": "Apri attività",
+    "bellImportant": "Importante",
+    "bellEmptyImportant": "Nessuna attività importante",
+    "importantCount": "{{count}} importanti"
   },
   "statistics": {
     "title": "Statistiche",

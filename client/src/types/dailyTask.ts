@@ -8,6 +8,7 @@ export type DailyTask = {
   note: string;
   splitCount: number;
   splitDone: number;
+  important: boolean;
   userId: string;
   createdAt: string;
   updatedAt: string;

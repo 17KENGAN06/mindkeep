@@ -140,6 +140,21 @@ export function TasksPage() {
     }
   };
 
+  const onImportant = async (task: DailyTask) => {
+    setBusyId(task.id);
+    setFormError(null);
+    try {
+      await updateTask.mutateAsync({
+        id: task.id,
+        payload: { important: !task.important },
+      });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   const onSplit = async (task: DailyTask, splitCount: number) => {
     setBusyId(task.id);
     setFormError(null);
@@ -330,6 +345,7 @@ export function TasksPage() {
             <DailyTaskList
               tasks={dayTasks}
               onToggle={(task) => void onToggle(task)}
+              onImportant={(task) => void onImportant(task)}
               onDelete={(id) => void onDelete(id)}
               onSplit={(task, count) => void onSplit(task, count)}
               onSetPart={(task, done) => void onSetPart(task, done)}

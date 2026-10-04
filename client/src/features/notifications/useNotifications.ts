@@ -25,6 +25,7 @@ export function useNotificationSummary() {
         unreadCount: response.unreadCount ?? 0,
         dueToday: response.dueToday ?? 0,
         overdue: response.overdue ?? 0,
+        important: response.important ?? 0,
       };
     },
     refetchInterval: 60_000,

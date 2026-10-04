@@ -262,7 +262,10 @@
     "errors": {
       "title": "Gib der Aufgabe einen Namen",
       "minutes": "Minuten müssen mindestens 1 betragen"
-    }
+    },
+    "markImportant": "Als sehr wichtig markieren",
+    "unmarkImportant": "Wichtigkeit entfernen",
+    "important": "Wichtig"
   },
   "rhythm": {
     "title": "Gewohnheiten",
@@ -320,7 +323,7 @@
   },
   "notifications": {
     "title": "Benachrichtigungen",
-    "subtitle": "In-App-Erinnerungen, die der Server erstellt, wenn Wiederholungen fällig werden.",
+    "subtitle": "Wichtige Aufgaben, heutige Wiederholungen und Überfälliges — die Glocke hält sie im Blick.",
     "menuHint": "Ungelesene Wiederholungen und Systemnachrichten.",
     "unreadCount": "Ungelesen: {{count}}",
     "markAllRead": "Alle als gelesen markieren",
@@ -329,12 +332,14 @@
     "openMaterial": "Material öffnen",
     "unread": "Ungelesen",
     "emptyTitle": "Noch keine Benachrichtigungen",
-    "emptyDescription": "Wenn eine Wiederholung fällig wird, erscheint sie hier.",
+    "emptyDescription": "Wichtige Aufgaben und fällige Wiederholungen erscheinen hier sofort.",
     "types": {
       "REVIEW_DUE": "Heute fällig",
       "REVIEW_OVERDUE": "Überfällig",
-      "SYSTEM": "System"
-    }
+      "SYSTEM": "System",
+      "TASK_IMPORTANT": "Wichtig"
+    },
+    "openTask": "Zu den Aufgaben"
   },
   "finance": {
     "title": "Budget",

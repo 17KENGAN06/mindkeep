@@ -197,7 +197,10 @@
     "errors": {
       "title": "Introduce un título de tarea",
       "minutes": "Introduce el tiempo en minutos"
-    }
+    },
+    "markImportant": "Marcar como muy importante",
+    "unmarkImportant": "Quitar importancia",
+    "important": "Importante"
   },
   "forest": {
     "title": "Tu bosque",
@@ -1006,19 +1009,20 @@
   },
   "notifications": {
     "title": "Notificaciones",
-    "subtitle": "Los repasos de hoy y lo atrasado — la campana los mantiene a la vista.",
+    "subtitle": "Tareas importantes, repasos de hoy y atrasos — la campana los mantiene a la vista.",
     "unreadCount": "Sin leer: {{count}}",
     "markAllRead": "Marcar todas como leídas",
     "markRead": "Marcar como leída",
     "openMaterial": "Abrir material",
     "unread": "Sin leer",
     "emptyTitle": "Aún no hay notificaciones",
-    "emptyDescription": "Cuando un repaso toque hoy o esté atrasado, aparecerá aquí.",
+    "emptyDescription": "Las tareas importantes y los repasos aparecen aquí de inmediato.",
     "bellLabel": "Repasos pendientes: {{count}}",
     "types": {
       "REVIEW_DUE": "Para hoy",
       "REVIEW_OVERDUE": "Atrasado",
-      "SYSTEM": "Sistema"
+      "SYSTEM": "Sistema",
+      "TASK_IMPORTANT": "Importante"
     },
     "bellToday": "Hoy",
     "bellOverdue": "Atrasado",
@@ -1027,7 +1031,11 @@
     "openReviews": "Abrir repasos",
     "seeAll": "Todas las notificaciones",
     "dueCount": "{{count}} hoy",
-    "overdueCount": "{{count}} atrasados"
+    "overdueCount": "{{count}} atrasados",
+    "openTask": "Abrir tareas",
+    "bellImportant": "Importante",
+    "bellEmptyImportant": "No hay tareas importantes",
+    "importantCount": "{{count}} importantes"
   },
   "statistics": {
     "title": "Estadísticas",

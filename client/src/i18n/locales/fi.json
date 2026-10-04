@@ -197,7 +197,10 @@
     "errors": {
       "title": "Anna tehtävän nimi",
       "minutes": "Anna aika minuutteina"
-    }
+    },
+    "markImportant": "Merkitse erittäin tärkeäksi",
+    "unmarkImportant": "Poista tärkeys",
+    "important": "Tärkeä"
   },
   "forest": {
     "title": "Metsäsi",
@@ -1006,19 +1009,20 @@
   },
   "notifications": {
     "title": "Ilmoitukset",
-    "subtitle": "Tämän päivän kertaukset ja myöhässä olevat — kello pitää ne näkyvillä.",
+    "subtitle": "Tärkeät tehtävät, tämän päivän kertaukset ja myöhässä olevat — kello pitää ne näkyvillä.",
     "unreadCount": "Lukemattomia: {{count}}",
     "markAllRead": "Merkitse kaikki luetuiksi",
     "markRead": "Merkitse luetuksi",
     "openMaterial": "Avaa materiaali",
     "unread": "Lukematon",
     "emptyTitle": "Ei vielä ilmoituksia",
-    "emptyDescription": "Kun kertaus on tänään tai myöhässä, se näkyy täällä.",
+    "emptyDescription": "Tärkeät tehtävät ja erääntyvät kertaukset näkyvät täällä heti.",
     "bellLabel": "Odottavia kertauksia: {{count}}",
     "types": {
       "REVIEW_DUE": "Tänään",
       "REVIEW_OVERDUE": "Myöhässä",
-      "SYSTEM": "Järjestelmä"
+      "SYSTEM": "Järjestelmä",
+      "TASK_IMPORTANT": "Tärkeä"
     },
     "bellToday": "Tänään",
     "bellOverdue": "Myöhässä",
@@ -1027,7 +1031,11 @@
     "openReviews": "Avaa kertaukset",
     "seeAll": "Kaikki ilmoitukset",
     "dueCount": "{{count}} tänään",
-    "overdueCount": "{{count}} myöhässä"
+    "overdueCount": "{{count}} myöhässä",
+    "openTask": "Avaa tehtävät",
+    "bellImportant": "Tärkeä",
+    "bellEmptyImportant": "Ei tärkeitä tehtäviä",
+    "importantCount": "{{count}} tärkeää"
   },
   "statistics": {
     "title": "Tilastot",

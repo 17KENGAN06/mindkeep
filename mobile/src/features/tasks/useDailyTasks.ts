@@ -46,6 +46,7 @@ export function useToggleTask(date?: string) {
       dailyTasksApi.update(id, { completed }),
     onSuccess: () => {
       void invalidateTasks(queryClient);
+      void queryClient.invalidateQueries({ queryKey: ['notifications'] });
       if (date) {
         void queryClient.invalidateQueries({ queryKey: [...tasksKey, 'day', date] });
       }
@@ -60,6 +61,7 @@ export function useUpdateTask(date?: string) {
       dailyTasksApi.update(id, payload),
     onSuccess: () => {
       void invalidateTasks(queryClient);
+      void queryClient.invalidateQueries({ queryKey: ['notifications'] });
       if (date) {
         void queryClient.invalidateQueries({ queryKey: [...tasksKey, 'day', date] });
       }
@@ -83,6 +85,7 @@ export function useDeleteTask() {
     mutationFn: (id: string) => dailyTasksApi.remove(id),
     onSuccess: () => {
       void invalidateTasks(queryClient);
+      void queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
   });
 }

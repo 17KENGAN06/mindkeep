@@ -51,6 +51,7 @@ export function useUpdateDailyTask() {
       dailyTasksApi.update(id, payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: tasksKey });
+      void queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
   });
 }
@@ -61,6 +62,7 @@ export function useDeleteDailyTask() {
     mutationFn: (id: string) => dailyTasksApi.remove(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: tasksKey });
+      void queryClient.invalidateQueries({ queryKey: ['notifications'] });
       touchPlanUsage(queryClient);
     },
   });

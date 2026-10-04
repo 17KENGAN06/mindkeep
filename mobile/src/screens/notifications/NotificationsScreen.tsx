@@ -23,7 +23,7 @@ import { formatDate } from '../../utils/date';
 
 function typeTone(type: AppNotification['type']) {
   if (type === 'REVIEW_OVERDUE') return 'danger' as const;
-  if (type === 'REVIEW_DUE') return 'warn' as const;
+  if (type === 'REVIEW_DUE' || type === 'TASK_IMPORTANT') return 'warn' as const;
   return 'neutral' as const;
 }
 
@@ -125,13 +125,26 @@ export function NotificationsScreen() {
                   onPress={() => openMaterial(notification)}
                 />
               ) : null}
-              <AppButton
-                variant="ghost"
-                label={t('tabs.review')}
-                onPress={() =>
-                  tabNavigation.navigate('Review', { screen: 'ReviewInbox' })
-                }
-              />
+              {notification.type === 'TASK_IMPORTANT' || notification.dailyTaskId ? (
+                <AppButton
+                  variant="secondary"
+                  label={t('notifications.openTask')}
+                  onPress={() => {
+                    if (!notification.isRead) {
+                      void markRead.mutateAsync(notification.id);
+                    }
+                    tabNavigation.navigate('Tasks', { screen: 'TasksHome' });
+                  }}
+                />
+              ) : (
+                <AppButton
+                  variant="ghost"
+                  label={t('tabs.review')}
+                  onPress={() =>
+                    tabNavigation.navigate('Review', { screen: 'ReviewInbox' })
+                  }
+                />
+              )}
               {!notification.isRead ? (
                 <AppButton
                   variant="ghost"

@@ -16,8 +16,20 @@ import { formatDate } from '@/utils/date';
 
 function typeTone(type: AppNotification['type']) {
   if (type === 'REVIEW_OVERDUE') return 'danger' as const;
-  if (type === 'REVIEW_DUE') return 'warning' as const;
+  if (type === 'REVIEW_DUE' || type === 'TASK_IMPORTANT') return 'warning' as const;
   return 'neutral' as const;
+}
+
+function cardClass(notification: AppNotification) {
+  if (notification.type === 'REVIEW_OVERDUE') {
+    return notification.isRead ? 'bg-panel ring-red-400/25' : 'bg-red-50/55 ring-red-400/40';
+  }
+  if (notification.type === 'TASK_IMPORTANT') {
+    return notification.isRead
+      ? 'bg-panel ring-amber-400/30'
+      : 'bg-amber-50/70 ring-amber-400/45';
+  }
+  return notification.isRead ? 'bg-panel ring-line' : 'bg-brand-50/70 ring-brand-500/30';
 }
 
 export function NotificationsPage() {
@@ -63,15 +75,7 @@ export function NotificationsPage() {
           {notifications.map((notification) => (
             <li
               key={notification.id}
-              className={`rounded-2xl p-4 shadow-sm ring-1 ${
-                notification.type === 'REVIEW_OVERDUE'
-                  ? notification.isRead
-                    ? 'bg-panel ring-red-400/25'
-                    : 'bg-red-50/55 ring-red-400/40'
-                  : notification.isRead
-                    ? 'bg-panel ring-line'
-                    : 'bg-brand-50/70 ring-brand-500/30'
-              }`}
+              className={`rounded-2xl p-4 shadow-sm ring-1 ${cardClass(notification)}`}
             >
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
@@ -107,11 +111,27 @@ export function NotificationsPage() {
                     </Button>
                   </Link>
                 ) : null}
-                <Link to="/review">
-                  <Button type="button" variant="ghost">
-                    {t('nav.review')}
-                  </Button>
-                </Link>
+                {notification.type === 'TASK_IMPORTANT' || notification.dailyTaskId ? (
+                  <Link to="/tasks">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => {
+                        if (!notification.isRead) {
+                          void markRead.mutateAsync(notification.id);
+                        }
+                      }}
+                    >
+                      {t('notifications.openTask')}
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/review">
+                    <Button type="button" variant="ghost">
+                      {t('nav.review')}
+                    </Button>
+                  </Link>
+                )}
                 {!notification.isRead ? (
                   <Button
                     type="button"

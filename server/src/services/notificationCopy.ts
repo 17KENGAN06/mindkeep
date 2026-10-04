@@ -93,3 +93,55 @@ export function reminderNotificationCopy(
 ): { title: string; message: string } {
   return (kind === 'overdue' ? overdue : due)[locale](input);
 }
+
+type TaskCopyInput = {
+  title: string;
+  date: string;
+  minutes: number;
+};
+
+const importantTask: Record<AppLocale, (input: TaskCopyInput) => { title: string; message: string }> = {
+  en: ({ title, date, minutes }) => ({
+    title: 'Important task',
+    message: `${title} · ${date} · ${minutes} min`,
+  }),
+  ru: ({ title, date, minutes }) => ({
+    title: 'Важная задача',
+    message: `${title} · ${date} · ${minutes} мин`,
+  }),
+  uk: ({ title, date, minutes }) => ({
+    title: 'Важливе завдання',
+    message: `${title} · ${date} · ${minutes} хв`,
+  }),
+  pl: ({ title, date, minutes }) => ({
+    title: 'Ważne zadanie',
+    message: `${title} · ${date} · ${minutes} min`,
+  }),
+  de: ({ title, date, minutes }) => ({
+    title: 'Wichtige Aufgabe',
+    message: `${title} · ${date} · ${minutes} Min.`,
+  }),
+  fr: ({ title, date, minutes }) => ({
+    title: 'Tâche importante',
+    message: `${title} · ${date} · ${minutes} min`,
+  }),
+  it: ({ title, date, minutes }) => ({
+    title: 'Attività importante',
+    message: `${title} · ${date} · ${minutes} min`,
+  }),
+  es: ({ title, date, minutes }) => ({
+    title: 'Tarea importante',
+    message: `${title} · ${date} · ${minutes} min`,
+  }),
+  fi: ({ title, date, minutes }) => ({
+    title: 'Tärkeä tehtävä',
+    message: `${title} · ${date} · ${minutes} min`,
+  }),
+};
+
+export function taskImportantNotificationCopy(
+  locale: AppLocale,
+  input: TaskCopyInput,
+): { title: string; message: string } {
+  return importantTask[locale](input);
+}

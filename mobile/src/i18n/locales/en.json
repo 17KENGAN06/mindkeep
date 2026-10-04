@@ -262,7 +262,10 @@
     "errors": {
       "title": "Give the task a name",
       "minutes": "Minutes must be at least 1"
-    }
+    },
+    "markImportant": "Mark as very important",
+    "unmarkImportant": "Remove importance",
+    "important": "Important"
   },
   "rhythm": {
     "title": "Habits",
@@ -320,7 +323,7 @@
   },
   "notifications": {
     "title": "Notifications",
-    "subtitle": "In-app reminders created by the server when reviews become due.",
+    "subtitle": "Important tasks, today’s reviews, and anything you missed — the bell keeps them in view.",
     "menuHint": "Unread reviews and system messages.",
     "unreadCount": "Unread: {{count}}",
     "markAllRead": "Mark all as read",
@@ -329,12 +332,14 @@
     "openMaterial": "Open material",
     "unread": "Unread",
     "emptyTitle": "No notifications yet",
-    "emptyDescription": "When a review becomes due, it will appear here.",
+    "emptyDescription": "Important tasks and due reviews appear here right away.",
     "types": {
       "REVIEW_DUE": "Due today",
       "REVIEW_OVERDUE": "Overdue",
-      "SYSTEM": "System"
-    }
+      "SYSTEM": "System",
+      "TASK_IMPORTANT": "Important"
+    },
+    "openTask": "Open tasks"
   },
   "finance": {
     "title": "Budget",

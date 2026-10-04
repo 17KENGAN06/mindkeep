@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Split, Trash2 } from 'lucide-react';
+import { Check, Split, Star, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { DailyTask } from '@/types/dailyTask';
 
@@ -8,6 +8,7 @@ const SPLIT_CHOICES = [2, 3, 4, 5, 6, 7, 8] as const;
 type TaskListProps = {
   tasks: DailyTask[];
   onToggle: (task: DailyTask) => void;
+  onImportant: (task: DailyTask) => void;
   onDelete: (id: string) => void;
   onSplit: (task: DailyTask, splitCount: number) => void;
   onSetPart: (task: DailyTask, splitDone: number) => void;
@@ -26,6 +27,14 @@ function splitOf(task: DailyTask) {
   const count = Math.max(1, task.splitCount ?? 1);
   const done = Math.min(count, Math.max(0, task.splitDone ?? 0));
   return { count, done, split: count > 1 };
+}
+
+export function sortDailyTasks(tasks: DailyTask[]) {
+  return [...tasks].sort((left, right) => {
+    if (left.completed !== right.completed) return left.completed ? 1 : -1;
+    if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
+    return 0;
+  });
 }
 
 function TaskTitle({
@@ -54,6 +63,7 @@ function TaskTitle({
 export function DailyTaskList({
   tasks,
   onToggle,
+  onImportant,
   onDelete,
   onSplit,
   onSetPart,
@@ -61,8 +71,9 @@ export function DailyTaskList({
 }: TaskListProps) {
   const { t } = useTranslation();
   const [pickingId, setPickingId] = useState<string | null>(null);
+  const ordered = sortDailyTasks(tasks);
 
-  if (tasks.length === 0) {
+  if (ordered.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-line bg-brand-50/40 px-4 py-10 text-center">
         <p className="text-sm font-medium text-ink">{t('tasks.emptyDay')}</p>
@@ -73,16 +84,21 @@ export function DailyTaskList({
 
   return (
     <ul className="space-y-2">
-      {tasks.map((task) => {
+      {ordered.map((task) => {
         const parts = splitOf(task);
         const picking = pickingId === task.id;
         const busy = busyId === task.id;
+        const important = Boolean(task.important);
 
         return (
           <li
             key={task.id}
             className={`flex flex-col gap-3 rounded-2xl p-3 ring-1 transition sm:p-4 ${
-              task.completed ? 'bg-emerald-500/10 ring-emerald-500/30' : 'bg-panel ring-line'
+              task.completed
+                ? 'bg-emerald-500/10 ring-emerald-500/30'
+                : important
+                  ? 'bg-amber-500/[0.09] ring-amber-400/50 shadow-[0_0_24px_rgba(245,186,64,0.16)]'
+                  : 'bg-panel ring-line'
             }`}
           >
             <div className="flex items-start gap-3">
@@ -106,7 +122,7 @@ export function DailyTaskList({
                   <TaskTitle title={task.title} completed={task.completed} note={task.note} />
                   <p
                     className={`shrink-0 text-sm font-semibold sm:pt-0.5 sm:text-right ${
-                      task.completed ? 'text-emerald-400' : 'text-brand-500'
+                      task.completed ? 'text-emerald-400' : important ? 'text-amber-700' : 'text-brand-500'
                     }`}
                   >
                     {formatMinutes(task.minutes, t)}
@@ -116,7 +132,27 @@ export function DailyTaskList({
 
               <button
                 type="button"
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+                aria-pressed={important}
+                aria-label={important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
+                disabled={busy}
+                onClick={() => onImportant(task)}
+                className={`mt-0.5 inline-flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                  important
+                    ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 px-2.5 text-[#3a2a08] shadow-[0_0_18px_rgba(245,186,64,0.5)] ring-1 ring-amber-200/90'
+                    : 'w-11 text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600 hover:ring-amber-300/70'
+                }`}
+              >
+                <Star className={`h-4 w-4 ${important ? 'fill-current' : ''}`} aria-hidden />
+                {important ? (
+                  <span className="hidden text-xs font-bold tracking-wide sm:inline">
+                    {t('tasks.important')}
+                  </span>
+                ) : null}
+              </button>
+
+              <button
+                type="button"
+                className="mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
                 aria-label={t('common.delete')}
                 disabled={busy}
                 onClick={() => onDelete(task.id)}

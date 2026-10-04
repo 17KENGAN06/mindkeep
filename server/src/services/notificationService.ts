@@ -1,7 +1,10 @@
 import { NotificationType, ReminderStatus } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
 import type { AppLocale } from '@/services/emailCopy.js';
-import { reminderNotificationCopy } from '@/services/notificationCopy.js';
+import {
+  reminderNotificationCopy,
+  taskImportantNotificationCopy,
+} from '@/services/notificationCopy.js';
 import { AppError } from '@/utils/AppError.js';
 import { getCalendarDaysOverdue, getDayBoundsInTimeZone } from '@/utils/timezone.js';
 import { freeVisibleIds } from '@/services/entitlements.service.js';
@@ -11,6 +14,16 @@ const notificationInclude = {
     select: {
       id: true,
       title: true,
+    },
+  },
+  dailyTask: {
+    select: {
+      id: true,
+      title: true,
+      date: true,
+      minutes: true,
+      completed: true,
+      important: true,
     },
   },
 } as const;
@@ -30,7 +43,23 @@ export type NotificationInboxSummary = {
   unreadCount: number;
   dueToday: number;
   overdue: number;
+  important: number;
 };
+
+type TaskForNotify = {
+  id: string;
+  userId: string;
+  title: string;
+  date: Date | string;
+  minutes: number;
+  completed: boolean;
+  important: boolean;
+};
+
+function dateKeyOf(value: Date | string): string {
+  if (typeof value === 'string') return value.slice(0, 10);
+  return value.toISOString().slice(0, 10);
+}
 
 function copyForReminder(
   reminder: ReminderForNotify,
@@ -46,12 +75,22 @@ function copyForReminder(
 
 export class NotificationService {
   async list(userId: string) {
-    return prisma.notification.findMany({
-      where: { userId },
-      include: notificationInclude,
-      orderBy: { createdAt: 'desc' },
-      take: 50,
-    });
+    const include = notificationInclude;
+    const [important, rest] = await Promise.all([
+      prisma.notification.findMany({
+        where: { userId, type: NotificationType.TASK_IMPORTANT },
+        include,
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.notification.findMany({
+        where: { userId, NOT: { type: NotificationType.TASK_IMPORTANT } },
+        include,
+        orderBy: { createdAt: 'desc' },
+        take: 50,
+      }),
+    ]);
+
+    return [...important, ...rest];
   }
 
   async unreadCount(userId: string) {
@@ -61,9 +100,12 @@ export class NotificationService {
   }
 
   async inboxSummary(userId: string, locale: AppLocale = 'en'): Promise<NotificationInboxSummary> {
-    const counts = await this.syncUserReviewNotifications(userId, locale);
+    const [counts, important] = await Promise.all([
+      this.syncUserReviewNotifications(userId, locale),
+      this.syncUserTaskNotifications(userId, locale),
+    ]);
     const unreadCount = await this.unreadCount(userId);
-    return { unreadCount, ...counts };
+    return { unreadCount, important, ...counts };
   }
 
   /**
@@ -166,6 +208,78 @@ export class NotificationService {
     }
 
     return { dueToday, overdue };
+  }
+
+  async syncUserTaskNotifications(userId: string, locale: AppLocale = 'en'): Promise<number> {
+    const visibleIds = await freeVisibleIds(userId, 'tasks');
+    const tasks = await prisma.dailyTask.findMany({
+      where: {
+        userId,
+        important: true,
+        completed: false,
+        ...(visibleIds ? { id: { in: visibleIds } } : {}),
+      },
+    });
+
+    const existing = await prisma.notification.findMany({
+      where: { userId, type: NotificationType.TASK_IMPORTANT },
+    });
+    const wanted = new Set(tasks.map((task) => task.id));
+    const staleIds = existing
+      .filter((item) => !item.dailyTaskId || !wanted.has(item.dailyTaskId))
+      .map((item) => item.id);
+
+    if (staleIds.length > 0) {
+      await prisma.notification.deleteMany({ where: { id: { in: staleIds } } });
+    }
+
+    for (const task of tasks) {
+      await this.syncTaskNotification(task, locale);
+    }
+
+    return tasks.length;
+  }
+
+  async syncTaskNotification(task: TaskForNotify, locale: AppLocale = 'en'): Promise<void> {
+    if (!task.important || task.completed) {
+      await prisma.notification.deleteMany({ where: { dailyTaskId: task.id } });
+      return;
+    }
+
+    const date = dateKeyOf(task.date);
+    const { title, message } = taskImportantNotificationCopy(locale, {
+      title: task.title,
+      date,
+      minutes: task.minutes,
+    });
+
+    const existing = await prisma.notification.findUnique({
+      where: { dailyTaskId: task.id },
+    });
+
+    if (existing) {
+      const needsUpdate =
+        existing.title !== title ||
+        existing.message !== message ||
+        existing.type !== NotificationType.TASK_IMPORTANT;
+      if (needsUpdate) {
+        await prisma.notification.update({
+          where: { id: existing.id },
+          data: { title, message, type: NotificationType.TASK_IMPORTANT },
+        });
+      }
+      return;
+    }
+
+    await prisma.notification.create({
+      data: {
+        userId: task.userId,
+        dailyTaskId: task.id,
+        type: NotificationType.TASK_IMPORTANT,
+        title,
+        message,
+      },
+    });
   }
 
   async createReminderNotification(reminderId: string, locale: AppLocale = 'en') {

@@ -9,12 +9,14 @@ import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
 import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
 import { FREE_LIMITS } from '@/config/entitlements.js';
+import type { AppLocale } from '@/services/emailCopy.js';
 import {
   assertCreateLimit,
   freeVisibleIds,
   idIn,
   maybeCapMonthly,
 } from '@/services/entitlements.service.js';
+import { notificationService } from '@/services/notificationService.js';
 
 function parseDateOnly(value: string): Date {
   const [y, m, d] = value.split('-').map(Number);
@@ -55,6 +57,7 @@ export class DailyTaskService {
     note: string;
     splitCount: number;
     splitDone: number;
+    important: boolean;
     userId: string;
     createdAt: Date;
     updatedAt: Date;
@@ -64,6 +67,7 @@ export class DailyTaskService {
       date: toDateKey(task.date),
       splitCount: Math.max(1, task.splitCount ?? 1),
       splitDone: Math.max(0, task.splitDone ?? 0),
+      important: Boolean(task.important),
     };
   }
 
@@ -74,7 +78,7 @@ export class DailyTaskService {
       FREE_LIMITS.tasksPerMonth,
       await prisma.dailyTask.findMany({
         where: { userId, date: { gte: from, lt: to } },
-        orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
+        orderBy: [{ date: 'asc' }, { completed: 'asc' }, { important: 'desc' }, { createdAt: 'asc' }],
       }),
       (task) => task.date,
       (task) => task.createdAt.getTime(),
@@ -174,7 +178,7 @@ export class DailyTaskService {
     const visibleIds = await freeVisibleIds(userId, 'tasks', { dateKey: date });
     const tasks = await prisma.dailyTask.findMany({
       where: { userId, date: { gte: day, lt: next }, ...idIn(visibleIds) },
-      orderBy: [{ completed: 'asc' }, { createdAt: 'asc' }],
+      orderBy: [{ completed: 'asc' }, { important: 'desc' }, { createdAt: 'asc' }],
     });
 
     return {
@@ -249,7 +253,7 @@ export class DailyTaskService {
     return this.serialize(task);
   }
 
-  async update(userId: string, id: string, input: UpdateDailyTaskInput) {
+  async update(userId: string, id: string, input: UpdateDailyTaskInput, locale: AppLocale = 'en') {
     const existing = requireOwned(
       await prisma.dailyTask.findFirst({ where: { id, userId } }),
       'Task not found',
@@ -290,6 +294,7 @@ export class DailyTaskService {
         ...(input.title !== undefined ? { title: input.title } : {}),
         ...(input.minutes !== undefined ? { minutes: input.minutes } : {}),
         ...(input.note !== undefined ? { note: input.note } : {}),
+        ...(input.important !== undefined ? { important: input.important } : {}),
         splitCount,
         splitDone,
         completed,
@@ -301,6 +306,7 @@ export class DailyTaskService {
       },
     });
 
+    await notificationService.syncTaskNotification(task, locale);
     return this.serialize(task);
   }
 

@@ -262,7 +262,10 @@
     "errors": {
       "title": "Anna tehtävälle nimi",
       "minutes": "Vähintään 1 minuutti"
-    }
+    },
+    "markImportant": "Merkitse erittäin tärkeäksi",
+    "unmarkImportant": "Poista tärkeys",
+    "important": "Tärkeä"
   },
   "rhythm": {
     "title": "Tavat",
@@ -320,7 +323,7 @@
   },
   "notifications": {
     "title": "Ilmoitukset",
-    "subtitle": "Sovelluksen sisäiset muistutukset, jotka palvelin luo kertauksen erääntyessä.",
+    "subtitle": "Tärkeät tehtävät, tämän päivän kertaukset ja myöhässä olevat — kello pitää ne näkyvillä.",
     "menuHint": "Lukemattomat kertaukset ja järjestelmäviestit.",
     "unreadCount": "Lukemattomia: {{count}}",
     "markAllRead": "Merkitse kaikki luetuiksi",
@@ -329,12 +332,14 @@
     "openMaterial": "Avaa materiaali",
     "unread": "Lukematon",
     "emptyTitle": "Ei vielä ilmoituksia",
-    "emptyDescription": "Kun kertaus erääntyy, ilmoitus ilmestyy tänne.",
+    "emptyDescription": "Tärkeät tehtävät ja erääntyvät kertaukset näkyvät täällä heti.",
     "types": {
       "REVIEW_DUE": "Tänään",
       "REVIEW_OVERDUE": "Myöhässä",
-      "SYSTEM": "Järjestelmä"
-    }
+      "SYSTEM": "Järjestelmä",
+      "TASK_IMPORTANT": "Tärkeä"
+    },
+    "openTask": "Avaa tehtävät"
   },
   "finance": {
     "title": "Budjetti",

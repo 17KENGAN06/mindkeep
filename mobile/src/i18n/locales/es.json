@@ -262,7 +262,10 @@
     "errors": {
       "title": "Ponle un nombre a la tarea",
       "minutes": "Los minutos deben ser al menos 1"
-    }
+    },
+    "markImportant": "Marcar como muy importante",
+    "unmarkImportant": "Quitar importancia",
+    "important": "Importante"
   },
   "rhythm": {
     "title": "Hábitos",
@@ -320,7 +323,7 @@
   },
   "notifications": {
     "title": "Notificaciones",
-    "subtitle": "Recordatorios en la app creados por el servidor cuando los repasos vencen.",
+    "subtitle": "Tareas importantes, repasos de hoy y atrasos — la campana los mantiene a la vista.",
     "menuHint": "Repasos sin leer y mensajes del sistema.",
     "unreadCount": "Sin leer: {{count}}",
     "markAllRead": "Marcar todas como leídas",
@@ -329,12 +332,14 @@
     "openMaterial": "Abrir material",
     "unread": "Sin leer",
     "emptyTitle": "Aún no hay notificaciones",
-    "emptyDescription": "Cuando un repaso venza, aparecerá aquí.",
+    "emptyDescription": "Las tareas importantes y los repasos aparecen aquí de inmediato.",
     "types": {
       "REVIEW_DUE": "Para hoy",
       "REVIEW_OVERDUE": "Atrasado",
-      "SYSTEM": "Sistema"
-    }
+      "SYSTEM": "Sistema",
+      "TASK_IMPORTANT": "Importante"
+    },
+    "openTask": "Abrir tareas"
   },
   "finance": {
     "title": "Presupuesto",

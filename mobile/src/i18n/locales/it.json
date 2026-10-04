@@ -262,7 +262,10 @@
     "errors": {
       "title": "Dai un nome all'attività",
       "minutes": "I minuti devono essere almeno 1"
-    }
+    },
+    "markImportant": "Segna come molto importante",
+    "unmarkImportant": "Rimuovi importanza",
+    "important": "Importante"
   },
   "rhythm": {
     "title": "Abitudini",
@@ -320,7 +323,7 @@
   },
   "notifications": {
     "title": "Notifiche",
-    "subtitle": "Promemoria in-app creati dal server quando i ripassi diventano dovuti.",
+    "subtitle": "Attività importanti, ripassi di oggi e ritardi — la campanella li tiene in vista.",
     "menuHint": "Ripassi non letti e messaggi di sistema.",
     "unreadCount": "Non lette: {{count}}",
     "markAllRead": "Segna tutte come lette",
@@ -329,12 +332,14 @@
     "openMaterial": "Apri materiale",
     "unread": "Non letta",
     "emptyTitle": "Nessuna notifica per ora",
-    "emptyDescription": "Quando un ripasso diventa dovuto, apparirà qui.",
+    "emptyDescription": "Le attività importanti e i ripassi dovuti compaiono qui subito.",
     "types": {
       "REVIEW_DUE": "In scadenza oggi",
       "REVIEW_OVERDUE": "In ritardo",
-      "SYSTEM": "Sistema"
-    }
+      "SYSTEM": "Sistema",
+      "TASK_IMPORTANT": "Importante"
+    },
+    "openTask": "Apri attività"
   },
   "finance": {
     "title": "Budget",

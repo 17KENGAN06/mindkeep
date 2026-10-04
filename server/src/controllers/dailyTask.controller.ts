@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import { resolveAppLocale } from '@/services/emailCopy.js';
 import { dailyTaskService } from '@/services/dailyTask.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
@@ -50,10 +51,12 @@ export class DailyTaskController {
   }
 
   async update(req: Request, res: Response): Promise<void> {
+    const locale = resolveAppLocale(req.header('x-app-language') ?? req.header('accept-language'));
     const task = await dailyTaskService.update(
       requireUserId(req),
       req.params.id as string,
       req.body as UpdateDailyTaskInput,
+      locale,
     );
     res.status(200).json({ task });
   }

@@ -95,7 +95,13 @@ export function TasksScreen() {
     [periodQuery.data?.days],
   );
 
-  const dayTasks = (periodQuery.data?.tasks ?? []).filter((task) => task.date === selectedDate);
+  const dayTasks = [...(periodQuery.data?.tasks ?? [])]
+    .filter((task) => task.date === selectedDate)
+    .sort((left, right) => {
+      if (left.completed !== right.completed) return left.completed ? 1 : -1;
+      if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
+      return 0;
+    });
 
   const onMonthChange = (nextYear: number, nextMonth: number) => {
     setYear(nextYear);
@@ -151,6 +157,21 @@ export function TasksScreen() {
     setFormError(null);
     try {
       await toggleTask.mutateAsync({ id: task.id, completed: !task.completed });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const onImportant = async (task: DailyTask) => {
+    setBusyId(task.id);
+    setFormError(null);
+    try {
+      await updateTask.mutateAsync({
+        id: task.id,
+        payload: { important: !task.important },
+      });
     } catch {
       setFormError(t('auth.errors.generic'));
     } finally {
@@ -280,6 +301,7 @@ export function TasksScreen() {
                     styles.taskCard,
                     { backgroundColor: colors.panel, borderColor: colors.line },
                     task.completed && { borderColor: `${colors.brand}59` },
+                    task.important && !task.completed && { borderColor: '#e0a020' },
                     editingId === task.id && { borderColor: colors.brand },
                   ]}
                 >
@@ -314,6 +336,26 @@ export function TasksScreen() {
                       </View>
                     </Pressable>
                     <View style={styles.taskActions}>
+                      <Pressable
+                        disabled={busyId === task.id}
+                        onPress={() => void onImportant(task)}
+                        accessibilityRole="button"
+                        accessibilityLabel={
+                          task.important ? t('tasks.unmarkImportant') : t('tasks.markImportant')
+                        }
+                        style={[
+                          styles.importantBtn,
+                          task.important
+                            ? { backgroundColor: '#f0b429', borderColor: '#e0a020' }
+                            : { borderColor: colors.line, backgroundColor: colors.bg },
+                        ]}
+                      >
+                        <AppIcon
+                          name={task.important ? 'star' : 'star-outline'}
+                          color={task.important ? '#3a2a08' : colors.muted}
+                          size={18}
+                        />
+                      </Pressable>
                       <AppButton
                         variant="ghost"
                         label={t('common.edit')}
@@ -478,6 +520,14 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingBottom: 8,
     paddingHorizontal: 10,
+  },
+  importantBtn: {
+    alignItems: 'center',
+    borderRadius: 12,
+    borderWidth: 1,
+    height: 36,
+    justifyContent: 'center',
+    width: 36,
   },
   splitRow: {
     alignItems: 'center',

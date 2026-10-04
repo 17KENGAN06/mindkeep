@@ -197,7 +197,10 @@
     "errors": {
       "title": "Enter a task title",
       "minutes": "Enter time in minutes"
-    }
+    },
+    "markImportant": "Mark as very important",
+    "unmarkImportant": "Remove importance",
+    "important": "Important"
   },
   "forest": {
     "title": "Your Forest",
@@ -1006,19 +1009,20 @@
   },
   "notifications": {
     "title": "Notifications",
-    "subtitle": "Today’s reviews and anything you missed — the bell keeps them in view.",
+    "subtitle": "Important tasks, today’s reviews, and anything you missed — the bell keeps them in view.",
     "unreadCount": "Unread: {{count}}",
     "markAllRead": "Mark all as read",
     "markRead": "Mark as read",
     "openMaterial": "Open material",
     "unread": "Unread",
     "emptyTitle": "No notifications yet",
-    "emptyDescription": "When a review is due today or overdue, it will appear here.",
+    "emptyDescription": "Important tasks and due reviews appear here right away.",
     "bellLabel": "Reviews waiting: {{count}}",
     "types": {
       "REVIEW_DUE": "Due today",
       "REVIEW_OVERDUE": "Overdue",
-      "SYSTEM": "System"
+      "SYSTEM": "System",
+      "TASK_IMPORTANT": "Important"
     },
     "bellToday": "Today",
     "bellOverdue": "Overdue",
@@ -1027,7 +1031,11 @@
     "openReviews": "Open reviews",
     "seeAll": "All notifications",
     "dueCount": "{{count}} today",
-    "overdueCount": "{{count}} overdue"
+    "overdueCount": "{{count}} overdue",
+    "openTask": "Open tasks",
+    "bellImportant": "Important",
+    "bellEmptyImportant": "No important tasks",
+    "importantCount": "{{count}} important"
   },
   "statistics": {
     "title": "Statistics",

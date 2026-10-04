@@ -30,6 +30,7 @@ export type UpdateDailyTaskPayload = {
   minutes?: number;
   note?: string;
   completed?: boolean;
+  important?: boolean;
   splitCount?: number;
   splitDone?: number;
 };

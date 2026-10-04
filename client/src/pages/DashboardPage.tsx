@@ -1,4 +1,4 @@
-﻿import { BookOpen, Check, CheckCircle2, GraduationCap, Repeat } from 'lucide-react';
+﻿import { BookOpen, Check, CheckCircle2, GraduationCap, Repeat, Star } from 'lucide-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +27,7 @@ import {
   useDailyTasksPeriod,
   useUpdateDailyTask,
 } from '@/features/tasks/useDailyTasks';
+import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
 import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
 import { formatDate, toDateInputValue } from '@/utils/date';
@@ -139,7 +140,9 @@ export function DashboardPage() {
   }
 
   const { stats, recentMaterials } = dashboardQuery.data;
-  const todayTasks = (tasksQuery.data?.tasks ?? []).filter((task) => task.date === today);
+  const todayTasks = sortDailyTasks(
+    (tasksQuery.data?.tasks ?? []).filter((task) => task.date === today),
+  );
   const todayDone = todayTasks.filter((task) => task.completed).length;
   const todayTotal = todayTasks.length;
   const tasksPercent = todayTotal > 0 ? (todayDone / todayTotal) * 100 : 0;
@@ -186,6 +189,18 @@ export function DashboardPage() {
       await updateTask.mutateAsync({
         id: task.id,
         payload: { completed: !task.completed },
+      });
+    } finally {
+      setBusyTaskId(null);
+    }
+  };
+
+  const onImportantTask = async (task: DailyTask) => {
+    setBusyTaskId(task.id);
+    try {
+      await updateTask.mutateAsync({
+        id: task.id,
+        payload: { important: !task.important },
       });
     } finally {
       setBusyTaskId(null);
@@ -325,7 +340,9 @@ export function DashboardPage() {
                   className={`flex items-start gap-3 rounded-2xl px-3 py-3 ring-1 transition ${
                     task.completed
                       ? 'bg-emerald-500/10 ring-emerald-500/25'
-                      : 'bg-brand-50/30 ring-line/70'
+                      : task.important
+                        ? 'bg-amber-500/[0.09] ring-amber-400/45'
+                        : 'bg-brand-50/30 ring-line/70'
                   }`}
                 >
                   <button
@@ -363,6 +380,20 @@ export function DashboardPage() {
                       </span>
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    aria-pressed={Boolean(task.important)}
+                    aria-label={task.important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
+                    disabled={busyTaskId === task.id}
+                    onClick={() => void onImportantTask(task)}
+                    className={`mt-0.5 inline-flex h-9 shrink-0 items-center justify-center gap-1 rounded-lg transition ${
+                      task.important
+                        ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 px-2 text-[#3a2a08] shadow-[0_0_14px_rgba(245,186,64,0.45)]'
+                        : 'w-9 text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600'
+                    }`}
+                  >
+                    <Star className={`h-3.5 w-3.5 ${task.important ? 'fill-current' : ''}`} aria-hidden />
+                  </button>
                 </li>
               ))
             )}

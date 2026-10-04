@@ -262,7 +262,10 @@
     "errors": {
       "title": "Donne un nom à la tâche",
       "minutes": "Les minutes doivent être d'au moins 1"
-    }
+    },
+    "markImportant": "Marquer comme très importante",
+    "unmarkImportant": "Retirer l’importance",
+    "important": "Important"
   },
   "rhythm": {
     "title": "Habitudes",
@@ -320,7 +323,7 @@
   },
   "notifications": {
     "title": "Notifications",
-    "subtitle": "Rappels dans l'app, créés par le serveur lorsque les révisions deviennent dues.",
+    "subtitle": "Tâches importantes, révisions du jour et retards — la cloche les garde en vue.",
     "menuHint": "Révisions non lues et messages système.",
     "unreadCount": "Non lues : {{count}}",
     "markAllRead": "Tout marquer comme lu",
@@ -329,12 +332,14 @@
     "openMaterial": "Ouvrir la fiche",
     "unread": "Non lu",
     "emptyTitle": "Aucune notification pour l'instant",
-    "emptyDescription": "Lorsqu'une révision devient due, elle apparaîtra ici.",
+    "emptyDescription": "Les tâches importantes et les révisions dues apparaissent ici tout de suite.",
     "types": {
       "REVIEW_DUE": "Dû aujourd'hui",
       "REVIEW_OVERDUE": "En retard",
-      "SYSTEM": "Système"
-    }
+      "SYSTEM": "Système",
+      "TASK_IMPORTANT": "Important"
+    },
+    "openTask": "Ouvrir les tâches"
   },
   "finance": {
     "title": "Budget",

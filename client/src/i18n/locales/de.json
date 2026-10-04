@@ -197,7 +197,10 @@
     "errors": {
       "title": "Gib einen Aufgabentitel ein",
       "minutes": "Gib die Zeit in Minuten ein"
-    }
+    },
+    "markImportant": "Als sehr wichtig markieren",
+    "unmarkImportant": "Wichtigkeit entfernen",
+    "important": "Wichtig"
   },
   "forest": {
     "title": "Dein Wald",
@@ -1006,19 +1009,20 @@
   },
   "notifications": {
     "title": "Benachrichtigungen",
-    "subtitle": "Heutige Wiederholungen und Überfälliges — die Glocke hält sie im Blick.",
+    "subtitle": "Wichtige Aufgaben, heutige Wiederholungen und Überfälliges — die Glocke hält sie im Blick.",
     "unreadCount": "Ungelesen: {{count}}",
     "markAllRead": "Alle als gelesen markieren",
     "markRead": "Als gelesen markieren",
     "openMaterial": "Material öffnen",
     "unread": "Ungelesen",
     "emptyTitle": "Noch keine Benachrichtigungen",
-    "emptyDescription": "Wenn eine Wiederholung heute fällig oder überfällig ist, erscheint sie hier.",
+    "emptyDescription": "Wichtige Aufgaben und fällige Wiederholungen erscheinen hier sofort.",
     "bellLabel": "Offene Wiederholungen: {{count}}",
     "types": {
       "REVIEW_DUE": "Heute fällig",
       "REVIEW_OVERDUE": "Überfällig",
-      "SYSTEM": "System"
+      "SYSTEM": "System",
+      "TASK_IMPORTANT": "Wichtig"
     },
     "bellToday": "Heute",
     "bellOverdue": "Überfällig",
@@ -1027,7 +1031,11 @@
     "openReviews": "Zu den Wiederholungen",
     "seeAll": "Alle Hinweise",
     "dueCount": "{{count}} heute",
-    "overdueCount": "{{count}} überfällig"
+    "overdueCount": "{{count}} überfällig",
+    "openTask": "Zu den Aufgaben",
+    "bellImportant": "Wichtig",
+    "bellEmptyImportant": "Keine wichtigen Aufgaben",
+    "importantCount": "{{count}} wichtig"
   },
   "statistics": {
     "title": "Statistik",

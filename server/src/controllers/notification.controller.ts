@@ -31,6 +31,7 @@ export class NotificationController {
       unreadCount: summary.unreadCount,
       dueToday: summary.dueToday,
       overdue: summary.overdue,
+      important: summary.important,
     });
   }
 

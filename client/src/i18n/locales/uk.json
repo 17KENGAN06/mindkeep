@@ -197,7 +197,10 @@
     "errors": {
       "title": "Введіть назву задачі",
       "minutes": "Вкажіть час у хвилинах"
-    }
+    },
+    "markImportant": "Зробити дуже важливим",
+    "unmarkImportant": "Зняти важливість",
+    "important": "Важливо"
   },
   "forest": {
     "title": "Ваш ліс",
@@ -1006,19 +1009,20 @@
   },
   "notifications": {
     "title": "Сповіщення",
-    "subtitle": "Повторення на сьогодні і все прострочене — дзвіночок тримає їх на видноті.",
+    "subtitle": "Важливі завдання, повторення на сьогодні і все прострочене — дзвіночок тримає їх на видноті.",
     "unreadCount": "Непрочитаних: {{count}}",
     "markAllRead": "Прочитати всі",
     "markRead": "Прочитано",
     "openMaterial": "Відкрити матеріал",
     "unread": "Нове",
     "emptyTitle": "Сповіщень ще немає",
-    "emptyDescription": "Коли настане повторення або воно прострочиться, воно з’явиться тут.",
+    "emptyDescription": "Важливі завдання і повторення з’являються тут одразу.",
     "bellLabel": "Очікують повторення: {{count}}",
     "types": {
       "REVIEW_DUE": "На сьогодні",
       "REVIEW_OVERDUE": "Прострочено",
-      "SYSTEM": "Система"
+      "SYSTEM": "Система",
+      "TASK_IMPORTANT": "Важливо"
     },
     "bellToday": "Сьогодні",
     "bellOverdue": "Прострочено",
@@ -1027,7 +1031,11 @@
     "openReviews": "До повторень",
     "seeAll": "Усі сповіщення",
     "dueCount": "{{count}} сьогодні",
-    "overdueCount": "{{count}} прострочено"
+    "overdueCount": "{{count}} прострочено",
+    "openTask": "До завдань",
+    "bellImportant": "Важливо",
+    "bellEmptyImportant": "Немає важливих завдань",
+    "importantCount": "{{count}} важливих"
   },
   "statistics": {
     "title": "Статистика",
