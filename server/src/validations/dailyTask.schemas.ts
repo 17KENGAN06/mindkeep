@@ -55,7 +55,28 @@ export const dailyTaskIdParamsSchema = z.object({
   id: z.string().min(1),
 });
 
+const bulkTaskItemSchema = z.object({
+  title: z.string().trim().min(1).max(200),
+  minutes: z.coerce.number().int().min(1).max(24 * 60),
+});
+
+export const bulkCreateDailyTasksSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  tasks: z.array(bulkTaskItemSchema).min(1).max(60),
+});
+
+export const copyDailyTasksSchema = z.object({
+  from: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  to: z
+    .array(z.string().regex(/^\d{4}-\d{2}-\d{2}$/))
+    .min(1)
+    .max(21)
+    .transform((dates) => [...new Set(dates)]),
+});
+
 export type DailyTaskPeriodQuery = z.infer<typeof dailyTaskPeriodQuerySchema>;
 export type ForestQuery = z.infer<typeof forestQuerySchema>;
 export type CreateDailyTaskInput = z.infer<typeof createDailyTaskSchema>;
 export type UpdateDailyTaskInput = z.infer<typeof updateDailyTaskSchema>;
+export type BulkCreateDailyTasksInput = z.infer<typeof bulkCreateDailyTasksSchema>;
+export type CopyDailyTasksInput = z.infer<typeof copyDailyTasksSchema>;

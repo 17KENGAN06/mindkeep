@@ -3,6 +3,8 @@ import { resolveAppLocale } from '@/services/emailCopy.js';
 import { dailyTaskService } from '@/services/dailyTask.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
+  BulkCreateDailyTasksInput,
+  CopyDailyTasksInput,
   CreateDailyTaskInput,
   DailyTaskPeriodQuery,
   ForestQuery,
@@ -48,6 +50,22 @@ export class DailyTaskController {
       req.body as CreateDailyTaskInput,
     );
     res.status(201).json({ task });
+  }
+
+  async bulkCreate(req: Request, res: Response): Promise<void> {
+    const result = await dailyTaskService.bulkCreate(
+      requireUserId(req),
+      req.body as BulkCreateDailyTasksInput,
+    );
+    res.status(201).json(result);
+  }
+
+  async copyDay(req: Request, res: Response): Promise<void> {
+    const result = await dailyTaskService.copyDay(
+      requireUserId(req),
+      req.body as CopyDailyTasksInput,
+    );
+    res.status(201).json(result);
   }
 
   async update(req: Request, res: Response): Promise<void> {

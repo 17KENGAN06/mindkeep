@@ -4,6 +4,8 @@ import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
 import {
+  bulkCreateDailyTasksSchema,
+  copyDailyTasksSchema,
   createDailyTaskSchema,
   dailyTaskDayQuerySchema,
   dailyTaskIdParamsSchema,
@@ -38,6 +40,18 @@ dailyTaskRouter.post(
   '/',
   validate(createDailyTaskSchema),
   asyncHandler((req, res) => dailyTaskController.create(req, res)),
+);
+
+dailyTaskRouter.post(
+  '/bulk',
+  validate(bulkCreateDailyTasksSchema),
+  asyncHandler((req, res) => dailyTaskController.bulkCreate(req, res)),
+);
+
+dailyTaskRouter.post(
+  '/copy',
+  validate(copyDailyTasksSchema),
+  asyncHandler((req, res) => dailyTaskController.copyDay(req, res)),
 );
 
 dailyTaskRouter.patch(

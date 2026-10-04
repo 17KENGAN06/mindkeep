@@ -1,5 +1,7 @@
 import { prisma } from '@/config/prisma.js';
 import type {
+  BulkCreateDailyTasksInput,
+  CopyDailyTasksInput,
   CreateDailyTaskInput,
   DailyTaskPeriodQuery,
   ForestQuery,
@@ -11,6 +13,7 @@ import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
 import { FREE_LIMITS } from '@/config/entitlements.js';
 import type { AppLocale } from '@/services/emailCopy.js';
 import {
+  assertCreateCount,
   assertCreateLimit,
   freeVisibleIds,
   idIn,
@@ -264,6 +267,73 @@ export class DailyTaskService {
       },
     });
     return this.serialize(task);
+  }
+
+  async bulkCreate(userId: string, input: BulkCreateDailyTasksInput) {
+    await assertCreateCount(userId, 'tasks', input.tasks.length, { dateKey: input.date });
+    const date = parseDateOnly(input.date);
+    const result = await prisma.dailyTask.createMany({
+      data: input.tasks.map((task) => ({
+        userId,
+        title: task.title,
+        minutes: task.minutes,
+        date,
+        note: '',
+      })),
+    });
+    return { created: result.count };
+  }
+
+  async copyDay(userId: string, input: CopyDailyTasksInput) {
+    const targets = input.to.filter((date) => date !== input.from);
+    if (targets.length === 0) {
+      throw new AppError('Pick at least one other day', {
+        statusCode: 400,
+        code: 'COPY_NO_DAYS',
+      });
+    }
+
+    const sourceDay = parseDateOnly(input.from);
+    const sourceNext = new Date(sourceDay);
+    sourceNext.setUTCDate(sourceNext.getUTCDate() + 1);
+    const sourceTasks = await prisma.dailyTask.findMany({
+      where: { userId, date: { gte: sourceDay, lt: sourceNext } },
+      orderBy: [{ createdAt: 'asc' }],
+    });
+
+    if (sourceTasks.length === 0) {
+      throw new AppError('No tasks to copy', {
+        statusCode: 400,
+        code: 'COPY_EMPTY',
+      });
+    }
+
+    const byMonth = new Map<string, number>();
+    for (const date of targets) {
+      const key = date.slice(0, 7);
+      byMonth.set(key, (byMonth.get(key) ?? 0) + sourceTasks.length);
+    }
+    for (const [monthKey, add] of byMonth) {
+      await assertCreateCount(userId, 'tasks', add, { dateKey: `${monthKey}-01` });
+    }
+
+    const result = await prisma.dailyTask.createMany({
+      data: targets.flatMap((date) =>
+        sourceTasks.map((task) => ({
+          userId,
+          title: task.title,
+          minutes: task.minutes,
+          date: parseDateOnly(date),
+          note: task.note,
+          important: task.important,
+          splitCount: Math.max(1, task.splitCount ?? 1),
+          splitDone: 0,
+          completed: false,
+          completedAt: null,
+        })),
+      ),
+    });
+    return { created: result.count };
   }
 
   async update(userId: string, id: string, input: UpdateDailyTaskInput, locale: AppLocale = 'en') {

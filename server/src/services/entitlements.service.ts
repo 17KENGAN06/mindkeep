@@ -144,6 +144,19 @@ export async function assertCreateLimit(
   if (used >= limit) throwPlanLimit(feature, used, limit);
 }
 
+export async function assertCreateCount(
+  userId: string,
+  feature: 'tasks',
+  add: number,
+  extra?: { dateKey?: string },
+): Promise<void> {
+  if (add <= 0) return;
+  const entitlement = await getEntitlement(userId);
+  if (entitlement.pro) return;
+  const { used, limit } = await usedFor(userId, feature, extra);
+  if (used + add > limit) throwPlanLimit(feature, used, limit);
+}
+
 export async function assertMealDateAllowed(userId: string, dateKey: string): Promise<void> {
   const entitlement = await getEntitlement(userId);
   if (entitlement.pro) return;

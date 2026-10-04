@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
 import { ForestProgressCard } from '@/components/forest/ForestProgressCard';
 import { DailyTaskList } from '@/components/tasks/DailyTaskList';
@@ -11,7 +12,11 @@ import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
+import { TaskCopyDialog } from '@/features/tasks/TaskCopyDialog';
+import { TaskImportDialog } from '@/features/tasks/TaskImportDialog';
 import {
+  useBulkCreateDailyTasks,
+  useCopyDailyTasks,
   useCreateDailyTask,
   useDailyTasksPeriod,
   useDeleteDailyTask,
@@ -51,6 +56,10 @@ export function TasksPage() {
   const [minutes, setMinutes] = useState('30');
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [copyOpen, setCopyOpen] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState<string | null>(null);
 
   const periodQuery = useDailyTasksPeriod({
     view,
@@ -59,6 +68,8 @@ export function TasksPage() {
   });
   const forestQuery = useForestSummary(year, month, view === 'month');
   const createTask = useCreateDailyTask();
+  const bulkCreate = useBulkCreateDailyTasks();
+  const copyTasks = useCopyDailyTasks();
   const updateTask = useUpdateDailyTask();
   const deleteTask = useDeleteDailyTask();
 
@@ -122,6 +133,37 @@ export function TasksPage() {
       setMinutes('30');
     } catch (error) {
       setFormError(mutationErrorMessage(error, t));
+    }
+  };
+
+  const onImport = async (tasks: { title: string; minutes: number }[]) => {
+    if (!selectedDate) return;
+    setImportError(null);
+    try {
+      await bulkCreate.mutateAsync({ date: selectedDate, tasks });
+      setImportOpen(false);
+    } catch (error) {
+      setImportError(mutationErrorMessage(error, t, 'tasks.errors.importEmpty'));
+    }
+  };
+
+  const onCopy = async (dates: string[]) => {
+    if (!selectedDate) return;
+    setCopyError(null);
+    try {
+      await copyTasks.mutateAsync({ from: selectedDate, to: dates });
+      setCopyOpen(false);
+    } catch (error) {
+      const code = error instanceof ApiError ? error.code : null;
+      if (code === 'COPY_EMPTY') {
+        setCopyError(t('tasks.errors.copyEmpty'));
+        return;
+      }
+      if (code === 'COPY_NO_DAYS') {
+        setCopyError(t('tasks.errors.copyNoDays'));
+        return;
+      }
+      setCopyError(mutationErrorMessage(error, t));
     }
   };
 
@@ -314,7 +356,36 @@ export function TasksPage() {
             </div>
 
             <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
-              <h3 className="text-sm font-semibold text-ink">{t('tasks.addTask')}</h3>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-sm font-semibold text-ink">{t('tasks.addTask')}</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="!w-auto px-3 py-2 text-sm"
+                    disabled={!selectedDate}
+                    onClick={() => {
+                      setImportError(null);
+                      setImportOpen(true);
+                    }}
+                  >
+                    {t('tasks.import')}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="!w-auto px-3 py-2 text-sm"
+                    disabled={!selectedDate || dayTasks.length === 0}
+                    title={!dayTasks.length ? t('tasks.copyNone') : undefined}
+                    onClick={() => {
+                      setCopyError(null);
+                      setCopyOpen(true);
+                    }}
+                  >
+                    {t('tasks.copy')}
+                  </Button>
+                </div>
+              </div>
               <form
                 className="mt-3 grid gap-3 sm:grid-cols-[1fr_140px_auto]"
                 onSubmit={(event) => void onCreate(event)}
@@ -352,6 +423,28 @@ export function TasksPage() {
               busyId={busyId}
             />
           </section>
+
+          <TaskImportDialog
+            open={importOpen}
+            date={selectedDate ?? ''}
+            isLoading={bulkCreate.isPending}
+            error={importError}
+            onClose={() => setImportOpen(false)}
+            onImport={(tasks) => void onImport(tasks)}
+          />
+          {selectedDate ? (
+            <TaskCopyDialog
+              open={copyOpen}
+              from={selectedDate}
+              taskCount={dayTasks.length}
+              year={year}
+              month={month}
+              isLoading={copyTasks.isPending}
+              error={copyError}
+              onClose={() => setCopyOpen(false)}
+              onCopy={(dates) => void onCopy(dates)}
+            />
+          ) : null}
         </>
       )}
     </div>
