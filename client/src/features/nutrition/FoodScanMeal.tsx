@@ -1,4 +1,4 @@
-import { Camera, Images } from 'lucide-react';
+import { Camera, Images, LoaderCircle } from 'lucide-react';
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -159,33 +159,37 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
 
       {canScan ? (
         <div className="grid grid-cols-2 gap-2">
-          <Button
+          <button
             type="button"
-            variant="secondary"
-            className="w-full sm:w-full"
-            isLoading={analyzing}
-            loadingText={t('calories.scan.analyzing')}
+            className="inline-flex min-h-11 min-w-0 w-full items-center justify-center gap-1 overflow-hidden rounded-xl bg-panel px-1.5 py-2 text-[13px] font-semibold leading-none text-ink ring-1 ring-line whitespace-nowrap touch-manipulation hover:ring-brand-400 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={analyzing}
+            aria-busy={analyzing}
             onClick={() => {
               setError(null);
               cameraRef.current?.click();
             }}
           >
-            <Camera className="mr-2 h-4 w-4 shrink-0" aria-hidden />
-            {t('calories.scan.button')}
-          </Button>
-          <Button
+            {analyzing ? (
+              <LoaderCircle className="h-4 w-4 shrink-0 animate-spin" aria-hidden />
+            ) : (
+              <>
+                <Camera className="h-4 w-4 shrink-0" aria-hidden />
+                {t('calories.scan.buttonShort')}
+              </>
+            )}
+          </button>
+          <button
             type="button"
-            variant="secondary"
-            className="w-full sm:w-full"
+            className="inline-flex min-h-11 min-w-0 w-full items-center justify-center gap-1 overflow-hidden rounded-xl bg-panel px-1.5 py-2 text-[13px] font-semibold leading-none text-ink ring-1 ring-line whitespace-nowrap touch-manipulation hover:ring-brand-400 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={analyzing}
             onClick={() => {
               setError(null);
               galleryRef.current?.click();
             }}
           >
-            <Images className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            <Images className="h-4 w-4 shrink-0" aria-hidden />
             {t('calories.scan.gallery')}
-          </Button>
+          </button>
         </div>
       ) : (
         <Button

@@ -7,6 +7,7 @@ import type {
   UpdateNutritionSettingsInput,
   UpsertWaterInput,
   UpsertWeightInput,
+  UpsertStepsInput,
 } from '@/validations/nutrition.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
@@ -38,11 +39,13 @@ function roundKg(value: number): number {
 function serializeSettings(settings: {
   calorieGoal: number;
   waterGoal: number;
+  stepsGoal: number;
   weightGoal: number | null;
 }) {
   return {
     calorieGoal: settings.calorieGoal,
     waterGoal: settings.waterGoal,
+    stepsGoal: settings.stepsGoal,
     weightGoal: settings.weightGoal === null ? null : roundKg(settings.weightGoal),
   };
 }
@@ -87,6 +90,7 @@ export class NutritionService {
       data: {
         ...(input.calorieGoal !== undefined ? { calorieGoal: input.calorieGoal } : {}),
         ...(input.waterGoal !== undefined ? { waterGoal: input.waterGoal } : {}),
+        ...(input.stepsGoal !== undefined ? { stepsGoal: input.stepsGoal } : {}),
         ...(input.weightGoal !== undefined
           ? { weightGoal: input.weightGoal === null ? null : roundKg(input.weightGoal) }
           : {}),
@@ -103,7 +107,7 @@ export class NutritionService {
     const trendFrom = await weightHistoryFrom(userId, trendFromRequested);
     const weightFrom = await weightHistoryFrom(userId, from);
 
-    const [meals, waterDays, weightDays, weightTrendDays] = await Promise.all([
+    const [meals, waterDays, weightDays, weightTrendDays, stepsDays] = await Promise.all([
       prisma.meal.findMany({
         where: { userId, date: { gte: mealFrom, lt: to } },
         orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
@@ -117,6 +121,9 @@ export class NutritionService {
       prisma.weightDay.findMany({
         where: { userId, date: { gte: trendFrom, lt: to } },
         orderBy: { date: 'asc' },
+      }),
+      prisma.stepsDay.findMany({
+        where: { userId, date: { gte: from, lt: to } },
       }),
     ]);
 
@@ -163,6 +170,10 @@ export class NutritionService {
       water: waterDays.map((row) => ({
         date: toDateKey(row.date),
         glasses: row.glasses,
+      })),
+      steps: stepsDays.map((row) => ({
+        date: toDateKey(row.date),
+        done: row.done,
       })),
       weight: weightDays.map((row) => ({
         date: toDateKey(row.date),
@@ -235,6 +246,16 @@ export class NutritionService {
       update: { glasses: input.glasses },
     });
     return { date: toDateKey(row.date), glasses: row.glasses };
+  }
+
+  async upsertSteps(userId: string, input: UpsertStepsInput) {
+    const date = parseDateOnly(input.date);
+    const row = await prisma.stepsDay.upsert({
+      where: { userId_date: { userId, date } },
+      create: { userId, date, done: input.done },
+      update: { done: input.done },
+    });
+    return { date: toDateKey(row.date), done: row.done };
   }
 
   async upsertWeight(userId: string, input: UpsertWeightInput) {

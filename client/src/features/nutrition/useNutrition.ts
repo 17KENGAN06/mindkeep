@@ -68,6 +68,17 @@ export function useSetWater() {
   });
 }
 
+export function useSetSteps() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ date, done }: { date: string; done: boolean }) =>
+      nutritionApi.setSteps(date, done),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: nutritionKey });
+    },
+  });
+}
+
 export function useSetWeight() {
   const queryClient = useQueryClient();
   return useMutation({

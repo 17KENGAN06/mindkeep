@@ -1,6 +1,7 @@
 export type NutritionSettings = {
   calorieGoal: number;
   waterGoal: number;
+  stepsGoal: number;
   weightGoal: number | null;
 };
 
@@ -18,6 +19,11 @@ export type Meal = {
 export type WaterDay = {
   date: string;
   glasses: number;
+};
+
+export type StepsDay = {
+  date: string;
+  done: boolean;
 };
 
 export type WeightDay = {
@@ -40,6 +46,7 @@ export type NutritionPeriodResponse = {
   days: NutritionDaySummary[];
   meals: Meal[];
   water: WaterDay[];
+  steps?: StepsDay[];
   weight?: WeightDay[];
   weightTrend?: WeightDay[];
   weightAvg?: number | null;

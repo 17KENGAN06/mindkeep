@@ -26,7 +26,7 @@ export function MealKindPicker({ value, onChange, pro }: MealKindPickerProps) {
             <button
               key={kind}
               type="button"
-              className={`min-h-10 rounded-full px-3 text-sm font-medium transition touch-manipulation ${
+              className={`min-h-10 whitespace-nowrap rounded-full px-3 text-sm font-medium transition touch-manipulation ${
                 selected
                   ? 'bg-brand-500 text-[#07110d]'
                   : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'

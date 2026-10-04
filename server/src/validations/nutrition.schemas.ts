@@ -11,6 +11,7 @@ export const updateNutritionSettingsSchema = z
   .object({
     calorieGoal: z.coerce.number().int().min(500).max(10000).optional(),
     waterGoal: z.coerce.number().int().min(1).max(20).optional(),
+    stepsGoal: z.coerce.number().int().min(1000).max(100000).optional(),
     weightGoal: z.coerce.number().min(20).max(400).nullable().optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
@@ -43,6 +44,11 @@ export const upsertWaterSchema = z.object({
   glasses: z.coerce.number().int().min(0).max(30),
 });
 
+export const upsertStepsSchema = z.object({
+  date: dateOnly,
+  done: z.boolean(),
+});
+
 export const upsertWeightSchema = z.object({
   date: dateOnly,
   kg: z.coerce.number().min(20).max(400),
@@ -68,5 +74,6 @@ export type UpdateNutritionSettingsInput = z.infer<typeof updateNutritionSetting
 export type CreateMealInput = z.infer<typeof createMealSchema>;
 export type UpdateMealInput = z.infer<typeof updateMealSchema>;
 export type UpsertWaterInput = z.infer<typeof upsertWaterSchema>;
+export type UpsertStepsInput = z.infer<typeof upsertStepsSchema>;
 export type UpsertWeightInput = z.infer<typeof upsertWeightSchema>;
 export type ScanFoodInput = z.infer<typeof scanFoodSchema>;

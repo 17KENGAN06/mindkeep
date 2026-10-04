@@ -754,6 +754,11 @@
     "glasses": "szklanki",
     "waterHint": "Dotykaj szklanek, aby śledzić wodę. Nie jest doliczana do kalorii.",
     "waterProgress": "Szklanki dziś",
+    "stepsTitle": "Kroki",
+    "stepsHint": "Ustaw dzienny cel i odhaczaj dni, w których go osiągniesz.",
+    "stepsGoal": "Kroków dziennie",
+    "stepsCheck": "Cel dnia zaliczony",
+    "stepsMonth": "Dni w tym miesiącu",
     "saveGoals": "Zapisz cele",
     "statEaten": "Zjedzone",
     "statGoal": "Cel",
@@ -800,13 +805,15 @@
       "calories": "Podaj kalorie",
       "calorieGoal": "Cel powinien wynosić co najmniej 500 kcal",
       "waterGoal": "Ustaw co najmniej 1 szklankę",
+      "stepsGoal": "Ustaw co najmniej 1000 kroków",
       "weight": "Podaj wagę między 20 a 400 kg",
       "weightGoal": "Waga docelowa powinna wynosić 20–400 kg",
       "unavailable": "API odżywiania nie jest jeszcze dostępne. Wdróż API z tabelami kalorii, wody i wagi.",
-      "kind": "Wybierz śniadanie, obiad, kolację, przekąskę albo kolejny posiłek"
+      "kind": "Wybierz śniadanie, obiad, kolację, przekąskę albo inne"
     },
     "scan": {
       "button": "Skanuj jedzenie",
+      "buttonShort": "Skan",
       "hint": "Zrób zdjęcie dania albo wybierz jedno z galerii. Sprawdź wynik, a potem dopiero dodaj.",
       "proOnly": "Skan jedzenia jest w Pro.",
       "phoneOnly": "Dostępne tylko na telefonie.",
@@ -828,7 +835,7 @@
         "badType": "Użyj zdjęcia JPEG, PNG lub WebP.",
         "invalid": "Najpierw wybierz zdjęcie posiłku."
       },
-      "gallery": "Z galerii"
+      "gallery": "Foto"
     },
     "kinds": {
       "label": "Który posiłek",
@@ -837,7 +844,7 @@
       "lunch": "Obiad",
       "dinner": "Kolacja",
       "snack": "Przekąska",
-      "extra": "Kolejny posiłek"
+      "extra": "Inne"
     }
   },
   "dashboard": {

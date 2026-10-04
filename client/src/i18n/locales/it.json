@@ -754,6 +754,11 @@
     "glasses": "bicchieri",
     "waterHint": "Tocca i bicchieri per tracciare l'acqua. Non viene aggiunta alle calorie.",
     "waterProgress": "Bicchieri oggi",
+    "stepsTitle": "Passi",
+    "stepsHint": "Imposta un obiettivo giornaliero e spunta i giorni in cui lo raggiungi.",
+    "stepsGoal": "Passi al giorno",
+    "stepsCheck": "Obiettivo del giorno fatto",
+    "stepsMonth": "Giorni in questo mese",
     "saveGoals": "Salva obiettivi",
     "statEaten": "Mangiate",
     "statGoal": "Obiettivo",
@@ -800,13 +805,15 @@
       "calories": "Inserisci le calorie",
       "calorieGoal": "L'obiettivo deve essere di almeno 500 kcal",
       "waterGoal": "Imposta almeno 1 bicchiere",
+      "stepsGoal": "Imposta almeno 1000 passi",
       "weight": "Inserisci un peso tra 20 e 400 kg",
       "weightGoal": "Il peso obiettivo deve essere tra 20 e 400 kg",
       "unavailable": "L'API Nutrizione non è ancora disponibile. Fai il deploy dell'API con le tabelle calorie, water e weight.",
-      "kind": "Scegli colazione, pranzo, cena, spuntino o un altro pasto"
+      "kind": "Scegli colazione, pranzo, cena, spuntino o altro"
     },
     "scan": {
       "button": "Scansiona il cibo",
+      "buttonShort": "Scan",
       "hint": "Fotografa il piatto o scegline uno dalla galleria. Controlla il risultato e solo allora aggiungilo.",
       "proOnly": "La scansione cibo è inclusa in Pro.",
       "phoneOnly": "Disponibile solo sul telefono.",
@@ -828,7 +835,7 @@
         "badType": "Usa una foto JPEG, PNG o WebP.",
         "invalid": "Scegli prima una foto del pasto."
       },
-      "gallery": "Dalla galleria"
+      "gallery": "Foto"
     },
     "kinds": {
       "label": "Quale pasto",
@@ -837,7 +844,7 @@
       "lunch": "Pranzo",
       "dinner": "Cena",
       "snack": "Spuntino",
-      "extra": "Altro pasto"
+      "extra": "Altro"
     }
   },
   "dashboard": {

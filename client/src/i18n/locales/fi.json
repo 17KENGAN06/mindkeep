@@ -754,6 +754,11 @@
     "glasses": "lasia",
     "waterHint": "Merkitse lasit. Vesi ei lisää kaloreita.",
     "waterProgress": "Lasit tänään",
+    "stepsTitle": "Askeleet",
+    "stepsHint": "Aseta päivätavoite ja merkitse päivät, jolloin saavutat sen.",
+    "stepsGoal": "Askelia päivässä",
+    "stepsCheck": "Päivän tavoite tehty",
+    "stepsMonth": "Päiviä tässä kuussa",
     "saveGoals": "Tallenna tavoitteet",
     "statEaten": "Syöty",
     "statGoal": "Tavoite",
@@ -800,13 +805,15 @@
       "calories": "Anna kalorit",
       "calorieGoal": "Tavoitteen tulee olla vähintään 500 kcal",
       "waterGoal": "Aseta vähintään 1 lasi",
+      "stepsGoal": "Aseta vähintään 1 000 askelta",
       "weight": "Anna paino väliltä 20–400 kg",
       "weightGoal": "Tavoitepainon tulee olla 20–400 kg",
       "unavailable": "Ravinto-API ei ole vielä käytössä. API pitää deployata kalori-, vesi- ja painotauluilla.",
-      "kind": "Valitse aamiainen, lounas, illallinen, välipala tai extra-ateria"
+      "kind": "Valitse aamiainen, lounas, illallinen, välipala tai muu"
     },
     "scan": {
       "button": "Skannaa ruoka",
+      "buttonShort": "Skan",
       "hint": "Ota kuva annoksesta tai valitse yksi galleriasta. Tarkista tulos ja lisää vasta sitten.",
       "proOnly": "Ruokaskannaus sisältyy Prohon.",
       "phoneOnly": "Käytettävissä vain puhelimella.",
@@ -828,7 +835,7 @@
         "badType": "Käytä JPEG-, PNG- tai WebP-kuvaa.",
         "invalid": "Valitse ensin kuva ateriasta."
       },
-      "gallery": "Galleriasta"
+      "gallery": "Kuvat"
     },
     "kinds": {
       "label": "Mikä ateria",
@@ -837,7 +844,7 @@
       "lunch": "Lounas",
       "dinner": "Illallinen",
       "snack": "Välipala",
-      "extra": "Extra-ateria"
+      "extra": "Muu"
     }
   },
   "dashboard": {

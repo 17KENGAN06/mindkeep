@@ -754,6 +754,11 @@
     "glasses": "Gläser",
     "waterHint": "Tippe auf Gläser, um Wasser zu erfassen. Es wird nicht zu den Kalorien addiert.",
     "waterProgress": "Gläser heute",
+    "stepsTitle": "Schritte",
+    "stepsHint": "Lege ein Tagesziel fest und hake die Tage ab, an denen du es erreichst.",
+    "stepsGoal": "Schritte pro Tag",
+    "stepsCheck": "Tagesziel erledigt",
+    "stepsMonth": "Tage in diesem Monat",
     "saveGoals": "Ziele speichern",
     "statEaten": "Gegessen",
     "statGoal": "Ziel",
@@ -800,13 +805,15 @@
       "calories": "Kalorien eingeben",
       "calorieGoal": "Das Ziel sollte mindestens 500 kcal betragen",
       "waterGoal": "Lege mindestens 1 Glas fest",
+      "stepsGoal": "Lege mindestens 1000 Schritte fest",
       "weight": "Gib ein Gewicht zwischen 20 und 400 kg ein",
       "weightGoal": "Das Zielgewicht sollte 20–400 kg betragen",
       "unavailable": "Die Ernährungs-API ist noch nicht verfügbar. Deploye die API mit Kalorien-, Wasser- und Gewichtstabellen.",
-      "kind": "Wähle Frühstück, Mittag, Abendessen, Snack oder eine Extra-Mahlzeit"
+      "kind": "Wähle Frühstück, Mittag, Abendessen, Snack oder Sonstiges"
     },
     "scan": {
       "button": "Essen scannen",
+      "buttonShort": "Scan",
       "hint": "Fotografiere das Gericht oder wähle ein Foto. Prüfe das Ergebnis und füge es dann hinzu.",
       "proOnly": "Essensscan ist in Pro enthalten.",
       "phoneOnly": "Nur auf dem Handy verfügbar.",
@@ -828,7 +835,7 @@
         "badType": "Bitte ein JPEG-, PNG- oder WebP-Foto verwenden.",
         "invalid": "Wähle zuerst ein Foto der Mahlzeit."
       },
-      "gallery": "Aus Fotos"
+      "gallery": "Fotos"
     },
     "kinds": {
       "label": "Welche Mahlzeit",
@@ -837,7 +844,7 @@
       "lunch": "Mittagessen",
       "dinner": "Abendessen",
       "snack": "Snack",
-      "extra": "Extra-Mahlzeit"
+      "extra": "Sonstiges"
     }
   },
   "dashboard": {

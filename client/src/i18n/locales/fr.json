@@ -754,6 +754,11 @@
     "glasses": "verres",
     "waterHint": "Appuie sur les verres pour suivre l'eau. Elle n'est pas ajoutée aux calories.",
     "waterProgress": "Verres aujourd'hui",
+    "stepsTitle": "Pas",
+    "stepsHint": "Fixe un objectif quotidien, puis coche les jours où tu l'atteins.",
+    "stepsGoal": "Pas par jour",
+    "stepsCheck": "Objectif du jour atteint",
+    "stepsMonth": "Jours ce mois-ci",
     "saveGoals": "Enregistrer les objectifs",
     "statEaten": "Mangées",
     "statGoal": "Objectif",
@@ -800,13 +805,15 @@
       "calories": "Saisis les calories",
       "calorieGoal": "L'objectif doit être d'au moins 500 kcal",
       "waterGoal": "Indique au moins 1 verre",
+      "stepsGoal": "Indique au moins 1 000 pas",
       "weight": "Saisis un poids entre 20 et 400 kg",
       "weightGoal": "Le poids cible doit être entre 20 et 400 kg",
       "unavailable": "L'API Nutrition n'est pas encore disponible. Déploie l'API avec les tables calorie, water et weight.",
-      "kind": "Choisis petit-déjeuner, déjeuner, dîner, collation ou un repas en plus"
+      "kind": "Choisis petit-déjeuner, déjeuner, dîner, collation ou autre"
     },
     "scan": {
       "button": "Scanner le plat",
+      "buttonShort": "Scan",
       "hint": "Photographie le plat ou choisis une photo. Vérifie le résultat, puis ajoute-le.",
       "proOnly": "Le scan alimentaire est inclus dans Pro.",
       "phoneOnly": "Disponible uniquement sur téléphone.",
@@ -828,7 +835,7 @@
         "badType": "Utilise une photo JPEG, PNG ou WebP.",
         "invalid": "Choisis d’abord une photo du repas."
       },
-      "gallery": "Depuis Photos"
+      "gallery": "Photos"
     },
     "kinds": {
       "label": "Quel repas",
@@ -837,7 +844,7 @@
       "lunch": "Déjeuner",
       "dinner": "Dîner",
       "snack": "Collation",
-      "extra": "Repas en plus"
+      "extra": "Autre"
     }
   },
   "dashboard": {

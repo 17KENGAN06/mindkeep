@@ -11,6 +11,7 @@ import {
   scanFoodSchema,
   updateMealSchema,
   updateNutritionSettingsSchema,
+  upsertStepsSchema,
   upsertWaterSchema,
   upsertWeightSchema,
 } from '@/validations/nutrition.schemas.js';
@@ -35,6 +36,12 @@ nutritionRouter.put(
   '/water',
   validate(upsertWaterSchema),
   asyncHandler((req, res) => nutritionController.upsertWater(req, res)),
+);
+
+nutritionRouter.put(
+  '/steps',
+  validate(upsertStepsSchema),
+  asyncHandler((req, res) => nutritionController.upsertSteps(req, res)),
 );
 
 nutritionRouter.put(

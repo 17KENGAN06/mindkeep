@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Trash2 } from 'lucide-react';
 import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
 import { WaterGlasses } from '@/components/nutrition/WaterGlasses';
@@ -13,12 +14,14 @@ import { mutationErrorMessage, isProAccount } from '@/features/billing/planLimit
 import { PlanRemain } from '@/components/billing/PlanRemain';
 import { FoodScanMeal } from '@/features/nutrition/FoodScanMeal';
 import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
+import { StepsCheck } from '@/features/nutrition/StepsCheck';
 import { isMealKind, type MealKind } from '@/features/nutrition/mealKinds';
 import { useAuth } from '@/features/auth/useAuth';
 import {
   useCreateMeal,
   useDeleteMeal,
   useNutritionPeriod,
+  useSetSteps,
   useSetWater,
   useSetWeight,
   useUpdateNutritionSettings,
@@ -58,6 +61,7 @@ export function CaloriesPage() {
   const [mealKind, setMealKind] = useState<MealKind | null>(null);
   const [calorieGoalInput, setCalorieGoalInput] = useState('');
   const [waterGoalInput, setWaterGoalInput] = useState('');
+  const [stepsGoalInput, setStepsGoalInput] = useState('');
   const [weightGoalInput, setWeightGoalInput] = useState('');
   const [weightInput, setWeightInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
@@ -68,6 +72,7 @@ export function CaloriesPage() {
   const createMeal = useCreateMeal();
   const deleteMeal = useDeleteMeal();
   const setWater = useSetWater();
+  const setSteps = useSetSteps();
   const setWeight = useSetWeight();
 
   useEffect(() => {
@@ -81,6 +86,7 @@ export function CaloriesPage() {
     if (!periodQuery.data) return;
     setCalorieGoalInput(String(periodQuery.data.settings.calorieGoal));
     setWaterGoalInput(String(periodQuery.data.settings.waterGoal));
+    setStepsGoalInput(String(periodQuery.data.settings.stepsGoal ?? 10000));
     setWeightGoalInput(
       periodQuery.data.settings.weightGoal == null
         ? ''
@@ -114,10 +120,16 @@ export function CaloriesPage() {
 
   const { settings, meals, water, days } = periodQuery.data;
   const weight = periodQuery.data.weight ?? [];
+  const stepsDays = periodQuery.data.steps ?? [];
   const weightAvg = periodQuery.data.weightAvg ?? null;
   const dayMeals = meals.filter((meal) => meal.date === selectedDate);
   const eaten = dayMeals.reduce((sum, meal) => sum + meal.calories, 0);
   const glasses = water.find((row) => row.date === selectedDate)?.glasses ?? 0;
+  const stepsGoal = settings.stepsGoal ?? 10000;
+  const stepsDone = stepsDays.find((row) => row.date === selectedDate)?.done ?? false;
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const stepsMonthDone = stepsDays.filter((row) => row.done).length;
+  const stepsMonthPercent = Math.min(100, Math.round((stepsMonthDone / Math.max(daysInMonth, 1)) * 100));
   const dayWeight = weight.find((row) => row.date === selectedDate)?.kg ?? null;
   const overeating = eaten > settings.calorieGoal;
   const remaining = settings.calorieGoal - eaten;
@@ -161,6 +173,21 @@ export function CaloriesPage() {
     }
     try {
       await updateSettings.mutateAsync({ waterGoal });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    }
+  };
+
+  const onSaveStepsGoal = async (event: FormEvent) => {
+    event.preventDefault();
+    setFormError(null);
+    const next = Number(stepsGoalInput);
+    if (!Number.isFinite(next) || next < 1000 || next > 100000) {
+      setFormError(t('calories.errors.stepsGoal'));
+      return;
+    }
+    try {
+      await updateSettings.mutateAsync({ stepsGoal: Math.round(next) });
     } catch {
       setFormError(t('auth.errors.generic'));
     }
@@ -243,6 +270,15 @@ export function CaloriesPage() {
     setFormError(null);
     try {
       await setWater.mutateAsync({ date: selectedDate, glasses: next });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    }
+  };
+
+  const onStepsChange = async (done: boolean) => {
+    setFormError(null);
+    try {
+      await setSteps.mutateAsync({ date: selectedDate, done });
     } catch {
       setFormError(t('auth.errors.generic'));
     }
@@ -374,31 +410,40 @@ export function CaloriesPage() {
                 dayMeals.map((meal) => (
                   <li
                     key={meal.id}
-                    className="flex items-center gap-3 rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line"
+                    className="flex items-start gap-2 rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line"
                   >
                     <div className="min-w-0 flex-1">
                       {isMealKind(meal.kind) ? (
-                        <p className="flex min-w-0 items-baseline gap-2">
-                          <span className="max-w-[48%] shrink-0 truncate text-sm font-semibold text-ink">
+                        <>
+                          <p className="text-sm font-semibold leading-snug text-ink [overflow-wrap:anywhere]">
                             {t(`calories.kinds.${meal.kind}`)}
-                          </span>
-                          <span className="min-w-0 truncate text-xs text-muted">{meal.title}</span>
-                        </p>
+                          </p>
+                          <p className="mt-0.5 text-xs leading-snug text-muted [overflow-wrap:anywhere]">
+                            {meal.title}
+                          </p>
+                        </>
                       ) : (
-                        <p className="truncate text-sm font-medium text-ink">{meal.title}</p>
+                        <p className="text-sm font-medium leading-snug text-ink [overflow-wrap:anywhere]">
+                          {meal.title}
+                        </p>
                       )}
                     </div>
-                    <span className="shrink-0 text-sm tabular-nums text-muted">
-                      {meal.calories} {t('calories.kcal')}
-                    </span>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      disabled={busyId === meal.id || deleteMeal.isPending}
-                      onClick={() => void onDeleteMeal(meal.id)}
-                    >
-                      {t('common.delete')}
-                    </Button>
+                    <div className="flex shrink-0 flex-col items-end gap-1">
+                      <span className="text-sm tabular-nums whitespace-nowrap text-muted">
+                        {meal.calories} {t('calories.kcal')}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        className="!w-auto min-h-9 px-2 py-1.5 text-sm"
+                        disabled={busyId === meal.id || deleteMeal.isPending}
+                        aria-label={t('common.delete')}
+                        onClick={() => void onDeleteMeal(meal.id)}
+                      >
+                        <Trash2 className="h-4 w-4 sm:hidden" aria-hidden />
+                        <span className="hidden sm:inline">{t('common.delete')}</span>
+                      </Button>
+                    </div>
                   </li>
                 ))
               )}
@@ -443,6 +488,52 @@ export function CaloriesPage() {
               disabled={setWater.isPending}
               onChange={(next) => void onWaterChange(next)}
             />
+
+            <div className="space-y-3 border-t border-line pt-4">
+              <div>
+                <h3 className="text-base font-semibold text-ink">{t('calories.stepsTitle')}</h3>
+                <p className="mt-1 text-sm text-muted">{t('calories.stepsHint')}</p>
+              </div>
+
+              <form onSubmit={(event) => void onSaveStepsGoal(event)}>
+                <Input
+                  id="steps-goal"
+                  label={t('calories.stepsGoal')}
+                  type="number"
+                  min="1000"
+                  max="100000"
+                  step="500"
+                  value={stepsGoalInput}
+                  onChange={(event) => setStepsGoalInput(event.target.value)}
+                  action={
+                    <Button type="submit" isLoading={updateSettings.isPending} className="w-full sm:!w-44">
+                      {t('calories.saveGoals')}
+                    </Button>
+                  }
+                />
+              </form>
+
+              <StepsCheck
+                done={stepsDone}
+                goal={stepsGoal}
+                disabled={setSteps.isPending}
+                label={t('calories.stepsCheck')}
+                hint={t('calories.stepsGoal')}
+                onChange={(done) => void onStepsChange(done)}
+              />
+
+              <div>
+                <div className="flex items-center justify-between gap-3 text-sm">
+                  <span className="text-muted">{t('calories.stepsMonth')}</span>
+                  <span className="font-semibold tabular-nums text-ink">
+                    {stepsMonthDone} / {daysInMonth}
+                  </span>
+                </div>
+                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/70">
+                  <div className="h-full rounded-full bg-brand-500" style={{ width: `${stepsMonthPercent}%` }} />
+                </div>
+              </div>
+            </div>
           </section>
         </div>
 

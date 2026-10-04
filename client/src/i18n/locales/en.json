@@ -754,6 +754,11 @@
     "glasses": "glasses",
     "waterHint": "Tap glasses to track water. It is not added to calories.",
     "waterProgress": "Glasses today",
+    "stepsTitle": "Steps",
+    "stepsHint": "Set a daily goal, then tick the days you reach it.",
+    "stepsGoal": "Steps per day",
+    "stepsCheck": "Goal done today",
+    "stepsMonth": "Days this month",
     "saveGoals": "Save goals",
     "statEaten": "Eaten",
     "statGoal": "Goal",
@@ -776,7 +781,7 @@
         "lunch": "Lunch",
         "dinner": "Dinner",
         "snack": "Snack",
-        "extra": "Extra meal"
+        "extra": "Other"
       },
       "emptyMeals": "No meals logged for this day yet.",
     "waterTitle": "Water",
@@ -809,13 +814,15 @@
       "calories": "Enter calories",
       "calorieGoal": "Goal should be at least 500 kcal",
       "waterGoal": "Set at least 1 glass",
+      "stepsGoal": "Set at least 1,000 steps",
       "weight": "Enter a weight between 20 and 400 kg",
       "weightGoal": "Target weight should be 20–400 kg",
-      "kind": "Choose breakfast, lunch, dinner, a snack, or an extra meal",
+      "kind": "Choose breakfast, lunch, dinner, a snack, or other",
       "unavailable": "Nutrition API is not available yet. Deploy the API with calorie, water and weight tables."
     },
     "scan": {
       "button": "Scan food",
+      "buttonShort": "Scan",
       "hint": "Photo a dish or pick one from the gallery. Check the result, then add it.",
       "proOnly": "Food scan is included in Pro.",
       "phoneOnly": "Available only on a phone.",
@@ -827,7 +834,7 @@
       "add": "Add meal",
       "cancel": "Discard",
       "pickPhoto": "Choose a photo",
-      "gallery": "From photos",
+      "gallery": "Photos",
       "privacy": "The photo is used only to estimate calories and is not saved.",
       "errors": {
         "unavailable": "Food scan is not connected yet.",

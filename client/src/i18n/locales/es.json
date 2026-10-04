@@ -754,6 +754,11 @@
     "glasses": "vasos",
     "waterHint": "Toca los vasos para seguir el agua. No se suma a las calorías.",
     "waterProgress": "Vasos de hoy",
+    "stepsTitle": "Pasos",
+    "stepsHint": "Pon un objetivo diario y marca los días en que lo cumples.",
+    "stepsGoal": "Pasos al día",
+    "stepsCheck": "Objetivo del día hecho",
+    "stepsMonth": "Días este mes",
     "saveGoals": "Guardar objetivos",
     "statEaten": "Consumidas",
     "statGoal": "Objetivo",
@@ -800,13 +805,15 @@
       "calories": "Introduce las calorías",
       "calorieGoal": "El objetivo debe ser de al menos 500 kcal",
       "waterGoal": "Indica al menos 1 vaso",
+      "stepsGoal": "Indica al menos 1.000 pasos",
       "weight": "Introduce un peso entre 20 y 400 kg",
       "weightGoal": "El peso objetivo debe estar entre 20 y 400 kg",
       "unavailable": "La API de Nutrición aún no está disponible. Despliega la API con las tablas calorie, water y weight.",
-      "kind": "Elige desayuno, comida, cena, tentempié u otra comida"
+      "kind": "Elige desayuno, comida, cena, tentempié u otro"
     },
     "scan": {
       "button": "Escanear comida",
+      "buttonShort": "Scan",
       "hint": "Fotografía el plato o elige una foto. Revisa el resultado y luego añádelo.",
       "proOnly": "El escaneo de comida está en Pro.",
       "phoneOnly": "Disponible solo en el teléfono.",
@@ -828,7 +835,7 @@
         "badType": "Usa una foto JPEG, PNG o WebP.",
         "invalid": "Elige primero una foto de la comida."
       },
-      "gallery": "De la galería"
+      "gallery": "Fotos"
     },
     "kinds": {
       "label": "Cuál comida",
@@ -837,7 +844,7 @@
       "lunch": "Comida",
       "dinner": "Cena",
       "snack": "Tentempié",
-      "extra": "Otra comida"
+      "extra": "Otro"
     }
   },
   "dashboard": {

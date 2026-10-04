@@ -8,6 +8,7 @@ import type {
   ScanFoodInput,
   UpdateMealInput,
   UpdateNutritionSettingsInput,
+  UpsertStepsInput,
   UpsertWaterInput,
   UpsertWeightInput,
 } from '@/validations/nutrition.schemas.js';
@@ -67,6 +68,14 @@ export class NutritionController {
       req.body as UpsertWaterInput,
     );
     res.status(200).json({ water });
+  }
+
+  async upsertSteps(req: Request, res: Response): Promise<void> {
+    const steps = await nutritionService.upsertSteps(
+      requireUserId(req),
+      req.body as UpsertStepsInput,
+    );
+    res.status(200).json({ steps });
   }
 
   async upsertWeight(req: Request, res: Response): Promise<void> {
