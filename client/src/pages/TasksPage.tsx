@@ -287,7 +287,7 @@ export function TasksPage() {
             year={year}
             month={month}
             selectedDate={selectedDate}
-            days={data.days.map((day) => ({ ...day, skipped: 0 }))}
+            days={data.days.map((day) => ({ ...day, skipped: 0, important: day.important ?? 0 }))}
             onMonthChange={(nextYear, nextMonth) => {
               setYear(nextYear);
               setMonth(nextMonth);

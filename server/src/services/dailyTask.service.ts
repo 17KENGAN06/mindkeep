@@ -87,7 +87,16 @@ export class DailyTaskService {
     const today = todayKey();
     const daysMap = new Map<
       string,
-      { date: string; total: number; overdue: number; pending: number; completed: number; minutes: number; minutesDone: number }
+      {
+        date: string;
+        total: number;
+        overdue: number;
+        pending: number;
+        completed: number;
+        important: number;
+        minutes: number;
+        minutesDone: number;
+      }
     >();
 
     for (const task of tasks) {
@@ -98,11 +107,15 @@ export class DailyTaskService {
         overdue: 0,
         pending: 0,
         completed: 0,
+        important: 0,
         minutes: 0,
         minutesDone: 0,
       };
       bucket.total += 1;
       bucket.minutes += task.minutes;
+      if (task.important && !task.completed) {
+        bucket.important += 1;
+      }
       if (task.completed) {
         bucket.completed += 1;
         bucket.minutesDone += task.minutes;

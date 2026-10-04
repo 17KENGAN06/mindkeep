@@ -493,59 +493,68 @@
   "guide": {
     "eyebrow": "Prosty przewodnik",
     "title": "Jak korzystać z Mindkeep",
-    "intro": "Mindkeep to przestrzeń na zadania, finanse i powtórki wiedzy. Zacznij od jednego obszaru i dodaj resztę, gdy będziesz gotowy.",
-    "stepsTitle": "Zacznij w sześciu prostych krokach",
+    "intro": "Mindkeep to przestrzeń na dzień: zadania, powtórki, notatki, nawyki, pieniądze i odżywianie. Zaraz po rejestracji wybierasz, z czego chcesz korzystać. Reszta zostaje schowana, aż włączysz ją w ustawieniach.",
+    "stepsTitle": "Jak to działa",
     "stepLabel": "Krok {{number}}",
     "steps": [
       {
-        "title": "Utwórz konto",
-        "body": "Zarejestruj się e-mailem albo przez Google. Strefa czasowa wykrywana jest automatycznie — to ważne dla dat zadań i powtórek."
+        "title": "Załóż konto",
+        "body": "Zarejestruj się e-mailem (po haśle przyjdzie kod logowania) albo przez Google. Strefa czasowa wykrywa się sama — daty zadań i powtórek trafią na właściwy dzień."
+      },
+      {
+        "title": "Wybierz, z czego korzystasz",
+        "body": "Krótki quiz pyta, które usługi gabinetu są ci potrzebne, i krótko każdą wyjaśnia. Później zmienisz to w Więcej → Ustawienia. Czego nie włączysz — nie pojawi się w menu ani w przeglądzie."
       },
       {
         "title": "Otwórz przegląd",
-        "body": "Pulpit pokazuje dzisiejsze zadania, powtórki i krótki obraz finansów."
+        "body": "Widać tylko włączone usługi. Puste bloki w pierwszych dniach są w porządku."
       },
       {
-        "title": "Dodaj zadania",
-        "body": "W Planowaniu dodaj pracę na dzień albo zbuduj plan miesiąca — potem odhaczaj pozycje."
+        "title": "Zaplanuj dzień",
+        "body": "Dodaj zadanie: tytuł i ile minut zajmuje. Jeśli nie może umknąć, naciśnij Ważne: od razu pojawi się w powiadomieniach, żeby przypomnieć z wyprzedzeniem, a kalendarz oznaczy ten dzień flagą."
       },
       {
-        "title": "Zapisz to, czego się nauczyłeś",
-        "body": "Dodaj materiał po lekcji albo ćwiczeniu. Mindkeep zaplanuje powtórki na dzień 3, 7 i 30."
+        "title": "Zapisz, czego się nauczyłeś",
+        "body": "Po lekcji lub praktyce dodaj materiał. Mindkeep sam ustawi powtórki na dzień 3, 7 i 30."
       },
       {
         "title": "Zapisz ruch pieniędzy",
-        "body": "W budżecie najpierw wybierz gotówkę albo kartę, potem walutę i zapisz przychód albo wydatek."
+        "body": "W budżecie najpierw wybierz gotówkę albo kartę, potem walutę. Każda waluta liczy się osobno — bez przeliczania na jedną sumę."
       },
       {
         "title": "Wracaj przez kalendarze",
-        "body": "Kalendarze zadań i powtórek pokazują, co przypada na dziś i co nadchodzi — bez presji i skomplikowanej konfiguracji."
+        "body": "Kalendarze zadań i powtórek pokazują, co czeka dziś, co jest zaległe i w które dni są ważne zadania."
       }
     ],
     "rulesTitle": "Warto wiedzieć",
     "rules": [
-      "Zadania, finanse i powtórki dzielą jedno konto, ale nie wchodzą sobie w drogę.",
-      "Harmonogram powtórek 3 / 7 / 30 liczony jest od daty nauki i nie przesuwa się po ukończeniu.",
-      "Każda operacja ma swoją walutę. Sumy przeliczamy na walutę podglądu.",
-      "Twoje dane należą tylko do twojego konta i nie są widoczne dla innych użytkowników."
+      "Po rejestracji wybierasz usługi. Zestaw zmienisz w każdej chwili w Więcej → Ustawienia.",
+      "Oznacz zadanie jako ważne — od razu pojawi się w dzwonku, bez czekania na późniejsze przypomnienie.",
+      "Harmonogram powtórek 3 / 7 / 30 liczy się od daty nauki i nie przesuwa się po wykonaniu.",
+      "Każda operacja ma własną walutę. Sumy nie są przeliczane między walutami.",
+      "Dane należą tylko do twojego konta i nie są widoczne dla innych."
     ],
     "faqTitle": "FAQ",
     "faq": [
       {
         "question": "Od czego zacząć?",
-        "answer": "Od tego, co jest ważne teraz: dzisiejszych zadań, pierwszego materiału do powtórki albo wpisu przychodu lub wydatku. Resztę połączysz później."
+        "answer": "Po quizie otwórz jedną z wybranych usług: zadanie na dziś, pierwszy materiał do powtórki albo wpis przychodu i wydatku."
       },
       {
-        "question": "Czy muszę korzystać z każdej sekcji?",
-        "answer": "Nie. Możesz używać tylko zadań, tylko powtórek albo tylko finansów — przestrzeń jest zbudowana pod elastyczne korzystanie."
+        "question": "Czy muszę używać wszystkich działów?",
+        "answer": "Nie. Quiz jest po to, żeby gabinet nie zarastał. Później usługi włączysz lub wyłączysz w Ustawieniach."
+      },
+      {
+        "question": "Co robi przycisk Ważne przy zadaniu?",
+        "answer": "Oznacza zadanie jako bardzo ważne. Powiadomienie od razu pojawia się w dzwonku, a kalendarz zadań oznacza ten dzień — żeby przypomnieć z wyprzedzeniem."
       },
       {
         "question": "Co mogę dodawać jako materiały?",
-        "answer": "Słówka, notatki, wzory, reguły, decyzje z pracy, linki albo pytania i odpowiedzi — wszystko, do czego chcesz wracać."
+        "answer": "Słowa, notatki, wzory, reguły, decyzje z pracy, linki — wszystko, do czego chcesz wracać."
       },
       {
         "question": "W jakiej walucie jest budżet?",
-        "answer": "Mindkeep obecnie prowadzi finanse w euro. Dzięki temu podsumowania zostają proste i unikasz zamieszania z kursami."
+        "answer": "Walutę wybierasz dla każdej operacji. Sumy nie są przeliczane między walutami."
       }
     ],
     "ctaTitle": "Zrób pierwszy krok już dziś",
@@ -1057,8 +1066,10 @@
     "legend": {
       "overdue": "Zaległe",
       "pending": "Oczekujące",
-      "completed": "Ukończone"
-    }
+      "completed": "Ukończone",
+      "important": "Ważne"
+    },
+    "cellAriaImportant": "{{day}}, {{count}} pozycji, ważnych: {{important}}"
   },
   "rhythm": {
     "title": "Nawyki",

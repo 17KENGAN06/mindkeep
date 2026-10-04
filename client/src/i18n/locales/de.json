@@ -493,59 +493,68 @@
   "guide": {
     "eyebrow": "Einfache Anleitung",
     "title": "So nutzt du Mindkeep",
-    "intro": "Mindkeep ist ein Arbeitsraum für Aufgaben, Finanzen und Wissenswiederholung. Starte mit einem Bereich und ergänze den Rest, wenn du soweit bist.",
-    "stepsTitle": "In sechs einfachen Schritten starten",
+    "intro": "Mindkeep ist ein Arbeitsraum für den Tag: Aufgaben, Wiederholen, Notizen, Gewohnheiten, Geld und Ernährung. Direkt nach der Anmeldung wählst du, was du nutzen willst. Der Rest bleibt ausgeblendet, bis du ihn in den Einstellungen einschaltest.",
+    "stepsTitle": "So funktioniert es",
     "stepLabel": "Schritt {{number}}",
     "steps": [
       {
-        "title": "Konto erstellen",
-        "body": "Registriere dich per E-Mail oder Google. Deine Zeitzone wird automatisch erkannt — wichtig für Aufgaben- und Wiederholungsdaten."
+        "title": "Konto anlegen",
+        "body": "Registriere dich per E-Mail (nach dem Passwort kommt ein Login-Code) oder mit Google. Die Zeitzone wird automatisch erkannt — damit Aufgaben- und Wiederholungstermine auf den richtigen Tag fallen."
       },
       {
-        "title": "Die Übersicht öffnen",
-        "body": "Das Dashboard zeigt die Aufgaben von heute, Wiederholungen und einen kurzen Finanzüberblick."
+        "title": "Wähle, was du nutzt",
+        "body": "Ein kurzes Quiz fragt, welche Dienste du willst, und erklärt jeden klar. Später änderst du das unter Mehr → Einstellungen. Was du nicht einschaltest, erscheint weder im Menü noch in der Übersicht."
       },
       {
-        "title": "Aufgaben hinzufügen",
-        "body": "Unter Planung fügst du Arbeit für den Tag hinzu oder baust einen Monatsplan — und hakst Punkte ab."
+        "title": "Öffne die Übersicht",
+        "body": "Du siehst nur die eingeschalteten Dienste. Leere Blöcke in den ersten Tagen sind normal."
       },
       {
-        "title": "Festhalten, was du gelernt hast",
-        "body": "Füge nach einer Lektion oder Übung ein Material hinzu. Mindkeep plant Wiederholungen für Tag 3, 7 und 30."
+        "title": "Plane den Tag",
+        "body": "Füge eine Aufgabe mit Titel und Minuten hinzu. Wenn sie nicht untergehen darf, tippe auf Wichtig: Sie erscheint sofort in den Benachrichtigungen, damit du rechtzeitig erinnert wirst, und der Kalender markiert den Tag mit einer Flagge."
       },
       {
-        "title": "Geldbewegung erfassen",
-        "body": "Im Budget zuerst bar oder Karte, dann die Währung — und Einnahme oder Ausgabe erfassen."
+        "title": "Speichere, was du gelernt hast",
+        "body": "Nach einer Lektion oder Übung füge ein Material hinzu. Mindkeep plant Wiederholungen für Tag 3, 7 und 30."
       },
       {
-        "title": "Über Kalender zurückkehren",
-        "body": "Aufgaben- und Wiederholungskalender zeigen, was heute fällig ist und was kommt — ohne Druck und ohne komplizierte Einrichtung."
+        "title": "Erfasse Geldbewegungen",
+        "body": "Im Budget wählst du zuerst bar oder Karte, dann die Währung. Jede Währung bleibt für sich — ohne umgerechnete Summen."
+      },
+      {
+        "title": "Komm über die Kalender zurück",
+        "body": "Aufgaben- und Wiederholungskalender zeigen, was fällig ist, was überfällig ist und an welchen Tagen wichtige Aufgaben liegen."
       }
     ],
     "rulesTitle": "Gut zu wissen",
     "rules": [
-      "Aufgaben, Finanzen und Wiederholen teilen ein Konto, bleiben aber aus dem Weg.",
-      "Der 3 / 7 / 30-Wiederholungsplan wird vom Lerndatum gezählt und verschiebt sich nach dem Abschluss nicht.",
-      "Jede Buchung hat ihre Währung. Summen werden in die Anzeigewährung umgerechnet.",
-      "Deine Daten gehören nur deinem Konto und sind für andere Nutzer nicht sichtbar."
+      "Nach der Registrierung wählst du deine Dienste. Du kannst sie jederzeit unter Mehr → Einstellungen ändern.",
+      "Markiere eine Aufgabe als wichtig — sie erscheint sofort in der Glocke, ohne auf eine spätere Erinnerung zu warten.",
+      "Der 3-/7-/30-Tage-Plan zählt ab dem Lerndatum und verschiebt sich nach dem Erledigen nicht.",
+      "Jede Buchung hat ihre eigene Währung. Summen werden nicht zwischen Währungen umgerechnet.",
+      "Deine Daten gehören nur deinem Konto und sind für andere unsichtbar."
     ],
     "faqTitle": "FAQ",
     "faq": [
       {
         "question": "Wo soll ich anfangen?",
-        "answer": "Mit dem, was jetzt zählt: den Aufgaben von heute, einem ersten Wiederholungsmaterial oder einem Einnahmen-/Ausgabeneintrag. Den Rest kannst du später verbinden."
+        "answer": "Nach dem Quiz öffne einen der gewählten Dienste: eine Aufgabe für heute, ein erstes Wiederholungsmaterial oder eine Einnahme/Ausgabe."
       },
       {
         "question": "Muss ich jeden Bereich nutzen?",
-        "answer": "Nein. Du kannst nur Aufgaben, nur Wiederholen oder nur Finanzen nutzen — der Arbeitsraum ist für flexiblen Gebrauch gebaut."
+        "answer": "Nein. Das Quiz hält den Arbeitsraum schlank. Dienste schaltest du später in den Einstellungen ein oder aus."
       },
       {
-        "question": "Was kann ich als Materialien hinzufügen?",
-        "answer": "Wörter, Notizen, Formeln, Regeln, Arbeitsentscheidungen, Links oder Fragen und Antworten — alles, zu dem du zurückkehren willst."
+        "question": "Was macht Wichtig bei einer Aufgabe?",
+        "answer": "Es markiert die Aufgabe als sehr wichtig. Eine Benachrichtigung erscheint sofort in der Glocke, und der Aufgabenkalender markiert den Tag — damit du rechtzeitig erinnert wirst."
+      },
+      {
+        "question": "Was kann ich als Material hinzufügen?",
+        "answer": "Wörter, Notizen, Formeln, Regeln, Arbeitsentscheidungen, Links — alles, zu dem du zurückkehren willst."
       },
       {
         "question": "In welcher Währung ist das Budget?",
-        "answer": "Die Währung wählst du pro Buchung. Summen werden in die Anzeigewährung umgerechnet."
+        "answer": "Die Währung wählst du pro Buchung. Summen werden nicht zwischen Währungen umgerechnet."
       }
     ],
     "ctaTitle": "Mach heute den ersten Schritt",
@@ -1057,8 +1066,10 @@
     "legend": {
       "overdue": "Überfällig",
       "pending": "Offen",
-      "completed": "Erledigt"
-    }
+      "completed": "Erledigt",
+      "important": "Wichtig"
+    },
+    "cellAriaImportant": "{{day}}, {{count}} Einträge, {{important}} wichtig"
   },
   "rhythm": {
     "title": "Gewohnheiten",

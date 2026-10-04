@@ -7,6 +7,7 @@ export type CalendarDaySummary = {
   overdue: number;
   completed: number;
   skipped: number;
+  important?: number;
 };
 
 export type CalendarReminder = Reminder & {

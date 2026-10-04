@@ -493,59 +493,68 @@
   "guide": {
     "eyebrow": "Guida semplice",
     "title": "Come usare Mindkeep",
-    "intro": "Mindkeep è uno spazio di lavoro per attività, finanze e ripasso delle conoscenze. Parti da un'area e aggiungi il resto quando sei pronto.",
-    "stepsTitle": "Inizia in sei passi semplici",
+    "intro": "Mindkeep è uno spazio per la giornata: attività, ripassi, note, abitudini, soldi e alimentazione. Subito dopo la registrazione scegli cosa vuoi usare. Il resto resta nascosto finché non lo attivi nelle impostazioni.",
+    "stepsTitle": "Come funziona",
     "stepLabel": "Passo {{number}}",
     "steps": [
       {
         "title": "Crea un account",
-        "body": "Registrati con e-mail o Google. Il fuso orario viene rilevato automaticamente — importante per le date di attività e ripassi."
+        "body": "Registrati con e-mail (dopo la password arriva un codice di accesso) o con Google. Il fuso orario si rileva da solo, così le date di attività e ripassi cadono nel giorno giusto."
+      },
+      {
+        "title": "Scegli cosa usare",
+        "body": "Un breve quiz chiede quali servizi vuoi, con una spiegazione semplice di ciascuno. Potrai cambiarlo dopo in Altro → Impostazioni. Ciò che non attivi non compare nel menu né nella panoramica."
       },
       {
         "title": "Apri la panoramica",
-        "body": "La dashboard mostra le attività di oggi, i ripassi e un breve riepilogo finanziario."
+        "body": "Vedi solo i servizi accesi. I blocchi vuoti nei primi giorni sono normali."
       },
       {
-        "title": "Aggiungi attività",
-        "body": "In Pianificazione, aggiungi il lavoro del giorno o costruisci un piano del mese — poi spunta gli elementi."
+        "title": "Pianifica la giornata",
+        "body": "Aggiungi un’attività con titolo e minuti. Se non deve sfuggire, tocca Importante: compare subito nelle notifiche per ricordartelo in anticipo, e il calendario segna quel giorno con una bandiera."
       },
       {
         "title": "Salva ciò che hai imparato",
-        "body": "Aggiungi un materiale dopo una lezione o un esercizio. Mindkeep programma i ripassi per i giorni 3, 7 e 30."
+        "body": "Dopo una lezione o una pratica, aggiungi un materiale. Mindkeep programma i ripassi per i giorni 3, 7 e 30."
       },
       {
         "title": "Registra i movimenti di denaro",
-        "body": "Nel budget scegli prima contanti o carta, poi la valuta, e registra entrata o uscita."
+        "body": "Nel Budget scegli prima contanti o carta, poi la valuta. Ogni valuta resta per conto suo — niente totali convertiti."
       },
       {
         "title": "Torna dai calendari",
-        "body": "I calendari di attività e ripassi mostrano cosa è dovuto oggi e cosa arriva — senza pressione né impostazioni complesse."
+        "body": "I calendari di attività e ripassi mostrano cosa è dovuto, cosa è in ritardo e in quali giorni ci sono attività importanti."
       }
     ],
     "rulesTitle": "Buono a sapersi",
     "rules": [
-      "Attività, finanze e ripasso condividono un account, ma restano ciascuno per conto proprio.",
-      "Il calendario di ripasso 3 / 7 / 30 si conta dalla data di apprendimento e non si sposta dopo il completamento.",
-      "Ogni operazione ha la sua valuta. I totali sono convertiti nella valuta di visualizzazione.",
-      "I tuoi dati appartengono solo al tuo account e non sono visibili ad altri utenti."
+      "Dopo la registrazione scegli i servizi. Puoi cambiarli in qualsiasi momento in Altro → Impostazioni.",
+      "Segna un’attività come importante: compare subito nella campanella, senza aspettare un promemoria più tardi.",
+      "Il ritmo 3 / 7 / 30 si conta dalla data di studio e non si sposta dopo il completamento.",
+      "Ogni operazione ha la propria valuta. I totali non vengono convertiti tra valute.",
+      "I dati appartengono solo al tuo account e non sono visibili ad altri."
     ],
     "faqTitle": "FAQ",
     "faq": [
       {
-        "question": "Da dove dovrei iniziare?",
-        "answer": "Da ciò che conta ora: le attività di oggi, un primo materiale da ripassare o una voce di entrata/uscita. Il resto lo colleghi dopo."
+        "question": "Da dove comincio?",
+        "answer": "Dopo il quiz apri uno dei servizi scelti: un’attività per oggi, un primo materiale da ripassare o una voce di entrata/uscita."
       },
       {
-        "question": "Devo usare ogni sezione?",
-        "answer": "No. Puoi usare solo le attività, solo il ripasso o solo le finanze — lo spazio è pensato per un uso flessibile."
+        "question": "Devo usare tutte le sezioni?",
+        "answer": "No. Il quiz serve a non affollare lo spazio. I servizi li accendi o spegni dopo in Impostazioni."
+      },
+      {
+        "question": "Cosa fa Importante su un’attività?",
+        "answer": "Segna l’attività come molto importante. Una notifica compare subito nella campanella e il calendario delle attività marca il giorno — per ricordartelo in anticipo."
       },
       {
         "question": "Cosa posso aggiungere come materiali?",
-        "answer": "Parole, note, formule, regole, decisioni di lavoro, link o Q&A — tutto ciò a cui vuoi tornare."
+        "answer": "Parole, note, formule, regole, decisioni di lavoro, link — tutto ciò a cui vuoi tornare."
       },
       {
         "question": "In quale valuta è il budget?",
-        "answer": "Scegli la valuta per ogni operazione. I totali sono convertiti nella valuta di visualizzazione."
+        "answer": "Scegli la valuta per ogni operazione. I totali non vengono convertiti tra valute."
       }
     ],
     "ctaTitle": "Fai il primo passo oggi",
@@ -1057,8 +1066,10 @@
     "legend": {
       "overdue": "In ritardo",
       "pending": "In attesa",
-      "completed": "Completato"
-    }
+      "completed": "Completato",
+      "important": "Importante"
+    },
+    "cellAriaImportant": "{{day}}, {{count}} voci, {{important}} importanti"
   },
   "rhythm": {
     "title": "Abitudini",

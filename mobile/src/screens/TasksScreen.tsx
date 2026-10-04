@@ -91,6 +91,7 @@ export function TasksScreen() {
         pending: day.pending,
         completed: day.completed,
         skipped: 0,
+        important: day.important ?? 0,
       })),
     [periodQuery.data?.days],
   );

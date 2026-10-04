@@ -23,6 +23,7 @@ export type DailyTaskDaySummary = {
   completed: number;
   minutes: number;
   minutesDone: number;
+  important?: number;
 };
 
 export type DailyTaskMonthSummary = {

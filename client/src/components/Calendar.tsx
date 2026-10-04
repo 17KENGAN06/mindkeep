@@ -12,7 +12,7 @@
   subMonths,
 } from 'date-fns';
 import { de, enUS, es, fi, fr, it, pl, ru, uk } from 'date-fns/locale';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Flag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import type { AppLanguage } from '@/i18n';
@@ -119,6 +119,7 @@ export function Calendar({
 
   const summaryByDate = new Map(days.map((day) => [day.date, day]));
   const selected = selectedDate ? parseISO(selectedDate) : null;
+  const showImportantLegend = days.some((day) => (day.important ?? 0) > 0);
 
   return (
     <div className="rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
@@ -165,6 +166,7 @@ export function Calendar({
           const inMonth = isSameMonth(day, monthDate);
           const isSelected = selected ? isSameDay(day, selected) : false;
           const isToday = key === todayKey;
+          const important = summary?.important ?? 0;
           const status = dayStatus(summary);
 
           return (
@@ -176,18 +178,36 @@ export function Calendar({
               aria-pressed={isSelected}
               aria-label={
                 summary && summary.total > 0
-                  ? t('calendar.cellAria', {
-                      day: format(day, 'd MMMM', { locale }),
-                      count: summary.total,
-                    })
+                  ? important > 0
+                    ? t('calendar.cellAriaImportant', {
+                        day: format(day, 'd MMMM', { locale }),
+                        count: summary.total,
+                        important,
+                      })
+                    : t('calendar.cellAria', {
+                        day: format(day, 'd MMMM', { locale }),
+                        count: summary.total,
+                      })
                   : format(day, 'd MMMM', { locale })
               }
-              className={`flex min-h-[4.25rem] flex-col items-center rounded-2xl px-1 py-1.5 transition ring-1 ring-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:min-h-[4.75rem] ${
+              className={`relative flex min-h-[4.25rem] flex-col items-center rounded-2xl px-1 py-1.5 transition ring-1 ring-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 sm:min-h-[4.75rem] ${
                 wash[status]
               } ${inMonth ? '' : 'opacity-55'} ${
-                isSelected ? '!ring-2 !ring-brand-500' : isToday ? 'ring-brand-500/35' : ''
+                isSelected
+                  ? '!ring-2 !ring-brand-500'
+                  : important > 0
+                    ? 'ring-amber-400/55'
+                    : isToday
+                      ? 'ring-brand-500/35'
+                      : ''
               }`}
             >
+              {important > 0 ? (
+                <Flag
+                  className="absolute top-1.5 right-1 h-3 w-3 fill-amber-400 text-amber-600"
+                  aria-hidden
+                />
+              ) : null}
               <span
                 className={`inline-flex h-6 w-6 items-center justify-center text-xs font-semibold tabular-nums sm:h-7 sm:w-7 sm:text-sm ${
                   isToday
@@ -222,6 +242,12 @@ export function Calendar({
           <span className="h-5 min-w-5 rounded-full bg-emerald-500/18 ring-1 ring-emerald-500/35" />
           {t('calendar.legend.completed')}
         </span>
+        {showImportantLegend ? (
+          <span className="inline-flex items-center gap-1.5">
+            <Flag className="h-3.5 w-3.5 fill-amber-400 text-amber-600" aria-hidden />
+            {t('calendar.legend.important')}
+          </span>
+        ) : null}
       </div>
     </div>
   );

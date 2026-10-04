@@ -493,59 +493,68 @@
   "guide": {
     "eyebrow": "Guide simple",
     "title": "Comment utiliser Mindkeep",
-    "intro": "Mindkeep est un espace pour les tâches, les finances et la révision des connaissances. Commence par un domaine et ajoute le reste quand tu es prêt.",
-    "stepsTitle": "Démarre en six étapes simples",
+    "intro": "Mindkeep est un espace pour la journée : tâches, révisions, notes, habitudes, argent et nutrition. Juste après l’inscription, tu choisis ce que tu veux utiliser. Le reste reste caché jusqu’à ce que tu l’actives dans les réglages.",
+    "stepsTitle": "Comment ça marche",
     "stepLabel": "Étape {{number}}",
     "steps": [
       {
-        "title": "Crée un compte",
-        "body": "Inscris-toi avec e-mail ou Google. Ton fuseau horaire est détecté automatiquement — important pour les dates des tâches et des révisions."
+        "title": "Créer un compte",
+        "body": "Inscris-toi par e-mail (un code de connexion suit le mot de passe) ou avec Google. Le fuseau horaire est détecté automatiquement pour que les dates des tâches et des révisions tombent le bon jour."
       },
       {
-        "title": "Ouvre la vue d'ensemble",
-        "body": "Le tableau de bord montre tes tâches du jour, tes révisions et un aperçu financier."
+        "title": "Choisir ce que tu utilises",
+        "body": "Un court quiz demande quels services tu veux, avec une explication simple de chacun. Tu pourras changer ça plus tard dans Plus → Réglages. Ce que tu n’actives pas n’apparaît ni dans le menu ni dans l’aperçu."
       },
       {
-        "title": "Ajoute des tâches",
-        "body": "Dans Planification, ajoute le travail du jour ou construis un plan du mois — puis coche les éléments."
+        "title": "Ouvrir l’aperçu",
+        "body": "Tu ne vois que les services activés. Des blocs vides les premiers jours, c’est normal."
       },
       {
-        "title": "Enregistre ce que tu as appris",
-        "body": "Ajoute une fiche après une leçon ou un exercice. Mindkeep programme les révisions aux jours 3, 7 et 30."
+        "title": "Planifier la journée",
+        "body": "Ajoute une tâche avec un titre et le nombre de minutes. Si elle ne doit pas filer, appuie sur Important : elle apparaît tout de suite dans les notifications pour te le rappeler à l’avance, et le calendrier marque ce jour d’un drapeau."
       },
       {
-        "title": "Note les mouvements d'argent",
-        "body": "Dans le budget, choisis d’abord espèces ou carte, puis la devise, et note un revenu ou une dépense."
+        "title": "Garder ce que tu as appris",
+        "body": "Après une leçon ou une pratique, ajoute un matériel. Mindkeep programme les révisions aux jours 3, 7 et 30."
       },
       {
-        "title": "Reviens par les calendriers",
-        "body": "Les calendriers des tâches et des révisions montrent ce qui est dû aujourd'hui et ce qui arrive — sans pression ni réglage complexe."
+        "title": "Noter les mouvements d’argent",
+        "body": "Dans Budget, choisis d’abord espèces ou carte, puis la devise. Chaque devise reste à part — pas de totaux convertis."
+      },
+      {
+        "title": "Revenir par les calendriers",
+        "body": "Les calendriers des tâches et des révisions montrent ce qui est dû, ce qui est en retard, et quels jours ont des tâches importantes."
       }
     ],
     "rulesTitle": "Bon à savoir",
     "rules": [
-      "Tâches, finances et révision partagent un même compte, mais restent chacune de leur côté.",
-      "Le calendrier de révision 3 / 7 / 30 se compte depuis la date d'apprentissage et ne bouge pas après achèvement.",
-      "Chaque opération a sa devise. Les totaux sont convertis dans la devise d’affichage.",
-      "Tes données n'appartiennent qu'à ton compte et ne sont pas visibles par les autres utilisateurs."
+      "Après l’inscription tu choisis tes services. Tu peux les changer à tout moment dans Plus → Réglages.",
+      "Marque une tâche comme importante : elle apparaît tout de suite dans la cloche, sans attendre un rappel plus tard.",
+      "Le rythme 3 / 7 / 30 se compte depuis la date d’apprentissage et ne bouge pas après validation.",
+      "Chaque opération a sa propre devise. Les totaux ne sont pas convertis d’une devise à l’autre.",
+      "Tes données n’appartiennent qu’à ton compte et restent invisibles aux autres."
     ],
     "faqTitle": "FAQ",
     "faq": [
       {
         "question": "Par où commencer ?",
-        "answer": "Par ce qui compte maintenant : les tâches du jour, une première fiche à réviser, ou une entrée de revenu/dépense. Tu pourras relier le reste plus tard."
+        "answer": "Après le quiz, ouvre l’un des services choisis : une tâche pour aujourd’hui, un premier matériel à réviser, ou une entrée de revenu/dépense."
       },
       {
-        "question": "Dois-je utiliser toutes les sections ?",
-        "answer": "Non. Tu peux n'utiliser que les tâches, que la révision ou que les finances — l'espace est conçu pour un usage souple."
+        "question": "Dois-je tout utiliser ?",
+        "answer": "Non. Le quiz existe pour que l’espace reste clair. Tu actives ou désactives les services plus tard dans Réglages."
       },
       {
-        "question": "Que puis-je ajouter comme fiches ?",
-        "answer": "Mots, notes, formules, règles, décisions de travail, liens ou Q&R — tout ce que tu veux revoir."
+        "question": "Que fait Important sur une tâche ?",
+        "answer": "Ça marque la tâche comme très importante. Une notification apparaît tout de suite dans la cloche, et le calendrier des tâches marque le jour — pour te le rappeler avant qu’elle ne glisse."
       },
       {
-        "question": "Dans quelle devise est le budget ?",
-        "answer": "Tu choisis la devise pour chaque opération. Les totaux sont convertis dans la devise d’affichage."
+        "question": "Que puis-je ajouter comme matériels ?",
+        "answer": "Mots, notes, formules, règles, décisions de travail, liens — tout ce à quoi tu veux revenir."
+      },
+      {
+        "question": "Le budget est dans quelle devise ?",
+        "answer": "Tu choisis la devise pour chaque opération. Les totaux ne sont pas convertis entre devises."
       }
     ],
     "ctaTitle": "Fais le premier pas aujourd'hui",
@@ -1057,8 +1066,10 @@
     "legend": {
       "overdue": "En retard",
       "pending": "En attente",
-      "completed": "Terminé"
-    }
+      "completed": "Terminé",
+      "important": "Important"
+    },
+    "cellAriaImportant": "{{day}}, {{count}} éléments, {{important}} importantes"
   },
   "rhythm": {
     "title": "Habitudes",

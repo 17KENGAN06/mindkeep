@@ -39,6 +39,7 @@ export function MonthGrid({
   const labels = weekdayLabels(language);
   const grid = monthGrid(year, month);
   const summaryByDate = new Map(days.map((day) => [day.date, day]));
+  const showImportantLegend = days.some((day) => (day.important ?? 0) > 0);
   const statusColor: Record<Exclude<DayStatus, 'none'>, string> = {
     overdue: colors.danger,
     pending: colors.warn,
@@ -103,8 +104,15 @@ export function MonthGrid({
               >
                 {date.getDate()}
               </Text>
-              {status !== 'none' ? (
-                <View style={[styles.dot, { backgroundColor: statusColor[status] }]} />
+              {status !== 'none' || (summary?.important ?? 0) > 0 ? (
+                <View style={styles.dots}>
+                  {status !== 'none' ? (
+                    <View style={[styles.dot, { backgroundColor: statusColor[status] }]} />
+                  ) : null}
+                  {(summary?.important ?? 0) > 0 ? (
+                    <View style={[styles.dot, { backgroundColor: '#f0b429' }]} />
+                  ) : null}
+                </View>
               ) : (
                 <View style={styles.dotSpacer} />
               )}
@@ -117,6 +125,9 @@ export function MonthGrid({
         <LegendDot color={colors.danger} label={t('calendar.legend.overdue')} />
         <LegendDot color={colors.warn} label={t('calendar.legend.pending')} />
         <LegendDot color={colors.brand} label={t('calendar.legend.completed')} />
+        {showImportantLegend ? (
+          <LegendDot color="#f0b429" label={t('calendar.legend.important')} />
+        ) : null}
       </View>
     </View>
   );
@@ -153,7 +164,8 @@ const styles = StyleSheet.create({
   },
   cellOutside: { opacity: 0.4 },
   day: { fontSize: 14, fontWeight: '600' },
-  dot: { borderRadius: 3, height: 6, marginTop: 4, width: 6 },
+  dots: { flexDirection: 'row', gap: 3, height: 6, marginTop: 4 },
+  dot: { borderRadius: 3, height: 6, width: 6 },
   dotSpacer: { height: 10 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 8, paddingHorizontal: 4 },
   legendItem: { alignItems: 'center', flexDirection: 'row', gap: 6 },

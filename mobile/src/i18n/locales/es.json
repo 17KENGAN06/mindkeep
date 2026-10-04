@@ -165,8 +165,10 @@
     "legend": {
       "overdue": "Atrasado",
       "pending": "Pendiente",
-      "completed": "Completado"
-    }
+      "completed": "Completado",
+      "important": "Importante"
+    },
+    "cellAriaImportant": "{{day}}, {{count}} elementos, {{important}} importantes"
   },
   "fuel": {
     "title": "Nutrición",
@@ -562,59 +564,68 @@
   "guide": {
     "eyebrow": "Guía sencilla",
     "title": "Cómo usar Mindkeep",
-    "intro": "Mindkeep es un espacio de trabajo para tareas, finanzas y el repaso de conocimientos. Empieza por un área y añade el resto cuando estés listo.",
-    "stepsTitle": "Empieza en seis pasos sencillos",
+    "intro": "Mindkeep es un espacio para el día: tareas, repaso, notas, hábitos, dinero y nutrición. Nada más registrarte eliges qué quieres usar. El resto queda oculto hasta que lo actives en Ajustes.",
+    "stepsTitle": "Cómo funciona",
     "stepLabel": "Paso {{number}}",
     "steps": [
       {
         "title": "Crea una cuenta",
-        "body": "Regístrate con correo o Google. Tu zona horaria se detecta automáticamente — importante para las fechas de tareas y repasos."
+        "body": "Regístrate con correo (después de la contraseña llega un código de acceso) o con Google. La zona horaria se detecta sola para que las fechas de tareas y repasos caigan el día correcto."
+      },
+      {
+        "title": "Elige qué usar",
+        "body": "Un quiz corto pregunta qué servicios quieres, con una explicación clara de cada uno. Luego puedes cambiarlo en Más → Ajustes. Lo que no actives no aparece ni en el menú ni en el resumen."
       },
       {
         "title": "Abre el resumen",
-        "body": "El panel muestra las tareas de hoy, los repasos y un breve vistazo financiero."
+        "body": "Solo ves los servicios encendidos. Los bloques vacíos los primeros días son normales."
       },
       {
-        "title": "Añade tareas",
-        "body": "En Planificación, añade el trabajo del día o arma un plan del mes — y marca los elementos."
+        "title": "Planifica el día",
+        "body": "Añade una tarea con título y minutos. Si no puede escaparse, pulsa Importante: aparece al momento en notificaciones para recordártelo con antelación, y el calendario marca ese día con una bandera."
       },
       {
         "title": "Guarda lo que aprendiste",
-        "body": "Añade un material después de una lección o una práctica. Mindkeep programa los repasos para los días 3, 7 y 30."
+        "body": "Después de una clase o práctica, añade un material. Mindkeep programa repasos para los días 3, 7 y 30."
       },
       {
         "title": "Registra el movimiento de dinero",
-        "body": "En el presupuesto elige primero efectivo o tarjeta, luego la moneda, y anota ingreso o gasto."
+        "body": "En Presupuesto elige primero efectivo o tarjeta, luego la moneda. Cada moneda se cuenta por separado — sin totales convertidos."
       },
       {
         "title": "Vuelve por los calendarios",
-        "body": "Los calendarios de tareas y repasos muestran qué toca hoy y qué viene — sin presión ni una configuración compleja."
+        "body": "Los calendarios de tareas y repasos muestran lo que toca, lo atrasado y en qué días hay tareas importantes."
       }
     ],
     "rulesTitle": "Conviene saber",
     "rules": [
-      "Tareas, finanzas y repaso comparten una cuenta, pero no se estorban entre sí.",
-      "El calendario de repaso 3 / 7 / 30 se cuenta desde la fecha de aprendizaje y no se mueve después de completarlo.",
-      "Cada operación tiene su moneda. Los totales se convierten a la moneda de vista.",
-      "Tus datos pertenecen solo a tu cuenta y no son visibles para otros usuarios."
+      "Tras registrarte eliges los servicios. Puedes cambiarlos cuando quieras en Más → Ajustes.",
+      "Marca una tarea como importante y aparece al momento en la campana, sin esperar un aviso más tarde.",
+      "El ritmo 3 / 7 / 30 se cuenta desde la fecha de aprendizaje y no se mueve al completar.",
+      "Cada operación tiene su propia moneda. Los totales no se convierten entre monedas.",
+      "Tus datos pertenecen solo a tu cuenta y no los ven otros usuarios."
     ],
     "faqTitle": "FAQ",
     "faq": [
       {
         "question": "¿Por dónde empiezo?",
-        "answer": "Por lo que importa ahora: las tareas de hoy, un primer material de repaso o una entrada de ingreso/gasto. El resto lo conectas después."
+        "answer": "Después del quiz abre uno de los servicios que elegiste: una tarea de hoy, un primer material de repaso o un ingreso/gasto."
       },
       {
         "question": "¿Tengo que usar todas las secciones?",
-        "answer": "No. Puedes usar solo tareas, solo repaso o solo finanzas — el espacio está pensado para un uso flexible."
+        "answer": "No. El quiz existe para que el espacio no se llene. Luego enciendes o apagas servicios en Ajustes."
+      },
+      {
+        "question": "¿Qué hace Importante en una tarea?",
+        "answer": "Marca la tarea como muy importante. Una notificación aparece al momento en la campana y el calendario de tareas marca el día — para recordártelo antes de que se escape."
       },
       {
         "question": "¿Qué puedo añadir como materiales?",
-        "answer": "Palabras, notas, fórmulas, reglas, decisiones de trabajo, enlaces o preguntas y respuestas — todo lo que quieras volver a ver."
+        "answer": "Palabras, notas, fórmulas, reglas, decisiones de trabajo, enlaces — todo a lo que quieras volver."
       },
       {
         "question": "¿En qué moneda está el presupuesto?",
-        "answer": "Eliges la moneda en cada operación. Los totales se convierten a la moneda de vista."
+        "answer": "Eliges la moneda en cada operación. Los totales no se convierten entre monedas."
       }
     ],
     "ctaTitle": "Da el primer paso hoy",

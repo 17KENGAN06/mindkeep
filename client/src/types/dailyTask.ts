@@ -22,6 +22,7 @@ export type DailyTaskDaySummary = {
   overdue: number;
   pending: number;
   completed: number;
+  important: number;
   minutes: number;
   minutesDone: number;
 };

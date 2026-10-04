@@ -165,8 +165,10 @@
     "legend": {
       "overdue": "Overdue",
       "pending": "Pending",
-      "completed": "Completed"
-    }
+      "completed": "Completed",
+      "important": "Important"
+    },
+    "cellAriaImportant": "{{day}}, {{count}} items, {{important}} important"
   },
   "fuel": {
     "title": "Nutrition",
@@ -562,59 +564,68 @@
   "guide": {
     "eyebrow": "Simple guide",
     "title": "How to use Mindkeep",
-    "intro": "Mindkeep is a workspace for tasks, finance, and knowledge review. Start with one area and add the rest when you are ready.",
-    "stepsTitle": "Get started in six simple steps",
+    "intro": "Mindkeep is a workspace for the day — tasks, review, notes, habits, money, and nutrition. Right after you sign up, you choose which of these you want. The rest stay hidden until you turn them on.",
+    "stepsTitle": "How it works",
     "stepLabel": "Step {{number}}",
     "steps": [
       {
         "title": "Create an account",
-        "body": "Sign up with email or Google. Your timezone is detected automatically — important for task and review dates."
+        "body": "Sign up with email (a login code follows) or Google. Your timezone is detected automatically so task and review dates land on the right day."
+      },
+      {
+        "title": "Choose what you use",
+        "body": "A short quiz asks which services you want, with a plain explanation of each. You can change this later in More → Settings. Anything you leave off does not appear in the menu or on the overview."
       },
       {
         "title": "Open the overview",
-        "body": "The dashboard shows today’s tasks, reviews, and a short finance snapshot."
+        "body": "You see only the services you switched on. Empty blocks in the first days are normal."
       },
       {
-        "title": "Add tasks",
-        "body": "In Planning, add work for the day or build a month plan — then check items off."
+        "title": "Plan the day",
+        "body": "Add a task with a title and how many minutes it takes. If it must not slip, tap Important: it appears in notifications at once so you are reminded in advance, and the calendar marks that day with a flag."
       },
       {
         "title": "Save what you learned",
-        "body": "Add a material after a lesson or practice. Mindkeep schedules reviews for day 3, 7, and 30."
+        "body": "After a lesson or practice, add a material. Mindkeep schedules reviews for day 3, 7, and 30."
       },
       {
         "title": "Log money movement",
-        "body": "In Budget, choose cash or card, then the currency, and log income or expense."
+        "body": "In Budget, choose cash or card first, then the currency. Each currency stays on its own — no converted totals."
       },
       {
         "title": "Return via calendars",
-        "body": "Task and review calendars show what is due today and what is coming — without pressure or complex setup."
+        "body": "Task and review calendars show what is due, what is late, and which days have important tasks."
       }
     ],
     "rulesTitle": "Good to know",
     "rules": [
-      "Tasks, finance, and review share one account but stay out of each other’s way.",
+      "After registration you pick your services. Change them anytime in More → Settings.",
+      "Mark a task Important and it shows in the bell immediately — you do not wait for a later reminder.",
       "The 3 / 7 / 30 review schedule is counted from the learning date and does not shift after completion.",
-      "Each operation has its own currency. Totals convert to the currency you view in.",
+      "Each operation has its own currency. Totals stay in that currency and are not converted.",
       "Your data belongs only to your account and is not visible to other users."
     ],
     "faqTitle": "FAQ",
     "faq": [
       {
         "question": "Where should I start?",
-        "answer": "With whatever matters now: today’s tasks, a first review material, or an income/expense entry. You can connect the rest later."
+        "answer": "After the quiz, open one of the services you picked: a task for today, a first review material, or an income/expense entry."
       },
       {
         "question": "Do I have to use every section?",
-        "answer": "No. You can run only tasks, only review, or only finance — the workspace is built for flexible use."
+        "answer": "No. The quiz is there so the cabinet stays uncluttered. Turn services on or off later in Settings."
+      },
+      {
+        "question": "What does Important on a task do?",
+        "answer": "It flags the task as very important. A notification appears at once in the bell, and the task calendar marks that day, so you are reminded before it slips."
       },
       {
         "question": "What can I add as materials?",
-        "answer": "Words, notes, formulas, rules, work decisions, links, or Q&A — anything you want to revisit."
+        "answer": "Words, notes, formulas, rules, work decisions, links — anything you want to revisit."
       },
       {
         "question": "Which currency is the budget in?",
-        "answer": "You choose the currency for each operation. Totals are converted to the display currency you pick."
+        "answer": "You choose the currency for each operation. Totals are not converted between currencies."
       }
     ],
     "ctaTitle": "Take the first step today",

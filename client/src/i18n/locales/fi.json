@@ -493,59 +493,68 @@
   "guide": {
     "eyebrow": "Yksinkertainen opas",
     "title": "Näin käytät Mindkeepiä",
-    "intro": "Mindkeep on työtila tehtäville, taloudelle ja tiedon kertaukselle. Aloita yhdestä suunnasta ja lisää loput, kun olet valmis.",
-    "stepsTitle": "Aloita kuudella yksinkertaisella askeleella",
+    "intro": "Mindkeep on tila päivälle: tehtävät, kertaus, muistiinpanot, tavat, raha ja ravinto. Heti rekisteröinnin jälkeen valitset, mitä haluat käyttää. Muut pysyvät piilossa, kunnes otat ne käyttöön asetuksissa.",
+    "stepsTitle": "Miten se toimii",
     "stepLabel": "Vaihe {{number}}",
     "steps": [
       {
         "title": "Luo tili",
-        "body": "Rekisteröidy sähköpostilla tai Googlella. Aikavyöhyke tunnistetaan automaattisesti — tärkeää tehtävien ja kertausten päiville."
+        "body": "Rekisteröidy sähköpostilla (salasanan jälkeen tulee kirjautumiskoodi) tai Googlella. Aikavyöhyke tunnistetaan automaattisesti, jotta tehtävien ja kertausten päivämäärät osuvat oikeaan päivään."
       },
       {
-        "title": "Avaa yleiskuva",
-        "body": "Koontinäyttö näyttää tämän päivän tehtävät, kertaukset ja lyhyen talousyhteenvedon."
+        "title": "Valitse, mitä käytät",
+        "body": "Lyhyt visailu kysyy, mitkä palvelut haluat, ja selittää kunkin selkeästi. Voit muuttaa tätä myöhemmin kohdassa Lisää → Asetukset. Mitä et ota käyttöön, ei näy valikossa eikä yleiskatsauksessa."
       },
       {
-        "title": "Lisää tehtäviä",
-        "body": "Suunnittelussa lisää päivän töitä tai kuukausisuunnitelma — ja merkitse valmiit."
+        "title": "Avaa yleiskatsaus",
+        "body": "Näet vain käyttöön otetut palvelut. Tyhjät lohkot ensimmäisinä päivinä ovat normaaleja."
       },
       {
-        "title": "Tallenna opittu",
-        "body": "Lisää materiaali oppitunnin tai harjoituksen jälkeen. Mindkeep aikatauluttaa kertaukset päiville 3, 7 ja 30."
+        "title": "Suunnittele päivä",
+        "body": "Lisää tehtävä: otsikko ja montako minuuttia se vie. Jos se ei saa unohtua, napauta Tärkeä: se näkyy heti ilmoituksissa, jotta muistutus tulee ajoissa, ja kalenteri merkitsee päivän lipulla."
       },
       {
-        "title": "Kirjaa rahaliikenne",
-        "body": "Budjetissa valitse ensin käteinen tai kortti, sitten valuutta, ja kirjaa tulo tai meno."
+        "title": "Tallenna oppimasi",
+        "body": "Oppitunnin tai harjoituksen jälkeen lisää materiaali. Mindkeep ajastaa kertaukset päiville 3, 7 ja 30."
       },
       {
-        "title": "Palaa kalenterien kautta",
-        "body": "Tehtävä- ja kertauskalenterit näyttävät, mitä on tänään ja mitä tulossa — ilman painetta tai monimutkaista asetusta."
+        "title": "Kirjaa rahan liike",
+        "body": "Budjetissa valitse ensin käteinen tai kortti, sitten valuutta. Kukin valuutta pysyy omallaan — ilman muunnettuja summia."
+      },
+      {
+        "title": "Palaa kalentereista",
+        "body": "Tehtävä- ja kertauskalenterit näyttävät, mikä erääntyy, mikä on myöhässä ja minä päivinä on tärkeitä tehtäviä."
       }
     ],
     "rulesTitle": "Hyvä tietää",
     "rules": [
-      "Tehtävät, talous ja kertaus jakavat saman tilin, mutta eivät häiritse toisiaan.",
+      "Rekisteröinnin jälkeen valitset palvelut. Voit vaihtaa niitä milloin tahansa kohdassa Lisää → Asetukset.",
+      "Merkitse tehtävä tärkeäksi — se näkyy heti kellossa, ilman että odotat myöhempää muistutusta.",
       "Kertausaikataulu 3 / 7 / 30 lasketaan oppimispäivästä eikä siirry suorituksen jälkeen.",
-      "Jokaisella tapahtumalla on valuutta. Summat muunnetaan näyttövaluuttaan.",
-      "Tietosi kuuluvat vain tilillesi eivätkä näy muille käyttäjille."
+      "Jokaisella tapahtumalla on oma valuuttansa. Summia ei muunneta valuuttojen välillä.",
+      "Tietosi kuuluvat vain tilillesi eivätkä näy muille."
     ],
     "faqTitle": "UKK",
     "faq": [
       {
         "question": "Mistä kannattaa aloittaa?",
-        "answer": "Siitä, mikä nyt on tärkeintä: päivän tehtävät, ensimmäinen kertausmateriaali tai tulo-/menomerkintä. Loput voi yhdistää myöhemmin."
+        "answer": "Visailun jälkeen avaa yksi valitsemistasi palveluista: tämän päivän tehtävä, ensimmäinen kertausmateriaali tai tulo/meno."
       },
       {
         "question": "Pitääkö käyttää kaikkia osioita?",
-        "answer": "Ei. Voit käyttää vain tehtäviä, vain kertausta tai vain taloutta — työtila on joustava."
+        "answer": "Ei. Visailu on olemassa, jotta tila ei täyty. Palveluita voit myöhemmin kytkeä päälle tai pois Asetuksissa."
+      },
+      {
+        "question": "Mitä Tärkeä tekee tehtävässä?",
+        "answer": "Se merkitsee tehtävän erittäin tärkeäksi. Ilmoitus ilmestyy heti kelloon, ja tehtäväkalenteri merkitsee päivän — jotta muistutus tulee ennen kuin asia karkaa."
       },
       {
         "question": "Mitä voin lisätä materiaaleiksi?",
-        "answer": "Sanoja, muistiinpanoja, kaavoja, sääntöjä, työratkaisuja, linkkejä tai kysymys-vastauspareja — kaikkea, johon haluat palata."
+        "answer": "Sanoja, muistiinpanoja, kaavoja, sääntöjä, työpäätöksiä, linkkejä — kaikkea, johon haluat palata."
       },
       {
         "question": "Missä valuutassa budjetti on?",
-        "answer": "Mindkeep pitää talouden tällä hetkellä euroissa. Näin yhteenvedot pysyvät yksinkertaisina ilman kurssihämmennystä."
+        "answer": "Valitset valuutan jokaiseen tapahtumaan. Summia ei muunneta valuuttojen välillä."
       }
     ],
     "ctaTitle": "Ota ensimmäinen askel tänään",
@@ -1057,8 +1066,10 @@
     "legend": {
       "overdue": "Myöhässä",
       "pending": "Odottaa",
-      "completed": "Valmis"
-    }
+      "completed": "Valmis",
+      "important": "Tärkeä"
+    },
+    "cellAriaImportant": "{{day}}, {{count}} kohdetta, {{important}} tärkeää"
   },
   "rhythm": {
     "title": "Tavat",
