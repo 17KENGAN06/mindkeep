@@ -72,10 +72,10 @@ export function Select({
         <div
           role="listbox"
           aria-labelledby={inputId}
-          className={`grid min-w-0 gap-1 rounded-2xl bg-brand-50/40 ring-1 ${
-            compactPanel ? 'h-11 grid-cols-2 p-1' : 'p-1.5'
+          className={`grid min-w-0 gap-1.5 rounded-2xl bg-brand-50/40 ring-1 ${
+            compactPanel ? 'min-h-11 grid-cols-1 p-1.5 min-[420px]:grid-cols-2' : 'p-1.5'
           } ${error ? 'ring-red-400' : 'ring-line/70'} ${
-            options.length === 1 ? 'grid-cols-1' : 'grid-cols-2'
+            compactPanel ? '' : options.length === 1 ? 'grid-cols-1' : 'grid-cols-2'
           }`}
         >
           {placeholder ? (
@@ -103,9 +103,7 @@ export function Select({
                 role="option"
                 aria-selected={active}
                 disabled={disabled}
-                className={`${
-                  compactPanel ? 'h-full' : 'min-h-10'
-                } rounded-xl px-2 text-center text-sm font-semibold leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 ${
+                className={`min-h-10 rounded-xl px-3 text-center text-sm font-semibold leading-none whitespace-nowrap transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 ${
                   active
                     ? 'bg-brand-500 text-[#07110d] shadow-sm'
                     : 'text-muted hover:bg-panel hover:text-ink'

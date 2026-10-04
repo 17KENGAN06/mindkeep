@@ -43,7 +43,7 @@ export function NotesPage() {
         </Link>
       </section>
 
-      <section className="grid gap-3 rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:grid-cols-[1fr_11rem]">
+      <section className="grid gap-3 rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:grid-cols-[minmax(0,1fr)_minmax(20rem,26rem)]">
         <Input
           label={t('notes.search')}
           placeholder={t('notes.searchPlaceholder')}
