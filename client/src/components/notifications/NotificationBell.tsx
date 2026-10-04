@@ -1,11 +1,44 @@
 import { Bell, Flag } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useNotificationSummary, useNotifications } from '@/features/notifications/useNotifications';
 import { useOverdueReminders, useTodayReminders } from '@/features/reminders/useReminders';
 import type { Reminder } from '@/types/reminder';
 import type { AppNotification } from '@/types/notification';
+
+const PANEL_MARGIN = 12;
+const PANEL_DESKTOP_WIDTH = 352;
+const PANEL_MOBILE_MAX = 767;
+
+function panelBox(button: DOMRect): CSSProperties {
+  const top = Math.round(button.bottom + 8);
+  const maxHeight = Math.max(160, window.innerHeight - top - PANEL_MARGIN);
+  if (window.innerWidth <= PANEL_MOBILE_MAX) {
+    return {
+      position: 'fixed',
+      top,
+      left: PANEL_MARGIN,
+      right: PANEL_MARGIN,
+      width: 'auto',
+      maxHeight,
+    };
+  }
+
+  const width = Math.min(PANEL_DESKTOP_WIDTH, window.innerWidth - PANEL_MARGIN * 2);
+  const left = Math.min(
+    Math.max(PANEL_MARGIN, button.right - width),
+    window.innerWidth - PANEL_MARGIN - width,
+  );
+  return {
+    position: 'fixed',
+    top,
+    left,
+    width,
+    maxHeight,
+  };
+}
 
 function ReminderRows({
   items,
@@ -42,7 +75,9 @@ export function NotificationBell() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [panelStyle, setPanelStyle] = useState<CSSProperties>();
   const rootRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
   const { data: summary } = useNotificationSummary();
   const { data: inbox, refetch: refetchInbox } = useNotifications();
@@ -66,11 +101,31 @@ export function NotificationBell() {
     if (open) void refetchInbox();
   }, [open, refetchInbox]);
 
+  useLayoutEffect(() => {
+    if (!open) return;
+
+    const place = () => {
+      const button = rootRef.current?.querySelector('button');
+      if (!button) return;
+      setPanelStyle(panelBox(button.getBoundingClientRect()));
+    };
+
+    place();
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, true);
+    return () => {
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', place, true);
+    };
+  }, [open]);
+
   useEffect(() => {
     if (!open) return;
 
     const onPointer = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+      const target = event.target as Node;
+      if (rootRef.current?.contains(target) || panelRef.current?.contains(target)) return;
+      setOpen(false);
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setOpen(false);
@@ -121,13 +176,16 @@ export function NotificationBell() {
         ) : null}
       </button>
 
-      {open ? (
-        <div
-          id={panelId}
-          role="dialog"
-          aria-label={t('notifications.title')}
-          className="absolute top-full right-0 z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-panel shadow-xl ring-1 ring-line"
-        >
+      {open
+        ? createPortal(
+            <div
+              ref={panelRef}
+              id={panelId}
+              role="dialog"
+              aria-label={t('notifications.title')}
+              style={panelStyle}
+              className="z-50 overflow-hidden overflow-y-auto rounded-2xl bg-panel shadow-xl ring-1 ring-line"
+            >
           <Link
             to="/notifications"
             onClick={() => setOpen(false)}
@@ -221,8 +279,10 @@ export function NotificationBell() {
               {t('notifications.openReviews')}
             </Link>
           </div>
-        </div>
-      ) : null}
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
