@@ -1,12 +1,14 @@
 import { env } from '@/config/env.js';
+import { logger } from '@/config/logger.js';
 import { getEntitlement } from '@/services/entitlements.service.js';
 import { resolveAppLocale, type AppLocale } from '@/services/emailCopy.js';
 import { AppError } from '@/utils/AppError.js';
 import type { ScanFoodInput } from '@/validations/nutrition.schemas.js';
 
 export const FOOD_SCAN_MAX_BYTES = 700_000;
-const GEMINI_TIMEOUT_MS = 22_000;
-const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash';
+const GEMINI_TIMEOUT_MS = 28_000;
+const DEFAULT_GEMINI_MODEL = 'gemini-3.5-flash-lite';
+const FALLBACK_GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash'];
 
 const LANGUAGE_NAME: Record<AppLocale, string> = {
   uk: 'Ukrainian',
@@ -88,15 +90,18 @@ export function parseFoodScanAiPayload(raw: unknown): FoodScanEstimate {
   const body = raw as {
     recognized?: unknown;
     mealName?: unknown;
+    meal_name?: unknown;
     totalCalories?: unknown;
+    total_calories?: unknown;
   };
 
   if (body.recognized === false) {
     throwScan('FOOD_NOT_RECOGNIZED', 'Could not recognize a dish', 422);
   }
 
-  const mealName = typeof body.mealName === 'string' ? body.mealName.trim().slice(0, 120) : '';
-  const calories = Number(body.totalCalories);
+  const nameRaw = body.mealName ?? body.meal_name;
+  const mealName = typeof nameRaw === 'string' ? nameRaw.trim().slice(0, 120) : '';
+  const calories = Number(body.totalCalories ?? body.total_calories);
 
   if (!mealName || !Number.isFinite(calories)) {
     throwScan('FOOD_NOT_RECOGNIZED', 'Could not recognize a dish', 422);
@@ -110,38 +115,72 @@ export function parseFoodScanAiPayload(raw: unknown): FoodScanEstimate {
   return { mealName, totalCalories };
 }
 
-function extractGeminiJson(data: unknown): unknown {
-  const text = (
-    data as {
-      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
-    }
-  )?.candidates?.[0]?.content?.parts?.[0]?.text;
+function unwrapJsonText(text: string): string {
+  const fence = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const inner = fence?.[1]?.trim() ?? text.trim();
+  const object = inner.match(/\{[\s\S]*\}/);
+  return object?.[0] ?? inner;
+}
 
-  if (typeof text !== 'string' || !text.trim()) {
+export function extractGeminiJson(data: unknown): unknown {
+  const candidate = (
+    data as {
+      candidates?: Array<{
+        content?: { parts?: Array<{ text?: string; thought?: boolean }> };
+      }>;
+    }
+  )?.candidates?.[0];
+
+  const text = (candidate?.content?.parts ?? [])
+    .filter((part) => !part.thought && typeof part.text === 'string')
+    .map((part) => part.text)
+    .join('\n')
+    .trim();
+
+  if (!text) {
     throwScan('FOOD_SCAN_FAILED', 'Could not read the photo', 502);
   }
 
   try {
-    return JSON.parse(text);
+    return JSON.parse(unwrapJsonText(text));
   } catch {
     throwScan('FOOD_SCAN_FAILED', 'Could not read the photo', 502);
   }
 }
 
-async function estimateWithGemini(
+function geminiModels(): string[] {
+  const preferred = env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
+  return [...new Set([preferred, ...FALLBACK_GEMINI_MODELS])];
+}
+
+function geminiErrorMeta(body: unknown): { status?: string; message?: string } {
+  const error = (body as { error?: { status?: string; message?: string } } | null)?.error;
+  return {
+    status: error?.status,
+    message: error?.message?.slice(0, 180),
+  };
+}
+
+async function callGemini(
+  model: string,
+  key: string,
   buffer: Buffer,
   mimeType: string,
   locale: AppLocale,
-): Promise<FoodScanEstimate> {
-  const key = env.GEMINI_API_KEY;
-  if (!key) {
-    throwScan('FOOD_SCAN_UNAVAILABLE', 'Food scan is not connected yet', 503);
-  }
-
-  const model = env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
+  options: { jsonMime: boolean; thinkingOff: boolean },
+): Promise<{ ok: true; payload: unknown } | { ok: false; status: number; googleStatus?: string }> {
   const language = LANGUAGE_NAME[locale];
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), GEMINI_TIMEOUT_MS);
+  const generationConfig: Record<string, unknown> = {
+    temperature: 0.2,
+  };
+  if (options.jsonMime) {
+    generationConfig.responseMimeType = 'application/json';
+  }
+  if (options.thinkingOff) {
+    generationConfig.thinkingConfig = { thinkingBudget: 0 };
+  }
 
   let response: Response;
   try {
@@ -157,11 +196,12 @@ async function estimateWithGemini(
         body: JSON.stringify({
           contents: [
             {
+              role: 'user',
               parts: [
                 {
                   text: [
                     'Estimate calories for one meal from this photo.',
-                    `Reply with JSON only: {"recognized":boolean,"mealName":string,"totalCalories":integer}`,
+                    'Reply with JSON only: {"recognized":boolean,"mealName":string,"totalCalories":integer}',
                     `mealName must be in ${language}, max 80 characters.`,
                     'If there is no food, set recognized to false, mealName to "", totalCalories to 0.',
                     'totalCalories is a typical serving between 1 and 10000.',
@@ -177,10 +217,7 @@ async function estimateWithGemini(
               ],
             },
           ],
-          generationConfig: {
-            temperature: 0.2,
-            responseMimeType: 'application/json',
-          },
+          generationConfig,
         }),
       },
     );
@@ -193,15 +230,61 @@ async function estimateWithGemini(
     clearTimeout(timer);
   }
 
-  if (!response.ok) {
-    if (response.status === 401 || response.status === 403) {
-      throwScan('FOOD_SCAN_UNAVAILABLE', 'Food scan is not connected yet', 503);
-    }
-    throwScan('FOOD_SCAN_FAILED', 'Could not read the photo', 502);
+  const body = (await response.json().catch(() => null)) as unknown;
+  if (response.ok) {
+    return { ok: true, payload: body };
   }
 
-  const payload = (await response.json().catch(() => null)) as unknown;
-  return parseFoodScanAiPayload(extractGeminiJson(payload));
+  const meta = geminiErrorMeta(body);
+  logger.warn('Food scan Gemini rejected', { model, http: response.status, ...meta });
+  return { ok: false, status: response.status, googleStatus: meta.status };
+}
+
+async function estimateWithGemini(
+  buffer: Buffer,
+  mimeType: string,
+  locale: AppLocale,
+): Promise<FoodScanEstimate> {
+  const key = env.GEMINI_API_KEY;
+  if (!key) {
+    throwScan('FOOD_SCAN_UNAVAILABLE', 'Food scan is not connected yet', 503);
+  }
+
+  let sawAuthFailure = false;
+  let lastFailure: { status: number; googleStatus?: string } | null = null;
+
+  for (const model of geminiModels()) {
+    const attempts = [
+      { jsonMime: true, thinkingOff: true },
+      { jsonMime: true, thinkingOff: false },
+      { jsonMime: false, thinkingOff: false },
+    ];
+
+    for (const options of attempts) {
+      const result = await callGemini(model, key, buffer, mimeType, locale, options);
+      if (result.ok) {
+        return parseFoodScanAiPayload(extractGeminiJson(result.payload));
+      }
+
+      lastFailure = result;
+      if (result.status === 401 || result.status === 403) {
+        sawAuthFailure = true;
+        break;
+      }
+      if (result.status === 404 || result.googleStatus === 'NOT_FOUND') {
+        break;
+      }
+      if (result.status === 429) {
+        throwScan('RATE_LIMITED', 'Too many food scans. Please try again later.', 429);
+      }
+    }
+  }
+
+  if (sawAuthFailure) {
+    throwScan('FOOD_SCAN_UNAVAILABLE', 'Food scan is not connected yet', 503);
+  }
+  logger.warn('Food scan Gemini exhausted models', lastFailure ?? {});
+  throwScan('FOOD_SCAN_FAILED', 'Could not read the photo', 502);
 }
 
 export const foodScanService = {

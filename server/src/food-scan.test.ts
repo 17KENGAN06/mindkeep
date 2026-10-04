@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import {
   decodeFoodScanImage,
   detectFoodScanMime,
+  extractGeminiJson,
   parseFoodScanAiPayload,
 } from '@/services/food-scan.service.js';
 import { AppError } from '@/utils/AppError.js';
@@ -35,6 +36,24 @@ test('parseFoodScanAiPayload accepts a plausible meal', () => {
   assert.deepEqual(
     parseFoodScanAiPayload({ recognized: true, mealName: '  Oatmeal  ', totalCalories: 320.4 }),
     { mealName: 'Oatmeal', totalCalories: 320 },
+  );
+});
+
+test('extractGeminiJson skips thought parts and markdown fences', () => {
+  assert.deepEqual(
+    extractGeminiJson({
+      candidates: [
+        {
+          content: {
+            parts: [
+              { thought: true, text: 'looking at the plate' },
+              { text: '```json\n{"recognized":true,"mealName":"Soup","totalCalories":210}\n```' },
+            ],
+          },
+        },
+      ],
+    }),
+    { recognized: true, mealName: 'Soup', totalCalories: 210 },
   );
 });
 
