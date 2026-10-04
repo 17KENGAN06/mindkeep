@@ -1,4 +1,4 @@
-import { Camera } from 'lucide-react';
+import { Camera, Images } from 'lucide-react';
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -11,12 +11,15 @@ import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/features/auth/useAuth';
 import { isProAccount, mutationErrorMessage } from '@/features/billing/planLimit';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
+import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
+import type { MealKind } from '@/features/nutrition/mealKinds';
 import { useCreateMeal } from '@/features/nutrition/useNutrition';
 import { usePhoneViewport } from '@/features/nutrition/usePhoneViewport';
 
 type ReviewState = {
   mealName: string;
   totalCalories: string;
+  kind: MealKind | null;
 };
 
 function scanErrorMessage(error: unknown, t: (key: string) => string): string {
@@ -60,21 +63,17 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   const { user } = useAuth();
   const phone = usePhoneViewport();
   const createMeal = useCreateMeal();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const cameraRef = useRef<HTMLInputElement>(null);
+  const galleryRef = useRef<HTMLInputElement>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ReviewState | null>(null);
   const pro = isProAccount(user);
   const canScan = phone && pro;
 
-  const onPickPhoto = () => {
+  const onNeedPro = () => {
     setError(null);
-    if (!phone) return;
-    if (!pro) {
-      navigate('/account');
-      return;
-    }
-    inputRef.current?.click();
+    navigate('/account');
   };
 
   const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +89,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
       setReview({
         mealName: estimate.mealName,
         totalCalories: String(estimate.totalCalories),
+        kind: null,
       });
     } catch (caught) {
       setError(scanErrorMessage(caught, t));
@@ -110,6 +110,10 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
       setError(t('calories.errors.calories'));
       return;
     }
+    if (pro && !review.kind) {
+      setError(t('calories.errors.kind'));
+      return;
+    }
 
     setError(null);
     try {
@@ -117,6 +121,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
         title: review.mealName.trim(),
         calories: Math.round(calories),
         date,
+        ...(review.kind ? { kind: review.kind } : {}),
       });
       setReview(null);
     } catch (caught) {
@@ -133,38 +138,71 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   return (
     <div className="space-y-3">
       {phone ? (
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/*"
-          capture="environment"
-          className="sr-only"
-          onChange={(event) => void onFile(event)}
-        />
+        <>
+          <input
+            ref={cameraRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/*"
+            capture="environment"
+            className="sr-only"
+            onChange={(event) => void onFile(event)}
+          />
+          <input
+            ref={galleryRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/*"
+            className="sr-only"
+            onChange={(event) => void onFile(event)}
+          />
+        </>
       ) : null}
 
-      <Button
-        type="button"
-        variant={canScan ? 'secondary' : 'ghost'}
-        className="w-full"
-        disabled={!phone}
-        isLoading={analyzing}
-        loadingText={t('calories.scan.analyzing')}
-        title={!phone ? t('calories.scan.phoneOnly') : undefined}
-        onClick={onPickPhoto}
-      >
-        <Camera className="mr-2 h-4 w-4 shrink-0" aria-hidden />
-        {t('calories.scan.button')}
-        {!phone ? (
+      {canScan ? (
+        <div className="grid grid-cols-2 gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full sm:w-full"
+            isLoading={analyzing}
+            loadingText={t('calories.scan.analyzing')}
+            onClick={() => {
+              setError(null);
+              cameraRef.current?.click();
+            }}
+          >
+            <Camera className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            {t('calories.scan.button')}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full sm:w-full"
+            disabled={analyzing}
+            onClick={() => {
+              setError(null);
+              galleryRef.current?.click();
+            }}
+          >
+            <Images className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            {t('calories.scan.gallery')}
+          </Button>
+        </div>
+      ) : (
+        <Button
+          type="button"
+          variant="ghost"
+          className="w-full"
+          disabled={!phone}
+          title={!phone ? t('calories.scan.phoneOnly') : undefined}
+          onClick={phone ? onNeedPro : undefined}
+        >
+          <Camera className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+          {t('calories.scan.button')}
           <span className="ml-2">
-            <Badge tone="neutral">{t('calories.scan.phoneBadge')}</Badge>
+            <Badge tone="neutral">{!phone ? t('calories.scan.phoneBadge') : 'Pro'}</Badge>
           </span>
-        ) : !pro ? (
-          <span className="ml-2">
-            <Badge>Pro</Badge>
-          </span>
-        ) : null}
-      </Button>
+        </Button>
+      )}
       <p className="text-xs text-muted">{hint}</p>
       <ErrorMessage message={error ?? undefined} />
 
@@ -183,6 +221,11 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
               </h3>
               <p className="mt-1 text-sm text-muted">{t('calories.scan.reviewHint')}</p>
             </div>
+            <MealKindPicker
+              value={review.kind}
+              pro={pro}
+              onChange={(kind) => setReview({ ...review, kind })}
+            />
             <Input
               label={t('calories.mealTitle')}
               value={review.mealName}
@@ -198,6 +241,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
               onChange={(event) => setReview({ ...review, totalCalories: event.target.value })}
             />
             <p className="text-xs text-muted">{t('calories.scan.privacy')}</p>
+            <ErrorMessage message={error ?? undefined} />
             <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <Button
                 type="button"

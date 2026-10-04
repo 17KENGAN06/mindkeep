@@ -802,11 +802,12 @@
       "waterGoal": "Indique au moins 1 verre",
       "weight": "Saisis un poids entre 20 et 400 kg",
       "weightGoal": "Le poids cible doit être entre 20 et 400 kg",
-      "unavailable": "L'API Nutrition n'est pas encore disponible. Déploie l'API avec les tables calorie, water et weight."
+      "unavailable": "L'API Nutrition n'est pas encore disponible. Déploie l'API avec les tables calorie, water et weight.",
+      "kind": "Choisis petit-déjeuner, déjeuner, dîner, collation ou un repas en plus"
     },
     "scan": {
       "button": "Scanner le plat",
-      "hint": "Photographie le plat. Vérifie le résultat, puis ajoute-le.",
+      "hint": "Photographie le plat ou choisis une photo. Vérifie le résultat, puis ajoute-le.",
       "proOnly": "Le scan alimentaire est inclus dans Pro.",
       "phoneOnly": "Disponible uniquement sur téléphone.",
       "phoneBadge": "Uniquement téléphone",
@@ -826,7 +827,17 @@
         "tooLarge": "La photo est trop lourde. Prends un plan plus serré.",
         "badType": "Utilise une photo JPEG, PNG ou WebP.",
         "invalid": "Choisis d’abord une photo du repas."
-      }
+      },
+      "gallery": "Depuis Photos"
+    },
+    "kinds": {
+      "label": "Quel repas",
+      "proHint": "Les types de repas sont inclus dans Pro.",
+      "breakfast": "Petit-déj.",
+      "lunch": "Déjeuner",
+      "dinner": "Dîner",
+      "snack": "Collation",
+      "extra": "Repas en plus"
     }
   },
   "dashboard": {

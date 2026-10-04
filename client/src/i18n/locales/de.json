@@ -802,11 +802,12 @@
       "waterGoal": "Lege mindestens 1 Glas fest",
       "weight": "Gib ein Gewicht zwischen 20 und 400 kg ein",
       "weightGoal": "Das Zielgewicht sollte 20–400 kg betragen",
-      "unavailable": "Die Ernährungs-API ist noch nicht verfügbar. Deploye die API mit Kalorien-, Wasser- und Gewichtstabellen."
+      "unavailable": "Die Ernährungs-API ist noch nicht verfügbar. Deploye die API mit Kalorien-, Wasser- und Gewichtstabellen.",
+      "kind": "Wähle Frühstück, Mittag, Abendessen, Snack oder eine Extra-Mahlzeit"
     },
     "scan": {
       "button": "Essen scannen",
-      "hint": "Fotografiere das Gericht. Prüfe das Ergebnis und füge es dann hinzu.",
+      "hint": "Fotografiere das Gericht oder wähle ein Foto. Prüfe das Ergebnis und füge es dann hinzu.",
       "proOnly": "Essensscan ist in Pro enthalten.",
       "phoneOnly": "Nur auf dem Handy verfügbar.",
       "phoneBadge": "Nur Handy",
@@ -826,7 +827,17 @@
         "tooLarge": "Das Foto ist zu groß. Nimm eine nähere Aufnahme.",
         "badType": "Bitte ein JPEG-, PNG- oder WebP-Foto verwenden.",
         "invalid": "Wähle zuerst ein Foto der Mahlzeit."
-      }
+      },
+      "gallery": "Aus Fotos"
+    },
+    "kinds": {
+      "label": "Welche Mahlzeit",
+      "proHint": "Mahlzeitentypen sind in Pro enthalten.",
+      "breakfast": "Frühstück",
+      "lunch": "Mittagessen",
+      "dinner": "Abendessen",
+      "snack": "Snack",
+      "extra": "Extra-Mahlzeit"
     }
   },
   "dashboard": {

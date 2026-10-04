@@ -9,9 +9,12 @@ import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
-import { mutationErrorMessage } from '@/features/billing/planLimit';
+import { mutationErrorMessage, isProAccount } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
 import { FoodScanMeal } from '@/features/nutrition/FoodScanMeal';
+import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
+import { isMealKind, type MealKind } from '@/features/nutrition/mealKinds';
+import { useAuth } from '@/features/auth/useAuth';
 import {
   useCreateMeal,
   useDeleteMeal,
@@ -44,12 +47,15 @@ function currentDefaults() {
 
 export function CaloriesPage() {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const pro = isProAccount(user);
   const defaults = useMemo(() => currentDefaults(), []);
   const [year, setYear] = useState(defaults.year);
   const [month, setMonth] = useState(defaults.month);
   const [selectedDate, setSelectedDate] = useState(defaults.date);
   const [title, setTitle] = useState('');
   const [kcal, setKcal] = useState('');
+  const [mealKind, setMealKind] = useState<MealKind | null>(null);
   const [calorieGoalInput, setCalorieGoalInput] = useState('');
   const [waterGoalInput, setWaterGoalInput] = useState('');
   const [weightGoalInput, setWeightGoalInput] = useState('');
@@ -172,14 +178,20 @@ export function CaloriesPage() {
       setFormError(t('calories.errors.calories'));
       return;
     }
+    if (pro && !mealKind) {
+      setFormError(t('calories.errors.kind'));
+      return;
+    }
     try {
       await createMeal.mutateAsync({
         title: title.trim(),
         calories,
         date: selectedDate,
+        ...(mealKind ? { kind: mealKind } : {}),
       });
       setTitle('');
       setKcal('');
+      setMealKind(null);
     } catch (error) {
       setFormError(mutationErrorMessage(error, t));
     }
@@ -323,6 +335,9 @@ export function CaloriesPage() {
               <div className="mt-3">
                 <FoodScanMeal date={selectedDate} />
               </div>
+              <div className="mt-3">
+                <MealKindPicker value={mealKind} pro={pro} onChange={setMealKind} />
+              </div>
               <form
                 className="mt-3 grid gap-3 sm:grid-cols-[1fr_140px_auto]"
                 onSubmit={(event) => void onAddMeal(event)}
@@ -361,7 +376,18 @@ export function CaloriesPage() {
                     key={meal.id}
                     className="flex items-center gap-3 rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line"
                   >
-                    <p className="min-w-0 flex-1 truncate text-sm font-medium text-ink">{meal.title}</p>
+                    <div className="min-w-0 flex-1">
+                      {isMealKind(meal.kind) ? (
+                        <p className="flex min-w-0 items-baseline gap-2">
+                          <span className="max-w-[48%] shrink-0 truncate text-sm font-semibold text-ink">
+                            {t(`calories.kinds.${meal.kind}`)}
+                          </span>
+                          <span className="min-w-0 truncate text-xs text-muted">{meal.title}</span>
+                        </p>
+                      ) : (
+                        <p className="truncate text-sm font-medium text-ink">{meal.title}</p>
+                      )}
+                    </div>
                     <span className="shrink-0 text-sm tabular-nums text-muted">
                       {meal.calories} {t('calories.kcal')}
                     </span>

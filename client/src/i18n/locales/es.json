@@ -802,11 +802,12 @@
       "waterGoal": "Indica al menos 1 vaso",
       "weight": "Introduce un peso entre 20 y 400 kg",
       "weightGoal": "El peso objetivo debe estar entre 20 y 400 kg",
-      "unavailable": "La API de Nutrición aún no está disponible. Despliega la API con las tablas calorie, water y weight."
+      "unavailable": "La API de Nutrición aún no está disponible. Despliega la API con las tablas calorie, water y weight.",
+      "kind": "Elige desayuno, comida, cena, tentempié u otra comida"
     },
     "scan": {
       "button": "Escanear comida",
-      "hint": "Fotografía el plato. Revisa el resultado y luego añádelo.",
+      "hint": "Fotografía el plato o elige una foto. Revisa el resultado y luego añádelo.",
       "proOnly": "El escaneo de comida está en Pro.",
       "phoneOnly": "Disponible solo en el teléfono.",
       "phoneBadge": "Solo móvil",
@@ -826,7 +827,17 @@
         "tooLarge": "La foto es demasiado grande. Haz un plano más cercano.",
         "badType": "Usa una foto JPEG, PNG o WebP.",
         "invalid": "Elige primero una foto de la comida."
-      }
+      },
+      "gallery": "De la galería"
+    },
+    "kinds": {
+      "label": "Cuál comida",
+      "proHint": "Los tipos de comida están en Pro.",
+      "breakfast": "Desayuno",
+      "lunch": "Comida",
+      "dinner": "Cena",
+      "snack": "Tentempié",
+      "extra": "Otra comida"
     }
   },
   "dashboard": {

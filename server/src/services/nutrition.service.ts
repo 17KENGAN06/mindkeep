@@ -10,7 +10,7 @@ import type {
 } from '@/validations/nutrition.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
-import { assertMealDateAllowed, mealHistoryFrom, weightHistoryFrom } from '@/services/entitlements.service.js';
+import { assertMealDateAllowed, getEntitlement, mealHistoryFrom, weightHistoryFrom } from '@/services/entitlements.service.js';
 
 function rethrowNutritionError(error: unknown): never {
   if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2021') {
@@ -59,6 +59,7 @@ function serializeMeal(meal: {
   title: string;
   calories: number;
   date: Date;
+  kind: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'extra' | null;
   userId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -177,12 +178,18 @@ export class NutritionService {
 
   async createMeal(userId: string, input: CreateMealInput) {
     await assertMealDateAllowed(userId, input.date);
+    let kind = input.kind ?? null;
+    if (kind) {
+      const entitlement = await getEntitlement(userId);
+      if (!entitlement.pro) kind = null;
+    }
     return serializeMeal(
       await prisma.meal.create({
         data: {
           title: input.title,
           calories: input.calories,
           date: parseDateOnly(input.date),
+          kind,
           userId,
         },
       }),
@@ -196,12 +203,19 @@ export class NutritionService {
       'MEAL_NOT_FOUND',
     );
 
+    let kind = input.kind;
+    if (kind) {
+      const entitlement = await getEntitlement(userId);
+      if (!entitlement.pro) kind = undefined;
+    }
+
     return serializeMeal(
       await prisma.meal.update({
         where: { id },
         data: {
           ...(input.title !== undefined ? { title: input.title } : {}),
           ...(input.calories !== undefined ? { calories: input.calories } : {}),
+          ...(kind !== undefined ? { kind } : {}),
         },
       }),
     );

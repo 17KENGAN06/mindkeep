@@ -768,8 +768,17 @@
     "mealTitle": "Meal",
     "mealPlaceholder": "Lunch, snack...",
     "mealCalories": "kcal",
-    "saveMeal": "Add",
-    "emptyMeals": "No meals logged for this day yet.",
+      "saveMeal": "Add",
+      "kinds": {
+        "label": "Which meal",
+        "proHint": "Meal types are included in Pro.",
+        "breakfast": "Breakfast",
+        "lunch": "Lunch",
+        "dinner": "Dinner",
+        "snack": "Snack",
+        "extra": "Extra meal"
+      },
+      "emptyMeals": "No meals logged for this day yet.",
     "waterTitle": "Water",
     "weightTitle": "Weight",
     "weightHint": "Log weight for the selected day. The average is for this month.",
@@ -802,11 +811,12 @@
       "waterGoal": "Set at least 1 glass",
       "weight": "Enter a weight between 20 and 400 kg",
       "weightGoal": "Target weight should be 20–400 kg",
+      "kind": "Choose breakfast, lunch, dinner, a snack, or an extra meal",
       "unavailable": "Nutrition API is not available yet. Deploy the API with calorie, water and weight tables."
     },
     "scan": {
       "button": "Scan food",
-      "hint": "Photo a dish. Check the result, then add it.",
+      "hint": "Photo a dish or pick one from the gallery. Check the result, then add it.",
       "proOnly": "Food scan is included in Pro.",
       "phoneOnly": "Available only on a phone.",
       "phoneBadge": "Phone only",
@@ -817,6 +827,7 @@
       "add": "Add meal",
       "cancel": "Discard",
       "pickPhoto": "Choose a photo",
+      "gallery": "From photos",
       "privacy": "The photo is used only to estimate calories and is not saved.",
       "errors": {
         "unavailable": "Food scan is not connected yet.",

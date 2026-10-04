@@ -9,6 +9,7 @@ export type Meal = {
   title: string;
   calories: number;
   date: string;
+  kind?: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'extra' | null;
   userId: string;
   createdAt: string;
   updatedAt: string;

@@ -802,11 +802,12 @@
       "waterGoal": "Imposta almeno 1 bicchiere",
       "weight": "Inserisci un peso tra 20 e 400 kg",
       "weightGoal": "Il peso obiettivo deve essere tra 20 e 400 kg",
-      "unavailable": "L'API Nutrizione non è ancora disponibile. Fai il deploy dell'API con le tabelle calorie, water e weight."
+      "unavailable": "L'API Nutrizione non è ancora disponibile. Fai il deploy dell'API con le tabelle calorie, water e weight.",
+      "kind": "Scegli colazione, pranzo, cena, spuntino o un altro pasto"
     },
     "scan": {
       "button": "Scansiona il cibo",
-      "hint": "Fotografa il piatto. Controlla il risultato e solo allora aggiungilo.",
+      "hint": "Fotografa il piatto o scegline uno dalla galleria. Controlla il risultato e solo allora aggiungilo.",
       "proOnly": "La scansione cibo è inclusa in Pro.",
       "phoneOnly": "Disponibile solo sul telefono.",
       "phoneBadge": "Solo telefono",
@@ -826,7 +827,17 @@
         "tooLarge": "La foto è troppo grande. Fai uno scatto più ravvicinato.",
         "badType": "Usa una foto JPEG, PNG o WebP.",
         "invalid": "Scegli prima una foto del pasto."
-      }
+      },
+      "gallery": "Dalla galleria"
+    },
+    "kinds": {
+      "label": "Quale pasto",
+      "proHint": "I tipi di pasto sono inclusi in Pro.",
+      "breakfast": "Colazione",
+      "lunch": "Pranzo",
+      "dinner": "Cena",
+      "snack": "Spuntino",
+      "extra": "Altro pasto"
     }
   },
   "dashboard": {

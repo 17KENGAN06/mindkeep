@@ -21,12 +21,14 @@ export const createMealSchema = z.object({
   title: z.string().trim().min(1).max(120),
   calories: z.coerce.number().int().min(1).max(10000),
   date: dateOnly,
+  kind: z.enum(['breakfast', 'lunch', 'dinner', 'snack', 'extra']).optional(),
 });
 
 export const updateMealSchema = z
   .object({
     title: z.string().trim().min(1).max(120).optional(),
     calories: z.coerce.number().int().min(1).max(10000).optional(),
+    kind: z.enum(['breakfast', 'lunch', 'dinner', 'snack', 'extra']).nullable().optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one field is required',

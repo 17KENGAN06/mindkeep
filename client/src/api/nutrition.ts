@@ -7,10 +7,13 @@ import type {
   WeightDay,
 } from '@/types/nutrition';
 
+import type { MealKind } from '@/features/nutrition/mealKinds';
+
 export type CreateMealPayload = {
   title: string;
   calories: number;
   date: string;
+  kind?: MealKind;
 };
 
 export type UpdateMealPayload = {

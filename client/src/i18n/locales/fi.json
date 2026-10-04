@@ -802,11 +802,12 @@
       "waterGoal": "Aseta vähintään 1 lasi",
       "weight": "Anna paino väliltä 20–400 kg",
       "weightGoal": "Tavoitepainon tulee olla 20–400 kg",
-      "unavailable": "Ravinto-API ei ole vielä käytössä. API pitää deployata kalori-, vesi- ja painotauluilla."
+      "unavailable": "Ravinto-API ei ole vielä käytössä. API pitää deployata kalori-, vesi- ja painotauluilla.",
+      "kind": "Valitse aamiainen, lounas, illallinen, välipala tai extra-ateria"
     },
     "scan": {
       "button": "Skannaa ruoka",
-      "hint": "Ota kuva annoksesta. Tarkista tulos ja lisää vasta sitten.",
+      "hint": "Ota kuva annoksesta tai valitse yksi galleriasta. Tarkista tulos ja lisää vasta sitten.",
       "proOnly": "Ruokaskannaus sisältyy Prohon.",
       "phoneOnly": "Käytettävissä vain puhelimella.",
       "phoneBadge": "Vain puhelin",
@@ -826,7 +827,17 @@
         "tooLarge": "Kuva on liian suuri. Ota lähempi otos.",
         "badType": "Käytä JPEG-, PNG- tai WebP-kuvaa.",
         "invalid": "Valitse ensin kuva ateriasta."
-      }
+      },
+      "gallery": "Galleriasta"
+    },
+    "kinds": {
+      "label": "Mikä ateria",
+      "proHint": "Ateriatyypit sisältyvät Prohon.",
+      "breakfast": "Aamiainen",
+      "lunch": "Lounas",
+      "dinner": "Illallinen",
+      "snack": "Välipala",
+      "extra": "Extra-ateria"
     }
   },
   "dashboard": {

@@ -802,11 +802,12 @@
       "waterGoal": "Ustaw co najmniej 1 szklankę",
       "weight": "Podaj wagę między 20 a 400 kg",
       "weightGoal": "Waga docelowa powinna wynosić 20–400 kg",
-      "unavailable": "API odżywiania nie jest jeszcze dostępne. Wdróż API z tabelami kalorii, wody i wagi."
+      "unavailable": "API odżywiania nie jest jeszcze dostępne. Wdróż API z tabelami kalorii, wody i wagi.",
+      "kind": "Wybierz śniadanie, obiad, kolację, przekąskę albo kolejny posiłek"
     },
     "scan": {
       "button": "Skanuj jedzenie",
-      "hint": "Zrób zdjęcie dania. Sprawdź wynik, a potem dopiero dodaj.",
+      "hint": "Zrób zdjęcie dania albo wybierz jedno z galerii. Sprawdź wynik, a potem dopiero dodaj.",
       "proOnly": "Skan jedzenia jest w Pro.",
       "phoneOnly": "Dostępne tylko na telefonie.",
       "phoneBadge": "Tylko telefon",
@@ -826,7 +827,17 @@
         "tooLarge": "Zdjęcie jest za duże. Zrób bliższe ujęcie.",
         "badType": "Użyj zdjęcia JPEG, PNG lub WebP.",
         "invalid": "Najpierw wybierz zdjęcie posiłku."
-      }
+      },
+      "gallery": "Z galerii"
+    },
+    "kinds": {
+      "label": "Który posiłek",
+      "proHint": "Rodzaje posiłków są w Pro.",
+      "breakfast": "Śniadanie",
+      "lunch": "Obiad",
+      "dinner": "Kolacja",
+      "snack": "Przekąska",
+      "extra": "Kolejny posiłek"
     }
   },
   "dashboard": {
