@@ -2,11 +2,13 @@ import { Router } from 'express';
 import { nutritionController } from '@/controllers/nutrition.controller.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { requireAuth } from '@/middleware/auth.middleware.js';
+import { foodScanRateLimit } from '@/middleware/foodScanRateLimit.js';
 import { validate } from '@/middleware/validate.js';
 import {
   createMealSchema,
   mealIdParamsSchema,
   nutritionPeriodQuerySchema,
+  scanFoodSchema,
   updateMealSchema,
   updateNutritionSettingsSchema,
   upsertWaterSchema,
@@ -39,6 +41,13 @@ nutritionRouter.put(
   '/weight',
   validate(upsertWeightSchema),
   asyncHandler((req, res) => nutritionController.upsertWeight(req, res)),
+);
+
+nutritionRouter.post(
+  '/scan',
+  foodScanRateLimit,
+  validate(scanFoodSchema),
+  asyncHandler((req, res) => nutritionController.scanFood(req, res)),
 );
 
 nutritionRouter.post(

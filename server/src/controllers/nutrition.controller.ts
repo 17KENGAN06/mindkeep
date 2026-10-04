@@ -1,9 +1,11 @@
 import type { Request, Response } from 'express';
+import { foodScanService } from '@/services/food-scan.service.js';
 import { nutritionService } from '@/services/nutrition.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
   CreateMealInput,
   NutritionPeriodQuery,
+  ScanFoodInput,
   UpdateMealInput,
   UpdateNutritionSettingsInput,
   UpsertWaterInput,
@@ -73,6 +75,15 @@ export class NutritionController {
       req.body as UpsertWeightInput,
     );
     res.status(200).json({ weight });
+  }
+
+  async scanFood(req: Request, res: Response): Promise<void> {
+    const estimate = await foodScanService.scanMeal(
+      requireUserId(req),
+      req.body as ScanFoodInput,
+      req.header('x-app-language') ?? req.header('accept-language'),
+    );
+    res.status(200).json(estimate);
   }
 }
 

@@ -46,6 +46,17 @@ const envSchema = z.object({
   STRIPE_WEBHOOK_SECRET: z.string().trim().min(1).optional(),
   STRIPE_PRICE_MONTHLY: z.string().trim().min(1).optional(),
   STRIPE_PRICE_YEARLY: z.string().trim().min(1).optional(),
+  /** Google AI Studio key. Food scan returns 503 until this is set. */
+  GEMINI_API_KEY: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => (value && value.length > 0 ? value : undefined)),
+  GEMINI_MODEL: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => (value && value.length > 0 ? value : undefined)),
 });
 
 const parsed = envSchema.safeParse(process.env);

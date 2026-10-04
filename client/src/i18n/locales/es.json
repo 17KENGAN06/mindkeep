@@ -803,6 +803,28 @@
       "weight": "Introduce un peso entre 20 y 400 kg",
       "weightGoal": "El peso objetivo debe estar entre 20 y 400 kg",
       "unavailable": "La API de Nutrición aún no está disponible. Despliega la API con las tablas calorie, water y weight."
+    },
+    "scan": {
+      "button": "Escanear comida",
+      "hint": "Fotografía el plato. Revisa el resultado y luego añádelo.",
+      "proOnly": "El escaneo de comida está en Pro.",
+      "upgrade": "Pasar a Pro",
+      "analyzing": "Leyendo la foto…",
+      "reviewTitle": "Revisa antes de añadir",
+      "reviewHint": "Si la estimación no cuadra, edita el nombre o las calorías.",
+      "add": "Añadir comida",
+      "cancel": "Descartar",
+      "pickPhoto": "Elegir una foto",
+      "privacy": "La foto solo se usa para estimar calorías y no se guarda.",
+      "errors": {
+        "unavailable": "El escaneo de comida aún no está conectado.",
+        "proRequired": "El escaneo de comida está en Pro.",
+        "notRecognized": "No se reconoció el plato. Prueba una foto más cercana y nítida.",
+        "failed": "No se pudo leer la foto. Inténtalo de nuevo.",
+        "tooLarge": "La foto es demasiado grande. Haz un plano más cercano.",
+        "badType": "Usa una foto JPEG, PNG o WebP.",
+        "invalid": "Elige primero una foto de la comida."
+      }
     }
   },
   "dashboard": {
@@ -1169,7 +1191,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Política de privacidad",
-    "updated": "Actualizada: 30 September 2026",
+    "updated": "Actualizada: 4 October 2026",
     "intro": "Esta política explica qué datos recopila Mindkeep, por qué los necesitamos y cómo los protegemos. Al usar el servicio, usted acepta las prácticas descritas a continuación.",
     "contactLabel": "Preguntas sobre datos:",
     "sections": [
@@ -1185,7 +1207,8 @@
         "body": [
           "Datos de la cuenta: nombre, correo y una contraseña con hash al registrarse.",
           "Contenido de aprendizaje: materiales, categorías, fechas de aprendizaje y estados de repaso.",
-          "Datos técnicos: zona horaria, idioma de la interfaz y registros básicos del servidor necesarios para la seguridad y la fiabilidad."
+          "Datos técnicos: zona horaria, idioma de la interfaz y registros básicos del servidor necesarios para la seguridad y la fiabilidad.",
+          "Si usas el escaneo de comida en la web móvil, la foto se procesa solo para estimar el nombre y las calorías y no se guarda en nuestros servidores."
         ]
       },
       {
@@ -1209,7 +1232,8 @@
         "body": [
           "No vendemos datos personales.",
           "Los proveedores de alojamiento y bases de datos pueden tratar los datos solo para operar Mindkeep, según un acuerdo con el operador.",
-          "Si te suscribes, Stripe procesa el pago y recibe el email y los datos de facturación necesarios para cobrar la tarjeta."
+          "Si te suscribes, Stripe procesa el pago y recibe el email y los datos de facturación necesarios para cobrar la tarjeta.",
+          "Si escaneas una comida en la web móvil, la foto se envía a Google Gemini solo para estimar calorías y luego se descarta. No guardamos la foto."
         ]
       },
       {

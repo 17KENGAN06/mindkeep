@@ -18,11 +18,18 @@ export type UpdateMealPayload = {
   calories?: number;
 };
 
+export type FoodScanEstimate = {
+  mealName: string;
+  totalCalories: number;
+};
+
 export const nutritionApi = {
   getPeriod: (year: number, month: number) =>
     apiClient.get<NutritionPeriodResponse>(`/api/nutrition?year=${year}&month=${month}`),
   updateSettings: (payload: Partial<NutritionSettings>) =>
     apiClient.patch<{ settings: NutritionSettings }>('/api/nutrition/settings', payload),
+  scanFood: (payload: { image: string; mimeType: 'image/jpeg' | 'image/png' | 'image/webp' }) =>
+    apiClient.post<FoodScanEstimate>('/api/nutrition/scan', payload, { timeoutMs: 35_000 }),
   createMeal: (payload: CreateMealPayload) =>
     apiClient.post<{ meal: Meal }>('/api/nutrition/meals', payload),
   updateMeal: (id: string, payload: UpdateMealPayload) =>

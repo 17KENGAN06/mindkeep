@@ -44,6 +44,20 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.csrf');
     case 'PLAN_LIMIT':
       return t('billing.limitReached');
+    case 'FOOD_SCAN_UNAVAILABLE':
+      return t('calories.scan.errors.unavailable');
+    case 'FOOD_SCAN_PRO_REQUIRED':
+      return t('calories.scan.errors.proRequired');
+    case 'FOOD_NOT_RECOGNIZED':
+      return t('calories.scan.errors.notRecognized');
+    case 'FOOD_SCAN_TOO_LARGE':
+      return t('calories.scan.errors.tooLarge');
+    case 'FOOD_SCAN_BAD_TYPE':
+      return t('calories.scan.errors.badType');
+    case 'FOOD_SCAN_INVALID':
+      return t('calories.scan.errors.invalid');
+    case 'FOOD_SCAN_FAILED':
+      return t('calories.scan.errors.failed');
     case 'BILLING_UNAVAILABLE':
     case 'BILLING_PORTAL_UNAVAILABLE':
       return t('billing.unavailable');

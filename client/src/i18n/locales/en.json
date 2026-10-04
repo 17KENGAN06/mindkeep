@@ -803,6 +803,28 @@
       "weight": "Enter a weight between 20 and 400 kg",
       "weightGoal": "Target weight should be 20–400 kg",
       "unavailable": "Nutrition API is not available yet. Deploy the API with calorie, water and weight tables."
+    },
+    "scan": {
+      "button": "Scan food",
+      "hint": "Photo a dish. Check the result, then add it.",
+      "proOnly": "Food scan is included in Pro.",
+      "upgrade": "Upgrade to Pro",
+      "analyzing": "Reading the photo…",
+      "reviewTitle": "Check before adding",
+      "reviewHint": "Edit the name or calories if the estimate looks off.",
+      "add": "Add meal",
+      "cancel": "Discard",
+      "pickPhoto": "Choose a photo",
+      "privacy": "The photo is used only to estimate calories and is not saved.",
+      "errors": {
+        "unavailable": "Food scan is not connected yet.",
+        "proRequired": "Food scan is included in Pro.",
+        "notRecognized": "Could not recognize a dish. Try a closer, clearer photo.",
+        "failed": "Could not read the photo. Try again.",
+        "tooLarge": "The photo is too large. Try a closer shot.",
+        "badType": "Use a JPEG, PNG, or WebP photo.",
+        "invalid": "Choose a photo of the meal first."
+      }
     }
   },
   "dashboard": {
@@ -1169,7 +1191,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "updated": "Updated: 30 September 2026",
+    "updated": "Updated: 4 October 2026",
     "intro": "This policy explains what data Mindkeep collects, why we need it, and how we protect it. By using the service, you agree to the practices described below.",
     "contactLabel": "Data questions:",
     "sections": [
@@ -1185,7 +1207,8 @@
         "body": [
           "Account data: name, email, and a hashed password when you register.",
           "Learning content: materials, categories, learned dates, and review statuses.",
-          "Technical data: timezone, interface language, and basic server logs needed for security and reliability."
+          "Technical data: timezone, interface language, and basic server logs needed for security and reliability.",
+          "If you use food scan on the mobile website, the photo is processed to estimate a meal name and calories and is not saved on our servers."
         ]
       },
       {
@@ -1209,7 +1232,8 @@
         "body": [
           "We do not sell personal data.",
           "Hosting and database providers may process data only to run Mindkeep under agreement with the operator.",
-          "If you subscribe, Stripe processes the payment and receives email and billing details needed to charge the card."
+          "If you subscribe, Stripe processes the payment and receives email and billing details needed to charge the card.",
+          "If you scan a meal on the mobile website, the photo is sent to Google Gemini only to estimate calories and is discarded afterwards. We do not store the photo."
         ]
       },
       {

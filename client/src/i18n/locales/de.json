@@ -803,6 +803,28 @@
       "weight": "Gib ein Gewicht zwischen 20 und 400 kg ein",
       "weightGoal": "Das Zielgewicht sollte 20–400 kg betragen",
       "unavailable": "Die Ernährungs-API ist noch nicht verfügbar. Deploye die API mit Kalorien-, Wasser- und Gewichtstabellen."
+    },
+    "scan": {
+      "button": "Essen scannen",
+      "hint": "Fotografiere das Gericht. Prüfe das Ergebnis und füge es dann hinzu.",
+      "proOnly": "Essensscan ist in Pro enthalten.",
+      "upgrade": "Zu Pro wechseln",
+      "analyzing": "Foto wird gelesen…",
+      "reviewTitle": "Vor dem Hinzufügen prüfen",
+      "reviewHint": "Wenn die Schätzung nicht passt, ändere Name oder Kalorien.",
+      "add": "Mahlzeit hinzufügen",
+      "cancel": "Verwerfen",
+      "pickPhoto": "Foto wählen",
+      "privacy": "Das Foto dient nur der Kalorienschätzung und wird nicht gespeichert.",
+      "errors": {
+        "unavailable": "Essensscan ist noch nicht verbunden.",
+        "proRequired": "Essensscan ist in Pro enthalten.",
+        "notRecognized": "Gericht nicht erkannt. Nimm ein näheres, schärferes Foto.",
+        "failed": "Foto konnte nicht gelesen werden. Bitte erneut versuchen.",
+        "tooLarge": "Das Foto ist zu groß. Nimm eine nähere Aufnahme.",
+        "badType": "Bitte ein JPEG-, PNG- oder WebP-Foto verwenden.",
+        "invalid": "Wähle zuerst ein Foto der Mahlzeit."
+      }
     }
   },
   "dashboard": {
@@ -1169,7 +1191,7 @@
   "privacy": {
     "eyebrow": "Rechtliches",
     "title": "Datenschutzerklärung",
-    "updated": "Aktualisiert: 30 September 2026",
+    "updated": "Aktualisiert: 4 October 2026",
     "intro": "Diese Erklärung beschreibt, welche Daten Mindkeep erhebt, warum wir sie benötigen und wie wir sie schützen. Mit der Nutzung des Dienstes stimmen Sie den nachfolgend beschriebenen Praktiken zu.",
     "contactLabel": "Fragen zu Daten:",
     "sections": [
@@ -1185,7 +1207,8 @@
         "body": [
           "Kontodaten: Name, E-Mail und ein gehashtes Passwort bei der Registrierung.",
           "Lerninhalte: Materialien, Kategorien, Lerndaten und Wiederholungsstatus.",
-          "Technische Daten: Zeitzone, Oberflächensprache sowie grundlegende Serverprotokolle für Sicherheit und Zuverlässigkeit."
+          "Technische Daten: Zeitzone, Oberflächensprache sowie grundlegende Serverprotokolle für Sicherheit und Zuverlässigkeit.",
+          "Wenn du den Essensscan auf der mobilen Website nutzt, wird das Foto nur zur Schätzung von Name und Kalorien verarbeitet und nicht auf unseren Servern gespeichert."
         ]
       },
       {
@@ -1209,7 +1232,8 @@
         "body": [
           "Wir verkaufen keine personenbezogenen Daten.",
           "Hosting- und Datenbankanbieter dürfen Daten nur verarbeiten, um Mindkeep im Auftrag des Betreibers zu betreiben.",
-          "Wenn du ein Abo abschließt, verarbeitet Stripe die Zahlung und erhält E-Mail- und Rechnungsdaten, die für die Kartenzahlung nötig sind."
+          "Wenn du ein Abo abschließt, verarbeitet Stripe die Zahlung und erhält E-Mail- und Rechnungsdaten, die für die Kartenzahlung nötig sind.",
+          "Wenn du eine Mahlzeit auf der mobilen Website scannst, geht das Foto nur zur Kalorienschätzung an Google Gemini und wird danach verworfen. Wir speichern das Foto nicht."
         ]
       },
       {

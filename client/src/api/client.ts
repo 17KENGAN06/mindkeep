@@ -16,14 +16,17 @@ export class ApiError extends Error {
   }
 }
 
-type RequestOptions = Omit<RequestInit, 'body'> & {
+type RequestOptions = Omit<RequestInit, 'body' | 'headers'> & {
   body?: unknown;
+  headers?: HeadersInit;
+  timeoutMs?: number;
 };
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const headers = new Headers(options.headers);
+  const { body, timeoutMs, signal, headers: headerInit, ...rest } = options;
+  const headers = new Headers(headerInit);
 
-  if (options.body !== undefined && !headers.has('Content-Type')) {
+  if (body !== undefined && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
   }
 
@@ -32,19 +35,19 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   headers.set('X-App-Language', i18n.resolvedLanguage ?? i18n.language ?? 'en');
 
   const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 12_000);
-  if (options.signal) {
-    options.signal.addEventListener('abort', () => controller.abort(), { once: true });
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs ?? 12_000);
+  if (signal) {
+    signal.addEventListener('abort', () => controller.abort(), { once: true });
   }
 
   let response: Response;
   try {
     response = await fetch(`${env.apiUrl}${path}`, {
-      ...options,
+      ...rest,
       headers,
       credentials: 'include',
       signal: controller.signal,
-      body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
@@ -78,7 +81,8 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
 export const apiClient = {
   get: <T>(path: string) => request<T>(path),
-  post: <T>(path: string, body?: unknown) => request<T>(path, { method: 'POST', body }),
+  post: <T>(path: string, body?: unknown, extra?: { timeoutMs?: number }) =>
+    request<T>(path, { method: 'POST', body, timeoutMs: extra?.timeoutMs }),
   put: <T>(path: string, body?: unknown) => request<T>(path, { method: 'PUT', body }),
   patch: <T>(path: string, body?: unknown) => request<T>(path, { method: 'PATCH', body }),
   delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),

@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
+import { FoodScanMeal } from '@/features/nutrition/FoodScanMeal';
 import {
   useCreateMeal,
   useDeleteMeal,
@@ -319,6 +320,9 @@ export function CaloriesPage() {
 
             <div>
               <h4 className="text-sm font-semibold text-ink">{t('calories.addMeal')}</h4>
+              <div className="mt-3">
+                <FoodScanMeal date={selectedDate} />
+              </div>
               <form
                 className="mt-3 grid gap-3 sm:grid-cols-[1fr_140px_auto]"
                 onSubmit={(event) => void onAddMeal(event)}

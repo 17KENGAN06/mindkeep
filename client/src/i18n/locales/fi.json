@@ -803,6 +803,28 @@
       "weight": "Anna paino väliltä 20–400 kg",
       "weightGoal": "Tavoitepainon tulee olla 20–400 kg",
       "unavailable": "Ravinto-API ei ole vielä käytössä. API pitää deployata kalori-, vesi- ja painotauluilla."
+    },
+    "scan": {
+      "button": "Skannaa ruoka",
+      "hint": "Ota kuva annoksesta. Tarkista tulos ja lisää vasta sitten.",
+      "proOnly": "Ruokaskannaus sisältyy Prohon.",
+      "upgrade": "Siirry Prohon",
+      "analyzing": "Luetaan kuvaa…",
+      "reviewTitle": "Tarkista ennen lisäämistä",
+      "reviewHint": "Jos arvio näyttää väärältä, muuta nimeä tai kaloreita.",
+      "add": "Lisää ateria",
+      "cancel": "Hylkää",
+      "pickPhoto": "Valitse kuva",
+      "privacy": "Kuvaa käytetään vain kaloriarvioon, eikä sitä tallenneta.",
+      "errors": {
+        "unavailable": "Ruokaskannausta ei ole vielä kytketty.",
+        "proRequired": "Ruokaskannaus sisältyy Prohon.",
+        "notRecognized": "Annosta ei tunnistettu. Kokeile lähempää ja terävämpää kuvaa.",
+        "failed": "Kuvaa ei voitu lukea. Yritä uudelleen.",
+        "tooLarge": "Kuva on liian suuri. Ota lähempi otos.",
+        "badType": "Käytä JPEG-, PNG- tai WebP-kuvaa.",
+        "invalid": "Valitse ensin kuva ateriasta."
+      }
     }
   },
   "dashboard": {
@@ -1169,7 +1191,7 @@
   "privacy": {
     "eyebrow": "Oikeudellinen",
     "title": "Tietosuojaseloste",
-    "updated": "Päivitetty: 30 September 2026",
+    "updated": "Päivitetty: 4 October 2026",
     "intro": "Tämä seloste kertoo, mitä tietoja Mindkeep kerää, miksi niitä tarvitaan ja miten suojaamme niitä. Käyttämällä palvelua hyväksyt alla kuvatut käytännöt.",
     "contactLabel": "Tietopyynnöt:",
     "sections": [
@@ -1185,7 +1207,8 @@
         "body": [
           "Tilin tiedot: nimi, sähköposti ja salasanan tiiviste rekisteröityessä.",
           "Oppimissisältö: materiaalit, kategoriat, oppimispäivämäärät ja kertauksen tilat.",
-          "Tekniset tiedot: aikavyöhyke, käyttöliittymän kieli sekä palvelimen peruslokit turvallisuutta ja vakautta varten."
+          "Tekniset tiedot: aikavyöhyke, käyttöliittymän kieli sekä palvelimen peruslokit turvallisuutta ja vakautta varten.",
+          "Jos käytät ruokaskannausta sivuston mobiiliversiossa, kuva käsitellään vain nimen ja kalorien arvioimiseksi eikä sitä tallenneta palvelimillemme."
         ]
       },
       {
@@ -1209,7 +1232,8 @@
         "body": [
           "Emme myy henkilötietoja.",
           "Hosting- ja tietokantapalvelut voivat käsitellä tietoja vain Mindkeepin ylläpitoa varten operaattorin sopimuksen mukaisesti.",
-          "Jos tilaat, Stripe käsittelee maksun ja saa sähköpostin sekä laskutustiedot, joita korttiveloitus vaatii."
+          "Jos tilaat, Stripe käsittelee maksun ja saa sähköpostin sekä laskutustiedot, joita korttiveloitus vaatii.",
+          "Jos skannaat aterian sivuston mobiiliversiossa, kuva lähetetään Google Geminille vain kaloriarviota varten ja hävitetään sen jälkeen. Emme tallenna kuvaa."
         ]
       },
       {

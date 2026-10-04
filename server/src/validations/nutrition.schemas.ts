@@ -46,9 +46,25 @@ export const upsertWeightSchema = z.object({
   kg: z.coerce.number().min(20).max(400),
 });
 
+const foodScanMimeType = z.enum(['image/jpeg', 'image/png', 'image/webp']);
+
+export const scanFoodSchema = z.object({
+  image: z
+    .string()
+    .min(80)
+    .max(900_000)
+    .transform((value) => {
+      const trimmed = value.trim();
+      const comma = trimmed.indexOf(',');
+      return trimmed.startsWith('data:') && comma !== -1 ? trimmed.slice(comma + 1) : trimmed;
+    }),
+  mimeType: foodScanMimeType,
+});
+
 export type NutritionPeriodQuery = z.infer<typeof nutritionPeriodQuerySchema>;
 export type UpdateNutritionSettingsInput = z.infer<typeof updateNutritionSettingsSchema>;
 export type CreateMealInput = z.infer<typeof createMealSchema>;
 export type UpdateMealInput = z.infer<typeof updateMealSchema>;
 export type UpsertWaterInput = z.infer<typeof upsertWaterSchema>;
 export type UpsertWeightInput = z.infer<typeof upsertWeightSchema>;
+export type ScanFoodInput = z.infer<typeof scanFoodSchema>;
