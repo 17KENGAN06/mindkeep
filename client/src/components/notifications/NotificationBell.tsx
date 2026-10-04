@@ -1,4 +1,4 @@
-import { Bell, Star } from 'lucide-react';
+import { Bell, Flag } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -167,7 +167,7 @@ export function NotificationBell() {
                         onClick={() => setOpen(false)}
                         className="flex items-center gap-2 truncate rounded-xl px-2.5 py-2 text-sm font-medium text-ink transition hover:bg-amber-50"
                       >
-                        <Star className="h-3.5 w-3.5 shrink-0 fill-current text-amber-500" aria-hidden />
+                        <Flag className="h-3.5 w-3.5 shrink-0 fill-current text-amber-500" aria-hidden />
                         <span className="truncate">{item.dailyTask?.title ?? item.message}</span>
                       </Link>
                     </li>

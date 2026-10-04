@@ -1,4 +1,4 @@
-﻿import { BookOpen, Check, CheckCircle2, GraduationCap, Repeat, Star } from 'lucide-react';
+﻿import { BookOpen, Check, CheckCircle2, Flag, GraduationCap, Repeat } from 'lucide-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -337,7 +337,7 @@ export function DashboardPage() {
               todayTasks.slice(0, 6).map((task) => (
                 <li
                   key={task.id}
-                  className={`flex items-start gap-3 rounded-2xl px-3 py-3 ring-1 transition ${
+                  className={`flex items-center gap-3 rounded-2xl px-3 py-3 ring-1 transition ${
                     task.completed
                       ? 'bg-emerald-500/10 ring-emerald-500/25'
                       : task.important
@@ -347,7 +347,7 @@ export function DashboardPage() {
                 >
                   <button
                     type="button"
-                    className={`mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition ${
+                    className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition ${
                       task.completed
                         ? 'border-brand-500 bg-brand-500 text-[#07110d]'
                         : 'border-line bg-transparent text-transparent hover:border-brand-400'
@@ -366,33 +366,35 @@ export function DashboardPage() {
                     >
                       {task.title}
                     </p>
-                    <div className="mt-1 flex flex-wrap items-center gap-2">
-                      {(task.splitCount ?? 1) > 1 ? (
-                        <span className="rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-500">
-                          {t('tasks.splitProgress', {
-                            done: task.splitDone ?? 0,
-                            count: task.splitCount,
-                          })}
-                        </span>
-                      ) : null}
-                      <span className="text-xs text-muted">
-                        {task.minutes} {t('tasks.minShort')}
+                    {(task.splitCount ?? 1) > 1 ? (
+                      <span className="mt-1 inline-flex rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-500">
+                        {t('tasks.splitProgress', {
+                          done: task.splitDone ?? 0,
+                          count: task.splitCount,
+                        })}
                       </span>
-                    </div>
+                    ) : null}
                   </div>
+                  <span
+                    className={`min-w-[3.25rem] shrink-0 text-right text-xs font-semibold whitespace-nowrap tabular-nums ${
+                      task.completed ? 'text-emerald-400' : task.important ? 'text-amber-700' : 'text-muted'
+                    }`}
+                  >
+                    {task.minutes} {t('tasks.minShort')}
+                  </span>
                   <button
                     type="button"
                     aria-pressed={Boolean(task.important)}
                     aria-label={task.important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
                     disabled={busyTaskId === task.id}
                     onClick={() => void onImportantTask(task)}
-                    className={`mt-0.5 inline-flex h-9 shrink-0 items-center justify-center gap-1 rounded-lg transition ${
+                    className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition ${
                       task.important
-                        ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 px-2 text-[#3a2a08] shadow-[0_0_14px_rgba(245,186,64,0.45)]'
-                        : 'w-9 text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600'
+                        ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_14px_rgba(245,186,64,0.45)]'
+                        : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600'
                     }`}
                   >
-                    <Star className={`h-3.5 w-3.5 ${task.important ? 'fill-current' : ''}`} aria-hidden />
+                    <Flag className={`h-3.5 w-3.5 ${task.important ? 'fill-current' : ''}`} aria-hidden />
                   </button>
                 </li>
               ))

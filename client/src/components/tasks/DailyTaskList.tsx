@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Split, Star, Trash2 } from 'lucide-react';
+import { Check, Flag, Split, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { DailyTask } from '@/types/dailyTask';
 
@@ -101,10 +101,10 @@ export function DailyTaskList({
                   : 'bg-panel ring-line'
             }`}
           >
-            <div className="flex items-start gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <button
                 type="button"
-                className={`mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
+                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                   task.completed
                     ? 'border-emerald-400 bg-emerald-500 text-[#07110d]'
                     : 'border-line bg-panel text-muted hover:border-brand-400 hover:text-brand-500'
@@ -117,48 +117,43 @@ export function DailyTaskList({
                 <Check className="h-5 w-5" aria-hidden />
               </button>
 
-              <div className="flex min-w-0 flex-1 flex-col gap-1">
-                <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                  <TaskTitle title={task.title} completed={task.completed} note={task.note} />
-                  <p
-                    className={`shrink-0 text-sm font-semibold sm:pt-0.5 sm:text-right ${
-                      task.completed ? 'text-emerald-400' : important ? 'text-amber-700' : 'text-brand-500'
-                    }`}
-                  >
-                    {formatMinutes(task.minutes, t)}
-                  </p>
-                </div>
+              <div className="min-w-0 flex-1">
+                <TaskTitle title={task.title} completed={task.completed} note={task.note} />
               </div>
 
-              <button
-                type="button"
-                aria-pressed={important}
-                aria-label={important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
-                disabled={busy}
-                onClick={() => onImportant(task)}
-                className={`mt-0.5 inline-flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
-                  important
-                    ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 px-2.5 text-[#3a2a08] shadow-[0_0_18px_rgba(245,186,64,0.5)] ring-1 ring-amber-200/90'
-                    : 'w-11 text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600 hover:ring-amber-300/70'
+              <p
+                className={`min-w-[6.5rem] shrink-0 text-right text-sm font-semibold leading-none whitespace-nowrap tabular-nums sm:w-[7.25rem] ${
+                  task.completed ? 'text-emerald-400' : important ? 'text-amber-700' : 'text-brand-500'
                 }`}
               >
-                <Star className={`h-4 w-4 ${important ? 'fill-current' : ''}`} aria-hidden />
-                {important ? (
-                  <span className="hidden text-xs font-bold tracking-wide sm:inline">
-                    {t('tasks.important')}
-                  </span>
-                ) : null}
-              </button>
+                {formatMinutes(task.minutes, t)}
+              </p>
 
-              <button
-                type="button"
-                className="mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
-                aria-label={t('common.delete')}
-                disabled={busy}
-                onClick={() => onDelete(task.id)}
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
+              <div className="flex shrink-0 items-center gap-1">
+                <button
+                  type="button"
+                  aria-pressed={important}
+                  aria-label={important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
+                  disabled={busy}
+                  onClick={() => onImportant(task)}
+                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                    important
+                      ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_16px_rgba(245,186,64,0.45)] ring-1 ring-amber-200/90'
+                      : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600 hover:ring-amber-300/70'
+                  }`}
+                >
+                  <Flag className={`h-4 w-4 ${important ? 'fill-current' : ''}`} aria-hidden />
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+                  aria-label={t('common.delete')}
+                  disabled={busy}
+                  onClick={() => onDelete(task.id)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
             {parts.split ? (

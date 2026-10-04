@@ -351,7 +351,7 @@ export function TasksScreen() {
                         ]}
                       >
                         <AppIcon
-                          name={task.important ? 'star' : 'star-outline'}
+                          name={task.important ? 'flag' : 'flag-outline'}
                           color={task.important ? '#3a2a08' : colors.muted}
                           size={18}
                         />
