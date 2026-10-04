@@ -48,7 +48,7 @@ export function DashboardLayout() {
         </Reveal>
 
         <div className="mt-auto pt-4">
-          <SiteFooter embedded />
+          <SiteFooter embedded compact />
         </div>
       </div>
     </div>

@@ -11,10 +11,10 @@ export function HomeFooter() {
         <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
           {t('home.sections.footer')}
         </p>
-        <h2 className="font-display mt-2 max-w-3xl text-2xl font-semibold tracking-tight text-ink sm:mt-3 sm:text-4xl xl:text-5xl">
+        <h2 className="font-display mt-2 max-w-3xl text-2xl font-semibold tracking-tight text-ink sm:mt-3 sm:text-4xl xl:text-[2.75rem] xl:leading-tight">
           {t('footer.tagline')}
         </h2>
-        <p className="mt-3 max-w-2xl text-sm text-muted sm:mt-4 sm:text-base xl:text-lg">
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:mt-4 sm:text-base">
           {t('footer.about')}
         </p>
       </SnapReveal>

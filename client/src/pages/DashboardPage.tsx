@@ -209,17 +209,11 @@ export function DashboardPage() {
 
   return (
     <div className="min-w-0 space-y-6">
-      <section className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div className="min-w-0 max-w-2xl">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-              {t('dashboard.welcome', { name: user?.name ?? '' })}
-            </h1>
-            <PlanChip user={user} />
-          </div>
-          <p className="mt-2 text-sm text-muted sm:text-base">{t('dashboard.tagline')}</p>
-        </div>
-        <p className="max-w-sm text-sm text-muted italic lg:text-right">{t('dashboard.quote')}</p>
+      <section className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+          {t('dashboard.welcome', { name: user?.name ?? '' })}
+        </h1>
+        <PlanChip user={user} />
       </section>
 
       {(showTasks || showReview || showHabits) && (

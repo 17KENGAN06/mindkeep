@@ -288,11 +288,11 @@
     }
   },
   "home": {
-    "title": "Tieni lo studio su un ritmo stabile.",
-    "subtitle": "Mindkeep raccoglie il giorno, lo studio e i soldi in un posto calmo — così i progressi non si sfarinano quando la vita accelera.",
+    "title": "Compiti, studio e budget — in un solo spazio.",
+    "subtitle": "Piano del giorno, ritorno su ciò che hai imparato a 3, 7 e 30 giorni, budget per ogni valuta. Dopo la registrazione scegli quali servizi usare.",
     "ctaRegister": "Inizia gratis",
     "ctaLogin": "Accedi",
-    "eyebrow": "Studio · Giorno · Equilibrio",
+    "eyebrow": "Compiti · Ripassi · Budget",
     "pillarsTitle": "Una base stabile per imparare",
     "pillarsSubtitle": "Non un altro mucchio di note. Un sistema quieto perché studio, giorno e soldi non vadano ciascuno per conto suo.",
     "pillars": {
@@ -405,14 +405,14 @@
     },
     "heroVisual": {
       "tasksTitle": "Oggi",
-      "tasksItem1": "Blocco di studio — 25 minuti",
-      "tasksItem2": "Chiudere la settimana senza code",
+      "tasksItem1": "Ripassare gli appunti — 25 min",
+      "tasksItem2": "Importante · nelle notifiche",
       "reviewTitle": "Studio",
-      "reviewQuestion": "Cosa di questa settimana deve restare?",
-      "reviewHint": "Torna prima di sbiadire",
-      "financeTitle": "Saldo",
-      "financeLabel": "Questo periodo",
-      "financeValue": "+€420"
+      "reviewQuestion": "Ritorno al giorno 3",
+      "reviewHint": "Poi 7 e 30",
+      "financeTitle": "Budget",
+      "financeLabel": "Contanti · EUR",
+      "financeValue": "€420"
     },
     "mobileNav": {
       "title": "Navigazione del sito",
@@ -424,43 +424,43 @@
       "close": "Chiudi",
       "closeFull": "Chiudi menu"
     },
-    "heroLead": "Un solo spazio: attività del giorno, ripassi 3·7·30 e budget in euro — senza saltare da un'app all'altra.",
+    "heroLead": "Uno spazio: compiti del giorno, ripassi 3·7·30 e budget per valuta — senza saltare tra app.",
     "heroBrowse": "Scorri le sezioni qui sotto",
     "services": {
-      "eyebrow": "Cosa ottieni",
-      "title": "Sei servizi, un spazio calmo",
-      "subtitle": "Compiti, studio, soldi, abitudini, note e corpo — insieme, così i progressi non si disperdono.",
+      "eyebrow": "Cosa c’è dentro",
+      "title": "Sei servizi. Accendi solo quelli che ti servono.",
+      "subtitle": "Gli altri non compaiono nel menu né nella panoramica. Puoi cambiarlo dopo in Impostazioni.",
       "items": {
         "tasks": {
           "title": "Compiti del giorno",
-          "text": "Pianifica oggi e il mese, spunta e vedi la settimana senza rumore in testa."
+          "text": "Elenco di oggi e del mese, con durata. «Importante» mette subito il compito nelle notifiche."
         },
         "learning": {
-          "title": "Studio e ritorno",
-          "text": "Salva ciò che conta e torna nel ritmo 3 · 7 · 30 — la conoscenza non deve svanire dopo una settimana piena."
+          "title": "Studio e ripassi",
+          "text": "Salva un materiale dopo lo studio — torna al giorno 3, 7 e 30. Senza voti, senza SM-2."
         },
         "finance": {
           "title": "Budget",
-          "text": "Entrate, uscite e un saldo di periodo chiaro, così i soldi non spariscono dietro lo studio."
+          "text": "Contanti o carta, poi la valuta. Ogni valuta da sola — senza conversioni."
         },
         "habits": {
           "title": "Abitudini",
-          "text": "Un ritmo mensile semplice da tenere — un segno al giorno, senza teatro di serie."
+          "text": "Un segno al giorno su una griglia di 30 giorni. I giorni saltati restano visibili."
         },
         "notes": {
           "title": "Note",
-          "text": "I pensieri accanto al lavoro, non in un’altra app che poi non apri."
+          "text": "Testo semplice accanto al lavoro — incolla dalla chat e lo ritrovi dopo."
         },
         "nutrition": {
-          "title": "Nutrizione e corpo",
-          "text": "Pasti, acqua e peso nello stesso spazio — abbastanza per essere onesti, senza un altro cruscotto."
+          "title": "Alimentazione e corpo",
+          "text": "Calorie dai pasti, acqua in bicchieri, peso nel giorno scelto."
         }
       }
     },
     "pricing": {
       "eyebrow": "Piani",
-      "title": "Inizia gratis. Pro quando serve più spazio.",
-      "subtitle": "Tutte le funzioni dal primo giorno. Free ha limiti di quantità calmi. Pro li toglie — l’annuale risparmia circa due mesi.",
+      "title": "Free ha limiti di quantità. Pro li toglie.",
+      "subtitle": "Tutte le funzioni sono aperte dal primo giorno. Il Pro annuale costa circa due mesi in meno rispetto al mensile.",
       "freePrice": "0 €",
       "freeHint": "Cosa include Free:",
       "yearHint": "circa due mesi in omaggio rispetto al pagamento mensile",
@@ -679,9 +679,9 @@
   },
   "auth": {
     "loginTitle": "Bentornato",
-    "loginSubtitle": "Accedi per continuare con attività, ripasso e finanze.",
+    "loginSubtitle": "Email e codice di accesso — oppure Google in un passo.",
     "registerTitle": "Crea il tuo account",
-    "registerSubtitle": "Uno spazio unico per pianificazione, memoria e budget.",
+    "registerSubtitle": "Poi un quiz breve: quali servizi lasciare nello spazio.",
     "name": "Nome",
     "email": "E-mail",
     "password": "Password",
@@ -838,7 +838,7 @@
   "dashboard": {
     "welcome": "Ciao, {{name}}",
     "subtitle": "Una panoramica unica di attività, ripassi e finanze — tutto ciò che conta oggi.",
-    "tagline": "Più della conoscenza. Più dei piani. Impara. Agisci. Cresci.",
+    "tagline": "Compiti, ripassi e numeri di oggi — in una schermata.",
     "quote": "« I piccoli passi di ogni giorno portano a grandi risultati. »",
     "timezone": "Fuso orario: {{timezone}}",
     "open": "Apri",
@@ -1095,7 +1095,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — un ritmo stabile per lo studio",
+      "home": "Mindkeep — compiti, ripassi 3·7·30 e budget",
       "login": "Accedi · Mindkeep",
       "register": "Inizia gratis · Mindkeep",
       "dashboard": "Panoramica · Mindkeep",
@@ -1132,8 +1132,8 @@
   },
   "footer": {
     "craftedLabel": "Proprietà di",
-    "tagline": "Dove lo studio resta stabile — e giorno e soldi restano in vista.",
-    "about": "Mindkeep unisce compiti quotidiani, studio che non sbiadisce e finanze personali — con calma, in un solo spazio.",
+    "tagline": "Uno spazio per compiti, ripassi 3·7·30 e budget.",
+    "about": "Dopo la registrazione scegli i servizi. Gli altri restano nascosti finché non li attivi in Impostazioni. Un account sul sito.",
     "linksLabel": "Naviga",
     "follow": "Su Instagram",
     "instagram": "Instagram",
@@ -1261,8 +1261,8 @@
   },
   "blog": {
     "eyebrow": "Diario",
-    "title": "Note su memoria e concentrazione",
-    "subtitle": "Tre temi che danno forma al modo in cui Mindkeep pensa l'apprendimento.",
+    "title": "Ripassi, focus e cosa tenere",
+    "subtitle": "Tre note brevi: perché 3·7·30, come Pomodoro aiuta a catturare e la regola 80/20.",
     "viewAll": "Apri il blog",
     "back": "Tutti gli articoli",
     "byAuthor": "Di {{author}}",

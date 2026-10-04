@@ -288,11 +288,11 @@
     }
   },
   "home": {
-    "title": "Pidä oppiminen tasaisessa rytmissä.",
-    "subtitle": "Mindkeep kokoaa päivän, opin ja rahan yhteen rauhalliseen paikkaan — jotta edistys ei murene, kun elämä kiihtyy.",
+    "title": "Tehtävät, opiskelu ja budjetti — yhdessä tilassa.",
+    "subtitle": "Päivän suunnitelma, paluu opittuun 3, 7 ja 30 päivän päästä, budjetti valuutoittain. Rekisteröinnin jälkeen valitset, mitä käytät.",
     "ctaRegister": "Aloita ilmaiseksi",
     "ctaLogin": "Kirjaudu",
-    "eyebrow": "Oppiminen · Päivä · Tasapaino",
+    "eyebrow": "Tehtävät · Kertaus · Budjetti",
     "pillarsTitle": "Vakaa perusta oppimiselle",
     "pillarsSubtitle": "Ei enää yhtä muistilappupinoa. Rauhallinen järjestelmä, jotta oppiminen, päivä ja raha eivät karkaa eri suuntiin.",
     "pillars": {
@@ -405,14 +405,14 @@
     },
     "heroVisual": {
       "tasksTitle": "Tänään",
-      "tasksItem1": "Opiskelujakso — 25 minuuttia",
-      "tasksItem2": "Sulje viikko ilman häntiä",
-      "reviewTitle": "Oppiminen",
-      "reviewQuestion": "Mikä tästä viikosta saa jäädä?",
-      "reviewHint": "Se palaa ennen kuin haalistuu",
-      "financeTitle": "Saldo",
-      "financeLabel": "Tämä jakso",
-      "financeValue": "+€420"
+      "tasksItem1": "Kertaa muistiinpanot — 25 min",
+      "tasksItem2": "Tärkeä · ilmoituksissa",
+      "reviewTitle": "Opiskelu",
+      "reviewQuestion": "Paluu päivänä 3",
+      "reviewHint": "Sitten 7 ja 30",
+      "financeTitle": "Budjetti",
+      "financeLabel": "Käteinen · EUR",
+      "financeValue": "€420"
     },
     "mobileNav": {
       "title": "Sivuston navigointi",
@@ -424,43 +424,43 @@
       "close": "Sulje",
       "closeFull": "Sulje valikko"
     },
-    "heroLead": "Yksi työpöytä: päivän tehtävät, 3·7·30-kertaukset ja eurobudjetti — ilman hyppelyä sovellusten välillä.",
+    "heroLead": "Yksi tila: päivän tehtävät, 3·7·30-kertaukset ja budjetti valuutoittain — ilman hyppelyä sovellusten välillä.",
     "heroBrowse": "Selaa osioita alla",
     "services": {
-      "eyebrow": "Mitä saat",
-      "title": "Kuusi palvelua, yksi rauhallinen tila",
-      "subtitle": "Tehtävät, oppiminen, raha, tavat, muistiinpanot ja keho — yhdessä, jotta edistys ei hajoa.",
+      "eyebrow": "Mitä sisällä on",
+      "title": "Kuusi palvelua. Kytket päälle vain tarvitsemasi.",
+      "subtitle": "Muut pysyvät poissa valikosta ja yleiskuvasta. Voit muuttaa tämän myöhemmin Asetuksissa.",
       "items": {
         "tasks": {
           "title": "Päivän tehtävät",
-          "text": "Suunnittele tänään ja kuukausi, merkitse valmista ja näe viikko ilman meteliä päässä."
+          "text": "Lista tälle päivälle ja kuukaudelle, kestolla. «Tärkeä» vie tehtävän heti ilmoituksiin."
         },
         "learning": {
-          "title": "Oppiminen ja paluu",
-          "text": "Tallenna tärkeä ja palaa rytmissä 3 · 7 · 30 — tiedon ei tarvitse kadota tiiviin viikon jälkeen."
+          "title": "Opiskelu ja kertaus",
+          "text": "Tallenna aineisto opiskelun jälkeen — paluu päivinä 3, 7 ja 30. Ei arvosanoja, ei SM-2:ta."
         },
         "finance": {
           "title": "Budjetti",
-          "text": "Tulot, menot ja selkeä jakson saldo, jotta raha ei katoa oppimisen taakse."
+          "text": "Käteinen tai kortti, sitten valuutta. Kukin valuutta erikseen — ilman muuntoa."
         },
         "habits": {
           "title": "Tavat",
-          "text": "Yksinkertainen kuukausirytmi, jota voi pitää — yksi merkintä päivässä, ilman putkiesitystä."
+          "text": "Yksi merkintä päivässä 30 päivän ruudukossa. Väliin jääneet päivät näkyvät."
         },
         "notes": {
           "title": "Muistiinpanot",
-          "text": "Ajatukset työn vieressä, ei toisessa sovelluksessa, jota et enää avaa."
+          "text": "Tavallinen teksti työn vieressä — liitä chatista ja löydä myöhemmin."
         },
         "nutrition": {
           "title": "Ravinto ja keho",
-          "text": "Ateriat, vesi ja paino samassa tilassa — tarpeeksi rehellisyyteen, ilman uutta kojittymispaneelia."
+          "text": "Kalorit aterioista, vesi laseina, paino valitulta päivältä."
         }
       }
     },
     "pricing": {
       "eyebrow": "Paketit",
-      "title": "Aloita ilmaiseksi. Pro, kun tarvitset lisää tilaa.",
-      "subtitle": "Kaikki ominaisuudet ensimmäisestä päivästä. Freessä on rauhalliset määrärajoitukset. Pro poistaa ne — vuosi säästää noin kaksi kuukautta.",
+      "title": "Free rajoittaa määrää. Pro poistaa rajat.",
+      "subtitle": "Kaikki toiminnot ovat auki ensimmäisestä päivästä. Vuosittainen Pro on noin kaksi kuukautta edullisempi kuin kuukausimaksu.",
       "freePrice": "0 €",
       "freeHint": "Free-pakettiin kuuluu:",
       "yearHint": "noin kaksi kuukautta kaupan päälle kuukausimaksuun verrattuna",
@@ -679,9 +679,9 @@
   },
   "auth": {
     "loginTitle": "Tervetuloa takaisin",
-    "loginSubtitle": "Kirjaudu jatkaaksesi tehtäviä, kertausta ja taloutta.",
+    "loginSubtitle": "Sähköposti ja kirjautumiskoodi — tai Google yhdellä askeleella.",
     "registerTitle": "Luo tili",
-    "registerSubtitle": "Yksi työtila suunnittelulle, muistille ja budjetille.",
+    "registerSubtitle": "Sitten lyhyt kysely: mitkä palvelut jäävät tilaan.",
     "name": "Nimi",
     "email": "Sähköposti",
     "password": "Salasana",
@@ -838,7 +838,7 @@
   "dashboard": {
     "welcome": "Hei, {{name}}",
     "subtitle": "Yhteenveto tehtävistä, kertauksista ja taloudesta — kaikki tärkeä yhdellä näytöllä.",
-    "tagline": "Enemmän kuin tietoa. Enemmän kuin suunnitelmia. Opiskele. Toimi. Kasva.",
+    "tagline": "Tämän päivän tehtävät, kertaukset ja luvut — yhdellä näytöllä.",
     "quote": "«Pienet askeleet joka päivä johtavat suuriin tuloksiin»",
     "timezone": "Aikavyöhyke: {{timezone}}",
     "open": "Avaa",
@@ -1095,7 +1095,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — tasainen rytmi oppimiselle",
+      "home": "Mindkeep — tehtävät, 3·7·30-kertaus ja budjetti",
       "login": "Kirjaudu · Mindkeep",
       "register": "Aloita · Mindkeep",
       "dashboard": "Yhteenveto · Mindkeep",
@@ -1132,8 +1132,8 @@
   },
   "footer": {
     "craftedLabel": "Omistaja",
-    "tagline": "Missä oppiminen pysyy vakaana — ja päivä ja raha näkyvissä.",
-    "about": "Mindkeep yhdistää päivän tehtävät, oppimisen joka ei haalistu, ja henkilökohtaisen talouden — rauhallisesti, yhdessä tilassa.",
+    "tagline": "Tila tehtäville, 3·7·30-kertaukselle ja budjetille.",
+    "about": "Rekisteröinnin jälkeen valitset palvelut. Muut pysyvät piilossa, kunnes kytket ne Asetuksissa. Yksi tili sivustolla.",
     "linksLabel": "Navigointi",
     "follow": "Instagramissa",
     "instagram": "Instagram",
@@ -1261,8 +1261,8 @@
   },
   "blog": {
     "eyebrow": "Päiväkirja",
-    "title": "Muistiinpanoja muistista & fokusesta",
-    "subtitle": "Kolme teemaa, jotka muovaavat Mindkeepin tapaa oppia.",
+    "title": "Kertaus, fokus ja mitä pitää",
+    "subtitle": "Kolme lyhyttä merkintää: miksi 3·7·30, miten Pomodoro auttaa tallentamaan, ja 80/20-sääntö.",
     "viewAll": "Avaa blogi",
     "back": "Kaikki artikkelit",
     "byAuthor": "Kirjoittaja: {{author}}",

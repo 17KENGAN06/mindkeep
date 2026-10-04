@@ -288,11 +288,11 @@
     }
   },
   "home": {
-    "title": "Ucz się w równym rytmie.",
-    "subtitle": "Mindkeep zbiera dzień, naukę i pieniądze w jednym spokojnym miejscu — żeby postęp nie osypywał się, gdy życie przyspiesza.",
+    "title": "Zadania, nauka i budżet — w jednym miejscu.",
+    "subtitle": "Plan dnia, powrót do materiału po 3, 7 i 30 dniach, budżet osobno dla każdej waluty. Po rejestracji wybierasz, z czego korzystasz.",
     "ctaRegister": "Zacznij za darmo",
     "ctaLogin": "Zaloguj się",
-    "eyebrow": "Nauka · Dzień · Balans",
+    "eyebrow": "Zadania · Powtórki · Budżet",
     "pillarsTitle": "Stabilna podstawa do nauki",
     "pillarsSubtitle": "Nie kolejny stos notatek. Spokojny system, by nauka, dzień i pieniądze nie rozjeżdżały się w różne strony.",
     "pillars": {
@@ -405,14 +405,14 @@
     },
     "heroVisual": {
       "tasksTitle": "Dziś",
-      "tasksItem1": "Blok nauki — 25 minut",
-      "tasksItem2": "Zamknąć tydzień bez ogonków",
+      "tasksItem1": "Powtórzyć notatki — 25 min",
+      "tasksItem2": "Ważne · w powiadomieniach",
       "reviewTitle": "Nauka",
-      "reviewQuestion": "Co z tego tygodnia ma zostać?",
-      "reviewHint": "Wróci, zanim wyblaknie",
-      "financeTitle": "Saldo",
-      "financeLabel": "Ten okres",
-      "financeValue": "+€420"
+      "reviewQuestion": "Powrót po 3 dniach",
+      "reviewHint": "Potem 7 i 30",
+      "financeTitle": "Budżet",
+      "financeLabel": "Gotówka · EUR",
+      "financeValue": "€420"
     },
     "mobileNav": {
       "title": "Nawigacja strony",
@@ -424,43 +424,43 @@
       "close": "Zamknij",
       "closeFull": "Zamknij menu"
     },
-    "heroLead": "Jedno miejsce: zadania dnia, powtórki 3·7·30 i budżet w euro — bez skakania między aplikacjami.",
+    "heroLead": "Jedno konto: zadania na dzień, powtórki 3·7·30 i budżet per waluta — bez skakania między aplikacjami.",
     "heroBrowse": "Przeglądaj sekcje poniżej",
     "services": {
-      "eyebrow": "Co dostajesz",
-      "title": "Sześć usług, jedno spokojne miejsce",
-      "subtitle": "Zadania, nauka, pieniądze, nawyki, notatki i ciało — razem, żeby postęp się nie rozjeżdżał.",
+      "eyebrow": "Co jest w środku",
+      "title": "Sześć usług. Włączasz tylko te, których potrzebujesz.",
+      "subtitle": "Pozostałe nie pojawiają się w menu ani w przeglądzie. Później zmienisz to w Ustawieniach.",
       "items": {
         "tasks": {
-          "title": "Zadania dnia",
-          "text": "Plan na dziś i na miesiąc, odhaczanie i jasny tydzień — bez hałasu w głowie."
+          "title": "Zadania na dzień",
+          "text": "Lista na dziś i na miesiąc, z czasem. Przycisk „Ważne” od razu wrzuca zadanie do powiadomień."
         },
         "learning": {
-          "title": "Nauka i powrót",
-          "text": "Zapisz to, co ważne, i wróć w rytmie 3 · 7 · 30 — wiedza nie musi znikać po intensywnym tygodniu."
+          "title": "Nauka i powtórki",
+          "text": "Zapisz materiał po nauce — wraca po 3, 7 i 30 dniach. Bez ocen i SM-2."
         },
         "finance": {
           "title": "Budżet",
-          "text": "Przychody, wydatki i czytelne saldo okresu, żeby pieniądze nie ginęły za nauką."
+          "text": "Gotówka albo karta, potem waluta. Każda waluta osobno — bez przeliczeń."
         },
         "habits": {
           "title": "Nawyki",
-          "text": "Prosty miesięczny rytm, który da się utrzymać — jedno odhaczenie dziennie, bez teatru serii."
+          "text": "Jedno odhaczenie dziennie na siatce 30 dni. Pominięte dni zostają widoczne."
         },
         "notes": {
           "title": "Notatki",
-          "text": "Myśli obok pracy, a nie w kolejnej aplikacji, której potem nie otwierasz."
+          "text": "Zwykły tekst obok pracy — wkleisz z czatu i znajdziesz później."
         },
         "nutrition": {
           "title": "Odżywianie i ciało",
-          "text": "Posiłki, woda i waga w tym samym gabinecie — dość, by być szczerym, bez kolejnego dashboardu."
+          "text": "Kalorie z posiłków, woda w szklankach, waga na wybrany dzień."
         }
       }
     },
     "pricing": {
       "eyebrow": "Plany",
-      "title": "Zacznij za darmo. Pro, gdy potrzebujesz więcej miejsca.",
-      "subtitle": "Wszystkie funkcje od pierwszego dnia. Free ma spokojne limity ilości. Pro je zdejmuje, a rok oszczędza około dwóch miesięcy.",
+      "title": "Free ma limity ilości. Pro je zdejmuje.",
+      "subtitle": "Wszystkie funkcje są otwarte od pierwszego dnia. Roczny Pro jest o ok. dwa miesiące tańszy niż płatność miesięczna.",
       "freePrice": "0 €",
       "freeHint": "Co obejmuje Free:",
       "yearHint": "około dwóch miesięcy w prezencie wobec płatności miesięcznej",
@@ -679,9 +679,9 @@
   },
   "auth": {
     "loginTitle": "Witamy z powrotem",
-    "loginSubtitle": "Zaloguj się, aby kontynuować zadania, powtórki i finanse.",
+    "loginSubtitle": "E-mail i kod logowania — albo Google w jednym kroku.",
     "registerTitle": "Utwórz konto",
-    "registerSubtitle": "Jedna przestrzeń na planowanie, pamięć i budżet.",
+    "registerSubtitle": "Potem krótki quiz: które usługi zostawić w przestrzeni.",
     "name": "Imię",
     "email": "E-mail",
     "password": "Hasło",
@@ -838,7 +838,7 @@
   "dashboard": {
     "welcome": "Cześć, {{name}}",
     "subtitle": "Jeden przegląd zadań, powtórek i finansów — wszystko, co ważne dzisiaj.",
-    "tagline": "Więcej niż wiedza. Więcej niż plany. Ucz się. Działaj. Rośnij.",
+    "tagline": "Zadania, powtórki i liczby na dziś — na jednym ekranie.",
     "quote": "„Małe kroki każdego dnia prowadzą do wielkich rezultatów.”",
     "timezone": "Strefa czasowa: {{timezone}}",
     "open": "Otwórz",
@@ -1095,7 +1095,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — stabilna podstawa do nauki",
+      "home": "Mindkeep — zadania, powtórki 3·7·30 i budżet",
       "login": "Zaloguj się · Mindkeep",
       "register": "Zacznij za darmo · Mindkeep",
       "dashboard": "Przegląd · Mindkeep",
@@ -1132,8 +1132,8 @@
   },
   "footer": {
     "craftedLabel": "Własność",
-    "tagline": "Gdzie nauka zostaje stabilna — a dzień i pieniądze w polu widzenia.",
-    "about": "Mindkeep łączy codzienne zadania, naukę, która nie blaknie, i finanse osobiste — spokojnie, w jednym miejscu.",
+    "tagline": "Przestrzeń na zadania, powtórki 3·7·30 i budżet.",
+    "about": "Po rejestracji wybierasz usługi. Reszta zostaje ukryta, aż włączysz ją w Ustawieniach. Jedno konto na stronie.",
     "linksLabel": "Nawigacja",
     "follow": "Na Instagramie",
     "instagram": "Instagram",
@@ -1261,8 +1261,8 @@
   },
   "blog": {
     "eyebrow": "Dziennik",
-    "title": "Notatki o pamięci i skupieniu",
-    "subtitle": "Trzy tematy, które kształtują to, jak Mindkeep myśli o nauce.",
+    "title": "Powtórki, skupienie i co zostawić",
+    "subtitle": "Trzy krótkie notatki: po co 3·7·30, jak Pomodoro pomaga zapisać i zasada 80/20.",
     "viewAll": "Otwórz bloga",
     "back": "Wszystkie artykuły",
     "byAuthor": "Autor: {{author}}",

@@ -479,7 +479,7 @@
     "deleteAccountTypeHint": "Kirjoita DELETE isoilla kirjaimilla."
   },
   "dashboard": {
-    "tagline": "Enemmän kuin tietoa. Enemmän kuin suunnitelmia. Opiskele. Toimi. Kasva.",
+    "tagline": "Tämän päivän tehtävät, kertaukset ja luvut — yhdellä näytöllä.",
     "cards": {
       "tasksToday": "Tehtävät tänään",
       "reviews": "Kertaukset",

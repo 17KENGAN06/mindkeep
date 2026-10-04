@@ -27,7 +27,7 @@ export function AuthLayout() {
       </div>
 
       <div className="mt-10 w-full sm:mt-14">
-        <SiteFooter />
+        <SiteFooter compact />
       </div>
     </div>
   );

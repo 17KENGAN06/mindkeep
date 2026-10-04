@@ -228,7 +228,6 @@ export function TodayScreen() {
                 </Text>
               </Pressable>
             </View>
-            <Text style={[styles.tagline, { color: colors.muted }]}>{t('dashboard.tagline')}</Text>
           </View>
         </View>
         {error ? <Text style={[styles.error, { color: colors.danger }]}>{t('today.error')}</Text> : null}
@@ -552,13 +551,12 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: { padding: 20, paddingBottom: 40, width: '100%' },
-  helloRow: { alignItems: 'flex-start', flexDirection: 'row', gap: 12, marginBottom: 4, maxWidth: '100%' },
+  helloRow: { alignItems: 'flex-start', flexDirection: 'row', gap: 12, marginBottom: 16, maxWidth: '100%' },
   helloCopy: { flex: 1, minWidth: 0 },
   helloTitleRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   hello: { fontSize: 28, fontWeight: '700' },
   planChip: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 5 },
   planChipText: { fontSize: 10, fontWeight: '800', letterSpacing: 1.2, textTransform: 'uppercase' },
-  tagline: { fontSize: 14, marginTop: 6, marginBottom: 16 },
   error: { marginBottom: 12 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 14, maxWidth: '100%' },
   progressCard: {

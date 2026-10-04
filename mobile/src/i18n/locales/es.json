@@ -479,7 +479,7 @@
     "deleteAccountTypeHint": "Escribe DELETE en mayúsculas."
   },
   "dashboard": {
-    "tagline": "Más que conocimiento. Más que planes. Aprende. Actúa. Crece.",
+    "tagline": "Tareas, repasos y cifras de hoy — en una sola pantalla.",
     "cards": {
       "tasksToday": "Tareas de hoy",
       "reviews": "Repasos",

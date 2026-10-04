@@ -288,11 +288,11 @@
     }
   },
   "home": {
-    "title": "Gardez lʼapprentissage sur un rythme stable.",
-    "subtitle": "Mindkeep rassemble le jour, les études et lʼargent dans un lieu calme — pour que le progrès ne sʼeffrite pas quand la vie accélère.",
+    "title": "Tâches, révisions et budget — dans un seul espace.",
+    "subtitle": "Plan du jour, retour sur l’appris à 3, 7 et 30 jours, budget par devise. Après l’inscription, vous choisissez les services à utiliser.",
     "ctaRegister": "Commencer gratuitement",
     "ctaLogin": "Connexion",
-    "eyebrow": "Études · Jour · Équilibre",
+    "eyebrow": "Tâches · Révisions · Budget",
     "pillarsTitle": "Une base stable pour apprendre",
     "pillarsSubtitle": "Pas une pile de notes de plus. Un système calme pour que études, jour et argent cessent de partir chacun de leur côté.",
     "pillars": {
@@ -404,15 +404,15 @@
       "finance": "Budget en euros — clair et calme"
     },
     "heroVisual": {
-      "tasksTitle": "Aujourdʼhui",
-      "tasksItem1": "Bloc dʼétude — 25 minutes",
-      "tasksItem2": "Clore la semaine sans restes",
-      "reviewTitle": "Études",
-      "reviewQuestion": "Que faut-il garder de cette semaine ?",
-      "reviewHint": "Ça revient avant de sʼeffacer",
-      "financeTitle": "Solde",
-      "financeLabel": "Cette période",
-      "financeValue": "+€420"
+      "tasksTitle": "Aujourd’hui",
+      "tasksItem1": "Relire les notes — 25 min",
+      "tasksItem2": "Important · dans les notifications",
+      "reviewTitle": "Apprentissage",
+      "reviewQuestion": "Retour au jour 3",
+      "reviewHint": "Puis 7 et 30",
+      "financeTitle": "Budget",
+      "financeLabel": "Espèces · EUR",
+      "financeValue": "€420"
     },
     "mobileNav": {
       "title": "Navigation du site",
@@ -424,43 +424,43 @@
       "close": "Fermer",
       "closeFull": "Fermer le menu"
     },
-    "heroLead": "Un seul espace : tâches du jour, révisions 3·7·30 et budget en euros — sans sauter d'une app à l'autre.",
+    "heroLead": "Un espace : tâches du jour, révisions 3·7·30 et budget par devise — sans sauter d’appli en appli.",
     "heroBrowse": "Parcourir les sections ci-dessous",
     "services": {
-      "eyebrow": "Ce que vous avez",
-      "title": "Six services, un espace calme",
-      "subtitle": "Tâches, études, argent, habitudes, notes et corps — ensemble, pour que le progrès ne se disperse pas.",
+      "eyebrow": "Ce qu’il y a dedans",
+      "title": "Six services. Vous n’activez que ceux dont vous avez besoin.",
+      "subtitle": "Les autres n’apparaissent ni dans le menu ni dans l’aperçu. Vous pourrez changer plus tard dans Réglages.",
       "items": {
         "tasks": {
           "title": "Tâches du jour",
-          "text": "Planifiez aujourd’hui et le mois, cochez, et voyez la semaine sans bruit dans la tête."
+          "text": "Liste du jour et du mois, avec durée. « Important » envoie la tâche tout de suite dans les notifications."
         },
         "learning": {
-          "title": "Études et retour",
-          "text": "Gardez l’essentiel et revenez au rythme 3 · 7 · 30 — le savoir n’a pas à disparaître après une semaine dense."
+          "title": "Apprentissage & révisions",
+          "text": "Enregistrez un matériel après le cours — retour aux jours 3, 7 et 30. Sans notes, sans SM-2."
         },
         "finance": {
           "title": "Budget",
-          "text": "Revenus, dépenses et un solde de période clair, pour que l’argent ne disparaisse pas derrière les études."
+          "text": "Espèces ou carte, puis la devise. Chaque devise à part — sans conversion."
         },
         "habits": {
           "title": "Habitudes",
-          "text": "Un rythme mensuel simple à tenir — une case par jour, sans théâtre de séries."
+          "text": "Une coche par jour sur une grille de 30 jours. Les jours manqués restent visibles."
         },
         "notes": {
           "title": "Notes",
-          "text": "Les pensées à côté du travail, pas dans une autre appli que vous n’ouvrirez plus."
+          "text": "Du texte simple à côté du travail — coller depuis le chat et retrouver plus tard."
         },
         "nutrition": {
-          "title": "Nutrition et corps",
-          "text": "Repas, eau et poids dans le même espace — assez pour rester honnête, sans un autre tableau de bord."
+          "title": "Nutrition & corps",
+          "text": "Calories des repas, eau en verres, poids le jour choisi."
         }
       }
     },
     "pricing": {
       "eyebrow": "Offres",
-      "title": "Commencez gratuitement. Pro quand il faut plus de place.",
-      "subtitle": "Toutes les fonctions dès le premier jour. Free a des plafonds calmes. Pro les lève — l’annuel économise environ deux mois.",
+      "title": "Free a des plafonds de quantité. Pro les enlève.",
+      "subtitle": "Toutes les fonctions sont ouvertes dès le premier jour. L’abonnement annuel revient à environ deux mois de moins que le mensuel.",
       "freePrice": "0 €",
       "freeHint": "Ce qu’inclut Free :",
       "yearHint": "environ deux mois offerts par rapport au paiement mensuel",
@@ -679,9 +679,9 @@
   },
   "auth": {
     "loginTitle": "Bon retour",
-    "loginSubtitle": "Connecte-toi pour poursuivre tes tâches, tes révisions et tes finances.",
+    "loginSubtitle": "E-mail et code de connexion — ou Google en une étape.",
     "registerTitle": "Crée ton compte",
-    "registerSubtitle": "Un seul espace pour la planification, la mémoire et le budget.",
+    "registerSubtitle": "Puis un court quiz : quels services garder dans l’espace.",
     "name": "Nom",
     "email": "E-mail",
     "password": "Mot de passe",
@@ -838,7 +838,7 @@
   "dashboard": {
     "welcome": "Bonjour, {{name}}",
     "subtitle": "Une vue unique des tâches, des révisions et des finances — tout ce qui compte aujourd'hui.",
-    "tagline": "Plus que du savoir. Plus que des plans. Apprendre. Agir. Grandir.",
+    "tagline": "Tâches, révisions et chiffres du jour — sur un seul écran.",
     "quote": "« Les petits pas de chaque jour mènent à de grands résultats. »",
     "timezone": "Fuseau horaire : {{timezone}}",
     "open": "Ouvrir",
@@ -1095,7 +1095,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — un rythme stable pour apprendre",
+      "home": "Mindkeep — tâches, révisions 3·7·30 et budget",
       "login": "Connexion · Mindkeep",
       "register": "Commencer gratuitement · Mindkeep",
       "dashboard": "Vue d'ensemble · Mindkeep",
@@ -1132,8 +1132,8 @@
   },
   "footer": {
     "craftedLabel": "Propriété de",
-    "tagline": "Là où lʼapprentissage reste stable — et le jour et lʼargent restent en vue.",
-    "about": "Mindkeep réunit les tâches du jour, un apprentissage qui ne sʼefface pas, et les finances perso — calmement, dans un seul espace.",
+    "tagline": "Un espace pour les tâches, les révisions 3·7·30 et le budget.",
+    "about": "Après l’inscription, vous choisissez les services. Les autres restent cachés jusqu’à ce que vous les activiez dans Réglages. Un compte sur le site.",
     "linksLabel": "Naviguer",
     "follow": "Sur Instagram",
     "instagram": "Instagram",
@@ -1261,8 +1261,8 @@
   },
   "blog": {
     "eyebrow": "Journal",
-    "title": "Notes sur la mémoire et l'attention",
-    "subtitle": "Trois thèmes qui façonnent la façon dont Mindkeep pense l'apprentissage.",
+    "title": "Révisions, focus et ce qu’il faut garder",
+    "subtitle": "Trois notes courtes : pourquoi 3·7·30, comment Pomodoro aide à capturer, et la règle 80/20.",
     "viewAll": "Ouvrir le blog",
     "back": "Tous les articles",
     "byAuthor": "Par {{author}}",

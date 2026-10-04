@@ -120,12 +120,12 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
                 {t('common.appName')}
               </p>
             </div>
-            {screen ? null : (
+            {tight ? null : (
               <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">{t('footer.tagline')}</p>
             )}
-            {!tight ? (
+            {tight ? null : (
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{t('footer.about')}</p>
-            ) : null}
+            )}
             <div className={`${screen ? 'mt-6' : 'mt-5'} flex flex-wrap gap-3`}>
               <SocialLink
                 href={INSTAGRAM_URL}
