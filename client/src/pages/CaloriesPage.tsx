@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Trash2 } from 'lucide-react';
 import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
 import { WaterGlasses } from '@/components/nutrition/WaterGlasses';
@@ -14,8 +13,9 @@ import { mutationErrorMessage, isProAccount } from '@/features/billing/planLimit
 import { PlanRemain } from '@/components/billing/PlanRemain';
 import { FoodScanMeal } from '@/features/nutrition/FoodScanMeal';
 import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
+import { MealRow } from '@/features/nutrition/MealRow';
 import { StepsCheck } from '@/features/nutrition/StepsCheck';
-import { isMealKind, type MealKind } from '@/features/nutrition/mealKinds';
+import { type MealKind } from '@/features/nutrition/mealKinds';
 import { useAuth } from '@/features/auth/useAuth';
 import {
   useCreateMeal,
@@ -46,6 +46,22 @@ function currentDefaults() {
     month: now.getMonth() + 1,
     date: toDateInputValue(),
   };
+}
+
+function stepsMonthWindow(year: number, month: number, todayKey: string) {
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const parts = todayKey.split('-');
+  const todayYear = Number(parts[0]);
+  const todayMonth = Number(parts[1]);
+  const todayDay = Number(parts[2]);
+  const pad = (value: number) => String(value).padStart(2, '0');
+  if (year < todayYear || (year === todayYear && month < todayMonth)) {
+    return { elapsed: daysInMonth, cutoff: `${year}-${pad(month)}-${pad(daysInMonth)}` };
+  }
+  if (year === todayYear && month === todayMonth && Number.isFinite(todayDay) && todayDay > 0) {
+    return { elapsed: todayDay, cutoff: todayKey };
+  }
+  return { elapsed: 0, cutoff: `${year}-${pad(month)}-00` };
 }
 
 export function CaloriesPage() {
@@ -127,9 +143,13 @@ export function CaloriesPage() {
   const glasses = water.find((row) => row.date === selectedDate)?.glasses ?? 0;
   const stepsGoal = settings.stepsGoal ?? 10000;
   const stepsDone = stepsDays.find((row) => row.date === selectedDate)?.done ?? false;
-  const daysInMonth = new Date(year, month, 0).getDate();
-  const stepsMonthDone = stepsDays.filter((row) => row.done).length;
-  const stepsMonthPercent = Math.min(100, Math.round((stepsMonthDone / Math.max(daysInMonth, 1)) * 100));
+  const todayKey = toDateInputValue();
+  const stepsWindow = stepsMonthWindow(year, month, todayKey);
+  const stepsMonthDone = stepsDays.filter((row) => row.done && row.date <= stepsWindow.cutoff).length;
+  const stepsMonthPercent =
+    stepsWindow.elapsed <= 0
+      ? 0
+      : Math.min(100, Math.round((stepsMonthDone / stepsWindow.elapsed) * 100));
   const dayWeight = weight.find((row) => row.date === selectedDate)?.kg ?? null;
   const overeating = eaten > settings.calorieGoal;
   const remaining = settings.calorieGoal - eaten;
@@ -408,43 +428,12 @@ export function CaloriesPage() {
                 </li>
               ) : (
                 dayMeals.map((meal) => (
-                  <li
+                  <MealRow
                     key={meal.id}
-                    className="flex items-start gap-2 rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line"
-                  >
-                    <div className="min-w-0 flex-1">
-                      {isMealKind(meal.kind) ? (
-                        <>
-                          <p className="text-sm font-semibold leading-snug text-ink [overflow-wrap:anywhere]">
-                            {t(`calories.kinds.${meal.kind}`)}
-                          </p>
-                          <p className="mt-0.5 text-xs leading-snug text-muted [overflow-wrap:anywhere]">
-                            {meal.title}
-                          </p>
-                        </>
-                      ) : (
-                        <p className="text-sm font-medium leading-snug text-ink [overflow-wrap:anywhere]">
-                          {meal.title}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex shrink-0 flex-col items-end gap-1">
-                      <span className="text-sm tabular-nums whitespace-nowrap text-muted">
-                        {meal.calories} {t('calories.kcal')}
-                      </span>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        className="!w-auto min-h-9 px-2 py-1.5 text-sm"
-                        disabled={busyId === meal.id || deleteMeal.isPending}
-                        aria-label={t('common.delete')}
-                        onClick={() => void onDeleteMeal(meal.id)}
-                      >
-                        <Trash2 className="h-4 w-4 sm:hidden" aria-hidden />
-                        <span className="hidden sm:inline">{t('common.delete')}</span>
-                      </Button>
-                    </div>
-                  </li>
+                    meal={meal}
+                    busy={busyId === meal.id || deleteMeal.isPending}
+                    onDelete={(id) => void onDeleteMeal(id)}
+                  />
                 ))
               )}
             </ul>
@@ -526,7 +515,7 @@ export function CaloriesPage() {
                 <div className="flex items-center justify-between gap-3 text-sm">
                   <span className="text-muted">{t('calories.stepsMonth')}</span>
                   <span className="font-semibold tabular-nums text-ink">
-                    {stepsMonthDone} / {daysInMonth}
+                    {stepsMonthDone} / {stepsWindow.elapsed}
                   </span>
                 </div>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/70">
