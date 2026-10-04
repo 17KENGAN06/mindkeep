@@ -200,7 +200,8 @@
     },
     "markImportant": "Marcar como muy importante",
     "unmarkImportant": "Quitar importancia",
-    "important": "Importante"
+    "important": "Importante",
+    "importantHint": "Aparece al momento en notificaciones"
   },
   "forest": {
     "title": "Tu bosque",

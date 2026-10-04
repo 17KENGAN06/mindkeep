@@ -265,7 +265,8 @@
     },
     "markImportant": "Marquer comme très importante",
     "unmarkImportant": "Retirer l’importance",
-    "important": "Important"
+    "important": "Important",
+    "importantHint": "Apparaît tout de suite dans les notifications"
   },
   "rhythm": {
     "title": "Habitudes",

@@ -200,7 +200,8 @@
     },
     "markImportant": "Merkitse erittäin tärkeäksi",
     "unmarkImportant": "Poista tärkeys",
-    "important": "Tärkeä"
+    "important": "Tärkeä",
+    "importantHint": "Näkyy heti ilmoituksissa"
   },
   "forest": {
     "title": "Metsäsi",

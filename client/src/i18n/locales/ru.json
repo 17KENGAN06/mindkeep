@@ -200,7 +200,8 @@
     },
     "markImportant": "Сделать очень важной",
     "unmarkImportant": "Снять важность",
-    "important": "Важно"
+    "important": "Важно",
+    "importantHint": "Сразу появится в уведомлениях"
   },
   "forest": {
     "title": "Ваш лес",

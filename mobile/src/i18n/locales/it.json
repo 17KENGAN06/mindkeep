@@ -265,7 +265,8 @@
     },
     "markImportant": "Segna come molto importante",
     "unmarkImportant": "Rimuovi importanza",
-    "important": "Importante"
+    "important": "Importante",
+    "importantHint": "Compare subito nelle notifiche"
   },
   "rhythm": {
     "title": "Abitudini",

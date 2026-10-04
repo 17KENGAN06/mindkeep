@@ -386,15 +386,19 @@ export function DashboardPage() {
                     type="button"
                     aria-pressed={Boolean(task.important)}
                     aria-label={task.important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
+                    title={t('tasks.importantHint')}
                     disabled={busyTaskId === task.id}
                     onClick={() => void onImportantTask(task)}
-                    className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition ${
+                    className={`inline-flex h-9 shrink-0 items-center justify-center gap-1 rounded-lg px-2 transition ${
                       task.important
                         ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_14px_rgba(245,186,64,0.45)]'
-                        : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600'
+                        : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-700'
                     }`}
                   >
                     <Flag className={`h-3.5 w-3.5 ${task.important ? 'fill-current' : ''}`} aria-hidden />
+                    <span className="text-[11px] font-bold tracking-wide whitespace-nowrap">
+                      {t('tasks.important')}
+                    </span>
                   </button>
                 </li>
               ))

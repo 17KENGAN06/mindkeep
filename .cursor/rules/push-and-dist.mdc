@@ -1,0 +1,18 @@
+---
+description: After product changes, commit, push, and rebuild Hostinger dist without waiting to be asked.
+alwaysApply: true
+---
+
+# Push and dist
+
+When a change is finished (UI, API, copy, or anything meant to go live), do not wait for «пуш» / «дист»:
+
+1. Commit the relevant files (no secrets, no empty commits).
+2. Push to `origin` on the current branch.
+3. Build the Hostinger dist:
+
+```
+$env:VITE_API_URL="https://api.mindkeep.cloud"; npm run build -w client; Copy-Item client/public/.htaccess client/dist/.htaccess
+```
+
+Leave Hostinger upload of `client/dist` to the user. Do not force-push. Skip this loop only for questions, plans, or work the user says not to ship.

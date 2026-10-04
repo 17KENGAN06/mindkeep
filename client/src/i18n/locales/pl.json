@@ -200,7 +200,8 @@
     },
     "markImportant": "Oznacz jako bardzo ważne",
     "unmarkImportant": "Usuń ważność",
-    "important": "Ważne"
+    "important": "Ważne",
+    "importantHint": "Od razu w powiadomieniach"
   },
   "forest": {
     "title": "Twój las",

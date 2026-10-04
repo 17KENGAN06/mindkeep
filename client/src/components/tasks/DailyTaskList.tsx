@@ -134,15 +134,19 @@ export function DailyTaskList({
                   type="button"
                   aria-pressed={important}
                   aria-label={important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
+                  title={t('tasks.importantHint')}
                   disabled={busy}
                   onClick={() => onImportant(task)}
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                  className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-xl px-2.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                     important
                       ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_16px_rgba(245,186,64,0.45)] ring-1 ring-amber-200/90'
-                      : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-600 hover:ring-amber-300/70'
+                      : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-700 hover:ring-amber-300/70'
                   }`}
                 >
-                  <Flag className={`h-4 w-4 ${important ? 'fill-current' : ''}`} aria-hidden />
+                  <Flag className={`h-4 w-4 shrink-0 ${important ? 'fill-current' : ''}`} aria-hidden />
+                  <span className="text-xs font-bold tracking-wide whitespace-nowrap">
+                    {t('tasks.important')}
+                  </span>
                 </button>
                 <button
                   type="button"

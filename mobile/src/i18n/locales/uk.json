@@ -265,7 +265,8 @@
     },
     "markImportant": "Зробити дуже важливим",
     "unmarkImportant": "Зняти важливість",
-    "important": "Важливо"
+    "important": "Важливо",
+    "importantHint": "Одразу з’явиться в сповіщеннях"
   },
   "rhythm": {
     "title": "Звички",

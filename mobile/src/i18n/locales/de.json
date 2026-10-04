@@ -265,7 +265,8 @@
     },
     "markImportant": "Als sehr wichtig markieren",
     "unmarkImportant": "Wichtigkeit entfernen",
-    "important": "Wichtig"
+    "important": "Wichtig",
+    "importantHint": "Sofort in den Benachrichtigungen"
   },
   "rhythm": {
     "title": "Gewohnheiten",

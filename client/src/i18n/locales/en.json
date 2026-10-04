@@ -200,7 +200,8 @@
     },
     "markImportant": "Mark as very important",
     "unmarkImportant": "Remove importance",
-    "important": "Important"
+    "important": "Important",
+    "importantHint": "Shows in notifications right away"
   },
   "forest": {
     "title": "Your Forest",

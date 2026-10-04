@@ -343,6 +343,7 @@ export function TasksScreen() {
                         accessibilityLabel={
                           task.important ? t('tasks.unmarkImportant') : t('tasks.markImportant')
                         }
+                        accessibilityHint={t('tasks.importantHint')}
                         style={[
                           styles.importantBtn,
                           task.important
@@ -353,8 +354,16 @@ export function TasksScreen() {
                         <AppIcon
                           name={task.important ? 'flag' : 'flag-outline'}
                           color={task.important ? '#3a2a08' : colors.muted}
-                          size={18}
+                          size={16}
                         />
+                        <Text
+                          style={[
+                            styles.importantLabel,
+                            { color: task.important ? '#3a2a08' : colors.muted },
+                          ]}
+                        >
+                          {t('tasks.important')}
+                        </Text>
                       </Pressable>
                       <AppButton
                         variant="ghost"
@@ -525,9 +534,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 12,
     borderWidth: 1,
+    flexDirection: 'row',
+    gap: 6,
     height: 36,
     justifyContent: 'center',
-    width: 36,
+    paddingHorizontal: 10,
+  },
+  importantLabel: {
+    fontSize: 12,
+    fontWeight: '700',
   },
   splitRow: {
     alignItems: 'center',
