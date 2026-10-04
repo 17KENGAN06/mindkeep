@@ -3,12 +3,7 @@ import { adminController } from '@/controllers/admin.controller.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { requireAdmin, requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
-import {
-  adminReviewIdSchema,
-  adminUserIdSchema,
-  moderateReviewSchema,
-  setBetaTesterSchema,
-} from '@/validations/admin.schemas.js';
+import { adminUserIdSchema, setBetaTesterSchema } from '@/validations/admin.schemas.js';
 
 export const adminRouter = Router();
 
@@ -45,18 +40,6 @@ adminRouter.get(
   '/users/:id',
   validate(adminUserIdSchema, 'params'),
   asyncHandler((req, res) => adminController.getUserActivity(req, res)),
-);
-
-adminRouter.get(
-  '/reviews',
-  asyncHandler((req, res) => adminController.listReviews(req, res)),
-);
-
-adminRouter.patch(
-  '/reviews/:id',
-  validate(adminReviewIdSchema, 'params'),
-  validate(moderateReviewSchema),
-  asyncHandler((req, res) => adminController.moderateReview(req, res)),
 );
 
 adminRouter.get(

@@ -5,7 +5,6 @@ import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';
 import { recordAdminAudit } from '@/services/audit.service.js';
 import { AppError } from '@/utils/AppError.js';
-import type { ModerateReviewInput } from '@/validations/admin.schemas.js';
 
 type ActivityModuleId = 'review' | 'tasks' | 'habits' | 'nutrition' | 'finance' | 'notes';
 
@@ -636,34 +635,6 @@ export class AdminService {
     });
 
     return updated;
-  }
-
-  async listReviews() {
-    return prisma.userReview.findMany({
-      include: {
-        user: { select: { name: true, email: true } },
-      },
-      orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
-    });
-  }
-
-  async moderateReview(id: string, input: ModerateReviewInput, actorUserId: string) {
-    const review = await prisma.userReview.update({
-      where: { id },
-      data: { status: input.status },
-      include: {
-        user: { select: { name: true, email: true } },
-      },
-    });
-
-    await recordAdminAudit({
-      action: input.status === 'APPROVED' ? 'REVIEW_APPROVED' : 'REVIEW_REJECTED',
-      actorUserId,
-      targetType: 'review',
-      targetId: id,
-    });
-
-    return review;
   }
 
   async listAuditEvents() {

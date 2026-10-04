@@ -14,7 +14,6 @@ import { noteRouter } from '@/routes/note.routes.js';
 import { nutritionRouter } from '@/routes/nutrition.routes.js';
 import { reminderRouter } from '@/routes/reminder.routes.js';
 import { rhythmRouter } from '@/routes/rhythm.routes.js';
-import { reviewRouter } from '@/routes/review.routes.js';
 import { statisticsRouter } from '@/routes/statistics.routes.js';
 
 export const apiRouter = Router();
@@ -32,7 +31,6 @@ apiRouter.use('/notes', noteRouter);
 apiRouter.use('/nutrition', nutritionRouter);
 apiRouter.use('/rhythm', rhythmRouter);
 apiRouter.use('/reminders', reminderRouter);
-apiRouter.use('/reviews', reviewRouter);
 apiRouter.use('/notifications', notificationRouter);
 apiRouter.use('/statistics', statisticsRouter);
 apiRouter.use('/internal/cron', cronRouter);

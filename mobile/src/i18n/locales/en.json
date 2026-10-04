@@ -680,15 +680,6 @@
     "usersTitle": "Users",
     "empty": "No users yet",
     "loadError": "Could not load admin data.",
-    "reviewsTitle": "Review moderation",
-    "reviewsEmpty": "No submitted reviews yet",
-    "approveReview": "Approve",
-    "rejectReview": "Reject",
-    "reviewStatus": {
-      "PENDING": "Awaiting review",
-      "APPROVED": "Published",
-      "REJECTED": "Rejected"
-    },
     "stats": {
       "users": "Users",
       "admins": "Admins",

@@ -680,15 +680,6 @@
     "usersTitle": "Käyttäjät",
     "empty": "Ei käyttäjiä vielä",
     "loadError": "Admin-tietojen lataus epäonnistui.",
-    "reviewsTitle": "Arvioiden moderointi",
-    "reviewsEmpty": "Lähetettyjä arvioita ei vielä ole",
-    "approveReview": "Hyväksy",
-    "rejectReview": "Hylkää",
-    "reviewStatus": {
-      "PENDING": "Odottaa tarkistusta",
-      "APPROVED": "Julkaistu",
-      "REJECTED": "Hylätty"
-    },
     "stats": {
       "users": "Käyttäjät",
       "admins": "Adminit",

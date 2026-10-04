@@ -47,12 +47,6 @@ enum PlanInterval {
   YEAR
 }
 
-enum UserReviewStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
-
 enum BudgetCurrency {
   UAH
   EUR
@@ -103,7 +97,6 @@ model User {
   materials          LearningMaterial[]
   reminders          ReviewReminder[]
   notifications      Notification[]
-  review             UserReview?
   budgetSettings     BudgetSettings?
   budgetCategories   BudgetCategory[]
   budgetOperations   BudgetOperation[]
@@ -147,8 +140,6 @@ enum AdminAuditAction {
   GOOGLE_LOGIN
   PASSWORD_CHANGED
   PASSWORD_RESET
-  REVIEW_APPROVED
-  REVIEW_REJECTED
   BETA_GRANTED
   BETA_REVOKED
 }
@@ -165,23 +156,6 @@ model AdminAuditEvent {
 
   @@index([createdAt])
   @@index([action, createdAt])
-}
-
-model UserReview {
-  id        String           @id @default(cuid())
-  rating    Int
-  text      String
-  location  String?
-  locale    String           @default("en")
-  status    UserReviewStatus @default(PENDING)
-  userId    String           @unique
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([status, createdAt])
-  @@index([status, locale, createdAt])
 }
 
 model Category {

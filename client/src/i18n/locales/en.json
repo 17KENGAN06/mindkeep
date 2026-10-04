@@ -364,26 +364,6 @@
       "note": "Store buttons are a preview. The web app is already live at mindkeep.cloud.",
       "readBlog": "Read learning notes"
     },
-    "testimonials": {
-      "eyebrow": "From people who tried it",
-      "title": "A calmer way to keep going",
-      "subtitle": "They wanted study, the day, and money in one place — without extra noise.",
-      "beta": "Beta testing participant",
-      "all": "All reviews",
-      "rating": "Rating: {{count}} out of 5",
-      "previous": "Previous reviews",
-      "next": "Next reviews",
-      "communityMember": "Mindkeep user",
-      "loginHint": "You can leave a review after completing 20 reviews.",
-      "progressHint": "You have completed {{count}} of {{required}} reviews. Keep using Mindkeep a little longer and the feedback form will unlock here.",
-      "pending": "Thank you! Your review was sent to the admin and is awaiting moderation.",
-      "approved": "Your review has been approved and published.",
-      "yourRating": "Rating",
-      "yourReview": "Your review",
-      "yourLocation": "City and country (optional)",
-      "submit": "Send for approval",
-      "submitError": "Could not submit your review. Please try again."
-    },
     "sections": {
       "hero": "Start",
       "pillars": "Foundation",
@@ -391,7 +371,6 @@
       "rhythm": "Steady return",
       "features": "Inside",
       "apps": "Apps",
-      "testimonials": "Reviews",
       "blog": "Blog",
       "cta": "Try it",
       "services": "Services",
@@ -570,8 +549,6 @@
     "usersTitle": "Users",
     "empty": "No users yet",
     "loadError": "Could not load admin data.",
-    "reviewsTitle": "Review moderation",
-    "reviewsEmpty": "No submitted reviews yet",
     "subscribersTitle": "Paid subscribers",
     "subscribersHint": "Accounts with an active Stripe subscription.",
     "subscribersEmpty": "No paid subscribers yet",
@@ -583,13 +560,6 @@
     "betaSelect": "User",
     "betaSelectPlaceholder": "Type a name or email",
     "betaSearchEmpty": "No matching users",
-    "approveReview": "Approve",
-    "rejectReview": "Reject",
-    "reviewStatus": {
-      "PENDING": "Awaiting review",
-      "APPROVED": "Published",
-      "REJECTED": "Rejected"
-    },
     "stats": {
       "users": "Users",
       "admins": "Admins",
@@ -673,8 +643,6 @@
       "GOOGLE_LOGIN": "Signed in with Google",
       "PASSWORD_CHANGED": "Changed password",
       "PASSWORD_RESET": "Reset password",
-      "REVIEW_APPROVED": "Approved a review",
-      "REVIEW_REJECTED": "Rejected a review",
       "BETA_GRANTED": "Granted beta access",
       "BETA_REVOKED": "Revoked beta access"
     }

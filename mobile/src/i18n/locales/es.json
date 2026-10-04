@@ -680,15 +680,6 @@
     "usersTitle": "Usuarios",
     "empty": "Aún no hay usuarios",
     "loadError": "No se pudieron cargar los datos de admin.",
-    "reviewsTitle": "Moderación de reseñas",
-    "reviewsEmpty": "Aún no hay reseñas enviadas",
-    "approveReview": "Aprobar",
-    "rejectReview": "Rechazar",
-    "reviewStatus": {
-      "PENDING": "En espera",
-      "APPROVED": "Publicada",
-      "REJECTED": "Rechazada"
-    },
     "stats": {
       "users": "Usuarios",
       "admins": "Admins",

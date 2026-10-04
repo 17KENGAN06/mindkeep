@@ -680,15 +680,6 @@
     "usersTitle": "Nutzer",
     "empty": "Noch keine Nutzer",
     "loadError": "Admindaten konnten nicht geladen werden.",
-    "reviewsTitle": "Bewertungsfreigabe",
-    "reviewsEmpty": "Noch keine eingereichten Bewertungen",
-    "approveReview": "Freigeben",
-    "rejectReview": "Ablehnen",
-    "reviewStatus": {
-      "PENDING": "Wartet auf Prüfung",
-      "APPROVED": "Veröffentlicht",
-      "REJECTED": "Abgelehnt"
-    },
     "stats": {
       "users": "Nutzer",
       "admins": "Admins",

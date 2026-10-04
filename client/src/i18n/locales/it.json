@@ -364,26 +364,6 @@
       "note": "I pulsanti degli store sono un'anteprima. L'app web è già attiva su mindkeep.cloud.",
       "readBlog": "Leggi le note di apprendimento"
     },
-    "testimonials": {
-      "eyebrow": "Chi lʼha già provato",
-      "title": "Continuare con più calma",
-      "subtitle": "Volevano tenere studio, giorno e soldi nello stesso posto — senza rumore extra.",
-      "beta": "Partecipante al test beta",
-      "all": "Tutte le recensioni",
-      "rating": "Valutazione: {{count}} su 5",
-      "previous": "Recensioni precedenti",
-      "next": "Recensioni successive",
-      "communityMember": "Utente Mindkeep",
-      "loginHint": "Potrai lasciare una recensione dopo aver completato 20 ripassi.",
-      "progressHint": "Hai completato {{count}} ripassi su {{required}}. Continua un po' con Mindkeep e il modulo si sbloccherà qui.",
-      "pending": "Grazie! La tua recensione è stata inviata all'admin e attende la moderazione.",
-      "approved": "La tua recensione è stata approvata e pubblicata.",
-      "yourRating": "Valutazione",
-      "yourReview": "La tua recensione",
-      "yourLocation": "Città e paese (facoltativo)",
-      "submit": "Invia per approvazione",
-      "submitError": "Impossibile inviare la recensione. Riprova."
-    },
     "sections": {
       "hero": "Inizio",
       "pillars": "Base",
@@ -391,7 +371,6 @@
       "rhythm": "Ritorno fermo",
       "features": "Dentro",
       "apps": "App",
-      "testimonials": "Recensioni",
       "blog": "Blog",
       "cta": "Provalo",
       "services": "Servizi",
@@ -570,8 +549,6 @@
     "usersTitle": "Utenti",
     "empty": "Nessun utente per ora",
     "loadError": "Impossibile caricare i dati admin.",
-    "reviewsTitle": "Moderazione recensioni",
-    "reviewsEmpty": "Nessuna recensione inviata per ora",
     "subscribersTitle": "Abbonati a pagamento",
     "subscribersHint": "Account con abbonamento Stripe attivo.",
     "subscribersEmpty": "Nessun abbonato a pagamento per ora",
@@ -583,13 +560,6 @@
     "betaSelect": "Utente",
     "betaSelectPlaceholder": "Nome o email",
     "betaSearchEmpty": "Nessun risultato",
-    "approveReview": "Approva",
-    "rejectReview": "Rifiuta",
-    "reviewStatus": {
-      "PENDING": "In attesa di revisione",
-      "APPROVED": "Pubblicata",
-      "REJECTED": "Rifiutata"
-    },
     "stats": {
       "users": "Utenti",
       "admins": "Admin",
@@ -673,8 +643,6 @@
       "GOOGLE_LOGIN": "Accesso con Google",
       "PASSWORD_CHANGED": "Password modificata",
       "PASSWORD_RESET": "Password reimpostata",
-      "REVIEW_APPROVED": "Recensione approvata",
-      "REVIEW_REJECTED": "Recensione rifiutata",
       "BETA_GRANTED": "Accesso beta concesso",
       "BETA_REVOKED": "Accesso beta revocato"
     }

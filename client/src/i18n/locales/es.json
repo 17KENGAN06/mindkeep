@@ -364,26 +364,6 @@
       "note": "Los botones de las tiendas son una vista previa. La app web ya está en mindkeep.cloud.",
       "readBlog": "Leer notas de aprendizaje"
     },
-    "testimonials": {
-      "eyebrow": "Quienes ya lo probaron",
-      "title": "Seguir con más calma",
-      "subtitle": "Querían tener estudio, día y dinero en un solo sitio — sin ruido extra.",
-      "beta": "Participante de la prueba beta",
-      "all": "Todas las reseñas",
-      "rating": "Valoración: {{count}} de 5",
-      "previous": "Reseñas anteriores",
-      "next": "Reseñas siguientes",
-      "communityMember": "Usuario de Mindkeep",
-      "loginHint": "Podrás dejar una reseña después de completar 20 repasos.",
-      "progressHint": "Has completado {{count}} de {{required}} repasos. Sigue usando Mindkeep un poco más y el formulario se desbloqueará aquí.",
-      "pending": "¡Gracias! Tu reseña se envió al admin y espera moderación.",
-      "approved": "Tu reseña ha sido aprobada y publicada.",
-      "yourRating": "Valoración",
-      "yourReview": "Tu reseña",
-      "yourLocation": "Ciudad y país (opcional)",
-      "submit": "Enviar para aprobación",
-      "submitError": "No se pudo enviar tu reseña. Inténtalo de nuevo."
-    },
     "sections": {
       "hero": "Inicio",
       "pillars": "Base",
@@ -391,7 +371,6 @@
       "rhythm": "Regreso firme",
       "features": "Dentro",
       "apps": "Apps",
-      "testimonials": "Reseñas",
       "blog": "Blog",
       "cta": "Probar",
       "services": "Servicios",
@@ -570,8 +549,6 @@
     "usersTitle": "Usuarios",
     "empty": "Aún no hay usuarios",
     "loadError": "No se pudieron cargar los datos de admin.",
-    "reviewsTitle": "Moderación de reseñas",
-    "reviewsEmpty": "Aún no hay reseñas enviadas",
     "subscribersTitle": "Suscriptores de pago",
     "subscribersHint": "Cuentas con una suscripción Stripe activa.",
     "subscribersEmpty": "Aún no hay suscriptores de pago",
@@ -583,13 +560,6 @@
     "betaSelect": "Usuario",
     "betaSelectPlaceholder": "Nombre o email",
     "betaSearchEmpty": "Sin resultados",
-    "approveReview": "Aprobar",
-    "rejectReview": "Rechazar",
-    "reviewStatus": {
-      "PENDING": "En espera",
-      "APPROVED": "Publicada",
-      "REJECTED": "Rechazada"
-    },
     "stats": {
       "users": "Usuarios",
       "admins": "Admins",
@@ -673,8 +643,6 @@
       "GOOGLE_LOGIN": "Inició sesión con Google",
       "PASSWORD_CHANGED": "Cambió la contraseña",
       "PASSWORD_RESET": "Restableció la contraseña",
-      "REVIEW_APPROVED": "Aprobó una reseña",
-      "REVIEW_REJECTED": "Rechazó una reseña",
       "BETA_GRANTED": "Concedió acceso beta",
       "BETA_REVOKED": "Retiró acceso beta"
     }

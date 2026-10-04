@@ -364,26 +364,6 @@
       "note": "Kauppapainikkeet ovat esikatselu. Verkkoversio on jo käytössä osoitteessa mindkeep.cloud.",
       "readBlog": "Lue oppimisesta"
     },
-    "testimonials": {
-      "eyebrow": "Ne jotka kokeilivat",
-      "title": "Jatkaa rauhallisemmin",
-      "subtitle": "He halusivat opin, päivän ja rahan samaan paikkaan — ilman ylimääräistä meteliä.",
-      "beta": "Betatestaukseen osallistunut",
-      "all": "Kaikki arviot",
-      "rating": "Arvosana: {{count}} / 5",
-      "previous": "Edelliset arviot",
-      "next": "Seuraavat arviot",
-      "communityMember": "Mindkeep-käyttäjä",
-      "loginHint": "Voit jättää arvion 20 suoritetun kertauksen jälkeen.",
-      "progressHint": "Olet suorittanut {{count}} / {{required}} kertausta. Käytä Mindkeepia vielä hieman, niin palautelomake avautuu tähän.",
-      "pending": "Kiitos! Arviosi lähetettiin ylläpitäjälle ja odottaa tarkistusta.",
-      "approved": "Arviosi on hyväksytty ja julkaistu.",
-      "yourRating": "Arvosana",
-      "yourReview": "Arviosi",
-      "yourLocation": "Kaupunki ja maa (valinnainen)",
-      "submit": "Lähetä tarkistettavaksi",
-      "submitError": "Arvion lähettäminen epäonnistui. Yritä uudelleen."
-    },
     "sections": {
       "hero": "Alku",
       "pillars": "Perusta",
@@ -391,7 +371,6 @@
       "rhythm": "Tasaiseen paluuseen",
       "features": "Sisällä",
       "apps": "Sovellukset",
-      "testimonials": "Arviot",
       "blog": "Blogi",
       "cta": "Kokeile",
       "services": "Palvelut",
@@ -570,8 +549,6 @@
     "usersTitle": "Käyttäjät",
     "empty": "Ei käyttäjiä vielä",
     "loadError": "Admin-tietojen lataus epäonnistui.",
-    "reviewsTitle": "Arvioiden moderointi",
-    "reviewsEmpty": "Lähetettyjä arvioita ei vielä ole",
     "subscribersTitle": "Maksavat tilaajat",
     "subscribersHint": "Tilit, joilla on aktiivinen Stripe-tilaus.",
     "subscribersEmpty": "Ei vielä maksavia tilaajia",
@@ -583,13 +560,6 @@
     "betaSelect": "Käyttäjä",
     "betaSelectPlaceholder": "Nimi tai sähköposti",
     "betaSearchEmpty": "Ei osumia",
-    "approveReview": "Hyväksy",
-    "rejectReview": "Hylkää",
-    "reviewStatus": {
-      "PENDING": "Odottaa tarkistusta",
-      "APPROVED": "Julkaistu",
-      "REJECTED": "Hylätty"
-    },
     "stats": {
       "users": "Käyttäjät",
       "admins": "Adminit",
@@ -673,8 +643,6 @@
       "GOOGLE_LOGIN": "Kirjautui Googlella",
       "PASSWORD_CHANGED": "Vaihtoi salasanan",
       "PASSWORD_RESET": "Nollasi salasanan",
-      "REVIEW_APPROVED": "Hyväksyi arvostelun",
-      "REVIEW_REJECTED": "Hylkäsi arvostelun",
       "BETA_GRANTED": "Antoi beta-oikeuden",
       "BETA_REVOKED": "Poisti beta-oikeuden"
     }

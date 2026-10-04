@@ -70,8 +70,6 @@ export type AdminAuditAction =
   | 'GOOGLE_LOGIN'
   | 'PASSWORD_CHANGED'
   | 'PASSWORD_RESET'
-  | 'REVIEW_APPROVED'
-  | 'REVIEW_REJECTED'
   | 'BETA_GRANTED'
   | 'BETA_REVOKED';
 

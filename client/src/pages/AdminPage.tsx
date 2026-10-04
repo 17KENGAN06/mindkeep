@@ -13,7 +13,6 @@ import type { AppLanguage } from '@/i18n';
 import { formatDate } from '@/utils/date';
 
 const BETA_SEARCH_LIMIT = 8;
-const HIDDEN_AUDIT_ACTIONS = new Set(['REVIEW_APPROVED', 'REVIEW_REJECTED']);
 
 export function AdminPage() {
   const { t, i18n } = useTranslation();
@@ -92,9 +91,7 @@ export function AdminPage() {
   const users = usersQuery.data ?? [];
   const subscribers = subscribersQuery.data ?? [];
   const testers = testersQuery.data ?? [];
-  const auditEvents = (auditQuery.data ?? []).filter(
-    (event) => !HIDDEN_AUDIT_ACTIONS.has(event.action),
-  );
+  const auditEvents = auditQuery.data ?? [];
   const betaMatches = matchBetaUsers(
     users.filter((item) => item.role !== 'ADMIN' && !item.betaTester),
     betaQuery,

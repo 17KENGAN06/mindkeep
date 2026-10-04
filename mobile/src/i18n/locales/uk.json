@@ -680,15 +680,6 @@
     "usersTitle": "Користувачі",
     "empty": "Користувачів ще немає",
     "loadError": "Не вдалося завантажити дані адмінки.",
-    "reviewsTitle": "Модерація відгуків",
-    "reviewsEmpty": "Надісланих відгуків ще немає",
-    "approveReview": "Схвалити",
-    "rejectReview": "Відхилити",
-    "reviewStatus": {
-      "PENDING": "Очікує перевірки",
-      "APPROVED": "Опубліковано",
-      "REJECTED": "Відхилено"
-    },
     "stats": {
       "users": "Користувачі",
       "admins": "Адміни",

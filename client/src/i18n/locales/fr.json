@@ -364,26 +364,6 @@
       "note": "Les boutons des stores sont un aperçu. L'app web est déjà en ligne sur mindkeep.cloud.",
       "readBlog": "Lire les notes d'apprentissage"
     },
-    "testimonials": {
-      "eyebrow": "Ceux qui ont essayé",
-      "title": "Continuer plus calmement",
-      "subtitle": "Ils voulaient garder études, jour et argent au même endroit — sans bruit en trop.",
-      "beta": "Participant au test bêta",
-      "all": "Tous les avis",
-      "rating": "Note : {{count}} sur 5",
-      "previous": "Avis précédents",
-      "next": "Avis suivants",
-      "communityMember": "Utilisateur Mindkeep",
-      "loginHint": "Tu pourras laisser un avis après 20 révisions terminées.",
-      "progressHint": "Tu as terminé {{count}} révisions sur {{required}}. Continue un peu avec Mindkeep et le formulaire s'ouvrira ici.",
-      "pending": "Merci ! Ton avis a été envoyé à l'admin et attend la modération.",
-      "approved": "Ton avis a été approuvé et publié.",
-      "yourRating": "Note",
-      "yourReview": "Ton avis",
-      "yourLocation": "Ville et pays (facultatif)",
-      "submit": "Envoyer pour validation",
-      "submitError": "Impossible d'envoyer ton avis. Réessaie."
-    },
     "sections": {
       "hero": "Début",
       "pillars": "Base",
@@ -391,7 +371,6 @@
       "rhythm": "Retour régulier",
       "features": "À l'intérieur",
       "apps": "Apps",
-      "testimonials": "Avis",
       "blog": "Blog",
       "cta": "Essayer",
       "services": "Services",
@@ -570,8 +549,6 @@
     "usersTitle": "Utilisateurs",
     "empty": "Aucun utilisateur pour l'instant",
     "loadError": "Impossible de charger les données admin.",
-    "reviewsTitle": "Modération des avis",
-    "reviewsEmpty": "Aucun avis soumis pour l'instant",
     "subscribersTitle": "Abonnés payants",
     "subscribersHint": "Comptes avec un abonnement Stripe actif.",
     "subscribersEmpty": "Pas encore d’abonnés payants",
@@ -583,13 +560,6 @@
     "betaSelect": "Utilisateur",
     "betaSelectPlaceholder": "Nom ou e-mail",
     "betaSearchEmpty": "Aucun résultat",
-    "approveReview": "Approuver",
-    "rejectReview": "Refuser",
-    "reviewStatus": {
-      "PENDING": "En attente",
-      "APPROVED": "Publié",
-      "REJECTED": "Refusé"
-    },
     "stats": {
       "users": "Utilisateurs",
       "admins": "Admins",
@@ -673,8 +643,6 @@
       "GOOGLE_LOGIN": "Connecté avec Google",
       "PASSWORD_CHANGED": "Mot de passe modifié",
       "PASSWORD_RESET": "Mot de passe réinitialisé",
-      "REVIEW_APPROVED": "Avis approuvé",
-      "REVIEW_REJECTED": "Avis refusé",
       "BETA_GRANTED": "Accès bêta accordé",
       "BETA_REVOKED": "Accès bêta retiré"
     }

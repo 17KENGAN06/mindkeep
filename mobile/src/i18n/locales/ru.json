@@ -680,15 +680,6 @@
     "usersTitle": "Пользователи",
     "empty": "Пользователей пока нет",
     "loadError": "Не удалось загрузить данные админки.",
-    "reviewsTitle": "Отзывы на модерации",
-    "reviewsEmpty": "Отзывов пока нет",
-    "approveReview": "Одобрить",
-    "rejectReview": "Отклонить",
-    "reviewStatus": {
-      "PENDING": "Ожидает проверки",
-      "APPROVED": "Опубликован",
-      "REJECTED": "Отклонён"
-    },
     "stats": {
       "users": "Пользователи",
       "admins": "Админы",

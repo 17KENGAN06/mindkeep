@@ -364,26 +364,6 @@
       "note": "Die Store-Buttons sind eine Vorschau. Die Web-App läuft bereits unter mindkeep.cloud.",
       "readBlog": "Lernnotizen lesen"
     },
-    "testimonials": {
-      "eyebrow": "Von Menschen, die es versucht haben",
-      "title": "Ruhiger weitermachen",
-      "subtitle": "Sie wollten Lernen, Tag und Geld an einem Ort — ohne Extra-Lärm.",
-      "beta": "Teilnehmerin / Teilnehmer am Betatest",
-      "all": "Alle Stimmen",
-      "rating": "Bewertung: {{count}} von 5",
-      "previous": "Vorherige Stimmen",
-      "next": "Nächste Stimmen",
-      "communityMember": "Mindkeep-Nutzer",
-      "loginHint": "Eine Bewertung kannst du nach 20 abgeschlossenen Wiederholungen hinterlassen.",
-      "progressHint": "Du hast {{count}} von {{required}} Wiederholungen abgeschlossen. Nutze Mindkeep noch etwas länger, dann erscheint hier das Feedback-Formular.",
-      "pending": "Danke! Deine Bewertung wurde an den Admin gesendet und wartet auf Freigabe.",
-      "approved": "Deine Bewertung wurde freigegeben und veröffentlicht.",
-      "yourRating": "Bewertung",
-      "yourReview": "Deine Stimme",
-      "yourLocation": "Stadt und Land (optional)",
-      "submit": "Zur Freigabe senden",
-      "submitError": "Die Bewertung konnte nicht gesendet werden. Bitte versuche es erneut."
-    },
     "sections": {
       "hero": "Start",
       "pillars": "Fundament",
@@ -391,7 +371,6 @@
       "rhythm": "Ruhige Rückkehr",
       "features": "Innen",
       "apps": "Apps",
-      "testimonials": "Stimmen",
       "blog": "Blog",
       "cta": "Ausprobieren",
       "services": "Leistungen",
@@ -570,8 +549,6 @@
     "usersTitle": "Nutzer",
     "empty": "Noch keine Nutzer",
     "loadError": "Admindaten konnten nicht geladen werden.",
-    "reviewsTitle": "Bewertungsfreigabe",
-    "reviewsEmpty": "Noch keine eingereichten Bewertungen",
     "subscribersTitle": "Zahlende Abonnenten",
     "subscribersHint": "Konten mit aktivem Stripe-Abo.",
     "subscribersEmpty": "Noch keine zahlenden Abonnenten",
@@ -583,13 +560,6 @@
     "betaSelect": "Nutzer",
     "betaSelectPlaceholder": "Name oder E-Mail",
     "betaSearchEmpty": "Keine Treffer",
-    "approveReview": "Freigeben",
-    "rejectReview": "Ablehnen",
-    "reviewStatus": {
-      "PENDING": "Wartet auf Prüfung",
-      "APPROVED": "Veröffentlicht",
-      "REJECTED": "Abgelehnt"
-    },
     "stats": {
       "users": "Nutzer",
       "admins": "Admins",
@@ -673,8 +643,6 @@
       "GOOGLE_LOGIN": "Mit Google angemeldet",
       "PASSWORD_CHANGED": "Passwort geändert",
       "PASSWORD_RESET": "Passwort zurückgesetzt",
-      "REVIEW_APPROVED": "Bewertung freigegeben",
-      "REVIEW_REJECTED": "Bewertung abgelehnt",
       "BETA_GRANTED": "Beta-Zugang vergeben",
       "BETA_REVOKED": "Beta-Zugang entzogen"
     }

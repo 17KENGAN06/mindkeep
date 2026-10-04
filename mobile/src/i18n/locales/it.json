@@ -680,15 +680,6 @@
     "usersTitle": "Utenti",
     "empty": "Nessun utente per ora",
     "loadError": "Impossibile caricare i dati admin.",
-    "reviewsTitle": "Moderazione recensioni",
-    "reviewsEmpty": "Nessuna recensione inviata per ora",
-    "approveReview": "Approva",
-    "rejectReview": "Rifiuta",
-    "reviewStatus": {
-      "PENDING": "In attesa di revisione",
-      "APPROVED": "Pubblicata",
-      "REJECTED": "Rifiutata"
-    },
     "stats": {
       "users": "Utenti",
       "admins": "Admin",

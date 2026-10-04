@@ -680,15 +680,6 @@
     "usersTitle": "Użytkownicy",
     "empty": "Nie ma jeszcze użytkowników",
     "loadError": "Nie udało się wczytać danych administratora.",
-    "reviewsTitle": "Moderacja opinii",
-    "reviewsEmpty": "Nie przesłano jeszcze żadnych opinii",
-    "approveReview": "Zatwierdź",
-    "rejectReview": "Odrzuć",
-    "reviewStatus": {
-      "PENDING": "Oczekuje na recenzję",
-      "APPROVED": "Opublikowana",
-      "REJECTED": "Odrzucona"
-    },
     "stats": {
       "users": "Użytkownicy",
       "admins": "Administratorzy",

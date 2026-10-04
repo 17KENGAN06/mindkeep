@@ -680,15 +680,6 @@
     "usersTitle": "Utilisateurs",
     "empty": "Aucun utilisateur pour l'instant",
     "loadError": "Impossible de charger les données admin.",
-    "reviewsTitle": "Modération des avis",
-    "reviewsEmpty": "Aucun avis soumis pour l'instant",
-    "approveReview": "Approuver",
-    "rejectReview": "Refuser",
-    "reviewStatus": {
-      "PENDING": "En attente",
-      "APPROVED": "Publié",
-      "REJECTED": "Refusé"
-    },
     "stats": {
       "users": "Utilisateurs",
       "admins": "Admins",

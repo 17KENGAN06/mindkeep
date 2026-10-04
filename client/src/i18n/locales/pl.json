@@ -364,26 +364,6 @@
       "note": "Przyciski sklepów to podgląd. Aplikacja webowa działa już na mindkeep.cloud.",
       "readBlog": "Czytaj notatki o nauce"
     },
-    "testimonials": {
-      "eyebrow": "Kto już spróbował",
-      "title": "Spokojniej iść dalej",
-      "subtitle": "Chcieli trzymać naukę, dzień i pieniądze w jednym miejscu — bez zbędnego hałasu.",
-      "beta": "Uczestnik testów beta",
-      "all": "Wszystkie opinie",
-      "rating": "Ocena: {{count}} na 5",
-      "previous": "Poprzednie opinie",
-      "next": "Następne opinie",
-      "communityMember": "Użytkownik Mindkeep",
-      "loginHint": "Opinię możesz zostawić po ukończeniu 20 powtórek.",
-      "progressHint": "Ukończyłeś {{count}} z {{required}} powtórek. Korzystaj z Mindkeep jeszcze chwilę, a formularz opinii odblokuje się tutaj.",
-      "pending": "Dziękujemy! Twoja opinia trafiła do administratora i czeka na moderację.",
-      "approved": "Twoja opinia została zatwierdzona i opublikowana.",
-      "yourRating": "Ocena",
-      "yourReview": "Twoja opinia",
-      "yourLocation": "Miasto i kraj (opcjonalnie)",
-      "submit": "Wyślij do zatwierdzenia",
-      "submitError": "Nie udało się wysłać opinii. Spróbuj ponownie."
-    },
     "sections": {
       "hero": "Start",
       "pillars": "Fundament",
@@ -391,7 +371,6 @@
       "rhythm": "Równy powrót",
       "features": "W środku",
       "apps": "Aplikacje",
-      "testimonials": "Opinie",
       "blog": "Blog",
       "cta": "Wypróbuj",
       "services": "Usługi",
@@ -570,8 +549,6 @@
     "usersTitle": "Użytkownicy",
     "empty": "Nie ma jeszcze użytkowników",
     "loadError": "Nie udało się wczytać danych administratora.",
-    "reviewsTitle": "Moderacja opinii",
-    "reviewsEmpty": "Nie przesłano jeszcze żadnych opinii",
     "subscribersTitle": "Płatni subskrybenci",
     "subscribersHint": "Konta z aktywną subskrypcją Stripe.",
     "subscribersEmpty": "Nie ma jeszcze płatnych subskrybentów",
@@ -583,13 +560,6 @@
     "betaSelect": "Użytkownik",
     "betaSelectPlaceholder": "Imię lub e-mail",
     "betaSearchEmpty": "Brak wyników",
-    "approveReview": "Zatwierdź",
-    "rejectReview": "Odrzuć",
-    "reviewStatus": {
-      "PENDING": "Oczekuje na recenzję",
-      "APPROVED": "Opublikowana",
-      "REJECTED": "Odrzucona"
-    },
     "stats": {
       "users": "Użytkownicy",
       "admins": "Administratorzy",
@@ -673,8 +643,6 @@
       "GOOGLE_LOGIN": "Zalogował się przez Google",
       "PASSWORD_CHANGED": "Zmienił hasło",
       "PASSWORD_RESET": "Zresetował hasło",
-      "REVIEW_APPROVED": "Zatwierdził opinię",
-      "REVIEW_REJECTED": "Odrzucił opinię",
       "BETA_GRANTED": "Przyznał dostęp beta",
       "BETA_REVOKED": "Odebrał dostęp beta"
     }

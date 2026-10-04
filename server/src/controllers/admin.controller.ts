@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { adminService } from '@/services/admin.service.js';
 import { AppError } from '@/utils/AppError.js';
-import type { ModerateReviewInput, SetBetaTesterInput } from '@/validations/admin.schemas.js';
+import type { SetBetaTesterInput } from '@/validations/admin.schemas.js';
 
 export class AdminController {
   async overview(_req: Request, res: Response): Promise<void> {
@@ -38,26 +38,6 @@ export class AdminController {
     const body = req.body as SetBetaTesterInput;
     const user = await adminService.setBetaTester(req.params.id as string, body.betaTester, req.user.id);
     res.json({ user });
-  }
-
-  async listReviews(_req: Request, res: Response): Promise<void> {
-    res.json({ reviews: await adminService.listReviews() });
-  }
-
-  async moderateReview(req: Request, res: Response): Promise<void> {
-    if (!req.user) {
-      throw new AppError('Authentication required', {
-        statusCode: 401,
-        code: 'UNAUTHORIZED',
-      });
-    }
-
-    const review = await adminService.moderateReview(
-      req.params.id as string,
-      req.body as ModerateReviewInput,
-      req.user.id,
-    );
-    res.json({ review });
   }
 
   async listAudit(_req: Request, res: Response): Promise<void> {
