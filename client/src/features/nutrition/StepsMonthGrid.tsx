@@ -7,10 +7,8 @@ type StepsMonthGridProps = {
   month: number;
   today: string;
   startedOn: string;
-  selectedDate: string;
   doneDates: ReadonlySet<string>;
   disabled?: boolean;
-  onSelectDate: (date: string) => void;
   onToggle: (date: string, done: boolean) => void;
 };
 
@@ -23,10 +21,8 @@ export function StepsMonthGrid({
   month,
   today,
   startedOn,
-  selectedDate,
   doneDates,
   disabled = false,
-  onSelectDate,
   onToggle,
 }: StepsMonthGridProps) {
   const { i18n } = useTranslation();
@@ -50,12 +46,10 @@ export function StepsMonthGrid({
           }
 
           const done = doneDates.has(cell.date);
-          const selected = cell.date === selectedDate;
           const todayCell = cell.date === today;
           const trackable = canTrackSteps(cell.date, startedOn, today);
           const className = [
             'inline-flex aspect-square max-h-8 min-w-0 w-full items-center justify-center rounded-lg text-[11px] font-semibold tabular-nums transition touch-manipulation',
-            selected ? 'ring-2 ring-brand-500 ring-offset-1 ring-offset-surface' : '',
             done
               ? 'bg-brand-500 text-[#07110d]'
               : todayCell && trackable
@@ -85,10 +79,7 @@ export function StepsMonthGrid({
               aria-current={todayCell ? 'date' : undefined}
               aria-label={String(cell.day)}
               className={className}
-              onClick={() => {
-                onSelectDate(cell.date);
-                onToggle(cell.date, !done);
-              }}
+              onClick={() => onToggle(cell.date, !done)}
             >
               {cell.day}
             </button>

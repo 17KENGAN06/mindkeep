@@ -517,10 +517,8 @@ export function CaloriesPage() {
                   month={month}
                   today={todayKey}
                   startedOn={joinKey}
-                  selectedDate={selectedDate}
                   doneDates={stepsDoneDates}
                   disabled={setSteps.isPending}
-                  onSelectDate={setSelectedDate}
                   onToggle={(date, done) => void onStepsChange(date, done)}
                 />
               </div>
