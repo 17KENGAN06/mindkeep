@@ -1317,7 +1317,7 @@
     },
     "billingTitle": "Maksut",
     "billingBody": "Peru milloin tahansa tilillä. Käyttämätöntä aikaa ei palauteta. Poikkeukset vain palautuskäytännön mukaan.",
-    "billingWarning": "Peruutus ei palauta rahaa. Palautus evätään paitsi todistetussa tuplaveloituksessa, maksussa ilman käyttöoikeutta tai sitovassa määräyksessä. Useimmat viestit suljetaan ilman palautusta.",
+    "billingWarning": "Uusimisen pysäytys ei palauta rahaa. 14 päivän ikkunaa ei ole. Käsittelemme vain todistetun tuplaveloituksen, maksun ilman korjattavaa käyttöoikeutta tai sitovan määräyksen. Useimmat viestit suljetaan ilman palautusta.",
     "billing": {
       "exceptionAck": "Olen lukenut tilaus- ja palautuskäytännön. Palautus on poikkeus, ei peruutuksesta seuraava oikeus.",
       "noUnusedRefundAck": "En pyydä käyttämättömiä päiviä takaisin peruutuksen tai paketin vaihdon jälkeen."
@@ -1662,7 +1662,9 @@
     "switchScheduled": "{{date}} alkaen",
     "undoSwitch": "Pidä nykyinen paketti",
     "billingNote": "Korttimaksu avautuu selaimessa. Sama paketti toimii sen jälkeen sivustolla ja sovelluksessa.",
-    "refundNote": "Pysäytä uusiminen tilillä. Käyttöoikeus maksettuun päivään. Käyttämätöntä aikaa ei palauteta."
+    "refundNote": "Seuraavan veloituksen voi pysäyttää tilillä. Käyttöoikeus maksettuun päivään. Käyttämättömiä päiviä ei palauteta, eikä 14 päivän rahat takaisin -ikkunaa ole.",
+    "immediateAck": "Pyydän Mindkeepiä avaamaan maksetun käyttöoikeuden heti, kun maksu onnistuu. Tämä on digitaalinen palvelu, joka toimitetaan heti. Käyttämättömiä päiviä ei palauteta.",
+    "immediateAckNeed": "Rastita ennen maksua."
   },
   "terms": {
     "eyebrow": "Lakitekstit",
@@ -1698,8 +1700,8 @@
         "title": "4. Paid plans",
         "body": [
           "Paid plans are sold as subscriptions through Stripe Checkout on the website. There is no trial.",
-          "Access to paid features starts as soon as payment succeeds.",
-          "A plan change takes effect after the current paid period ends. Cancel stops the next renewal only. Unused time is not refunded. Details are in the Subscription & Refund Policy."
+          "Maksettu käyttöoikeus avautuu heti onnistuneen maksun jälkeen. Maksamalla pyydät aloittamaan digitaalisen palvelun heti. Mindkeepillä ei ole 14 päivän rahat takaisin -ikkunaa.",
+          "Tason vaihto alkaa maksetun jakson jälkeen. Peruminen pysäyttää vain seuraavan veloituksen. Käyttämättömiä päiviä ei palauteta. Tiedot tilaus- ja palautuskäytännössä."
         ]
       },
       {
@@ -1778,70 +1780,70 @@
     ]
   },
   "refund": {
-    "eyebrow": "Lakitekstit",
+    "eyebrow": "Oikeudellinen",
     "title": "Tilaus ja palautukset",
     "updated": "Päivitetty: 5. lokakuuta 2026",
-    "intro": "Mindkeep on digitaalinen palvelu. Käyttöoikeus alkaa maksun onnistuttua. Sääntö: voit pysäyttää seuraavan uusimisen; jo maksettua aikaa ei palauteta.",
-    "contactLabel": "Poikkeuksellinen maksutarkistus:",
-    "requestCta": "Avaa poikkeuslomake",
+    "intro": "Mindkeep on digitaalinen työtila. Kun korttimaksu onnistuu, Plus tai Pro avautuu heti tilille. Se on toimitus. Seuraavan veloituksen voi pysäyttää. Jo maksettuja päiviä ei palauteta. 14 päivän «muutin mieleni» -ikkunaa ei ole.",
+    "contactLabel": "Poikkeuksellinen maksun tarkistus:",
+    "requestCta": "Avaa poikkeuksellinen lomake",
     "sections": [
       {
-        "title": "1. How billing works",
+        "title": "1. Mistä maksat",
         "body": [
-          "Plans are billed in euro through Stripe on the website. There is no free trial.",
-          "Monthly and yearly prices are shown on /plans. Yearly is charged once for the year; monthly is charged every month.",
-          "The same paid plan then works on the website and in the app."
+          "Maksu euroina sivustolla Stripen kautta. Kokeilujaksoa ei ole.",
+          "Kuukausi tai vuosi näkyy /plans-sivulla ennen maksua. Sama taso toimii sitten sivustolla ja sovelluksessa."
         ]
       },
       {
-        "title": "2. When paid access starts",
+        "title": "2. Käyttö heti — tämä ei ole kaupan palautus",
         "body": [
-          "Paid features are supplied immediately after a successful payment.",
-          "By paying you ask us to start the digital service at once. You acknowledge that this can exhaust the EU 14-day right of withdrawal for digital services supplied immediately (Consumer Rights Directive, Article 16(m)), where that right would otherwise apply."
+          "Kun maksu onnistuu, maksulliset ominaisuudet ovat tilillä. Silloin digitaalinen palvelu on toimitettu.",
+          "Maksamalla pyydät aloitusta nyt, et odotusajan jälkeen. Vahvistat sen /plans-sivulla ennen Stripe Checkoutia.",
+          "Mindkeep ei tarjoa 14 päivän rahapalautusta tilauksille. Peruuttamisoikeus, jonka laki antaa päättyä, kun olet pyytänyt välitöntä digitaalista käyttöä ja saanut sen, päättyy käyttöoikeuden avautuessa."
         ]
       },
       {
-        "title": "3. How to cancel",
+        "title": "3. Miten lopetat maksamisen",
         "body": [
-          "Cancel in Account → Stop renewal, or in the Stripe customer portal. Cancellation is always at the end of the current period.",
-          "You keep Plus or Pro until the date already paid. After that the account returns to Free caps.",
-          "Stopping renewal is not a refund. Stripe is not asked to return the last payment."
+          "Tilillä pysäytä uusiminen tai Stripe-portaali. Aina jo maksetun jakson lopussa.",
+          "Plus tai Pro säilyy siihen päivään, sitten Free-rajat.",
+          "Uusimisen pysäytys ei palauta viimeistä maksua."
         ]
       },
       {
-        "title": "4. No refund of unused time",
+        "title": "4. Käyttämättömät päivät eivät ole käteistä",
         "body": [
-          "We do not refund remaining days, unused features, a plan you barely used, forgetting to cancel, buying the wrong interval, or switching Plus ↔ Pro.",
-          "A scheduled plan change starts only after the current period. You keep what you paid for until that date. There is no credit and no partial chargeback through the product."
+          "Emme palauta jäljellä olevia päiviä, käyttämättömiä ominaisuuksia, unohtunutta perumista, väärää kuukautta/vuotta tai myöhempää Plus ↔ Pro -vaihtoa.",
+          "Ajastettu tason vaihto alkaa vasta nykyisen jakson jälkeen. Tuotteessa ei ole hyvitystä."
         ]
       },
       {
-        "title": "5. The only exceptional refunds",
+        "title": "5. Ainoat tapaukset, joita katsomme",
         "body": [
-          "We may refund, at our review, only if: (a) Stripe charged the same purchase twice; (b) payment succeeded but paid access never unlocked and we cannot repair it; or (c) a competent authority or binding consumer law requires it.",
-          "Change of mind, unused days, “I found a cheaper app”, and “I want money back in Stripe” are not exceptional cases. They are refused."
+          "Rahat voimme palauttaa tarkistuksen jälkeen vain, jos Stripe veloitti saman oston kahdesti, tai maksu meni läpi mutta käyttö ei auennut emmekä voi korjata sitä, tai tuomioistuin, viranomainen tai pakottava sääntö sitä vaatii sinun tapauksessasi.",
+          "Mielenmuutos, «en ehtinyt käyttää», halvempi sovellus ja «palauta Stripessä» hylätään."
         ]
       },
       {
-        "title": "6. How a review is requested (this is intentionally slow)",
+        "title": "6. Miten pyydät (tarkoituksella hitaasti, ilman nappia)",
         "body": [
-          "There is no refund button in Account, in the app, or in Stripe Checkout. We do not expose a customer refund API.",
-          "If you believe an exceptional case applies, open Contact, choose the billing topic, tick both acknowledgments, and write at least 400 characters with dates, the Stripe receipt email, and proof of the duplicate or missing access.",
-          "Incomplete, short, or “please refund unused days” messages are closed without a refund. We may take two weeks or longer. Most requests are refused. If we agree, we issue the refund ourselves through Stripe — you cannot self-serve it."
+          "Palautusnappia ei ole tilillä, sovelluksessa eikä Stripe Checkoutissa.",
+          "Yhteystiedot → laskutus, molemmat rastit, vähintään 400 merkkiä, päivämäärät, Stripen kuittisähköposti ja todiste tuplaveloituksesta tai puuttuvasta käytöstä.",
+          "Lyhyet «palauttakaa käyttämättömät päivät» suljetaan ilman palautusta. Käsittely voi kestää kaksi viikkoa. Useimmat ovat kieltoja."
         ]
       },
       {
-        "title": "7. Chargebacks",
+        "title": "7. Korttikiistat",
         "body": [
-          "If you open a card dispute while you still have access, we may pause or close the account and send Stripe evidence of the digital supply and this policy.",
-          "Use Account to stop renewal instead of a dispute unless there is a true unauthorised charge."
+          "Kiista, kun maksettu käyttö on vielä auki, voi keskeyttää tilin. Stripe saa todisteen digitaalisesta toimituksesta ja tämän käytännön.",
+          "Seuraava veloitus pysäytetään tilillä. Kiista on, jos maksu ei ollut sinun."
         ]
       },
       {
-        "title": "8. Consumers in the EU/EEA",
+        "title": "8. Jos ostat kuluttajana",
         "body": [
-          "Nothing in this policy takes away a consumer right you cannot legally waive.",
-          "Where the law still requires a withdrawal after digital supply has started, we will follow that law. That is not the same as a goodwill refund for unused subscription days."
+          "Emme vie kuluttajan oikeutta, josta ei voi luopua.",
+          "14 päivän rahapalautus ei ole myöskään osa tuotetta. Pyysit digitaalista palvelua heti, ja se alkoi. Jos maasi pakottava sääntö dokumentoidussa tapauksessa silti vaatii peruutuksen, noudatamme sitä tarkistuksen jälkeen — se ei ole käyttämättömien päivien palautus."
         ]
       }
     ]

@@ -27,6 +27,7 @@ export function PlansPage() {
   const [busy, setBusy] = useState<'plus' | 'pro' | 'portal' | 'clear' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [switchTarget, setSwitchTarget] = useState<PaidPlan | null>(null);
+  const [immediateAck, setImmediateAck] = useState(false);
 
   const statusQuery = useQuery({
     queryKey: ['billing', 'status'],
@@ -45,6 +46,10 @@ export function PlansPage() {
 
   const startCheckout = async (plan: PaidPlan) => {
     if (!isAuthenticated) return;
+    if (!immediateAck) {
+      setError(t('plans.immediateAckNeed'));
+      return;
+    }
     setError(null);
     setBusy(plan);
     try {
@@ -162,7 +167,7 @@ export function PlansPage() {
         type="button"
         className="w-full gap-2 sm:w-full"
         isLoading={busy === plan}
-        disabled={busy !== null}
+        disabled={busy !== null || !immediateAck}
         onClick={() => void startCheckout(plan)}
       >
         {interval === 'year' ? t('plans.ctaYear') : t('plans.ctaMonth')}
@@ -220,6 +225,18 @@ export function PlansPage() {
           <p className="mt-4 max-w-2xl rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">
             {t('billing.cancelScheduled')}
           </p>
+        ) : null}
+
+        {isAuthenticated && !subscribed ? (
+          <label className="mt-6 flex max-w-2xl cursor-pointer items-start gap-3 text-sm leading-relaxed text-ink">
+            <input
+              type="checkbox"
+              className="mt-1 h-4 w-4 shrink-0 accent-brand-500"
+              checked={immediateAck}
+              onChange={(event) => setImmediateAck(event.target.checked)}
+            />
+            <span>{t('plans.immediateAck')}</span>
+          </label>
         ) : null}
 
         <div className="mt-8">

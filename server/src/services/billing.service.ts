@@ -392,7 +392,8 @@ export async function createCheckoutSession(
     custom_text: {
       submit: {
         message:
-          'Access starts as soon as payment succeeds. Cancelling later does not refund unused time.',
+        message:
+          'Paid access opens as soon as payment succeeds. This is a digital service supplied at once. Unused days are not refunded. There is no 14-day money-back window.',
       },
     },
     subscription_data: {

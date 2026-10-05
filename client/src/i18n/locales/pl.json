@@ -1317,7 +1317,7 @@
     },
     "billingTitle": "Płatności",
     "billingBody": "Anuluj w dowolnym momencie w koncie. Niewykorzystany czas nie podlega zwrotowi. Wyjątki tylko według polityki.",
-    "billingWarning": "Anulowanie nie zwraca pieniędzy. Zwrot odrzucamy poza podwójnym obciążeniem, płatnością bez dostępu albo wiążącym nakazem. Większość wiadomości zamykamy bez zwrotu.",
+    "billingWarning": "Wyłączenie odnowienia nie zwraca pieniędzy. Nie ma 14-dniowego okna zwrotu. Rozpatrujemy tylko podwójne obciążenie, płatność bez dostępu którego nie da się naprawić albo wiążący nakaz. Większość wiadomości zamykamy bez zwrotu.",
     "billing": {
       "exceptionAck": "Przeczytałem(-am) politykę subskrypcji i zwrotów. Zwrot jest wyjątkiem, nie prawem wynikającym z anulowania.",
       "noUnusedRefundAck": "Nie proszę o zwrot niewykorzystanych dni po anulowaniu lub zmianie planu."
@@ -1662,7 +1662,9 @@
     "switchScheduled": "Od {{date}}",
     "undoSwitch": "Zostaw obecny plan",
     "billingNote": "Płatność kartą otwiera się w przeglądarce. Ten sam plan działa potem na stronie i w aplikacji.",
-    "refundNote": "Zatrzymaj odnawianie w koncie. Dostęp do opłaconej daty. Niewykorzystany czas nie jest zwracany."
+    "refundNote": "Następne pobranie możesz wyłączyć w koncie. Dostęp do opłaconej daty. Nieużytych dni nie zwracamy i nie prowadzimy 14-dniowego okna zwrotu pieniędzy.",
+    "immediateAck": "Proszę otworzyć płatny dostęp zaraz po płatności. To usługa cyfrowa świadczona od razu. Nieużyte dni nie są zwracane.",
+    "immediateAckNeed": "Zaznacz to przed płatnością."
   },
   "terms": {
     "eyebrow": "Informacje prawne",
@@ -1698,8 +1700,8 @@
         "title": "4. Paid plans",
         "body": [
           "Paid plans are sold as subscriptions through Stripe Checkout on the website. There is no trial.",
-          "Access to paid features starts as soon as payment succeeds.",
-          "A plan change takes effect after the current paid period ends. Cancel stops the next renewal only. Unused time is not refunded. Details are in the Subscription & Refund Policy."
+          "Płatny dostęp otwiera się zaraz po udanej płatności. Płacąc, prosisz o natychmiastowe rozpoczęcie usługi cyfrowej. Mindkeep nie prowadzi 14-dniowego okna zwrotu pieniędzy.",
+          "Zmiana planu po końcu opłaconego okresu. Anulowanie zatrzymuje tylko następne pobranie. Nieużyte dni nie wracają. Szczegóły w polityce subskrypcji i zwrotów."
         ]
       },
       {
@@ -1778,70 +1780,70 @@
     ]
   },
   "refund": {
-    "eyebrow": "Informacje prawne",
+    "eyebrow": "Prawo",
     "title": "Subskrypcja i zwroty",
     "updated": "Zaktualizowano: 5 października 2026",
-    "intro": "Mindkeep to usługa cyfrowa. Dostęp zaczyna się po płatności. Zasada: możesz zatrzymać kolejne odnowienie; nie zwracamy już opłaconego czasu.",
+    "intro": "Mindkeep to cyfrowa przestrzeń. Gdy płatność kartą przejdzie, Plus lub Pro otwiera się od razu na koncie. To jest świadczenie usługi. Następne pobranie możesz wyłączyć. Opłaconych dni nie zwracamy. Nie ma 14-dniowego okna „zmieniłem zdanie”.",
     "contactLabel": "Wyjątkowa weryfikacja płatności:",
     "requestCta": "Otwórz formularz wyjątkowy",
     "sections": [
       {
-        "title": "1. How billing works",
+        "title": "1. Za co płacisz",
         "body": [
-          "Plans are billed in euro through Stripe on the website. There is no free trial.",
-          "Monthly and yearly prices are shown on /plans. Yearly is charged once for the year; monthly is charged every month.",
-          "The same paid plan then works on the website and in the app."
+          "Płatność w euro na stronie przez Stripe. Nie ma okresu próbnego.",
+          "Miesiąc lub rok widać na /plans przed płatnością. Ten sam plan działa potem na stronie i w aplikacji."
         ]
       },
       {
-        "title": "2. When paid access starts",
+        "title": "2. Dostęp od razu — to nie zwrot ze sklepu",
         "body": [
-          "Paid features are supplied immediately after a successful payment.",
-          "By paying you ask us to start the digital service at once. You acknowledge that this can exhaust the EU 14-day right of withdrawal for digital services supplied immediately (Consumer Rights Directive, Article 16(m)), where that right would otherwise apply."
+          "Gdy płatność przejdzie, płatne funkcje są już na koncie. Wtedy usługa cyfrowa została świadczona.",
+          "Płacąc, prosisz o start teraz, nie po przerwie. Potwierdzasz to na /plans przed Stripe Checkout.",
+          "Mindkeep nie oferuje 14-dniowego zwrotu pieniędzy za subskrypcję. Prawo do odstąpienia, które ustawa pozwala wyczerpać po żądaniu natychmiastowego dostępu cyfrowego, kończy się z otwarciem dostępu."
         ]
       },
       {
-        "title": "3. How to cancel",
+        "title": "3. Jak przestać płacić",
         "body": [
-          "Cancel in Account → Stop renewal, or in the Stripe customer portal. Cancellation is always at the end of the current period.",
-          "You keep Plus or Pro until the date already paid. After that the account returns to Free caps.",
-          "Stopping renewal is not a refund. Stripe is not asked to return the last payment."
+          "W koncie wyłącz odnowienie albo portal Stripe. Zawsze na koniec już opłaconego okresu.",
+          "Plus lub Pro zostaje do tej daty, potem limity Free.",
+          "Wyłączenie odnowienia nie cofa ostatniej płatności."
         ]
       },
       {
-        "title": "4. No refund of unused time",
+        "title": "4. Nieużyte dni to nie gotówka",
         "body": [
-          "We do not refund remaining days, unused features, a plan you barely used, forgetting to cancel, buying the wrong interval, or switching Plus ↔ Pro.",
-          "A scheduled plan change starts only after the current period. You keep what you paid for until that date. There is no credit and no partial chargeback through the product."
+          "Nie zwracamy pozostałych dni, nieużytych funkcji, zapomnianego anulowania, złego miesiąca/roku ani późniejszej zmiany Plus ↔ Pro.",
+          "Zaplanowana zmiana planu startuje po bieżącym okresie. W produkcie nie ma kredytu."
         ]
       },
       {
-        "title": "5. The only exceptional refunds",
+        "title": "5. Jedyne sprawy, które oglądamy",
         "body": [
-          "We may refund, at our review, only if: (a) Stripe charged the same purchase twice; (b) payment succeeded but paid access never unlocked and we cannot repair it; or (c) a competent authority or binding consumer law requires it.",
-          "Change of mind, unused days, “I found a cheaper app”, and “I want money back in Stripe” are not exceptional cases. They are refused."
+          "Pieniądze możemy oddać po sprawdzeniu tylko przy podwójnym obciążeniu tego samego zakupu, płatności bez otwartego dostępu którego nie naprawimy, albo gdy sąd, regulator lub bezwzględny przepis i tak tego wymaga w twojej sprawie.",
+          "Zmiana zdania, „prawie nie używałem”, tańsza aplikacja i „zwrot w Stripe” są odrzucane."
         ]
       },
       {
-        "title": "6. How a review is requested (this is intentionally slow)",
+        "title": "6. Jak prosić (celowo wolno, bez przycisku)",
         "body": [
-          "There is no refund button in Account, in the app, or in Stripe Checkout. We do not expose a customer refund API.",
-          "If you believe an exceptional case applies, open Contact, choose the billing topic, tick both acknowledgments, and write at least 400 characters with dates, the Stripe receipt email, and proof of the duplicate or missing access.",
-          "Incomplete, short, or “please refund unused days” messages are closed without a refund. We may take two weeks or longer. Most requests are refused. If we agree, we issue the refund ourselves through Stripe — you cannot self-serve it."
+          "Nie ma przycisku zwrotu w koncie, aplikacji ani Stripe Checkout.",
+          "Kontakt → płatności, dwa potwierdzenia, co najmniej 400 znaków, daty, e-mail z potwierdzeniem Stripe i dowód podwójnego obciążenia albo braku dostępu.",
+          "Krótkie „oddajcie nieużyte dni” zamykamy bez zwrotu. Rozpatrzenie może trwać dwa tygodnie. Większość to odmowa."
         ]
       },
       {
-        "title": "7. Chargebacks",
+        "title": "7. Spory kartowe",
         "body": [
-          "If you open a card dispute while you still have access, we may pause or close the account and send Stripe evidence of the digital supply and this policy.",
-          "Use Account to stop renewal instead of a dispute unless there is a true unauthorised charge."
+          "Spór przy wciąż otwartym płatnym dostępie może wstrzymać konto. Stripe dostanie dowód świadczenia usługi cyfrowej i tę politykę.",
+          "Następne pobranie wyłącz w koncie. Spór — gdy płatność nie była twoja."
         ]
       },
       {
-        "title": "8. Consumers in the EU/EEA",
+        "title": "8. Gdy kupujesz jako konsument",
         "body": [
-          "Nothing in this policy takes away a consumer right you cannot legally waive.",
-          "Where the law still requires a withdrawal after digital supply has started, we will follow that law. That is not the same as a goodwill refund for unused subscription days."
+          "Nie zabieramy prawa konsumenta, którego nie można się zrzec.",
+          "14-dniowy zwrot pieniędzy nie jest też częścią produktu. Poprosiłeś o natychmiastową usługę cyfrową i ona się zaczęła. Jeśli bezwzględny przepis w twoim kraju w udokumentowanej sprawie i tak wymusi odstąpienie, wykonamy je po sprawdzeniu — to nie zwrot za nieużyte dni."
         ]
       }
     ]

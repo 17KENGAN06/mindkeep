@@ -1299,7 +1299,7 @@
       "bug": "I found a bug",
       "question": "I have a question"
     },
-    "billingWarning": "Cancelling a subscription does not return money. Refunds are refused except for a proven duplicate charge, a charge with no access, or a binding legal order. Most messages here are closed without a refund.",
+    "billingWarning": "Stopping renewal does not return money. We do not run a 14-day money-back window. A refund is only considered for a proven double charge, a charge with no access we cannot repair, or a binding legal order. Most messages here are closed without a refund.",
     "billing": {
       "exceptionAck": "I have read the Subscription & Refund Policy. I understand that a refund is exceptional, not a right that follows from cancelling.",
       "noUnusedRefundAck": "I am not asking to be paid back for unused days after I cancel or switch plans."
@@ -1435,8 +1435,8 @@
         "title": "4. Paid plans",
         "body": [
           "Paid plans are sold as subscriptions through Stripe Checkout on the website. There is no trial.",
-          "Access to paid features starts as soon as payment succeeds.",
-          "A plan change takes effect after the current paid period ends. Cancel stops the next renewal only. Unused time is not refunded. Details are in the Subscription & Refund Policy."
+          "Paid access opens as soon as payment succeeds. By paying you ask us to start a digital service at once. Mindkeep does not run a 14-day money-back window.",
+          "A plan change starts after the current paid period ends. Cancel only stops the next charge. Unused days are not paid back. Details are in the Subscription & Refund Policy."
         ]
       },
       {
@@ -1518,67 +1518,67 @@
     "eyebrow": "Legal",
     "title": "Subscription & Refund Policy",
     "updated": "Updated: 5 October 2026",
-    "intro": "Mindkeep is a digital service. Access starts as soon as payment succeeds. The default rule is simple: you can stop the next renewal; we do not return money for time you already paid for.",
+    "intro": "Mindkeep is a digital workspace. When the card payment succeeds, Plus or Pro opens on your account at once. That opening is the delivery. You can stop the next charge. We do not pay back days already paid, and we do not run a 14-day money-back window.",
     "contactLabel": "Exceptional billing review:",
     "requestCta": "Open the exceptional billing form",
     "sections": [
       {
-        "title": "1. How billing works",
+        "title": "1. What you pay for",
         "body": [
-          "Plans are billed in euro through Stripe on the website. There is no free trial.",
-          "Monthly and yearly prices are shown on /plans. Yearly is charged once for the year; monthly is charged every month.",
-          "The same paid plan then works on the website and in the app."
+          "You pay in euro on the website through Stripe. There is no trial and no “try then decide”.",
+          "Month or year is shown on /plans before you pay. The same plan then works on the website and in the app."
         ]
       },
       {
-        "title": "2. When paid access starts",
+        "title": "2. Access starts at once — this is not a shop return",
         "body": [
-          "Paid features are supplied immediately after a successful payment.",
-          "By paying you ask us to start the digital service at once. You acknowledge that this can exhaust the EU 14-day right of withdrawal for digital services supplied immediately (Consumer Rights Directive, Article 16(m)), where that right would otherwise apply."
+          "As soon as payment succeeds, paid features are on the account. That is when the digital service is supplied.",
+          "By paying you ask us to start now, not after a waiting period. You confirm that on /plans before Checkout opens.",
+          "Mindkeep does not offer, advertise, or process a 14-day money-back return for subscriptions. Cooling-off that the law allows to end once you asked for immediate digital access and then received it, ends when access opens."
         ]
       },
       {
-        "title": "3. How to cancel",
+        "title": "3. How to stop paying",
         "body": [
-          "Cancel in Account → Stop renewal, or in the Stripe customer portal. Cancellation is always at the end of the current period.",
-          "You keep Plus or Pro until the date already paid. After that the account returns to Free caps.",
-          "Stopping renewal is not a refund. Stripe is not asked to return the last payment."
+          "In Account, stop renewal — or use the Stripe customer portal. It always takes effect at the end of the period you already paid.",
+          "You keep Plus or Pro until that date. Then the account goes back to Free caps.",
+          "Stopping renewal does not send the last payment back. Stripe is not asked to reverse it."
         ]
       },
       {
-        "title": "4. No refund of unused time",
+        "title": "4. Unused days stay unused — they are not cash",
         "body": [
-          "We do not refund remaining days, unused features, a plan you barely used, forgetting to cancel, buying the wrong interval, or switching Plus ↔ Pro.",
-          "A scheduled plan change starts only after the current period. You keep what you paid for until that date. There is no credit and no partial chargeback through the product."
+          "We do not pay back remaining days, unused features, a plan you barely opened, a forgotten cancel, the wrong month/year, or a later switch between Plus and Pro.",
+          "A planned plan change starts only after the current period. There is no credit and no partial refund in the product."
         ]
       },
       {
-        "title": "5. The only exceptional refunds",
+        "title": "5. The only cases we look at",
         "body": [
-          "We may refund, at our review, only if: (a) Stripe charged the same purchase twice; (b) payment succeeded but paid access never unlocked and we cannot repair it; or (c) a competent authority or binding consumer law requires it.",
-          "Change of mind, unused days, “I found a cheaper app”, and “I want money back in Stripe” are not exceptional cases. They are refused."
+          "We may return money after a review only if Stripe charged the same purchase twice, or payment went through but paid access never opened and we cannot repair it, or a court, a regulator, or a mandatory consumer rule still forces it in your specific case.",
+          "“I changed my mind”, “I barely used it”, “I found a cheaper app”, and “refund me in Stripe” are not those cases. They are refused."
         ]
       },
       {
-        "title": "6. How a review is requested (this is intentionally slow)",
+        "title": "6. How to ask (slow on purpose, no button)",
         "body": [
-          "There is no refund button in Account, in the app, or in Stripe Checkout. We do not expose a customer refund API.",
-          "If you believe an exceptional case applies, open Contact, choose the billing topic, tick both acknowledgments, and write at least 400 characters with dates, the Stripe receipt email, and proof of the duplicate or missing access.",
-          "Incomplete, short, or “please refund unused days” messages are closed without a refund. We may take two weeks or longer. Most requests are refused. If we agree, we issue the refund ourselves through Stripe — you cannot self-serve it."
+          "There is no refund button in Account, in the app, or in Stripe Checkout. Customers cannot trigger a refund themselves.",
+          "If you think one of the rare cases above applies: Contact → billing topic, both checkboxes, at least 400 characters, dates, the Stripe receipt email, and proof of the double charge or the missing access.",
+          "Short messages and “please pay unused days back” are closed without a refund. A review can take two weeks or longer. Most are refused. If we agree, we issue the refund ourselves through Stripe."
         ]
       },
       {
-        "title": "7. Chargebacks",
+        "title": "7. Card disputes",
         "body": [
-          "If you open a card dispute while you still have access, we may pause or close the account and send Stripe evidence of the digital supply and this policy.",
-          "Use Account to stop renewal instead of a dispute unless there is a true unauthorised charge."
+          "If you open a card dispute while the account still has paid access, we may pause or close it and send Stripe proof that the digital service was supplied, plus this policy.",
+          "To stop the next charge, use Account. A dispute is for a payment that was not yours — not for unused days."
         ]
       },
       {
-        "title": "8. Consumers in the EU/EEA",
+        "title": "8. If you buy as a consumer",
         "body": [
-          "Nothing in this policy takes away a consumer right you cannot legally waive.",
-          "Where the law still requires a withdrawal after digital supply has started, we will follow that law. That is not the same as a goodwill refund for unused subscription days."
+          "We do not take away a consumer right you cannot legally give up.",
+          "We also do not treat a 14-day cash refund as part of the product. You asked for a digital service to start at once, and it did. If a mandatory rule in your country still forces a withdrawal in a documented case, we follow that rule after review — that is not unused-time cashback."
         ]
       }
     ]
@@ -1798,7 +1798,9 @@
     "switchScheduled": "Starts {{date}}",
     "undoSwitch": "Keep my current plan",
     "billingNote": "Card checkout opens in the browser. The same plan then works on the website and in the app.",
-    "refundNote": "You can stop renewal in Account. Access stays until the paid date. Unused time is not refunded.",
+    "refundNote": "You can stop the next charge in Account. Access stays until the paid date. We do not pay unused days back, and we do not run a 14-day money-back window.",
+    "immediateAck": "I ask Mindkeep to open paid access as soon as payment succeeds. This is a digital service supplied at once. Unused days are not paid back.",
+    "immediateAckNeed": "Tick this before paying.",
     "free": {
       "name": "Free",
       "tagline": "The full product. Type meals and expenses yourself.",

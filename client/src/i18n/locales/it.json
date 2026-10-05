@@ -1317,7 +1317,7 @@
     },
     "billingTitle": "Pagamenti",
     "billingBody": "Disdici quando vuoi nell’account. Il tempo non usato non viene rimborsato. Eccezioni solo secondo la policy.",
-    "billingWarning": "Disdire non restituisce i soldi. Rimborso rifiutato salvo addebito doppio, pagamento senza accesso o ordine vincolante. La maggior parte dei messaggi si chiude senza rimborso.",
+    "billingWarning": "Fermare il rinnovo non restituisce i soldi. Non c’è una finestra di 14 giorni. Esaminiamo solo un addebito doppio dimostrato, un pagamento senza accesso irreparabile o un ordine vincolante. La maggior parte dei messaggi si chiude senza rimborso.",
     "billing": {
       "exceptionAck": "Ho letto la policy di abbonamento e rimborsi. Un rimborso è eccezionale, non un diritto che segue la disdetta.",
       "noUnusedRefundAck": "Non chiedo indietro i giorni non usati dopo la disdetta o il cambio piano."
@@ -1662,7 +1662,9 @@
     "switchScheduled": "Dal {{date}}",
     "undoSwitch": "Tieni il piano attuale",
     "billingNote": "Il pagamento con carta si apre nel browser. Lo stesso piano vale poi sul sito e nell’app.",
-    "refundNote": "Ferma il rinnovo nell’account. Accesso fino alla data pagata. Il tempo non usato non viene rimborsato."
+    "refundNote": "Puoi fermare il prossimo addebito nell’account. Accesso fino alla data già pagata. I giorni non usati non tornano, e non c’è una finestra di 14 giorni per riavere i soldi.",
+    "immediateAck": "Chiedo a Mindkeep di aprire l’accesso a pagamento appena il pagamento riesce. È un servizio digitale erogato subito. I giorni non usati non vengono rimborsati.",
+    "immediateAckNeed": "Spunta prima di pagare."
   },
   "terms": {
     "eyebrow": "Note legali",
@@ -1698,8 +1700,8 @@
         "title": "4. Paid plans",
         "body": [
           "Paid plans are sold as subscriptions through Stripe Checkout on the website. There is no trial.",
-          "Access to paid features starts as soon as payment succeeds.",
-          "A plan change takes effect after the current paid period ends. Cancel stops the next renewal only. Unused time is not refunded. Details are in the Subscription & Refund Policy."
+          "L’accesso a pagamento si apre appena il pagamento riesce. Pagando chiedi di avviare subito un servizio digitale. Mindkeep non gestisce una finestra di 14 giorni per riavere i soldi.",
+          "Il cambio piano parte dopo il periodo già pagato. L’annullo ferma solo il prossimo addebito. I giorni non usati non tornano. Dettagli nella politica di abbonamento e rimborsi."
         ]
       },
       {
@@ -1778,70 +1780,70 @@
     ]
   },
   "refund": {
-    "eyebrow": "Note legali",
+    "eyebrow": "Legale",
     "title": "Abbonamento e rimborsi",
     "updated": "Aggiornato: 5 ottobre 2026",
-    "intro": "Mindkeep è un servizio digitale. L’accesso inizia al pagamento. Regola: puoi fermare il rinnovo successivo; non rimborsiamo il tempo già pagato.",
-    "contactLabel": "Revisione eccezionale dei pagamenti:",
+    "intro": "Mindkeep è uno spazio di lavoro digitale. Quando il pagamento con carta va a buon fine, Plus o Pro si apre subito sull’account. Quello è l’erogazione. Puoi fermare il prossimo addebito. I giorni già pagati non li restituiamo. Non c’è una finestra di 14 giorni “ho cambiato idea”.",
+    "contactLabel": "Verifica di pagamento eccezionale:",
     "requestCta": "Apri il modulo eccezionale",
     "sections": [
       {
-        "title": "1. How billing works",
+        "title": "1. Cosa paghi",
         "body": [
-          "Plans are billed in euro through Stripe on the website. There is no free trial.",
-          "Monthly and yearly prices are shown on /plans. Yearly is charged once for the year; monthly is charged every month.",
-          "The same paid plan then works on the website and in the app."
+          "Paghi in euro sul sito con Stripe. Non c’è prova gratuita.",
+          "Mese o anno si vedono su /plans prima del pagamento. Lo stesso piano vale poi sul sito e nell’app."
         ]
       },
       {
-        "title": "2. When paid access starts",
+        "title": "2. Accesso subito — non è un reso da negozio",
         "body": [
-          "Paid features are supplied immediately after a successful payment.",
-          "By paying you ask us to start the digital service at once. You acknowledge that this can exhaust the EU 14-day right of withdrawal for digital services supplied immediately (Consumer Rights Directive, Article 16(m)), where that right would otherwise apply."
+          "Appena il pagamento riesce, le funzioni a pagamento sono sull’account. In quel momento il servizio digitale è erogato.",
+          "Pagando chiedi di partire ora, non dopo un’attesa. Lo confermi su /plans prima di Stripe Checkout.",
+          "Mindkeep non offre un rimborso di 14 giorni per gli abbonamenti. Il recesso che la legge consente di esaurire quando hai chiesto l’accesso digitale immediato finisce all’apertura dell’accesso."
         ]
       },
       {
-        "title": "3. How to cancel",
+        "title": "3. Come smettere di pagare",
         "body": [
-          "Cancel in Account → Stop renewal, or in the Stripe customer portal. Cancellation is always at the end of the current period.",
-          "You keep Plus or Pro until the date already paid. After that the account returns to Free caps.",
-          "Stopping renewal is not a refund. Stripe is not asked to return the last payment."
+          "Nell’account ferma il rinnovo, o il portale Stripe. Vale sempre a fine del periodo già pagato.",
+          "Plus o Pro restano fino a quella data, poi i tetti Free.",
+          "Fermare il rinnovo non storna l’ultimo pagamento."
         ]
       },
       {
-        "title": "4. No refund of unused time",
+        "title": "4. I giorni non usati non sono contanti",
         "body": [
-          "We do not refund remaining days, unused features, a plan you barely used, forgetting to cancel, buying the wrong interval, or switching Plus ↔ Pro.",
-          "A scheduled plan change starts only after the current period. You keep what you paid for until that date. There is no credit and no partial chargeback through the product."
+          "Non rimborsiamo i giorni restanti, le funzioni non usate, un annullo dimenticato, il mese/anno sbagliato o un passaggio Plus ↔ Pro.",
+          "Un cambio piano pianificato parte dopo il periodo in corso. Nessun credito nel prodotto."
         ]
       },
       {
-        "title": "5. The only exceptional refunds",
+        "title": "5. I soli casi che guardiamo",
         "body": [
-          "We may refund, at our review, only if: (a) Stripe charged the same purchase twice; (b) payment succeeded but paid access never unlocked and we cannot repair it; or (c) a competent authority or binding consumer law requires it.",
-          "Change of mind, unused days, “I found a cheaper app”, and “I want money back in Stripe” are not exceptional cases. They are refused."
+          "Possiamo restituire i soldi dopo verifica solo se Stripe ha addebitato due volte lo stesso acquisto, o il pagamento è passato ma l’accesso non si è mai aperto e non possiamo ripararlo, oppure un giudice, un’autorità o una norma inderogabile lo impone nel tuo caso.",
+          "Cambio idea, quasi inutilizzato, app più economica e “rimborsami in Stripe” sono rifiutati."
         ]
       },
       {
-        "title": "6. How a review is requested (this is intentionally slow)",
+        "title": "6. Come chiedere (lento di proposito, senza pulsante)",
         "body": [
-          "There is no refund button in Account, in the app, or in Stripe Checkout. We do not expose a customer refund API.",
-          "If you believe an exceptional case applies, open Contact, choose the billing topic, tick both acknowledgments, and write at least 400 characters with dates, the Stripe receipt email, and proof of the duplicate or missing access.",
-          "Incomplete, short, or “please refund unused days” messages are closed without a refund. We may take two weeks or longer. Most requests are refused. If we agree, we issue the refund ourselves through Stripe — you cannot self-serve it."
+          "Nessun pulsante rimborso in account, app o Stripe Checkout.",
+          "Contatti → pagamenti, entrambe le spunte, almeno 400 caratteri, date, e-mail della ricevuta Stripe e prova del doppio addebito o dell’accesso mancante.",
+          "I messaggi corti “ridatemi i giorni non usati” si chiudono senza rimborso. La verifica può richiedere due settimane. La maggior parte è un no."
         ]
       },
       {
-        "title": "7. Chargebacks",
+        "title": "7. Controversie sulla carta",
         "body": [
-          "If you open a card dispute while you still have access, we may pause or close the account and send Stripe evidence of the digital supply and this policy.",
-          "Use Account to stop renewal instead of a dispute unless there is a true unauthorised charge."
+          "Una controversia con accesso a pagamento ancora aperto può mettere in pausa l’account. Stripe riceve la prova dell’erogazione digitale e questa policy.",
+          "Per fermare il prossimo addebito usa l’account. La controversia è per un pagamento che non era tuo."
         ]
       },
       {
-        "title": "8. Consumers in the EU/EEA",
+        "title": "8. Se compri come consumatore",
         "body": [
-          "Nothing in this policy takes away a consumer right you cannot legally waive.",
-          "Where the law still requires a withdrawal after digital supply has started, we will follow that law. That is not the same as a goodwill refund for unused subscription days."
+          "Non togliamo un diritto del consumatore a cui non puoi rinunciare per legge.",
+          "Un rimborso di 14 giorni non è nemmeno parte del prodotto. Hai chiesto un servizio digitale immediato ed è partito. Se una norma inderogabile del tuo Paese in un caso documentato impone comunque il recesso, lo eseguiremo dopo verifica — non è un rimborso dei giorni non usati."
         ]
       }
     ]

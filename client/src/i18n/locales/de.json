@@ -1317,7 +1317,7 @@
     },
     "billingTitle": "Zahlung",
     "billingBody": "Kündigung jederzeit im Konto. Ungenutzte Zeit wird nicht erstattet. Ausnahmen nur nach der Erstattungsrichtlinie.",
-    "billingWarning": "Eine Kündigung erstattet kein Geld. Erstattungen nur bei nachgewiesener Doppelabbuchung, Zahlung ohne Zugang oder bindender Rechtsanordnung. Die meisten Anfragen werden abgelehnt.",
+    "billingWarning": "Verlängerung stoppen gibt kein Geld zurück. Es gibt kein 14-Tage-Geld-zurück-Fenster. Geprüft wird nur eine nachgewiesene Doppelabbuchung, eine Zahlung ohne reparierbaren Zugang oder eine bindende Rechtsanordnung. Die meisten Nachrichten werden ohne Erstattung geschlossen.",
     "billing": {
       "exceptionAck": "Ich habe die Abo- und Erstattungsrichtlinie gelesen. Eine Erstattung ist die Ausnahme, kein Recht nach Kündigung.",
       "noUnusedRefundAck": "Ich verlange keine Erstattung ungenutzter Tage nach Kündigung oder Tarifwechsel."
@@ -1662,7 +1662,9 @@
     "switchScheduled": "Ab {{date}}",
     "undoSwitch": "Aktuellen Plan behalten",
     "billingNote": "Kartenzahlung öffnet im Browser. Derselbe Plan gilt danach auf der Website und in der App.",
-    "refundNote": "Verlängerung im Konto stoppen. Zugang bis zum bezahlten Datum. Ungenutzte Zeit wird nicht erstattet."
+    "refundNote": "Die nächste Abbuchung kannst du im Konto stoppen. Zugang bis zum bezahlten Datum. Ungenutzte Tage zahlen wir nicht zurück, und es gibt kein 14-Tage-Geld-zurück-Fenster.",
+    "immediateAck": "Ich bitte Mindkeep, den bezahlten Zugang sofort nach der Zahlung zu öffnen. Das ist ein digitaler Dienst, der sofort erbracht wird. Ungenutzte Tage werden nicht zurückgezahlt.",
+    "immediateAckNeed": "Bitte vor der Zahlung ankreuzen."
   },
   "terms": {
     "eyebrow": "Rechtliches",
@@ -1698,8 +1700,8 @@
         "title": "4. Paid plans",
         "body": [
           "Paid plans are sold as subscriptions through Stripe Checkout on the website. There is no trial.",
-          "Access to paid features starts as soon as payment succeeds.",
-          "A plan change takes effect after the current paid period ends. Cancel stops the next renewal only. Unused time is not refunded. Details are in the Subscription & Refund Policy."
+          "Bezahlter Zugang öffnet sich sofort nach erfolgreicher Zahlung. Mit der Zahlung bittest du uns, einen digitalen Dienst sofort zu starten. Mindkeep führt kein 14-Tage-Geld-zurück-Fenster.",
+          "Ein Planwechsel gilt nach dem aktuellen bezahlten Zeitraum. Kündigen stoppt nur die nächste Abbuchung. Ungenutzte Tage werden nicht zurückgezahlt. Details stehen in der Abo- und Erstattungsrichtlinie."
         ]
       },
       {
@@ -1779,69 +1781,69 @@
   },
   "refund": {
     "eyebrow": "Rechtliches",
-    "title": "Abo- und Erstattungsrichtlinie",
+    "title": "Abo und Erstattungen",
     "updated": "Aktualisiert: 5. Oktober 2026",
-    "intro": "Mindkeep ist ein digitaler Dienst. Zugang beginnt nach erfolgreicher Zahlung. Standard: nächste Verlängerung stoppen; kein Geld für bereits bezahlte Zeit zurück.",
+    "intro": "Mindkeep ist ein digitaler Arbeitsbereich. Sobald die Kartenzahlung durchgeht, öffnet Plus oder Pro sofort auf dem Konto. Das ist die Lieferung. Die nächste Abbuchung kannst du stoppen. Bereits bezahlte Tage zahlen wir nicht zurück. Ein 14-Tage-Fenster „ich habe es mir anders überlegt“ gibt es nicht.",
     "contactLabel": "Außergewöhnliche Zahlungsprüfung:",
     "requestCta": "Außergewöhnliches Formular öffnen",
     "sections": [
       {
-        "title": "1. How billing works",
+        "title": "1. Wofür du zahlst",
         "body": [
-          "Plans are billed in euro through Stripe on the website. There is no free trial.",
-          "Monthly and yearly prices are shown on /plans. Yearly is charged once for the year; monthly is charged every month.",
-          "The same paid plan then works on the website and in the app."
+          "Zahlung in Euro auf der Website über Stripe. Es gibt keine Testphase.",
+          "Monat oder Jahr siehst du auf /plans vor der Zahlung. Derselbe Plan gilt danach auf der Website und in der App."
         ]
       },
       {
-        "title": "2. When paid access starts",
+        "title": "2. Zugang sofort — das ist keine Ladenrückgabe",
         "body": [
-          "Paid features are supplied immediately after a successful payment.",
-          "By paying you ask us to start the digital service at once. You acknowledge that this can exhaust the EU 14-day right of withdrawal for digital services supplied immediately (Consumer Rights Directive, Article 16(m)), where that right would otherwise apply."
+          "Sobald die Zahlung durchgeht, sind die bezahlten Funktionen auf dem Konto. In diesem Moment ist der digitale Dienst erbracht.",
+          "Mit der Zahlung bittest du uns, jetzt zu starten, nicht nach einer Wartezeit. Das bestätigst du auf /plans, bevor Stripe Checkout öffnet.",
+          "Mindkeep bietet keine 14-tägige Gelderstattung für Abos. Ein Widerruf, den das Gesetz enden lässt, sobald du sofortigen digitalen Zugang verlangt und erhalten hast, endet mit der Öffnung des Zugangs."
         ]
       },
       {
-        "title": "3. How to cancel",
+        "title": "3. So hörst du auf zu zahlen",
         "body": [
-          "Cancel in Account → Stop renewal, or in the Stripe customer portal. Cancellation is always at the end of the current period.",
-          "You keep Plus or Pro until the date already paid. After that the account returns to Free caps.",
-          "Stopping renewal is not a refund. Stripe is not asked to return the last payment."
+          "Im Konto die Verlängerung stoppen — oder im Stripe-Kundenportal. Das gilt immer am Ende des bereits bezahlten Zeitraums.",
+          "Plus oder Pro bleiben bis zu diesem Datum. Danach gelten wieder die Free-Limits.",
+          "Verlängerung stoppen schickt die letzte Zahlung nicht zurück."
         ]
       },
       {
-        "title": "4. No refund of unused time",
+        "title": "4. Ungenutzte Tage sind kein Bargeld",
         "body": [
-          "We do not refund remaining days, unused features, a plan you barely used, forgetting to cancel, buying the wrong interval, or switching Plus ↔ Pro.",
-          "A scheduled plan change starts only after the current period. You keep what you paid for until that date. There is no credit and no partial chargeback through the product."
+          "Wir zahlen keine Resttage, ungenutzte Funktionen, vergessene Kündigung, falschen Monat/Jahr oder einen späteren Wechsel Plus ↔ Pro zurück.",
+          "Ein geplanter Planwechsel startet erst nach dem aktuellen Zeitraum. Kein Guthaben im Produkt."
         ]
       },
       {
-        "title": "5. The only exceptional refunds",
+        "title": "5. Die einzigen Fälle, die wir ansehen",
         "body": [
-          "We may refund, at our review, only if: (a) Stripe charged the same purchase twice; (b) payment succeeded but paid access never unlocked and we cannot repair it; or (c) a competent authority or binding consumer law requires it.",
-          "Change of mind, unused days, “I found a cheaper app”, and “I want money back in Stripe” are not exceptional cases. They are refused."
+          "Geld können wir nach Prüfung nur zurückzahlen bei Doppelabbuchung derselben Kauf, Zahlung ohne öffnenden Zugang den wir nicht reparieren können, oder wenn Gericht, Behörde oder zwingendes Recht es in deinem Fall verlangt.",
+          "Meinungsänderung, kaum genutzt, billigere App und „erstattet in Stripe“ lehnen wir ab."
         ]
       },
       {
-        "title": "6. How a review is requested (this is intentionally slow)",
+        "title": "6. So fragst du nach (absichtlich langsam, ohne Knopf)",
         "body": [
-          "There is no refund button in Account, in the app, or in Stripe Checkout. We do not expose a customer refund API.",
-          "If you believe an exceptional case applies, open Contact, choose the billing topic, tick both acknowledgments, and write at least 400 characters with dates, the Stripe receipt email, and proof of the duplicate or missing access.",
-          "Incomplete, short, or “please refund unused days” messages are closed without a refund. We may take two weeks or longer. Most requests are refused. If we agree, we issue the refund ourselves through Stripe — you cannot self-serve it."
+          "Kein Erstattungsknopf im Konto, in der App oder in Stripe Checkout.",
+          "Kontakt → Zahlung, beide Häkchen, mindestens 400 Zeichen, Daten, Stripe-Beleg und Beweis der Doppelabbuchung oder des fehlenden Zugangs.",
+          "Kurze „Resttage zurück“-Nachrichten werden ohne Erstattung geschlossen. Prüfung kann zwei Wochen dauern. Die meisten werden abgelehnt."
         ]
       },
       {
-        "title": "7. Chargebacks",
+        "title": "7. Karteneinsprüche",
         "body": [
-          "If you open a card dispute while you still have access, we may pause or close the account and send Stripe evidence of the digital supply and this policy.",
-          "Use Account to stop renewal instead of a dispute unless there is a true unauthorised charge."
+          "Ein Karteneinspruch bei noch offenem bezahltem Zugang kann das Konto pausieren. Stripe erhält den Nachweis der digitalen Leistung und diese Richtlinie.",
+          "Nächste Abbuchung im Konto stoppen. Einspruch nur, wenn die Zahlung nicht von dir war."
         ]
       },
       {
-        "title": "8. Consumers in the EU/EEA",
+        "title": "8. Wenn du als Verbraucherin oder Verbraucher kaufst",
         "body": [
-          "Nothing in this policy takes away a consumer right you cannot legally waive.",
-          "Where the law still requires a withdrawal after digital supply has started, we will follow that law. That is not the same as a goodwill refund for unused subscription days."
+          "Wir nehmen kein Recht weg, auf das du gesetzlich nicht verzichten kannst.",
+          "Eine 14-tägige Gelderstattung ist trotzdem kein Bestandteil des Produkts. Du hast den digitalen Dienst sofort verlangt, und er hat begonnen. Zwingt eine Regel deines Landes in einem dokumentierten Fall trotzdem zum Widerruf, folgen wir ihr nach Prüfung — das ist keine Rückzahlung ungenutzter Tage."
         ]
       }
     ]
