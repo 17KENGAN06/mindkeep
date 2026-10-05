@@ -1249,7 +1249,11 @@
       "account": "Compte · Mindkeep",
       "onboarding": "Réglage rapide · Mindkeep",
       "settings": "Réglages · Mindkeep",
-      "billingReturn": "Retour à MindKeep · Mindkeep"
+      "billingReturn": "Retour à MindKeep · Mindkeep",
+      "terms": "Conditions d’utilisation · Mindkeep",
+      "cookies": "Politique cookies · Mindkeep",
+      "refund": "Abonnement et remboursement · Mindkeep",
+      "plans": "Offres · Mindkeep"
     }
   },
   "footer": {
@@ -1270,7 +1274,10 @@
     "paymentsLabel": "Paiement",
     "paymentsVia": "Paiement par carte via Stripe.",
     "paymentsAria": "Cartes acceptées : Visa, Mastercard et American Express. Les paiements sont traités par Stripe.",
-    "paymentsStripe": "Stripe"
+    "paymentsStripe": "Stripe",
+    "terms": "CGU",
+    "cookies": "Cookies",
+    "refund": "Remboursements"
   },
   "contact": {
     "eyebrow": "Studio",
@@ -1288,12 +1295,14 @@
     },
     "placeholders": {
       "topic": "Choisir un sujet",
-      "message": "Écris quelques lignes pour que l'on puisse t'aider."
+      "message": "Écris quelques lignes pour que l'on puisse t'aider.",
+      "billing": "Décrivez en détail l’erreur de paiement ou le fondement juridique. « J’ai changé d’avis » ne suffit pas."
     },
     "topics": {
       "partnership": "Partenariat / collaboration",
       "bug": "J'ai trouvé un bug",
-      "question": "J'ai une question"
+      "question": "J'ai une question",
+      "billing": "Demande de paiement / remboursement exceptionnel"
     },
     "destination": "Ce message sera envoyé à {{email}}",
     "send": "Envoyer le message",
@@ -1308,7 +1317,17 @@
       "messageMax": "Le message est trop long",
       "validation": "Vérifie le formulaire et réessaie",
       "generic": "Impossible d'envoyer le message",
-      "unavailable": "Le formulaire est temporairement indisponible. Écris-nous directement à l'adresse ci-dessus."
+      "unavailable": "Le formulaire est temporairement indisponible. Écris-nous directement à l'adresse ci-dessus.",
+      "billingMessageMin": "Pour le paiement, 400 caractères minimum. Les demandes courtes sont refusées.",
+      "exceptionAck": "Confirmez avoir lu la politique de remboursement.",
+      "noUnusedRefundAck": "Confirmez que le temps non utilisé n’est pas remboursé."
+    },
+    "billingTitle": "Paiement",
+    "billingBody": "Résiliation à tout moment dans le compte. Le temps non utilisé n’est pas remboursé. Exceptions uniquement selon la politique.",
+    "billingWarning": "Résilier ne rembourse pas. Remboursement refusé sauf double prélèvement prouvé, paiement sans accès, ou décision contraignante. La plupart des messages sont clos sans remboursement.",
+    "billing": {
+      "exceptionAck": "J’ai lu la politique d’abonnement et de remboursement. Un remboursement est exceptionnel, pas un droit lié à la résiliation.",
+      "noUnusedRefundAck": "Je ne demande pas le remboursement des jours non utilisés après résiliation ou changement d’offre."
     }
   },
   "notFound": {
@@ -1320,7 +1339,7 @@
   "privacy": {
     "eyebrow": "Mentions légales",
     "title": "Politique de confidentialité",
-    "updated": "Mise à jour : 4 October 2026",
+    "updated": "Mis à jour : 5 octobre 2026",
     "intro": "Cette politique explique quelles données Mindkeep collecte, pourquoi nous en avons besoin et comment nous les protégeons. En utilisant le service, vous acceptez les pratiques décrites ci-dessous.",
     "contactLabel": "Questions relatives aux données :",
     "sections": [
@@ -1458,11 +1477,11 @@
     "manage": "Gérer l’abonnement",
     "renews": "Renouvellement le {{date}}",
     "ends": "Accès jusqu’au {{date}}",
-    "cancelScheduled": "L’annulation est prévue. Pro reste jusqu’à la fin de la période.",
+    "cancelScheduled": "Résiliation planifiée. L’accès reste jusqu’à la fin de la période. Les jours non utilisés ne sont pas remboursés.",
     "success": "Paiement reçu. Pro est actif.",
     "canceled": "Paiement annulé. Rien n’a été débité.",
     "unavailable": "Les paiements ne sont pas encore branchés.",
-    "alreadyPro": "Ce compte a déjà Pro.",
+    "alreadyPro": "Ce compte a déjà une offre payante.",
     "customerMissing": "Abonnez-vous d’abord.",
     "checkoutFailed": "Impossible d’ouvrir le paiement. Réessayez.",
     "of": "{{used}} / {{limit}}",
@@ -1500,7 +1519,7 @@
     "ctaMonth": "Choisir le mois",
     "usageTitle": "Limites du plan Free",
     "usageLead": "Ces plafonds s’appliquent tant que vous n’êtes pas abonné. Pro les retire.",
-    "proUnlocked": "Les plafonds de quantité sont désactivés sur ce compte.",
+    "proUnlocked": "Les plafonds sont levés. Une résiliation ultérieure ne rembourse pas le temps restant.",
     "remain": "{{left}} sur {{limit}} restants",
     "remainDays": "Derniers {{count}} jours",
     "paidInBrowser": "Le paiement par carte s’ouvre dans le navigateur. Le même Pro marche ensuite dans l’app et sur le site.",
@@ -1510,7 +1529,20 @@
     "returnPortal": "Les changements d’abonnement sont enregistrés. Vous pouvez revenir à l’app.",
     "openApp": "Ouvrir l’app",
     "stayOnSite": "Rester sur le site",
-    "plusLabel": "Plus"
+    "plusLabel": "Plus",
+    "cancelCta": "Arrêter le renouvellement",
+    "cancelHint": "L’accès reste jusqu’à la date déjà payée. Pas de remboursement des jours restants. Exceptions : politique de remboursement.",
+    "cancelTitle": "Arrêter le renouvellement sans remboursement ?",
+    "cancelConfirm": "L’accès reste jusqu’au {{date}}. Puis Free. Pas de remboursement des jours restants, d’un changement d’avis ou d’une offre peu utilisée. Ce n’est pas un remboursement Stripe.",
+    "cancelConfirmCta": "Arrêter le renouvellement, aucun remboursement",
+    "cancelDone": "Renouvellement arrêté. Accès jusqu’à la date payée.",
+    "resumeCta": "Garder l’abonnement",
+    "resumeDone": "Le renouvellement est de nouveau actif.",
+    "pendingSwitch": "{{plan}} commence le {{date}}. Jusque-là, l’offre déjà payée reste. Le temps non utilisé n’est pas remboursé.",
+    "noSubscription": "Pas d’abonnement payant sur ce compte.",
+    "samePlan": "Vous êtes déjà sur cette offre.",
+    "cancelBeforeChange": "Gardez d’abord l’abonnement, puis changez d’offre.",
+    "changeUnavailable": "Impossible de planifier le changement. Réessayez plus tard."
   },
   "onboarding": {
     "eyebrow": "Réglage rapide",
@@ -1577,7 +1609,7 @@
     "ctaMonth": "Payer chaque mois",
     "current": "Votre offre",
     "viewPlans": "Voir les offres",
-    "upgrade": "Passer à Pro",
+    "upgrade": "Passer à Pro après cette période",
     "accountLead": "Plus enlève les plafonds. Pro scanne aussi les repas et les tickets depuis une photo.",
     "payHow": "Paiement",
     "intervalYear": "Année",
@@ -1618,7 +1650,8 @@
       "without": [
         "Scan du repas depuis une photo",
         "Scan du ticket dans Budget"
-      ]
+      ],
+      "monthCharged": "€4.99 chaque mois"
     },
     "pro": {
       "name": "Pro",
@@ -1632,7 +1665,199 @@
       "unlocks": [
         "Scanner un repas depuis une photo sur le téléphone",
         "Scanner un ticket dans Budget, puis choisir espèces ou carte"
-      ]
-    }
+      ],
+      "monthCharged": "€7.99 chaque mois"
+    },
+    "periodEnd": "la fin de cette période",
+    "switchTo": "Passer à {{plan}} après cette période",
+    "switchTitle": "Passer à {{plan}} plus tard ?",
+    "switchConfirm": "{{plan}} commence le {{date}}. Jusque-là, {{current}} reste. Prix et fonctions ne changent pas aujourd’hui. Les jours restants ne sont pas remboursés.",
+    "switchConfirmCta": "Planifier le changement",
+    "switchScheduled": "À partir du {{date}}",
+    "undoSwitch": "Garder mon offre actuelle",
+    "billingNote": "Le paiement carte s’ouvre dans le navigateur. La même offre marche ensuite sur le site et l’app.",
+    "refundNote": "Arrêtez le renouvellement dans le compte. Accès jusqu’à la date payée. Temps non utilisé non remboursé."
+  },
+  "terms": {
+    "eyebrow": "Mentions",
+    "title": "Conditions d’utilisation",
+    "updated": "Mis à jour : 5 octobre 2026",
+    "intro": "Ces conditions régissent Mindkeep, un espace personnel numérique sur mindkeep.cloud et dans les apps MindKeep.",
+    "contactLabel": "Questions juridiques :",
+    "sections": [
+      {
+        "title": "1. Who we are",
+        "body": [
+          "Mindkeep is operated by WEISEZAHOY studio.",
+          "Contact: contact@mindkeep.cloud. Product defects: admin@mindkeep.cloud."
+        ]
+      },
+      {
+        "title": "2. The service",
+        "body": [
+          "Mindkeep is a digital service: tasks, review, notes, habits, budget, and nutrition in one account.",
+          "Free includes all modules with quantity caps. Plus lifts those caps. Pro adds photo scan for meals and receipts.",
+          "We may change features, caps, and prices with notice on the site. Paid time already purchased is not extended because of a later price drop."
+        ]
+      },
+      {
+        "title": "3. Accounts",
+        "body": [
+          "You must provide a real email you control and keep it accurate.",
+          "You are responsible for activity on your account. Tell us at admin@mindkeep.cloud if you lose access.",
+          "We may suspend or delete an account that is abusive, fraudulent, or a risk to the service."
+        ]
+      },
+      {
+        "title": "4. Paid plans",
+        "body": [
+          "Paid plans are sold as subscriptions through Stripe Checkout on the website. There is no trial.",
+          "Access to paid features starts as soon as payment succeeds.",
+          "A plan change takes effect after the current paid period ends. Cancel stops the next renewal only. Unused time is not refunded. Details are in the Subscription & Refund Policy."
+        ]
+      },
+      {
+        "title": "5. Acceptable use",
+        "body": [
+          "Do not scan content you have no right to process, attack the service, scrape at scale, or upload malware.",
+          "Food and receipt scans are for your own records. They are estimates, not professional tax, medical, or nutrition advice."
+        ]
+      },
+      {
+        "title": "6. Availability and liability",
+        "body": [
+          "We aim for a reliable service but do not promise uninterrupted access or error-free scans.",
+          "To the fullest extent allowed by law, Mindkeep is provided as-is. We are not liable for lost data, lost profits, or indirect loss, except where liability cannot be excluded (including death, personal injury from negligence, or fraud).",
+          "If you are a consumer in the EU/EEA, these terms do not take away rights you cannot waive."
+        ]
+      },
+      {
+        "title": "7. Intellectual property",
+        "body": [
+          "The Mindkeep product, brand, and design belong to the operator. You keep the content you add.",
+          "You grant us a limited licence to host that content only to run the service for you."
+        ]
+      },
+      {
+        "title": "8. Changes and contact",
+        "body": [
+          "We may update these terms. The date on this page is the current version.",
+          "Questions: contact@mindkeep.cloud."
+        ]
+      }
+    ]
+  },
+  "cookies": {
+    "eyebrow": "Mentions",
+    "title": "Politique cookies",
+    "updated": "Mis à jour : 5 octobre 2026",
+    "intro": "Comment Mindkeep utilise les cookies. Pas de cookies publicitaires, pas de vente des données de navigation.",
+    "contactLabel": "Questions cookies :",
+    "sections": [
+      {
+        "title": "1. What we use",
+        "body": [
+          "Essential cookies keep you signed in on the website (a secure session) and help stop cross-site request forgery.",
+          "Without them, the signed-in workspace cannot run. They are not used to profile you for ads."
+        ]
+      },
+      {
+        "title": "2. Local storage",
+        "body": [
+          "The browser may keep interface language and theme locally so the product looks the same next time.",
+          "That storage stays on your device. You can clear it in the browser; you may need to choose language and theme again."
+        ]
+      },
+      {
+        "title": "3. Payments",
+        "body": [
+          "When you open Stripe Checkout, Stripe may set its own cookies on Stripe’s pages to process the card, prevent fraud, and complete 3-D Secure.",
+          "Those cookies are controlled by Stripe, not by Mindkeep. See Stripe’s cookie documentation."
+        ]
+      },
+      {
+        "title": "4. What we do not use",
+        "body": [
+          "We do not run advertising networks, social tracking pixels, or cross-site marketing cookies on mindkeep.cloud.",
+          "Scan photos are processed and discarded as described in the Privacy Policy — they are not stored as cookies."
+        ]
+      },
+      {
+        "title": "5. Your controls",
+        "body": [
+          "You can block cookies in the browser. Blocking essential cookies will sign you out and may prevent login.",
+          "For more on data, read the Privacy Policy."
+        ]
+      }
+    ]
+  },
+  "refund": {
+    "eyebrow": "Mentions",
+    "title": "Abonnement et remboursement",
+    "updated": "Mis à jour : 5 octobre 2026",
+    "intro": "Mindkeep est un service numérique. L’accès commence dès le paiement. Règle : arrêter le prochain renouvellement ; pas de remboursement du temps déjà payé.",
+    "contactLabel": "Examen de paiement exceptionnel :",
+    "requestCta": "Ouvrir le formulaire exceptionnel",
+    "sections": [
+      {
+        "title": "1. How billing works",
+        "body": [
+          "Plans are billed in euro through Stripe on the website. There is no free trial.",
+          "Monthly and yearly prices are shown on /plans. Yearly is charged once for the year; monthly is charged every month.",
+          "The same paid plan then works on the website and in the app."
+        ]
+      },
+      {
+        "title": "2. When paid access starts",
+        "body": [
+          "Paid features are supplied immediately after a successful payment.",
+          "By paying you ask us to start the digital service at once. You acknowledge that this can exhaust the EU 14-day right of withdrawal for digital services supplied immediately (Consumer Rights Directive, Article 16(m)), where that right would otherwise apply."
+        ]
+      },
+      {
+        "title": "3. How to cancel",
+        "body": [
+          "Cancel in Account → Stop renewal, or in the Stripe customer portal. Cancellation is always at the end of the current period.",
+          "You keep Plus or Pro until the date already paid. After that the account returns to Free caps.",
+          "Stopping renewal is not a refund. Stripe is not asked to return the last payment."
+        ]
+      },
+      {
+        "title": "4. No refund of unused time",
+        "body": [
+          "We do not refund remaining days, unused features, a plan you barely used, forgetting to cancel, buying the wrong interval, or switching Plus ↔ Pro.",
+          "A scheduled plan change starts only after the current period. You keep what you paid for until that date. There is no credit and no partial chargeback through the product."
+        ]
+      },
+      {
+        "title": "5. The only exceptional refunds",
+        "body": [
+          "We may refund, at our review, only if: (a) Stripe charged the same purchase twice; (b) payment succeeded but paid access never unlocked and we cannot repair it; or (c) a competent authority or binding consumer law requires it.",
+          "Change of mind, unused days, “I found a cheaper app”, and “I want money back in Stripe” are not exceptional cases. They are refused."
+        ]
+      },
+      {
+        "title": "6. How a review is requested (this is intentionally slow)",
+        "body": [
+          "There is no refund button in Account, in the app, or in Stripe Checkout. We do not expose a customer refund API.",
+          "If you believe an exceptional case applies, open Contact, choose the billing topic, tick both acknowledgments, and write at least 400 characters with dates, the Stripe receipt email, and proof of the duplicate or missing access.",
+          "Incomplete, short, or “please refund unused days” messages are closed without a refund. We may take two weeks or longer. Most requests are refused. If we agree, we issue the refund ourselves through Stripe — you cannot self-serve it."
+        ]
+      },
+      {
+        "title": "7. Chargebacks",
+        "body": [
+          "If you open a card dispute while you still have access, we may pause or close the account and send Stripe evidence of the digital supply and this policy.",
+          "Use Account to stop renewal instead of a dispute unless there is a true unauthorised charge."
+        ]
+      },
+      {
+        "title": "8. Consumers in the EU/EEA",
+        "body": [
+          "Nothing in this policy takes away a consumer right you cannot legally waive.",
+          "Where the law still requires a withdrawal after digital supply has started, we will follow that law. That is not the same as a goodwill refund for unused subscription days."
+        ]
+      }
+    ]
   }
 }

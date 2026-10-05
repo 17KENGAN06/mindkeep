@@ -6,6 +6,8 @@ export type ContactPayload = {
   name: string;
   email: string;
   message: string;
+  exceptionAck?: boolean;
+  noUnusedRefundAck?: boolean;
   botToken?: string;
   website?: string;
 };

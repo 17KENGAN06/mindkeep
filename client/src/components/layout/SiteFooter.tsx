@@ -87,8 +87,14 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
     { to: '/blog', label: t('nav.blog'), match: (path: string) => path === '/blog' || path.startsWith('/blog/') },
     { to: '/login', label: t('nav.login'), match: (path: string) => path === '/login' || isAuthenticated },
     { to: '/contact', label: t('nav.contact'), match: (path: string) => path === '/contact' },
-    { to: '/privacy', label: t('footer.privacy'), match: (path: string) => path === '/privacy' },
   ].filter((link) => !link.match(location.pathname));
+
+  const legalLinks = [
+    { to: '/privacy', label: t('footer.privacy') },
+    { to: '/terms', label: t('footer.terms') },
+    { to: '/cookies', label: t('footer.cookies') },
+    { to: '/refund', label: t('footer.refund') },
+  ].filter((link) => link.to !== location.pathname);
 
   const studioLink = (
     <a
@@ -195,6 +201,17 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
               />
             </p>
             <p className="mt-4 text-xs leading-relaxed text-muted/80">{t('footer.rights')}</p>
+            <nav className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium">
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="inline-flex min-h-11 items-center text-muted no-underline transition hover:text-brand-500 md:min-h-0"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
           </div>
           <PaymentMarks
             compact={compact}

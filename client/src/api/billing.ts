@@ -16,6 +16,9 @@ export type BillingStatus = {
   hasStripeCustomer: boolean;
   subscribed: boolean;
   betaTester: boolean;
+  pendingPlan: 'PLUS' | 'PRO' | null;
+  pendingInterval: 'MONTH' | 'YEAR' | null;
+  pendingChangeAt: string | null;
   usage: {
     materials: BillingUsageItem;
     reviewCategories: BillingUsageItem;
@@ -35,4 +38,9 @@ export const billingApi = {
     apiClient.post<{ url: string }>('/api/billing/checkout', { interval, plan }),
   portal: () => apiClient.post<{ url: string }>('/api/billing/portal'),
   sync: (sessionId: string) => apiClient.post<{ user: User }>('/api/billing/sync', { sessionId }),
+  change: (plan: 'plus' | 'pro', interval: 'month' | 'year') =>
+    apiClient.post<{ ok: true }>('/api/billing/change', { plan, interval }),
+  clearChange: () => apiClient.post<{ ok: true }>('/api/billing/change/clear'),
+  cancel: () => apiClient.post<{ ok: true }>('/api/billing/cancel'),
+  resume: () => apiClient.post<{ ok: true }>('/api/billing/resume'),
 };

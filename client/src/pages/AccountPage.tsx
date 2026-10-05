@@ -130,7 +130,8 @@ function BillingSection() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState<'portal' | 'sync' | null>(null);
+  const [busy, setBusy] = useState<'portal' | 'sync' | 'cancel' | 'resume' | null>(null);
+  const [cancelOpen, setCancelOpen] = useState(false);
 
   const statusQuery = useQuery({
     queryKey: ['billing', 'status'],
@@ -182,6 +183,35 @@ function BillingSection() {
     }
   };
 
+  const confirmCancel = async () => {
+    setError(null);
+    setBusy('cancel');
+    try {
+      await billingApi.cancel();
+      await queryClient.invalidateQueries({ queryKey: ['billing'] });
+      setNotice(t('billing.cancelDone'));
+      setCancelOpen(false);
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const resume = async () => {
+    setError(null);
+    setBusy('resume');
+    try {
+      await billingApi.resume();
+      await queryClient.invalidateQueries({ queryKey: ['billing'] });
+      setNotice(t('billing.resumeDone'));
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setBusy(null);
+    }
+  };
+
   const status = statusQuery.data;
   const billed = Boolean(status?.hasStripeCustomer);
   const subscribed = Boolean(status?.subscribed);
@@ -213,6 +243,7 @@ function BillingSection() {
           : t('billing.subtitle');
 
   return (
+    <>
     <div className="overflow-hidden rounded-[1.75rem] border border-brand-500/35 bg-panel shadow-[0_18px_40px_-28px_rgba(53,111,88,0.55)] ring-1 ring-brand-500/10">
       <div className="relative overflow-hidden bg-gradient-to-br from-brand-500/25 via-brand-50/80 to-panel px-5 py-6 sm:px-7 sm:py-7">
         <div className="pointer-events-none absolute -top-16 -right-10 h-40 w-40 rounded-full bg-brand-500/25 blur-3xl" />
@@ -261,26 +292,65 @@ function BillingSection() {
           <p className="rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">{t('billing.cancelScheduled')}</p>
         ) : null}
 
+        {status?.pendingPlan ? (
+          <p className="rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">
+            {t('billing.pendingSwitch', {
+              plan: status.pendingPlan === 'PLUS' ? t('billing.plusLabel') : t('billing.proLabel'),
+              date: status.pendingChangeAt
+                ? new Date(status.pendingChangeAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
+                : expires ?? t('plans.periodEnd'),
+            })}
+          </p>
+        ) : null}
+
         {status && !status.configured ? (
           <p className="text-sm text-muted">{t('billing.unavailable')}</p>
         ) : null}
 
-        <Link to="/plans" className="block sm:inline-flex">
-          <Button className="w-full gap-2 sm:w-auto">
-            {t('plans.viewPlans')}
-            <ArrowRight className="h-4 w-4" aria-hidden />
-          </Button>
-        </Link>
+        <div className="flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8">
+          <Link to="/plans" className="block sm:inline-flex">
+            <Button className="w-full gap-2 sm:w-auto">
+              {t('plans.viewPlans')}
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Button>
+          </Link>
 
-        {showManage ? (
+          {showManage ? (
+            <Button
+              type="button"
+              variant="secondary"
+              isLoading={busy === 'portal'}
+              disabled={busy !== null}
+              onClick={() => void openPortal()}
+            >
+              {t('billing.manage')}
+            </Button>
+          ) : null}
+        </div>
+
+        {subscribed && !status?.cancelAtPeriodEnd ? (
+          <div className="space-y-3">
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={busy !== null}
+              onClick={() => setCancelOpen(true)}
+            >
+              {t('billing.cancelCta')}
+            </Button>
+            <p className="text-sm leading-relaxed text-muted">{t('billing.cancelHint')}</p>
+          </div>
+        ) : null}
+
+        {subscribed && status?.cancelAtPeriodEnd ? (
           <Button
             type="button"
             variant="secondary"
-            isLoading={busy === 'portal'}
+            isLoading={busy === 'resume'}
             disabled={busy !== null}
-            onClick={() => void openPortal()}
+            onClick={() => void resume()}
           >
-            {t('billing.manage')}
+            {t('billing.resumeCta')}
           </Button>
         ) : null}
 
@@ -293,6 +363,17 @@ function BillingSection() {
         {status && !subscribed && !isBeta ? <UsageGrid usage={status.usage} /> : null}
       </div>
     </div>
+      <ConfirmDialog
+        open={cancelOpen}
+        title={t('billing.cancelTitle')}
+        description={t('billing.cancelConfirm', { date: expires ?? t('plans.periodEnd') })}
+        confirmLabel={t('billing.cancelConfirmCta')}
+        cancelLabel={t('common.cancel')}
+        isLoading={busy === 'cancel'}
+        onConfirm={() => void confirmCancel()}
+        onCancel={() => setCancelOpen(false)}
+      />
+    </>
   );
 }
 

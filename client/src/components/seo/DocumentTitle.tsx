@@ -34,6 +34,10 @@ const routeTitleKeys: Record<string, string> = {
   '/blog': 'seo.titles.blog',
   '/guide': 'seo.titles.guide',
   '/privacy': 'seo.titles.privacy',
+  '/terms': 'seo.titles.terms',
+  '/cookies': 'seo.titles.cookies',
+  '/refund': 'seo.titles.refund',
+  '/plans': 'seo.titles.plans',
   '/contact': 'seo.titles.contact',
   '/billing/return': 'seo.titles.billingReturn',
 };

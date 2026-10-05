@@ -39,11 +39,15 @@ async function clearDeadSubscription(userId: string, alsoCustomer: boolean): Pro
     where: { id: userId },
     data: {
       stripeSubscriptionId: null,
+      stripeScheduleId: null,
       ...(alsoCustomer ? { stripeCustomerId: null } : {}),
       plan: UserPlan.FREE,
       planInterval: null,
       planExpiresAt: null,
       cancelAtPeriodEnd: false,
+      pendingPlan: null,
+      pendingInterval: null,
+      pendingChangeAt: null,
     },
   });
 }
@@ -67,6 +71,32 @@ function subscriptionPriceId(subscription: Stripe.Subscription): string | null {
 function subscriptionIdOf(value: string | Stripe.Subscription | null | undefined): string | null {
   if (!value) return null;
   return typeof value === 'string' ? value : value.id;
+}
+
+function scheduleIdOf(
+  value: string | Stripe.SubscriptionSchedule | Stripe.Subscription['schedule'] | null | undefined,
+): string | null {
+  if (!value) return null;
+  return typeof value === 'string' ? value : value.id;
+}
+
+function unixSeconds(date: Date): number {
+  return Math.floor(date.getTime() / 1000);
+}
+
+function paidPlanFromCheckout(plan: CheckoutPlan): UserPlan {
+  return plan === 'plus' ? UserPlan.PLUS : UserPlan.PRO;
+}
+
+function intervalFromCheckout(interval: 'month' | 'year'): PlanInterval {
+  return interval === 'year' ? PlanInterval.YEAR : PlanInterval.MONTH;
+}
+
+function stripeErrorCode(error: unknown): string | undefined {
+  if (typeof error === 'object' && error !== null && 'code' in error) {
+    return (error as { code?: string }).code;
+  }
+  return undefined;
 }
 
 function invoiceSubscriptionId(invoice: Stripe.Invoice): string | null {
@@ -119,15 +149,30 @@ export async function applySubscription(
     customerId ||
     (typeof subscription.customer === 'string' ? subscription.customer : subscription.customer?.id);
 
+  const existing = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { pendingPlan: true, pendingInterval: true, pendingChangeAt: true },
+  });
+
+  const pendingMatches =
+    Boolean(existing?.pendingPlan) &&
+    existing?.pendingPlan === paidPlan &&
+    existing?.pendingInterval === interval;
+  const keepPending = entitled && existing?.pendingPlan && !pendingMatches;
+
   await prisma.user.update({
     where: { id: userId },
     data: {
       ...(customer ? { stripeCustomerId: customer } : {}),
       stripeSubscriptionId: entitled ? subscription.id : null,
+      stripeScheduleId: entitled ? scheduleIdOf(subscription.schedule) : null,
       plan: entitled ? paidPlan : UserPlan.FREE,
       planInterval: entitled ? interval : null,
       planExpiresAt: entitled ? subscriptionPeriodEnd(subscription) : null,
       cancelAtPeriodEnd: entitled ? Boolean(subscription.cancel_at_period_end) : false,
+      pendingPlan: keepPending ? existing?.pendingPlan : null,
+      pendingInterval: keepPending ? existing?.pendingInterval : null,
+      pendingChangeAt: keepPending ? existing?.pendingChangeAt : null,
     },
   });
 }
@@ -230,11 +275,20 @@ export async function handleStripeWebhook(rawBody: Buffer, signature: string | u
 export async function getBillingFlags(userId: string) {
   const row = await prisma.user.findUnique({
     where: { id: userId },
-    select: { stripeCustomerId: true, stripeSubscriptionId: true },
+    select: {
+      stripeCustomerId: true,
+      stripeSubscriptionId: true,
+      pendingPlan: true,
+      pendingInterval: true,
+      pendingChangeAt: true,
+    },
   });
   return {
     hasStripeCustomer: Boolean(row?.stripeCustomerId),
     subscribed: Boolean(row?.stripeSubscriptionId),
+    pendingPlan: row?.pendingPlan === UserPlan.PLUS || row?.pendingPlan === UserPlan.PRO ? row.pendingPlan : null,
+    pendingInterval: row?.pendingInterval ?? null,
+    pendingChangeAt: row?.pendingChangeAt ?? null,
   };
 }
 
@@ -334,9 +388,15 @@ export async function createCheckoutSession(
     customer_update: { name: 'auto' },
     success_url: returns.success,
     cancel_url: returns.cancel,
-    metadata: { userId: user.id },
+    metadata: { userId: user.id, plan },
+    custom_text: {
+      submit: {
+        message:
+          'Access starts as soon as payment succeeds. Cancelling later does not refund unused time.',
+      },
+    },
     subscription_data: {
-      metadata: { userId: user.id },
+      metadata: { userId: user.id, plan },
     },
   });
 
@@ -348,6 +408,58 @@ export async function createCheckoutSession(
   }
 
   return { url: session.url };
+}
+
+const PORTAL_META = 'no-refund-v1';
+let cachedPortalConfigId: string | null | undefined;
+
+function originFromClientUrl(): string {
+  return env.CLIENT_URL.replace(/\/$/, '');
+}
+
+async function portalConfigurationId(): Promise<string | undefined> {
+  if (cachedPortalConfigId !== undefined) {
+    return cachedPortalConfigId ?? undefined;
+  }
+  const stripe = getStripe();
+  const origin = originFromClientUrl();
+  try {
+    const listed = await stripe.billingPortal.configurations.list({ limit: 20, active: true });
+    const found = listed.data.find((row) => row.metadata?.mindkeep === PORTAL_META);
+    if (found) {
+      cachedPortalConfigId = found.id;
+      return found.id;
+    }
+    const created = await stripe.billingPortal.configurations.create({
+      business_profile: {
+        privacy_policy_url: `${origin}/privacy`,
+        terms_of_service_url: `${origin}/terms`,
+      },
+      features: {
+        customer_update: {
+          enabled: true,
+          allowed_updates: ['email', 'address', 'name'],
+        },
+        invoice_history: { enabled: true },
+        payment_method_update: { enabled: true },
+        subscription_cancel: {
+          enabled: true,
+          mode: 'at_period_end',
+          cancellation_reason: {
+            enabled: true,
+            options: ['too_expensive', 'missing_features', 'switched_service', 'unused', 'other'],
+          },
+        },
+        subscription_update: { enabled: false },
+      },
+      metadata: { mindkeep: PORTAL_META },
+    });
+    cachedPortalConfigId = created.id;
+    return created.id;
+  } catch {
+    cachedPortalConfigId = null;
+    return undefined;
+  }
 }
 
 export async function createPortalSession(userId: string, nativeClient = false): Promise<{ url: string }> {
@@ -366,9 +478,11 @@ export async function createPortalSession(userId: string, nativeClient = false):
   }
 
   try {
+    const configuration = await portalConfigurationId();
     const session = await getStripe().billingPortal.sessions.create({
       customer: user.stripeCustomerId,
       return_url: stripeReturnUrls(env.CLIENT_URL, nativeClient).portal,
+      ...(configuration ? { configuration } : {}),
     });
     return { url: session.url };
   } catch {
@@ -411,6 +525,243 @@ export async function syncCheckoutSession(userId: string, sessionId: string): Pr
   }
 
   await applyCheckoutSession(session);
+}
+
+async function requireActiveSubscription(userId: string): Promise<{
+  user: {
+    id: string;
+    plan: UserPlan;
+    planInterval: PlanInterval | null;
+    pendingPlan: UserPlan | null;
+    pendingInterval: PlanInterval | null;
+    stripeSubscriptionId: string;
+    stripeScheduleId: string | null;
+  };
+  subscription: Stripe.Subscription;
+}> {
+  if (!isStripeConfigured()) billingUnavailable();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      plan: true,
+      planInterval: true,
+      pendingPlan: true,
+      pendingInterval: true,
+      stripeSubscriptionId: true,
+      stripeScheduleId: true,
+    },
+  });
+
+  if (!user?.stripeSubscriptionId) {
+    throw new AppError('No active subscription on this account', {
+      statusCode: 400,
+      code: 'NO_SUBSCRIPTION',
+    });
+  }
+
+  const stripe = getStripe();
+  let subscription: Stripe.Subscription;
+  try {
+    subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+  } catch (error) {
+    if (isMissingStripeObject(error)) {
+      await clearDeadSubscription(user.id, false);
+      throw new AppError('No active subscription on this account', {
+        statusCode: 400,
+        code: 'NO_SUBSCRIPTION',
+      });
+    }
+    throw error;
+  }
+
+  if (!PRO_STATUSES.has(subscription.status)) {
+    await applySubscription(user.id, subscription);
+    throw new AppError('No active subscription on this account', {
+      statusCode: 400,
+      code: 'NO_SUBSCRIPTION',
+    });
+  }
+
+  return {
+    user: { ...user, stripeSubscriptionId: user.stripeSubscriptionId },
+    subscription,
+  };
+}
+
+async function releaseSchedule(stripe: Stripe, scheduleId: string | null | undefined): Promise<void> {
+  if (!scheduleId) return;
+  try {
+    await stripe.subscriptionSchedules.release(scheduleId);
+  } catch (error) {
+    const code = stripeErrorCode(error);
+    if (code === 'resource_missing' || isMissingStripeObject(error)) return;
+    const message = error instanceof Error ? error.message : '';
+    if (/already been released|canceled|completed/i.test(message)) return;
+    throw error;
+  }
+}
+
+async function ensureSchedule(
+  stripe: Stripe,
+  subscription: Stripe.Subscription,
+): Promise<Stripe.SubscriptionSchedule> {
+  const existingId = scheduleIdOf(subscription.schedule);
+  if (existingId) {
+    const existing = await stripe.subscriptionSchedules.retrieve(existingId);
+    if (existing.status === 'active' || existing.status === 'not_started') {
+      return existing;
+    }
+  }
+  return stripe.subscriptionSchedules.create({ from_subscription: subscription.id });
+}
+
+export async function schedulePlanChange(
+  userId: string,
+  plan: CheckoutPlan,
+  interval: 'month' | 'year',
+): Promise<void> {
+  if (plan === 'plus' && !isPlusStripeConfigured()) billingUnavailable();
+  const priceId = priceIdForPlan(plan, interval);
+  if (!priceId) billingUnavailable();
+
+  const { user, subscription } = await requireActiveSubscription(userId);
+  if (subscription.cancel_at_period_end) {
+    throw new AppError('Resume the subscription before changing plans', {
+      statusCode: 409,
+      code: 'CANCEL_PENDING',
+    });
+  }
+
+  const currentPrice = subscriptionPriceId(subscription);
+  const nextPlan = paidPlanFromCheckout(plan);
+  const nextInterval = intervalFromCheckout(interval);
+  if (currentPrice === priceId && user.plan === nextPlan && user.planInterval === nextInterval) {
+    throw new AppError('You are already on this plan', {
+      statusCode: 409,
+      code: 'SAME_PLAN',
+    });
+  }
+
+  if (user.pendingPlan === nextPlan && user.pendingInterval === nextInterval) {
+    return;
+  }
+
+  const periodEnd = subscriptionPeriodEnd(subscription);
+  if (!periodEnd || periodEnd.getTime() <= Date.now() + 60_000) {
+    throw new AppError('Could not schedule a plan change for this period', {
+      statusCode: 409,
+      code: 'CHANGE_UNAVAILABLE',
+    });
+  }
+
+  const stripe = getStripe();
+  const schedule = await ensureSchedule(stripe, subscription);
+  const currentPhase = schedule.phases[0];
+  if (!currentPhase) {
+    throw new AppError('Could not schedule a plan change for this period', {
+      statusCode: 409,
+      code: 'CHANGE_UNAVAILABLE',
+    });
+  }
+
+  const phasePrice = currentPhase.items[0]?.price;
+  const currentPhasePrice =
+    (typeof phasePrice === 'string'
+      ? phasePrice
+      : phasePrice && typeof phasePrice === 'object'
+        ? phasePrice.id
+        : null) ?? currentPrice;
+  if (!currentPhasePrice) {
+    throw new AppError('Could not schedule a plan change for this period', {
+      statusCode: 409,
+      code: 'CHANGE_UNAVAILABLE',
+    });
+  }
+
+  try {
+    await stripe.subscriptionSchedules.update(schedule.id, {
+      end_behavior: 'release',
+      phases: [
+        {
+          items: [{ price: currentPhasePrice, quantity: 1 }],
+          start_date: currentPhase.start_date,
+          end_date: unixSeconds(periodEnd),
+          proration_behavior: 'none',
+        },
+        {
+          items: [{ price: priceId, quantity: 1 }],
+          proration_behavior: 'none',
+        },
+      ],
+    });
+  } catch {
+    throw new AppError('Could not schedule a plan change for this period', {
+      statusCode: 502,
+      code: 'CHANGE_UNAVAILABLE',
+    });
+  }
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      stripeScheduleId: schedule.id,
+      pendingPlan: nextPlan,
+      pendingInterval: nextInterval,
+      pendingChangeAt: periodEnd,
+    },
+  });
+}
+
+export async function clearScheduledPlanChange(userId: string): Promise<void> {
+  const { user, subscription } = await requireActiveSubscription(userId);
+  const stripe = getStripe();
+  const scheduleId = user.stripeScheduleId || scheduleIdOf(subscription.schedule);
+  await releaseSchedule(stripe, scheduleId);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      stripeScheduleId: null,
+      pendingPlan: null,
+      pendingInterval: null,
+      pendingChangeAt: null,
+    },
+  });
+  const latest = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+  await applySubscription(user.id, latest);
+}
+
+export async function cancelSubscriptionAtPeriodEnd(userId: string): Promise<void> {
+  const { user, subscription } = await requireActiveSubscription(userId);
+  const stripe = getStripe();
+  const scheduleId = user.stripeScheduleId || scheduleIdOf(subscription.schedule);
+  await releaseSchedule(stripe, scheduleId);
+
+  const updated = await stripe.subscriptions.update(user.stripeSubscriptionId, {
+    cancel_at_period_end: true,
+    proration_behavior: 'none',
+  });
+  await applySubscription(user.id, updated);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      stripeScheduleId: null,
+      pendingPlan: null,
+      pendingInterval: null,
+      pendingChangeAt: null,
+      cancelAtPeriodEnd: true,
+    },
+  });
+}
+
+export async function resumeSubscription(userId: string): Promise<void> {
+  const { user } = await requireActiveSubscription(userId);
+  const stripe = getStripe();
+  const updated = await stripe.subscriptions.update(user.stripeSubscriptionId, {
+    cancel_at_period_end: false,
+  });
+  await applySubscription(user.id, updated);
 }
 
 export async function cancelStripeForDeletedUser(userId: string): Promise<void> {

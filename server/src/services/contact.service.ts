@@ -41,11 +41,20 @@ export class ContactService {
     const message = compact(input.message);
     const topicLabel = CONTACT_TOPIC_LABEL[input.topic];
     const to = inboxForTopic(input.topic);
+    const billingFlags =
+      input.topic === 'billing'
+        ? [
+            `Exceptional-refund acknowledgment: ${input.exceptionAck ? 'yes' : 'no'}`,
+            `Unused-time no-refund acknowledgment: ${input.noUnusedRefundAck ? 'yes' : 'no'}`,
+            'Default product rule: refuse unless duplicate charge, no access after payment, or a binding legal order.',
+          ]
+        : [];
     const text = [
       `Topic: ${topicLabel}`,
       `Inbox: ${to}`,
       `Name: ${name}`,
       `Email: ${email}`,
+      ...billingFlags,
       '',
       message,
     ].join('\n');
@@ -62,6 +71,12 @@ export class ContactService {
           ['Inbox', to],
           ['Name', name],
           ['Email', email],
+          ...(input.topic === 'billing'
+            ? ([
+                ['Exceptional refund ack', input.exceptionAck ? 'yes' : 'no'],
+                ['No unused-time refund ack', input.noUnusedRefundAck ? 'yes' : 'no'],
+              ] as Array<[string, string]>)
+            : []),
         ],
         message,
       ),

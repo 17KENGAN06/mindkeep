@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { billingApi } from '@/api/billing';
@@ -8,21 +9,41 @@ import { PublicHeader } from '@/components/layout/PublicHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/ui/Button';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { mapAuthError } from '@/features/auth/mapAuthError';
 import { useAuth } from '@/features/auth/useAuth';
 import { accountPlan } from '@/features/billing/planLimit';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 
+type PaidPlan = 'plus' | 'pro';
+
 export function PlansPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const queryClient = useQueryClient();
   const { isAuthenticated, user } = useAuth();
   const current = accountPlan(user);
   const [interval, setInterval] = useState<'month' | 'year'>('year');
-  const [busy, setBusy] = useState<'plus' | 'pro' | 'portal' | null>(null);
+  const [busy, setBusy] = useState<'plus' | 'pro' | 'portal' | 'clear' | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [switchTarget, setSwitchTarget] = useState<PaidPlan | null>(null);
 
-  const startCheckout = async (plan: 'plus' | 'pro') => {
+  const statusQuery = useQuery({
+    queryKey: ['billing', 'status'],
+    queryFn: () => billingApi.status(),
+    enabled: isAuthenticated,
+  });
+  const status = statusQuery.data;
+  const subscribed =
+    Boolean(status?.subscribed) ||
+    ((current === 'PLUS' || current === 'PRO') && user?.role !== 'ADMIN' && !user?.betaTester);
+  const expiresAt = status?.planExpiresAt ? new Date(status.planExpiresAt) : null;
+  const expiresLabel = expiresAt
+    ? expiresAt.toLocaleDateString(i18n.language, { dateStyle: 'medium' })
+    : t('plans.periodEnd');
+  const pendingPlan = status?.pendingPlan === 'PLUS' ? 'plus' : status?.pendingPlan === 'PRO' ? 'pro' : null;
+
+  const startCheckout = async (plan: PaidPlan) => {
     if (!isAuthenticated) return;
     setError(null);
     setBusy(plan);
@@ -47,28 +68,84 @@ export function PlansPage() {
     }
   };
 
-  const paidCta = (plan: 'plus' | 'pro', label: string) => {
-    if (current === 'PRO' || (plan === 'plus' && current === 'PLUS')) {
+  const confirmSwitch = async () => {
+    if (!switchTarget) return;
+    setError(null);
+    setBusy(switchTarget);
+    try {
+      await billingApi.change(switchTarget, interval);
+      await queryClient.invalidateQueries({ queryKey: ['billing'] });
+      setSwitchTarget(null);
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const clearPending = async () => {
+    setError(null);
+    setBusy('clear');
+    try {
+      await billingApi.clearChange();
+      await queryClient.invalidateQueries({ queryKey: ['billing'] });
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const paidCta = (plan: PaidPlan, label: string) => {
+    const isCurrent = (plan === 'plus' && current === 'PLUS') || (plan === 'pro' && current === 'PRO');
+    const pendingHere = pendingPlan === plan;
+
+    if (pendingHere) {
       return (
-        <Button type="button" variant="secondary" className="w-full sm:w-full" onClick={() => void openPortal()}>
-          {t('billing.manage')}
-        </Button>
+        <div className="space-y-3">
+          <p className="text-center text-sm font-medium text-ink">{t('plans.switchScheduled', { date: expiresLabel })}</p>
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full sm:w-full"
+            isLoading={busy === 'clear'}
+            disabled={busy !== null}
+            onClick={() => void clearPending()}
+          >
+            {t('plans.undoSwitch')}
+          </Button>
+        </div>
       );
     }
-    if (current === 'PLUS' && plan === 'pro') {
+
+    if (isCurrent && subscribed) {
       return (
         <Button
           type="button"
-          className="w-full gap-2 sm:w-full"
+          variant="secondary"
+          className="w-full sm:w-full"
           isLoading={busy === 'portal'}
           disabled={busy !== null}
           onClick={() => void openPortal()}
         >
-          {t('plans.upgrade')}
-          <ArrowRight className="h-4 w-4" aria-hidden />
+          {t('billing.manage')}
         </Button>
       );
     }
+
+    if (subscribed) {
+      return (
+        <Button
+          type="button"
+          className="w-full gap-2 sm:w-full"
+          disabled={busy !== null || Boolean(status?.cancelAtPeriodEnd)}
+          onClick={() => setSwitchTarget(plan)}
+        >
+          {t('plans.switchTo', { plan: plan === 'plus' ? t('plans.plus.name') : t('plans.pro.name') })}
+        </Button>
+      );
+    }
+
     if (!isAuthenticated) {
       return (
         <Link to="/register" className="block">
@@ -79,6 +156,7 @@ export function PlansPage() {
         </Link>
       );
     }
+
     return (
       <Button
         type="button"
@@ -92,6 +170,10 @@ export function PlansPage() {
       </Button>
     );
   };
+
+  const switchName = switchTarget === 'plus' ? t('plans.plus.name') : t('plans.pro.name');
+  const currentName =
+    current === 'PLUS' ? t('plans.plus.name') : current === 'PRO' ? t('plans.pro.name') : t('plans.free.name');
 
   return (
     <div className="min-h-dvh overflow-x-hidden">
@@ -134,9 +216,16 @@ export function PlansPage() {
           <ErrorMessage message={error ?? undefined} />
         </div>
 
+        {status?.cancelAtPeriodEnd ? (
+          <p className="mt-4 max-w-2xl rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">
+            {t('billing.cancelScheduled')}
+          </p>
+        ) : null}
+
         <div className="mt-8">
           <PlanCards
             currentPlan={current}
+            interval={interval}
             actions={{
               free: isAuthenticated ? (
                 <Link to="/dashboard" className="block">
@@ -157,10 +246,26 @@ export function PlansPage() {
           />
         </div>
 
-        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">{t('billing.paidInBrowser')}</p>
+        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">{t('plans.billingNote')}</p>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+          {t('plans.refundNote')}{' '}
+          <Link to="/refund" className="font-semibold text-brand-500 no-underline">
+            {t('footer.refund')}
+          </Link>
+        </p>
+        <SiteFooter embedded />
       </div>
 
-      <SiteFooter embedded />
+      <ConfirmDialog
+        open={switchTarget !== null}
+        title={t('plans.switchTitle', { plan: switchName })}
+        description={t('plans.switchConfirm', { plan: switchName, current: currentName, date: expiresLabel })}
+        confirmLabel={t('plans.switchConfirmCta')}
+        cancelLabel={t('common.cancel')}
+        isLoading={busy === 'plus' || busy === 'pro'}
+        onConfirm={() => void confirmSwitch()}
+        onCancel={() => setSwitchTarget(null)}
+      />
     </div>
   );
 }

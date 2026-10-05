@@ -3,7 +3,7 @@ import { billingController } from '@/controllers/billing.controller.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
-import { checkoutSchema, syncCheckoutSchema } from '@/validations/billing.schemas.js';
+import { changePlanSchema, checkoutSchema, syncCheckoutSchema } from '@/validations/billing.schemas.js';
 
 export const billingRouter = Router();
 
@@ -29,4 +29,25 @@ billingRouter.post(
   '/sync',
   validate(syncCheckoutSchema),
   asyncHandler((req, res) => billingController.sync(req, res)),
+);
+
+billingRouter.post(
+  '/change',
+  validate(changePlanSchema),
+  asyncHandler((req, res) => billingController.change(req, res)),
+);
+
+billingRouter.post(
+  '/change/clear',
+  asyncHandler((req, res) => billingController.clearChange(req, res)),
+);
+
+billingRouter.post(
+  '/cancel',
+  asyncHandler((req, res) => billingController.cancel(req, res)),
+);
+
+billingRouter.post(
+  '/resume',
+  asyncHandler((req, res) => billingController.resume(req, res)),
 );

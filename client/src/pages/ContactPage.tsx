@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BotGuard } from '@/components/auth/BotGuard';
 import { PublicHeader } from '@/components/layout/PublicHeader';
@@ -13,14 +13,17 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Textarea } from '@/components/ui/Textarea';
 import { contactApi } from '@/api/contact';
-import { CONTACT_INBOX, inboxForTopic, type ContactTopic } from '@/config/contact';
+import { CONTACT_INBOX, CONTACT_TOPICS, inboxForTopic, type ContactTopic } from '@/config/contact';
 import { mapContactError } from '@/features/contact/mapContactError';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { createContactFormSchema, type ContactFormValues } from '@/schemas/contact';
 
 export function ContactPage() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const schema = createContactFormSchema(t);
+  const presetTopic = searchParams.get('topic');
+  const initialTopic = presetTopic && CONTACT_TOPICS.includes(presetTopic as ContactTopic) ? presetTopic : '';
   const [botToken, setBotToken] = useState<string | null>(null);
   const [humanChecked, setHumanChecked] = useState(false);
   const [botError, setBotError] = useState<string | undefined>();
@@ -36,10 +39,12 @@ export function ContactPage() {
   } = useForm<ContactFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      topic: '',
+      topic: initialTopic,
       name: '',
       email: '',
       message: '',
+      exceptionAck: false,
+      noUnusedRefundAck: false,
       website: '',
     },
   });
@@ -67,6 +72,8 @@ export function ContactPage() {
         name: values.name.trim(),
         email: values.email.trim(),
         message: values.message.trim(),
+        exceptionAck: values.exceptionAck,
+        noUnusedRefundAck: values.noUnusedRefundAck,
         botToken,
         website: values.website ?? '',
       });
@@ -109,6 +116,14 @@ export function ContactPage() {
               <p className="mt-2 text-sm leading-relaxed text-muted">{t('contact.supportBody')}</p>
               <p className="mt-3 break-all text-sm font-medium text-brand-500">{CONTACT_INBOX.support}</p>
             </a>
+            <Link
+              to="/refund"
+              className="glass-panel rounded-2xl p-5 no-underline transition hover:ring-1 hover:ring-brand-300 sm:col-span-2 xl:col-span-1"
+            >
+              <p className="text-sm font-semibold text-ink">{t('contact.billingTitle')}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{t('contact.billingBody')}</p>
+              <p className="mt-3 text-sm font-medium text-brand-500">{t('footer.refund')}</p>
+            </Link>
           </div>
 
           <Reveal delayMs={80}>
@@ -139,6 +154,7 @@ export function ContactPage() {
                         { value: 'partnership', label: t('contact.topics.partnership') },
                         { value: 'bug', label: t('contact.topics.bug') },
                         { value: 'question', label: t('contact.topics.question') },
+                        { value: 'billing', label: t('contact.topics.billing') },
                       ]}
                       name={field.name}
                       value={field.value ?? ''}
@@ -163,14 +179,48 @@ export function ContactPage() {
                   error={errors.email?.message}
                   {...register('email')}
                 />
+                {topic === 'billing' ? (
+                  <div className="space-y-3 rounded-2xl bg-brand-50/70 p-4 text-sm leading-relaxed text-ink ring-1 ring-brand-500/20">
+                    <p>{t('contact.billingWarning')}</p>
+                    <Link to="/refund" className="font-semibold text-brand-500 no-underline">
+                      {t('footer.refund')}
+                    </Link>
+                  </div>
+                ) : null}
+
                 <Textarea
                   label={t('contact.fields.message')}
-                  placeholder={t('contact.placeholders.message')}
+                  placeholder={
+                    topic === 'billing' ? t('contact.placeholders.billing') : t('contact.placeholders.message')
+                  }
                   rows={8}
                   className="min-h-40"
                   error={errors.message?.message}
                   {...register('message')}
                 />
+
+                {topic === 'billing' ? (
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-3 text-sm leading-relaxed text-ink">
+                      <input type="checkbox" className="mt-1 h-4 w-4 accent-brand-500" {...register('exceptionAck')} />
+                      <span>{t('contact.billing.exceptionAck')}</span>
+                    </label>
+                    {errors.exceptionAck?.message ? (
+                      <p className="text-sm text-red-700">{errors.exceptionAck.message}</p>
+                    ) : null}
+                    <label className="flex items-start gap-3 text-sm leading-relaxed text-ink">
+                      <input
+                        type="checkbox"
+                        className="mt-1 h-4 w-4 accent-brand-500"
+                        {...register('noUnusedRefundAck')}
+                      />
+                      <span>{t('contact.billing.noUnusedRefundAck')}</span>
+                    </label>
+                    {errors.noUnusedRefundAck?.message ? (
+                      <p className="text-sm text-red-700">{errors.noUnusedRefundAck.message}</p>
+                    ) : null}
+                  </div>
+                ) : null}
 
                 <input
                   type="text"

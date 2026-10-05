@@ -65,6 +65,14 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('billing.alreadyPro');
     case 'BILLING_CUSTOMER_MISSING':
       return t('billing.customerMissing');
+    case 'NO_SUBSCRIPTION':
+      return t('billing.noSubscription');
+    case 'SAME_PLAN':
+      return t('billing.samePlan');
+    case 'CANCEL_PENDING':
+      return t('billing.cancelBeforeChange');
+    case 'CHANGE_UNAVAILABLE':
+      return t('billing.changeUnavailable');
     case 'STRIPE_CHECKOUT_FAILED':
     case 'STRIPE_SESSION_MISMATCH':
       return t('billing.checkoutFailed');

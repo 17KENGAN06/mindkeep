@@ -34,7 +34,7 @@ export function ConfirmDialog({
         <h2 id="confirm-dialog-title" className="text-lg font-semibold text-ink">
           {title}
         </h2>
-        <p className="mt-2 text-sm text-muted">{description}</p>
+        <p className="mt-2 whitespace-pre-line text-sm text-muted">{description}</p>
         <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <Button type="button" variant="secondary" onClick={onCancel} disabled={isLoading}>
             {cancelLabel}

@@ -1,4 +1,4 @@
-export const CONTACT_TOPICS = ['partnership', 'bug', 'question'] as const;
+export const CONTACT_TOPICS = ['partnership', 'bug', 'question', 'billing'] as const;
 
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
@@ -17,11 +17,12 @@ export const CONTACT_INBOX = {
 } as const;
 
 export function inboxForTopic(topic: ContactTopic): string {
-  return topic === 'bug' ? MINDKEEP_ADMIN : MINDKEEP_CONTACT;
+  return topic === 'bug' || topic === 'billing' ? MINDKEEP_ADMIN : MINDKEEP_CONTACT;
 }
 
 export const CONTACT_TOPIC_LABEL: Record<ContactTopic, string> = {
   partnership: 'Partnership / collaboration',
   bug: 'Bug report',
   question: 'Question',
+  billing: 'Billing / exceptional refund',
 };

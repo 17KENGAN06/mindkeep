@@ -97,10 +97,14 @@ model User {
   emailVerified Boolean @default(true)
   stripeCustomerId     String?       @unique
   stripeSubscriptionId String?       @unique
+  stripeScheduleId     String?       @unique
   plan                 UserPlan      @default(FREE)
   planInterval         PlanInterval?
   planExpiresAt        DateTime?
   cancelAtPeriodEnd    Boolean       @default(false)
+  pendingPlan          UserPlan?
+  pendingInterval      PlanInterval?
+  pendingChangeAt      DateTime?
   betaTester           Boolean       @default(false)
   onboardingCompletedAt DateTime?
   enabledModules        String[]     @default([])

@@ -1249,7 +1249,11 @@
       "account": "Tili · Mindkeep",
       "onboarding": "Pika-asetus · Mindkeep",
       "settings": "Asetukset · Mindkeep",
-      "billingReturn": "Takaisin MindKeepiin · Mindkeep"
+      "billingReturn": "Takaisin MindKeepiin · Mindkeep",
+      "terms": "Käyttöehdot · Mindkeep",
+      "cookies": "Evästekäytäntö · Mindkeep",
+      "refund": "Tilaus ja palautukset · Mindkeep",
+      "plans": "Paketit · Mindkeep"
     }
   },
   "footer": {
@@ -1270,7 +1274,10 @@
     "paymentsLabel": "Maksut",
     "paymentsVia": "Korttimaksu Stripen kautta.",
     "paymentsAria": "Hyväksytyt kortit: Visa, Mastercard ja American Express. Maksut käsittelee Stripe.",
-    "paymentsStripe": "Stripe"
+    "paymentsStripe": "Stripe",
+    "terms": "Ehdot",
+    "cookies": "Evästeet",
+    "refund": "Palautukset"
   },
   "contact": {
     "eyebrow": "Studio",
@@ -1288,12 +1295,14 @@
     },
     "placeholders": {
       "topic": "Valitse aihe",
-      "message": "Kirjoita muutama rivi, jotta voimme auttaa."
+      "message": "Kirjoita muutama rivi, jotta voimme auttaa.",
+      "billing": "Kuvaile poikkeuksellinen maksuvirhe tai oikeusperuste yksityiskohtaisesti. «Muutin mieleni» ei riitä."
     },
     "topics": {
       "partnership": "Yhteistyö",
       "bug": "Löysin virheen",
-      "question": "Minulla on kysymys"
+      "question": "Minulla on kysymys",
+      "billing": "Poikkeuksellinen maksu- / palautuspyyntö"
     },
     "destination": "Tämä viesti lähetetään osoitteeseen {{email}}",
     "send": "Lähetä",
@@ -1308,7 +1317,17 @@
       "messageMax": "Viesti on liian pitkä",
       "validation": "Tarkista lomake ja yritä uudelleen",
       "generic": "Viestiä ei voitu lähettää",
-      "unavailable": "Lomake ei ole juuri nyt käytössä. Kirjoita suoraan yllä olevaan osoitteeseen."
+      "unavailable": "Lomake ei ole juuri nyt käytössä. Kirjoita suoraan yllä olevaan osoitteeseen.",
+      "billingMessageMin": "Maksuissa vähintään 400 merkkiä. Lyhyet pyynnöt evätään.",
+      "exceptionAck": "Vahvista, että olet lukenut palautuskäytännön.",
+      "noUnusedRefundAck": "Vahvista, että käyttämätöntä aikaa ei palauteta."
+    },
+    "billingTitle": "Maksut",
+    "billingBody": "Peru milloin tahansa tilillä. Käyttämätöntä aikaa ei palauteta. Poikkeukset vain palautuskäytännön mukaan.",
+    "billingWarning": "Peruutus ei palauta rahaa. Palautus evätään paitsi todistetussa tuplaveloituksessa, maksussa ilman käyttöoikeutta tai sitovassa määräyksessä. Useimmat viestit suljetaan ilman palautusta.",
+    "billing": {
+      "exceptionAck": "Olen lukenut tilaus- ja palautuskäytännön. Palautus on poikkeus, ei peruutuksesta seuraava oikeus.",
+      "noUnusedRefundAck": "En pyydä käyttämättömiä päiviä takaisin peruutuksen tai paketin vaihdon jälkeen."
     }
   },
   "notFound": {
@@ -1320,7 +1339,7 @@
   "privacy": {
     "eyebrow": "Oikeudellinen",
     "title": "Tietosuojaseloste",
-    "updated": "Päivitetty: 4 October 2026",
+    "updated": "Päivitetty: 5. lokakuuta 2026",
     "intro": "Tämä seloste kertoo, mitä tietoja Mindkeep kerää, miksi niitä tarvitaan ja miten suojaamme niitä. Käyttämällä palvelua hyväksyt alla kuvatut käytännöt.",
     "contactLabel": "Tietopyynnöt:",
     "sections": [
@@ -1458,11 +1477,11 @@
     "manage": "Hallinnoi tilausta",
     "renews": "Uusitaan {{date}}",
     "ends": "Käyttö {{date}} asti",
-    "cancelScheduled": "Peruutus on ajastettu. Pro pysyy jakson loppuun.",
+    "cancelScheduled": "Peruutus on ajastettu. Käyttöoikeus jatkuu kauden loppuun. Käyttämättömiä päiviä ei palauteta.",
     "success": "Maksu vastaanotettu. Pro on päällä.",
     "canceled": "Maksu peruutettiin. Mitään ei veloitettu.",
     "unavailable": "Maksuja ei ole vielä kytketty.",
-    "alreadyPro": "Tällä tilillä on jo Pro.",
+    "alreadyPro": "Tällä tilillä on jo maksullinen paketti.",
     "customerMissing": "Tilaa ensin.",
     "checkoutFailed": "Maksua ei voitu avata. Yritä uudelleen.",
     "of": "{{used}} / {{limit}}",
@@ -1500,7 +1519,7 @@
     "ctaMonth": "Valitse kuukausi",
     "usageTitle": "Free-suunnitelman rajat",
     "usageLead": "Nämä katot ovat voimassa kunnes tilaat. Pro poistaa ne.",
-    "proUnlocked": "Määrärajoitukset on poistettu tältä tililtä.",
+    "proUnlocked": "Määrärajoitukset ovat poissa. Myöhempi peruutus ei palauta jäljellä olevaa aikaa.",
     "remain": "{{left}} / {{limit}} jäljellä",
     "remainDays": "Viimeiset {{count}} pv",
     "paidInBrowser": "Korttimaksu avautuu selaimessa. Sama Pro toimii sen jälkeen sovelluksessa ja sivustolla.",
@@ -1510,7 +1529,20 @@
     "returnPortal": "Tilauksen muutokset on tallennettu. Voit palata sovellukseen.",
     "openApp": "Avaa sovellus",
     "stayOnSite": "Jää sivustolle",
-    "plusLabel": "Plus"
+    "plusLabel": "Plus",
+    "cancelCta": "Pysäytä uusiminen",
+    "cancelHint": "Käyttöoikeus jatkuu jo maksettuun päivään. Jäljellä olevia päiviä ei palauteta. Poikkeukset: palautuskäytäntö.",
+    "cancelTitle": "Pysäytetäänkö uusiminen ilman palautusta?",
+    "cancelConfirm": "Käyttöoikeus jatkuu {{date}} asti. Sitten Free. Emme palauta jäljellä olevia päiviä, mielenmuutosta emmekä vähän käytettyä pakettia. Tämä ei ole Stripe-palautus.",
+    "cancelConfirmCta": "Pysäytä uusiminen, ei rahaa takaisin",
+    "cancelDone": "Uusiminen pysäytetty. Käyttöoikeus maksettuun päivään.",
+    "resumeCta": "Pidä tilaus",
+    "resumeDone": "Uusiminen on taas päällä.",
+    "pendingSwitch": "{{plan}} alkaa {{date}}. Siihen asti säilyy jo maksettu paketti. Käyttämätöntä aikaa ei palauteta.",
+    "noSubscription": "Tällä tilillä ei ole maksullista tilausta.",
+    "samePlan": "Olet jo tällä paketilla.",
+    "cancelBeforeChange": "Pidä tilaus ensin, vaihda paketti sen jälkeen.",
+    "changeUnavailable": "Paketin vaihtoa ei voitu ajastaa. Yritä myöhemmin."
   },
   "onboarding": {
     "eyebrow": "Pika-asetus",
@@ -1577,7 +1609,7 @@
     "ctaMonth": "Maksa kuukausittain",
     "current": "Sinun tasosi",
     "viewPlans": "Katso tilaukset",
-    "upgrade": "Siirry Prohon",
+    "upgrade": "Siirry Prohon tämän kauden jälkeen",
     "accountLead": "Plus poistaa rajat. Pro skannaa myös ruoat ja kuitit kuvasta.",
     "payHow": "Maksu",
     "intervalYear": "Vuosi",
@@ -1618,7 +1650,8 @@
       "without": [
         "Aterian skannaus kuvasta",
         "Kuitin skannaus Budjettiin"
-      ]
+      ],
+      "monthCharged": "€4.99 joka kuukausi"
     },
     "pro": {
       "name": "Pro",
@@ -1632,7 +1665,199 @@
       "unlocks": [
         "Skannaa ateria kuvasta puhelimella",
         "Skannaa kuitti Budjettiin ja valitse käteinen tai kortti"
-      ]
-    }
+      ],
+      "monthCharged": "€7.99 joka kuukausi"
+    },
+    "periodEnd": "tämän kauden lopussa",
+    "switchTo": "Siirry pakettiin {{plan}} tämän kauden jälkeen",
+    "switchTitle": "Siirrytäänkö pakettiin {{plan}} myöhemmin?",
+    "switchConfirm": "{{plan}} alkaa {{date}}. Siihen asti säilyy {{current}}. Hinta ja toiminnot eivät muutu tänään. Jäljellä olevia päiviä ei palauteta.",
+    "switchConfirmCta": "Ajasta vaihto",
+    "switchScheduled": "{{date}} alkaen",
+    "undoSwitch": "Pidä nykyinen paketti",
+    "billingNote": "Korttimaksu avautuu selaimessa. Sama paketti toimii sen jälkeen sivustolla ja sovelluksessa.",
+    "refundNote": "Pysäytä uusiminen tilillä. Käyttöoikeus maksettuun päivään. Käyttämätöntä aikaa ei palauteta."
+  },
+  "terms": {
+    "eyebrow": "Lakitekstit",
+    "title": "Käyttöehdot",
+    "updated": "Päivitetty: 5. lokakuuta 2026",
+    "intro": "Nämä ehdot koskevat Mindkeepiä, digitaalista henkilökohtaista työtilaa osoitteessa mindkeep.cloud ja MindKeep-sovelluksissa.",
+    "contactLabel": "Lakikysymykset:",
+    "sections": [
+      {
+        "title": "1. Who we are",
+        "body": [
+          "Mindkeep is operated by WEISEZAHOY studio.",
+          "Contact: contact@mindkeep.cloud. Product defects: admin@mindkeep.cloud."
+        ]
+      },
+      {
+        "title": "2. The service",
+        "body": [
+          "Mindkeep is a digital service: tasks, review, notes, habits, budget, and nutrition in one account.",
+          "Free includes all modules with quantity caps. Plus lifts those caps. Pro adds photo scan for meals and receipts.",
+          "We may change features, caps, and prices with notice on the site. Paid time already purchased is not extended because of a later price drop."
+        ]
+      },
+      {
+        "title": "3. Accounts",
+        "body": [
+          "You must provide a real email you control and keep it accurate.",
+          "You are responsible for activity on your account. Tell us at admin@mindkeep.cloud if you lose access.",
+          "We may suspend or delete an account that is abusive, fraudulent, or a risk to the service."
+        ]
+      },
+      {
+        "title": "4. Paid plans",
+        "body": [
+          "Paid plans are sold as subscriptions through Stripe Checkout on the website. There is no trial.",
+          "Access to paid features starts as soon as payment succeeds.",
+          "A plan change takes effect after the current paid period ends. Cancel stops the next renewal only. Unused time is not refunded. Details are in the Subscription & Refund Policy."
+        ]
+      },
+      {
+        "title": "5. Acceptable use",
+        "body": [
+          "Do not scan content you have no right to process, attack the service, scrape at scale, or upload malware.",
+          "Food and receipt scans are for your own records. They are estimates, not professional tax, medical, or nutrition advice."
+        ]
+      },
+      {
+        "title": "6. Availability and liability",
+        "body": [
+          "We aim for a reliable service but do not promise uninterrupted access or error-free scans.",
+          "To the fullest extent allowed by law, Mindkeep is provided as-is. We are not liable for lost data, lost profits, or indirect loss, except where liability cannot be excluded (including death, personal injury from negligence, or fraud).",
+          "If you are a consumer in the EU/EEA, these terms do not take away rights you cannot waive."
+        ]
+      },
+      {
+        "title": "7. Intellectual property",
+        "body": [
+          "The Mindkeep product, brand, and design belong to the operator. You keep the content you add.",
+          "You grant us a limited licence to host that content only to run the service for you."
+        ]
+      },
+      {
+        "title": "8. Changes and contact",
+        "body": [
+          "We may update these terms. The date on this page is the current version.",
+          "Questions: contact@mindkeep.cloud."
+        ]
+      }
+    ]
+  },
+  "cookies": {
+    "eyebrow": "Lakitekstit",
+    "title": "Evästekäytäntö",
+    "updated": "Päivitetty: 5. lokakuuta 2026",
+    "intro": "Miten Mindkeep käyttää evästeitä. Ei mainosevästeitä, ei selailutietojen myyntiä.",
+    "contactLabel": "Evästekysymykset:",
+    "sections": [
+      {
+        "title": "1. What we use",
+        "body": [
+          "Essential cookies keep you signed in on the website (a secure session) and help stop cross-site request forgery.",
+          "Without them, the signed-in workspace cannot run. They are not used to profile you for ads."
+        ]
+      },
+      {
+        "title": "2. Local storage",
+        "body": [
+          "The browser may keep interface language and theme locally so the product looks the same next time.",
+          "That storage stays on your device. You can clear it in the browser; you may need to choose language and theme again."
+        ]
+      },
+      {
+        "title": "3. Payments",
+        "body": [
+          "When you open Stripe Checkout, Stripe may set its own cookies on Stripe’s pages to process the card, prevent fraud, and complete 3-D Secure.",
+          "Those cookies are controlled by Stripe, not by Mindkeep. See Stripe’s cookie documentation."
+        ]
+      },
+      {
+        "title": "4. What we do not use",
+        "body": [
+          "We do not run advertising networks, social tracking pixels, or cross-site marketing cookies on mindkeep.cloud.",
+          "Scan photos are processed and discarded as described in the Privacy Policy — they are not stored as cookies."
+        ]
+      },
+      {
+        "title": "5. Your controls",
+        "body": [
+          "You can block cookies in the browser. Blocking essential cookies will sign you out and may prevent login.",
+          "For more on data, read the Privacy Policy."
+        ]
+      }
+    ]
+  },
+  "refund": {
+    "eyebrow": "Lakitekstit",
+    "title": "Tilaus ja palautukset",
+    "updated": "Päivitetty: 5. lokakuuta 2026",
+    "intro": "Mindkeep on digitaalinen palvelu. Käyttöoikeus alkaa maksun onnistuttua. Sääntö: voit pysäyttää seuraavan uusimisen; jo maksettua aikaa ei palauteta.",
+    "contactLabel": "Poikkeuksellinen maksutarkistus:",
+    "requestCta": "Avaa poikkeuslomake",
+    "sections": [
+      {
+        "title": "1. How billing works",
+        "body": [
+          "Plans are billed in euro through Stripe on the website. There is no free trial.",
+          "Monthly and yearly prices are shown on /plans. Yearly is charged once for the year; monthly is charged every month.",
+          "The same paid plan then works on the website and in the app."
+        ]
+      },
+      {
+        "title": "2. When paid access starts",
+        "body": [
+          "Paid features are supplied immediately after a successful payment.",
+          "By paying you ask us to start the digital service at once. You acknowledge that this can exhaust the EU 14-day right of withdrawal for digital services supplied immediately (Consumer Rights Directive, Article 16(m)), where that right would otherwise apply."
+        ]
+      },
+      {
+        "title": "3. How to cancel",
+        "body": [
+          "Cancel in Account → Stop renewal, or in the Stripe customer portal. Cancellation is always at the end of the current period.",
+          "You keep Plus or Pro until the date already paid. After that the account returns to Free caps.",
+          "Stopping renewal is not a refund. Stripe is not asked to return the last payment."
+        ]
+      },
+      {
+        "title": "4. No refund of unused time",
+        "body": [
+          "We do not refund remaining days, unused features, a plan you barely used, forgetting to cancel, buying the wrong interval, or switching Plus ↔ Pro.",
+          "A scheduled plan change starts only after the current period. You keep what you paid for until that date. There is no credit and no partial chargeback through the product."
+        ]
+      },
+      {
+        "title": "5. The only exceptional refunds",
+        "body": [
+          "We may refund, at our review, only if: (a) Stripe charged the same purchase twice; (b) payment succeeded but paid access never unlocked and we cannot repair it; or (c) a competent authority or binding consumer law requires it.",
+          "Change of mind, unused days, “I found a cheaper app”, and “I want money back in Stripe” are not exceptional cases. They are refused."
+        ]
+      },
+      {
+        "title": "6. How a review is requested (this is intentionally slow)",
+        "body": [
+          "There is no refund button in Account, in the app, or in Stripe Checkout. We do not expose a customer refund API.",
+          "If you believe an exceptional case applies, open Contact, choose the billing topic, tick both acknowledgments, and write at least 400 characters with dates, the Stripe receipt email, and proof of the duplicate or missing access.",
+          "Incomplete, short, or “please refund unused days” messages are closed without a refund. We may take two weeks or longer. Most requests are refused. If we agree, we issue the refund ourselves through Stripe — you cannot self-serve it."
+        ]
+      },
+      {
+        "title": "7. Chargebacks",
+        "body": [
+          "If you open a card dispute while you still have access, we may pause or close the account and send Stripe evidence of the digital supply and this policy.",
+          "Use Account to stop renewal instead of a dispute unless there is a true unauthorised charge."
+        ]
+      },
+      {
+        "title": "8. Consumers in the EU/EEA",
+        "body": [
+          "Nothing in this policy takes away a consumer right you cannot legally waive.",
+          "Where the law still requires a withdrawal after digital supply has started, we will follow that law. That is not the same as a goodwill refund for unused subscription days."
+        ]
+      }
+    ]
   }
 }

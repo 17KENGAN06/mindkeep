@@ -6,11 +6,15 @@ import {
   createPortalSession,
   getBillingFlags,
   handleStripeWebhook,
+  schedulePlanChange,
+  clearScheduledPlanChange,
+  cancelSubscriptionAtPeriodEnd,
+  resumeSubscription,
   syncCheckoutSession,
 } from '@/services/billing.service.js';
 import { getUsageSnapshot } from '@/services/entitlements.service.js';
 import { AppError } from '@/utils/AppError.js';
-import type { CheckoutInput, SyncCheckoutInput } from '@/validations/billing.schemas.js';
+import type { ChangePlanInput, CheckoutInput, SyncCheckoutInput } from '@/validations/billing.schemas.js';
 
 function requireUserId(req: Request): string {
   if (!req.user) {
@@ -70,6 +74,27 @@ export class BillingController {
     await syncCheckoutSession(userId, input.sessionId);
     const user = await authService.me(userId);
     res.status(200).json({ user });
+  }
+
+  async change(req: Request, res: Response): Promise<void> {
+    const input = req.body as ChangePlanInput;
+    await schedulePlanChange(requireUserId(req), input.plan, input.interval);
+    res.status(200).json({ ok: true });
+  }
+
+  async clearChange(req: Request, res: Response): Promise<void> {
+    await clearScheduledPlanChange(requireUserId(req));
+    res.status(200).json({ ok: true });
+  }
+
+  async cancel(req: Request, res: Response): Promise<void> {
+    await cancelSubscriptionAtPeriodEnd(requireUserId(req));
+    res.status(200).json({ ok: true });
+  }
+
+  async resume(req: Request, res: Response): Promise<void> {
+    await resumeSubscription(requireUserId(req));
+    res.status(200).json({ ok: true });
   }
 
   async webhook(req: Request, res: Response): Promise<void> {
