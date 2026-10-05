@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { parseTaskImport } from '@/features/tasks/parseTaskImport';
@@ -68,10 +70,11 @@ export function TaskImportDialog({
   const cardSep = cardChoice === 'newline' ? '\n' : cardChoice === 'semicolon' ? ';' : cardCustom;
   const parsed = useMemo(() => parseTaskImport(text, pairSep, cardSep), [text, pairSep, cardSep]);
 
+  useLockBodyScroll(open);
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">
+  return createPortal(
+    <div className="fixed inset-0 z-[90] flex items-end justify-center bg-ink/40 p-4 overscroll-none sm:items-center">
       <form
         role="dialog"
         aria-modal="true"
@@ -192,6 +195,7 @@ export function TaskImportDialog({
           </Button>
         </div>
       </form>
-    </div>
+    </div>,
+    document.body,
   );
 }

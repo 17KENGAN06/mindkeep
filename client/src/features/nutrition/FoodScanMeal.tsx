@@ -1,5 +1,6 @@
 import { Camera, Images, LoaderCircle, X } from 'lucide-react';
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
@@ -16,6 +17,7 @@ import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
 import type { MealKind } from '@/features/nutrition/mealKinds';
 import { useCreateMeal } from '@/features/nutrition/useNutrition';
 import { usePhoneViewport } from '@/features/nutrition/usePhoneViewport';
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 
 const MAX_PHOTOS = 3;
 
@@ -82,6 +84,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   const [review, setReview] = useState<ReviewState | null>(null);
   const automation = hasAutomation(user);
   const canScan = phone && automation;
+  useLockBodyScroll(preparing || review !== null);
 
   const photosRef = useRef<PickedPhoto[]>([]);
   photosRef.current = photos;
@@ -113,8 +116,16 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
     setPreparing(true);
   };
 
-  const addFiles = (list: FileList | File[]) => {
-    const incoming = Array.from(list).filter((file) => file.type.startsWith('image/'));
+  const addFiles = (list: File[]) => {
+    const incoming = list
+      .filter((file) => !file.type || file.type.startsWith('image/'))
+      .map(
+        (file) =>
+          new File([file], file.name || 'photo.jpg', {
+            type: file.type || 'image/jpeg',
+            lastModified: file.lastModified,
+          }),
+      );
     if (incoming.length === 0) return;
     setError(null);
     setPhotos((current) => {
@@ -129,9 +140,9 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   };
 
   const onFileInput = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
+    const files = Array.from(event.target.files ?? []);
     event.target.value = '';
-    if (files && files.length > 0) addFiles(files);
+    if (files.length > 0) addFiles(files);
   };
 
   const removePhoto = (id: string) => {
@@ -215,7 +226,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
           <input
             ref={cameraRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp,image/*"
+            accept="image/*"
             capture="environment"
             className="sr-only"
             onChange={onFileInput}
@@ -223,7 +234,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
           <input
             ref={galleryRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp,image/*"
+            accept="image/*"
             multiple
             className="sr-only"
             onChange={onFileInput}
@@ -278,15 +289,17 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
       <p className="text-xs text-muted">{hint}</p>
       <ErrorMessage message={!preparing && !review ? error ?? undefined : undefined} />
 
-      {preparing ? (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">
+      {preparing
+        ? createPortal(
+            <div className="fixed inset-0 z-[90] flex items-end justify-center bg-ink/40 p-4 overscroll-none sm:items-center">
           <form
             role="dialog"
             aria-modal="true"
             aria-labelledby="food-scan-prepare-title"
-            className="w-full max-w-md space-y-4 rounded-2xl bg-panel p-5 shadow-lg"
+            className="flex max-h-[90dvh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
             onSubmit={(event) => void onEstimate(event)}
           >
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain pr-0.5">
             <div>
               <h3 id="food-scan-prepare-title" className="text-lg font-semibold text-ink">
                 {t('calories.scan.prepareTitle')}
@@ -360,7 +373,8 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             </div>
             <p className="text-xs text-muted">{t('calories.scan.privacy')}</p>
             <ErrorMessage message={error ?? undefined} />
-            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            </div>
+            <div className="mt-4 flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <Button type="button" variant="secondary" onClick={closePrepare} disabled={analyzing}>
                 {t('calories.scan.cancel')}
               </Button>
@@ -369,46 +383,51 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
               </Button>
             </div>
           </form>
-        </div>
-      ) : null}
+        </div>,
+        document.body,
+      )
+      : null}
 
-      {review ? (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">
+      {review
+        ? createPortal(
+            <div className="fixed inset-0 z-[90] flex items-end justify-center bg-ink/40 p-4 overscroll-none sm:items-center">
           <form
             role="dialog"
             aria-modal="true"
             aria-labelledby="food-scan-review-title"
-            className="w-full max-w-md space-y-4 rounded-2xl bg-panel p-5 shadow-lg"
+            className="flex max-h-[90dvh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
             onSubmit={(event) => void onConfirm(event)}
           >
-            <div>
-              <h3 id="food-scan-review-title" className="text-lg font-semibold text-ink">
-                {t('calories.scan.reviewTitle')}
-              </h3>
-              <p className="mt-1 text-sm text-muted">{t('calories.scan.reviewHint')}</p>
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain">
+              <div>
+                <h3 id="food-scan-review-title" className="text-lg font-semibold text-ink">
+                  {t('calories.scan.reviewTitle')}
+                </h3>
+                <p className="mt-1 text-sm text-muted">{t('calories.scan.reviewHint')}</p>
+              </div>
+              <MealKindPicker
+                value={review.kind}
+                pro={automation}
+                onChange={(kind) => setReview({ ...review, kind })}
+              />
+              <Input
+                label={t('calories.mealTitle')}
+                value={review.mealName}
+                onChange={(event) => setReview({ ...review, mealName: event.target.value })}
+                autoComplete="off"
+              />
+              <Input
+                label={t('calories.mealCalories')}
+                type="number"
+                min="1"
+                max="10000"
+                value={review.totalCalories}
+                onChange={(event) => setReview({ ...review, totalCalories: event.target.value })}
+              />
+              <p className="text-xs text-muted">{t('calories.scan.privacy')}</p>
+              <ErrorMessage message={error ?? undefined} />
             </div>
-            <MealKindPicker
-              value={review.kind}
-              pro={automation}
-              onChange={(kind) => setReview({ ...review, kind })}
-            />
-            <Input
-              label={t('calories.mealTitle')}
-              value={review.mealName}
-              onChange={(event) => setReview({ ...review, mealName: event.target.value })}
-              autoComplete="off"
-            />
-            <Input
-              label={t('calories.mealCalories')}
-              type="number"
-              min="1"
-              max="10000"
-              value={review.totalCalories}
-              onChange={(event) => setReview({ ...review, totalCalories: event.target.value })}
-            />
-            <p className="text-xs text-muted">{t('calories.scan.privacy')}</p>
-            <ErrorMessage message={error ?? undefined} />
-            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <div className="mt-4 flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <Button
                 type="button"
                 variant="secondary"
@@ -422,8 +441,10 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
               </Button>
             </div>
           </form>
-        </div>
-      ) : null}
+        </div>,
+        document.body,
+      )
+      : null}
     </div>
   );
 }

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 import type { AppLanguage } from '@/i18n';
 import { formatMonthTitle, monthCells, weekdayLabels } from '@/utils/date';
 
@@ -60,10 +62,11 @@ export function TaskCopyDialog({
     });
   };
 
+  useLockBodyScroll(open);
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">
+  return createPortal(
+    <div className="fixed inset-0 z-[90] flex items-end justify-center bg-ink/40 p-4 overscroll-none sm:items-center">
       <form
         role="dialog"
         aria-modal="true"
@@ -157,6 +160,7 @@ export function TaskCopyDialog({
           </Button>
         </div>
       </form>
-    </div>
+    </div>,
+    document.body,
   );
 }

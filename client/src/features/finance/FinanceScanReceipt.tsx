@@ -1,5 +1,6 @@
 import { Banknote, Camera, Images, LoaderCircle, WalletCards } from 'lucide-react';
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
@@ -14,6 +15,7 @@ import { currencyOptions, isFinanceCurrency, type FinanceCurrency } from '@/feat
 import { formatSignedMoney } from '@/features/finance/financeUtils';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
 import { usePhoneViewport } from '@/features/nutrition/usePhoneViewport';
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 import type { AppLanguage } from '@/i18n';
 import type { FinanceCategory, FinanceDraftOperation, FinanceMoneyKind } from '@/types/finance';
 
@@ -83,6 +85,7 @@ export function FinanceScanReceipt({
   const [batchMoneyKind, setBatchMoneyKind] = useState<FinanceMoneyKind>(defaultMoneyKind);
   const automation = hasAutomation(user);
   const canScan = phone && automation;
+  useLockBodyScroll(review !== null);
 
   const onNeedPro = () => {
     setError(null);
@@ -90,14 +93,15 @@ export function FinanceScanReceipt({
   };
 
   const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0] ? event.target.files[0] : null;
+    const copied = file ? new File([file], file.name || 'photo.jpg', { type: file.type || 'image/jpeg' }) : null;
     event.target.value = '';
-    if (!file) return;
+    if (!copied) return;
 
     setError(null);
     setAnalyzing(true);
     try {
-      const payload = await compressMealPhoto(file);
+      const payload = await compressMealPhoto(copied);
       const result = await financeApi.scanStatement({ ...payload, fallbackCurrency });
       setBatchCategory('');
       setBatchMoneyKind(defaultMoneyKind);
@@ -157,7 +161,7 @@ export function FinanceScanReceipt({
           <input
             ref={cameraRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp,image/*"
+            accept="image/*"
             capture="environment"
             className="sr-only"
             onChange={(event) => void onFile(event)}
@@ -165,7 +169,7 @@ export function FinanceScanReceipt({
           <input
             ref={galleryRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp,image/*"
+            accept="image/*"
             className="sr-only"
             onChange={(event) => void onFile(event)}
           />
@@ -225,8 +229,9 @@ export function FinanceScanReceipt({
       <p className="text-xs text-muted">{hint}</p>
       <ErrorMessage message={review ? undefined : error ?? undefined} />
 
-      {review ? (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">
+      {review
+        ? createPortal(
+            <div className="fixed inset-0 z-[90] flex items-end justify-center bg-ink/40 p-4 overscroll-none sm:items-center">
           <form
             role="dialog"
             aria-modal="true"
@@ -363,8 +368,10 @@ export function FinanceScanReceipt({
               </Button>
             </div>
           </form>
-        </div>
-      ) : null}
+        </div>,
+        document.body,
+      )
+      : null}
     </div>
   );
 }

@@ -1,4 +1,6 @@
-﻿import { Button } from '@/components/ui/Button';
+﻿import { createPortal } from 'react-dom';
+import { Button } from '@/components/ui/Button';
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 
 type ConfirmDialogProps = {
   open: boolean;
@@ -21,10 +23,11 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  useLockBodyScroll(open);
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">
+  return createPortal(
+    <div className="fixed inset-0 z-[90] flex items-end justify-center bg-ink/40 p-4 overscroll-none sm:items-center">
       <div
         role="dialog"
         aria-modal="true"
@@ -44,6 +47,7 @@ export function ConfirmDialog({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
