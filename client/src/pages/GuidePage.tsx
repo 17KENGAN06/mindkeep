@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BrandLockup } from '@/components/brand/BrandLockup';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { PublicHeader } from '@/components/layout/PublicHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/ui/Button';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
@@ -29,13 +27,7 @@ export function GuidePage() {
   return (
     <div className="min-h-dvh overflow-x-hidden">
       <div className={`${PAGE_SHELL} ${PAGE_SHELL_Y}`}>
-        <header className="flex items-center justify-between gap-3">
-          <BrandLockup to="/" size="md" />
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LanguageSwitcher />
-          </div>
-        </header>
+        <PublicHeader />
 
         <Reveal className="mt-12 max-w-3xl sm:mt-16">
           <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">

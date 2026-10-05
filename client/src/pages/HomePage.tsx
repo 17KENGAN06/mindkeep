@@ -13,6 +13,7 @@ import { MobileHomeNav } from '@/components/home/MobileHomeNav';
 import { SnapReveal } from '@/components/home/SnapReveal';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { PlansCta } from '@/components/layout/PlansCta';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
@@ -99,6 +100,7 @@ export function HomePage() {
                 </nav>
                 <ThemeToggle />
                 <LanguageSwitcher />
+                <PlansCta />
               </div>
             </SnapReveal>
 

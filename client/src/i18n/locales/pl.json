@@ -50,7 +50,9 @@
     "closeMenu": "Zamknij menu",
     "settings": "Ustawienia",
     "menu": "Menu",
-    "account": "Konto"
+    "account": "Konto",
+    "plans": "Porównaj plany",
+    "plansShort": "Plany"
   },
   "placeholders": {
     "comingSoon": "Ta sekcja jest w trakcie rozwoju",
@@ -1507,7 +1509,8 @@
     "returnCanceled": "Płatność anulowana. Nic nie pobrano.",
     "returnPortal": "Zmiany subskrypcji zapisane. Możesz wrócić do aplikacji.",
     "openApp": "Otwórz aplikację",
-    "stayOnSite": "Zostań na stronie"
+    "stayOnSite": "Zostań na stronie",
+    "plusLabel": "Plus"
   },
   "onboarding": {
     "eyebrow": "Krótka konfiguracja",
@@ -1557,5 +1560,79 @@
     "appearanceTitle": "Wygląd",
     "saved": "Zapisano.",
     "needOne": "Zostaw włączoną przynajmniej jedną usługę."
+  },
+  "plans": {
+    "eyebrow": "Plany",
+    "title": "Trzy plany. Jeden produkt.",
+    "subtitle": "Na Free otwarte są wszystkie moduły. Plus zdejmuje limity ilości. Pro dodaje skan zdjęć posiłków i paragonów.",
+    "includes": "Co jest w planie",
+    "limits": "Limity na Free",
+    "removes": "Ten plan zdejmuje",
+    "without": "Nie wchodzi",
+    "unlocks": "Ten plan odblokowuje",
+    "ctaFree": "Zacznij za darmo",
+    "ctaPlus": "Wybierz Plus",
+    "ctaPro": "Wybierz Pro",
+    "ctaYear": "Płać rocznie",
+    "ctaMonth": "Płać co miesiąc",
+    "current": "Twój plan",
+    "viewPlans": "Zobacz plany",
+    "upgrade": "Przejdź na Pro",
+    "accountLead": "Plus zdejmuje limity. Pro skanuje też posiłki i paragony ze zdjęcia.",
+    "payHow": "Płatność",
+    "intervalYear": "Rok",
+    "intervalMonth": "Miesiąc",
+    "free": {
+      "name": "Free",
+      "tagline": "Zacznij dziś, ze spokojnymi limitami.",
+      "price": "€0",
+      "billed": "Karta nie jest potrzebna.",
+      "includes": [
+        "Wszystkie moduły od pierwszego dnia: zadania, powtórki, notatki, nawyki, budżet, odżywianie",
+        "To samo konto na stronie"
+      ],
+      "limits": [
+        "20 materiałów · 45 zadań / miesiąc · 3 kategorie powtórek",
+        "3 nawyki · 20 notatek · 5 kategorii budżetu",
+        "25 zapisów finansów / miesiąc · posiłki 7 dni · 2 urządzenia"
+      ],
+      "without": [
+        "Skan posiłku ze zdjęcia",
+        "Skan paragonu w Budżecie"
+      ]
+    },
+    "plus": {
+      "name": "Plus",
+      "tagline": "Więcej miejsca. Posiłki i pieniądze wpisujesz nadal sam.",
+      "yearPerMonth": "€3.33",
+      "yearCharged": "€39.99 raz w roku",
+      "monthPrice": "€4.99",
+      "includes": [
+        "Wszystko z Free",
+        "Ten sam Plus w aplikacji po płatności na stronie"
+      ],
+      "removes": [
+        "Limity ilości na materiały, nawyki, notatki, zadania i budżet",
+        "Ścianę 7 dni dla posiłków i limit 2 urządzeń"
+      ],
+      "without": [
+        "Skan posiłku ze zdjęcia",
+        "Skan paragonu w Budżecie"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Plus, a aparat uzupełnia posiłki i budżet.",
+      "yearPerMonth": "€5.83",
+      "yearCharged": "€69.99 raz w roku",
+      "monthPrice": "€7.99",
+      "includes": [
+        "Wszystko z Plus"
+      ],
+      "unlocks": [
+        "Skan posiłku ze zdjęcia na telefonie",
+        "Skan paragonu do Budżetu, potem gotówka lub karta"
+      ]
+    }
   }
 }

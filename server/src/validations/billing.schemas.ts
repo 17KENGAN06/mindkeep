@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const checkoutSchema = z.object({
   interval: z.enum(['month', 'year']),
+  plan: z.enum(['plus', 'pro']).default('pro'),
 });
 
 export const syncCheckoutSchema = z.object({

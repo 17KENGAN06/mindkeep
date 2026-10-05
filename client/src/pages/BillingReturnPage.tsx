@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { billingApi } from '@/api/billing';
-import { BrandLockup } from '@/components/brand/BrandLockup';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { PublicHeader } from '@/components/layout/PublicHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { useAuth } from '@/features/auth/useAuth';
 
@@ -34,13 +32,7 @@ export function BillingReturnPage() {
   return (
     <div className="min-h-dvh overflow-x-hidden">
       <div className={`${PAGE_SHELL} ${PAGE_SHELL_Y}`}>
-        <header className="flex items-center justify-between gap-3">
-          <BrandLockup to="/" size="md" />
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LanguageSwitcher />
-          </div>
-        </header>
+        <PublicHeader />
 
         <section className="mx-auto mt-16 max-w-xl rounded-[1.75rem] border border-brand-500/30 bg-panel p-6 sm:p-8">
           <p className="text-[11px] font-semibold tracking-[0.2em] text-brand-500 uppercase">

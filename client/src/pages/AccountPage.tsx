@@ -1,7 +1,7 @@
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '@/api/auth';
 import { billingApi, type BillingStatus } from '@/api/billing';
@@ -130,7 +130,7 @@ function BillingSection() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState<'month' | 'year' | 'portal' | 'sync' | null>(null);
+  const [busy, setBusy] = useState<'portal' | 'sync' | null>(null);
 
   const statusQuery = useQuery({
     queryKey: ['billing', 'status'],
@@ -170,18 +170,6 @@ function BillingSection() {
     setSearchParams({}, { replace: true });
   }, [queryClient, searchParams, setSearchParams, t]);
 
-  const startCheckout = async (interval: 'month' | 'year') => {
-    setError(null);
-    setBusy(interval);
-    try {
-      const result = await billingApi.checkout(interval);
-      window.location.assign(result.url);
-    } catch (caught) {
-      setError(mapAuthError(caught, t));
-      setBusy(null);
-    }
-  };
-
   const openPortal = async () => {
     setError(null);
     setBusy('portal');
@@ -199,7 +187,7 @@ function BillingSection() {
   const subscribed = Boolean(status?.subscribed);
   const isAdmin = user?.role === 'ADMIN';
   const isBeta = Boolean((user?.betaTester || status?.betaTester) && !isAdmin);
-  const isPro = status?.plan === 'PRO';
+  const isPro = status?.plan === 'PRO' || status?.plan === 'PLUS';
   const showSubscribe = Boolean(status?.configured && !subscribed && !isBeta);
   const showManage = Boolean(status?.configured && billed);
   const expires = status?.planExpiresAt
@@ -208,11 +196,13 @@ function BillingSection() {
 
   const planName = isAdmin
     ? t('billing.adminUnlimited')
-    : subscribed
-      ? t('billing.proLabel')
-      : isBeta
-        ? t('billing.betaLabel')
-        : t('billing.freeLabel');
+    : status?.plan === 'PLUS'
+      ? t('billing.plusLabel')
+      : subscribed
+        ? t('billing.proLabel')
+        : isBeta
+          ? t('billing.betaLabel')
+          : t('billing.freeLabel');
   const planCaption =
     subscribed && expires
       ? t(status?.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })
@@ -234,18 +224,10 @@ function BillingSection() {
             </p>
             {showSubscribe ? (
               <>
-                <div className="mt-3 flex items-end gap-2">
-                  <p className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-                    {t('home.pricing.yearPerMonth')}
-                  </p>
-                  <p className="mb-1.5 text-sm font-medium text-muted">{t('home.pricing.perMonth')}</p>
-                </div>
-                <p className="mt-2 text-sm font-semibold text-brand-500">
-                  {t('home.pricing.onlyIfYearly')}
+                <p className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+                  {t('billing.freeLabel')}
                 </p>
-                <p className="mt-1 text-sm text-muted">{t('home.pricing.yearCharged')}</p>
-                <p className="mt-1 text-xs text-muted">{t('home.pricing.yearHint')}</p>
-                <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">{planCaption}</p>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">{t('plans.accountLead')}</p>
               </>
             ) : (
               <>
@@ -283,63 +265,12 @@ function BillingSection() {
           <p className="text-sm text-muted">{t('billing.unavailable')}</p>
         ) : null}
 
-        {showSubscribe ? (
-          <div className="grid gap-3 sm:grid-cols-2">
-            <article className="flex flex-col rounded-[1.35rem] border border-brand-500/40 bg-gradient-to-br from-brand-500/16 via-panel to-panel p-4 sm:p-5">
-              <div className="flex items-center justify-between gap-2">
-                <p className="text-[11px] font-semibold tracking-[0.16em] text-brand-500 uppercase">
-                  {t('billing.yearCard')}
-                </p>
-                <span className="rounded-full bg-brand-500 px-2.5 py-0.5 text-[10px] font-bold tracking-[0.12em] text-[#07110d] uppercase">
-                  {t('home.pricing.recommended')}
-                </span>
-              </div>
-              <div className="mt-3 flex items-end gap-1.5">
-                <p className="font-display text-3xl font-semibold tracking-tight text-ink">
-                  {t('home.pricing.yearPerMonth')}
-                </p>
-                <p className="mb-1 text-sm text-muted">{t('home.pricing.perMonth')}</p>
-              </div>
-              <p className="mt-2 text-sm font-medium text-brand-500">{t('home.pricing.onlyIfYearly')}</p>
-              <p className="mt-1 text-xs leading-relaxed text-muted">{t('home.pricing.yearCharged')}</p>
-              <Button
-                type="button"
-                className="mt-5 w-full gap-2 sm:w-full"
-                isLoading={busy === 'year'}
-                disabled={busy !== null}
-                onClick={() => void startCheckout('year')}
-              >
-                {t('billing.ctaYear')}
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Button>
-            </article>
-
-            <article className="flex flex-col rounded-[1.35rem] border border-line bg-panel/70 p-4 sm:p-5">
-              <p className="text-[11px] font-semibold tracking-[0.16em] text-muted uppercase">
-                {t('home.pricing.orMonthly')}
-              </p>
-              <div className="mt-3 flex items-end gap-1.5">
-                <p className="font-display text-3xl font-semibold tracking-tight text-ink">
-                  {t('home.pricing.monthPrice')}
-                </p>
-                <p className="mb-1 text-sm text-muted">{t('home.pricing.perMonth')}</p>
-              </div>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-                {t('home.pricing.monthBilled')}
-              </p>
-              <Button
-                type="button"
-                variant="secondary"
-                className="mt-5 w-full sm:w-full"
-                isLoading={busy === 'month'}
-                disabled={busy !== null}
-                onClick={() => void startCheckout('month')}
-              >
-                {t('billing.ctaMonth')}
-              </Button>
-            </article>
-          </div>
-        ) : null}
+        <Link to="/plans" className="block sm:inline-flex">
+          <Button className="w-full gap-2 sm:w-auto">
+            {t('plans.viewPlans')}
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Button>
+        </Link>
 
         {showManage ? (
           <Button

@@ -68,6 +68,7 @@ const FinanceTransactionsPage = lazyNamed(
 const ForestPage = lazyNamed(() => import('@/pages/ForestPage'), 'ForestPage');
 const GuidePage = lazyNamed(() => import('@/pages/GuidePage'), 'GuidePage');
 const OnboardingPage = lazyNamed(() => import('@/pages/OnboardingPage'), 'OnboardingPage');
+const PlansPage = lazyNamed(() => import('@/pages/PlansPage'), 'PlansPage');
 const SettingsPage = lazyNamed(() => import('@/pages/SettingsPage'), 'SettingsPage');
 const LoginPage = lazyNamed(() => import('@/pages/LoginPage'), 'LoginPage');
 const ForgotPasswordPage = lazyNamed(() => import('@/pages/ForgotPasswordPage'), 'ForgotPasswordPage');
@@ -167,6 +168,14 @@ export function AppRoutes() {
           }
         />
         <Route path="/contact" element={<ContactPage />} />
+        <Route
+          path="/plans"
+          element={
+            <MaintenanceHome>
+              <PlansPage />
+            </MaintenanceHome>
+          }
+        />
         <Route path="/billing/return" element={<BillingReturnPage />} />
 
         <Route

@@ -8,7 +8,8 @@ export type BillingUsageItem = {
 
 export type BillingStatus = {
   configured: boolean;
-  plan: 'FREE' | 'PRO';
+  plan: 'FREE' | 'PLUS' | 'PRO';
+  plusConfigured: boolean;
   planInterval: 'MONTH' | 'YEAR' | null;
   planExpiresAt: string | null;
   cancelAtPeriodEnd: boolean;
@@ -30,8 +31,8 @@ export type BillingStatus = {
 
 export const billingApi = {
   status: () => apiClient.get<BillingStatus>('/api/billing/status'),
-  checkout: (interval: 'month' | 'year') =>
-    apiClient.post<{ url: string }>('/api/billing/checkout', { interval }),
+  checkout: (interval: 'month' | 'year', plan: 'plus' | 'pro' = 'pro') =>
+    apiClient.post<{ url: string }>('/api/billing/checkout', { interval, plan }),
   portal: () => apiClient.post<{ url: string }>('/api/billing/portal'),
   sync: (sessionId: string) => apiClient.post<{ user: User }>('/api/billing/sync', { sessionId }),
 };

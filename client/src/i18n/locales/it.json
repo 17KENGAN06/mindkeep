@@ -50,7 +50,9 @@
     "closeMenu": "Chiudi menu",
     "settings": "Impostazioni",
     "menu": "Menu",
-    "account": "Account"
+    "account": "Account",
+    "plans": "Confronta i piani",
+    "plansShort": "Piani"
   },
   "placeholders": {
     "comingSoon": "Questa sezione è in fase di sviluppo",
@@ -1507,7 +1509,8 @@
     "returnCanceled": "Checkout annullato. Non è stato addebitato nulla.",
     "returnPortal": "Modifiche all’abbonamento salvate. Puoi tornare all’app.",
     "openApp": "Apri l’app",
-    "stayOnSite": "Resta sul sito"
+    "stayOnSite": "Resta sul sito",
+    "plusLabel": "Plus"
   },
   "onboarding": {
     "eyebrow": "Setup rapido",
@@ -1557,5 +1560,79 @@
     "appearanceTitle": "Aspetto",
     "saved": "Salvato.",
     "needOne": "Tieni acceso almeno un servizio."
+  },
+  "plans": {
+    "eyebrow": "Piani",
+    "title": "Tre piani. Un solo prodotto.",
+    "subtitle": "Su Free tutti i moduli sono aperti. Plus toglie i tetti di quantità. Pro aggiunge lo scan foto per pasti e scontrini.",
+    "includes": "Cosa c’è in questo piano",
+    "limits": "Limiti su Free",
+    "removes": "Questo piano toglie",
+    "without": "Non incluso",
+    "unlocks": "Questo piano sblocca",
+    "ctaFree": "Inizia gratis",
+    "ctaPlus": "Scegli Plus",
+    "ctaPro": "Scegli Pro",
+    "ctaYear": "Paga all’anno",
+    "ctaMonth": "Paga ogni mese",
+    "current": "Il tuo piano",
+    "viewPlans": "Vedi i piani",
+    "upgrade": "Passa a Pro",
+    "accountLead": "Plus toglie i tetti. Pro scansiona anche pasti e scontrini dalla foto.",
+    "payHow": "Pagamento",
+    "intervalYear": "Anno",
+    "intervalMonth": "Mese",
+    "free": {
+      "name": "Free",
+      "tagline": "Inizia oggi, con tetti calmi.",
+      "price": "€0",
+      "billed": "Carta non necessaria.",
+      "includes": [
+        "Tutti i moduli dal primo giorno: compiti, ripasso, note, abitudini, budget, alimentazione",
+        "Lo stesso account sul sito"
+      ],
+      "limits": [
+        "20 materiali · 45 compiti / mese · 3 categorie di ripasso",
+        "3 abitudini · 20 note · 5 categorie di budget",
+        "25 movimenti finanziari / mese · pasti 7 giorni · 2 dispositivi"
+      ],
+      "without": [
+        "Scan del pasto dalla foto",
+        "Scan dello scontrino nel Budget"
+      ]
+    },
+    "plus": {
+      "name": "Plus",
+      "tagline": "Più spazio. Pasti e soldi li inserisci ancora tu.",
+      "yearPerMonth": "€3.33",
+      "yearCharged": "€39.99 una volta all’anno",
+      "monthPrice": "€4.99",
+      "includes": [
+        "Tutto di Free",
+        "Lo stesso Plus nell’app dopo il pagamento sul sito"
+      ],
+      "removes": [
+        "I tetti di quantità su materiali, abitudini, note, compiti e budget",
+        "Il muro di 7 giorni sui pasti e il limite di 2 dispositivi"
+      ],
+      "without": [
+        "Scan del pasto dalla foto",
+        "Scan dello scontrino nel Budget"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Plus, e la fotocamera riempie pasti e budget.",
+      "yearPerMonth": "€5.83",
+      "yearCharged": "€69.99 una volta all’anno",
+      "monthPrice": "€7.99",
+      "includes": [
+        "Tutto di Plus"
+      ],
+      "unlocks": [
+        "Scansiona un pasto dalla foto sul telefono",
+        "Scansiona uno scontrino nel Budget, poi scegli contanti o carta"
+      ]
+    }
   }
 }

@@ -93,7 +93,7 @@ type UserRecord = {
 };
 
 function toPublicUser(user: UserRecord): PublicUser {
-  const entitled = isProUser(user);
+  const paid = isProUser(user);
   return {
     id: user.id,
     name: user.name,
@@ -101,10 +101,14 @@ function toPublicUser(user: UserRecord): PublicUser {
     timezone: user.timezone,
     role: user.role,
     hasPassword: Boolean(user.passwordHash),
-    plan: entitled ? UserPlan.PRO : UserPlan.FREE,
-    planInterval: entitled ? user.planInterval : null,
-    planExpiresAt: entitled ? user.planExpiresAt : null,
-    cancelAtPeriodEnd: entitled ? user.cancelAtPeriodEnd : false,
+    plan: paid
+      ? user.plan === UserPlan.FREE
+        ? UserPlan.PRO
+        : user.plan
+      : UserPlan.FREE,
+    planInterval: paid ? user.planInterval : null,
+    planExpiresAt: paid ? user.planExpiresAt : null,
+    cancelAtPeriodEnd: paid ? user.cancelAtPeriodEnd : false,
     betaTester: user.betaTester,
     onboardingCompleted: Boolean(user.onboardingCompletedAt),
     enabledModules: user.onboardingCompletedAt

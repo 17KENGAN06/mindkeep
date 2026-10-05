@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { isStripeConfigured } from '@/config/stripe.js';
+import { isPlusStripeConfigured, isStripeConfigured } from '@/config/stripe.js';
 import { authService } from '@/services/auth.service.js';
 import {
   createCheckoutSession,
@@ -36,6 +36,7 @@ export class BillingController {
     ]);
     res.status(200).json({
       configured: isStripeConfigured(),
+      plusConfigured: isPlusStripeConfigured(),
       plan: user.plan,
       planInterval: user.planInterval,
       planExpiresAt: user.planExpiresAt,
@@ -53,6 +54,7 @@ export class BillingController {
       input.interval,
       req.header('x-app-language') ?? req.header('accept-language'),
       isNativeClient(req),
+      input.plan,
     );
     res.status(200).json(result);
   }

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Select } from '@/components/ui/Select';
 import { useAuth } from '@/features/auth/useAuth';
-import { isProAccount, mutationErrorMessage } from '@/features/billing/planLimit';
+import { hasAutomation, mutationErrorMessage } from '@/features/billing/planLimit';
 import { currencyOptions, isFinanceCurrency, type FinanceCurrency } from '@/features/finance/currencies';
 import { formatSignedMoney } from '@/features/finance/financeUtils';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
@@ -81,12 +81,12 @@ export function FinanceScanReceipt({
   const [review, setReview] = useState<ReviewRow[] | null>(null);
   const [batchCategory, setBatchCategory] = useState('');
   const [batchMoneyKind, setBatchMoneyKind] = useState<FinanceMoneyKind>(defaultMoneyKind);
-  const pro = isProAccount(user);
-  const canScan = phone && pro;
+  const automation = hasAutomation(user);
+  const canScan = phone && automation;
 
   const onNeedPro = () => {
     setError(null);
-    void navigate('/account');
+    void navigate('/plans');
   };
 
   const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -146,7 +146,7 @@ export function FinanceScanReceipt({
 
   const hint = !phone
     ? t('finance.scan.phoneOnly')
-    : pro
+    : automation
       ? t('finance.scan.hint')
       : t('finance.scan.proOnly');
 

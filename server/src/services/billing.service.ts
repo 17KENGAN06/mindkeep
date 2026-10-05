@@ -5,11 +5,14 @@ import { prisma } from '@/config/prisma.js';
 import {
   getStripe,
   intervalForPriceId,
+  isPlusStripeConfigured,
   isStripeConfigured,
   isStripeWebhookConfigured,
-  priceIdForInterval,
+  planForPriceId,
+  priceIdForPlan,
   stripeCheckoutLocale,
   stripeReturnUrls,
+  type CheckoutPlan,
 } from '@/config/stripe.js';
 import { AppError } from '@/utils/AppError.js';
 
@@ -111,6 +114,7 @@ export async function applySubscription(
   const entitled = PRO_STATUSES.has(subscription.status);
   const priceId = subscriptionPriceId(subscription);
   const interval = intervalForPriceId(priceId) as PlanInterval | null;
+  const paidPlan = planForPriceId(priceId) === 'PLUS' ? UserPlan.PLUS : UserPlan.PRO;
   const customer =
     customerId ||
     (typeof subscription.customer === 'string' ? subscription.customer : subscription.customer?.id);
@@ -120,7 +124,7 @@ export async function applySubscription(
     data: {
       ...(customer ? { stripeCustomerId: customer } : {}),
       stripeSubscriptionId: entitled ? subscription.id : null,
-      plan: entitled ? UserPlan.PRO : UserPlan.FREE,
+      plan: entitled ? paidPlan : UserPlan.FREE,
       planInterval: entitled ? interval : null,
       planExpiresAt: entitled ? subscriptionPeriodEnd(subscription) : null,
       cancelAtPeriodEnd: entitled ? Boolean(subscription.cancel_at_period_end) : false,
@@ -268,9 +272,11 @@ export async function createCheckoutSession(
   interval: 'month' | 'year',
   localeHeader?: string | null,
   nativeClient = false,
+  plan: CheckoutPlan = 'pro',
 ): Promise<{ url: string }> {
   if (!isStripeConfigured()) billingUnavailable();
-  const priceId = priceIdForInterval(interval);
+  if (plan === 'plus' && !isPlusStripeConfigured()) billingUnavailable();
+  const priceId = priceIdForPlan(plan, interval);
   if (!priceId) billingUnavailable();
 
   const user = await prisma.user.findUnique({
@@ -297,7 +303,7 @@ export async function createCheckoutSession(
     try {
       const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
       if (PRO_STATUSES.has(subscription.status)) {
-        throw new AppError('This account already has Pro', {
+        throw new AppError('This account already has a paid plan', {
           statusCode: 409,
           code: 'ALREADY_PRO',
         });

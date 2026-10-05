@@ -1,3 +1,5 @@
+export type UserPlan = 'FREE' | 'PLUS' | 'PRO';
+
 export type User = {
   id: string;
   name: string;
@@ -5,7 +7,7 @@ export type User = {
   timezone: string;
   role: 'USER' | 'ADMIN';
   hasPassword?: boolean;
-  plan?: 'FREE' | 'PRO';
+  plan?: UserPlan;
   planInterval?: 'MONTH' | 'YEAR' | null;
   planExpiresAt?: string | null;
   cancelAtPeriodEnd?: boolean;

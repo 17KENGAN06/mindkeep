@@ -192,7 +192,7 @@ export function FinanceBudgetPage() {
   };
 
   const onNeedPro = () => {
-    void navigate('/account');
+    void navigate('/plans');
   };
 
   const saveDrafts = async (rows: FinanceDraftOperation[]) => {

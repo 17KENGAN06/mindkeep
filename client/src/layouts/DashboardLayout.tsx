@@ -6,6 +6,7 @@ import { MobileNav } from '@/components/layout/dashboard/MobileNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
+import { PlansCta } from '@/components/layout/PlansCta';
 import { Button } from '@/components/ui/Button';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { dashboardNav } from '@/config/dashboardNav';
@@ -28,6 +29,7 @@ export function DashboardLayout() {
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
+              <PlansCta />
               <NotificationBell />
               <div className="hidden items-center gap-2 min-[1200px]:flex">
                 <Button variant="secondary" type="button" onClick={() => void logout()}>

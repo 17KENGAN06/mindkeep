@@ -50,7 +50,9 @@
     "closeMenu": "Sulje valikko",
     "settings": "Asetukset",
     "menu": "Valikko",
-    "account": "Tili"
+    "account": "Tili",
+    "plans": "Vertaa suunnitelmia",
+    "plansShort": "Tilaukset"
   },
   "placeholders": {
     "comingSoon": "Osio on kehitteillä",
@@ -1507,7 +1509,8 @@
     "returnCanceled": "Maksu peruttu. Mitään ei veloitettu.",
     "returnPortal": "Tilauksen muutokset on tallennettu. Voit palata sovellukseen.",
     "openApp": "Avaa sovellus",
-    "stayOnSite": "Jää sivustolle"
+    "stayOnSite": "Jää sivustolle",
+    "plusLabel": "Plus"
   },
   "onboarding": {
     "eyebrow": "Pika-asetus",
@@ -1557,5 +1560,79 @@
     "appearanceTitle": "Ulkoasu",
     "saved": "Tallennettu.",
     "needOne": "Jätä vähintään yksi palvelu päälle."
+  },
+  "plans": {
+    "eyebrow": "Tilaukset",
+    "title": "Kolme tasoa. Yksi tuote.",
+    "subtitle": "Freessä kaikki osiot ovat auki. Plus poistaa määrärajoitukset. Pro lisää ruokien ja kuittien kuvaskannauksen.",
+    "includes": "Mitä tähän kuuluu",
+    "limits": "Rajat Freessä",
+    "removes": "Tämä taso poistaa",
+    "without": "Ei sisälly",
+    "unlocks": "Tämä taso avaa",
+    "ctaFree": "Aloita ilmaiseksi",
+    "ctaPlus": "Valitse Plus",
+    "ctaPro": "Valitse Pro",
+    "ctaYear": "Maksa vuodelta",
+    "ctaMonth": "Maksa kuukausittain",
+    "current": "Sinun tasosi",
+    "viewPlans": "Katso tilaukset",
+    "upgrade": "Siirry Prohon",
+    "accountLead": "Plus poistaa rajat. Pro skannaa myös ruoat ja kuitit kuvasta.",
+    "payHow": "Maksu",
+    "intervalYear": "Vuosi",
+    "intervalMonth": "Kuukausi",
+    "free": {
+      "name": "Free",
+      "tagline": "Aloita tänään, rauhallisilla rajoilla.",
+      "price": "€0",
+      "billed": "Korttia ei tarvita.",
+      "includes": [
+        "Kaikki osiot ensimmäisestä päivästä: tehtävät, kertaaminen, muistiinpanot, tavat, budjetti, ravinto",
+        "Sama tili verkkosivulla"
+      ],
+      "limits": [
+        "20 materiaalia · 45 tehtävää / kuukausi · 3 kertauskategoriaa",
+        "3 tapaa · 20 muistiinpanoa · 5 budjettikategoriaa",
+        "25 taloustapahtumaa / kuukausi · ateriat 7 päivää · 2 laitetta"
+      ],
+      "without": [
+        "Aterian skannaus kuvasta",
+        "Kuitin skannaus Budjettiin"
+      ]
+    },
+    "plus": {
+      "name": "Plus",
+      "tagline": "Enemmän tilaa. Ruoka ja raha merkitään yhä itse.",
+      "yearPerMonth": "€3.33",
+      "yearCharged": "€39.99 kerran vuodessa",
+      "monthPrice": "€4.99",
+      "includes": [
+        "Kaikki Freestä",
+        "Sama Plus sovelluksessa verkkosivun maksun jälkeen"
+      ],
+      "removes": [
+        "Määrärajoitukset materiaaleista, tavoista, muistiinpanoista, tehtävistä ja budjetista",
+        "7 päivän seinän aterioissa ja 2 laitteen rajan"
+      ],
+      "without": [
+        "Aterian skannaus kuvasta",
+        "Kuitin skannaus Budjettiin"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Plus, ja kamera täyttää ateriat ja budjetin.",
+      "yearPerMonth": "€5.83",
+      "yearCharged": "€69.99 kerran vuodessa",
+      "monthPrice": "€7.99",
+      "includes": [
+        "Kaikki Plusista"
+      ],
+      "unlocks": [
+        "Skannaa ateria kuvasta puhelimella",
+        "Skannaa kuitti Budjettiin ja valitse käteinen tai kortti"
+      ]
+    }
   }
 }

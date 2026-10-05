@@ -56,5 +56,5 @@ export function usePlanUsage() {
 
 export function isProAccount(user?: Pick<User, 'plan' | 'role' | 'betaTester'> | null): boolean {
   if (!user) return false;
-  return user.plan === 'PRO' || user.role === 'ADMIN' || Boolean(user.betaTester);
+  return user.plan === 'PRO' || user.plan === 'PLUS' || user.role === 'ADMIN' || Boolean(user.betaTester);
 }

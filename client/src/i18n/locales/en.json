@@ -50,7 +50,9 @@
     "closeMenu": "Close menu",
     "settings": "Settings",
     "menu": "Menu",
-    "account": "Account"
+    "account": "Account",
+    "plans": "Compare plans",
+    "plansShort": "Plans"
   },
   "placeholders": {
     "comingSoon": "This section is under development",
@@ -880,17 +882,17 @@
     "mealTitle": "Meal",
     "mealPlaceholder": "Lunch, snack...",
     "mealCalories": "kcal",
-      "saveMeal": "Add",
-      "kinds": {
-        "label": "Which meal",
-        "proHint": "Meal types are included in Pro.",
-        "breakfast": "Breakfast",
-        "lunch": "Lunch",
-        "dinner": "Dinner",
-        "snack": "Snack",
-        "extra": "Other"
-      },
-      "emptyMeals": "No meals logged for this day yet.",
+    "saveMeal": "Add",
+    "kinds": {
+      "label": "Which meal",
+      "proHint": "Meal types are included in Pro.",
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snack",
+      "extra": "Other"
+    },
+    "emptyMeals": "No meals logged for this day yet.",
     "waterTitle": "Water",
     "weightTitle": "Weight",
     "weightHint": "Log weight for the selected day. The average is for this month.",
@@ -1507,7 +1509,8 @@
     "returnCanceled": "Checkout was cancelled. Nothing was charged.",
     "returnPortal": "Subscription changes are saved. You can return to the app.",
     "openApp": "Open the app",
-    "stayOnSite": "Continue on the website"
+    "stayOnSite": "Continue on the website",
+    "plusLabel": "Plus"
   },
   "onboarding": {
     "eyebrow": "Quick setup",
@@ -1557,5 +1560,79 @@
     "appearanceTitle": "Appearance",
     "saved": "Saved.",
     "needOne": "Keep at least one service on."
+  },
+  "plans": {
+    "eyebrow": "Plans",
+    "title": "Three plans. One product.",
+    "subtitle": "Every module is open on Free. Plus lifts the quantity caps. Pro adds photo scan for meals and receipts.",
+    "includes": "What’s in this plan",
+    "limits": "Limits on Free",
+    "removes": "This plan removes",
+    "without": "Not in this plan",
+    "unlocks": "This plan unlocks",
+    "ctaFree": "Start free",
+    "ctaPlus": "Choose Plus",
+    "ctaPro": "Choose Pro",
+    "ctaYear": "Pay yearly",
+    "ctaMonth": "Pay monthly",
+    "current": "Your plan",
+    "viewPlans": "See all plans",
+    "upgrade": "Upgrade to Pro",
+    "accountLead": "Plus lifts the caps. Pro also scans meals and receipts from a photo.",
+    "payHow": "Pay",
+    "intervalYear": "Yearly",
+    "intervalMonth": "Monthly",
+    "free": {
+      "name": "Free",
+      "tagline": "Start today, with calm caps.",
+      "price": "€0",
+      "billed": "No card needed.",
+      "includes": [
+        "All modules from day one: tasks, review, notes, habits, budget, nutrition",
+        "The same account on the website"
+      ],
+      "limits": [
+        "20 materials · 45 tasks / month · 3 review categories",
+        "3 habits · 20 notes · 5 budget categories",
+        "25 finance records / month · meals 7 days · 2 devices"
+      ],
+      "without": [
+        "Photo scan for meals",
+        "Receipt scan in Budget"
+      ]
+    },
+    "plus": {
+      "name": "Plus",
+      "tagline": "More room. You still enter meals and money yourself.",
+      "yearPerMonth": "€3.33",
+      "yearCharged": "€39.99 billed once a year",
+      "monthPrice": "€4.99",
+      "includes": [
+        "Everything in Free",
+        "The same Plus in the app after website checkout"
+      ],
+      "removes": [
+        "Quantity caps on materials, habits, notes, tasks, and budget",
+        "The 7-day meal wall and the 2-device wall"
+      ],
+      "without": [
+        "Photo scan for meals",
+        "Receipt scan in Budget"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Plus, and the camera fills meals and budget.",
+      "yearPerMonth": "€5.83",
+      "yearCharged": "€69.99 billed once a year",
+      "monthPrice": "€7.99",
+      "includes": [
+        "Everything in Plus"
+      ],
+      "unlocks": [
+        "Scan a meal from a photo on your phone",
+        "Scan a receipt into Budget, then pick cash or card"
+      ]
+    }
   }
 }

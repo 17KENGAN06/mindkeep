@@ -33,7 +33,7 @@ export function MealKindPicker({ value, onChange, pro }: MealKindPickerProps) {
               } ${pro ? '' : 'opacity-70'}`}
               onClick={() => {
                 if (!pro) {
-                  navigate('/account');
+                  navigate('/plans');
                   return;
                 }
                 onChange(kind);

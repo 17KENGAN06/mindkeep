@@ -32,7 +32,19 @@ const entitlementSelect = {
   betaTester: true,
 } as const;
 
-export function isProUser(
+export function isPaidUser(
+  user: Pick<EntitlementUser, 'email' | 'role' | 'plan' | 'planExpiresAt' | 'betaTester'>,
+): boolean {
+  if (user.role === UserRole.ADMIN || env.ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+    return true;
+  }
+  if (user.betaTester) return true;
+  if (user.plan !== UserPlan.PLUS && user.plan !== UserPlan.PRO) return false;
+  if (user.planExpiresAt && user.planExpiresAt.getTime() < Date.now()) return false;
+  return true;
+}
+
+export function hasAutomation(
   user: Pick<EntitlementUser, 'email' | 'role' | 'plan' | 'planExpiresAt' | 'betaTester'>,
 ): boolean {
   if (user.role === UserRole.ADMIN || env.ADMIN_EMAILS.includes(user.email.toLowerCase())) {
@@ -44,7 +56,16 @@ export function isProUser(
   return true;
 }
 
-export async function getEntitlement(userId: string): Promise<EntitlementUser & { pro: boolean }> {
+/** Quantity caps are lifted on Plus and Pro. */
+export function isProUser(
+  user: Pick<EntitlementUser, 'email' | 'role' | 'plan' | 'planExpiresAt' | 'betaTester'>,
+): boolean {
+  return isPaidUser(user);
+}
+
+export async function getEntitlement(
+  userId: string,
+): Promise<EntitlementUser & { pro: boolean; automation: boolean }> {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: entitlementSelect,
@@ -60,10 +81,11 @@ export async function getEntitlement(userId: string): Promise<EntitlementUser & 
       planExpiresAt: null,
       betaTester: false,
       pro: false,
+      automation: false,
     };
   }
 
-  return { ...user, pro: isProUser(user) };
+  return { ...user, pro: isPaidUser(user), automation: hasAutomation(user) };
 }
 
 async function usedFor(

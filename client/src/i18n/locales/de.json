@@ -50,7 +50,9 @@
     "closeMenu": "Menü schließen",
     "settings": "Einstellungen",
     "menu": "Menü",
-    "account": "Konto"
+    "account": "Konto",
+    "plans": "Pläne vergleichen",
+    "plansShort": "Pläne"
   },
   "placeholders": {
     "comingSoon": "Dieser Bereich ist noch in Arbeit",
@@ -1507,7 +1509,8 @@
     "returnCanceled": "Checkout abgebrochen. Es wurde nichts berechnet.",
     "returnPortal": "Abo-Änderungen sind gespeichert. Du kannst zur App zurück.",
     "openApp": "App öffnen",
-    "stayOnSite": "Auf der Website bleiben"
+    "stayOnSite": "Auf der Website bleiben",
+    "plusLabel": "Plus"
   },
   "onboarding": {
     "eyebrow": "Kurzes Setup",
@@ -1557,5 +1560,79 @@
     "appearanceTitle": "Darstellung",
     "saved": "Gespeichert.",
     "needOne": "Lass mindestens einen Dienst an."
+  },
+  "plans": {
+    "eyebrow": "Pläne",
+    "title": "Drei Pläne. Ein Produkt.",
+    "subtitle": "Auf Free sind alle Module offen. Plus hebt die Mengenlimits. Pro scannt Fotos für Mahlzeiten und Belege.",
+    "includes": "Was in diesem Plan ist",
+    "limits": "Limits auf Free",
+    "removes": "Dieser Plan hebt auf",
+    "without": "Nicht enthalten",
+    "unlocks": "Dieser Plan schaltet frei",
+    "ctaFree": "Kostenlos starten",
+    "ctaPlus": "Plus wählen",
+    "ctaPro": "Pro wählen",
+    "ctaYear": "Jährlich zahlen",
+    "ctaMonth": "Monatlich zahlen",
+    "current": "Dein Plan",
+    "viewPlans": "Pläne ansehen",
+    "upgrade": "Auf Pro wechseln",
+    "accountLead": "Plus hebt die Limits. Pro scannt auch Mahlzeiten und Belege vom Foto.",
+    "payHow": "Zahlung",
+    "intervalYear": "Jahr",
+    "intervalMonth": "Monat",
+    "free": {
+      "name": "Free",
+      "tagline": "Heute starten, mit ruhigen Limits.",
+      "price": "€0",
+      "billed": "Keine Karte nötig.",
+      "includes": [
+        "Alle Module ab Tag eins: Aufgaben, Wiederholung, Notizen, Gewohnheiten, Budget, Ernährung",
+        "Dasselbe Konto auf der Website"
+      ],
+      "limits": [
+        "20 Materialien · 45 Aufgaben / Monat · 3 Wiederholungskategorien",
+        "3 Gewohnheiten · 20 Notizen · 5 Budgetkategorien",
+        "25 Finanzbuchungen / Monat · Mahlzeiten 7 Tage · 2 Geräte"
+      ],
+      "without": [
+        "Foto-Scan für Mahlzeiten",
+        "Beleg-Scan im Budget"
+      ]
+    },
+    "plus": {
+      "name": "Plus",
+      "tagline": "Mehr Platz. Mahlzeiten und Geld trägst du weiter selbst ein.",
+      "yearPerMonth": "€3.33",
+      "yearCharged": "€39.99 einmal im Jahr",
+      "monthPrice": "€4.99",
+      "includes": [
+        "Alles aus Free",
+        "Dasselbe Plus in der App nach dem Checkout auf der Website"
+      ],
+      "removes": [
+        "Mengenlimits bei Materialien, Gewohnheiten, Notizen, Aufgaben und Budget",
+        "Die 7-Tage-Wand bei Mahlzeiten und das 2-Geräte-Limit"
+      ],
+      "without": [
+        "Foto-Scan für Mahlzeiten",
+        "Beleg-Scan im Budget"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Plus, und die Kamera füllt Mahlzeiten und Budget.",
+      "yearPerMonth": "€5.83",
+      "yearCharged": "€69.99 einmal im Jahr",
+      "monthPrice": "€7.99",
+      "includes": [
+        "Alles aus Plus"
+      ],
+      "unlocks": [
+        "Mahlzeit vom Foto auf dem Telefon scannen",
+        "Beleg ins Budget scannen, dann Bargeld oder Karte wählen"
+      ]
+    }
   }
 }

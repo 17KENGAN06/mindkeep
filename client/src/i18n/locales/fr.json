@@ -50,7 +50,9 @@
     "closeMenu": "Fermer le menu",
     "settings": "Réglages",
     "menu": "Menu",
-    "account": "Compte"
+    "account": "Compte",
+    "plans": "Comparer les plans",
+    "plansShort": "Plans"
   },
   "placeholders": {
     "comingSoon": "Cette section est en cours de développement",
@@ -1507,7 +1509,8 @@
     "returnCanceled": "Paiement annulé. Rien n’a été débité.",
     "returnPortal": "Les changements d’abonnement sont enregistrés. Vous pouvez revenir à l’app.",
     "openApp": "Ouvrir l’app",
-    "stayOnSite": "Rester sur le site"
+    "stayOnSite": "Rester sur le site",
+    "plusLabel": "Plus"
   },
   "onboarding": {
     "eyebrow": "Réglage rapide",
@@ -1557,5 +1560,79 @@
     "appearanceTitle": "Apparence",
     "saved": "Enregistré.",
     "needOne": "Garde au moins un service activé."
+  },
+  "plans": {
+    "eyebrow": "Offres",
+    "title": "Trois offres. Un produit.",
+    "subtitle": "Sur Free, tous les modules sont ouverts. Plus enlève les plafonds. Pro ajoute le scan photo des repas et des tickets.",
+    "includes": "Ce qu’il y a dans cette offre",
+    "limits": "Plafonds sur Free",
+    "removes": "Cette offre enlève",
+    "without": "Non inclus",
+    "unlocks": "Cette offre débloque",
+    "ctaFree": "Commencer gratuitement",
+    "ctaPlus": "Choisir Plus",
+    "ctaPro": "Choisir Pro",
+    "ctaYear": "Payer à l’année",
+    "ctaMonth": "Payer chaque mois",
+    "current": "Votre offre",
+    "viewPlans": "Voir les offres",
+    "upgrade": "Passer à Pro",
+    "accountLead": "Plus enlève les plafonds. Pro scanne aussi les repas et les tickets depuis une photo.",
+    "payHow": "Paiement",
+    "intervalYear": "Année",
+    "intervalMonth": "Mois",
+    "free": {
+      "name": "Free",
+      "tagline": "Commencez aujourd’hui, avec des plafonds calmes.",
+      "price": "€0",
+      "billed": "Pas de carte nécessaire.",
+      "includes": [
+        "Tous les modules dès le premier jour : tâches, révision, notes, habitudes, budget, nutrition",
+        "Le même compte sur le site"
+      ],
+      "limits": [
+        "20 supports · 45 tâches / mois · 3 catégories de révision",
+        "3 habitudes · 20 notes · 5 catégories de budget",
+        "25 opérations finance / mois · repas 7 jours · 2 appareils"
+      ],
+      "without": [
+        "Scan du repas depuis une photo",
+        "Scan du ticket dans Budget"
+      ]
+    },
+    "plus": {
+      "name": "Plus",
+      "tagline": "Plus de place. Vous saisissez encore repas et argent vous-même.",
+      "yearPerMonth": "€3.33",
+      "yearCharged": "€39.99 une fois par an",
+      "monthPrice": "€4.99",
+      "includes": [
+        "Tout Free",
+        "Le même Plus dans l’app après le paiement sur le site"
+      ],
+      "removes": [
+        "Les plafonds de quantité sur supports, habitudes, notes, tâches et budget",
+        "Le mur de 7 jours pour les repas et la limite de 2 appareils"
+      ],
+      "without": [
+        "Scan du repas depuis une photo",
+        "Scan du ticket dans Budget"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Plus, et l’appareil photo remplit repas et budget.",
+      "yearPerMonth": "€5.83",
+      "yearCharged": "€69.99 une fois par an",
+      "monthPrice": "€7.99",
+      "includes": [
+        "Tout Plus"
+      ],
+      "unlocks": [
+        "Scanner un repas depuis une photo sur le téléphone",
+        "Scanner un ticket dans Budget, puis choisir espèces ou carte"
+      ]
+    }
   }
 }

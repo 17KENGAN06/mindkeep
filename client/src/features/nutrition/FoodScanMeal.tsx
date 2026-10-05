@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/features/auth/useAuth';
-import { isProAccount, mutationErrorMessage } from '@/features/billing/planLimit';
+import { hasAutomation, mutationErrorMessage } from '@/features/billing/planLimit';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
 import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
 import type { MealKind } from '@/features/nutrition/mealKinds';
@@ -68,12 +68,12 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ReviewState | null>(null);
-  const pro = isProAccount(user);
-  const canScan = phone && pro;
+  const automation = hasAutomation(user);
+  const canScan = phone && automation;
 
   const onNeedPro = () => {
     setError(null);
-    navigate('/account');
+    navigate('/plans');
   };
 
   const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +110,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
       setError(t('calories.errors.calories'));
       return;
     }
-    if (pro && !review.kind) {
+    if (automation && !review.kind) {
       setError(t('calories.errors.kind'));
       return;
     }
@@ -131,7 +131,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
 
   const hint = !phone
     ? t('calories.scan.phoneOnly')
-    : pro
+    : automation
       ? t('calories.scan.hint')
       : t('calories.scan.proOnly');
 
@@ -227,7 +227,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             </div>
             <MealKindPicker
               value={review.kind}
-              pro={pro}
+              pro={automation}
               onChange={(kind) => setReview({ ...review, kind })}
             />
             <Input

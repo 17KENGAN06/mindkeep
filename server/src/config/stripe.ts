@@ -14,6 +14,8 @@ const CHECKOUT_LOCALES = new Set<Stripe.Checkout.SessionCreateParams.Locale>([
   'ru',
 ]);
 
+export type CheckoutPlan = 'plus' | 'pro';
+
 export function isLiveStripeSecret(key: string | undefined): boolean {
   return Boolean(key?.startsWith('sk_live_') || key?.startsWith('rk_live_'));
 }
@@ -35,13 +37,31 @@ export function stripeBillingReady(params: {
   return true;
 }
 
+function proMonthlyId(): string | undefined {
+  return env.STRIPE_PRICE_PRO_MONTHLY || env.STRIPE_PRICE_MONTHLY;
+}
+
+function proYearlyId(): string | undefined {
+  return env.STRIPE_PRICE_PRO_YEARLY || env.STRIPE_PRICE_YEARLY;
+}
+
 export function isStripeConfigured(): boolean {
   return stripeBillingReady({
     nodeEnv: env.NODE_ENV,
     secret: env.STRIPE_SECRET_KEY,
-    monthly: env.STRIPE_PRICE_MONTHLY,
-    yearly: env.STRIPE_PRICE_YEARLY,
+    monthly: proMonthlyId(),
+    yearly: proYearlyId(),
   });
+}
+
+export function isPlusStripeConfigured(): boolean {
+  if (!env.STRIPE_SECRET_KEY) return false;
+  if (env.NODE_ENV === 'production' && !isLiveStripeSecret(env.STRIPE_SECRET_KEY)) return false;
+  const monthly = env.STRIPE_PRICE_PLUS_MONTHLY;
+  const yearly = env.STRIPE_PRICE_PLUS_YEARLY;
+  if (!stripePricesLookValid(monthly, yearly)) return false;
+  const used = new Set([proMonthlyId(), proYearlyId()].filter(Boolean));
+  return Boolean(monthly && yearly && !used.has(monthly) && !used.has(yearly));
 }
 
 export function isStripeWebhookConfigured(): boolean {
@@ -62,14 +82,51 @@ export function getStripe(): Stripe {
   return client;
 }
 
+export function priceIdForPlan(plan: CheckoutPlan, interval: 'month' | 'year'): string | undefined {
+  if (plan === 'plus') {
+    return interval === 'year' ? env.STRIPE_PRICE_PLUS_YEARLY : env.STRIPE_PRICE_PLUS_MONTHLY;
+  }
+  return interval === 'year' ? proYearlyId() : proMonthlyId();
+}
+
 export function priceIdForInterval(interval: 'month' | 'year'): string | undefined {
-  return interval === 'year' ? env.STRIPE_PRICE_YEARLY : env.STRIPE_PRICE_MONTHLY;
+  return priceIdForPlan('pro', interval);
+}
+
+function plusPriceIds(): string[] {
+  return [env.STRIPE_PRICE_PLUS_MONTHLY, env.STRIPE_PRICE_PLUS_YEARLY].filter(
+    (id): id is string => Boolean(id),
+  );
+}
+
+export function planForPriceId(priceId: string | null | undefined): 'PLUS' | 'PRO' | null {
+  if (!priceId) return null;
+  if (plusPriceIds().includes(priceId)) return 'PLUS';
+  const knownPro = [proMonthlyId(), proYearlyId(), env.STRIPE_PRICE_MONTHLY, env.STRIPE_PRICE_YEARLY].filter(
+    Boolean,
+  );
+  if (knownPro.includes(priceId)) return 'PRO';
+  return 'PRO';
 }
 
 export function intervalForPriceId(priceId: string | null | undefined): 'MONTH' | 'YEAR' | null {
   if (!priceId) return null;
-  if (priceId === env.STRIPE_PRICE_YEARLY) return 'YEAR';
-  if (priceId === env.STRIPE_PRICE_MONTHLY) return 'MONTH';
+  if (
+    priceId === proYearlyId() ||
+    priceId === env.STRIPE_PRICE_YEARLY ||
+    priceId === env.STRIPE_PRICE_PLUS_YEARLY ||
+    priceId === env.STRIPE_PRICE_PRO_YEARLY
+  ) {
+    return 'YEAR';
+  }
+  if (
+    priceId === proMonthlyId() ||
+    priceId === env.STRIPE_PRICE_MONTHLY ||
+    priceId === env.STRIPE_PRICE_PLUS_MONTHLY ||
+    priceId === env.STRIPE_PRICE_PRO_MONTHLY
+  ) {
+    return 'MONTH';
+  }
   return null;
 }
 

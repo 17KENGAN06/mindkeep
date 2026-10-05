@@ -39,6 +39,7 @@ enum UserRole {
 
 enum UserPlan {
   FREE
+  PLUS
   PRO
 }
 

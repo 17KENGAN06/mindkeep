@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { PaymentMarks } from '@/components/layout/PaymentMarks';
 import { PAGE_SHELL } from '@/config/layout';
+import { useAuth } from '@/features/auth/useAuth';
 
 const STUDIO_URL = 'https://weisezahoy.com/';
 const STUDIO_NAME = 'WEISEZAHOY';
@@ -74,8 +75,20 @@ type SiteFooterProps = {
 
 export function SiteFooter({ compact = false, embedded = false, screen = false }: SiteFooterProps) {
   const { t } = useTranslation();
+  const location = useLocation();
+  const { isAuthenticated } = useAuth();
   const year = new Date().getFullYear();
   const tight = compact || screen;
+
+  const footerLinks = [
+    { to: '/', label: t('nav.home'), match: (path: string) => path === '/' },
+    { to: '/plans', label: t('nav.plansShort'), match: (path: string) => path === '/plans' },
+    { to: '/guide', label: t('nav.guide'), match: (path: string) => path === '/guide' },
+    { to: '/blog', label: t('nav.blog'), match: (path: string) => path === '/blog' || path.startsWith('/blog/') },
+    { to: '/login', label: t('nav.login'), match: (path: string) => path === '/login' || isAuthenticated },
+    { to: '/contact', label: t('nav.contact'), match: (path: string) => path === '/contact' },
+    { to: '/privacy', label: t('footer.privacy'), match: (path: string) => path === '/privacy' },
+  ].filter((link) => !link.match(location.pathname));
 
   const studioLink = (
     <a
@@ -147,42 +160,15 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
           <div className="md:text-right">
             <p className="text-[11px] tracking-[0.24em] text-muted uppercase">{t('footer.linksLabel')}</p>
             <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-2.5 text-sm font-medium md:max-w-md md:justify-end md:justify-self-end">
-              <Link
-                to="/"
-                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
-              >
-                {t('nav.home')}
-              </Link>
-              <Link
-                to="/guide"
-                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
-              >
-                {t('nav.guide')}
-              </Link>
-              <Link
-                to="/blog"
-                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
-              >
-                {t('nav.blog')}
-              </Link>
-              <Link
-                to="/login"
-                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
-              >
-                {t('nav.login')}
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
-              >
-                {t('nav.contact')}
-              </Link>
-              <Link
-                to="/privacy"
-                className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
-              >
-                {t('footer.privacy')}
-              </Link>
+              {footerLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="inline-flex min-h-11 items-center text-ink no-underline transition hover:text-brand-500 md:min-h-0"
+                >
+                  {link.label}
+                </Link>
+              ))}
               <a
                 href={STUDIO_URL}
                 target="_blank"
@@ -210,15 +196,13 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
             </p>
             <p className="mt-4 text-xs leading-relaxed text-muted/80">{t('footer.rights')}</p>
           </div>
-          {embedded && compact ? null : (
-            <PaymentMarks
-              compact={compact}
-              label={t('footer.paymentsLabel')}
-              via={t('footer.paymentsVia')}
-              ariaLabel={t('footer.paymentsAria')}
-              stripeLabel={t('footer.paymentsStripe')}
-            />
-          )}
+          <PaymentMarks
+            compact={compact}
+            label={t('footer.paymentsLabel')}
+            via={t('footer.paymentsVia')}
+            ariaLabel={t('footer.paymentsAria')}
+            stripeLabel={t('footer.paymentsStripe')}
+          />
         </div>
       </div>
     </footer>

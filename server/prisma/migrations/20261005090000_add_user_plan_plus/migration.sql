@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "UserPlan" ADD VALUE IF NOT EXISTS 'PLUS';

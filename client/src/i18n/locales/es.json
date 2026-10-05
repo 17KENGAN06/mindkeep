@@ -50,7 +50,9 @@
     "closeMenu": "Cerrar menú",
     "settings": "Ajustes",
     "menu": "Menú",
-    "account": "Cuenta"
+    "account": "Cuenta",
+    "plans": "Comparar planes",
+    "plansShort": "Planes"
   },
   "placeholders": {
     "comingSoon": "Esta sección está en desarrollo",
@@ -1507,7 +1509,8 @@
     "returnCanceled": "Pago cancelado. No se cobró nada.",
     "returnPortal": "Los cambios de suscripción están guardados. Puedes volver a la app.",
     "openApp": "Abrir la app",
-    "stayOnSite": "Seguir en el sitio"
+    "stayOnSite": "Seguir en el sitio",
+    "plusLabel": "Plus"
   },
   "onboarding": {
     "eyebrow": "Ajuste rápido",
@@ -1557,5 +1560,79 @@
     "appearanceTitle": "Apariencia",
     "saved": "Guardado.",
     "needOne": "Deja al menos un servicio activado."
+  },
+  "plans": {
+    "eyebrow": "Planes",
+    "title": "Tres planes. Un producto.",
+    "subtitle": "En Free todos los módulos están abiertos. Plus quita los topes de cantidad. Pro añade el escaneo de fotos de comidas y tickets.",
+    "includes": "Qué incluye este plan",
+    "limits": "Límites en Free",
+    "removes": "Este plan quita",
+    "without": "No incluido",
+    "unlocks": "Este plan desbloquea",
+    "ctaFree": "Empezar gratis",
+    "ctaPlus": "Elegir Plus",
+    "ctaPro": "Elegir Pro",
+    "ctaYear": "Pagar al año",
+    "ctaMonth": "Pagar cada mes",
+    "current": "Tu plan",
+    "viewPlans": "Ver planes",
+    "upgrade": "Pasar a Pro",
+    "accountLead": "Plus quita los topes. Pro también escanea comidas y tickets desde una foto.",
+    "payHow": "Pago",
+    "intervalYear": "Año",
+    "intervalMonth": "Mes",
+    "free": {
+      "name": "Free",
+      "tagline": "Empieza hoy, con topes tranquilos.",
+      "price": "€0",
+      "billed": "No hace falta tarjeta.",
+      "includes": [
+        "Todos los módulos desde el primer día: tareas, repaso, notas, hábitos, presupuesto, nutrición",
+        "La misma cuenta en el sitio"
+      ],
+      "limits": [
+        "20 materiales · 45 tareas / mes · 3 categorías de repaso",
+        "3 hábitos · 20 notas · 5 categorías de presupuesto",
+        "25 movimientos financieros / mes · comidas 7 días · 2 dispositivos"
+      ],
+      "without": [
+        "Escaneo de la comida desde una foto",
+        "Escaneo del ticket en Presupuesto"
+      ]
+    },
+    "plus": {
+      "name": "Plus",
+      "tagline": "Más espacio. Sigue apuntando comidas y dinero tú.",
+      "yearPerMonth": "€3.33",
+      "yearCharged": "€39.99 una vez al año",
+      "monthPrice": "€4.99",
+      "includes": [
+        "Todo de Free",
+        "El mismo Plus en la app tras pagar en el sitio"
+      ],
+      "removes": [
+        "Los topes de cantidad en materiales, hábitos, notas, tareas y presupuesto",
+        "El muro de 7 días en comidas y el límite de 2 dispositivos"
+      ],
+      "without": [
+        "Escaneo de la comida desde una foto",
+        "Escaneo del ticket en Presupuesto"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Plus, y la cámara rellena comidas y presupuesto.",
+      "yearPerMonth": "€5.83",
+      "yearCharged": "€69.99 una vez al año",
+      "monthPrice": "€7.99",
+      "includes": [
+        "Todo de Plus"
+      ],
+      "unlocks": [
+        "Escanear una comida desde una foto en el teléfono",
+        "Escanear un ticket al Presupuesto y elegir efectivo o tarjeta"
+      ]
+    }
   }
 }

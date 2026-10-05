@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { BrandLockup } from '@/components/brand/BrandLockup';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { PlansCta } from '@/components/layout/PlansCta';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Reveal } from '@/components/motion/Reveal';
@@ -15,6 +16,7 @@ export function AuthLayout() {
         <header className="mb-6 flex items-center justify-between gap-3 sm:mb-8">
           <BrandLockup to="/" size="md" />
           <div className="flex shrink-0 items-center gap-2">
+            <PlansCta />
             <ThemeToggle />
             <LanguageSwitcher />
           </div>

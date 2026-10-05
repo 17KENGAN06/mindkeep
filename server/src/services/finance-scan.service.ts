@@ -272,8 +272,8 @@ export const financeScanService = {
     localeHeader?: string | null,
   ): Promise<{ operations: FinanceScanOperation[] }> {
     const entitlement = await getEntitlement(userId);
-    if (!entitlement.pro) {
-      throwScan('FINANCE_IMPORT_PRO_REQUIRED', 'Finance import is included in Pro', 403);
+    if (!entitlement.automation) {
+      throwScan('FINANCE_IMPORT_PRO_REQUIRED', 'Finance scan is included in Pro', 403);
     }
 
     const { buffer, mimeType } = decodeFoodScanImage(input.image, input.mimeType);

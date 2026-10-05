@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BrandLockup } from '@/components/brand/BrandLockup';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { PublicHeader } from '@/components/layout/PublicHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/ui/Button';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
@@ -14,13 +12,7 @@ export function NotFoundPage() {
   return (
     <div className="relative min-h-dvh overflow-x-hidden">
       <div className={`${PAGE_SHELL} ${PAGE_SHELL_Y} flex min-h-dvh flex-col`}>
-        <header className="flex items-center justify-between gap-3">
-          <BrandLockup to="/" size="md" />
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LanguageSwitcher />
-          </div>
-        </header>
+        <PublicHeader />
 
         <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
           <Reveal>

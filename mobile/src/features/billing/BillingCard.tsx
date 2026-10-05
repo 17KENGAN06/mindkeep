@@ -75,7 +75,7 @@ export function BillingCard() {
   const subscribed = Boolean(status?.subscribed);
   const isAdmin = user?.role === 'ADMIN';
   const isBeta = Boolean((user?.betaTester || status?.betaTester) && !isAdmin);
-  const isPro = status?.plan === 'PRO';
+  const isPro = status?.plan === 'PRO' || status?.plan === 'PLUS';
   const showSubscribe = Boolean(status?.configured && !subscribed && !isBeta);
   const showManage = Boolean(status?.configured && billed);
   const expires = status?.planExpiresAt

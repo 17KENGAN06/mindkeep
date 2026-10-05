@@ -158,6 +158,13 @@ export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: Mobile
             </p>
             <div className="grid grid-cols-2 gap-2">
               <Link
+                to="/plans"
+                className="col-span-2 inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-500 px-3 text-sm font-semibold text-[#07110d] no-underline"
+                onClick={close}
+              >
+                {t('nav.plansShort')}
+              </Link>
+              <Link
                 to="/guide"
                 className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-50/40 px-3 text-sm font-semibold text-ink no-underline ring-1 ring-line/70"
                 onClick={close}

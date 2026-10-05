@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { UserPlan, UserRole } from '@prisma/client';
 import { throwPlanLimit } from '@/config/entitlements.js';
-import { isProUser, keepLatestPerUtcMonth } from '@/services/entitlements.service.js';
+import { isProUser, hasAutomation, keepLatestPerUtcMonth } from '@/services/entitlements.service.js';
 import { AppError } from '@/utils/AppError.js';
 
 test('throwPlanLimit returns PLAN_LIMIT with counts', () => {
@@ -66,6 +66,18 @@ test('beta testers are entitled without a paid plan', () => {
     }),
     true,
   );
+});
+
+test('active Plus lifts limits but has no scan automation', () => {
+  const plus = {
+    email: 'plus@mindkeep.test',
+    role: UserRole.USER,
+    plan: UserPlan.PLUS,
+    planExpiresAt: new Date(Date.now() + 86_400_000),
+    betaTester: false,
+  };
+  assert.equal(isProUser(plus), true);
+  assert.equal(hasAutomation(plus), false);
 });
 
 test('keepLatestPerUtcMonth keeps the newest rows per month', () => {

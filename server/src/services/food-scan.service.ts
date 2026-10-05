@@ -290,7 +290,7 @@ async function estimateWithGemini(
 export const foodScanService = {
   async scanMeal(userId: string, input: ScanFoodInput, localeHeader?: string | null): Promise<FoodScanEstimate> {
     const entitlement = await getEntitlement(userId);
-    if (!entitlement.pro) {
+    if (!entitlement.automation) {
       throwScan('FOOD_SCAN_PRO_REQUIRED', 'Food scan is included in Pro', 403);
     }
 

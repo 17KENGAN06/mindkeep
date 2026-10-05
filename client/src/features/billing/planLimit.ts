@@ -1,7 +1,7 @@
 import { useQuery, type QueryClient } from '@tanstack/react-query';
 import { ApiError } from '@/api/client';
 import { billingApi, type BillingStatus } from '@/api/billing';
-import type { User } from '@/types/auth';
+import type { User, UserPlan } from '@/types/auth';
 
 type Translate = (key: string) => string;
 
@@ -60,7 +60,25 @@ export function usePlanUsage() {
 
 export type PlanUsageFeature = keyof BillingStatus['usage'];
 
-export function isProAccount(user?: Pick<User, 'plan' | 'role' | 'betaTester'> | null): boolean {
-  if (!user) return false;
-  return user.plan === 'PRO' || user.role === 'ADMIN' || Boolean(user.betaTester);
+export type PlanAccount = Pick<User, 'plan' | 'role' | 'betaTester'> | null | undefined;
+
+export function accountPlan(user?: PlanAccount): UserPlan {
+  if (!user) return 'FREE';
+  if (user.role === 'ADMIN' || Boolean(user.betaTester)) return 'PRO';
+  if (user.plan === 'PLUS' || user.plan === 'PRO') return user.plan;
+  return 'FREE';
+}
+
+/** Quantity caps are lifted on Plus and Pro. */
+export function isProAccount(user?: PlanAccount): boolean {
+  return accountPlan(user) !== 'FREE';
+}
+
+export function isPaidAccount(user?: PlanAccount): boolean {
+  return isProAccount(user);
+}
+
+/** Food and receipt scan — Pro only. */
+export function hasAutomation(user?: PlanAccount): boolean {
+  return accountPlan(user) === 'PRO';
 }
