@@ -153,9 +153,11 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
     });
   };
 
+  const canEstimate = photos.length > 0 || note.trim().length >= 2;
+
   const onEstimate = async (event: FormEvent) => {
     event.preventDefault();
-    if (photos.length < 1) {
+    if (!canEstimate) {
       setError(t('calories.scan.prepareNeedPhoto'));
       return;
     }
@@ -163,10 +165,13 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
     setError(null);
     setAnalyzing(true);
     try {
-      const images = await Promise.all(photos.map((photo) => compressMealPhoto(photo.file)));
+      const images =
+        photos.length > 0
+          ? await Promise.all(photos.map((photo) => compressMealPhoto(photo.file)))
+          : [];
       const trimmed = note.trim();
       const estimate = await nutritionApi.scanFood({
-        images,
+        ...(images.length > 0 ? { images } : {}),
         ...(trimmed ? { note: trimmed.slice(0, 240) } : {}),
       });
       setReview({
@@ -378,7 +383,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
               <Button type="button" variant="secondary" onClick={closePrepare} disabled={analyzing}>
                 {t('calories.scan.cancel')}
               </Button>
-              <Button type="submit" isLoading={analyzing} disabled={photos.length < 1}>
+              <Button type="submit" isLoading={analyzing} disabled={!canEstimate}>
                 {t('calories.scan.prepareSubmit')}
               </Button>
             </div>

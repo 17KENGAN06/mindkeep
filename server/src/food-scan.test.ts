@@ -23,9 +23,13 @@ test('foodScanPrompt mentions an optional dish hint and one meal for extra photo
   assert.match(many, /do not count the meal 3 times/);
   assert.match(many, /борщ и котлета/);
   assert.match(many, /Russian/);
+
+  const textOnly = foodScanPrompt('en', 'oatmeal with banana', 0);
+  assert.match(textOnly, /no photo/i);
+  assert.match(textOnly, /oatmeal with banana/);
 });
 
-test('scanFoodSchema accepts a legacy photo or up to three images plus a note', () => {
+test('scanFoodSchema accepts a legacy photo, several images plus a note, or text only', () => {
   const payload = jpeg.toString('base64') + 'A'.repeat(80);
   const legacy = scanFoodSchema.parse({ image: payload, mimeType: 'image/jpeg' });
   assert.equal(legacy.images.length, 1);
@@ -40,6 +44,13 @@ test('scanFoodSchema accepts a legacy photo or up to three images plus a note', 
   });
   assert.equal(many.images.length, 2);
   assert.equal(many.note, 'soup');
+
+  const textOnly = scanFoodSchema.parse({ note: 'борщ и котлета' });
+  assert.equal(textOnly.images.length, 0);
+  assert.equal(textOnly.note, 'борщ и котлета');
+
+  assert.equal(scanFoodSchema.safeParse({}).success, false);
+  assert.equal(scanFoodSchema.safeParse({ note: ' ' }).success, false);
 });
 
 test('detects jpeg png and webp magic bytes', () => {

@@ -83,8 +83,8 @@ export const scanFoodSchema = z
         ? [{ image: stripFoodScanDataUrl(value.image), mimeType: value.mimeType }]
         : [];
     const images = (value.images && value.images.length > 0 ? value.images : fromLegacy).slice(0, 3);
-    if (images.length < 1) {
-      ctx.addIssue({ code: 'custom', message: 'Need a photo' });
+    if (images.length < 1 && note.length < 2) {
+      ctx.addIssue({ code: 'custom', message: 'Need a photo or a dish description' });
       return z.NEVER;
     }
     return { images, note: note || undefined };
