@@ -17,7 +17,7 @@ import { PlansCta } from '@/components/layout/PlansCta';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
-import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
+import { PAGE_SHELL, PAGE_SHELL_Y, HOME_SIDE_NAV_PAD } from '@/config/layout';
 
 const SECTION_IDS = ['hero', 'services', 'pricing', 'footer'] as const;
 
@@ -54,7 +54,7 @@ export function HomePage() {
         <button
           type="button"
           onClick={() => goToSection('hero')}
-          className="fixed right-4 bottom-24 z-50 hidden h-11 w-11 items-center justify-center rounded-full border border-line/80 bg-panel/90 text-ink shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-500 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none md:inline-flex xl:bottom-5"
+          className="fixed right-4 bottom-24 z-50 hidden h-11 w-11 items-center justify-center rounded-full border border-line/80 bg-panel/90 text-ink shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-500 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none md:inline-flex lg:bottom-5"
           aria-label={t('nav.home')}
           title={t('nav.home')}
         >
@@ -68,7 +68,7 @@ export function HomePage() {
         data-section-snap="true"
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
-          <div className={`relative ${PAGE_SHELL} ${PAGE_SHELL_Y} flex h-full w-full flex-col`}>
+          <div className={`relative ${PAGE_SHELL} ${HOME_SIDE_NAV_PAD} ${PAGE_SHELL_Y} flex h-full w-full flex-col`}>
             <SnapReveal
               className="relative z-50 flex items-center justify-between gap-2 sm:gap-3"
               delay={0.02}

@@ -56,7 +56,7 @@ function useAutoHideNav(activeId: string) {
     const nearNav = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse') return false;
       const width = window.innerWidth;
-      if (width >= 1280) return event.clientX > width - 80;
+      if (width >= 1024) return event.clientX > width - 88;
       return false;
     };
 
@@ -111,14 +111,14 @@ function SectionDots({
             <button
               type="button"
               onClick={() => onSelect(id)}
-              className={`pointer-events-auto group flex items-center ${showSideLabels ? 'gap-3' : 'justify-center'}`}
+              className="pointer-events-auto group relative flex items-center justify-center"
               aria-current={active ? 'true' : undefined}
               aria-label={labels[index]}
             >
               {showSideLabels ? (
                 <span
-                  className={`font-display max-w-0 overflow-hidden text-[10px] tracking-[0.18em] whitespace-nowrap text-muted uppercase opacity-0 transition-all duration-300 group-hover:max-w-40 group-hover:opacity-100 ${
-                    active ? 'max-w-40 text-brand-500 opacity-100' : ''
+                  className={`pointer-events-none absolute right-[calc(100%+0.55rem)] font-display text-[10px] tracking-[0.18em] whitespace-nowrap text-muted uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
+                    active ? 'text-brand-500 opacity-100' : ''
                   }`}
                 >
                   {labels[index]}
@@ -186,7 +186,7 @@ export function SectionNav({ sectionIds, labels, activeId, onSelect }: SectionNa
       <NavShell
         visible={visible}
         chromeProps={chromeProps}
-        className="pointer-events-none fixed top-1/2 right-[max(1rem,calc((100vw-1400px)/2-5.25rem))] z-40 hidden -translate-y-1/2 xl:flex"
+        className="pointer-events-none fixed top-1/2 right-3 z-40 hidden -translate-y-1/2 lg:flex xl:right-4 2xl:right-5"
         hiddenClassName="translate-x-3"
       >
         <div className="relative rounded-[1.75rem] border border-line/70 bg-panel/60 px-3 py-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-xl">

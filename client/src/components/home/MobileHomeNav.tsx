@@ -51,7 +51,7 @@ export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: Mobile
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 xl:hidden">
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 lg:hidden">
         <div className="pointer-events-auto mx-auto flex w-full max-w-lg items-center gap-2 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2">
           <div className="flex w-full items-center gap-1.5 rounded-2xl border border-line/80 bg-panel/95 p-1.5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
             <button
@@ -99,7 +99,7 @@ export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: Mobile
 
       {open ? (
         <div
-          className="fixed inset-0 z-[80] flex flex-col bg-panel xl:hidden"
+          className="fixed inset-0 z-[80] flex flex-col bg-panel lg:hidden"
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
