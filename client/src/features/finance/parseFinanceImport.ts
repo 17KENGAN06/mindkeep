@@ -1,4 +1,4 @@
-import { FINANCE_CURRENCIES, isFinanceCurrency, type FinanceCurrency } from '@/features/finance/currencies';
+import { FINANCE_CURRENCIES, type FinanceCurrency } from '@/features/finance/currencies';
 import type { FinanceMoneyKind, FinanceOperationType } from '@/types/finance';
 
 export type FinanceDraftOperation = {
@@ -153,7 +153,7 @@ function fromCells(
   if (!date || !parsedAmount) return null;
   const typeCell = map.type >= 0 ? (cells[map.type] ?? '') : '';
   const currencyCell = map.currency >= 0 ? (cells[map.currency] ?? '') : cells.join(' ');
-  const comment = (map.comment >= 0 ? cells[map.comment] : cells.filter((_, i) => i !== map.date && i !== map.amount).join(' '))
+  const comment = (map.comment >= 0 ? (cells[map.comment] ?? '') : cells.filter((_, i) => i !== map.date && i !== map.amount).join(' '))
     .trim()
     .slice(0, 500);
   const categoryName = map.category >= 0 ? (cells[map.category] ?? '').trim().slice(0, 80) : '';
