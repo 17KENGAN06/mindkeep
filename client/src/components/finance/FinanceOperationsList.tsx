@@ -66,7 +66,7 @@ export function FinanceOperationsList({
                   <span className="text-xs text-muted">{operation.category.name}</span>
                 ) : null}
               </div>
-              <p className="mt-2 text-sm text-ink">
+              <p className="mt-2 break-words text-sm text-ink">
                 {operation.comment || t('finance.noComment')}
               </p>
             </div>

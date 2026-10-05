@@ -39,10 +39,14 @@ export const createFinanceOperationSchema = z.object({
   type: financeOperationTypeSchema,
   moneyKind: financeMoneyKindSchema.optional().default(BudgetMoneyKind.ELECTRONIC),
   currency: financeCurrencySchema.optional().default(BudgetCurrency.EUR),
-  amount: z.number().positive().max(1_000_000_000),
+  amount: z.coerce.number().positive().max(1_000_000_000),
   date: z.string().datetime({ offset: true }).or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)),
   comment: z.string().trim().max(500).optional().default(''),
-  categoryId: z.string().min(1).nullable().optional(),
+  categoryId: z
+    .string()
+    .nullable()
+    .optional()
+    .transform((value) => (value && value.trim() !== '' ? value : null)),
 });
 
 export const bulkCreateFinanceOperationsSchema = z.object({

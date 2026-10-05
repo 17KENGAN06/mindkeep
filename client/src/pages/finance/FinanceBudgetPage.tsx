@@ -10,6 +10,7 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
+import { Textarea } from '@/components/ui/Textarea';
 import {
   currencyLabel,
   currencyOptions,
@@ -196,6 +197,19 @@ export function FinanceBudgetPage() {
         };
       }),
     });
+    const latest = rows
+      .map((row) => row.date)
+      .filter((value) => /^\d{4}-\d{2}-\d{2}$/.test(value))
+      .sort()
+      .at(-1);
+    if (latest) {
+      const [nextYear, nextMonth] = latest.split('-').map(Number);
+      if (nextYear && nextMonth) {
+        setView('month');
+        setYear(nextYear);
+        setMonth(nextMonth);
+      }
+    }
   };
 
   return (
@@ -280,11 +294,16 @@ export function FinanceBudgetPage() {
               label: category.name,
             }))}
           />
-          <Input
-            label={t('finance.comment')}
-            value={comment}
-            onChange={(event) => setComment(event.target.value)}
-          />
+          <div className="min-w-0 md:col-span-2">
+            <Textarea
+              label={t('finance.comment')}
+              value={comment}
+              rows={2}
+              maxLength={500}
+              className="min-h-16 resize-y"
+              onChange={(event) => setComment(event.target.value)}
+            />
+          </div>
           <div className="min-w-0 md:col-span-2">
             <ErrorMessage message={formError ?? undefined} />
             <Button type="submit" className="mt-2" isLoading={createOperation.isPending}>

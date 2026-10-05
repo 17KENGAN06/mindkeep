@@ -8,11 +8,12 @@ import { financeApi } from '@/api/finance';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
+import { Textarea } from '@/components/ui/Textarea';
 import { useAuth } from '@/features/auth/useAuth';
 import { hasAutomation, mutationErrorMessage } from '@/features/billing/planLimit';
 import { currencyOptions, isFinanceCurrency, type FinanceCurrency } from '@/features/finance/currencies';
-import { formatSignedMoney } from '@/features/finance/financeUtils';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
 import { usePhoneViewport } from '@/features/nutrition/usePhoneViewport';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
@@ -127,6 +128,14 @@ export function FinanceScanReceipt({
   const onConfirm = async (event: FormEvent) => {
     event.preventDefault();
     if (!review || review.length === 0) return;
+    const invalid = review.some(
+      (row) =>
+        !/^\d{4}-\d{2}-\d{2}$/.test(row.date) || !Number.isFinite(row.amount) || row.amount <= 0,
+    );
+    if (invalid) {
+      setError(t('finance.errors.amount'));
+      return;
+    }
     setError(null);
     try {
       await onSave(
@@ -136,7 +145,7 @@ export function FinanceScanReceipt({
           currency: row.currency,
           type: row.type,
           moneyKind: batchMoneyKind,
-          comment: row.comment,
+          comment: row.comment.trim(),
           categoryId: row.categoryId || null,
         })),
       );
@@ -146,6 +155,12 @@ export function FinanceScanReceipt({
     } catch (caught) {
       setError(scanErrorMessage(caught, t));
     }
+  };
+
+  const patchRow = (index: number, patch: Partial<ReviewRow>) => {
+    setReview(
+      (rows) => rows?.map((item, itemIndex) => (itemIndex === index ? { ...item, ...patch } : item)) ?? null,
+    );
   };
 
   const hint = !phone
@@ -294,34 +309,56 @@ export function FinanceScanReceipt({
               />
 
               <ul className="divide-y divide-line overflow-hidden rounded-2xl ring-1 ring-line">
-                {review.map((row, index) => {
-                  const signed = row.type === 'EXPENSE' ? -row.amount : row.amount;
-                  return (
-                    <li key={`${row.date}-${index}`} className="space-y-2 px-3 py-3">
-                      <div className="flex items-start justify-between gap-3">
-                        <p className="min-w-0 truncate text-sm font-medium text-ink">
-                          {row.comment || t('finance.noComment')}
-                        </p>
-                        <p
-                          className={`shrink-0 text-sm font-semibold ${
-                            row.type === 'EXPENSE' ? 'text-expense' : 'text-brand-500'
-                          }`}
-                        >
-                          {formatSignedMoney(signed, language, row.currency)}
-                        </p>
+                {review.map((row, index) => (
+                    <li key={`${row.date}-${index}`} className="min-w-0 space-y-3 px-3 py-3">
+                      <Textarea
+                        label={t('finance.scan.item')}
+                        value={row.comment}
+                        rows={2}
+                        maxLength={500}
+                        className="min-h-16 resize-y"
+                        onChange={(event) => patchRow(index, { comment: event.target.value })}
+                      />
+                      <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
+                        <Input
+                          label={t('finance.amount')}
+                          type="number"
+                          min="0.01"
+                          step="0.01"
+                          inputMode="decimal"
+                          value={Number.isFinite(row.amount) ? String(row.amount) : ''}
+                          onChange={(event) => {
+                            const next = Number(event.target.value);
+                            patchRow(index, {
+                              amount: Number.isFinite(next) ? next : 0,
+                            });
+                          }}
+                        />
+                        <Input
+                          label={t('finance.date')}
+                          type="date"
+                          value={row.date}
+                          onChange={(event) => patchRow(index, { date: event.target.value })}
+                        />
                       </div>
-                      <p className="text-xs text-muted">{row.date}</p>
+                      <Select
+                        label={t('finance.type')}
+                        value={row.type}
+                        options={[
+                          { value: 'EXPENSE', label: t('finance.expense') },
+                          { value: 'INCOME', label: t('finance.income') },
+                        ]}
+                        onChange={(event) =>
+                          patchRow(index, { type: event.target.value as ReviewRow['type'] })
+                        }
+                      />
                       <Select
                         label={t('finance.currency')}
                         value={row.currency}
                         options={currencyOptions(language)}
                         onChange={(event) => {
                           const next = event.target.value as FinanceCurrency;
-                          setReview((rows) =>
-                            rows?.map((item, itemIndex) =>
-                              itemIndex === index ? { ...item, currency: next } : item,
-                            ) ?? null,
-                          );
+                          patchRow(index, { currency: next });
                         }}
                       />
                       {review.length > 1 ? (
@@ -333,19 +370,11 @@ export function FinanceScanReceipt({
                             value: category.id,
                             label: category.name,
                           }))}
-                          onChange={(event) => {
-                            const next = event.target.value;
-                            setReview((rows) =>
-                              rows?.map((item, itemIndex) =>
-                                itemIndex === index ? { ...item, categoryId: next } : item,
-                              ) ?? null,
-                            );
-                          }}
+                          onChange={(event) => patchRow(index, { categoryId: event.target.value })}
                         />
                       ) : null}
                     </li>
-                  );
-                })}
+                ))}
               </ul>
               <p className="text-xs text-muted">{t('finance.scan.privacy')}</p>
             </div>

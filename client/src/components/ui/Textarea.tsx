@@ -10,7 +10,7 @@ export function Textarea({ label, error, hint, id, className = '', ...props }: T
   const inputId = id ?? props.name;
 
   return (
-    <label className="block space-y-1.5" htmlFor={inputId}>
+    <label className="block min-w-0 space-y-1.5" htmlFor={inputId}>
       <span className="text-sm font-medium text-ink">{label}</span>
       <textarea
         id={inputId}

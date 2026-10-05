@@ -52,7 +52,7 @@ export const financeApi = {
   createOperation: (payload: CreateOperationPayload) =>
     apiClient.post<{ operation: FinanceOperation }>('/api/finance/operations', payload),
   bulkCreateOperations: (payload: { operations: CreateOperationPayload[] }) =>
-    apiClient.post<{ created: number }>('/api/finance/operations/bulk', payload),
+    apiClient.post<{ created: number }>('/api/finance/operations/bulk', payload, { timeoutMs: 30_000 }),
   scanStatement: (payload: {
     image: string;
     mimeType: 'image/jpeg' | 'image/png' | 'image/webp';
