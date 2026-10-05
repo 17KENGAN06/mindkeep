@@ -1,5 +1,5 @@
-import { Camera, Images, LoaderCircle } from 'lucide-react';
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { Camera, Images, LoaderCircle, X } from 'lucide-react';
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
+import { Textarea } from '@/components/ui/Textarea';
 import { useAuth } from '@/features/auth/useAuth';
 import { hasAutomation, mutationErrorMessage } from '@/features/billing/planLimit';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
@@ -16,10 +17,18 @@ import type { MealKind } from '@/features/nutrition/mealKinds';
 import { useCreateMeal } from '@/features/nutrition/useNutrition';
 import { usePhoneViewport } from '@/features/nutrition/usePhoneViewport';
 
+const MAX_PHOTOS = 3;
+
 type ReviewState = {
   mealName: string;
   totalCalories: string;
   kind: MealKind | null;
+};
+
+type PickedPhoto = {
+  id: string;
+  file: File;
+  preview: string;
 };
 
 function scanErrorMessage(error: unknown, t: (key: string) => string): string {
@@ -65,32 +74,96 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   const createMeal = useCreateMeal();
   const cameraRef = useRef<HTMLInputElement>(null);
   const galleryRef = useRef<HTMLInputElement>(null);
+  const [preparing, setPreparing] = useState(false);
+  const [note, setNote] = useState('');
+  const [photos, setPhotos] = useState<PickedPhoto[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ReviewState | null>(null);
   const automation = hasAutomation(user);
   const canScan = phone && automation;
 
+  const photosRef = useRef<PickedPhoto[]>([]);
+  photosRef.current = photos;
+
+  useEffect(() => {
+    return () => {
+      photosRef.current.forEach((photo) => URL.revokeObjectURL(photo.preview));
+    };
+  }, []);
+
+  const clearPhotos = (next: PickedPhoto[] = []) => {
+    photos.forEach((photo) => URL.revokeObjectURL(photo.preview));
+    setPhotos(next);
+  };
+
+  const closePrepare = () => {
+    clearPhotos();
+    setNote('');
+    setPreparing(false);
+  };
+
   const onNeedPro = () => {
     setError(null);
     navigate('/plans');
   };
 
-  const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const openPrepare = () => {
+    setError(null);
+    setPreparing(true);
+  };
+
+  const addFiles = (list: FileList | File[]) => {
+    const incoming = Array.from(list).filter((file) => file.type.startsWith('image/'));
+    if (incoming.length === 0) return;
+    setError(null);
+    setPhotos((current) => {
+      const room = MAX_PHOTOS - current.length;
+      const added = incoming.slice(0, room).map((file) => ({
+        id: `${file.name}-${file.size}-${file.lastModified}-${Math.random().toString(36).slice(2, 7)}`,
+        file,
+        preview: URL.createObjectURL(file),
+      }));
+      return [...current, ...added];
+    });
+  };
+
+  const onFileInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
     event.target.value = '';
-    if (!file) return;
+    if (files && files.length > 0) addFiles(files);
+  };
+
+  const removePhoto = (id: string) => {
+    setPhotos((current) => {
+      const victim = current.find((photo) => photo.id === id);
+      if (victim) URL.revokeObjectURL(victim.preview);
+      return current.filter((photo) => photo.id !== id);
+    });
+  };
+
+  const onEstimate = async (event: FormEvent) => {
+    event.preventDefault();
+    if (photos.length < 1) {
+      setError(t('calories.scan.prepareNeedPhoto'));
+      return;
+    }
 
     setError(null);
     setAnalyzing(true);
     try {
-      const payload = await compressMealPhoto(file);
-      const estimate = await nutritionApi.scanFood(payload);
+      const images = await Promise.all(photos.map((photo) => compressMealPhoto(photo.file)));
+      const trimmed = note.trim();
+      const estimate = await nutritionApi.scanFood({
+        images,
+        ...(trimmed ? { note: trimmed.slice(0, 240) } : {}),
+      });
       setReview({
         mealName: estimate.mealName,
         totalCalories: String(estimate.totalCalories),
         kind: null,
       });
+      closePrepare();
     } catch (caught) {
       setError(scanErrorMessage(caught, t));
     } finally {
@@ -145,14 +218,15 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             accept="image/jpeg,image/png,image/webp,image/*"
             capture="environment"
             className="sr-only"
-            onChange={(event) => void onFile(event)}
+            onChange={onFileInput}
           />
           <input
             ref={galleryRef}
             type="file"
             accept="image/jpeg,image/png,image/webp,image/*"
+            multiple
             className="sr-only"
-            onChange={(event) => void onFile(event)}
+            onChange={onFileInput}
           />
         </>
       ) : null}
@@ -164,10 +238,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             className="inline-flex min-h-11 min-w-0 w-full items-center justify-center gap-1 overflow-hidden rounded-xl bg-panel px-1.5 py-2 text-[13px] font-semibold leading-none text-ink ring-1 ring-line whitespace-nowrap touch-manipulation hover:ring-brand-400 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={analyzing}
             aria-busy={analyzing}
-            onClick={() => {
-              setError(null);
-              cameraRef.current?.click();
-            }}
+            onClick={openPrepare}
           >
             {analyzing ? (
               <LoaderCircle className="h-4 w-4 shrink-0 animate-spin" aria-hidden />
@@ -182,10 +253,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             type="button"
             className="inline-flex min-h-11 min-w-0 w-full items-center justify-center gap-1 overflow-hidden rounded-xl bg-panel px-1.5 py-2 text-[13px] font-semibold leading-none text-ink ring-1 ring-line whitespace-nowrap touch-manipulation hover:ring-brand-400 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={analyzing}
-            onClick={() => {
-              setError(null);
-              galleryRef.current?.click();
-            }}
+            onClick={openPrepare}
           >
             <Images className="h-4 w-4 shrink-0" aria-hidden />
             {t('calories.scan.gallery')}
@@ -208,7 +276,101 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
         </Button>
       )}
       <p className="text-xs text-muted">{hint}</p>
-      <ErrorMessage message={error ?? undefined} />
+      <ErrorMessage message={!preparing && !review ? error ?? undefined : undefined} />
+
+      {preparing ? (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">
+          <form
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="food-scan-prepare-title"
+            className="w-full max-w-md space-y-4 rounded-2xl bg-panel p-5 shadow-lg"
+            onSubmit={(event) => void onEstimate(event)}
+          >
+            <div>
+              <h3 id="food-scan-prepare-title" className="text-lg font-semibold text-ink">
+                {t('calories.scan.prepareTitle')}
+              </h3>
+              <p className="mt-1 text-sm text-muted">{t('calories.scan.prepareLead')}</p>
+            </div>
+            <Textarea
+              label={t('calories.scan.prepareLabel')}
+              hint={t('calories.scan.prepareOptional')}
+              placeholder={t('calories.scan.preparePlaceholder')}
+              rows={3}
+              maxLength={240}
+              className="min-h-20"
+              value={note}
+              onChange={(event) => setNote(event.target.value)}
+            />
+            <div>
+              <p className="text-sm font-medium text-ink">{t('calories.scan.preparePhotos')}</p>
+              <p className="mt-1 text-xs text-muted">{t('calories.scan.preparePhotosHint')}</p>
+              {photos.length > 0 ? (
+                <ul className="mt-3 grid grid-cols-3 gap-2">
+                  {photos.map((photo, index) => (
+                    <li key={photo.id} className="relative">
+                      <img
+                        src={photo.preview}
+                        alt=""
+                        className="h-20 w-full rounded-xl object-cover ring-1 ring-line"
+                      />
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink/70 text-white"
+                        aria-label={t('calories.scan.removePhoto')}
+                        onClick={() => removePhoto(photo.id)}
+                        disabled={analyzing}
+                      >
+                        <X className="h-3.5 w-3.5" aria-hidden />
+                      </button>
+                      <span className="sr-only">
+                        {t('calories.scan.prepareCount', { count: index + 1 })}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              {photos.length < MAX_PHOTOS ? (
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="w-full"
+                    disabled={analyzing}
+                    onClick={() => cameraRef.current?.click()}
+                  >
+                    <Camera className="mr-1.5 h-4 w-4 shrink-0" aria-hidden />
+                    {t('calories.scan.prepareCamera')}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="w-full"
+                    disabled={analyzing}
+                    onClick={() => galleryRef.current?.click()}
+                  >
+                    <Images className="mr-1.5 h-4 w-4 shrink-0" aria-hidden />
+                    {t('calories.scan.prepareGallery')}
+                  </Button>
+                </div>
+              ) : (
+                <p className="mt-2 text-xs text-muted">{t('calories.scan.prepareCount', { count: photos.length })}</p>
+              )}
+            </div>
+            <p className="text-xs text-muted">{t('calories.scan.privacy')}</p>
+            <ErrorMessage message={error ?? undefined} />
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <Button type="button" variant="secondary" onClick={closePrepare} disabled={analyzing}>
+                {t('calories.scan.cancel')}
+              </Button>
+              <Button type="submit" isLoading={analyzing} disabled={photos.length < 1}>
+                {t('calories.scan.prepareSubmit')}
+              </Button>
+            </div>
+          </form>
+        </div>
+      ) : null}
 
       {review ? (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-4 sm:items-center">

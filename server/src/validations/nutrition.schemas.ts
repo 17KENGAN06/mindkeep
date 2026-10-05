@@ -56,18 +56,39 @@ export const upsertWeightSchema = z.object({
 
 const foodScanMimeType = z.enum(['image/jpeg', 'image/png', 'image/webp']);
 
-export const scanFoodSchema = z.object({
-  image: z
-    .string()
-    .min(80)
-    .max(900_000)
-    .transform((value) => {
-      const trimmed = value.trim();
-      const comma = trimmed.indexOf(',');
-      return trimmed.startsWith('data:') && comma !== -1 ? trimmed.slice(comma + 1) : trimmed;
-    }),
+function stripFoodScanDataUrl(value: string): string {
+  const trimmed = value.trim();
+  const comma = trimmed.indexOf(',');
+  return trimmed.startsWith('data:') && comma !== -1 ? trimmed.slice(comma + 1) : trimmed;
+}
+
+const scanFoodPhotoSchema = z.object({
+  image: z.string().min(80).max(900_000).transform(stripFoodScanDataUrl),
   mimeType: foodScanMimeType,
 });
+
+export const scanFoodSchema = z
+  .object({
+    note: z.string().max(400).optional(),
+    images: z.array(scanFoodPhotoSchema).max(3).optional(),
+    image: z.string().min(80).max(900_000).optional(),
+    mimeType: foodScanMimeType.optional(),
+  })
+  .transform((value, ctx) => {
+    const note = value.note
+      ? value.note.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 240)
+      : '';
+    const fromLegacy =
+      value.image && value.mimeType
+        ? [{ image: stripFoodScanDataUrl(value.image), mimeType: value.mimeType }]
+        : [];
+    const images = (value.images && value.images.length > 0 ? value.images : fromLegacy).slice(0, 3);
+    if (images.length < 1) {
+      ctx.addIssue({ code: 'custom', message: 'Need a photo' });
+      return z.NEVER;
+    }
+    return { images, note: note || undefined };
+  });
 
 export type NutritionPeriodQuery = z.infer<typeof nutritionPeriodQuerySchema>;
 export type UpdateNutritionSettingsInput = z.infer<typeof updateNutritionSettingsSchema>;

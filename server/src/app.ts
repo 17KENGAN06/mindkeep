@@ -73,7 +73,11 @@ app.post(
   express.raw({ type: 'application/json' }),
   asyncHandler((req, res) => billingController.webhook(req, res)),
 );
-app.use(express.json({ limit: '1mb' }));
+app.use((req, res, next) => {
+  const path = normalizePath(req);
+  const limit = path === '/api/nutrition/scan' ? '3mb' : '1mb';
+  return express.json({ limit })(req, res, next);
+});
 app.use(cookieParser());
 app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 

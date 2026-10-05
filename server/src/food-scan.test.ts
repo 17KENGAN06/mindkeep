@@ -4,12 +4,43 @@ import {
   decodeFoodScanImage,
   detectFoodScanMime,
   extractGeminiJson,
+  foodScanPrompt,
   parseFoodScanAiPayload,
 } from '@/services/food-scan.service.js';
 import { AppError } from '@/utils/AppError.js';
+import { scanFoodSchema } from '@/validations/nutrition.schemas.js';
 
 const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, ...Array.from({ length: 40 }, () => 0x00)]);
 const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, ...Array.from({ length: 32 }, () => 0x00)]);
+
+test('foodScanPrompt mentions an optional dish hint and one meal for extra photos', () => {
+  const one = foodScanPrompt('en', undefined, 1);
+  assert.match(one, /did not describe/);
+  assert.match(one, /one meal from this photo/i);
+
+  const many = foodScanPrompt('ru', 'борщ и котлета', 3);
+  assert.match(many, /3 photos/);
+  assert.match(many, /do not count the meal 3 times/);
+  assert.match(many, /борщ и котлета/);
+  assert.match(many, /Russian/);
+});
+
+test('scanFoodSchema accepts a legacy photo or up to three images plus a note', () => {
+  const payload = jpeg.toString('base64') + 'A'.repeat(80);
+  const legacy = scanFoodSchema.parse({ image: payload, mimeType: 'image/jpeg' });
+  assert.equal(legacy.images.length, 1);
+  assert.equal(legacy.note, undefined);
+
+  const many = scanFoodSchema.parse({
+    note: '  soup  ',
+    images: [
+      { image: payload, mimeType: 'image/jpeg' },
+      { image: payload, mimeType: 'image/jpeg' },
+    ],
+  });
+  assert.equal(many.images.length, 2);
+  assert.equal(many.note, 'soup');
+});
 
 test('detects jpeg png and webp magic bytes', () => {
   assert.equal(detectFoodScanMime(jpeg), 'image/jpeg');

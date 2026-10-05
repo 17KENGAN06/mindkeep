@@ -32,8 +32,10 @@ export const nutritionApi = {
     apiClient.get<NutritionPeriodResponse>(`/api/nutrition?year=${year}&month=${month}`),
   updateSettings: (payload: Partial<NutritionSettings>) =>
     apiClient.patch<{ settings: NutritionSettings }>('/api/nutrition/settings', payload),
-  scanFood: (payload: { image: string; mimeType: 'image/jpeg' | 'image/png' | 'image/webp' }) =>
-    apiClient.post<FoodScanEstimate>('/api/nutrition/scan', payload, { timeoutMs: 35_000 }),
+  scanFood: (payload: {
+    note?: string;
+    images: Array<{ image: string; mimeType: 'image/jpeg' | 'image/png' | 'image/webp' }>;
+  }) => apiClient.post<FoodScanEstimate>('/api/nutrition/scan', payload, { timeoutMs: 50_000 }),
   createMeal: (payload: CreateMealPayload) =>
     apiClient.post<{ meal: Meal }>('/api/nutrition/meals', payload),
   updateMeal: (id: string, payload: UpdateMealPayload) =>
