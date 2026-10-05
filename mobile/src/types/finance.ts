@@ -4,11 +4,14 @@ export type FinanceOperationType = 'INCOME' | 'EXPENSE';
 export type FinanceMoneyKind = 'CASH' | 'ELECTRONIC';
 export type FinanceView = 'month' | 'year';
 
+export type FinanceMonthlyLimits = Partial<Record<FinanceCurrency, number>>;
+
 export type FinanceSettings = {
   id: string;
   displayCurrency: FinanceCurrency;
   openingBalance: number;
   openingCurrency: FinanceCurrency;
+  monthlyLimits?: FinanceMonthlyLimits;
   userId: string;
   createdAt: string;
   updatedAt: string;

@@ -269,6 +269,7 @@ model BudgetSettings {
   displayCurrency BudgetCurrency @default(EUR)
   openingBalance  Float          @default(0)
   openingCurrency BudgetCurrency @default(EUR)
+  monthlyLimits   Json           @default("{}")
   userId          String         @unique
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt

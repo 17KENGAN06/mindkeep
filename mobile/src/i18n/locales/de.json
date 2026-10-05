@@ -394,7 +394,25 @@
     "perCurrencyTitle": "Nach Währung",
     "perCurrencyHint": "Einnahmen, Ausgaben und Saldo werden für jede Währung getrennt gezählt.",
     "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen.",
-    "allCurrencies": "Alle Währungen"
+    "allCurrencies": "Alle Währungen",
+    "limits": {
+      "sectionHint": "Setze ein monatliches Ausgabelimit je Währung und folge ihm am Balken — Währungen bleiben getrennt.",
+      "monthTitle": "Monatliches Ausgabebudget",
+      "yearTitle": "Jährliches Ausgabebudget",
+      "yearHint": "12 × dein monatliches Budget",
+      "unsetHint": "Setze ein Ausgabelimit für diese Währung und folge ihm hier.",
+      "amount": "Monatsbudget",
+      "set": "Budget setzen",
+      "change": "Ändern",
+      "remove": "Budget entfernen",
+      "spentOf": "{{spent}} von {{budget}}",
+      "left": "{{amount}} übrig",
+      "over": "{{amount}} drüber",
+      "addTitle": "Budget hinzufügen",
+      "addHint": "Wähle eine Währung und ein monatliches Ausgabelimit. Du kannst es vor der ersten Buchung setzen.",
+      "allSpending": "Der Balken zählt alle Ausgaben in dieser Währung, bar und Karte.",
+      "invalid": "Gib einen gültigen Budgetbetrag ein"
+    }
   },
   "auth": {
     "loginTitle": "Willkommen zurück",

@@ -33,8 +33,11 @@ export type CreateOperationPayload = {
 
 export const financeApi = {
   getSettings: () => apiClient.get<{ settings: FinanceSettings }>('/api/finance/settings'),
-  updateSettings: (payload: { openingBalance?: number; displayCurrency?: FinanceCurrency }) =>
-    apiClient.patch<{ settings: FinanceSettings }>('/api/finance/settings', payload),
+  updateSettings: (payload: {
+    openingBalance?: number;
+    displayCurrency?: FinanceCurrency;
+    monthlyLimit?: { currency: FinanceCurrency; amount: number | null };
+  }) => apiClient.patch<{ settings: FinanceSettings }>('/api/finance/settings', payload),
   getSummary: (params: FinancePeriodParams) =>
     apiClient.get<FinanceSummary>(`/api/finance/summary?${periodQuery(params)}`),
   listCategories: () => apiClient.get<{ categories: FinanceCategory[] }>('/api/finance/categories'),

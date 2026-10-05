@@ -394,7 +394,25 @@
     "perCurrencyTitle": "By currency",
     "perCurrencyHint": "Income, expense and balance are counted separately for every currency.",
     "emptyCurrencies": "No operations in this period yet.",
-    "allCurrencies": "All currencies"
+    "allCurrencies": "All currencies",
+    "limits": {
+      "sectionHint": "Set a monthly spend cap for each currency and follow it on the bar — currencies stay separate.",
+      "monthTitle": "Monthly spend budget",
+      "yearTitle": "Year spend budget",
+      "yearHint": "12 × your monthly budget",
+      "unsetHint": "Set a spending cap for this currency and follow it here.",
+      "amount": "Monthly budget",
+      "set": "Set budget",
+      "change": "Change",
+      "remove": "Remove budget",
+      "spentOf": "{{spent}} of {{budget}}",
+      "left": "{{amount}} left",
+      "over": "{{amount}} over",
+      "addTitle": "Add a budget",
+      "addHint": "Choose a currency and a monthly spend cap. You can set it before the first operation.",
+      "allSpending": "The bar counts all spending in this currency, including cash and card.",
+      "invalid": "Enter a valid budget amount"
+    }
   },
   "auth": {
     "loginTitle": "Welcome back",

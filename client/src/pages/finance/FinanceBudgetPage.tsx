@@ -5,6 +5,7 @@ import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
 import { FinanceOperationsList } from '@/components/finance/FinanceOperationsList';
 import { FinancePeriodControls } from '@/components/finance/FinancePeriodControls';
+import { FinanceAddCurrencyBudget, FinanceCurrencyBudget } from '@/components/finance/FinanceCurrencyBudget';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
@@ -15,13 +16,16 @@ import {
   currencyLabel,
   currencyOptions,
   FINANCE_CURRENCIES,
+  isFinanceCurrency,
   type FinanceCurrency,
 } from '@/features/finance/currencies';
 import { FinanceScanReceipt } from '@/features/finance/FinanceScanReceipt';
 import {
   currentPeriodDefaults,
+  expenseByCurrency,
   formatSignedMoney,
   summarizeByCurrency,
+  withBudgetCurrencies,
 } from '@/features/finance/financeUtils';
 import {
   useBulkCreateFinanceOperations,
@@ -29,6 +33,7 @@ import {
   useDeleteFinanceOperation,
   useFinanceCategories,
   useFinanceSummary,
+  useUpdateFinanceSettings,
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
 import type { FinanceDraftOperation, FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
@@ -103,15 +108,21 @@ export function FinanceBudgetPage() {
   const createOperation = useCreateFinanceOperation();
   const bulkCreate = useBulkCreateFinanceOperations();
   const deleteOperation = useDeleteFinanceOperation();
+  const updateSettings = useUpdateFinanceSettings();
+  const [savingLimit, setSavingLimit] = useState<string | null>(null);
 
   const periodOperations = summaryQuery.data?.operations ?? [];
+  const monthlyLimits = summaryQuery.data?.settings.monthlyLimits ?? {};
 
   const availableCurrencies = useMemo(() => {
-    const seen = new Set(periodOperations.map((op) => op.currency || 'EUR'));
+    const seen = new Set([
+      ...periodOperations.map((op) => op.currency || 'EUR'),
+      ...Object.keys(monthlyLimits),
+    ]);
     const ranked = FINANCE_CURRENCIES.filter((code) => seen.has(code));
     const extra = [...seen].filter((code) => !ranked.includes(code as FinanceCurrency));
     return [...ranked, ...extra];
-  }, [periodOperations]);
+  }, [periodOperations, monthlyLimits]);
 
   const activeCurrencyFilter =
     currencyFilter !== 'ALL' && availableCurrencies.some((code) => code === currencyFilter)
@@ -126,10 +137,22 @@ export function FinanceBudgetPage() {
     });
   }, [periodOperations, kindFilter, activeCurrencyFilter]);
 
-  const currencyBuckets = useMemo(
-    () => summarizeByCurrency(filteredOperations),
-    [filteredOperations],
-  );
+  const currencyBuckets = useMemo(() => {
+    const spentBuckets = summarizeByCurrency(filteredOperations);
+    const merged = withBudgetCurrencies(spentBuckets, monthlyLimits);
+    if (activeCurrencyFilter === 'ALL') return merged;
+    return merged.filter((bucket) => bucket.currency === activeCurrencyFilter);
+  }, [filteredOperations, monthlyLimits, activeCurrencyFilter]);
+
+  const periodExpense = useMemo(() => expenseByCurrency(periodOperations), [periodOperations]);
+
+  const takenForNewBudget = useMemo(() => {
+    const codes = new Set<string>(Object.keys(monthlyLimits));
+    for (const op of periodOperations) {
+      codes.add(op.currency || 'EUR');
+    }
+    return codes;
+  }, [monthlyLimits, periodOperations]);
 
   if (summaryQuery.isLoading || categoriesQuery.isLoading) {
     return <Loader />;
@@ -177,6 +200,18 @@ export function FinanceBudgetPage() {
       setFormError(t('auth.errors.generic'));
     } finally {
       setDeletingId(null);
+    }
+  };
+
+  const saveMonthlyLimit = async (code: FinanceCurrency, amount: number | null) => {
+    setSavingLimit(code);
+    setFormError(null);
+    try {
+      await updateSettings.mutateAsync({ monthlyLimit: { currency: code, amount } });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    } finally {
+      setSavingLimit(null);
     }
   };
 
@@ -317,7 +352,9 @@ export function FinanceBudgetPage() {
         <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">
             <h2 className="text-base font-semibold text-ink">{t('finance.perCurrencyTitle')}</h2>
-            <p className="mt-1 text-sm text-muted">{t('finance.perCurrencyHint')}</p>
+            <p className="mt-1 text-sm text-muted">
+              {t('finance.perCurrencyHint')} {t('finance.limits.sectionHint')}
+            </p>
           </div>
           <div className="flex min-w-0 flex-col gap-2 sm:items-end">
             <FilterChips
@@ -341,6 +378,15 @@ export function FinanceBudgetPage() {
             ) : null}
           </div>
         </div>
+
+        <ErrorMessage message={formError ?? undefined} />
+
+        <FinanceAddCurrencyBudget
+          language={language}
+          taken={takenForNewBudget}
+          isSaving={savingLimit !== null}
+          onSave={(code, nextAmount) => saveMonthlyLimit(code, nextAmount)}
+        />
 
         {currencyBuckets.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-line bg-brand-50/40 px-4 py-10 text-center">
@@ -408,6 +454,20 @@ export function FinanceBudgetPage() {
                         </dd>
                       </div>
                     </dl>
+
+                    {isFinanceCurrency(bucket.currency) ? (
+                      <FinanceCurrencyBudget
+                        currency={bucket.currency}
+                        language={language}
+                        view={view}
+                        monthlyLimit={monthlyLimits[bucket.currency]}
+                        spent={periodExpense[bucket.currency] ?? 0}
+                        showAllSpendingHint={kindFilter !== 'ALL'}
+                        isSaving={savingLimit === bucket.currency}
+                        onSave={(nextAmount) => saveMonthlyLimit(bucket.currency as FinanceCurrency, nextAmount)}
+                        onClear={() => saveMonthlyLimit(bucket.currency as FinanceCurrency, null)}
+                      />
+                    ) : null}
 
                     {view === 'year' && months.length > 0 ? (
                       <div className="relative mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">

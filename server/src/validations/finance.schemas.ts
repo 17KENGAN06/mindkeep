@@ -8,6 +8,12 @@ export const financeCurrencySchema = z.nativeEnum(BudgetCurrency);
 export const updateFinanceSettingsSchema = z.object({
   openingBalance: z.number().finite().optional(),
   displayCurrency: financeCurrencySchema.optional(),
+  monthlyLimit: z
+    .object({
+      currency: financeCurrencySchema,
+      amount: z.number().finite().min(0).max(1_000_000_000).nullable(),
+    })
+    .optional(),
 });
 
 export const createFinanceCategorySchema = z.object({

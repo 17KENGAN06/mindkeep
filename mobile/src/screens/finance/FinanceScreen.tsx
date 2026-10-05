@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -19,9 +19,17 @@ import { mapAuthError } from '../../features/auth/mapAuthError';
 import {
   currencyLabel,
   FINANCE_CURRENCIES,
+  isFinanceCurrency,
   type FinanceCurrency,
 } from '../../features/finance/currencies';
-import { formatSignedMoney, summarizeByCurrency } from '../../features/finance/financeUtils';
+import {
+  expenseByCurrency,
+  formatMoney,
+  formatSignedMoney,
+  periodBudgetTarget,
+  summarizeByCurrency,
+  withBudgetCurrencies,
+} from '../../features/finance/financeUtils';
 import {
   useCreateFinanceCategory,
   useCreateFinanceOperation,
@@ -30,6 +38,7 @@ import {
   useFinanceCategories,
   useFinanceSummary,
   useUpdateFinanceCategory,
+  useUpdateFinanceSettings,
 } from '../../features/finance/useFinance';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
@@ -76,6 +85,91 @@ function Chip({
   );
 }
 
+function CurrencyLimitEditor({
+  currency,
+  language,
+  view,
+  monthlyLimit,
+  spent,
+  isSaving,
+  onSave,
+  onClear,
+}: {
+  currency: string;
+  language: AppLanguage;
+  view: FinanceView;
+  monthlyLimit?: number;
+  spent: number;
+  isSaving: boolean;
+  onSave: (amount: number) => void;
+  onClear: () => void;
+}) {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const target = periodBudgetTarget(monthlyLimit, view);
+  const [draft, setDraft] = useState(monthlyLimit ? String(monthlyLimit) : '');
+
+  useEffect(() => {
+    setDraft(monthlyLimit ? String(monthlyLimit) : '');
+  }, [monthlyLimit]);
+
+  const ratio = target && target > 0 ? spent / target : 0;
+  const percent = Math.min(100, Math.round(ratio * 100));
+  const remaining = target ? target - spent : 0;
+  const over = Boolean(target) && remaining < 0;
+  const barColor = over || ratio >= 0.8 ? colors.expense : colors.brand;
+
+  return (
+    <View style={[styles.limitBox, { borderColor: colors.line, backgroundColor: colors.bg }]}>
+      <Text style={[styles.statLabel, { color: colors.muted }]}>
+        {view === 'year' ? t('finance.limits.yearTitle') : t('finance.limits.monthTitle')}
+      </Text>
+      {target ? (
+        <>
+          <Text style={[styles.statValue, { color: colors.ink }]}>
+            {t('finance.limits.spentOf', {
+              spent: formatMoney(spent, language, currency),
+              budget: formatMoney(target, language, currency),
+            })}
+          </Text>
+          <View style={[styles.limitTrack, { backgroundColor: colors.line }]}>
+            <View style={[styles.limitFill, { width: `${percent}%`, backgroundColor: barColor }]} />
+          </View>
+          <Text style={[styles.opMeta, { color: over ? colors.expense : colors.ink }]}>
+            {over
+              ? t('finance.limits.over', { amount: formatMoney(-remaining, language, currency) })
+              : t('finance.limits.left', { amount: formatMoney(remaining, language, currency) })}
+          </Text>
+        </>
+      ) : (
+        <Text style={[styles.opMeta, { color: colors.muted }]}>{t('finance.limits.unsetHint')}</Text>
+      )}
+      <TextInput
+        keyboardType="decimal-pad"
+        style={[styles.input, { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink }]}
+        value={draft}
+        onChangeText={setDraft}
+        placeholder="0.00"
+        placeholderTextColor={colors.muted}
+      />
+      <View style={styles.row}>
+        <AppButton
+          label={target ? t('common.save') : t('finance.limits.set')}
+          loading={isSaving}
+          onPress={() => {
+            const parsed = Number(draft.replace(',', '.'));
+            if (!Number.isFinite(parsed) || parsed <= 0) return;
+            onSave(parsed);
+          }}
+        />
+        {target ? (
+          <AppButton variant="ghost" label={t('finance.limits.remove')} loading={isSaving} onPress={onClear} />
+        ) : null}
+      </View>
+    </View>
+  );
+}
+
 export function FinanceScreen() {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
@@ -109,16 +203,24 @@ export function FinanceScreen() {
   const deleteCategory = useDeleteFinanceCategory();
   const createOperation = useCreateFinanceOperation();
   const deleteOperation = useDeleteFinanceOperation();
+  const updateSettings = useUpdateFinanceSettings();
+  const [savingLimit, setSavingLimit] = useState<string | null>(null);
+  const [addLimitCurrency, setAddLimitCurrency] = useState<FinanceCurrency>('UAH');
+  const [addLimitAmount, setAddLimitAmount] = useState('');
 
   const summary = summaryQuery.data;
+  const monthlyLimits = summary?.settings.monthlyLimits ?? {};
   const categories = categoriesQuery.data ?? [];
   const operations = summary?.operations ?? [];
   const availableCurrencies = useMemo(() => {
-    const seen = new Set(operations.map((op) => op.currency || 'EUR'));
+    const seen = new Set([
+      ...operations.map((op) => op.currency || 'EUR'),
+      ...Object.keys(monthlyLimits),
+    ]);
     const ranked = FINANCE_CURRENCIES.filter((code) => seen.has(code));
     const extra = [...seen].filter((code) => !(FINANCE_CURRENCIES as readonly string[]).includes(code));
     return [...ranked, ...extra];
-  }, [operations]);
+  }, [operations, monthlyLimits]);
   const activeCurrencyFilter =
     currencyFilter !== 'ALL' && availableCurrencies.includes(currencyFilter) ? currencyFilter : 'ALL';
   const filteredOperations = useMemo(
@@ -132,10 +234,22 @@ export function FinanceScreen() {
       }),
     [operations, kindFilter, activeCurrencyFilter],
   );
-  const currencyBuckets = useMemo(
-    () => summarizeByCurrency(filteredOperations),
-    [filteredOperations],
-  );
+  const currencyBuckets = useMemo(() => {
+    const spentBuckets = summarizeByCurrency(filteredOperations);
+    const merged = withBudgetCurrencies(spentBuckets, monthlyLimits);
+    if (activeCurrencyFilter === 'ALL') return merged;
+    return merged.filter((bucket) => bucket.currency === activeCurrencyFilter);
+  }, [filteredOperations, monthlyLimits, activeCurrencyFilter]);
+  const periodExpense = useMemo(() => expenseByCurrency(operations), [operations]);
+  const takenForNewBudget = useMemo(() => {
+    const codes = new Set<string>(Object.keys(monthlyLimits));
+    for (const op of operations) codes.add(op.currency || 'EUR');
+    return codes;
+  }, [monthlyLimits, operations]);
+  const freeBudgetCurrencies = FINANCE_CURRENCIES.filter((code) => !takenForNewBudget.has(code));
+  const addLimitSelected = freeBudgetCurrencies.includes(addLimitCurrency)
+    ? addLimitCurrency
+    : (freeBudgetCurrencies[0] ?? 'UAH');
 
   const shiftPeriod = (delta: number) => {
     if (view === 'year') {
@@ -228,6 +342,18 @@ export function FinanceScreen() {
       setComment('');
     } catch (caught) {
       setFormError(mapAuthError(caught, t));
+    }
+  };
+
+  const saveMonthlyLimit = async (code: FinanceCurrency, nextAmount: number | null) => {
+    setSavingLimit(code);
+    setFormError(null);
+    try {
+      await updateSettings.mutateAsync({ monthlyLimit: { currency: code, amount: nextAmount } });
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
+    } finally {
+      setSavingLimit(null);
     }
   };
 
@@ -340,6 +466,47 @@ export function FinanceScreen() {
           </View>
         ) : null}
 
+        {freeBudgetCurrencies.length > 0 ? (
+          <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.limits.addTitle')}</Text>
+            <Text style={[styles.subtitle, { color: colors.muted }]}>{t('finance.limits.addHint')}</Text>
+            <View style={styles.row}>
+              {freeBudgetCurrencies.map((code) => (
+                <Chip
+                  key={`add-limit-${code}`}
+                  label={code}
+                  active={addLimitSelected === code}
+                  onPress={() => setAddLimitCurrency(code)}
+                />
+              ))}
+            </View>
+            <TextInput
+              keyboardType="decimal-pad"
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
+              value={addLimitAmount}
+              onChangeText={setAddLimitAmount}
+              placeholder="0.00"
+              placeholderTextColor={colors.muted}
+            />
+            <AppButton
+              label={t('finance.limits.set')}
+              loading={savingLimit === addLimitSelected}
+              onPress={() => {
+                const parsed = Number(addLimitAmount.replace(',', '.'));
+                if (!Number.isFinite(parsed) || parsed <= 0) {
+                  setFormError(t('finance.limits.invalid'));
+                  return;
+                }
+                setAddLimitAmount('');
+                void saveMonthlyLimit(addLimitSelected, parsed);
+              }}
+            />
+          </View>
+        ) : null}
+
         {currencyBuckets.length === 0 ? (
           <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.empty, { color: colors.muted }]}>{t('finance.emptyCurrencies')}</Text>
@@ -390,6 +557,18 @@ export function FinanceScreen() {
                     </Text>
                   </View>
                 </View>
+                {isFinanceCurrency(bucket.currency) ? (
+                  <CurrencyLimitEditor
+                    currency={bucket.currency}
+                    language={language}
+                    view={view}
+                    monthlyLimit={monthlyLimits[bucket.currency]}
+                    spent={periodExpense[bucket.currency] ?? 0}
+                    isSaving={savingLimit === bucket.currency}
+                    onSave={(nextAmount) => void saveMonthlyLimit(bucket.currency as FinanceCurrency, nextAmount)}
+                    onClear={() => void saveMonthlyLimit(bucket.currency as FinanceCurrency, null)}
+                  />
+                ) : null}
                 {view === 'year'
                   ? months.map((item) => (
                       <Pressable
@@ -683,6 +862,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   chipFill: { alignSelf: 'stretch', width: '100%' },
+  limitBox: {
+    borderRadius: 14,
+    borderWidth: 1,
+    gap: 8,
+    padding: 12,
+  },
+  limitTrack: { borderRadius: 999, height: 8, overflow: 'hidden' },
+  limitFill: { borderRadius: 999, height: 8 },
   input: {
     borderRadius: 12,
     borderWidth: 1,

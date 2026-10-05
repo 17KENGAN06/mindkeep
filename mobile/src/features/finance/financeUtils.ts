@@ -39,6 +39,57 @@ function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
+export function emptyCurrencyBucket(currency: string): FinanceCurrencyBucket {
+  return {
+    currency,
+    income: 0,
+    expense: 0,
+    balance: 0,
+    byKind: { CASH: emptyKindBucket(), ELECTRONIC: emptyKindBucket() },
+    byMonth: Array.from({ length: 12 }, (_, index) => ({
+      month: index + 1,
+      income: 0,
+      expense: 0,
+      balance: 0,
+    })),
+  };
+}
+
+function sortCurrencyBuckets(buckets: FinanceCurrencyBucket[]): FinanceCurrencyBucket[] {
+  const ranked = FINANCE_CURRENCIES as readonly string[];
+  return [...buckets].sort((left, right) => {
+    const leftIndex = ranked.indexOf(left.currency);
+    const rightIndex = ranked.indexOf(right.currency);
+    return (leftIndex === -1 ? 99 : leftIndex) - (rightIndex === -1 ? 99 : rightIndex);
+  });
+}
+
+export function withBudgetCurrencies(
+  buckets: FinanceCurrencyBucket[],
+  monthlyLimits: Partial<Record<string, number>>,
+): FinanceCurrencyBucket[] {
+  const seen = new Set(buckets.map((bucket) => bucket.currency));
+  const extra = Object.keys(monthlyLimits)
+    .filter((code) => monthlyLimits[code] && monthlyLimits[code]! > 0 && !seen.has(code))
+    .map((code) => emptyCurrencyBucket(code));
+  return extra.length === 0 ? buckets : sortCurrencyBuckets([...buckets, ...extra]);
+}
+
+export function expenseByCurrency(operations: FinanceOperation[]): Record<string, number> {
+  const map: Record<string, number> = {};
+  for (const operation of operations) {
+    if (operation.type !== 'EXPENSE') continue;
+    const currency = operation.currency || FINANCE_CURRENCY;
+    map[currency] = roundMoney((map[currency] ?? 0) + operation.amount);
+  }
+  return map;
+}
+
+export function periodBudgetTarget(monthlyLimit: number | undefined, view: FinanceView): number | null {
+  if (monthlyLimit == null || monthlyLimit <= 0) return null;
+  return view === 'year' ? roundMoney(monthlyLimit * 12) : monthlyLimit;
+}
+
 export function summarizeByCurrency(operations: FinanceOperation[]): FinanceCurrencyBucket[] {
   const map = new Map<string, FinanceCurrencyBucket>();
 

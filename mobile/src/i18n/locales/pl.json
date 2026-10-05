@@ -394,7 +394,25 @@
     "perCurrencyTitle": "Według walut",
     "perCurrencyHint": "Przychód, wydatek i saldo liczymy osobno dla każdej waluty.",
     "emptyCurrencies": "W tym okresie nie ma jeszcze operacji.",
-    "allCurrencies": "Wszystkie waluty"
+    "allCurrencies": "Wszystkie waluty",
+    "limits": {
+      "sectionHint": "Ustaw miesięczny limit wydatków dla każdej waluty i śledź go na pasku — waluty zostają osobno.",
+      "monthTitle": "Miesięczny budżet wydatków",
+      "yearTitle": "Roczny budżet wydatków",
+      "yearHint": "12 × Twój miesięczny budżet",
+      "unsetHint": "Ustaw limit wydatków dla tej waluty i śledź go tutaj.",
+      "amount": "Budżet miesięczny",
+      "set": "Ustaw budżet",
+      "change": "Zmień",
+      "remove": "Usuń budżet",
+      "spentOf": "{{spent}} z {{budget}}",
+      "left": "Zostało {{amount}}",
+      "over": "Przekroczono o {{amount}}",
+      "addTitle": "Dodaj budżet",
+      "addHint": "Wybierz walutę i miesięczny limit wydatków. Możesz ustawić go przed pierwszą operacją.",
+      "allSpending": "Pasek liczy wszystkie wydatki w tej walucie, gotówkę i kartę.",
+      "invalid": "Podaj poprawną kwotę budżetu"
+    }
   },
   "auth": {
     "loginTitle": "Witamy z powrotem",

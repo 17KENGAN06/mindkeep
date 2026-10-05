@@ -16,8 +16,11 @@ export function useFinanceSettings() {
 export function useUpdateFinanceSettings() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: { openingBalance?: number; displayCurrency?: FinanceCurrency }) =>
-      financeApi.updateSettings(payload),
+    mutationFn: (payload: {
+      openingBalance?: number;
+      displayCurrency?: FinanceCurrency;
+      monthlyLimit?: { currency: FinanceCurrency; amount: number | null };
+    }) => financeApi.updateSettings(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });
     },

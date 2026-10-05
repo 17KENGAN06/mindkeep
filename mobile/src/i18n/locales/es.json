@@ -394,7 +394,25 @@
     "perCurrencyTitle": "Por moneda",
     "perCurrencyHint": "Ingresos, gastos y saldo se cuentan por separado para cada moneda.",
     "emptyCurrencies": "Aún no hay operaciones en este periodo.",
-    "allCurrencies": "Todas las monedas"
+    "allCurrencies": "Todas las monedas",
+    "limits": {
+      "sectionHint": "Pon un tope de gasto mensual por moneda y síguelo en la barra — las monedas no se mezclan.",
+      "monthTitle": "Presupuesto de gasto del mes",
+      "yearTitle": "Presupuesto de gasto del año",
+      "yearHint": "12 × tu presupuesto mensual",
+      "unsetHint": "Pon un tope de gasto para esta moneda y síguelo aquí.",
+      "amount": "Presupuesto mensual",
+      "set": "Fijar presupuesto",
+      "change": "Cambiar",
+      "remove": "Quitar presupuesto",
+      "spentOf": "{{spent}} de {{budget}}",
+      "over": "{{amount}} de más",
+      "left": "Quedan {{amount}}",
+      "addTitle": "Añadir un presupuesto",
+      "addHint": "Elige una moneda y un tope mensual. Puedes fijarlo antes de la primera operación.",
+      "allSpending": "La barra cuenta todo el gasto de esta moneda, efectivo y tarjeta.",
+      "invalid": "Introduce un importe de presupuesto válido"
+    }
   },
   "auth": {
     "loginTitle": "Qué bueno verte de nuevo",

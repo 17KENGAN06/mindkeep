@@ -394,7 +394,25 @@
     "perCurrencyTitle": "Per valuta",
     "perCurrencyHint": "Entrate, uscite e saldo si contano separatamente per ogni valuta.",
     "emptyCurrencies": "Nessuna operazione in questo periodo.",
-    "allCurrencies": "Tutte le valute"
+    "allCurrencies": "Tutte le valute",
+    "limits": {
+      "sectionHint": "Imposta un tetto di spesa mensile per ogni valuta e seguilo sulla barra — le valute restano separate.",
+      "monthTitle": "Budget di spesa mensile",
+      "yearTitle": "Budget di spesa annuale",
+      "yearHint": "12 × il tuo budget mensile",
+      "unsetHint": "Imposta un tetto di spesa per questa valuta e seguilo qui.",
+      "amount": "Budget mensile",
+      "set": "Imposta budget",
+      "change": "Modifica",
+      "remove": "Rimuovi budget",
+      "spentOf": "{{spent}} di {{budget}}",
+      "left": "{{amount}} rimasti",
+      "over": "{{amount}} oltre",
+      "addTitle": "Aggiungi un budget",
+      "addHint": "Scegli una valuta e un tetto di spesa mensile. Puoi impostarlo prima della prima operazione.",
+      "allSpending": "La barra conta tutta la spesa in questa valuta, contanti e carta.",
+      "invalid": "Inserisci un importo di budget valido"
+    }
   },
   "auth": {
     "loginTitle": "Bentornato",
