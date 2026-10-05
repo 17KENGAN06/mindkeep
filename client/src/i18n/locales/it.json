@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Piani",
     "title": "Tre piani. Un solo prodotto.",
-    "subtitle": "Free apre tutti i moduli. Plus toglie i tetti. Pro riempie pasti e scontrini da una foto.",
+    "subtitle": "Free è il prodotto intero con tetti. Plus toglie i tetti — pasti e spese li inserisci tu. Pro riempie entrambi da una foto.",
     "includes": "Cosa c’è in questo piano",
     "limits": "Limiti su Free",
     "removes": "Questo piano toglie",
@@ -1603,55 +1603,54 @@
     "current": "Il tuo piano",
     "viewPlans": "Vedi i piani",
     "upgrade": "Passa a Pro dopo questo periodo",
-    "accountLead": "Plus toglie i tetti. Pro scansiona anche pasti e scontrini dalla foto.",
+    "accountLead": "Plus: senza tetti, pasti e spese li inserisci tu. Pro: lo stesso, e una foto riempie pasti e scontrini.",
     "payHow": "Pagamento",
     "intervalYear": "Anno",
     "intervalMonth": "Mese",
     "free": {
       "name": "Free",
-      "tagline": "Inizia oggi. Tutti i moduli sono aperti.",
+      "tagline": "Il prodotto intero. Pasti e spese li inserisci tu.",
       "price": "€0",
       "billed": "Niente carta.",
       "includes": [
-        "Compiti, ripasso 3·7·30, note, abitudini, budget, nutrizione",
-        "Tetti: 20 materiali, 45 compiti/mese, 3 abitudini, 20 note",
-        "Diario pasti 7 giorni, 2 dispositivi",
-        "Pasti e spese li inserisci tu"
+        "Compiti del giorno, ripasso 3·7·30, note, abitudini, budget e diario pasti",
+        "Tetti: 20 materiali, 45 compiti/mese, 3 abitudini, 20 note, pasti 7 giorni, 2 dispositivi",
+        "Calorie e spese le inserisci a mano"
       ],
       "limits": [],
       "without": [
-        "Lo scan foto di pasti e scontrini è in Pro"
+        "Una foto non riempie pasto né scontrino — quello è Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Senza tetti. Pasti e soldi li inserisci ancora tu.",
+      "tagline": "Lo stesso prodotto, senza tetti di quantità.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / anno",
       "monthPrice": "€4.99",
       "includes": [
-        "Tutto Free, senza tetti di quantità",
-        "Diario pasti completo e più dispositivi",
-        "Pasti e spese li inserisci ancora tu"
+        "Tutto Free, senza tetto su compiti, note, abitudini e materiali",
+        "Diario pasti completo e più dispositivi sull’account",
+        "Calorie e spese le inserisci ancora a mano"
       ],
       "removes": [],
       "without": [
-        "Lo scan foto di pasti e scontrini è in Pro"
+        "Una foto non riempie pasto né scontrino — quello è Pro"
       ],
       "monthCharged": "€4.99 / mese"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, e la fotocamera riempie pasti e scontrini.",
+      "tagline": "Senza tetti. La fotocamera riempie pasti e scontrini.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / anno",
       "monthPrice": "€7.99",
       "includes": [
-        "Tutto Plus"
+        "Tutto Plus: prodotto intero, senza tetti di quantità"
       ],
       "unlocks": [
-        "Foto di un pasto — nome e calorie si compilano da soli",
-        "Foto di uno scontrino — operazioni in Budget, poi contanti o carta"
+        "Foto di un pasto — nome e calorie vanno nel diario",
+        "Foto di uno scontrino — importo in Budget; scegli contanti o carta"
       ],
       "monthCharged": "€7.99 / mese"
     },

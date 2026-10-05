@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Plany",
     "title": "Trzy plany. Jeden produkt.",
-    "subtitle": "Free otwiera wszystkie moduły. Plus zdejmuje limity. Pro wypełnia posiłki i paragony ze zdjęcia.",
+    "subtitle": "Free to cały produkt z limitami. Plus zdejmuje limity — posiłki i wydatki wpisujesz sam. Pro wypełnia oba ze zdjęcia.",
     "includes": "Co jest w planie",
     "limits": "Limity na Free",
     "removes": "Ten plan zdejmuje",
@@ -1603,55 +1603,54 @@
     "current": "Twój plan",
     "viewPlans": "Zobacz plany",
     "upgrade": "Przejdź na Pro po tym okresie",
-    "accountLead": "Plus zdejmuje limity. Pro skanuje też posiłki i paragony ze zdjęcia.",
+    "accountLead": "Plus: bez limitów, posiłki i wydatki wpisujesz sam. Pro: to samo, a zdjęcie wypełnia posiłki i paragony.",
     "payHow": "Płatność",
     "intervalYear": "Rok",
     "intervalMonth": "Miesiąc",
     "free": {
       "name": "Free",
-      "tagline": "Zacznij dziś. Wszystkie moduły są otwarte.",
+      "tagline": "Cały produkt. Posiłki i wydatki wpisujesz sam.",
       "price": "€0",
       "billed": "Bez karty.",
       "includes": [
-        "Zadania, powtórki 3·7·30, notatki, nawyki, budżet, żywienie",
-        "Limity: 20 materiałów, 45 zadań/mies., 3 nawyki, 20 notatek",
-        "Dziennik posiłków 7 dni, 2 urządzenia",
-        "Posiłki i wydatki wpisujesz sam"
+        "Zadania dnia, powtórki 3·7·30, notatki, nawyki, budżet i dziennik posiłków",
+        "Limity: 20 materiałów, 45 zadań/mies., 3 nawyki, 20 notatek, posiłki 7 dni, 2 urządzenia",
+        "Kalorie i wydatki wpisujesz ręcznie"
       ],
       "limits": [],
       "without": [
-        "Skan posiłków i paragonów ze zdjęcia jest w Pro"
+        "Zdjęcie nie wypełni posiłku ani paragonu — to jest Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Bez limitów. Posiłki i pieniądze nadal wpisujesz sam.",
+      "tagline": "Ten sam produkt, bez limitów ilości.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / rok",
       "monthPrice": "€4.99",
       "includes": [
-        "Cały Free, bez limitów ilości",
-        "Pełny dziennik posiłków i więcej urządzeń",
-        "Posiłki i wydatki nadal wpisujesz sam"
+        "Cały Free, bez limitu zadań, notatek, nawyków i materiałów",
+        "Pełna historia posiłków i więcej urządzeń na koncie",
+        "Kalorie i wydatki nadal wpisujesz ręcznie"
       ],
       "removes": [],
       "without": [
-        "Skan posiłków i paragonów ze zdjęcia jest w Pro"
+        "Zdjęcie nie wypełni posiłku ani paragonu — to jest Pro"
       ],
       "monthCharged": "€4.99 / miesiąc"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, a aparat wypełnia posiłki i paragony.",
+      "tagline": "Bez limitów. Aparat wypełnia posiłki i paragony.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / rok",
       "monthPrice": "€7.99",
       "includes": [
-        "Cały Plus"
+        "Cały Plus: pełny produkt, bez limitów ilości"
       ],
       "unlocks": [
-        "Zdjęcie posiłku — nazwa i kalorie uzupełniają się same",
-        "Zdjęcie paragonu — operacje do Budżetu, potem gotówka lub karta"
+        "Zdjęcie posiłku — nazwa i kalorie trafiają do dziennika",
+        "Zdjęcie paragonu — kwota do Budżetu, wybierasz gotówkę lub kartę"
       ],
       "monthCharged": "€7.99 / miesiąc"
     },

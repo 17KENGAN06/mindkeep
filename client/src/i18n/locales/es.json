@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Planes",
     "title": "Tres planes. Un producto.",
-    "subtitle": "Free abre todos los módulos. Plus quita topes. Pro rellena comidas y tickets con una foto.",
+    "subtitle": "Free es el producto entero con topes. Plus quita los topes — comidas y gastos los apuntas tú. Pro rellena ambos con una foto.",
     "includes": "Qué incluye este plan",
     "limits": "Límites en Free",
     "removes": "Este plan quita",
@@ -1603,55 +1603,54 @@
     "current": "Tu plan",
     "viewPlans": "Ver planes",
     "upgrade": "Pasar a Pro después de este periodo",
-    "accountLead": "Plus quita los topes. Pro también escanea comidas y tickets desde una foto.",
+    "accountLead": "Plus: sin topes, comidas y gastos los apuntas tú. Pro: lo mismo, y una foto rellena comidas y tickets.",
     "payHow": "Pago",
     "intervalYear": "Año",
     "intervalMonth": "Mes",
     "free": {
       "name": "Free",
-      "tagline": "Empieza hoy. Todos los módulos están abiertos.",
+      "tagline": "El producto entero. Apuntas comidas y gastos tú.",
       "price": "€0",
       "billed": "Sin tarjeta.",
       "includes": [
-        "Tareas, repaso 3·7·30, notas, hábitos, presupuesto, nutrición",
-        "Topes: 20 materiales, 45 tareas/mes, 3 hábitos, 20 notas",
-        "Diario de comidas 7 días, 2 dispositivos",
-        "Tú apuntas comidas y gastos a mano"
+        "Tareas del día, repaso 3·7·30, notas, hábitos, presupuesto y diario de comidas",
+        "Topes: 20 materiales, 45 tareas/mes, 3 hábitos, 20 notas, comidas 7 días, 2 dispositivos",
+        "Calorías y gastos: los apuntas a mano"
       ],
       "limits": [],
       "without": [
-        "El escaneo de comidas y tickets está en Pro"
+        "Una foto no rellena la comida ni el ticket — eso es Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Sin topes. Sigues apuntando comidas y dinero tú.",
+      "tagline": "El mismo producto, sin topes de cantidad.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / año",
       "monthPrice": "€4.99",
       "includes": [
-        "Todo Free, sin topes de cantidad",
-        "Diario de comidas completo y más dispositivos",
-        "Sigues apuntando comidas y gastos a mano"
+        "Todo Free, sin tope en tareas, notas, hábitos y materiales",
+        "Diario de comidas completo y más dispositivos en la cuenta",
+        "Calorías y gastos: sigues apuntándolos a mano"
       ],
       "removes": [],
       "without": [
-        "El escaneo de comidas y tickets está en Pro"
+        "Una foto no rellena la comida ni el ticket — eso es Pro"
       ],
       "monthCharged": "€4.99 / mes"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, y la cámara rellena comidas y tickets.",
+      "tagline": "Sin topes. La cámara rellena comidas y tickets.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / año",
       "monthPrice": "€7.99",
       "includes": [
-        "Todo Plus"
+        "Todo Plus: producto entero, sin topes de cantidad"
       ],
       "unlocks": [
-        "Foto de una comida — se rellenan nombre y calorías",
-        "Foto de un ticket — pasa a Presupuesto, luego eliges efectivo o tarjeta"
+        "Foto de una comida — nombre y calorías van al diario",
+        "Foto de un ticket — importe a Presupuesto; eliges efectivo o tarjeta"
       ],
       "monthCharged": "€7.99 / mes"
     },

@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Tilaukset",
     "title": "Kolme tasoa. Yksi tuote.",
-    "subtitle": "Free avaa kaikki osiot. Plus poistaa rajat. Pro täyttää ateriat ja kuitit kuvasta.",
+    "subtitle": "Free on koko tuote rajoilla. Plus poistaa rajat — ateriat ja kulut syötät itse. Pro täyttää molemmat kuvasta.",
     "includes": "Mitä tähän kuuluu",
     "limits": "Rajat Freessä",
     "removes": "Tämä taso poistaa",
@@ -1603,55 +1603,54 @@
     "current": "Sinun tasosi",
     "viewPlans": "Katso tilaukset",
     "upgrade": "Siirry Prohon tämän kauden jälkeen",
-    "accountLead": "Plus poistaa rajat. Pro skannaa myös ruoat ja kuitit kuvasta.",
+    "accountLead": "Plus: ei rajoja, ateriat ja kulut syötät itse. Pro: sama, ja kuva täyttää ateriat ja kuitit.",
     "payHow": "Maksu",
     "intervalYear": "Vuosi",
     "intervalMonth": "Kuukausi",
     "free": {
       "name": "Free",
-      "tagline": "Aloita tänään. Kaikki osiot ovat auki.",
+      "tagline": "Koko tuote. Ateriat ja kulut syötät itse.",
       "price": "€0",
       "billed": "Ei korttia.",
       "includes": [
-        "Tehtävät, kertaus 3·7·30, muistiinpanot, tavat, budjetti, ravinto",
-        "Rajat: 20 materiaalia, 45 tehtävää/kk, 3 tapaa, 20 muistiinpanoa",
-        "Ruokapäiväkirja 7 pv, 2 laitetta",
-        "Ateriat ja kulut syötät itse"
+        "Päivän tehtävät, kertaus 3·7·30, muistiinpanot, tavat, budjetti ja ruokapäiväkirja",
+        "Rajat: 20 materiaalia, 45 tehtävää/kk, 3 tapaa, 20 muistiinpanoa, ateriat 7 pv, 2 laitetta",
+        "Kalorit ja kulut syötät käsin"
       ],
       "limits": [],
       "without": [
-        "Aterioiden ja kuittien kuvaskannaus on Prossa"
+        "Kuva ei täytä ateriaa eikä kuittia — se on Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Ei rajoja. Ateriat ja raha syötetään yhä itse.",
+      "tagline": "Sama tuote, ilman määrärajoja.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / vuosi",
       "monthPrice": "€4.99",
       "includes": [
-        "Kaikki Freestä ilman määrärajoja",
-        "Koko ruokapäiväkirja ja lisää laitteita",
-        "Ateriat ja kulut syötät yhä itse"
+        "Kaikki Freestä ilman kattoa tehtävissä, muistiinpanoissa, tavoissa ja materiaaleissa",
+        "Koko ruokahistoria ja lisää laitteita tilillä",
+        "Kalorit ja kulut syötät yhä käsin"
       ],
       "removes": [],
       "without": [
-        "Aterioiden ja kuittien kuvaskannaus on Prossa"
+        "Kuva ei täytä ateriaa eikä kuittia — se on Pro"
       ],
       "monthCharged": "€4.99 / kuukausi"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, ja kamera täyttää ateriat ja kuitit.",
+      "tagline": "Ei rajoja. Kamera täyttää ateriat ja kuitit.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / vuosi",
       "monthPrice": "€7.99",
       "includes": [
-        "Kaikki Plusista"
+        "Kaikki Plusista: koko tuote ilman määrärajoja"
       ],
       "unlocks": [
-        "Kuva ateriasta — nimi ja kalorit täyttyvät",
-        "Kuva kuitista — tapahtumat Budjettiin, sitten käteinen tai kortti"
+        "Kuva ateriasta — nimi ja kalorit menevät päiväkirjaan",
+        "Kuva kuitista — summa Budjettiin; valitset käteisen tai kortin"
       ],
       "monthCharged": "€7.99 / kuukausi"
     },

@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Pläne",
     "title": "Drei Pläne. Ein Produkt.",
-    "subtitle": "Free öffnet alle Module. Plus hebt Limits. Pro füllt Essen und Belege per Foto.",
+    "subtitle": "Free ist das ganze Produkt mit Limits. Plus hebt die Limits — Essen und Geld trägst du selbst ein. Pro füllt beides per Foto.",
     "includes": "Was in diesem Plan ist",
     "limits": "Limits auf Free",
     "removes": "Dieser Plan hebt auf",
@@ -1603,55 +1603,54 @@
     "current": "Dein Plan",
     "viewPlans": "Pläne ansehen",
     "upgrade": "Nach dieser Periode zu Pro wechseln",
-    "accountLead": "Plus hebt die Limits. Pro scannt auch Mahlzeiten und Belege vom Foto.",
+    "accountLead": "Plus: keine Limits, Essen und Geld trägst du selbst ein. Pro: dasselbe, und ein Foto füllt Mahlzeiten und Belege.",
     "payHow": "Zahlung",
     "intervalYear": "Jahr",
     "intervalMonth": "Monat",
     "free": {
       "name": "Free",
-      "tagline": "Heute starten. Alle Module sind offen.",
+      "tagline": "Das ganze Produkt. Essen und Ausgaben trägst du selbst ein.",
       "price": "€0",
       "billed": "Keine Karte.",
       "includes": [
-        "Aufgaben, 3·7·30-Review, Notizen, Habits, Budget, Ernährung",
-        "Limits: 20 Materialien, 45 Aufgaben/Monat, 3 Habits, 20 Notizen",
-        "Essenstagebuch 7 Tage, 2 Geräte",
-        "Mahlzeiten und Ausgaben trägst du selbst ein"
+        "Tagesaufgaben, 3·7·30-Review, Notizen, Habits, Budget und Essenstagebuch",
+        "Limits: 20 Materialien, 45 Aufgaben/Monat, 3 Habits, 20 Notizen, Essen 7 Tage, 2 Geräte",
+        "Kalorien und Ausgaben trägst du per Hand ein"
       ],
       "limits": [],
       "without": [
-        "Foto-Scan für Mahlzeiten und Belege ist in Pro"
+        "Ein Foto füllt weder Mahlzeit noch Beleg — das ist Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Keine Limits. Essen und Geld trägst du weiter selbst ein.",
+      "tagline": "Dasselbe Produkt, ohne Mengenlimits.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / Jahr",
       "monthPrice": "€4.99",
       "includes": [
-        "Alles aus Free, ohne Mengenlimits",
-        "Volles Essenstagebuch und mehr Geräte",
-        "Mahlzeiten und Ausgaben trägst du weiter selbst ein"
+        "Alles aus Free, ohne Deckel bei Aufgaben, Notizen, Habits und Materialien",
+        "Volles Essenstagebuch und mehr Geräte im Konto",
+        "Kalorien und Ausgaben trägst du weiter per Hand ein"
       ],
       "removes": [],
       "without": [
-        "Foto-Scan für Mahlzeiten und Belege ist in Pro"
+        "Ein Foto füllt weder Mahlzeit noch Beleg — das ist Pro"
       ],
       "monthCharged": "€4.99 / Monat"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, und die Kamera füllt Essen und Belege.",
+      "tagline": "Keine Limits. Die Kamera füllt Essen und Belege.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / Jahr",
       "monthPrice": "€7.99",
       "includes": [
-        "Alles aus Plus"
+        "Alles aus Plus: ganzes Produkt, keine Mengenlimits"
       ],
       "unlocks": [
-        "Foto einer Mahlzeit — Name und Kalorien werden ausgefüllt",
-        "Foto eines Belegs — Buchungen ins Budget, dann Bar oder Karte"
+        "Foto einer Mahlzeit — Name und Kalorien landen im Tagebuch",
+        "Foto eines Belegs — Betrag ins Budget, du wählst Bar oder Karte"
       ],
       "monthCharged": "€7.99 / Monat"
     },

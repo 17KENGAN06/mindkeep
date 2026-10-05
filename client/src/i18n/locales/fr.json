@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Offres",
     "title": "Trois offres. Un produit.",
-    "subtitle": "Free ouvre tous les modules. Plus lève les plafonds. Pro remplit repas et tickets depuis une photo.",
+    "subtitle": "Free, c’est tout le produit avec plafonds. Plus lève les plafonds — repas et dépenses, vous les saisissez. Pro remplit les deux depuis une photo.",
     "includes": "Ce qu’il y a dans cette offre",
     "limits": "Plafonds sur Free",
     "removes": "Cette offre enlève",
@@ -1603,55 +1603,54 @@
     "current": "Votre offre",
     "viewPlans": "Voir les offres",
     "upgrade": "Passer à Pro après cette période",
-    "accountLead": "Plus enlève les plafonds. Pro scanne aussi les repas et les tickets depuis une photo.",
+    "accountLead": "Plus : sans plafonds, vous saisissez repas et dépenses. Pro : idem, et une photo remplit repas et tickets.",
     "payHow": "Paiement",
     "intervalYear": "Année",
     "intervalMonth": "Mois",
     "free": {
       "name": "Free",
-      "tagline": "Commencez aujourd’hui. Tous les modules sont ouverts.",
+      "tagline": "Tout le produit. Vous saisissez repas et dépenses vous-même.",
       "price": "€0",
       "billed": "Sans carte.",
       "includes": [
-        "Tâches, révision 3·7·30, notes, habitudes, budget, nutrition",
-        "Plafonds : 20 matières, 45 tâches/mois, 3 habitudes, 20 notes",
-        "Journal des repas 7 jours, 2 appareils",
-        "Vous saisissez repas et dépenses à la main"
+        "Tâches du jour, révision 3·7·30, notes, habitudes, budget et journal des repas",
+        "Plafonds : 20 matières, 45 tâches/mois, 3 habitudes, 20 notes, repas 7 jours, 2 appareils",
+        "Calories et dépenses : vous les saisissez à la main"
       ],
       "limits": [],
       "without": [
-        "Le scan photo des repas et tickets est dans Pro"
+        "Une photo ne remplit ni le repas ni le ticket — c’est Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Sans plafonds. Vous saisissez encore repas et argent.",
+      "tagline": "Le même produit, sans plafonds de quantité.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / an",
       "monthPrice": "€4.99",
       "includes": [
-        "Tout Free, sans plafonds de quantité",
-        "Journal des repas complet et plus d’appareils",
-        "Vous saisissez encore repas et dépenses à la main"
+        "Tout Free, sans plafond sur tâches, notes, habitudes et matières",
+        "Journal des repas complet et plus d’appareils sur le compte",
+        "Calories et dépenses : vous les saisissez encore à la main"
       ],
       "removes": [],
       "without": [
-        "Le scan photo des repas et tickets est dans Pro"
+        "Une photo ne remplit ni le repas ni le ticket — c’est Pro"
       ],
       "monthCharged": "€4.99 / mois"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, et l’appareil photo remplit repas et tickets.",
+      "tagline": "Sans plafonds. L’appareil photo remplit repas et tickets.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / an",
       "monthPrice": "€7.99",
       "includes": [
-        "Tout Plus"
+        "Tout Plus : produit entier, sans plafonds de quantité"
       ],
       "unlocks": [
-        "Photo d’un repas — nom et calories sont remplis",
-        "Photo d’un ticket — opérations dans Budget, puis espèces ou carte"
+        "Photo d’un repas — nom et calories vont dans le journal",
+        "Photo d’un ticket — montant dans Budget ; vous choisissez espèces ou carte"
       ],
       "monthCharged": "€7.99 / mois"
     },
