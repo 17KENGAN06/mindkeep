@@ -19,7 +19,7 @@ export function HomePricing() {
         <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
           {t('plans.eyebrow')}
         </p>
-        <h2 className="font-display mt-2 max-w-3xl text-2xl font-semibold tracking-tight text-ink sm:mt-3 sm:text-4xl xl:text-5xl">
+        <h2 className="font-display mt-2 max-w-3xl text-2xl font-semibold tracking-tight text-ink sm:mt-3 sm:text-[1.85rem] lg:text-3xl xl:text-5xl">
           {t('plans.title')}
         </h2>
         <p className="mt-3 max-w-2xl text-sm text-muted sm:mt-4 sm:text-base xl:text-lg">

@@ -11,7 +11,7 @@ type BrandLockupProps = {
 const sizeMap = {
   sm: { mark: 'h-7 w-7 shrink-0', text: 'text-base' },
   md: { mark: 'h-8 w-8 shrink-0', text: 'text-lg' },
-  lg: { mark: 'h-9 w-9 shrink-0 sm:h-10 sm:w-10', text: 'text-lg sm:text-xl md:text-2xl' },
+  lg: { mark: 'h-9 w-9 shrink-0 sm:h-10 sm:w-10', text: 'text-lg sm:text-xl' },
 } as const;
 
 export function BrandLockup({ to = '/', size = 'md', className = '' }: BrandLockupProps) {

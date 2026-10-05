@@ -21,7 +21,7 @@ export function HomeServices() {
         <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
           {t('home.services.eyebrow')}
         </p>
-        <h2 className="font-display mt-2 max-w-3xl text-2xl font-semibold tracking-tight text-ink sm:mt-3 sm:text-4xl xl:text-5xl">
+        <h2 className="font-display mt-2 max-w-3xl text-2xl font-semibold tracking-tight text-ink sm:mt-3 sm:text-[1.85rem] lg:text-3xl xl:text-5xl">
           {t('home.services.title')}
         </h2>
         <p className="mt-3 max-w-2xl text-sm text-muted sm:mt-4 sm:text-base xl:text-lg">
@@ -29,7 +29,7 @@ export function HomeServices() {
         </p>
       </SnapReveal>
 
-      <div className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-8 sm:grid-cols-2 xl:grid-cols-3 xl:gap-3">
+      <div className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-3">
         {SERVICES.map((item, index) => {
           const Icon = item.icon;
           return (

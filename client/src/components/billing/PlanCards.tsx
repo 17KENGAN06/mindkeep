@@ -97,7 +97,7 @@ export function PlanCards({
   ];
 
   return (
-    <div className="grid items-stretch gap-3 sm:gap-4 xl:grid-cols-3 xl:gap-4">
+    <div className="grid items-stretch gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-3 xl:gap-4">
       {cards.map((card) => (
         <article
           key={card.id}

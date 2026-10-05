@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ArrowRight, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BrandLockup } from '@/components/brand/BrandLockup';
 import { AnimatedSnapSection } from '@/components/home/AnimatedSnapSection';
 import { HeroStage } from '@/components/home/HeroStage';
 import { HomeFooter } from '@/components/home/HomeFooter';
@@ -12,10 +11,7 @@ import { SectionNav } from '@/components/home/SectionNav';
 import { MobileHomeNav } from '@/components/home/MobileHomeNav';
 import { SnapReveal } from '@/components/home/SnapReveal';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
-import { PlansCta } from '@/components/layout/PlansCta';
-import { PublicDesktopNav, PublicMenu } from '@/components/layout/PublicPageMenu';
-import { ThemeToggle } from '@/components/layout/ThemeToggle';
+import { PublicHeader } from '@/components/layout/PublicHeader';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
 import { PAGE_SHELL, PAGE_SHELL_Y, HOME_SIDE_NAV_PAD } from '@/config/layout';
@@ -70,21 +66,11 @@ export function HomePage() {
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
           <div className={`relative ${PAGE_SHELL} ${HOME_SIDE_NAV_PAD} ${PAGE_SHELL_Y} flex h-full w-full flex-col`}>
-            <SnapReveal
-              className="relative z-50 flex items-center justify-between gap-2 sm:gap-3"
-              delay={0.02}
-            >
-              <BrandLockup to="/" size="lg" className="min-w-0 max-w-[55%] sm:max-w-none" />
-              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                <PublicDesktopNav />
-                <ThemeToggle />
-                <LanguageSwitcher />
-                <PlansCta />
-                <PublicMenu className="hidden md:block xl:hidden" />
-              </div>
+            <SnapReveal className="relative z-50" delay={0.02}>
+              <PublicHeader size="lg" menuClassName="hidden md:block xl:hidden" />
             </SnapReveal>
 
-            <div className="relative grid min-h-0 flex-1 items-center gap-6 pb-24 pt-5 md:gap-8 md:pb-10 md:pt-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)] xl:gap-16 xl:pb-10 xl:pt-8">
+            <div className="relative grid min-h-0 flex-1 items-start gap-6 pb-16 pt-5 md:gap-7 md:pb-12 md:pt-6 lg:grid-cols-2 lg:items-center lg:gap-10 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)] xl:items-center xl:gap-16 xl:pb-10 xl:pt-8">
               <div
                 aria-hidden
                 className="hero-glow pointer-events-none absolute inset-x-[-12%] top-[5%] -z-10 h-[60%] rounded-[45%] bg-[radial-gradient(circle_at_center,var(--app-accent-soft),transparent_70%)] xl:left-[-8%] xl:w-[70%]"
@@ -92,25 +78,25 @@ export function HomePage() {
 
               <div className="relative min-w-0">
                 <SnapReveal direction="left" delay={0.08}>
-                  <p className="font-display text-sm font-medium tracking-[0.28em] text-brand-500 uppercase">
+                  <p className="font-display text-xs font-medium tracking-[0.28em] text-brand-500 uppercase sm:text-sm">
                     {t('home.eyebrow')}
                   </p>
                 </SnapReveal>
 
                 <SnapReveal direction="scale" delay={0.16}>
-                  <h1 className="font-display mt-4 max-w-5xl text-[2.5rem] leading-[1.05] font-semibold tracking-tight text-ink sm:mt-5 sm:text-6xl lg:text-[3.4rem] xl:text-[4.25rem]">
+                  <h1 className="font-display mt-3 max-w-[16ch] text-[2.5rem] leading-[1.08] font-semibold tracking-tight text-ink md:mt-4 md:text-[2.35rem] lg:text-[2.5rem] xl:mt-5 xl:max-w-5xl xl:text-[4.25rem]">
                     {t('home.title')}
                   </h1>
                 </SnapReveal>
 
                 <SnapReveal direction="right" delay={0.26}>
-                  <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted sm:mt-6 sm:text-lg lg:text-xl">
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted sm:mt-5 sm:text-base xl:mt-6 xl:max-w-3xl xl:text-xl">
                     {t('home.subtitle')}
                   </p>
                 </SnapReveal>
 
                 <SnapReveal delay={0.4}>
-                  <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap">
+                  <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap">
                     {isAuthenticated ? (
                       <Link to="/dashboard" className="w-full sm:w-auto">
                         <Button className="min-w-44 gap-2">

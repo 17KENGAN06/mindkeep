@@ -16,10 +16,6 @@ const PAGE_LINKS = [
 
 const DESKTOP_LINKS = PAGE_LINKS.filter((link) => link.to !== '/');
 
-type PublicPageLinksProps = {
-  onNavigate?: () => void;
-};
-
 export function PublicDesktopNav() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
@@ -39,45 +35,50 @@ export function PublicDesktopNav() {
   );
 }
 
+type PublicPageLinksProps = {
+  onNavigate?: () => void;
+};
+
 export function PublicPageLinks({ onNavigate }: PublicPageLinksProps) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const { isAuthenticated } = useAuth();
 
-  const tile =
-    'inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-50/40 px-3 text-sm font-semibold text-ink no-underline ring-1 ring-line/70';
-  const primary =
-    'inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-500 px-3 text-sm font-semibold text-[#07110d] no-underline';
+  const row =
+    'flex min-h-12 w-full items-center rounded-2xl px-4 text-left text-sm font-semibold no-underline transition';
+  const quiet = `${row} bg-brand-50/40 text-ink ring-1 ring-line/70 active:bg-brand-50`;
+  const accent = `${row} justify-center bg-brand-500 text-[#07110d]`;
+
+  const pages = PAGE_LINKS.filter((link) => !link.match(pathname) && link.to !== '/plans');
+  const plans = PAGE_LINKS.find((link) => link.to === '/plans' && !link.match(pathname));
 
   return (
-    <div className="grid grid-cols-2 gap-2">
-      {PAGE_LINKS.filter((link) => !link.match(pathname)).map((link) => (
-        <Link
-          key={link.to}
-          to={link.to}
-          className={
-            link.to === '/plans' ? `col-span-2 ${primary}` : link.to === '/' ? `col-span-2 ${tile}` : tile
-          }
-          onClick={onNavigate}
-        >
+    <nav className="flex flex-col gap-2" aria-label={t('footer.linksLabel')}>
+      {pages.map((link) => (
+        <Link key={link.to} to={link.to} className={quiet} onClick={onNavigate}>
           {t(link.labelKey)}
         </Link>
       ))}
+      {plans ? (
+        <Link to={plans.to} className={`${accent} mt-1`} onClick={onNavigate}>
+          {t(plans.labelKey)}
+        </Link>
+      ) : null}
       {isAuthenticated ? (
-        <Link to="/dashboard" className={`col-span-2 ${primary}`} onClick={onNavigate}>
+        <Link to="/dashboard" className={accent} onClick={onNavigate}>
           {t('nav.dashboard')}
         </Link>
       ) : (
-        <>
-          <Link to="/login" className={tile} onClick={onNavigate}>
+        <div className="mt-1 grid grid-cols-2 gap-2">
+          <Link to="/login" className={`${quiet} justify-center`} onClick={onNavigate}>
             {t('nav.login')}
           </Link>
-          <Link to="/register" className={primary} onClick={onNavigate}>
+          <Link to="/register" className={accent} onClick={onNavigate}>
             {t('home.ctaRegister')}
           </Link>
-        </>
+        </div>
       )}
-    </div>
+    </nav>
   );
 }
 
@@ -109,32 +110,33 @@ export function PublicMenu({ className = '' }: PublicMenuProps) {
       {open && typeof document !== 'undefined'
         ? createPortal(
             <div
-              className="fixed inset-0 z-[80] flex flex-col bg-panel"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby={titleId}
+              className="fixed inset-0 z-[80] flex items-stretch justify-end bg-ink/45 backdrop-blur-[2px] md:items-start md:p-3"
+              role="presentation"
+              onClick={close}
             >
-              <div className="flex items-center justify-between gap-3 border-b border-line/70 px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-3">
-                <div className="min-w-0">
-                  <p className="text-[10px] font-medium tracking-[0.18em] text-muted uppercase">
-                    {t('home.mobileNav.pages')}
-                  </p>
-                  <h2 id={titleId} className="font-display truncate text-xl font-semibold text-ink">
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={titleId}
+                className="flex h-full w-full max-w-none flex-col bg-panel shadow-[0_24px_80px_rgba(0,0,0,0.35)] md:h-auto md:max-h-[calc(100dvh-1.5rem)] md:w-[min(22rem,calc(100vw-1.5rem))] md:rounded-[1.6rem] md:ring-1 md:ring-line"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="flex items-center justify-between gap-3 border-b border-line/70 px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-3 md:pt-4">
+                  <h2 id={titleId} className="font-display text-lg font-semibold text-ink">
                     {t('nav.menu')}
                   </h2>
+                  <button
+                    type="button"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-brand-50/50 text-ink transition active:bg-brand-50"
+                    aria-label={t('nav.closeMenu')}
+                    onClick={close}
+                  >
+                    <X className="h-5 w-5" aria-hidden />
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="inline-flex h-12 min-w-12 items-center justify-center gap-2 rounded-2xl border border-line bg-brand-50/50 px-3 text-sm font-semibold text-ink transition active:bg-brand-50"
-                  aria-label={t('nav.closeMenu')}
-                  onClick={close}
-                >
-                  <X className="h-5 w-5" aria-hidden />
-                  <span>{t('nav.closeMenu')}</span>
-                </button>
-              </div>
-              <div className="flex-1 overflow-y-auto px-4 py-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-                <PublicPageLinks onNavigate={close} />
+                <div className="overflow-y-auto px-4 py-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:pb-5">
+                  <PublicPageLinks onNavigate={close} />
+                </div>
               </div>
             </div>,
             document.body,
