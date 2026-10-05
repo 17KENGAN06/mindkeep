@@ -303,7 +303,7 @@ export function FinanceScanReceipt({
                 className="flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
                 onSubmit={onPrepareSubmit}
               >
-                <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain">
+                <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-1">
                   <div>
                     <h3 id="finance-scan-prepare-title" className="text-lg font-semibold text-ink">
                       {t('finance.scan.prepareTitle')}
@@ -376,7 +376,7 @@ export function FinanceScanReceipt({
               <p className="mt-1 text-sm text-muted">{t('finance.scan.reviewHint')}</p>
             </div>
 
-            <div className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
+            <div className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-1">
               <div className="space-y-2">
                 <p className="text-sm font-medium text-ink">{t('finance.scan.moneyKind')}</p>
                 <div className="grid grid-cols-2 gap-2">
@@ -423,7 +423,7 @@ export function FinanceScanReceipt({
                 }}
               />
 
-              <ul className="divide-y divide-line overflow-hidden rounded-2xl ring-1 ring-line">
+              <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line">
                 {review.map((row, index) => (
                     <li key={`${row.date}-${index}`} className="min-w-0 space-y-3 px-3 py-3">
                       <Textarea

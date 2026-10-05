@@ -310,7 +310,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             className="flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
             onSubmit={(event) => void onEstimate(event)}
           >
-            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain pr-0.5">
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-1">
             <div>
               <h3 id="food-scan-prepare-title" className="text-lg font-semibold text-ink">
                 {t('calories.scan.prepareTitle')}
@@ -421,7 +421,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             className="flex max-h-[90dvh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
             onSubmit={(event) => void onConfirm(event)}
           >
-            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain">
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-1">
               <div>
                 <h3 id="food-scan-review-title" className="text-lg font-semibold text-ink">
                   {t('calories.scan.reviewTitle')}

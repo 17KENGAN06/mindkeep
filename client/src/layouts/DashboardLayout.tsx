@@ -46,7 +46,7 @@ export function DashboardLayout() {
           </div>
         </header>
 
-        <Reveal key={location.pathname} trigger="mount">
+        <Reveal key={location.pathname} trigger="mount" className="min-w-0 overflow-visible">
           <Outlet />
         </Reveal>
 

@@ -213,7 +213,7 @@ export function FinanceBudgetPage() {
   };
 
   return (
-    <div className="min-w-0 space-y-6 overflow-x-hidden">
+    <div className="min-w-0 space-y-6 px-px">
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('finance.budgetTitle')}</h1>
         <p className="mt-1 text-sm text-muted">{t('finance.budgetSubtitle')}</p>
@@ -354,13 +354,15 @@ export function FinanceBudgetPage() {
               return (
                 <article
                   key={bucket.currency}
-                  className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line"
+                  className="relative min-w-0 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line"
                 >
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"
+                  >
+                    <div className="absolute -top-10 -right-8 h-28 w-28 rounded-full bg-brand-500/10 blur-2xl" />
+                  </div>
                   <div className="relative">
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute -top-10 -right-8 h-28 w-28 rounded-full bg-brand-500/10 blur-2xl"
-                    />
                     <div className="relative flex flex-wrap items-end justify-between gap-3">
                       <h3 className="min-w-0 font-display text-xl font-semibold text-ink">
                         {currencyLabel(bucket.currency, language)}
