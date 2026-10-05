@@ -180,13 +180,6 @@
         "failed": "Kuvaa ei voitu lukea."
       }
     },
-    "repeat": {
-      "button": "Toista edellinen kuukausi",
-      "title": "Kopioidaanko edellinen kuukausi tähän?",
-      "description": "Kopioi tapahtumat jaksosta {{from}} jaksoon {{to}}. Tässä kuussa jo olevat ohitetaan.",
-      "save": "Kopioi",
-      "empty": "Edellisessä kuussa ei ole kopioitavia tapahtumia."
-    },
     "scan": {
       "button": "Skannaa kuitti",
       "buttonShort": "Skannaa",
@@ -1596,7 +1589,7 @@
   "plans": {
     "eyebrow": "Tilaukset",
     "title": "Kolme tasoa. Yksi tuote.",
-    "subtitle": "Freessä kaikki osiot ovat auki. Plus poistaa määrärajoitukset. Pro lisää ruokien ja kuittien kuvaskannauksen.",
+    "subtitle": "Freessä kaikki osiot. Plus poistaa rajat. Pro skannaa kuvat.",
     "includes": "Mitä tähän kuuluu",
     "limits": "Rajat Freessä",
     "removes": "Tämä taso poistaa",
@@ -1616,57 +1609,52 @@
     "intervalMonth": "Kuukausi",
     "free": {
       "name": "Free",
-      "tagline": "Aloita tänään, rauhallisilla rajoilla.",
+      "tagline": "Kaikki osiot. Rajat, ei lukkoja.",
       "price": "€0",
-      "billed": "Korttia ei tarvita.",
+      "billed": "Ei korttia.",
       "includes": [
-        "Kaikki osiot ensimmäisestä päivästä: tehtävät, kertaaminen, muistiinpanot, tavat, budjetti, ravinto",
-        "Sama tili verkkosivulla"
+        "Tehtävät, kertaus, muistiinpanot, tavat, budjetti, ruoka"
       ],
       "limits": [
-        "20 materiaalia · 45 tehtävää / kuukausi · 3 kertauskategoriaa",
-        "3 tapaa · 20 muistiinpanoa · 5 budjettikategoriaa",
-        "25 taloustapahtumaa / kuukausi · ateriat 7 päivää · 2 laitetta"
+        "20 materiaalia · 45 tehtävää/kk",
+        "3 tapaa · 20 muistiinpanoa · ruoka 7 pv",
+        "2 laitetta"
       ],
       "without": [
-        "Aterian skannaus kuvasta",
-        "Kuitin skannaus Budjettiin"
+        "Ei kuvaskannausta"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Enemmän tilaa. Ruoka ja raha merkitään yhä itse.",
+      "tagline": "Ei rajoja. Ruoka ja raha syötetään itse.",
       "yearPerMonth": "€3.33",
-      "yearCharged": "€39.99 kerran vuodessa",
+      "yearCharged": "€39.99 / vuosi",
       "monthPrice": "€4.99",
       "includes": [
-        "Kaikki Freestä",
-        "Sama Plus sovelluksessa verkkosivun maksun jälkeen"
+        "Kaikki Freestä, ilman rajoja"
       ],
       "removes": [
-        "Määrärajoitukset materiaaleista, tavoista, muistiinpanoista, tehtävistä ja budjetista",
-        "7 päivän seinän aterioissa ja 2 laitteen rajan"
+        "Koko ruoka-historia · lisää laitteita"
       ],
       "without": [
-        "Aterian skannaus kuvasta",
-        "Kuitin skannaus Budjettiin"
+        "Ei kuvaskannausta"
       ],
-      "monthCharged": "€4.99 joka kuukausi"
+      "monthCharged": "€4.99 / kuukausi"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, ja kamera täyttää ateriat ja budjetin.",
+      "tagline": "Plus ja kamera.",
       "yearPerMonth": "€5.83",
-      "yearCharged": "€69.99 kerran vuodessa",
+      "yearCharged": "€69.99 / vuosi",
       "monthPrice": "€7.99",
       "includes": [
         "Kaikki Plusista"
       ],
       "unlocks": [
-        "Skannaa ateria kuvasta puhelimella",
-        "Skannaa kuitti Budjettiin ja valitse käteinen tai kortti"
+        "Skannaa ateriat",
+        "Skannaa kuitit"
       ],
-      "monthCharged": "€7.99 joka kuukausi"
+      "monthCharged": "€7.99 / kuukausi"
     },
     "periodEnd": "tämän kauden lopussa",
     "switchTo": "Siirry pakettiin {{plan}} tämän kauden jälkeen",

@@ -49,17 +49,6 @@ export const bulkCreateFinanceOperationsSchema = z.object({
   operations: z.array(createFinanceOperationSchema).min(1).max(40),
 });
 
-export const repeatFinanceMonthSchema = z
-  .object({
-    fromYear: z.number().int().min(2000).max(2100),
-    fromMonth: z.number().int().min(1).max(12),
-    toYear: z.number().int().min(2000).max(2100),
-    toMonth: z.number().int().min(1).max(12),
-  })
-  .refine((value) => value.fromYear !== value.toYear || value.fromMonth !== value.toMonth, {
-    message: 'Pick a different month',
-  });
-
 const financeScanMimeType = z.enum(['image/jpeg', 'image/png', 'image/webp']);
 
 export const scanFinanceSchema = z.object({
@@ -82,5 +71,4 @@ export type UpdateFinanceCategoryInput = z.infer<typeof updateFinanceCategorySch
 export type FinancePeriodQuery = z.infer<typeof financePeriodQuerySchema>;
 export type CreateFinanceOperationInput = z.infer<typeof createFinanceOperationSchema>;
 export type BulkCreateFinanceOperationsInput = z.infer<typeof bulkCreateFinanceOperationsSchema>;
-export type RepeatFinanceMonthInput = z.infer<typeof repeatFinanceMonthSchema>;
 export type ScanFinanceInput = z.infer<typeof scanFinanceSchema>;

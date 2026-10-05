@@ -180,13 +180,6 @@
         "failed": "Nie udało się odczytać zdjęcia."
       }
     },
-    "repeat": {
-      "button": "Powtórz poprzedni miesiąc",
-      "title": "Skopiować poprzedni miesiąc tutaj?",
-      "description": "Skopiuj operacje z {{from}} do {{to}}. Te, które już są w tym miesiącu, zostaną pominięte.",
-      "save": "Kopiuj",
-      "empty": "W poprzednim miesiącu nie ma operacji do skopiowania."
-    },
     "scan": {
       "button": "Skanuj paragon",
       "buttonShort": "Skan",
@@ -1596,7 +1589,7 @@
   "plans": {
     "eyebrow": "Plany",
     "title": "Trzy plany. Jeden produkt.",
-    "subtitle": "Na Free otwarte są wszystkie moduły. Plus zdejmuje limity ilości. Pro dodaje skan zdjęć posiłków i paragonów.",
+    "subtitle": "Free ma wszystkie moduły. Plus zdejmuje limity. Pro skanuje zdjęcia.",
     "includes": "Co jest w planie",
     "limits": "Limity na Free",
     "removes": "Ten plan zdejmuje",
@@ -1616,57 +1609,52 @@
     "intervalMonth": "Miesiąc",
     "free": {
       "name": "Free",
-      "tagline": "Zacznij dziś, ze spokojnymi limitami.",
+      "tagline": "Wszystkie moduły. Limity, nie kłódki.",
       "price": "€0",
-      "billed": "Karta nie jest potrzebna.",
+      "billed": "Bez karty.",
       "includes": [
-        "Wszystkie moduły od pierwszego dnia: zadania, powtórki, notatki, nawyki, budżet, odżywianie",
-        "To samo konto na stronie"
+        "Zadania, powtórki, notatki, nawyki, budżet, posiłki"
       ],
       "limits": [
-        "20 materiałów · 45 zadań / miesiąc · 3 kategorie powtórek",
-        "3 nawyki · 20 notatek · 5 kategorii budżetu",
-        "25 zapisów finansów / miesiąc · posiłki 7 dni · 2 urządzenia"
+        "20 materiałów · 45 zadań/mies.",
+        "3 nawyki · 20 notatek · posiłki 7 dni",
+        "2 urządzenia"
       ],
       "without": [
-        "Skan posiłku ze zdjęcia",
-        "Skan paragonu w Budżecie"
+        "Bez skanu zdjęcia"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Więcej miejsca. Posiłki i pieniądze wpisujesz nadal sam.",
+      "tagline": "Bez limitów. Posiłki i pieniądze wpisujesz sam.",
       "yearPerMonth": "€3.33",
-      "yearCharged": "€39.99 raz w roku",
+      "yearCharged": "€39.99 / rok",
       "monthPrice": "€4.99",
       "includes": [
-        "Wszystko z Free",
-        "Ten sam Plus w aplikacji po płatności na stronie"
+        "Cały Free, bez limitów"
       ],
       "removes": [
-        "Limity ilości na materiały, nawyki, notatki, zadania i budżet",
-        "Ścianę 7 dni dla posiłków i limit 2 urządzeń"
+        "Pełna historia posiłków · więcej urządzeń"
       ],
       "without": [
-        "Skan posiłku ze zdjęcia",
-        "Skan paragonu w Budżecie"
+        "Bez skanu zdjęcia"
       ],
-      "monthCharged": "€4.99 co miesiąc"
+      "monthCharged": "€4.99 / miesiąc"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, a aparat uzupełnia posiłki i budżet.",
+      "tagline": "Plus i aparat.",
       "yearPerMonth": "€5.83",
-      "yearCharged": "€69.99 raz w roku",
+      "yearCharged": "€69.99 / rok",
       "monthPrice": "€7.99",
       "includes": [
-        "Wszystko z Plus"
+        "Cały Plus"
       ],
       "unlocks": [
-        "Skan posiłku ze zdjęcia na telefonie",
-        "Skan paragonu do Budżetu, potem gotówka lub karta"
+        "Skan posiłków",
+        "Skan paragonów"
       ],
-      "monthCharged": "€7.99 co miesiąc"
+      "monthCharged": "€7.99 / miesiąc"
     },
     "periodEnd": "końca tego okresu",
     "switchTo": "Przejdź na {{plan}} po tym okresie",

@@ -180,13 +180,6 @@
         "failed": "Das Foto konnte nicht gelesen werden."
       }
     },
-    "repeat": {
-      "button": "Letzten Monat wiederholen",
-      "title": "Letzten Monat hierher kopieren?",
-      "description": "Buchungen von {{from}} nach {{to}} kopieren. Treffer, die in diesem Monat schon da sind, werden übersprungen.",
-      "save": "Kopieren",
-      "empty": "Im Vormonat gibt es keine Buchungen zum Kopieren."
-    },
     "scan": {
       "button": "Beleg scannen",
       "buttonShort": "Scan",
@@ -1596,7 +1589,7 @@
   "plans": {
     "eyebrow": "Pläne",
     "title": "Drei Pläne. Ein Produkt.",
-    "subtitle": "Auf Free sind alle Module offen. Plus hebt die Mengenlimits. Pro scannt Fotos für Mahlzeiten und Belege.",
+    "subtitle": "Free hat alle Module. Plus hebt Limits. Pro scannt Fotos.",
     "includes": "Was in diesem Plan ist",
     "limits": "Limits auf Free",
     "removes": "Dieser Plan hebt auf",
@@ -1616,57 +1609,52 @@
     "intervalMonth": "Monat",
     "free": {
       "name": "Free",
-      "tagline": "Heute starten, mit ruhigen Limits.",
+      "tagline": "Alle Module. Limits, keine Schlösser.",
       "price": "€0",
-      "billed": "Keine Karte nötig.",
+      "billed": "Keine Karte.",
       "includes": [
-        "Alle Module ab Tag eins: Aufgaben, Wiederholung, Notizen, Gewohnheiten, Budget, Ernährung",
-        "Dasselbe Konto auf der Website"
+        "Aufgaben, Review, Notizen, Habits, Budget, Essen"
       ],
       "limits": [
-        "20 Materialien · 45 Aufgaben / Monat · 3 Wiederholungskategorien",
-        "3 Gewohnheiten · 20 Notizen · 5 Budgetkategorien",
-        "25 Finanzbuchungen / Monat · Mahlzeiten 7 Tage · 2 Geräte"
+        "20 Materialien · 45 Aufgaben/Monat",
+        "3 Habits · 20 Notizen · Essen 7 Tage",
+        "2 Geräte"
       ],
       "without": [
-        "Foto-Scan für Mahlzeiten",
-        "Beleg-Scan im Budget"
+        "Kein Foto-Scan"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Mehr Platz. Mahlzeiten und Geld trägst du weiter selbst ein.",
+      "tagline": "Keine Limits. Essen und Geld trägst du selbst ein.",
       "yearPerMonth": "€3.33",
-      "yearCharged": "€39.99 einmal im Jahr",
+      "yearCharged": "€39.99 / Jahr",
       "monthPrice": "€4.99",
       "includes": [
-        "Alles aus Free",
-        "Dasselbe Plus in der App nach dem Checkout auf der Website"
+        "Alles aus Free, ohne Limits"
       ],
       "removes": [
-        "Mengenlimits bei Materialien, Gewohnheiten, Notizen, Aufgaben und Budget",
-        "Die 7-Tage-Wand bei Mahlzeiten und das 2-Geräte-Limit"
+        "Volle Essenshistorie · mehr Geräte"
       ],
       "without": [
-        "Foto-Scan für Mahlzeiten",
-        "Beleg-Scan im Budget"
+        "Kein Foto-Scan"
       ],
-      "monthCharged": "€4.99 jeden Monat"
+      "monthCharged": "€4.99 / Monat"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, und die Kamera füllt Mahlzeiten und Budget.",
+      "tagline": "Plus, mit Kamera.",
       "yearPerMonth": "€5.83",
-      "yearCharged": "€69.99 einmal im Jahr",
+      "yearCharged": "€69.99 / Jahr",
       "monthPrice": "€7.99",
       "includes": [
         "Alles aus Plus"
       ],
       "unlocks": [
-        "Mahlzeit vom Foto auf dem Telefon scannen",
-        "Beleg ins Budget scannen, dann Bargeld oder Karte wählen"
+        "Mahlzeiten scannen",
+        "Belege scannen"
       ],
-      "monthCharged": "€7.99 jeden Monat"
+      "monthCharged": "€7.99 / Monat"
     },
     "periodEnd": "Ende dieser Periode",
     "switchTo": "Nach dieser Periode zu {{plan}} wechseln",

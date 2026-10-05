@@ -180,13 +180,6 @@
         "failed": "Impossibile leggere la foto."
       }
     },
-    "repeat": {
-      "button": "Ripeti il mese scorso",
-      "title": "Copiare il mese scorso qui?",
-      "description": "Copia le operazioni da {{from}} a {{to}}. Quelle già presenti in questo mese vengono saltate.",
-      "save": "Copia",
-      "empty": "Il mese precedente non ha operazioni da copiare."
-    },
     "scan": {
       "button": "Scansiona scontrino",
       "buttonShort": "Scan",
@@ -1596,7 +1589,7 @@
   "plans": {
     "eyebrow": "Piani",
     "title": "Tre piani. Un solo prodotto.",
-    "subtitle": "Su Free tutti i moduli sono aperti. Plus toglie i tetti di quantità. Pro aggiunge lo scan foto per pasti e scontrini.",
+    "subtitle": "Free ha tutti i moduli. Plus toglie i tetti. Pro scansiona le foto.",
     "includes": "Cosa c’è in questo piano",
     "limits": "Limiti su Free",
     "removes": "Questo piano toglie",
@@ -1616,57 +1609,52 @@
     "intervalMonth": "Mese",
     "free": {
       "name": "Free",
-      "tagline": "Inizia oggi, con tetti calmi.",
+      "tagline": "Tutti i moduli. Tetti, non lucchetti.",
       "price": "€0",
-      "billed": "Carta non necessaria.",
+      "billed": "Niente carta.",
       "includes": [
-        "Tutti i moduli dal primo giorno: compiti, ripasso, note, abitudini, budget, alimentazione",
-        "Lo stesso account sul sito"
+        "Compiti, ripasso, note, abitudini, budget, pasti"
       ],
       "limits": [
-        "20 materiali · 45 compiti / mese · 3 categorie di ripasso",
-        "3 abitudini · 20 note · 5 categorie di budget",
-        "25 movimenti finanziari / mese · pasti 7 giorni · 2 dispositivi"
+        "20 materiali · 45 compiti/mese",
+        "3 abitudini · 20 note · pasti 7 giorni",
+        "2 dispositivi"
       ],
       "without": [
-        "Scan del pasto dalla foto",
-        "Scan dello scontrino nel Budget"
+        "Niente scan foto"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Più spazio. Pasti e soldi li inserisci ancora tu.",
+      "tagline": "Senza tetti. Pasti e soldi li inserisci tu.",
       "yearPerMonth": "€3.33",
-      "yearCharged": "€39.99 una volta all’anno",
+      "yearCharged": "€39.99 / anno",
       "monthPrice": "€4.99",
       "includes": [
-        "Tutto di Free",
-        "Lo stesso Plus nell’app dopo il pagamento sul sito"
+        "Tutto Free, senza tetti"
       ],
       "removes": [
-        "I tetti di quantità su materiali, abitudini, note, compiti e budget",
-        "Il muro di 7 giorni sui pasti e il limite di 2 dispositivi"
+        "Storico pasti · più dispositivi"
       ],
       "without": [
-        "Scan del pasto dalla foto",
-        "Scan dello scontrino nel Budget"
+        "Niente scan foto"
       ],
-      "monthCharged": "€4.99 ogni mese"
+      "monthCharged": "€4.99 / mese"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, e la fotocamera riempie pasti e budget.",
+      "tagline": "Plus, con la fotocamera.",
       "yearPerMonth": "€5.83",
-      "yearCharged": "€69.99 una volta all’anno",
+      "yearCharged": "€69.99 / anno",
       "monthPrice": "€7.99",
       "includes": [
-        "Tutto di Plus"
+        "Tutto Plus"
       ],
       "unlocks": [
-        "Scansiona un pasto dalla foto sul telefono",
-        "Scansiona uno scontrino nel Budget, poi scegli contanti o carta"
+        "Scansiona i pasti",
+        "Scansiona gli scontrini"
       ],
-      "monthCharged": "€7.99 ogni mese"
+      "monthCharged": "€7.99 / mese"
     },
     "periodEnd": "la fine di questo periodo",
     "switchTo": "Passa a {{plan}} dopo questo periodo",

@@ -180,13 +180,6 @@
         "failed": "Could not read the photo."
       }
     },
-    "repeat": {
-      "button": "Repeat last month",
-      "title": "Copy last month here?",
-      "description": "Copy operations from {{from}} into {{to}}. Matching ones already in this month are skipped.",
-      "save": "Copy",
-      "empty": "The previous month has no operations to copy."
-    },
     "scan": {
       "button": "Scan receipt",
       "buttonShort": "Scan",
@@ -1779,7 +1772,7 @@
   "plans": {
     "eyebrow": "Plans",
     "title": "Three plans. One product.",
-    "subtitle": "Every module is open on Free. Plus lifts the quantity caps. Pro adds photo scan for meals and receipts.",
+    "subtitle": "Free has every module. Plus removes the caps. Pro adds photo scan.",
     "includes": "What’s in this plan",
     "limits": "Limits on Free",
     "removes": "This plan removes",
@@ -1808,56 +1801,51 @@
     "refundNote": "You can stop renewal in Account. Access stays until the paid date. Unused time is not refunded.",
     "free": {
       "name": "Free",
-      "tagline": "Start today, with calm caps.",
+      "tagline": "All modules. Caps, not locks.",
       "price": "€0",
-      "billed": "No card needed.",
+      "billed": "No card.",
       "includes": [
-        "All modules from day one: tasks, review, notes, habits, budget, nutrition",
-        "The same account on the website"
+        "Tasks, review, notes, habits, budget, food"
       ],
       "limits": [
-        "20 materials · 45 tasks / month · 3 review categories",
-        "3 habits · 20 notes · 5 budget categories",
-        "25 finance records / month · meals 7 days · 2 devices"
+        "20 materials · 45 tasks/mo",
+        "3 habits · 20 notes · meals 7 days",
+        "2 devices"
       ],
       "without": [
-        "Photo scan for meals",
-        "Receipt scan in Budget"
+        "No photo scan"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "More room. You still enter meals and money yourself.",
+      "tagline": "No caps. You type meals and money.",
       "yearPerMonth": "€3.33",
-      "yearCharged": "€39.99 billed once a year",
+      "yearCharged": "€39.99 / year",
       "monthPrice": "€4.99",
-      "monthCharged": "€4.99 billed every month",
+      "monthCharged": "€4.99 / month",
       "includes": [
-        "Everything in Free",
-        "The same Plus in the app after website checkout"
+        "Everything in Free, without caps"
       ],
       "removes": [
-        "Quantity caps on materials, habits, notes, tasks, and budget",
-        "The 7-day meal wall and the 2-device wall"
+        "Full meal history · more devices"
       ],
       "without": [
-        "Photo scan for meals",
-        "Receipt scan in Budget"
+        "No photo scan"
       ]
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, and the camera fills meals and budget.",
+      "tagline": "Plus, with the camera.",
       "yearPerMonth": "€5.83",
-      "yearCharged": "€69.99 billed once a year",
+      "yearCharged": "€69.99 / year",
       "monthPrice": "€7.99",
-      "monthCharged": "€7.99 billed every month",
+      "monthCharged": "€7.99 / month",
       "includes": [
         "Everything in Plus"
       ],
       "unlocks": [
-        "Scan a meal from a photo on your phone",
-        "Scan a receipt into Budget, then pick cash or card"
+        "Scan meals",
+        "Scan receipts"
       ]
     }
   }

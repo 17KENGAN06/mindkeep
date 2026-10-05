@@ -1,20 +1,15 @@
 import { useMemo, useState, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Banknote, WalletCards } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ApiError } from '@/api/client';
-import { isProAccount, mutationErrorMessage } from '@/features/billing/planLimit';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
-import { Badge } from '@/components/ui/Badge';
 import { FinanceOperationsList } from '@/components/finance/FinanceOperationsList';
 import { FinancePeriodControls } from '@/components/finance/FinancePeriodControls';
-import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
-import { useAuth } from '@/features/auth/useAuth';
 import {
   currencyLabel,
   currencyOptions,
@@ -25,7 +20,6 @@ import { FinanceScanReceipt } from '@/features/finance/FinanceScanReceipt';
 import {
   currentPeriodDefaults,
   formatSignedMoney,
-  previousMonth,
   summarizeByCurrency,
 } from '@/features/finance/financeUtils';
 import {
@@ -34,7 +28,6 @@ import {
   useDeleteFinanceOperation,
   useFinanceCategories,
   useFinanceSummary,
-  useRepeatFinanceMonth,
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
 import type { FinanceDraftOperation, FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
@@ -81,11 +74,8 @@ function FilterChips<T extends string>({
 
 export function FinanceBudgetPage() {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
-  const { user } = useAuth();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const defaults = currentPeriodDefaults();
-  const pro = isProAccount(user);
 
   const [view, setView] = useState<FinanceView>(defaults.view);
   const [year, setYear] = useState(defaults.year);
@@ -94,7 +84,6 @@ export function FinanceBudgetPage() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [kindFilter, setKindFilter] = useState<KindFilter>('ALL');
   const [currencyFilter, setCurrencyFilter] = useState<CurrencyFilter>('ALL');
-  const [repeatOpen, setRepeatOpen] = useState(false);
 
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
   const [moneyKind, setMoneyKind] = useState<FinanceMoneyKind>('ELECTRONIC');
@@ -112,7 +101,6 @@ export function FinanceBudgetPage() {
   const categoriesQuery = useFinanceCategories();
   const createOperation = useCreateFinanceOperation();
   const bulkCreate = useBulkCreateFinanceOperations();
-  const repeatMonth = useRepeatFinanceMonth();
   const deleteOperation = useDeleteFinanceOperation();
 
   const periodOperations = summaryQuery.data?.operations ?? [];
@@ -191,10 +179,6 @@ export function FinanceBudgetPage() {
     }
   };
 
-  const onNeedPro = () => {
-    void navigate('/plans');
-  };
-
   const saveDrafts = async (rows: FinanceDraftOperation[]) => {
     await bulkCreate.mutateAsync({
       operations: rows.map((row) => {
@@ -214,38 +198,12 @@ export function FinanceBudgetPage() {
     });
   };
 
-  const prior = previousMonth(year, month);
-
   return (
     <div className="min-w-0 space-y-6 overflow-x-hidden">
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('finance.budgetTitle')}</h1>
         <p className="mt-1 text-sm text-muted">{t('finance.budgetSubtitle')}</p>
         <PlanRemain feature="financeOperations" />
-        {view === 'month' ? (
-          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full sm:w-auto"
-              onClick={() => {
-                if (!pro) {
-                  onNeedPro();
-                  return;
-                }
-                setFormError(null);
-                setRepeatOpen(true);
-              }}
-            >
-              {t('finance.repeat.button')}
-              {pro ? null : (
-                <span className="ml-2">
-                  <Badge>Pro</Badge>
-                </span>
-              )}
-            </Button>
-          </div>
-        ) : null}
       </section>
 
       <FinancePeriodControls
@@ -471,40 +429,6 @@ export function FinanceBudgetPage() {
           </div>
         )}
       </section>
-
-      <ConfirmDialog
-        open={repeatOpen}
-        title={t('finance.repeat.title')}
-        description={t('finance.repeat.description', {
-          from: `${t(`finance.months.${prior.month}`)} ${prior.year}`,
-          to: `${t(`finance.months.${month}`)} ${year}`,
-        })}
-        confirmLabel={t('finance.repeat.save')}
-        cancelLabel={t('common.cancel')}
-        isLoading={repeatMonth.isPending}
-        onCancel={() => setRepeatOpen(false)}
-        onConfirm={() => {
-          if (repeatMonth.isPending) return;
-          void repeatMonth
-            .mutateAsync({
-              fromYear: prior.year,
-              fromMonth: prior.month,
-              toYear: year,
-              toMonth: month,
-            })
-            .then(() => {
-              setRepeatOpen(false);
-            })
-            .catch((error) => {
-              setRepeatOpen(false);
-              setFormError(
-                error instanceof ApiError && error.code === 'FINANCE_REPEAT_EMPTY'
-                  ? t('finance.repeat.empty')
-                  : mutationErrorMessage(error, t),
-              );
-            });
-        }}
-      />
     </div>
   );
 }

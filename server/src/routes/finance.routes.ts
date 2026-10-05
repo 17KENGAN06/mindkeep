@@ -9,7 +9,6 @@ import {
   createFinanceOperationSchema,
   financeIdParamsSchema,
   financePeriodQuerySchema,
-  repeatFinanceMonthSchema,
   scanFinanceSchema,
   updateFinanceCategorySchema,
   updateFinanceSettingsSchema,
@@ -77,12 +76,6 @@ financeRouter.post(
   '/operations/bulk',
   validate(bulkCreateFinanceOperationsSchema),
   asyncHandler((req, res) => financeController.bulkCreate(req, res)),
-);
-
-financeRouter.post(
-  '/operations/repeat',
-  validate(repeatFinanceMonthSchema),
-  asyncHandler((req, res) => financeController.repeatMonth(req, res)),
 );
 
 financeRouter.post(

@@ -31,13 +31,6 @@ export type CreateOperationPayload = {
   categoryId?: string | null;
 };
 
-export type RepeatFinanceMonthPayload = {
-  fromYear: number;
-  fromMonth: number;
-  toYear: number;
-  toMonth: number;
-};
-
 export const financeApi = {
   getSettings: () => apiClient.get<{ settings: FinanceSettings }>('/api/finance/settings'),
   updateSettings: (payload: { openingBalance?: number; displayCurrency?: FinanceCurrency }) =>
@@ -60,8 +53,6 @@ export const financeApi = {
     apiClient.post<{ operation: FinanceOperation }>('/api/finance/operations', payload),
   bulkCreateOperations: (payload: { operations: CreateOperationPayload[] }) =>
     apiClient.post<{ created: number }>('/api/finance/operations/bulk', payload),
-  repeatMonth: (payload: RepeatFinanceMonthPayload) =>
-    apiClient.post<{ created: number; skipped: number }>('/api/finance/operations/repeat', payload),
   scanStatement: (payload: {
     image: string;
     mimeType: 'image/jpeg' | 'image/png' | 'image/webp';

@@ -180,13 +180,6 @@
         "failed": "No se pudo leer la foto."
       }
     },
-    "repeat": {
-      "button": "Repetir el mes pasado",
-      "title": "¿Copiar el mes pasado aquí?",
-      "description": "Copia las operaciones de {{from}} a {{to}}. Las que ya están en este mes se omiten.",
-      "save": "Copiar",
-      "empty": "El mes anterior no tiene operaciones para copiar."
-    },
     "scan": {
       "button": "Escanear ticket",
       "buttonShort": "Scan",
@@ -1596,7 +1589,7 @@
   "plans": {
     "eyebrow": "Planes",
     "title": "Tres planes. Un producto.",
-    "subtitle": "En Free todos los módulos están abiertos. Plus quita los topes de cantidad. Pro añade el escaneo de fotos de comidas y tickets.",
+    "subtitle": "Free tiene todos los módulos. Plus quita topes. Pro escanea fotos.",
     "includes": "Qué incluye este plan",
     "limits": "Límites en Free",
     "removes": "Este plan quita",
@@ -1616,57 +1609,52 @@
     "intervalMonth": "Mes",
     "free": {
       "name": "Free",
-      "tagline": "Empieza hoy, con topes tranquilos.",
+      "tagline": "Todos los módulos. Topes, no candados.",
       "price": "€0",
-      "billed": "No hace falta tarjeta.",
+      "billed": "Sin tarjeta.",
       "includes": [
-        "Todos los módulos desde el primer día: tareas, repaso, notas, hábitos, presupuesto, nutrición",
-        "La misma cuenta en el sitio"
+        "Tareas, repaso, notas, hábitos, presupuesto, comida"
       ],
       "limits": [
-        "20 materiales · 45 tareas / mes · 3 categorías de repaso",
-        "3 hábitos · 20 notas · 5 categorías de presupuesto",
-        "25 movimientos financieros / mes · comidas 7 días · 2 dispositivos"
+        "20 materiales · 45 tareas/mes",
+        "3 hábitos · 20 notas · comidas 7 días",
+        "2 dispositivos"
       ],
       "without": [
-        "Escaneo de la comida desde una foto",
-        "Escaneo del ticket en Presupuesto"
+        "Sin escaneo de foto"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Más espacio. Sigue apuntando comidas y dinero tú.",
+      "tagline": "Sin topes. Tú escribes comidas y dinero.",
       "yearPerMonth": "€3.33",
-      "yearCharged": "€39.99 una vez al año",
+      "yearCharged": "€39.99 / año",
       "monthPrice": "€4.99",
       "includes": [
-        "Todo de Free",
-        "El mismo Plus en la app tras pagar en el sitio"
+        "Todo Free, sin topes"
       ],
       "removes": [
-        "Los topes de cantidad en materiales, hábitos, notas, tareas y presupuesto",
-        "El muro de 7 días en comidas y el límite de 2 dispositivos"
+        "Historial de comidas · más dispositivos"
       ],
       "without": [
-        "Escaneo de la comida desde una foto",
-        "Escaneo del ticket en Presupuesto"
+        "Sin escaneo de foto"
       ],
-      "monthCharged": "€4.99 cada mes"
+      "monthCharged": "€4.99 / mes"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, y la cámara rellena comidas y presupuesto.",
+      "tagline": "Plus, con cámara.",
       "yearPerMonth": "€5.83",
-      "yearCharged": "€69.99 una vez al año",
+      "yearCharged": "€69.99 / año",
       "monthPrice": "€7.99",
       "includes": [
-        "Todo de Plus"
+        "Todo Plus"
       ],
       "unlocks": [
-        "Escanear una comida desde una foto en el teléfono",
-        "Escanear un ticket al Presupuesto y elegir efectivo o tarjeta"
+        "Escanear comidas",
+        "Escanear tickets"
       ],
-      "monthCharged": "€7.99 cada mes"
+      "monthCharged": "€7.99 / mes"
     },
     "periodEnd": "el final de este periodo",
     "switchTo": "Pasar a {{plan}} después de este periodo",

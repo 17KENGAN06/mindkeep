@@ -7,7 +7,6 @@ import type {
   CreateFinanceCategoryInput,
   CreateFinanceOperationInput,
   FinancePeriodQuery,
-  RepeatFinanceMonthInput,
   ScanFinanceInput,
   UpdateFinanceCategoryInput,
   UpdateFinanceSettingsInput,
@@ -103,14 +102,6 @@ export class FinanceController {
     const result = await financeService.bulkCreate(
       requireUserId(req),
       req.body as BulkCreateFinanceOperationsInput,
-    );
-    res.status(201).json(result);
-  }
-
-  async repeatMonth(req: Request, res: Response): Promise<void> {
-    const result = await financeService.repeatMonth(
-      requireUserId(req),
-      req.body as RepeatFinanceMonthInput,
     );
     res.status(201).json(result);
   }
