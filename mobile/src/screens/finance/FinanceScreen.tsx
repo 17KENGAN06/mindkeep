@@ -23,6 +23,7 @@ import {
   type FinanceCurrency,
 } from '../../features/finance/currencies';
 import {
+  capsForView,
   expenseByCurrency,
   formatMoney,
   formatSignedMoney,
@@ -106,6 +107,7 @@ function CurrencyLimitEditor({
 }) {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const canEdit = view === 'month';
   const [draft, setDraft] = useState(monthlyLimit ? String(monthlyLimit) : '');
 
   useEffect(() => {
@@ -114,8 +116,8 @@ function CurrencyLimitEditor({
 
   const parsedDraft = Number(draft.replace(',', '.'));
   const previewMonthly =
-    Number.isFinite(parsedDraft) && parsedDraft > 0 ? parsedDraft : monthlyLimit;
-  const target = periodBudgetTarget(previewMonthly, view);
+    canEdit && Number.isFinite(parsedDraft) && parsedDraft > 0 ? parsedDraft : monthlyLimit;
+  const target = periodBudgetTarget(previewMonthly);
   const remaining = target ? target - spent : 0;
   const over = Boolean(target) && remaining < 0;
   const ratio = target && target > 0 ? spent / target : 0;
@@ -148,8 +150,12 @@ function CurrencyLimitEditor({
           ? over
             ? t('finance.limits.over', { amount: formatMoney(-remaining, language, currency) })
             : t('finance.limits.left', { amount: formatMoney(remaining, language, currency) })
-          : t('finance.limits.unsetHint')}
+          : canEdit
+            ? t('finance.limits.unsetHint')
+            : t('finance.limits.yearSetHint')}
       </Text>
+      {canEdit ? (
+      <>
       <TextInput
         keyboardType="decimal-pad"
         style={[styles.input, { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink }]}
@@ -172,6 +178,8 @@ function CurrencyLimitEditor({
           <AppButton variant="ghost" label={t('finance.limits.remove')} loading={isSaving} onPress={onClear} />
         ) : null}
       </View>
+      </>
+      ) : null}
     </View>
   );
 }
@@ -215,7 +223,8 @@ export function FinanceScreen() {
   const [addLimitAmount, setAddLimitAmount] = useState('');
 
   const summary = summaryQuery.data;
-  const monthlyLimits = summary?.settings.monthlyLimits ?? {};
+  const periodLimits = summary?.settings.periodLimits ?? {};
+  const monthlyLimits = capsForView(periodLimits, view, year, month);
   const categories = categoriesQuery.data ?? [];
   const operations = summary?.operations ?? [];
   const availableCurrencies = useMemo(() => {
@@ -355,7 +364,9 @@ export function FinanceScreen() {
     setSavingLimit(code);
     setFormError(null);
     try {
-      await updateSettings.mutateAsync({ monthlyLimit: { currency: code, amount: nextAmount } });
+      await updateSettings.mutateAsync({
+        monthlyLimit: { currency: code, amount: nextAmount, year, month },
+      });
     } catch (caught) {
       setFormError(mapAuthError(caught, t));
     } finally {
@@ -472,7 +483,7 @@ export function FinanceScreen() {
           </View>
         ) : null}
 
-        {freeBudgetCurrencies.length > 0 ? (
+        {view === 'month' && freeBudgetCurrencies.length > 0 ? (
           <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.limits.addTitle')}</Text>
             <Text style={[styles.subtitle, { color: colors.muted }]}>{t('finance.limits.addHint')}</Text>

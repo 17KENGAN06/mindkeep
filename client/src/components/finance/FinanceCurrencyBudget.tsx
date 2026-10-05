@@ -67,6 +67,7 @@ export function FinanceCurrencyBudget({
   onClear,
 }: FinanceCurrencyBudgetProps) {
   const { t } = useTranslation();
+  const canEdit = view === 'month';
   const [draft, setDraft] = useState(monthlyLimit ? String(monthlyLimit) : '');
   const [error, setError] = useState<string | null>(null);
 
@@ -75,8 +76,8 @@ export function FinanceCurrencyBudget({
     setError(null);
   }, [monthlyLimit]);
 
-  const previewMonthly = liveMonthlyCap(draft, monthlyLimit);
-  const target = periodBudgetTarget(previewMonthly, view);
+  const previewMonthly = canEdit ? liveMonthlyCap(draft, monthlyLimit) : monthlyLimit;
+  const target = periodBudgetTarget(previewMonthly);
   const remaining = target ? target - spent : 0;
   const over = Boolean(target) && remaining < 0;
 
@@ -117,47 +118,53 @@ export function FinanceCurrencyBudget({
           ? over
             ? t('finance.limits.over', { amount: formatMoney(-remaining, language, currency) })
             : t('finance.limits.left', { amount: formatMoney(remaining, language, currency) })
-          : t('finance.limits.unsetHint')}
+          : canEdit
+            ? t('finance.limits.unsetHint')
+            : t('finance.limits.yearSetHint')}
       </p>
 
-      <form className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center" onSubmit={(event) => void submit(event)}>
-        <label className="sr-only" htmlFor={`budget-${currency}`}>
-          {t('finance.limits.amount')}
-        </label>
-        <input
-          id={`budget-${currency}`}
-          type="number"
-          min="0.01"
-          step="0.01"
-          inputMode="decimal"
-          value={draft}
-          onChange={(event) => setDraft(event.target.value)}
-          placeholder={t('finance.limits.amount')}
-          className={`min-h-10 min-w-0 flex-1 rounded-xl border bg-panel px-3 py-2 text-sm text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
-            error ? 'border-red-400' : 'border-line'
-          }`}
-        />
-        <div className="flex shrink-0 gap-2">
-          <Button type="submit" isLoading={isSaving} className="!min-h-10 !px-4">
-            {monthlyLimit ? t('common.save') : t('finance.limits.set')}
-          </Button>
-          {monthlyLimit ? (
-            <Button
-              type="button"
-              variant="ghost"
-              className="!min-h-10 !px-3"
-              isLoading={isSaving}
-              onClick={() => void onClear()}
-            >
-              {t('finance.limits.remove')}
-            </Button>
+      {canEdit ? (
+        <>
+          <form className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center" onSubmit={(event) => void submit(event)}>
+            <label className="sr-only" htmlFor={`budget-${currency}`}>
+              {t('finance.limits.amount')}
+            </label>
+            <input
+              id={`budget-${currency}`}
+              type="number"
+              min="0.01"
+              step="0.01"
+              inputMode="decimal"
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              placeholder={t('finance.limits.amount')}
+              className={`min-h-10 min-w-0 flex-1 rounded-xl border bg-panel px-3 py-2 text-sm text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200 ${
+                error ? 'border-red-400' : 'border-line'
+              }`}
+            />
+            <div className="flex shrink-0 gap-2">
+              <Button type="submit" isLoading={isSaving} className="!min-h-10 !px-4">
+                {monthlyLimit ? t('common.save') : t('finance.limits.set')}
+              </Button>
+              {monthlyLimit ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="!min-h-10 !px-3"
+                  isLoading={isSaving}
+                  onClick={() => void onClear()}
+                >
+                  {t('finance.limits.remove')}
+                </Button>
+              ) : null}
+            </div>
+          </form>
+          {error ? (
+            <p className="text-xs text-red-500" role="alert">
+              {error}
+            </p>
           ) : null}
-        </div>
-      </form>
-      {error ? (
-        <p className="text-xs text-red-500" role="alert">
-          {error}
-        </p>
+        </>
       ) : null}
       {showAllSpendingHint ? <p className="text-xs text-muted">{t('finance.limits.allSpending')}</p> : null}
     </div>

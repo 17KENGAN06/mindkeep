@@ -12,7 +12,7 @@ export function useUpdateFinanceSettings() {
     mutationFn: (payload: {
       openingBalance?: number;
       displayCurrency?: FinanceCurrency;
-      monthlyLimit?: { currency: FinanceCurrency; amount: number | null };
+      monthlyLimit?: { currency: FinanceCurrency; amount: number | null; year: number; month: number };
     }) => financeApi.updateSettings(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });

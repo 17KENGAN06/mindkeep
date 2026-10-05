@@ -154,10 +154,11 @@
     "emptyCurrencies": "Aucune opération sur cette période.",
     "allCurrencies": "Toutes les devises",
     "limits": {
-      "sectionHint": "Fixez un plafond de dépenses mensuel par devise et suivez-le sur la barre — les devises restent séparées.",
+      "sectionHint": "Chaque mois a son propre plafond par devise. Changez de mois pour fixer un autre budget.",
       "monthTitle": "Budget de dépenses du mois",
       "yearTitle": "Budget de dépenses de l’année",
-      "yearHint": "12 × votre budget mensuel",
+      "yearHint": "Somme des budgets que vous avez fixés pour chaque mois de cette année.",
+      "yearSetHint": "Ouvrez un mois pour fixer son budget.",
       "unsetHint": "Fixez un plafond de dépenses pour cette devise et suivez-le ici.",
       "noCap": "Pas encore de plafond",
       "amount": "Budget mensuel",

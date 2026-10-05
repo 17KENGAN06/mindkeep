@@ -8,16 +8,20 @@ const financeKey = ['finance'] as const;
 
 function patchMonthlyLimit(
   settings: FinanceSettings | undefined,
-  monthlyLimit?: { currency: FinanceCurrency; amount: number | null },
+  monthlyLimit?: { currency: FinanceCurrency; amount: number | null; year: number; month: number },
 ): FinanceSettings | undefined {
   if (!settings || !monthlyLimit) return settings;
-  const monthlyLimits = { ...(settings.monthlyLimits ?? {}) };
+  const key = `${monthlyLimit.year}-${String(monthlyLimit.month).padStart(2, '0')}`;
+  const periodLimits = { ...(settings.periodLimits ?? {}) };
+  const bucket = { ...(periodLimits[key] ?? {}) };
   if (monthlyLimit.amount == null || monthlyLimit.amount <= 0) {
-    delete monthlyLimits[monthlyLimit.currency];
+    delete bucket[monthlyLimit.currency];
   } else {
-    monthlyLimits[monthlyLimit.currency] = monthlyLimit.amount;
+    bucket[monthlyLimit.currency] = monthlyLimit.amount;
   }
-  return { ...settings, monthlyLimits };
+  if (Object.keys(bucket).length === 0) delete periodLimits[key];
+  else periodLimits[key] = bucket;
+  return { ...settings, periodLimits };
 }
 
 export function useFinanceSettings() {
@@ -33,7 +37,7 @@ export function useUpdateFinanceSettings() {
     mutationFn: (payload: {
       openingBalance?: number;
       displayCurrency?: FinanceCurrency;
-      monthlyLimit?: { currency: FinanceCurrency; amount: number | null };
+      monthlyLimit?: { currency: FinanceCurrency; amount: number | null; year: number; month: number };
     }) => financeApi.updateSettings(payload),
     onMutate: async (payload) => {
       if (!payload.monthlyLimit) return;
@@ -64,7 +68,7 @@ export function useUpdateFinanceSettings() {
                 settings: {
                   ...old.settings,
                   ...result.settings,
-                  monthlyLimits: result.settings.monthlyLimits ?? old.settings.monthlyLimits,
+                  periodLimits: result.settings.periodLimits ?? old.settings.periodLimits,
                 },
               }
             : old,

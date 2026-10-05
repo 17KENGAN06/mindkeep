@@ -5,13 +5,14 @@ export type FinanceMoneyKind = 'CASH' | 'ELECTRONIC';
 export type FinanceView = 'month' | 'year';
 
 export type FinanceMonthlyLimits = Partial<Record<FinanceCurrency, number>>;
+export type FinancePeriodLimits = Record<string, FinanceMonthlyLimits>;
 
 export type FinanceSettings = {
   id: string;
   displayCurrency: FinanceCurrency;
   openingBalance: number;
   openingCurrency: FinanceCurrency;
-  monthlyLimits?: FinanceMonthlyLimits;
+  periodLimits?: FinancePeriodLimits;
   userId: string;
   createdAt: string;
   updatedAt: string;

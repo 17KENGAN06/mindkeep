@@ -396,10 +396,11 @@
     "emptyCurrencies": "Nessuna operazione in questo periodo.",
     "allCurrencies": "Tutte le valute",
     "limits": {
-      "sectionHint": "Imposta un tetto di spesa mensile per ogni valuta e seguilo sulla barra — le valute restano separate.",
+      "sectionHint": "Ogni mese ha un tetto di spesa proprio per valuta. Cambia mese per impostare un budget diverso.",
       "monthTitle": "Budget di spesa mensile",
       "yearTitle": "Budget di spesa annuale",
-      "yearHint": "12 × il tuo budget mensile",
+      "yearHint": "Somma dei budget impostati per ogni mese di quest’anno.",
+      "yearSetHint": "Apri un mese per impostare il suo budget.",
       "unsetHint": "Imposta un tetto di spesa per questa valuta e seguilo qui.",
       "noCap": "Nessun tetto",
       "amount": "Budget mensile",

@@ -154,10 +154,11 @@
     "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen.",
     "allCurrencies": "Alle Währungen",
     "limits": {
-      "sectionHint": "Setze ein monatliches Ausgabelimit je Währung und folge ihm am Balken — Währungen bleiben getrennt.",
+      "sectionHint": "Jeder Monat hat ein eigenes Ausgabelimit je Währung. Wechsle den Monat, um ein anderes Budget zu setzen.",
       "monthTitle": "Monatliches Ausgabebudget",
       "yearTitle": "Jährliches Ausgabebudget",
-      "yearHint": "12 × dein monatliches Budget",
+      "yearHint": "Summe der Budgets, die du für jeden Monat dieses Jahres gesetzt hast.",
+      "yearSetHint": "Öffne einen Monat, um sein Budget zu setzen.",
       "unsetHint": "Setze ein Ausgabelimit für diese Währung und folge ihm hier.",
       "noCap": "Noch kein Limit",
       "amount": "Monatsbudget",

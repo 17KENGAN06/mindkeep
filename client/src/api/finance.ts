@@ -36,7 +36,7 @@ export const financeApi = {
   updateSettings: (payload: {
     openingBalance?: number;
     displayCurrency?: FinanceCurrency;
-    monthlyLimit?: { currency: FinanceCurrency; amount: number | null };
+    monthlyLimit?: { currency: FinanceCurrency; amount: number | null; year: number; month: number };
   }) => apiClient.patch<{ settings: FinanceSettings }>('/api/finance/settings', payload),
   getSummary: (params: FinancePeriodParams) =>
     apiClient.get<FinanceSummary>(`/api/finance/summary?${periodQuery(params)}`),

@@ -154,10 +154,11 @@
     "emptyCurrencies": "Aún no hay operaciones en este periodo.",
     "allCurrencies": "Todas las monedas",
     "limits": {
-      "sectionHint": "Pon un tope de gasto mensual por moneda y síguelo en la barra — las monedas no se mezclan.",
+      "sectionHint": "Cada mes tiene su propio tope por moneda. Cambia de mes para fijar otro presupuesto.",
       "monthTitle": "Presupuesto de gasto del mes",
       "yearTitle": "Presupuesto de gasto del año",
-      "yearHint": "12 × tu presupuesto mensual",
+      "yearHint": "Suma de los presupuestos que fijaste para cada mes de este año.",
+      "yearSetHint": "Abre un mes para fijar su presupuesto.",
       "unsetHint": "Pon un tope de gasto para esta moneda y síguelo aquí.",
       "noCap": "Sin tope aún",
       "amount": "Presupuesto mensual",

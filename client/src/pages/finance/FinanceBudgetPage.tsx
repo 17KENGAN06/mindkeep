@@ -22,9 +22,11 @@ import {
 import { FinanceScanReceipt } from '@/features/finance/FinanceScanReceipt';
 import {
   currentPeriodDefaults,
+  capsForView,
   expenseByCurrency,
   formatMoney,
   formatSignedMoney,
+  limitsForPeriod,
   periodBudgetTarget,
   summarizeByCurrency,
   withBudgetCurrencies,
@@ -122,7 +124,8 @@ export function FinanceBudgetPage() {
   const [savingLimit, setSavingLimit] = useState<string | null>(null);
 
   const periodOperations = summaryQuery.data?.operations ?? [];
-  const monthlyLimits = summaryQuery.data?.settings.monthlyLimits ?? {};
+  const periodLimits = summaryQuery.data?.settings.periodLimits ?? {};
+  const monthlyLimits = capsForView(periodLimits, view, year, month);
 
   const availableCurrencies = useMemo(() => {
     const seen = new Set([
@@ -214,10 +217,11 @@ export function FinanceBudgetPage() {
   };
 
   const saveMonthlyLimit = async (code: FinanceCurrency, amount: number | null) => {
+    if (view !== 'month') return;
     setSavingLimit(code);
     setFormError(null);
     try {
-      await updateSettings.mutateAsync({ monthlyLimit: { currency: code, amount } });
+      await updateSettings.mutateAsync({ monthlyLimit: { currency: code, amount, year, month } });
     } catch {
       setFormError(t('auth.errors.generic'));
     } finally {
@@ -392,12 +396,14 @@ export function FinanceBudgetPage() {
 
         <ErrorMessage message={formError ?? undefined} />
 
+        {view === 'month' ? (
         <FinanceAddCurrencyBudget
           language={language}
           taken={takenForNewBudget}
           isSaving={savingLimit !== null}
           onSave={(code, nextAmount) => saveMonthlyLimit(code, nextAmount)}
         />
+        ) : null}
 
         {currencyBuckets.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-line bg-brand-50/40 px-4 py-10 text-center">
@@ -407,9 +413,15 @@ export function FinanceBudgetPage() {
           <div className="space-y-5">
             {currencyBuckets.map((bucket) => {
               const ops = filteredOperations.filter((op) => (op.currency || 'EUR') === bucket.currency);
-              const months = bucket.byMonth.filter((item) => item.income !== 0 || item.expense !== 0);
+              const months = bucket.byMonth.filter((item) => {
+                if (item.income !== 0 || item.expense !== 0) return true;
+                const monthCap = isFinanceCurrency(bucket.currency)
+                  ? limitsForPeriod(periodLimits, year, item.month)[bucket.currency]
+                  : undefined;
+                return Boolean(monthCap);
+              });
               const cap = isFinanceCurrency(bucket.currency)
-                ? periodBudgetTarget(monthlyLimits[bucket.currency], view)
+                ? periodBudgetTarget(monthlyLimits[bucket.currency])
                 : null;
               const spent = periodExpense[bucket.currency] ?? 0;
               return (
@@ -497,10 +509,19 @@ export function FinanceBudgetPage() {
 
                     {view === 'year' && months.length > 0 ? (
                       <div className="relative mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                        {months.map((item) => (
-                          <div
+                        {months.map((item) => {
+                          const monthCap = isFinanceCurrency(bucket.currency)
+                            ? periodBudgetTarget(limitsForPeriod(periodLimits, year, item.month)[bucket.currency])
+                            : null;
+                          return (
+                          <button
                             key={item.month}
-                            className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70"
+                            type="button"
+                            className="rounded-2xl bg-brand-50/40 px-3 py-3 text-left ring-1 ring-line/70 transition hover:ring-brand-400"
+                            onClick={() => {
+                              setMonth(item.month);
+                              setView('month');
+                            }}
                           >
                             <p className="text-sm font-medium text-ink">
                               {t(`finance.months.${item.month}`)}
@@ -513,8 +534,22 @@ export function FinanceBudgetPage() {
                               {t('finance.expense')}:{' '}
                               {formatSignedMoney(-item.expense, language, bucket.currency)}
                             </p>
-                          </div>
-                        ))}
+                            {monthCap ? (
+                              <div className="mt-2">
+                                <FinanceBudgetBar spent={item.expense} target={monthCap} className="h-1.5" />
+                                <p className="mt-1 text-[11px] text-muted">
+                                  {t('finance.limits.spentOf', {
+                                    spent: formatMoney(item.expense, language, bucket.currency),
+                                    budget: formatMoney(monthCap, language, bucket.currency),
+                                  })}
+                                </p>
+                              </div>
+                            ) : (
+                              <p className="mt-2 text-[11px] text-muted">{t('finance.limits.yearSetHint')}</p>
+                            )}
+                          </button>
+                          );
+                        })}
                       </div>
                     ) : null}
                   </div>

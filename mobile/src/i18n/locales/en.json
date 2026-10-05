@@ -396,10 +396,11 @@
     "emptyCurrencies": "No operations in this period yet.",
     "allCurrencies": "All currencies",
     "limits": {
-      "sectionHint": "Set a monthly spend cap for each currency and follow it on the bar — currencies stay separate.",
+      "sectionHint": "Each month has its own spend cap per currency. Switch month to set a different budget.",
       "monthTitle": "Monthly spend budget",
       "yearTitle": "Year spend budget",
-      "yearHint": "12 × your monthly budget",
+      "yearHint": "Sum of the budgets you set for each month this year.",
+      "yearSetHint": "Open a month to set its own budget.",
       "unsetHint": "Set a spending cap for this currency and follow it here.",
       "noCap": "No cap yet",
       "amount": "Monthly budget",

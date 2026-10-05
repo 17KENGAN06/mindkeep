@@ -1,7 +1,7 @@
 import { BudgetCurrency, BudgetMoneyKind, BudgetOperationType, Prisma } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
 import { convertAmount, getRateMap } from '@/services/exchangeRate.service.js';
-import { applyMonthlyLimit, parseMonthlyLimits } from '@/services/finance-limits.js';
+import { applyPeriodLimit, parsePeriodLimits } from '@/services/finance-limits.js';
 import type {
   BulkCreateFinanceOperationsInput,
   CreateFinanceCategoryInput,
@@ -28,10 +28,13 @@ function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-function presentSettings<T extends { monthlyLimits?: unknown }>(settings: T) {
+function toPublicSettings<T extends { monthlyLimits?: unknown }>(settings: T) {
+  const { limits } = parsePeriodLimits(settings.monthlyLimits);
+  const rest = { ...settings } as T & { monthlyLimits?: unknown; periodLimits?: unknown };
+  delete rest.monthlyLimits;
   return {
-    ...settings,
-    monthlyLimits: parseMonthlyLimits(settings.monthlyLimits),
+    ...rest,
+    periodLimits: limits,
   };
 }
 
@@ -75,27 +78,45 @@ async function requireFinanceImportPro(userId: string): Promise<void> {
 export class FinanceService {
   async getOrCreateSettings(userId: string) {
     const existing = await prisma.budgetSettings.findUnique({ where: { userId } });
-    if (existing) return presentSettings(existing);
+    if (!existing) {
+      return toPublicSettings(
+        await prisma.budgetSettings.create({
+          data: {
+            userId,
+            displayCurrency: DEFAULT_CURRENCY,
+            openingCurrency: DEFAULT_CURRENCY,
+            openingBalance: 0,
+          },
+        }),
+      );
+    }
 
-    return presentSettings(
-      await prisma.budgetSettings.create({
-        data: {
-          userId,
-          displayCurrency: DEFAULT_CURRENCY,
-          openingCurrency: DEFAULT_CURRENCY,
-          openingBalance: 0,
-        },
-      }),
-    );
+    const parsed = parsePeriodLimits(existing.monthlyLimits);
+    if (parsed.migratedFromLegacy) {
+      return toPublicSettings(
+        await prisma.budgetSettings.update({
+          where: { userId },
+          data: { monthlyLimits: parsed.limits },
+        }),
+      );
+    }
+
+    return toPublicSettings(existing);
   }
 
   async updateSettings(userId: string, input: UpdateFinanceSettingsInput) {
     const current = await this.getOrCreateSettings(userId);
-    const monthlyLimits = input.monthlyLimit
-      ? applyMonthlyLimit(current.monthlyLimits, input.monthlyLimit.currency, input.monthlyLimit.amount)
-      : current.monthlyLimits;
+    const periodLimits = input.monthlyLimit
+      ? applyPeriodLimit(
+          current.periodLimits,
+          input.monthlyLimit.year,
+          input.monthlyLimit.month,
+          input.monthlyLimit.currency,
+          input.monthlyLimit.amount,
+        )
+      : current.periodLimits;
 
-    return presentSettings(
+    return toPublicSettings(
       await prisma.budgetSettings.update({
         where: { userId },
         data: {
@@ -103,7 +124,7 @@ export class FinanceService {
             ? { displayCurrency: input.displayCurrency, openingCurrency: input.displayCurrency }
             : {}),
           ...(input.openingBalance !== undefined ? { openingBalance: input.openingBalance } : {}),
-          ...(input.monthlyLimit ? { monthlyLimits } : {}),
+          ...(input.monthlyLimit ? { monthlyLimits: periodLimits } : {}),
         },
       }),
     );
@@ -185,7 +206,7 @@ export class FinanceService {
       (row) => row.createdAt.getTime(),
     );
 
-    return { settings: presentSettings(settings), operations };
+    return { settings, operations };
   }
 
   async createOperation(userId: string, input: CreateFinanceOperationInput) {

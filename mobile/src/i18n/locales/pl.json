@@ -396,10 +396,11 @@
     "emptyCurrencies": "W tym okresie nie ma jeszcze operacji.",
     "allCurrencies": "Wszystkie waluty",
     "limits": {
-      "sectionHint": "Ustaw miesięczny limit wydatków dla każdej waluty i śledź go na pasku — waluty zostają osobno.",
+      "sectionHint": "Każdy miesiąc ma własny limit wydatków w każdej walucie. Zmień miesiąc, żeby ustawić inny budżet.",
       "monthTitle": "Miesięczny budżet wydatków",
       "yearTitle": "Roczny budżet wydatków",
-      "yearHint": "12 × Twój miesięczny budżet",
+      "yearHint": "Suma budżetów ustawionych na każdy miesiąc tego roku.",
+      "yearSetHint": "Otwórz miesiąc, żeby ustawić jego budżet.",
       "unsetHint": "Ustaw limit wydatków dla tej waluty i śledź go tutaj.",
       "noCap": "Brak limitu",
       "amount": "Budżet miesięczny",

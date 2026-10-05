@@ -12,6 +12,8 @@ export const updateFinanceSettingsSchema = z.object({
     .object({
       currency: financeCurrencySchema,
       amount: z.number().finite().min(0).max(1_000_000_000).nullable(),
+      year: z.number().int().min(2000).max(2100),
+      month: z.number().int().min(1).max(12),
     })
     .optional(),
 });

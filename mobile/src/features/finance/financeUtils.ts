@@ -1,6 +1,6 @@
 import { FINANCE_CURRENCIES } from './currencies';
 import type { AppLanguage } from '../../i18n';
-import type { FinanceMoneyKind, FinanceOperation, FinanceView } from '../../types/finance';
+import type { FinanceMoneyKind, FinanceMonthlyLimits, FinanceOperation, FinancePeriodLimits, FinanceView } from '../../types/finance';
 
 const intlLocales: Record<AppLanguage, string> = {
   uk: 'uk-UA',
@@ -85,9 +85,39 @@ export function expenseByCurrency(operations: FinanceOperation[]): Record<string
   return map;
 }
 
-export function periodBudgetTarget(monthlyLimit: number | undefined, view: FinanceView): number | null {
-  if (monthlyLimit == null || monthlyLimit <= 0) return null;
-  return view === 'year' ? roundMoney(monthlyLimit * 12) : monthlyLimit;
+export function budgetPeriodKey(year: number, month: number): string {
+  return `${year}-${String(month).padStart(2, '0')}`;
+}
+
+export function limitsForPeriod(
+  all: FinancePeriodLimits | undefined,
+  year: number,
+  month: number,
+): FinanceMonthlyLimits {
+  return all?.[budgetPeriodKey(year, month)] ?? {};
+}
+
+export function capsForView(
+  all: FinancePeriodLimits | undefined,
+  view: FinanceView,
+  year: number,
+  month: number,
+): FinanceMonthlyLimits {
+  if (view === 'month') return limitsForPeriod(all, year, month);
+  const out: FinanceMonthlyLimits = {};
+  for (let index = 1; index <= 12; index += 1) {
+    const slice = limitsForPeriod(all, year, index);
+    for (const [code, amount] of Object.entries(slice)) {
+      if (!amount) continue;
+      out[code as keyof FinanceMonthlyLimits] = roundMoney((out[code as keyof FinanceMonthlyLimits] ?? 0) + amount);
+    }
+  }
+  return out;
+}
+
+export function periodBudgetTarget(limit: number | undefined): number | null {
+  if (limit == null || limit <= 0) return null;
+  return limit;
 }
 
 export function summarizeByCurrency(operations: FinanceOperation[]): FinanceCurrencyBucket[] {
