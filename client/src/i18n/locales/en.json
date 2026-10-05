@@ -150,7 +150,41 @@
     "perCurrencyTitle": "By currency",
     "perCurrencyHint": "Income, expense and balance are counted separately for every currency.",
     "emptyCurrencies": "No operations in this period yet.",
-    "allCurrencies": "All currencies"
+    "allCurrencies": "All currencies",
+    "import": {
+      "button": "Import",
+      "title": "Add from a statement",
+      "hint": "Paste a bank export or photograph a receipt. Review the list, then save. Included in Pro.",
+      "tabs": {
+        "paste": "Paste",
+        "photo": "Photo"
+      },
+      "paste": "Statement text",
+      "pasteHint": "One operation per line: date, amount, currency, comment. Tab or comma. A minus means expense.",
+      "photoHint": "A paper receipt or a screenshot from the bank app.",
+      "scan": "Camera",
+      "gallery": "Photos",
+      "analyzing": "Reading the photo…",
+      "count": "{{count}} operations ready",
+      "empty": "No operations found in this text.",
+      "save": "Save operations",
+      "errors": {
+        "unavailable": "Photo import is not connected yet.",
+        "proRequired": "Import is included in Pro.",
+        "notRecognized": "Could not read operations from this photo.",
+        "tooLarge": "Photo is too large.",
+        "badType": "Use a JPEG, PNG, or WebP photo.",
+        "invalid": "Could not read this photo.",
+        "failed": "Could not read the photo."
+      }
+    },
+    "repeat": {
+      "button": "Repeat last month",
+      "title": "Copy last month here?",
+      "description": "Copy operations from {{from}} into {{to}}. Matching ones already in this month are skipped.",
+      "save": "Copy",
+      "empty": "The previous month has no operations to copy."
+    }
   },
   "tasks": {
     "title": "Daily tasks",
@@ -498,7 +532,8 @@
       "proPoints": {
         "unlimited": "Room to grow: more materials, habits, notes, and history",
         "history": "Longer charts and more devices, without monthly walls",
-        "devices": "The same Pro in the app and on the website after checkout"
+        "devices": "The same Pro in the app and on the website after checkout",
+        "import": "Import a bank statement or receipt into Budget"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ month",
@@ -1298,7 +1333,8 @@
           "We do not sell personal data.",
           "Hosting and database providers may process data only to run Mindkeep under agreement with the operator.",
           "If you subscribe, Stripe processes the payment and receives email and billing details needed to charge the card.",
-          "If you scan a meal on the mobile website, the photo is sent to Google Gemini only to estimate calories and is discarded afterwards. We do not store the photo."
+          "If you scan a meal on the mobile website, the photo is sent to Google Gemini only to estimate calories and is discarded afterwards. We do not store the photo.",
+          "If you photograph a receipt or bank statement in Budget, the photo is sent to Google Gemini only to read operations and is discarded afterwards. We do not store the photo."
         ]
       },
       {

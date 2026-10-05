@@ -150,7 +150,41 @@
     "perCurrencyTitle": "Por moneda",
     "perCurrencyHint": "Ingresos, gastos y saldo se cuentan por separado para cada moneda.",
     "emptyCurrencies": "Aún no hay operaciones en este periodo.",
-    "allCurrencies": "Todas las monedas"
+    "allCurrencies": "Todas las monedas",
+    "import": {
+      "button": "Importar",
+      "title": "Añadir desde un extracto",
+      "hint": "Pega un export del banco o fotografía un ticket. Revisa la lista y guarda. Incluido en Pro.",
+      "tabs": {
+        "paste": "Texto",
+        "photo": "Foto"
+      },
+      "paste": "Texto del extracto",
+      "pasteHint": "Una operación por línea: fecha, importe, moneda, comentario. Tabulador o coma. El menos es un gasto.",
+      "photoHint": "Ticket en papel o captura de la app del banco.",
+      "scan": "Cámara",
+      "gallery": "Fotos",
+      "analyzing": "Leyendo la foto…",
+      "count": "{{count}} operaciones listas",
+      "empty": "No se encontraron operaciones en este texto.",
+      "save": "Guardar operaciones",
+      "errors": {
+        "unavailable": "La importación por foto aún no está conectada.",
+        "proRequired": "La importación está incluida en Pro.",
+        "notRecognized": "No se pudieron leer las operaciones de esta foto.",
+        "tooLarge": "La foto es demasiado grande.",
+        "badType": "Usa JPEG, PNG o WebP.",
+        "invalid": "No se pudo leer esta foto.",
+        "failed": "No se pudo leer la foto."
+      }
+    },
+    "repeat": {
+      "button": "Repetir el mes pasado",
+      "title": "¿Copiar el mes pasado aquí?",
+      "description": "Copia las operaciones de {{from}} a {{to}}. Las que ya están en este mes se omiten.",
+      "save": "Copiar",
+      "empty": "El mes anterior no tiene operaciones para copiar."
+    }
   },
   "tasks": {
     "title": "Tareas del día",
@@ -498,7 +532,8 @@
       "proPoints": {
         "unlimited": "Más espacio: materiales, hábitos, notas e historial",
         "history": "Gráficos más largos y más dispositivos, sin muros mensuales",
-        "devices": "El mismo Pro en la app y en el sitio justo después del pago"
+        "devices": "El mismo Pro en la app y en el sitio justo después del pago",
+        "import": "Importa un extracto o un ticket al Presupuesto"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ mes",
@@ -1298,7 +1333,8 @@
           "No vendemos datos personales.",
           "Los proveedores de alojamiento y bases de datos pueden tratar los datos solo para operar Mindkeep, según un acuerdo con el operador.",
           "Si te suscribes, Stripe procesa el pago y recibe el email y los datos de facturación necesarios para cobrar la tarjeta.",
-          "Si escaneas una comida en la web móvil, la foto se envía a Google Gemini solo para estimar calorías y luego se descarta. No guardamos la foto."
+          "Si escaneas una comida en la web móvil, la foto se envía a Google Gemini solo para estimar calorías y luego se descarta. No guardamos la foto.",
+          "Si fotografías un ticket o un extracto en Presupuesto, la foto se envía a Google Gemini solo para leer las operaciones y luego se descarta. No guardamos la foto."
         ]
       },
       {

@@ -4,13 +4,17 @@ import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { requireAuth } from '@/middleware/auth.middleware.js';
 import { validate } from '@/middleware/validate.js';
 import {
+  bulkCreateFinanceOperationsSchema,
   createFinanceCategorySchema,
   createFinanceOperationSchema,
   financeIdParamsSchema,
   financePeriodQuerySchema,
+  repeatFinanceMonthSchema,
+  scanFinanceSchema,
   updateFinanceCategorySchema,
   updateFinanceSettingsSchema,
 } from '@/validations/finance.schemas.js';
+import { financeScanRateLimit } from '@/middleware/financeScanRateLimit.js';
 
 export const financeRouter = Router();
 
@@ -67,6 +71,25 @@ financeRouter.post(
   '/operations',
   validate(createFinanceOperationSchema),
   asyncHandler((req, res) => financeController.createOperation(req, res)),
+);
+
+financeRouter.post(
+  '/operations/bulk',
+  validate(bulkCreateFinanceOperationsSchema),
+  asyncHandler((req, res) => financeController.bulkCreate(req, res)),
+);
+
+financeRouter.post(
+  '/operations/repeat',
+  validate(repeatFinanceMonthSchema),
+  asyncHandler((req, res) => financeController.repeatMonth(req, res)),
+);
+
+financeRouter.post(
+  '/scan',
+  financeScanRateLimit,
+  validate(scanFinanceSchema),
+  asyncHandler((req, res) => financeController.scanStatement(req, res)),
 );
 
 financeRouter.delete(

@@ -1,10 +1,14 @@
 import type { Request, Response } from 'express';
 import { financeService } from '@/services/finance.service.js';
+import { financeScanService } from '@/services/finance-scan.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
+  BulkCreateFinanceOperationsInput,
   CreateFinanceCategoryInput,
   CreateFinanceOperationInput,
   FinancePeriodQuery,
+  RepeatFinanceMonthInput,
+  ScanFinanceInput,
   UpdateFinanceCategoryInput,
   UpdateFinanceSettingsInput,
 } from '@/validations/finance.schemas.js';
@@ -93,6 +97,31 @@ export class FinanceController {
       req.query as unknown as FinancePeriodQuery,
     );
     res.status(200).json(summary);
+  }
+
+  async bulkCreate(req: Request, res: Response): Promise<void> {
+    const result = await financeService.bulkCreate(
+      requireUserId(req),
+      req.body as BulkCreateFinanceOperationsInput,
+    );
+    res.status(201).json(result);
+  }
+
+  async repeatMonth(req: Request, res: Response): Promise<void> {
+    const result = await financeService.repeatMonth(
+      requireUserId(req),
+      req.body as RepeatFinanceMonthInput,
+    );
+    res.status(201).json(result);
+  }
+
+  async scanStatement(req: Request, res: Response): Promise<void> {
+    const result = await financeScanService.scanStatement(
+      requireUserId(req),
+      req.body as ScanFinanceInput,
+      req.header('x-app-language') ?? req.header('accept-language'),
+    );
+    res.status(200).json(result);
   }
 }
 

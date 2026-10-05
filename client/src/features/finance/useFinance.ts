@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { financeApi, type CreateOperationPayload } from '@/api/finance';
+import { financeApi, type CreateOperationPayload, type RepeatFinanceMonthPayload } from '@/api/finance';
 import type { FinanceCurrency } from '@/features/finance/currencies';
 import type { FinancePeriodParams } from '@/types/finance';
 import { touchPlanUsage } from '@/features/billing/planLimit';
@@ -76,6 +76,29 @@ export function useCreateFinanceOperation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateOperationPayload) => financeApi.createOperation(payload),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
+    },
+  });
+}
+
+export function useBulkCreateFinanceOperations() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: { operations: CreateOperationPayload[] }) =>
+      financeApi.bulkCreateOperations(payload),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
+    },
+  });
+}
+
+export function useRepeatFinanceMonth() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: RepeatFinanceMonthPayload) => financeApi.repeatMonth(payload),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: financeKey });
       touchPlanUsage(queryClient);

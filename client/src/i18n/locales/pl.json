@@ -150,7 +150,41 @@
     "perCurrencyTitle": "Według walut",
     "perCurrencyHint": "Przychód, wydatek i saldo liczymy osobno dla każdej waluty.",
     "emptyCurrencies": "W tym okresie nie ma jeszcze operacji.",
-    "allCurrencies": "Wszystkie waluty"
+    "allCurrencies": "Wszystkie waluty",
+    "import": {
+      "button": "Import",
+      "title": "Dodaj z wyciągu",
+      "hint": "Wklej eksport z banku albo zrób zdjęcie paragonu. Sprawdź listę i zapisz. W Pro.",
+      "tabs": {
+        "paste": "Tekst",
+        "photo": "Zdjęcie"
+      },
+      "paste": "Tekst wyciągu",
+      "pasteHint": "Jedna operacja w wierszu: data, kwota, waluta, komentarz. Tabulator lub przecinek. Minus to wydatek.",
+      "photoHint": "Paragon albo zrzut z aplikacji banku.",
+      "scan": "Aparat",
+      "gallery": "Zdjęcia",
+      "analyzing": "Czytanie zdjęcia…",
+      "count": "Gotowe operacje: {{count}}",
+      "empty": "W tym tekście nie znaleziono operacji.",
+      "save": "Zapisz operacje",
+      "errors": {
+        "unavailable": "Import ze zdjęcia nie jest jeszcze podłączony.",
+        "proRequired": "Import jest w Pro.",
+        "notRecognized": "Nie udało się odczytać operacji ze zdjęcia.",
+        "tooLarge": "Zdjęcie jest za duże.",
+        "badType": "Użyj JPEG, PNG lub WebP.",
+        "invalid": "Nie udało się odczytać tego zdjęcia.",
+        "failed": "Nie udało się odczytać zdjęcia."
+      }
+    },
+    "repeat": {
+      "button": "Powtórz poprzedni miesiąc",
+      "title": "Skopiować poprzedni miesiąc tutaj?",
+      "description": "Skopiuj operacje z {{from}} do {{to}}. Te, które już są w tym miesiącu, zostaną pominięte.",
+      "save": "Kopiuj",
+      "empty": "W poprzednim miesiącu nie ma operacji do skopiowania."
+    }
   },
   "tasks": {
     "title": "Zadania dnia",
@@ -498,7 +532,8 @@
       "proPoints": {
         "unlimited": "Więcej miejsca: materiały, nawyki, notatki i historia",
         "history": "Dłuższe wykresy i więcej urządzeń, bez miesięcznych ścian",
-        "devices": "To samo Pro w aplikacji i na stronie zaraz po płatności"
+        "devices": "To samo Pro w aplikacji i na stronie zaraz po płatności",
+        "import": "Import wyciągu lub paragonu do Budżetu"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ miesiąc",
@@ -1298,7 +1333,8 @@
           "Nie sprzedajemy danych osobowych.",
           "Dostawcy hostingu i baz danych mogą przetwarzać dane wyłącznie w celu działania Mindkeep, na podstawie umowy z operatorem.",
           "Jeśli wykupisz subskrypcję, płatność obsługuje Stripe i otrzymuje email oraz dane rozliczeniowe potrzebne do obciążenia karty.",
-          "Jeśli skanujesz posiłek w mobilnej wersji strony, zdjęcie trafia do Google Gemini tylko po to, by oszacować kalorie, i jest odrzucane. Nie przechowujemy zdjęcia."
+          "Jeśli skanujesz posiłek w mobilnej wersji strony, zdjęcie trafia do Google Gemini tylko po to, by oszacować kalorie, i jest odrzucane. Nie przechowujemy zdjęcia.",
+          "Jeśli fotografujesz paragon lub wyciąg w Budżecie, zdjęcie trafia do Google Gemini tylko po to, by odczytać operacje, i jest odrzucane. Nie przechowujemy zdjęcia."
         ]
       },
       {

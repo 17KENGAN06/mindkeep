@@ -150,7 +150,41 @@
     "perCurrencyTitle": "Par devise",
     "perCurrencyHint": "Recettes, dépenses et solde sont comptés séparément pour chaque devise.",
     "emptyCurrencies": "Aucune opération sur cette période.",
-    "allCurrencies": "Toutes les devises"
+    "allCurrencies": "Toutes les devises",
+    "import": {
+      "button": "Importer",
+      "title": "Ajouter depuis un relevé",
+      "hint": "Collez un export bancaire ou photographiez un ticket. Vérifiez la liste, puis enregistrez. Inclus dans Pro.",
+      "tabs": {
+        "paste": "Texte",
+        "photo": "Photo"
+      },
+      "paste": "Texte du relevé",
+      "pasteHint": "Une opération par ligne : date, montant, devise, commentaire. Tabulation ou virgule. Un moins = une dépense.",
+      "photoHint": "Ticket papier ou capture de l’application bancaire.",
+      "scan": "Appareil photo",
+      "gallery": "Photos",
+      "analyzing": "Lecture de la photo…",
+      "count": "{{count}} opérations prêtes",
+      "empty": "Aucune opération trouvée dans ce texte.",
+      "save": "Enregistrer les opérations",
+      "errors": {
+        "unavailable": "L’import photo n’est pas encore branché.",
+        "proRequired": "L’import est inclus dans Pro.",
+        "notRecognized": "Impossible de lire les opérations sur cette photo.",
+        "tooLarge": "La photo est trop lourde.",
+        "badType": "Utilisez JPEG, PNG ou WebP.",
+        "invalid": "Impossible de lire cette photo.",
+        "failed": "Impossible de lire la photo."
+      }
+    },
+    "repeat": {
+      "button": "Répéter le mois dernier",
+      "title": "Copier le mois dernier ici ?",
+      "description": "Copier les opérations de {{from}} vers {{to}}. Celles déjà présentes ce mois-ci sont ignorées.",
+      "save": "Copier",
+      "empty": "Le mois précédent n’a aucune opération à copier."
+    }
   },
   "tasks": {
     "title": "Tâches du jour",
@@ -498,7 +532,8 @@
       "proPoints": {
         "unlimited": "Plus de place : matériaux, habitudes, notes et historique",
         "history": "Graphiques plus longs et plus d’appareils, sans murs mensuels",
-        "devices": "Le même Pro dans l’app et sur le site dès le paiement"
+        "devices": "Le même Pro dans l’app et sur le site dès le paiement",
+        "import": "Importer un relevé ou un ticket dans Budget"
       },
       "yearPerMonth": "3,33 €",
       "perMonth": "/ mois",
@@ -1298,7 +1333,8 @@
           "Nous ne vendons pas de données personnelles.",
           "Les prestataires d'hébergement et de bases de données peuvent traiter les données uniquement pour faire fonctionner Mindkeep, dans le cadre d'un accord avec l'opérateur.",
           "Si tu t’abonnes, Stripe traite le paiement et reçoit l’e-mail et les données de facturation nécessaires au débit de la carte.",
-          "Si tu scannes un repas sur le site mobile, la photo est envoyée à Google Gemini uniquement pour estimer les calories, puis elle est jetée. Nous ne stockons pas la photo."
+          "Si tu scannes un repas sur le site mobile, la photo est envoyée à Google Gemini uniquement pour estimer les calories, puis elle est jetée. Nous ne stockons pas la photo.",
+          "Si tu photographies un ticket ou un relevé dans Budget, la photo est envoyée à Google Gemini uniquement pour lire les opérations, puis elle est jetée. Nous ne stockons pas la photo."
         ]
       },
       {

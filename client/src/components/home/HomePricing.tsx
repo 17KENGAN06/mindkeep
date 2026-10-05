@@ -7,7 +7,7 @@ import { HOME_SNAP_SHELL } from '@/config/layout';
 import { useAuth } from '@/features/auth/useAuth';
 
 const FREE_CAPS = ['study', 'life', 'body'] as const;
-const PRO_POINTS = ['unlimited', 'history', 'devices'] as const;
+const PRO_POINTS = ['unlimited', 'history', 'devices', 'import'] as const;
 
 export function HomePricing() {
   const { t } = useTranslation();

@@ -150,7 +150,41 @@
     "perCurrencyTitle": "Valuutoittain",
     "perCurrencyHint": "Tulot, menot ja saldo lasketaan erikseen jokaiselle valuutalle.",
     "emptyCurrencies": "Tällä jaksolla ei ole vielä tapahtumia.",
-    "allCurrencies": "Kaikki valuutat"
+    "allCurrencies": "Kaikki valuutat",
+    "import": {
+      "button": "Tuo",
+      "title": "Lisää tiliotteesta",
+      "hint": "Liitä pankin vienti tai kuvaa kuitti. Tarkista lista ja tallenna. Sisältyy Prohon.",
+      "tabs": {
+        "paste": "Teksti",
+        "photo": "Kuva"
+      },
+      "paste": "Tiliotteen teksti",
+      "pasteHint": "Yksi tapahtuma rivillä: päivä, summa, valuutta, kommentti. Tab tai pilkku. Miinus on meno.",
+      "photoHint": "Paperikuitti tai kuvakaappaus pankkisovelluksesta.",
+      "scan": "Kamera",
+      "gallery": "Kuvat",
+      "analyzing": "Luetaan kuvaa…",
+      "count": "{{count}} tapahtumaa valmiina",
+      "empty": "Tästä tekstistä ei löytynyt tapahtumia.",
+      "save": "Tallenna tapahtumat",
+      "errors": {
+        "unavailable": "Kuvatuontia ei ole vielä kytketty.",
+        "proRequired": "Tuonti sisältyy Prohon.",
+        "notRecognized": "Tapahtumia ei voitu lukea tästä kuvasta.",
+        "tooLarge": "Kuva on liian suuri.",
+        "badType": "Käytä JPEG-, PNG- tai WebP-kuvaa.",
+        "invalid": "Tätä kuvaa ei voitu lukea.",
+        "failed": "Kuvaa ei voitu lukea."
+      }
+    },
+    "repeat": {
+      "button": "Toista edellinen kuukausi",
+      "title": "Kopioidaanko edellinen kuukausi tähän?",
+      "description": "Kopioi tapahtumat jaksosta {{from}} jaksoon {{to}}. Tässä kuussa jo olevat ohitetaan.",
+      "save": "Kopioi",
+      "empty": "Edellisessä kuussa ei ole kopioitavia tapahtumia."
+    }
   },
   "tasks": {
     "title": "Päivittäiset tehtävät",
@@ -498,7 +532,8 @@
       "proPoints": {
         "unlimited": "Lisää tilaa: materiaalit, tavat, muistiinpanot ja historia",
         "history": "Pidemmät kaaviot ja lisää laitteita ilman kuukausiseiniä",
-        "devices": "Sama Pro sovelluksessa ja sivustolla heti maksun jälkeen"
+        "devices": "Sama Pro sovelluksessa ja sivustolla heti maksun jälkeen",
+        "import": "Tuo tiliote tai kuitti Budjettiin"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ kk",
@@ -1298,7 +1333,8 @@
           "Emme myy henkilötietoja.",
           "Hosting- ja tietokantapalvelut voivat käsitellä tietoja vain Mindkeepin ylläpitoa varten operaattorin sopimuksen mukaisesti.",
           "Jos tilaat, Stripe käsittelee maksun ja saa sähköpostin sekä laskutustiedot, joita korttiveloitus vaatii.",
-          "Jos skannaat aterian sivuston mobiiliversiossa, kuva lähetetään Google Geminille vain kaloriarviota varten ja hävitetään sen jälkeen. Emme tallenna kuvaa."
+          "Jos skannaat aterian sivuston mobiiliversiossa, kuva lähetetään Google Geminille vain kaloriarviota varten ja hävitetään sen jälkeen. Emme tallenna kuvaa.",
+          "Jos kuvaat kuitin tai tiliotteen Budjetissa, kuva lähetetään Google Geminille vain tapahtumien lukemista varten ja hävitetään sen jälkeen. Emme tallenna kuvaa."
         ]
       },
       {

@@ -150,7 +150,41 @@
     "perCurrencyTitle": "Nach Währung",
     "perCurrencyHint": "Einnahmen, Ausgaben und Saldo werden für jede Währung getrennt gezählt.",
     "emptyCurrencies": "In diesem Zeitraum gibt es noch keine Buchungen.",
-    "allCurrencies": "Alle Währungen"
+    "allCurrencies": "Alle Währungen",
+    "import": {
+      "button": "Import",
+      "title": "Aus einem Auszug hinzufügen",
+      "hint": "Bankexport einfügen oder einen Beleg fotografieren. Liste prüfen, dann speichern. Enthalten in Pro.",
+      "tabs": {
+        "paste": "Text",
+        "photo": "Foto"
+      },
+      "paste": "Auszugstext",
+      "pasteHint": "Eine Buchung pro Zeile: Datum, Betrag, Währung, Kommentar. Tab oder Komma. Minus bedeutet Ausgabe.",
+      "photoHint": "Papierbeleg oder Screenshot aus der Banking-App.",
+      "scan": "Kamera",
+      "gallery": "Fotos",
+      "analyzing": "Foto wird gelesen…",
+      "count": "{{count}} Buchungen bereit",
+      "empty": "In diesem Text wurden keine Buchungen gefunden.",
+      "save": "Buchungen speichern",
+      "errors": {
+        "unavailable": "Foto-Import ist noch nicht verbunden.",
+        "proRequired": "Import ist in Pro enthalten.",
+        "notRecognized": "Buchungen auf dem Foto konnten nicht gelesen werden.",
+        "tooLarge": "Das Foto ist zu groß.",
+        "badType": "Bitte JPEG, PNG oder WebP verwenden.",
+        "invalid": "Dieses Foto konnte nicht gelesen werden.",
+        "failed": "Das Foto konnte nicht gelesen werden."
+      }
+    },
+    "repeat": {
+      "button": "Letzten Monat wiederholen",
+      "title": "Letzten Monat hierher kopieren?",
+      "description": "Buchungen von {{from}} nach {{to}} kopieren. Treffer, die in diesem Monat schon da sind, werden übersprungen.",
+      "save": "Kopieren",
+      "empty": "Im Vormonat gibt es keine Buchungen zum Kopieren."
+    }
   },
   "tasks": {
     "title": "Tagesaufgaben",
@@ -498,7 +532,8 @@
       "proPoints": {
         "unlimited": "Mehr Raum: Materialien, Gewohnheiten, Notizen und Verlauf",
         "history": "Längere Charts und mehr Geräte, ohne monatliche Wände",
-        "devices": "Dasselbe Pro in der App und auf der Website direkt nach dem Checkout"
+        "devices": "Dasselbe Pro in der App und auf der Website direkt nach dem Checkout",
+        "import": "Kontoauszug oder Beleg in das Budget importieren"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ Monat",
@@ -1298,7 +1333,8 @@
           "Wir verkaufen keine personenbezogenen Daten.",
           "Hosting- und Datenbankanbieter dürfen Daten nur verarbeiten, um Mindkeep im Auftrag des Betreibers zu betreiben.",
           "Wenn du ein Abo abschließt, verarbeitet Stripe die Zahlung und erhält E-Mail- und Rechnungsdaten, die für die Kartenzahlung nötig sind.",
-          "Wenn du eine Mahlzeit auf der mobilen Website scannst, geht das Foto nur zur Kalorienschätzung an Google Gemini und wird danach verworfen. Wir speichern das Foto nicht."
+          "Wenn du eine Mahlzeit auf der mobilen Website scannst, geht das Foto nur zur Kalorienschätzung an Google Gemini und wird danach verworfen. Wir speichern das Foto nicht.",
+          "Wenn du in Budget einen Beleg oder Kontoauszug fotografierst, geht das Foto nur zum Auslesen der Buchungen an Google Gemini und wird danach verworfen. Wir speichern das Foto nicht."
         ]
       },
       {

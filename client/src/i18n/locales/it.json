@@ -150,7 +150,41 @@
     "perCurrencyTitle": "Per valuta",
     "perCurrencyHint": "Entrate, uscite e saldo si contano separatamente per ogni valuta.",
     "emptyCurrencies": "Nessuna operazione in questo periodo.",
-    "allCurrencies": "Tutte le valute"
+    "allCurrencies": "Tutte le valute",
+    "import": {
+      "button": "Importa",
+      "title": "Aggiungi da un estratto",
+      "hint": "Incolla un export della banca o fotografa uno scontrino. Controlla l’elenco e salva. Incluso in Pro.",
+      "tabs": {
+        "paste": "Testo",
+        "photo": "Foto"
+      },
+      "paste": "Testo dell’estratto",
+      "pasteHint": "Un’operazione per riga: data, importo, valuta, commento. Tabulatore o virgola. Il meno è un’uscita.",
+      "photoHint": "Scontrino cartaceo o screenshot dell’app della banca.",
+      "scan": "Fotocamera",
+      "gallery": "Foto",
+      "analyzing": "Lettura della foto…",
+      "count": "{{count}} operazioni pronte",
+      "empty": "Nessuna operazione trovata in questo testo.",
+      "save": "Salva operazioni",
+      "errors": {
+        "unavailable": "L’import da foto non è ancora collegato.",
+        "proRequired": "L’import è incluso in Pro.",
+        "notRecognized": "Impossibile leggere le operazioni da questa foto.",
+        "tooLarge": "La foto è troppo grande.",
+        "badType": "Usa JPEG, PNG o WebP.",
+        "invalid": "Impossibile leggere questa foto.",
+        "failed": "Impossibile leggere la foto."
+      }
+    },
+    "repeat": {
+      "button": "Ripeti il mese scorso",
+      "title": "Copiare il mese scorso qui?",
+      "description": "Copia le operazioni da {{from}} a {{to}}. Quelle già presenti in questo mese vengono saltate.",
+      "save": "Copia",
+      "empty": "Il mese precedente non ha operazioni da copiare."
+    }
   },
   "tasks": {
     "title": "Attività del giorno",
@@ -498,7 +532,8 @@
       "proPoints": {
         "unlimited": "Più spazio: materiali, abitudini, note e cronologia",
         "history": "Grafici più lunghi e più dispositivi, senza muri mensili",
-        "devices": "Lo stesso Pro nell’app e sul sito subito dopo il pagamento"
+        "devices": "Lo stesso Pro nell’app e sul sito subito dopo il pagamento",
+        "import": "Importa un estratto o uno scontrino nel Budget"
       },
       "yearPerMonth": "€3.33",
       "perMonth": "/ mese",
@@ -1298,7 +1333,8 @@
           "Non vendiamo dati personali.",
           "I fornitori di hosting e database possono trattare i dati solo per far funzionare Mindkeep, in base a un accordo con l'operatore.",
           "Se ti abboni, Stripe elabora il pagamento e riceve email e dati di fatturazione necessari per addebitare la carta.",
-          "Se scansionate un pasto sul sito mobile, la foto viene inviata a Google Gemini solo per stimare le calorie e poi scartata. Non memorizziamo la foto."
+          "Se scansionate un pasto sul sito mobile, la foto viene inviata a Google Gemini solo per stimare le calorie e poi scartata. Non memorizziamo la foto.",
+          "Se fotografate uno scontrino o un estratto nel Budget, la foto viene inviata a Google Gemini solo per leggere le operazioni e poi scartata. Non memorizziamo la foto."
         ]
       },
       {

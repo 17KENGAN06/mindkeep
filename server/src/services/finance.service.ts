@@ -2,9 +2,11 @@ import { BudgetCurrency, BudgetMoneyKind, BudgetOperationType, Prisma } from '@p
 import { prisma } from '@/config/prisma.js';
 import { convertAmount, getRateMap } from '@/services/exchangeRate.service.js';
 import type {
+  BulkCreateFinanceOperationsInput,
   CreateFinanceCategoryInput,
   CreateFinanceOperationInput,
   FinancePeriodQuery,
+  RepeatFinanceMonthInput,
   UpdateFinanceCategoryInput,
   UpdateFinanceSettingsInput,
 } from '@/validations/finance.schemas.js';
@@ -15,6 +17,7 @@ import {
   assertCreateLimit,
   dateKeyOf,
   freeVisibleIds,
+  getEntitlement,
   idIn,
   maybeCapMonthly,
 } from '@/services/entitlements.service.js';
@@ -50,6 +53,38 @@ function parseOperationDate(value: string): Date {
     return new Date(Date.UTC(y!, m! - 1, d!, 12, 0, 0));
   }
   return new Date(value);
+}
+
+function operationFingerprint(input: {
+  date: Date;
+  amount: number;
+  type: BudgetOperationType;
+  currency: BudgetCurrency;
+  comment: string;
+}): string {
+  return [
+    input.date.toISOString().slice(0, 10),
+    input.amount.toFixed(2),
+    input.type,
+    input.currency,
+    input.comment.trim().toLowerCase(),
+  ].join('|');
+}
+
+function shiftToMonth(date: Date, year: number, month: number): Date {
+  const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  const day = Math.min(date.getUTCDate(), lastDay);
+  return new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+}
+
+async function requireFinanceImportPro(userId: string): Promise<void> {
+  const entitlement = await getEntitlement(userId);
+  if (!entitlement.pro) {
+    throw new AppError('Finance import is included in Pro', {
+      statusCode: 403,
+      code: 'FINANCE_IMPORT_PRO_REQUIRED',
+    });
+  }
 }
 
 export class FinanceService {
@@ -184,6 +219,87 @@ export class FinanceService {
       },
       include: { category: true },
     });
+  }
+
+  async bulkCreate(userId: string, input: BulkCreateFinanceOperationsInput) {
+    await requireFinanceImportPro(userId);
+    await this.getOrCreateSettings(userId);
+
+    const categoryIds = [
+      ...new Set(input.operations.map((row) => row.categoryId).filter((id): id is string => Boolean(id))),
+    ];
+    if (categoryIds.length > 0) {
+      const owned = await prisma.budgetCategory.findMany({
+        where: { userId, id: { in: categoryIds } },
+        select: { id: true },
+      });
+      if (owned.length !== categoryIds.length) {
+        throw new AppError('Category not found', {
+          statusCode: 404,
+          code: 'FINANCE_CATEGORY_NOT_FOUND',
+        });
+      }
+    }
+
+    const result = await prisma.budgetOperation.createMany({
+      data: input.operations.map((row) => ({
+        userId,
+        type: row.type,
+        moneyKind: row.moneyKind ?? BudgetMoneyKind.ELECTRONIC,
+        amount: row.amount,
+        currency: row.currency ?? DEFAULT_CURRENCY,
+        date: parseOperationDate(row.date),
+        comment: row.comment ?? '',
+        categoryId: row.categoryId ?? null,
+      })),
+    });
+
+    return { created: result.count };
+  }
+
+  async repeatMonth(userId: string, input: RepeatFinanceMonthInput) {
+    await requireFinanceImportPro(userId);
+    await this.getOrCreateSettings(userId);
+
+    const sourceFrom = new Date(Date.UTC(input.fromYear, input.fromMonth - 1, 1));
+    const sourceTo = new Date(Date.UTC(input.fromYear, input.fromMonth, 1));
+    const targetFrom = new Date(Date.UTC(input.toYear, input.toMonth - 1, 1));
+    const targetTo = new Date(Date.UTC(input.toYear, input.toMonth, 1));
+
+    const source = await prisma.budgetOperation.findMany({
+      where: { userId, date: { gte: sourceFrom, lt: sourceTo } },
+      orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
+    });
+    if (source.length === 0) {
+      throw new AppError('No operations to repeat', {
+        statusCode: 400,
+        code: 'FINANCE_REPEAT_EMPTY',
+      });
+    }
+
+    const existing = await prisma.budgetOperation.findMany({
+      where: { userId, date: { gte: targetFrom, lt: targetTo } },
+    });
+    const taken = new Set(existing.map((row) => operationFingerprint(row)));
+    const drafts = source
+      .map((row) => ({
+        userId,
+        type: row.type,
+        moneyKind: row.moneyKind,
+        amount: row.amount,
+        currency: row.currency,
+        date: shiftToMonth(row.date, input.toYear, input.toMonth),
+        comment: row.comment,
+        categoryId: row.categoryId,
+      }))
+      .filter((row) => !taken.has(operationFingerprint(row)));
+
+    if (drafts.length === 0) {
+      return { created: 0, skipped: source.length };
+    }
+
+    const result = await prisma.budgetOperation.createMany({ data: drafts });
+    return { created: result.count, skipped: source.length - result.count };
   }
 
   async removeOperation(userId: string, id: string) {
