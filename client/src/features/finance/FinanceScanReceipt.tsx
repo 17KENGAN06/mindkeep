@@ -1,4 +1,4 @@
-import { Camera, Images, LoaderCircle } from 'lucide-react';
+import { Banknote, Camera, Images, LoaderCircle, WalletCards } from 'lucide-react';
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -12,11 +12,10 @@ import { useAuth } from '@/features/auth/useAuth';
 import { isProAccount, mutationErrorMessage } from '@/features/billing/planLimit';
 import { currencyOptions, isFinanceCurrency, type FinanceCurrency } from '@/features/finance/currencies';
 import { formatSignedMoney } from '@/features/finance/financeUtils';
-import type { FinanceDraftOperation } from '@/features/finance/parseFinanceImport';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
 import { usePhoneViewport } from '@/features/nutrition/usePhoneViewport';
 import type { AppLanguage } from '@/i18n';
-import type { FinanceCategory } from '@/types/finance';
+import type { FinanceCategory, FinanceDraftOperation, FinanceMoneyKind } from '@/types/finance';
 
 type ReviewRow = FinanceDraftOperation & { categoryId: string };
 
@@ -57,6 +56,7 @@ function scanErrorMessage(error: unknown, t: (key: string) => string): string {
 type FinanceScanReceiptProps = {
   language: AppLanguage;
   fallbackCurrency: FinanceCurrency;
+  defaultMoneyKind: FinanceMoneyKind;
   categories: FinanceCategory[];
   isSaving?: boolean;
   onSave: (operations: FinanceDraftOperation[]) => Promise<void>;
@@ -65,6 +65,7 @@ type FinanceScanReceiptProps = {
 export function FinanceScanReceipt({
   language,
   fallbackCurrency,
+  defaultMoneyKind,
   categories,
   isSaving = false,
   onSave,
@@ -79,6 +80,7 @@ export function FinanceScanReceipt({
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ReviewRow[] | null>(null);
   const [batchCategory, setBatchCategory] = useState('');
+  const [batchMoneyKind, setBatchMoneyKind] = useState<FinanceMoneyKind>(defaultMoneyKind);
   const pro = isProAccount(user);
   const canScan = phone && pro;
 
@@ -98,13 +100,14 @@ export function FinanceScanReceipt({
       const payload = await compressMealPhoto(file);
       const result = await financeApi.scanStatement({ ...payload, fallbackCurrency });
       setBatchCategory('');
+      setBatchMoneyKind(defaultMoneyKind);
       setReview(
         result.operations.map((row) => ({
           date: row.date,
           amount: row.amount,
           currency: isFinanceCurrency(row.currency ?? '') ? row.currency! : fallbackCurrency,
           type: row.type,
-          moneyKind: row.moneyKind ?? 'ELECTRONIC',
+          moneyKind: defaultMoneyKind,
           comment: row.comment ?? '',
           categoryId: '',
         })),
@@ -128,13 +131,14 @@ export function FinanceScanReceipt({
           amount: row.amount,
           currency: row.currency,
           type: row.type,
-          moneyKind: row.moneyKind,
+          moneyKind: batchMoneyKind,
           comment: row.comment,
           categoryId: row.categoryId || null,
         })),
       );
       setReview(null);
       setBatchCategory('');
+      setBatchMoneyKind(defaultMoneyKind);
     } catch (caught) {
       setError(scanErrorMessage(caught, t));
     }
@@ -238,6 +242,37 @@ export function FinanceScanReceipt({
             </div>
 
             <div className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-ink">{t('finance.scan.moneyKind')}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {(
+                    [
+                      { value: 'CASH' as const, label: t('finance.moneyKind.cash'), Icon: Banknote },
+                      { value: 'ELECTRONIC' as const, label: t('finance.scan.card'), Icon: WalletCards },
+                    ] as const
+                  ).map(({ value, label, Icon }) => {
+                    const selected = batchMoneyKind === value;
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        className={`flex min-h-11 items-center justify-center gap-2 rounded-2xl px-3 text-sm font-medium transition touch-manipulation ${
+                          selected
+                            ? 'bg-brand-500 text-[#07110d]'
+                            : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'
+                        }`}
+                        onClick={() => {
+                          setBatchMoneyKind(value);
+                          setReview((rows) => rows?.map((row) => ({ ...row, moneyKind: value })) ?? null);
+                        }}
+                      >
+                        <Icon className="h-4 w-4 shrink-0" aria-hidden />
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               <Select
                 label={t('finance.scan.category')}
                 value={batchCategory}

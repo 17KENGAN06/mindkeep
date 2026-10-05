@@ -29,6 +29,17 @@ export type FinanceKindTotals = {
   balance: number;
 };
 
+export type FinanceDraftOperation = {
+  date: string;
+  amount: number;
+  currency: FinanceCurrency;
+  type: FinanceOperationType;
+  moneyKind: FinanceMoneyKind;
+  comment: string;
+  categoryName?: string;
+  categoryId?: string | null;
+};
+
 export type FinanceOperation = {
   id: string;
   date: string;

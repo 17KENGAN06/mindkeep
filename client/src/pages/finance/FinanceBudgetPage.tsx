@@ -21,9 +21,7 @@ import {
   FINANCE_CURRENCIES,
   type FinanceCurrency,
 } from '@/features/finance/currencies';
-import { FinanceImportDialog } from '@/features/finance/FinanceImportDialog';
 import { FinanceScanReceipt } from '@/features/finance/FinanceScanReceipt';
-import type { FinanceDraftOperation } from '@/features/finance/parseFinanceImport';
 import {
   currentPeriodDefaults,
   formatSignedMoney,
@@ -39,7 +37,7 @@ import {
   useRepeatFinanceMonth,
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
-import type { FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
+import type { FinanceDraftOperation, FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
 
 function todayInputValue(): string {
   const now = new Date();
@@ -96,8 +94,6 @@ export function FinanceBudgetPage() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [kindFilter, setKindFilter] = useState<KindFilter>('ALL');
   const [currencyFilter, setCurrencyFilter] = useState<CurrencyFilter>('ALL');
-  const [importOpen, setImportOpen] = useState(false);
-  const [importError, setImportError] = useState<string | null>(null);
   const [repeatOpen, setRepeatOpen] = useState(false);
 
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
@@ -218,16 +214,6 @@ export function FinanceBudgetPage() {
     });
   };
 
-  const onImport = async (rows: FinanceDraftOperation[]) => {
-    setImportError(null);
-    try {
-      await saveDrafts(rows);
-      setImportOpen(false);
-    } catch (error) {
-      setImportError(mutationErrorMessage(error, t));
-    }
-  };
-
   const prior = previousMonth(year, month);
 
   return (
@@ -236,28 +222,8 @@ export function FinanceBudgetPage() {
         <h1 className="text-2xl font-semibold text-ink">{t('finance.budgetTitle')}</h1>
         <p className="mt-1 text-sm text-muted">{t('finance.budgetSubtitle')}</p>
         <PlanRemain feature="financeOperations" />
-        <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-          <Button
-            type="button"
-            variant="secondary"
-            className="w-full sm:w-auto"
-            onClick={() => {
-              if (!pro) {
-                onNeedPro();
-                return;
-              }
-              setImportError(null);
-              setImportOpen(true);
-            }}
-          >
-            {t('finance.import.button')}
-            {pro ? null : (
-              <span className="ml-2">
-                <Badge>Pro</Badge>
-              </span>
-            )}
-          </Button>
-          {view === 'month' ? (
+        {view === 'month' ? (
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
             <Button
               type="button"
               variant="secondary"
@@ -278,8 +244,8 @@ export function FinanceBudgetPage() {
                 </span>
               )}
             </Button>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </section>
 
       <FinancePeriodControls
@@ -297,6 +263,7 @@ export function FinanceBudgetPage() {
           <FinanceScanReceipt
             language={language}
             fallbackCurrency={currency}
+            defaultMoneyKind={moneyKind}
             categories={categories}
             isSaving={bulkCreate.isPending}
             onSave={saveDrafts}
@@ -505,16 +472,6 @@ export function FinanceBudgetPage() {
         )}
       </section>
 
-      <FinanceImportDialog
-        open={importOpen}
-        language={language}
-        fallbackCurrency={currency}
-        categories={categories}
-        isLoading={bulkCreate.isPending}
-        error={importError}
-        onClose={() => setImportOpen(false)}
-        onImport={(rows) => void onImport(rows)}
-      />
       <ConfirmDialog
         open={repeatOpen}
         title={t('finance.repeat.title')}
