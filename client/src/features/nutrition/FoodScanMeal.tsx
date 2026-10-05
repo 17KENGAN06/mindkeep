@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
+import { ScanDropZone } from '@/components/ui/ScanDropZone';
 import { Textarea } from '@/components/ui/Textarea';
 import { useAuth } from '@/features/auth/useAuth';
 import { hasAutomation, mutationErrorMessage } from '@/features/billing/planLimit';
@@ -83,7 +84,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ReviewState | null>(null);
   const automation = hasAutomation(user);
-  const canScan = phone && automation;
+  const canScan = automation;
   useLockBodyScroll(preparing || review !== null);
 
   const photosRef = useRef<PickedPhoto[]>([]);
@@ -218,24 +219,25 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
     }
   };
 
-  const hint = !phone
-    ? t('calories.scan.phoneOnly')
-    : automation
+  const hint = automation
+    ? phone
       ? t('calories.scan.hint')
-      : t('calories.scan.proOnly');
+      : t('calories.scan.desktopHint')
+    : t('calories.scan.proOnly');
 
   return (
     <div className="space-y-3">
-      {phone ? (
-        <>
-          <input
-            ref={cameraRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            className="sr-only"
-            onChange={onFileInput}
-          />
+      <>
+          {phone ? (
+            <input
+              ref={cameraRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="sr-only"
+              onChange={onFileInput}
+            />
+          ) : null}
           <input
             ref={galleryRef}
             type="file"
@@ -245,9 +247,9 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             onChange={onFileInput}
           />
         </>
-      ) : null}
 
       {canScan ? (
+        phone ? (
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
@@ -275,19 +277,23 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             {t('calories.scan.gallery')}
           </button>
         </div>
+        ) : (
+          <Button type="button" variant="secondary" className="w-full" disabled={analyzing} onClick={openPrepare}>
+            <Images className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            {t('calories.scan.button')}
+          </Button>
+        )
       ) : (
         <Button
           type="button"
           variant="ghost"
           className="w-full"
-          disabled={!phone}
-          title={!phone ? t('calories.scan.phoneOnly') : undefined}
-          onClick={phone ? onNeedPro : undefined}
+          onClick={onNeedPro}
         >
           <Camera className="mr-2 h-4 w-4 shrink-0" aria-hidden />
           {t('calories.scan.button')}
           <span className="ml-2">
-            <Badge tone="neutral">{!phone ? t('calories.scan.phoneBadge') : 'Pro'}</Badge>
+            <Badge tone="neutral">Pro</Badge>
           </span>
         </Button>
       )}
@@ -301,7 +307,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="food-scan-prepare-title"
-            className="flex max-h-[90dvh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
+            className="flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
             onSubmit={(event) => void onEstimate(event)}
           >
             <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain pr-0.5">
@@ -350,6 +356,7 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
                 </ul>
               ) : null}
               {photos.length < MAX_PHOTOS ? (
+                phone ? (
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   <Button
                     type="button"
@@ -372,6 +379,17 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
                     {t('calories.scan.prepareGallery')}
                   </Button>
                 </div>
+                ) : (
+                  <div className="mt-3">
+                    <ScanDropZone
+                      label={t('calories.scan.prepareUpload')}
+                      hint={t('calories.scan.prepareDrop')}
+                      disabled={analyzing}
+                      onPick={() => galleryRef.current?.click()}
+                      onFiles={addFiles}
+                    />
+                  </div>
+                )
               ) : (
                 <p className="mt-2 text-xs text-muted">{t('calories.scan.prepareCount', { count: photos.length })}</p>
               )}

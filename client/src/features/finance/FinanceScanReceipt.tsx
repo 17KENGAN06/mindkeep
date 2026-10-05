@@ -1,4 +1,4 @@
-import { Banknote, Camera, Images, LoaderCircle, WalletCards } from 'lucide-react';
+import { Banknote, Camera, Images, LoaderCircle, WalletCards, X } from 'lucide-react';
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
+import { ScanDropZone } from '@/components/ui/ScanDropZone';
 import { Select } from '@/components/ui/Select';
 import { Textarea } from '@/components/ui/Textarea';
 import { useAuth } from '@/features/auth/useAuth';
@@ -81,24 +82,37 @@ export function FinanceScanReceipt({
   const galleryRef = useRef<HTMLInputElement>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [preparing, setPreparing] = useState(false);
+  const [picked, setPicked] = useState<{ file: File; preview: string } | null>(null);
   const [review, setReview] = useState<ReviewRow[] | null>(null);
   const [batchCategory, setBatchCategory] = useState('');
   const [batchMoneyKind, setBatchMoneyKind] = useState<FinanceMoneyKind>(defaultMoneyKind);
   const automation = hasAutomation(user);
-  const canScan = phone && automation;
-  useLockBodyScroll(review !== null);
+  const canScan = automation;
+  useLockBodyScroll(preparing || review !== null);
+
+  const closePrepare = () => {
+    if (picked) URL.revokeObjectURL(picked.preview);
+    setPicked(null);
+    setPreparing(false);
+  };
 
   const onNeedPro = () => {
     setError(null);
     void navigate('/plans');
   };
 
-  const onFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ? event.target.files[0] : null;
-    const copied = file ? new File([file], file.name || 'photo.jpg', { type: file.type || 'image/jpeg' }) : null;
-    event.target.value = '';
-    if (!copied) return;
+  const setPickedFile = (file: File) => {
+    const copied = new File([file], file.name || 'photo.jpg', { type: file.type || 'image/jpeg' });
+    setPicked((current) => {
+      if (current) URL.revokeObjectURL(current.preview);
+      return { file: copied, preview: URL.createObjectURL(copied) };
+    });
+    setError(null);
+  };
 
+  const analyzeFile = async (file: File) => {
+    const copied = new File([file], file.name || 'photo.jpg', { type: file.type || 'image/jpeg' });
     setError(null);
     setAnalyzing(true);
     try {
@@ -117,12 +131,33 @@ export function FinanceScanReceipt({
           categoryId: '',
         })),
       );
+      closePrepare();
     } catch (caught) {
       setReview(null);
       setError(scanErrorMessage(caught, t));
     } finally {
       setAnalyzing(false);
     }
+  };
+
+  const onFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ? event.target.files[0] : null;
+    event.target.value = '';
+    if (!file) return;
+    if (preparing) {
+      setPickedFile(file);
+      return;
+    }
+    void analyzeFile(file);
+  };
+
+  const onPrepareSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    if (!picked) {
+      setError(t('finance.scan.errors.invalid'));
+      return;
+    }
+    void analyzeFile(picked.file);
   };
 
   const onConfirm = async (event: FormEvent) => {
@@ -163,35 +198,36 @@ export function FinanceScanReceipt({
     );
   };
 
-  const hint = !phone
-    ? t('finance.scan.phoneOnly')
-    : automation
+  const hint = automation
+    ? phone
       ? t('finance.scan.hint')
-      : t('finance.scan.proOnly');
+      : t('finance.scan.desktopHint')
+    : t('finance.scan.proOnly');
 
   return (
     <div className="space-y-3">
-      {phone ? (
-        <>
-          <input
-            ref={cameraRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            className="sr-only"
-            onChange={(event) => void onFile(event)}
-          />
+      <>
+          {phone ? (
+            <input
+              ref={cameraRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="sr-only"
+              onChange={onFile}
+            />
+          ) : null}
           <input
             ref={galleryRef}
             type="file"
             accept="image/*"
             className="sr-only"
-            onChange={(event) => void onFile(event)}
+            onChange={onFile}
           />
         </>
-      ) : null}
 
       {canScan ? (
+        phone ? (
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
@@ -225,24 +261,103 @@ export function FinanceScanReceipt({
             {t('finance.scan.gallery')}
           </button>
         </div>
+        ) : (
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full"
+            disabled={analyzing}
+            onClick={() => {
+              setError(null);
+              setPreparing(true);
+            }}
+          >
+            <Images className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            {t('finance.scan.button')}
+          </Button>
+        )
       ) : (
         <Button
           type="button"
           variant="ghost"
           className="w-full"
-          disabled={!phone}
-          title={!phone ? t('finance.scan.phoneOnly') : undefined}
-          onClick={phone ? onNeedPro : undefined}
+          onClick={onNeedPro}
         >
           <Camera className="mr-2 h-4 w-4 shrink-0" aria-hidden />
           {t('finance.scan.button')}
           <span className="ml-2">
-            <Badge tone="neutral">{!phone ? t('finance.scan.phoneBadge') : 'Pro'}</Badge>
+            <Badge tone="neutral">Pro</Badge>
           </span>
         </Button>
       )}
       <p className="text-xs text-muted">{hint}</p>
-      <ErrorMessage message={review ? undefined : error ?? undefined} />
+      <ErrorMessage message={!preparing && !review ? error ?? undefined : undefined} />
+
+      {preparing
+        ? createPortal(
+            <div className="fixed inset-0 z-[90] flex items-end justify-center bg-ink/40 p-4 overscroll-none sm:items-center">
+              <form
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="finance-scan-prepare-title"
+                className="flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-panel p-5 shadow-lg"
+                onSubmit={onPrepareSubmit}
+              >
+                <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain">
+                  <div>
+                    <h3 id="finance-scan-prepare-title" className="text-lg font-semibold text-ink">
+                      {t('finance.scan.prepareTitle')}
+                    </h3>
+                    <p className="mt-1 text-sm text-muted">{t('finance.scan.prepareLead')}</p>
+                  </div>
+                  {picked ? (
+                    <div className="relative">
+                      <img
+                        src={picked.preview}
+                        alt=""
+                        className="h-44 w-full rounded-2xl object-cover ring-1 ring-line"
+                      />
+                      <button
+                        type="button"
+                        className="absolute top-2 right-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-ink/70 text-white"
+                        aria-label={t('finance.scan.removePhoto')}
+                        onClick={() => {
+                          URL.revokeObjectURL(picked.preview);
+                          setPicked(null);
+                        }}
+                        disabled={analyzing}
+                      >
+                        <X className="h-3.5 w-3.5" aria-hidden />
+                      </button>
+                    </div>
+                  ) : (
+                    <ScanDropZone
+                      label={t('finance.scan.prepareUpload')}
+                      hint={t('finance.scan.prepareDrop')}
+                      disabled={analyzing}
+                      onPick={() => galleryRef.current?.click()}
+                      onFiles={(files) => {
+                        const file = files.find((item) => !item.type || item.type.startsWith('image/'));
+                        if (file) setPickedFile(file);
+                      }}
+                    />
+                  )}
+                  <p className="text-xs text-muted">{t('finance.scan.privacy')}</p>
+                  <ErrorMessage message={error ?? undefined} />
+                </div>
+                <div className="mt-4 flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                  <Button type="button" variant="secondary" onClick={closePrepare} disabled={analyzing}>
+                    {t('finance.scan.cancel')}
+                  </Button>
+                  <Button type="submit" isLoading={analyzing} disabled={!picked}>
+                    {t('finance.scan.prepareSubmit')}
+                  </Button>
+                </div>
+              </form>
+            </div>,
+            document.body,
+          )
+        : null}
 
       {review
         ? createPortal(
