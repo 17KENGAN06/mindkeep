@@ -272,11 +272,26 @@
   },
   "notes": {
     "title": "Notizen",
-    "subtitle": "Bewahre Ideen, Lektionen und Dinge, die sich zu merken lohnen.",
+    "subtitle": "Ausführliche Notizen mit Titel — oder ein kurzer Gedanke ohne Beschreibung.",
     "create": "+ Neue Notiz",
+    "createPage": "Notiz",
+    "createSnippet": "Gedanke",
     "createFirst": "Erste Notiz erstellen",
     "createTitle": "Neue Notiz",
-    "createSubtitle": "Sichere einen Gedanken, Auszug oder eine Lektion, bevor er entgleitet.",
+    "createSubtitle": "Gib einen Titel, den Rest schreibst du darunter.",
+    "kind": {
+      "all": "Alle",
+      "page": "Notizen",
+      "snippet": "Gedanken"
+    },
+    "snippetHint": "Nur der Gedanke — ohne Titel und Beschreibung.",
+    "snippetSave": "Gedanke speichern",
+    "snippetBadge": "Gedanke",
+    "snippetEditTitle": "Gedanke bearbeiten",
+    "emptyPageTitle": "Noch keine Notizen",
+    "emptyPageDescription": "Eine Notiz mit Titel und Text darunter.",
+    "emptySnippetTitle": "Noch keine Gedanken",
+    "emptySnippetDescription": "Ein kurzer Gedanke — ohne Titel, nur der Satz selbst.",
     "editTitle": "Notiz bearbeiten",
     "save": "Notiz speichern",
     "saveChanges": "Änderungen speichern",
@@ -297,12 +312,14 @@
     "fields": {
       "title": "Titel",
       "content": "Notiz",
+      "snippet": "Gedanke",
       "sourceUrl": "Quellenlink",
       "sourceHint": "Optional. Leer lassen, wenn es keinen Link gibt."
     },
     "placeholders": {
       "title": "Gib deiner Notiz einen Titel...",
       "content": "Schreib etwas, das sich zu merken lohnt...",
+      "snippet": "Menschen können eine Lage manchmal nicht in Worte fassen, weil ihr Wortschatz zu knapp ist",
       "sourceUrl": "https://..."
     },
     "errors": {

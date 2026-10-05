@@ -4,6 +4,8 @@ const MAX_TITLE = 200;
 const MAX_CONTENT = 50000;
 const MAX_URL = 2000;
 
+const noteKind = z.enum(['page', 'snippet']);
+
 function emptyToNull(value: string | null | undefined): string | null | undefined {
   if (value === undefined) return undefined;
   if (value === null) return null;
@@ -30,18 +32,28 @@ const optionalSourceUrl = z
 
 export const createNoteSchema = z
   .object({
-    title: z.string().trim().min(1, 'Title is required').max(MAX_TITLE),
-    content: z
-      .string()
-      .max(MAX_CONTENT)
-      .refine((value) => value.trim().length > 0, 'Note is required'),
+    kind: noteKind.optional().default('page'),
+    title: z.string().max(MAX_TITLE).optional().default(''),
+    content: z.string().max(MAX_CONTENT),
     sourceUrl: optionalSourceUrl,
   })
-  .transform((data) => ({
-    title: data.title,
-    content: data.content.replace(/^\uFEFF/, ''),
-    sourceUrl: emptyToNull(data.sourceUrl) ?? null,
-  }));
+  .superRefine((data, ctx) => {
+    if (!data.content.trim()) {
+      ctx.addIssue({ code: 'custom', path: ['content'], message: 'Note is required' });
+    }
+    if (data.kind !== 'snippet' && !data.title.trim()) {
+      ctx.addIssue({ code: 'custom', path: ['title'], message: 'Title is required' });
+    }
+  })
+  .transform((data) => {
+    const snippet = data.kind === 'snippet';
+    return {
+      kind: snippet ? ('snippet' as const) : ('page' as const),
+      title: snippet ? '' : data.title.trim(),
+      content: data.content.replace(/^\uFEFF/, ''),
+      sourceUrl: snippet ? null : (emptyToNull(data.sourceUrl) ?? null),
+    };
+  });
 
 export const updateNoteSchema = z
   .object({
@@ -68,6 +80,7 @@ export const noteIdParamsSchema = z.object({
 export const listNotesQuerySchema = z.object({
   search: z.string().trim().max(200).optional(),
   sort: z.enum(['newest', 'oldest']).optional().default('newest'),
+  kind: noteKind.optional(),
 });
 
 export type CreateNoteInput = z.infer<typeof createNoteSchema>;

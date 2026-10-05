@@ -8,6 +8,7 @@ import { Loader } from '@/components/ui/Loader';
 import { useDeleteNote, useNote } from '@/features/notes/useNotes';
 import type { AppLanguage } from '@/i18n';
 import { SourceLink } from '@/components/ui/SourceLink';
+import { isSnippetNote } from '@/types/note';
 import { formatDate } from '@/utils/date';
 
 export function NoteDetailPage() {
@@ -22,6 +23,8 @@ export function NoteDetailPage() {
   if (isLoading) return <Loader />;
   if (isError || !note) return <ErrorMessage message={t('notes.notFound')} />;
 
+  const snippet = isSnippetNote(note);
+
   return (
     <div className="space-y-6">
       <section className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -32,7 +35,18 @@ export function NoteDetailPage() {
           >
             ← {t('notes.backToNotes')}
           </Link>
-          <h1 className="mt-3 text-2xl font-semibold text-ink">{note.title}</h1>
+          {snippet ? (
+            <>
+              <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-brand-600">
+                {t('notes.snippetBadge')}
+              </p>
+              <p className="mt-2 whitespace-pre-wrap break-words text-2xl font-medium leading-snug text-ink">
+                {note.content}
+              </p>
+            </>
+          ) : (
+            <h1 className="mt-3 text-2xl font-semibold text-ink">{note.title}</h1>
+          )}
           <p className="mt-1 text-sm text-muted">{formatDate(note.createdAt, language)}</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -52,15 +66,17 @@ export function NoteDetailPage() {
         </div>
       </section>
 
-      <article className="mx-auto w-full max-w-4xl space-y-6 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line sm:p-6">
-        <div className="whitespace-pre-wrap text-[15px] leading-relaxed text-ink">{note.content}</div>
-        {note.sourceUrl ? (
-          <div className="border-t border-line pt-4">
-            <p className="text-sm font-semibold text-ink">{t('notes.source')}</p>
-            <SourceLink href={note.sourceUrl} actionLabel={t('materials.openSource')} />
-          </div>
-        ) : null}
-      </article>
+      {snippet ? null : (
+        <article className="mx-auto w-full max-w-4xl space-y-6 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line sm:p-6">
+          <div className="whitespace-pre-wrap text-[15px] leading-relaxed text-ink">{note.content}</div>
+          {note.sourceUrl ? (
+            <div className="border-t border-line pt-4">
+              <p className="text-sm font-semibold text-ink">{t('notes.source')}</p>
+              <SourceLink href={note.sourceUrl} actionLabel={t('materials.openSource')} />
+            </div>
+          ) : null}
+        </article>
+      )}
 
       <ConfirmDialog
         open={confirmDelete}

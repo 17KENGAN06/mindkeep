@@ -272,11 +272,26 @@
   },
   "notes": {
     "title": "Notes",
-    "subtitle": "Keep ideas, lessons and things worth remembering.",
+    "subtitle": "Titled notes with a body — or a single thought with no extra description.",
     "create": "+ New note",
+    "createPage": "Note",
+    "createSnippet": "Thought",
     "createFirst": "Create your first note",
     "createTitle": "New note",
-    "createSubtitle": "Save a thought, excerpt or lesson before it slips away.",
+    "createSubtitle": "Give it a title, then write the rest underneath.",
+    "kind": {
+      "all": "All",
+      "page": "Notes",
+      "snippet": "Thoughts"
+    },
+    "snippetHint": "Just the thought — no title, no extra description.",
+    "snippetSave": "Save thought",
+    "snippetBadge": "Thought",
+    "snippetEditTitle": "Edit thought",
+    "emptyPageTitle": "No notes yet",
+    "emptyPageDescription": "A titled note with space for the rest of the idea.",
+    "emptySnippetTitle": "No thoughts yet",
+    "emptySnippetDescription": "Write a short thought — no title, just the line itself.",
     "editTitle": "Edit note",
     "save": "Save note",
     "saveChanges": "Save changes",
@@ -297,12 +312,14 @@
     "fields": {
       "title": "Title",
       "content": "Note",
+      "snippet": "Thought",
       "sourceUrl": "Source link",
       "sourceHint": "Optional. Leave empty if there is no link."
     },
     "placeholders": {
       "title": "Give your note a title...",
       "content": "Write something worth remembering...",
+      "snippet": "People sometimes cannot describe a situation because their vocabulary is too thin",
       "sourceUrl": "https://..."
     },
     "errors": {

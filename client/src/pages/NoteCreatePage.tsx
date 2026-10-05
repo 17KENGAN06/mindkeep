@@ -39,7 +39,7 @@ export function NoteCreatePage() {
             if (createNote.isPending) return;
             setErrorMessage(undefined);
             try {
-              const result = await createNote.mutateAsync(payload);
+              const result = await createNote.mutateAsync({ ...payload, kind: 'page' });
               void navigate(`/notes/${result.note.id}`);
             } catch (error) {
               setErrorMessage(mutationErrorMessage(error, t));

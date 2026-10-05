@@ -272,11 +272,26 @@
   },
   "notes": {
     "title": "Note",
-    "subtitle": "Conserva idee, lezioni e cose che vale la pena ricordare.",
+    "subtitle": "Note complete con titolo — oppure un pensiero senza descrizione.",
     "create": "+ Nuova nota",
+    "createPage": "Nota",
+    "createSnippet": "Pensiero",
     "createFirst": "Crea la tua prima nota",
     "createTitle": "Nuova nota",
-    "createSubtitle": "Salva un pensiero, un estratto o una lezione prima che sfugga.",
+    "createSubtitle": "Dai un titolo e scrivi il resto sotto.",
+    "kind": {
+      "all": "Tutte",
+      "page": "Note",
+      "snippet": "Pensieri"
+    },
+    "snippetHint": "Solo il pensiero — senza titolo né descrizione.",
+    "snippetSave": "Salva pensiero",
+    "snippetBadge": "Pensiero",
+    "snippetEditTitle": "Modifica pensiero",
+    "emptyPageTitle": "Ancora nessuna nota",
+    "emptyPageDescription": "Una nota con titolo e testo dentro.",
+    "emptySnippetTitle": "Ancora nessun pensiero",
+    "emptySnippetDescription": "Un pensiero breve — senza titolo, solo la frase.",
     "editTitle": "Modifica nota",
     "save": "Salva nota",
     "saveChanges": "Salva le modifiche",
@@ -297,12 +312,14 @@
     "fields": {
       "title": "Titolo",
       "content": "Nota",
+      "snippet": "Pensiero",
       "sourceUrl": "Link della fonte",
       "sourceHint": "Facoltativo. Lascia vuoto se non c'è un link."
     },
     "placeholders": {
       "title": "Dai un titolo alla nota...",
       "content": "Scrivi qualcosa che vale la pena ricordare...",
+      "snippet": "A volte le persone non sanno descrivere una situazione perché il vocabolario è troppo scarso",
       "sourceUrl": "https://..."
     },
     "errors": {

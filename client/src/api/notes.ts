@@ -2,6 +2,7 @@ import { apiClient } from '@/api/client';
 import type { Note } from '@/types/note';
 
 export type NotePayload = {
+  kind?: 'page' | 'snippet';
   title: string;
   content: string;
   sourceUrl?: string | null;
@@ -10,12 +11,14 @@ export type NotePayload = {
 export type NotesQuery = {
   search?: string;
   sort?: 'newest' | 'oldest';
+  kind?: 'page' | 'snippet';
 };
 
 function toQuery(params: NotesQuery): string {
   const searchParams = new URLSearchParams();
   if (params.search) searchParams.set('search', params.search);
   if (params.sort) searchParams.set('sort', params.sort);
+  if (params.kind) searchParams.set('kind', params.kind);
   const query = searchParams.toString();
   return query ? `?${query}` : '';
 }

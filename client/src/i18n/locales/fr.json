@@ -272,11 +272,26 @@
   },
   "notes": {
     "title": "Notes",
-    "subtitle": "Garde idées, leçons et choses qui valent d'être retenues.",
+    "subtitle": "Des notes avec titre et contenu — ou une pensée sans description.",
     "create": "+ Nouvelle note",
+    "createPage": "Note",
+    "createSnippet": "Pensée",
     "createFirst": "Crée ta première note",
     "createTitle": "Nouvelle note",
-    "createSubtitle": "Enregistre une pensée, un extrait ou une leçon avant qu'elle s'échappe.",
+    "createSubtitle": "Donne un titre, puis écris le reste en dessous.",
+    "kind": {
+      "all": "Toutes",
+      "page": "Notes",
+      "snippet": "Pensées"
+    },
+    "snippetHint": "Juste la pensée — sans titre ni description.",
+    "snippetSave": "Enregistrer la pensée",
+    "snippetBadge": "Pensée",
+    "snippetEditTitle": "Modifier la pensée",
+    "emptyPageTitle": "Pas encore de notes",
+    "emptyPageDescription": "Une note avec un titre et le texte à l’intérieur.",
+    "emptySnippetTitle": "Pas encore de pensées",
+    "emptySnippetDescription": "Une courte pensée — sans titre, juste la phrase.",
     "editTitle": "Modifier la note",
     "save": "Enregistrer la note",
     "saveChanges": "Enregistrer les modifications",
@@ -297,12 +312,14 @@
     "fields": {
       "title": "Titre",
       "content": "Note",
+      "snippet": "Pensée",
       "sourceUrl": "Lien source",
       "sourceHint": "Facultatif. Laisse vide s'il n'y a pas de lien."
     },
     "placeholders": {
       "title": "Donne un titre à ta note...",
       "content": "Écris quelque chose qui vaut d'être retenu...",
+      "snippet": "Les gens n’arrivent parfois pas à décrire une situation, faute de vocabulaire",
       "sourceUrl": "https://..."
     },
     "errors": {

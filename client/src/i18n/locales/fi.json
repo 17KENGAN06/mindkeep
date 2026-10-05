@@ -272,11 +272,26 @@
   },
   "notes": {
     "title": "Muistiinpanot",
-    "subtitle": "Tallenna ideat, opit ja asiat, joihin haluat palata.",
+    "subtitle": "Muistiinpano otsikolla ja sisällöllä — tai lyhyt ajatus ilman kuvausta.",
     "create": "+ Uusi muistiinpano",
+    "createPage": "Muistiinpano",
+    "createSnippet": "Ajatus",
     "createFirst": "Luo ensimmäinen muistiinpano",
     "createTitle": "Uusi muistiinpano",
-    "createSubtitle": "Kirjaa ajatus, ote tai oppi ennen kuin se unohtuu.",
+    "createSubtitle": "Anna otsikko ja kirjoita loput alle.",
+    "kind": {
+      "all": "Kaikki",
+      "page": "Muistiinpanot",
+      "snippet": "Ajatukset"
+    },
+    "snippetHint": "Vain ajatus — ilman otsikkoa ja kuvausta.",
+    "snippetSave": "Tallenna ajatus",
+    "snippetBadge": "Ajatus",
+    "snippetEditTitle": "Muokkaa ajatusta",
+    "emptyPageTitle": "Ei vielä muistiinpanoja",
+    "emptyPageDescription": "Muistiinpano otsikolla ja tekstillä sisällä.",
+    "emptySnippetTitle": "Ei vielä ajatuksia",
+    "emptySnippetDescription": "Lyhyt ajatus — ilman otsikkoa, vain lause itse.",
     "editTitle": "Muokkaa muistiinpanoa",
     "save": "Tallenna muistiinpano",
     "saveChanges": "Tallenna muutokset",
@@ -297,12 +312,14 @@
     "fields": {
       "title": "Otsikko",
       "content": "Muistiinpano",
+      "snippet": "Ajatus",
       "sourceUrl": "Lähdelinkki",
       "sourceHint": "Valinnainen. Voit tallentaa ilman linkkiä."
     },
     "placeholders": {
       "title": "Anna muistiinpanolle otsikko...",
       "content": "Kirjoita jotain, joka kannattaa muistaa...",
+      "snippet": "Ihmiset eivät aina osaa kuvailla tilannetta, koska sanavarasto on liian kapea",
       "sourceUrl": "https://..."
     },
     "errors": {

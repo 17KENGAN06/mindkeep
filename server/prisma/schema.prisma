@@ -55,6 +55,11 @@ enum MealKind {
   extra
 }
 
+enum NoteKind {
+  page
+  snippet
+}
+
 enum BudgetCurrency {
   UAH
   EUR
@@ -315,7 +320,8 @@ model ExchangeRate {
 
 model Note {
   id        String   @id @default(cuid())
-  title     String
+  kind      NoteKind @default(page)
+  title     String   @default("")
   content   String
   sourceUrl String?
   userId    String

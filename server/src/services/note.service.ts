@@ -24,6 +24,7 @@ export class NoteService {
               ],
             }
           : {}),
+        ...(query.kind ? { kind: query.kind } : {}),
       },
       orderBy: { createdAt: query.sort === 'oldest' ? 'asc' : 'desc' },
     });
@@ -43,6 +44,7 @@ export class NoteService {
     await assertCreateLimit(userId, 'notes');
     return prisma.note.create({
       data: {
+        kind: input.kind,
         title: input.title,
         content: input.content,
         sourceUrl: input.sourceUrl,
@@ -52,14 +54,15 @@ export class NoteService {
   }
 
   async update(userId: string, id: string, input: UpdateNoteInput) {
-    await this.getById(userId, id);
+    const existing = await this.getById(userId, id);
+    const snippet = existing.kind === 'snippet';
 
     return prisma.note.update({
       where: { id },
       data: {
-        ...(input.title !== undefined ? { title: input.title } : {}),
+        ...(snippet || input.title === undefined ? {} : { title: input.title }),
         ...(input.content !== undefined ? { content: input.content } : {}),
-        ...(input.sourceUrl !== undefined ? { sourceUrl: input.sourceUrl } : {}),
+        ...(snippet ? {} : input.sourceUrl !== undefined ? { sourceUrl: input.sourceUrl } : {}),
       },
     });
   }

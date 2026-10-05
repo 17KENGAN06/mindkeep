@@ -272,11 +272,26 @@
   },
   "notes": {
     "title": "Notatki",
-    "subtitle": "Zachowuj pomysły, lekcje i rzeczy warte zapamiętania.",
+    "subtitle": "Pełne notatki z tytułem — albo krótka myśl bez opisu.",
     "create": "+ Nowa notatka",
+    "createPage": "Notatka",
+    "createSnippet": "Myśl",
     "createFirst": "Utwórz pierwszą notatkę",
     "createTitle": "Nowa notatka",
-    "createSubtitle": "Zapisz myśl, fragment albo lekcję, zanim umknie.",
+    "createSubtitle": "Nadaj tytuł, a resztę zapisz wewnątrz.",
+    "kind": {
+      "all": "Wszystkie",
+      "page": "Notatki",
+      "snippet": "Myśli"
+    },
+    "snippetHint": "Sama myśl — bez tytułu i opisu.",
+    "snippetSave": "Zapisz myśl",
+    "snippetBadge": "Myśl",
+    "snippetEditTitle": "Edytuj myśl",
+    "emptyPageTitle": "Nie ma jeszcze notatek",
+    "emptyPageDescription": "Notatka z tytułem i tekstem wewnątrz.",
+    "emptySnippetTitle": "Nie ma jeszcze myśli",
+    "emptySnippetDescription": "Krótka myśl — bez tytułu, sama fraza.",
     "editTitle": "Edytuj notatkę",
     "save": "Zapisz notatkę",
     "saveChanges": "Zapisz zmiany",
@@ -297,12 +312,14 @@
     "fields": {
       "title": "Tytuł",
       "content": "Notatka",
+      "snippet": "Myśl",
       "sourceUrl": "Link do źródła",
       "sourceHint": "Opcjonalnie. Zostaw puste, jeśli nie ma linku."
     },
     "placeholders": {
       "title": "Nadaj notatce tytuł...",
       "content": "Napisz coś wartego zapamiętania...",
+      "snippet": "Ludzie czasem nie potrafią opisać sytuacji słowami przez ubogi zasób słownictwa",
       "sourceUrl": "https://..."
     },
     "errors": {
