@@ -97,13 +97,13 @@ export function PlanCards({
   ];
 
   return (
-    <div className="grid items-stretch gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-4">
+    <div className="grid items-stretch gap-3 sm:gap-4 xl:grid-cols-3 xl:gap-4">
       {cards.map((card) => (
         <article
           key={card.id}
           className={`relative flex h-full flex-col overflow-hidden rounded-2xl p-4 sm:rounded-[1.4rem] sm:p-5 ${
             card.accent
-              ? 'z-[1] border-2 border-brand-500 bg-gradient-to-br from-brand-500/35 via-brand-50 to-panel shadow-[0_24px_56px_-28px_rgba(53,111,88,0.9)] ring-2 ring-brand-500/20 lg:scale-[1.04] lg:-translate-y-2'
+              ? 'z-[1] border-2 border-brand-500 bg-gradient-to-br from-brand-500/35 via-brand-50 to-panel shadow-[0_24px_56px_-28px_rgba(53,111,88,0.9)] ring-2 ring-brand-500/20 xl:scale-[1.04] xl:-translate-y-2'
               : 'border border-line bg-panel/80'
           }`}
         >

@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { matchesDesktopSnap } from '@/config/desktopSnap';
 import { SectionPlayProvider } from '@/components/home/sectionPlayContext';
 
 type AnimatedSnapSectionProps = {
@@ -7,10 +8,6 @@ type AnimatedSnapSectionProps = {
   className?: string;
   children: ReactNode;
 };
-
-function isDesktopSnap(): boolean {
-  return typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches;
-}
 
 /**
  * Desktop: replay enter animations when a full-page section becomes active.
@@ -23,10 +20,10 @@ export function AnimatedSnapSection({
   children,
 }: AnimatedSnapSectionProps) {
   const active = activeId === id;
-  const [play, setPlay] = useState(() => active || (typeof window !== 'undefined' && !isDesktopSnap()));
+  const [play, setPlay] = useState(() => active || (typeof window !== 'undefined' && !matchesDesktopSnap()));
 
   useEffect(() => {
-    const desktop = isDesktopSnap();
+    const desktop = matchesDesktopSnap();
 
     if (!desktop) {
       setPlay(true);

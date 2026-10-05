@@ -1687,8 +1687,8 @@
     "undoSwitch": "Garder mon offre actuelle",
     "billingNote": "Le paiement carte s’ouvre dans le navigateur. La même offre marche ensuite sur le site et l’app.",
     "refundNote": "Vous pouvez arrêter le prochain prélèvement dans le compte. Accès jusqu’à la date déjà payée. Les jours non utilisés ne sont pas remboursés, et il n’y a pas de fenêtre de 14 jours pour récupérer l’argent.",
-    "immediateAck": "Je demande à Mindkeep d’ouvrir l’accès payant dès que le paiement aboutit. C’est un service numérique fourni immédiatement. Les jours non utilisés ne sont pas remboursés.",
-    "immediateAckNeed": "Cochez avant de payer."
+    "immediateAck": "Ouvrir l’accès dès le paiement. Les jours payés restent jusqu’à la fin de la période — ils ne sont pas remboursés.",
+    "immediateAckNeed": "Cochez pour continuer."
   },
   "terms": {
     "eyebrow": "Mentions",

@@ -1687,8 +1687,8 @@
     "undoSwitch": "Pidä nykyinen paketti",
     "billingNote": "Korttimaksu avautuu selaimessa. Sama paketti toimii sen jälkeen sivustolla ja sovelluksessa.",
     "refundNote": "Seuraavan veloituksen voi pysäyttää tilillä. Käyttöoikeus maksettuun päivään. Käyttämättömiä päiviä ei palauteta, eikä 14 päivän rahat takaisin -ikkunaa ole.",
-    "immediateAck": "Pyydän Mindkeepiä avaamaan maksetun käyttöoikeuden heti, kun maksu onnistuu. Tämä on digitaalinen palvelu, joka toimitetaan heti. Käyttämättömiä päiviä ei palauteta.",
-    "immediateAckNeed": "Rastita ennen maksua."
+    "immediateAck": "Avaa käyttöoikeus heti maksun jälkeen. Maksetut päivät jäävät kauden loppuun — niitä ei palauteta.",
+    "immediateAckNeed": "Rastita jatkaaksesi."
   },
   "terms": {
     "eyebrow": "Lakitekstit",

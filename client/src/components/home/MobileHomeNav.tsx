@@ -1,8 +1,7 @@
 import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '@/features/auth/useAuth';
+import { PublicPageLinks } from '@/components/layout/PublicPageMenu';
 
 type MobileHomeNavProps = {
   sectionIds: string[];
@@ -13,7 +12,6 @@ type MobileHomeNavProps = {
 
 export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: MobileHomeNavProps) {
   const { t } = useTranslation();
-  const { isAuthenticated } = useAuth();
   const [open, setOpen] = useState(false);
   const titleId = useId();
   const activeIndex = Math.max(0, sectionIds.indexOf(activeId));
@@ -51,7 +49,7 @@ export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: Mobile
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 lg:hidden">
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 md:hidden">
         <div className="pointer-events-auto mx-auto flex w-full max-w-lg items-center gap-2 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2">
           <div className="flex w-full items-center gap-1.5 rounded-2xl border border-line/80 bg-panel/95 p-1.5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
             <button
@@ -99,7 +97,7 @@ export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: Mobile
 
       {open ? (
         <div
-          className="fixed inset-0 z-[80] flex flex-col bg-panel lg:hidden"
+          className="fixed inset-0 z-[80] flex flex-col bg-panel md:hidden"
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
@@ -156,62 +154,7 @@ export function MobileHomeNav({ sectionIds, labels, activeId, onSelect }: Mobile
             <p className="mt-6 mb-3 text-xs tracking-[0.18em] text-muted uppercase">
               {t('home.mobileNav.pages')}
             </p>
-            <div className="grid grid-cols-2 gap-2">
-              <Link
-                to="/plans"
-                className="col-span-2 inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-500 px-3 text-sm font-semibold text-[#07110d] no-underline"
-                onClick={close}
-              >
-                {t('nav.plansShort')}
-              </Link>
-              <Link
-                to="/guide"
-                className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-50/40 px-3 text-sm font-semibold text-ink no-underline ring-1 ring-line/70"
-                onClick={close}
-              >
-                {t('nav.guide')}
-              </Link>
-              <Link
-                to="/blog"
-                className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-50/40 px-3 text-sm font-semibold text-ink no-underline ring-1 ring-line/70"
-                onClick={close}
-              >
-                {t('nav.blog')}
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-50/40 px-3 text-sm font-semibold text-ink no-underline ring-1 ring-line/70"
-                onClick={close}
-              >
-                {t('nav.contact')}
-              </Link>
-              {isAuthenticated ? (
-                <Link
-                  to="/dashboard"
-                  className="col-span-2 inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-500 px-3 text-sm font-semibold text-[#07110d] no-underline"
-                  onClick={close}
-                >
-                  {t('nav.dashboard')}
-                </Link>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-50/40 px-3 text-sm font-semibold text-ink no-underline ring-1 ring-line/70"
-                    onClick={close}
-                  >
-                    {t('nav.login')}
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-brand-500 px-3 text-sm font-semibold text-[#07110d] no-underline"
-                    onClick={close}
-                  >
-                    {t('home.ctaRegister')}
-                  </Link>
-                </>
-              )}
-            </div>
+            <PublicPageLinks onNavigate={close} />
 
             <button
               type="button"

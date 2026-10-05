@@ -1687,8 +1687,8 @@
     "undoSwitch": "Aktuellen Plan behalten",
     "billingNote": "Kartenzahlung öffnet im Browser. Derselbe Plan gilt danach auf der Website und in der App.",
     "refundNote": "Die nächste Abbuchung kannst du im Konto stoppen. Zugang bis zum bezahlten Datum. Ungenutzte Tage zahlen wir nicht zurück, und es gibt kein 14-Tage-Geld-zurück-Fenster.",
-    "immediateAck": "Ich bitte Mindkeep, den bezahlten Zugang sofort nach der Zahlung zu öffnen. Das ist ein digitaler Dienst, der sofort erbracht wird. Ungenutzte Tage werden nicht zurückgezahlt.",
-    "immediateAckNeed": "Bitte vor der Zahlung ankreuzen."
+    "immediateAck": "Zugang direkt nach der Zahlung öffnen. Bezahlte Tage bleiben bis Periodenende — sie werden nicht erstattet.",
+    "immediateAckNeed": "Bitte ankreuzen, um fortzufahren."
   },
   "terms": {
     "eyebrow": "Rechtliches",

@@ -244,6 +244,10 @@ html[data-theme='light'] {
     scroll-margin-top: 0;
   }
 
+  .home-snap-shell {
+    min-height: 0;
+  }
+
   @media (max-width: 767px) {
     /* Only the last screen needs room for the mobile bottom nav. */
     .home-snap-section:last-child {
@@ -251,8 +255,16 @@ html[data-theme='light'] {
     }
   }
 
-  @media (min-width: 768px) {
+  /* Desktop only. Tablets keep normal document scroll so cards are not clipped. */
+  @media (min-width: 1280px) and (min-height: 900px) and (hover: hover) and (pointer: fine) {
+    .home-snap-root {
+      height: 100dvh;
+      overflow: hidden;
+    }
+
     .home-snap {
+      height: 100dvh;
+      overflow-y: auto;
       scroll-snap-type: y mandatory;
       scroll-behavior: smooth;
       overscroll-behavior-y: none;
@@ -260,7 +272,7 @@ html[data-theme='light'] {
     }
 
     .home-snap-section {
-      @apply h-dvh min-h-dvh max-h-dvh overflow-hidden;
+      @apply overflow-hidden;
       scroll-snap-align: start;
       scroll-snap-stop: always;
       height: 100dvh;
@@ -268,21 +280,17 @@ html[data-theme='light'] {
       max-height: 100dvh;
       padding-bottom: 0;
     }
-  }
 
-  /* Tablet: section dots sit at the bottom instead of overlapping the right column. */
-  @media (min-width: 768px) and (max-width: 1279px) {
-    .home-snap {
-      scroll-padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
-    }
-
-    .home-snap-section {
-      padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+    .home-snap-shell {
+      height: 100%;
+      min-height: 0;
+      justify-content: center;
+      overflow-y: auto;
     }
   }
 
   .home-snap-section .desktop-motion {
-    @apply pointer-events-none absolute hidden md:block;
+    @apply pointer-events-none absolute hidden xl:block;
   }
 
   .glass-panel {

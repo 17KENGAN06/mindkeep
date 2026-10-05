@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { useEffect, useState, type ReactNode } from 'react';
+import { matchesDesktopSnap } from '@/config/desktopSnap';
 import { useSectionPlay } from '@/components/home/sectionPlayContext';
 
 type SnapRevealProps = {
@@ -32,8 +33,7 @@ export function SnapReveal({
 
   useEffect(() => {
     if (!play) return;
-    // Phones and tablets: once shown, stay shown. Desktop snap can replay.
-    if (window.matchMedia('(max-width: 1279px)').matches) {
+    if (!matchesDesktopSnap()) {
       setStayVisible(true);
     }
   }, [play]);

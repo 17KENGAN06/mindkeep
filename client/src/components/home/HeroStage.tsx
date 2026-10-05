@@ -11,7 +11,7 @@ export function HeroStage() {
     <>
       {/* Phones and tablets: full-width product strip so header menus never cover a right column */}
       <div className="relative mt-2 space-y-3 xl:hidden">
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 lg:grid-cols-3">
           <article className="rounded-2xl border border-line/80 bg-panel/80 p-4 backdrop-blur-md">
             <div className="flex items-center gap-2 text-brand-500">
               <CheckSquare className="h-4 w-4 shrink-0" aria-hidden />

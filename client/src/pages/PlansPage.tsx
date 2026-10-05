@@ -228,10 +228,10 @@ export function PlansPage() {
         ) : null}
 
         {isAuthenticated && !subscribed ? (
-          <label className="mt-6 flex max-w-2xl cursor-pointer items-start gap-3 text-sm leading-relaxed text-ink">
+          <label className="mt-6 flex max-w-2xl cursor-pointer items-start gap-3 rounded-2xl bg-brand-50/90 px-4 py-3.5 text-sm leading-snug font-medium text-ink ring-1 ring-brand-500/35">
             <input
               type="checkbox"
-              className="mt-1 h-4 w-4 shrink-0 accent-brand-500"
+              className="mt-0.5 h-5 w-5 shrink-0 accent-brand-500"
               checked={immediateAck}
               onChange={(event) => setImmediateAck(event.target.checked)}
             />

@@ -1687,8 +1687,8 @@
     "undoSwitch": "Quedarme en el plan actual",
     "billingNote": "El pago con tarjeta se abre en el navegador. El mismo plan funciona luego en la web y en la app.",
     "refundNote": "Puedes detener el próximo cargo en la cuenta. Acceso hasta la fecha ya pagada. No devolvemos los días no usados y no hay una ventana de 14 días para recuperar el dinero.",
-    "immediateAck": "Pido a Mindkeep que abra el acceso de pago en cuanto el pago se complete. Es un servicio digital que se presta de inmediato. Los días no usados no se devuelven.",
-    "immediateAckNeed": "Marca esto antes de pagar."
+    "immediateAck": "Abrir el acceso en cuanto pague. Los días pagados siguen hasta el final del periodo — no se devuelven.",
+    "immediateAckNeed": "Marca esto para continuar."
   },
   "terms": {
     "eyebrow": "Legal",

@@ -1687,8 +1687,8 @@
     "undoSwitch": "Tieni il piano attuale",
     "billingNote": "Il pagamento con carta si apre nel browser. Lo stesso piano vale poi sul sito e nell’app.",
     "refundNote": "Puoi fermare il prossimo addebito nell’account. Accesso fino alla data già pagata. I giorni non usati non tornano, e non c’è una finestra di 14 giorni per riavere i soldi.",
-    "immediateAck": "Chiedo a Mindkeep di aprire l’accesso a pagamento appena il pagamento riesce. È un servizio digitale erogato subito. I giorni non usati non vengono rimborsati.",
-    "immediateAckNeed": "Spunta prima di pagare."
+    "immediateAck": "Apri l’accesso subito dopo il pagamento. I giorni pagati restano fino alla fine del periodo — non vengono rimborsati.",
+    "immediateAckNeed": "Spunta per continuare."
   },
   "terms": {
     "eyebrow": "Note legali",

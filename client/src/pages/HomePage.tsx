@@ -14,6 +14,7 @@ import { SnapReveal } from '@/components/home/SnapReveal';
 import { useSectionSnapScroll } from '@/components/home/useSectionSnapScroll';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { PlansCta } from '@/components/layout/PlansCta';
+import { PublicDesktopNav, PublicMenu } from '@/components/layout/PublicPageMenu';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
@@ -36,7 +37,7 @@ export function HomePage() {
   ];
 
   return (
-    <div className="relative min-h-dvh md:h-dvh md:overflow-hidden">
+    <div className="home-snap-root relative min-h-dvh">
       <SectionNav
         sectionIds={sectionIds}
         labels={labels}
@@ -54,7 +55,7 @@ export function HomePage() {
         <button
           type="button"
           onClick={() => goToSection('hero')}
-          className="fixed right-4 bottom-24 z-50 hidden h-11 w-11 items-center justify-center rounded-full border border-line/80 bg-panel/90 text-ink shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-500 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none md:inline-flex lg:bottom-5"
+          className="fixed right-4 bottom-5 z-50 hidden h-11 w-11 items-center justify-center rounded-full border border-line/80 bg-panel/90 text-ink shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-500 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none md:inline-flex"
           aria-label={t('nav.home')}
           title={t('nav.home')}
         >
@@ -64,7 +65,7 @@ export function HomePage() {
 
       <div
         ref={setScroller}
-        className="home-snap min-h-dvh overflow-x-hidden md:h-dvh md:overflow-y-auto"
+        className="home-snap min-h-dvh overflow-x-hidden"
         data-section-snap="true"
       >
         <AnimatedSnapSection id="hero" activeId={activeId}>
@@ -75,36 +76,15 @@ export function HomePage() {
             >
               <BrandLockup to="/" size="lg" className="min-w-0 max-w-[55%] sm:max-w-none" />
               <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                <nav
-                  className="hidden items-center gap-1 xl:flex"
-                  aria-label={t('footer.linksLabel')}
-                >
-                  <Link
-                    to="/guide"
-                    className="inline-flex min-h-11 items-center rounded-xl px-2.5 text-xs font-semibold text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
-                  >
-                    {t('nav.guide')}
-                  </Link>
-                  <Link
-                    to="/blog"
-                    className="inline-flex min-h-11 items-center rounded-xl px-2.5 text-xs font-semibold text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
-                  >
-                    {t('nav.blog')}
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="inline-flex min-h-11 items-center rounded-xl px-2.5 text-xs font-semibold text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
-                  >
-                    {t('nav.contact')}
-                  </Link>
-                </nav>
+                <PublicDesktopNav />
                 <ThemeToggle />
                 <LanguageSwitcher />
                 <PlansCta />
+                <PublicMenu className="hidden md:block xl:hidden" />
               </div>
             </SnapReveal>
 
-            <div className="relative grid min-h-0 flex-1 items-center gap-6 pb-8 pt-5 md:gap-8 md:pb-24 md:pt-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)] xl:gap-16 xl:pb-10 xl:pt-8">
+            <div className="relative grid min-h-0 flex-1 items-center gap-6 pb-24 pt-5 md:gap-8 md:pb-10 md:pt-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)] xl:gap-16 xl:pb-10 xl:pt-8">
               <div
                 aria-hidden
                 className="hero-glow pointer-events-none absolute inset-x-[-12%] top-[5%] -z-10 h-[60%] rounded-[45%] bg-[radial-gradient(circle_at_center,var(--app-accent-soft),transparent_70%)] xl:left-[-8%] xl:w-[70%]"

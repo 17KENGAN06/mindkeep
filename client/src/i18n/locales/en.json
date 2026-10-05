@@ -1823,8 +1823,8 @@
     "undoSwitch": "Keep my current plan",
     "billingNote": "Card checkout opens in the browser. The same plan then works on the website and in the app.",
     "refundNote": "You can stop the next charge in Account. Access stays until the paid date. We do not pay unused days back, and we do not run a 14-day money-back window.",
-    "immediateAck": "I ask Mindkeep to open paid access as soon as payment succeeds. This is a digital service supplied at once. Unused days are not paid back.",
-    "immediateAckNeed": "Tick this before paying.",
+    "immediateAck": "Start paid access as soon as I pay. I keep the days I paid for until they end — they are not refunded.",
+    "immediateAckNeed": "Tick this to continue.",
     "free": {
       "name": "Free",
       "tagline": "The full product. Type meals and expenses yourself.",

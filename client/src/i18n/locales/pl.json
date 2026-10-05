@@ -1687,8 +1687,8 @@
     "undoSwitch": "Zostaw obecny plan",
     "billingNote": "Płatność kartą otwiera się w przeglądarce. Ten sam plan działa potem na stronie i w aplikacji.",
     "refundNote": "Następne pobranie możesz wyłączyć w koncie. Dostęp do opłaconej daty. Nieużytych dni nie zwracamy i nie prowadzimy 14-dniowego okna zwrotu pieniędzy.",
-    "immediateAck": "Proszę otworzyć płatny dostęp zaraz po płatności. To usługa cyfrowa świadczona od razu. Nieużyte dni nie są zwracane.",
-    "immediateAckNeed": "Zaznacz to przed płatnością."
+    "immediateAck": "Włącz доступ zaraz po płatności. Opłacone dni zostają do końca okresu — nie są zwracane.",
+    "immediateAckNeed": "Zaznacz, aby kontynuować."
   },
   "terms": {
     "eyebrow": "Informacje prawne",

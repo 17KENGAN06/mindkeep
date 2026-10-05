@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { DESKTOP_SNAP_MQ, matchesDesktopSnap } from '@/config/desktopSnap';
 
 const WHEEL_THRESHOLD = 40;
 const TOUCH_THRESHOLD = 48;
@@ -10,9 +11,7 @@ const LOCK_MS = 900;
  */
 export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | null) {
   const [activeId, setActiveId] = useState(sectionIds[0] ?? '');
-  const [snapEnabled, setSnapEnabled] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches,
-  );
+  const [snapEnabled, setSnapEnabled] = useState(() => matchesDesktopSnap());
   const indexRef = useRef(0);
   const lockedRef = useRef(false);
   const lockTimerRef = useRef<number | null>(null);
@@ -25,7 +24,7 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
   }, [sectionIds]);
 
   useEffect(() => {
-    const media = window.matchMedia('(min-width: 768px)');
+    const media = window.matchMedia(DESKTOP_SNAP_MQ);
     const update = () => setSnapEnabled(media.matches);
     media.addEventListener('change', update);
     return () => media.removeEventListener('change', update);
@@ -65,10 +64,7 @@ export function useSectionSnapScroll(sectionIds: string[], root: HTMLElement | n
       setActiveId(id);
       lockBriefly();
 
-      const desktopSnap =
-        typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches;
-
-      if (desktopSnap) {
+      if (matchesDesktopSnap()) {
         root.scrollTo({ top: el.offsetTop, behavior });
       } else {
         const top = el.getBoundingClientRect().top + window.scrollY;
