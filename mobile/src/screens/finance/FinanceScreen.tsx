@@ -106,17 +106,20 @@ function CurrencyLimitEditor({
 }) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const target = periodBudgetTarget(monthlyLimit, view);
   const [draft, setDraft] = useState(monthlyLimit ? String(monthlyLimit) : '');
 
   useEffect(() => {
     setDraft(monthlyLimit ? String(monthlyLimit) : '');
   }, [monthlyLimit]);
 
-  const ratio = target && target > 0 ? spent / target : 0;
-  const percent = Math.min(100, Math.round(ratio * 100));
+  const parsedDraft = Number(draft.replace(',', '.'));
+  const previewMonthly =
+    Number.isFinite(parsedDraft) && parsedDraft > 0 ? parsedDraft : monthlyLimit;
+  const target = periodBudgetTarget(previewMonthly, view);
   const remaining = target ? target - spent : 0;
   const over = Boolean(target) && remaining < 0;
+  const ratio = target && target > 0 ? spent / target : 0;
+  const percent = Math.min(100, Math.round(ratio * 100));
   const barColor = over || ratio >= 0.8 ? colors.expense : colors.brand;
 
   return (
@@ -124,26 +127,29 @@ function CurrencyLimitEditor({
       <Text style={[styles.statLabel, { color: colors.muted }]}>
         {view === 'year' ? t('finance.limits.yearTitle') : t('finance.limits.monthTitle')}
       </Text>
-      {target ? (
-        <>
-          <Text style={[styles.statValue, { color: colors.ink }]}>
-            {t('finance.limits.spentOf', {
+      <Text style={[styles.statValue, { color: colors.ink }]}>
+        {target
+          ? t('finance.limits.spentOf', {
               spent: formatMoney(spent, language, currency),
               budget: formatMoney(target, language, currency),
-            })}
-          </Text>
-          <View style={[styles.limitTrack, { backgroundColor: colors.line }]}>
-            <View style={[styles.limitFill, { width: `${percent}%`, backgroundColor: barColor }]} />
-          </View>
-          <Text style={[styles.opMeta, { color: over ? colors.expense : colors.ink }]}>
-            {over
-              ? t('finance.limits.over', { amount: formatMoney(-remaining, language, currency) })
-              : t('finance.limits.left', { amount: formatMoney(remaining, language, currency) })}
-          </Text>
-        </>
-      ) : (
-        <Text style={[styles.opMeta, { color: colors.muted }]}>{t('finance.limits.unsetHint')}</Text>
-      )}
+            })
+          : t('finance.limits.noCap')}
+      </Text>
+      <View style={[styles.limitTrack, { backgroundColor: colors.line }]}>
+        <View
+          style={[
+            styles.limitFill,
+            { width: `${target ? percent : 0}%`, backgroundColor: target ? barColor : 'transparent' },
+          ]}
+        />
+      </View>
+      <Text style={[styles.opMeta, { color: over ? colors.expense : colors.muted }]}>
+        {target
+          ? over
+            ? t('finance.limits.over', { amount: formatMoney(-remaining, language, currency) })
+            : t('finance.limits.left', { amount: formatMoney(remaining, language, currency) })
+          : t('finance.limits.unsetHint')}
+      </Text>
       <TextInput
         keyboardType="decimal-pad"
         style={[styles.input, { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink }]}

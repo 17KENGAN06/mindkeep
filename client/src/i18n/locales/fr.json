@@ -159,6 +159,7 @@
       "yearTitle": "Budget de dépenses de l’année",
       "yearHint": "12 × votre budget mensuel",
       "unsetHint": "Fixez un plafond de dépenses pour cette devise et suivez-le ici.",
+      "noCap": "Pas encore de plafond",
       "amount": "Budget mensuel",
       "set": "Définir le budget",
       "change": "Modifier",

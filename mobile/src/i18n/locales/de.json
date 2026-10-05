@@ -401,6 +401,7 @@
       "yearTitle": "Jährliches Ausgabebudget",
       "yearHint": "12 × dein monatliches Budget",
       "unsetHint": "Setze ein Ausgabelimit für diese Währung und folge ihm hier.",
+      "noCap": "Noch kein Limit",
       "amount": "Monatsbudget",
       "set": "Budget setzen",
       "change": "Ändern",

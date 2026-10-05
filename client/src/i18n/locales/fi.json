@@ -159,6 +159,7 @@
       "yearTitle": "Vuoden menobudjetti",
       "yearHint": "12 × kuukausibudjettisi",
       "unsetHint": "Aseta tälle valuutalle menokatto ja seuraa sitä tässä.",
+      "noCap": "Ei kattoa vielä",
       "amount": "Kuukausibudjetti",
       "set": "Aseta budjetti",
       "change": "Muuta",

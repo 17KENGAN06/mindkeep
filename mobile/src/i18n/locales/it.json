@@ -401,6 +401,7 @@
       "yearTitle": "Budget di spesa annuale",
       "yearHint": "12 × il tuo budget mensile",
       "unsetHint": "Imposta un tetto di spesa per questa valuta e seguilo qui.",
+      "noCap": "Nessun tetto",
       "amount": "Budget mensile",
       "set": "Imposta budget",
       "change": "Modifica",

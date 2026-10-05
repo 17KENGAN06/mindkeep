@@ -401,6 +401,7 @@
       "yearTitle": "Year spend budget",
       "yearHint": "12 × your monthly budget",
       "unsetHint": "Set a spending cap for this currency and follow it here.",
+      "noCap": "No cap yet",
       "amount": "Monthly budget",
       "set": "Set budget",
       "change": "Change",

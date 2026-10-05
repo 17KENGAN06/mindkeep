@@ -159,6 +159,7 @@
       "yearTitle": "Roczny budżet wydatków",
       "yearHint": "12 × Twój miesięczny budżet",
       "unsetHint": "Ustaw limit wydatków dla tej waluty i śledź go tutaj.",
+      "noCap": "Brak limitu",
       "amount": "Budżet miesięczny",
       "set": "Ustaw budżet",
       "change": "Zmień",

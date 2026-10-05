@@ -401,6 +401,7 @@
       "yearTitle": "Presupuesto de gasto del año",
       "yearHint": "12 × tu presupuesto mensual",
       "unsetHint": "Pon un tope de gasto para esta moneda y síguelo aquí.",
+      "noCap": "Sin tope aún",
       "amount": "Presupuesto mensual",
       "set": "Fijar presupuesto",
       "change": "Cambiar",

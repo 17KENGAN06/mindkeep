@@ -5,7 +5,7 @@ import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
 import { FinanceOperationsList } from '@/components/finance/FinanceOperationsList';
 import { FinancePeriodControls } from '@/components/finance/FinancePeriodControls';
-import { FinanceAddCurrencyBudget, FinanceCurrencyBudget } from '@/components/finance/FinanceCurrencyBudget';
+import { FinanceAddCurrencyBudget, FinanceBudgetBar, FinanceCurrencyBudget } from '@/components/finance/FinanceCurrencyBudget';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
@@ -23,7 +23,9 @@ import { FinanceScanReceipt } from '@/features/finance/FinanceScanReceipt';
 import {
   currentPeriodDefaults,
   expenseByCurrency,
+  formatMoney,
   formatSignedMoney,
+  periodBudgetTarget,
   summarizeByCurrency,
   withBudgetCurrencies,
 } from '@/features/finance/financeUtils';
@@ -52,20 +54,28 @@ function FilterChips<T extends string>({
   value,
   onChange,
   items,
+  wrap = false,
 }: {
   value: T;
   onChange: (value: T) => void;
   items: Array<{ id: T; label: string }>;
+  wrap?: boolean;
 }) {
   return (
-    <div className="flex min-w-0 flex-wrap gap-1 rounded-2xl bg-brand-50/40 p-1 ring-1 ring-line/70">
+    <div
+      className={
+        wrap
+          ? 'inline-flex w-fit max-w-full flex-wrap items-center gap-0.5 rounded-full p-0.5 ring-1 ring-line/70'
+          : 'inline-flex w-fit shrink-0 flex-nowrap items-center gap-0.5 rounded-full p-0.5 ring-1 ring-line/70'
+      }
+    >
       {items.map((item) => {
         const active = value === item.id;
         return (
           <button
             key={item.id}
             type="button"
-            className={`min-h-9 rounded-xl px-3 text-xs font-semibold transition ${
+            className={`min-h-8 shrink-0 whitespace-nowrap rounded-full px-2.5 text-xs font-semibold transition ${
               active ? 'bg-brand-500 text-[#07110d] shadow-sm' : 'text-muted hover:bg-panel hover:text-ink'
             }`}
             onClick={() => onChange(item.id)}
@@ -349,14 +359,14 @@ export function FinanceBudgetPage() {
       </section>
 
       <section className="space-y-3">
-        <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-          <div className="min-w-0">
+        <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 lg:max-w-xl">
             <h2 className="text-base font-semibold text-ink">{t('finance.perCurrencyTitle')}</h2>
             <p className="mt-1 text-sm text-muted">
               {t('finance.perCurrencyHint')} {t('finance.limits.sectionHint')}
             </p>
           </div>
-          <div className="flex min-w-0 flex-col gap-2 sm:items-end">
+          <div className="flex shrink-0 flex-col items-start gap-2 lg:items-end">
             <FilterChips
               value={kindFilter}
               onChange={setKindFilter}
@@ -370,6 +380,7 @@ export function FinanceBudgetPage() {
               <FilterChips
                 value={activeCurrencyFilter}
                 onChange={setCurrencyFilter}
+                wrap
                 items={[
                   { id: 'ALL', label: t('finance.allCurrencies') },
                   ...availableCurrencies.map((code) => ({ id: code, label: code })),
@@ -397,6 +408,10 @@ export function FinanceBudgetPage() {
             {currencyBuckets.map((bucket) => {
               const ops = filteredOperations.filter((op) => (op.currency || 'EUR') === bucket.currency);
               const months = bucket.byMonth.filter((item) => item.income !== 0 || item.expense !== 0);
+              const cap = isFinanceCurrency(bucket.currency)
+                ? periodBudgetTarget(monthlyLimits[bucket.currency], view)
+                : null;
+              const spent = periodExpense[bucket.currency] ?? 0;
               return (
                 <article
                   key={bucket.currency}
@@ -434,6 +449,17 @@ export function FinanceBudgetPage() {
                         <dd className="mt-1 text-sm font-semibold text-expense">
                           {formatSignedMoney(-bucket.expense, language, bucket.currency)}
                         </dd>
+                        {cap ? (
+                          <div className="mt-2">
+                            <FinanceBudgetBar spent={spent} target={cap} className="h-1.5" />
+                            <p className="mt-1 text-[11px] text-muted">
+                              {t('finance.limits.spentOf', {
+                                spent: formatMoney(spent, language, bucket.currency),
+                                budget: formatMoney(cap, language, bucket.currency),
+                              })}
+                            </p>
+                          </div>
+                        ) : null}
                       </div>
                       <div className="rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line/70">
                         <dt className="flex items-center gap-1.5 text-[11px] tracking-wide text-muted uppercase">
