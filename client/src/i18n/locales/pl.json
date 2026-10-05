@@ -154,7 +154,7 @@
     "import": {
       "button": "Import",
       "title": "Dodaj z wyciągu",
-      "hint": "Wklej eksport z banku albo zrób zdjęcie paragonu. Sprawdź listę i zapisz. W Pro.",
+      "hint": "Wklej eksport z banku. Sprawdź listę i zapisz. W Pro.",
       "tabs": {
         "paste": "Tekst",
         "photo": "Zdjęcie"
@@ -184,6 +184,31 @@
       "description": "Skopiuj operacje z {{from}} do {{to}}. Te, które już są w tym miesiącu, zostaną pominięte.",
       "save": "Kopiuj",
       "empty": "W poprzednim miesiącu nie ma operacji do skopiowania."
+    },
+    "scan": {
+      "button": "Skanuj paragon",
+      "buttonShort": "Skan",
+      "gallery": "Foto",
+      "hint": "Zrób zdjęcie paragonu lub zrzut z banku. Sprawdź walutę i kategorię, potem dodaj.",
+      "proOnly": "Skan paragonu jest w Pro.",
+      "phoneOnly": "Dostępne tylko na telefonie.",
+      "phoneBadge": "Tylko telefon",
+      "analyzing": "Czytanie zdjęcia…",
+      "reviewTitle": "Sprawdź przed dodaniem",
+      "reviewHint": "Każda kwota zostaje w swojej walucie. Wybierz kategorię i zapisz.",
+      "category": "Kategoria",
+      "add": "Dodaj operacje",
+      "cancel": "Odrzuć",
+      "privacy": "Zdjęcie służy tylko do odczytu operacji i nie jest zapisywane.",
+      "errors": {
+        "unavailable": "Skan paragonu nie jest jeszcze podłączony.",
+        "proRequired": "Skan paragonu jest w Pro.",
+        "notRecognized": "Nie udało się odczytać operacji ze zdjęcia.",
+        "tooLarge": "Zdjęcie jest za duże.",
+        "badType": "Użyj JPEG, PNG lub WebP.",
+        "invalid": "Najpierw wybierz zdjęcie.",
+        "failed": "Nie udało się odczytać zdjęcia. Spróbuj ponownie."
+      }
     }
   },
   "tasks": {

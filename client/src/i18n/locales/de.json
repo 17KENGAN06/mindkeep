@@ -154,7 +154,7 @@
     "import": {
       "button": "Import",
       "title": "Aus einem Auszug hinzufügen",
-      "hint": "Bankexport einfügen oder einen Beleg fotografieren. Liste prüfen, dann speichern. Enthalten in Pro.",
+      "hint": "Bankexport einfügen. Liste prüfen, dann speichern. Enthalten in Pro.",
       "tabs": {
         "paste": "Text",
         "photo": "Foto"
@@ -184,6 +184,31 @@
       "description": "Buchungen von {{from}} nach {{to}} kopieren. Treffer, die in diesem Monat schon da sind, werden übersprungen.",
       "save": "Kopieren",
       "empty": "Im Vormonat gibt es keine Buchungen zum Kopieren."
+    },
+    "scan": {
+      "button": "Beleg scannen",
+      "buttonShort": "Scan",
+      "gallery": "Fotos",
+      "hint": "Fotografiere einen Beleg oder ein Banking-Screenshot. Prüfe Währung und Kategorie, dann hinzufügen.",
+      "proOnly": "Belegscan ist in Pro enthalten.",
+      "phoneOnly": "Nur auf dem Telefon verfügbar.",
+      "phoneBadge": "Nur Telefon",
+      "analyzing": "Foto wird gelesen…",
+      "reviewTitle": "Vor dem Hinzufügen prüfen",
+      "reviewHint": "Jeder Betrag bleibt in seiner Währung. Kategorie wählen, dann speichern.",
+      "category": "Kategorie",
+      "add": "Buchungen hinzufügen",
+      "cancel": "Verwerfen",
+      "privacy": "Das Foto dient nur zum Auslesen der Buchungen und wird nicht gespeichert.",
+      "errors": {
+        "unavailable": "Belegscan ist noch nicht verbunden.",
+        "proRequired": "Belegscan ist in Pro enthalten.",
+        "notRecognized": "Buchungen auf dem Foto konnten nicht gelesen werden.",
+        "tooLarge": "Das Foto ist zu groß.",
+        "badType": "Bitte JPEG, PNG oder WebP verwenden.",
+        "invalid": "Zuerst ein Foto wählen.",
+        "failed": "Das Foto konnte nicht gelesen werden. Bitte erneut versuchen."
+      }
     }
   },
   "tasks": {

@@ -51,10 +51,32 @@ function geminiErrorMeta(body: unknown): { status?: string; message?: string } {
   };
 }
 
-function asCurrency(value: unknown): BudgetCurrency | null {
+function asIsoCurrency(value: unknown): BudgetCurrency | null {
   if (typeof value !== 'string') return null;
   const code = value.trim().toUpperCase();
   return CURRENCIES.includes(code as BudgetCurrency) ? (code as BudgetCurrency) : null;
+}
+
+export function inferFinanceCurrency(parts: unknown[], fallback: BudgetCurrency): BudgetCurrency {
+  const blob = parts.map((part) => String(part ?? '')).join(' ');
+  if (!blob.trim()) return fallback;
+  const upper = blob.toUpperCase();
+
+  if (blob.includes('₴') || /UAH|\bГРН\b|ГРИВН/i.test(blob) || /грн/i.test(blob)) return BudgetCurrency.UAH;
+  if (blob.includes('€') || /\bEUR\b|\bEURO\b|ЕВРО/i.test(blob)) return BudgetCurrency.EUR;
+  if (blob.includes('£') || /\bGBP\b|ФУНТ/i.test(blob)) return BudgetCurrency.GBP;
+  if (/zł|\bPLN\b|ZLOTY|ЗЛОТ/i.test(blob)) return BudgetCurrency.PLN;
+  if (/\bCHF\b|ФРАНК/i.test(blob)) return BudgetCurrency.CHF;
+  if (/\bCZK\b/i.test(blob)) return BudgetCurrency.CZK;
+  if (/\bRON\b|ЛЕ[ЙИ]/i.test(blob)) return BudgetCurrency.RON;
+  if (/\bTRY\b|ЛИР/i.test(blob)) return BudgetCurrency.TRY;
+  if (/\bGEL\b|ЛАРИ/i.test(blob)) return BudgetCurrency.GEL;
+  if (/\bKZT\b|ТЕНГ/i.test(blob)) return BudgetCurrency.KZT;
+  if (/\bRUB\b|РУБ/i.test(blob)) return BudgetCurrency.RUB;
+  if (/\bUSD\b|ДОЛЛАР|DOLLAR/i.test(upper) || blob.includes('$')) return BudgetCurrency.USD;
+
+  const iso = asIsoCurrency(blob.split(/[\s,;]+/).find((token) => asIsoCurrency(token)));
+  return iso ?? fallback;
 }
 
 function asDate(value: unknown): string | null {
@@ -71,7 +93,10 @@ function asDate(value: unknown): string | null {
   return `${year}-${month}-${day}`;
 }
 
-export function parseFinanceScanAiPayload(raw: unknown): FinanceScanOperation[] {
+export function parseFinanceScanAiPayload(
+  raw: unknown,
+  fallback: BudgetCurrency = BudgetCurrency.EUR,
+): FinanceScanOperation[] {
   if (!raw || typeof raw !== 'object') {
     throwScan('FINANCE_SCAN_EMPTY', 'Could not read operations from the photo', 422);
   }
@@ -87,7 +112,10 @@ export function parseFinanceScanAiPayload(raw: unknown): FinanceScanOperation[] 
     const row = item as Record<string, unknown>;
     const date = asDate(row.date);
     const amount = Math.round(Math.abs(Number(row.amount)) * 100) / 100;
-    const currency = asCurrency(row.currency) ?? BudgetCurrency.EUR;
+    const currency = inferFinanceCurrency(
+      [row.currency, row.comment, row.description, row.symbol],
+      fallback,
+    );
     const typeRaw = String(row.type ?? '').toUpperCase();
     const type = typeRaw === 'INCOME' ? BudgetOperationType.INCOME : BudgetOperationType.EXPENSE;
     const kindRaw = String(row.moneyKind ?? row.money_kind ?? '').toUpperCase();
@@ -112,6 +140,7 @@ async function callGemini(
   buffer: Buffer,
   mimeType: string,
   locale: AppLocale,
+  fallback: BudgetCurrency,
   options: { jsonMime: boolean; thinkingOff: boolean },
 ): Promise<{ ok: true; payload: unknown } | { ok: false; status: number; googleStatus?: string }> {
   const language = LANGUAGE_NAME[locale];
@@ -150,7 +179,9 @@ async function callGemini(
                     'amount is always a positive number. type INCOME for money in, EXPENSE for money out.',
                     `comment in ${language}, max 80 characters: merchant or description.`,
                     'moneyKind CASH for paper receipts, ELECTRONIC for bank or card statements.',
-                    'If currency is missing, use EUR. Max 40 operations. If this is not a receipt or statement, operations is [].',
+                    'Detect currency from symbols and codes: ₴ грн UAH, € EUR, $ USD, zł PLN, £ GBP, and the other ISO codes in the list.',
+                    `If the currency is truly not visible, use ${fallback}. Never default to EUR when another currency is on the photo.`,
+                    'Max 40 operations. If this is not a receipt or statement, operations is [].',
                     'No extra keys or markdown.',
                   ].join(' '),
                 },
@@ -190,6 +221,7 @@ async function extractWithGemini(
   buffer: Buffer,
   mimeType: string,
   locale: AppLocale,
+  fallback: BudgetCurrency,
 ): Promise<FinanceScanOperation[]> {
   const key = env.GEMINI_API_KEY;
   if (!key) {
@@ -207,9 +239,9 @@ async function extractWithGemini(
     ];
 
     for (const options of attempts) {
-      const result = await callGemini(model, key, buffer, mimeType, locale, options);
+      const result = await callGemini(model, key, buffer, mimeType, locale, fallback, options);
       if (result.ok) {
-        return parseFinanceScanAiPayload(extractGeminiJson(result.payload));
+        return parseFinanceScanAiPayload(extractGeminiJson(result.payload), fallback);
       }
 
       lastFailure = result;
@@ -246,6 +278,7 @@ export const financeScanService = {
 
     const { buffer, mimeType } = decodeFoodScanImage(input.image, input.mimeType);
     const locale = resolveAppLocale(localeHeader);
-    return { operations: await extractWithGemini(buffer, mimeType, locale) };
+    const fallback = input.fallbackCurrency ?? BudgetCurrency.EUR;
+    return { operations: await extractWithGemini(buffer, mimeType, locale, fallback) };
   },
 };

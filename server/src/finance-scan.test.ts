@@ -30,6 +30,46 @@ test('parseFinanceScanAiPayload keeps signed amounts as positive expense', () =>
   );
 });
 
+test('parseFinanceScanAiPayload reads hryvnia from the receipt text', () => {
+  assert.deepEqual(
+    parseFinanceScanAiPayload(
+      {
+        operations: [
+          {
+            date: '2026-10-05',
+            amount: 87.5,
+            type: 'EXPENSE',
+            currency: 'грн',
+            comment: 'АТБ',
+            moneyKind: 'CASH',
+          },
+        ],
+      },
+      'EUR',
+    ),
+    [
+      {
+        date: '2026-10-05',
+        amount: 87.5,
+        currency: 'UAH',
+        type: 'EXPENSE',
+        moneyKind: 'CASH',
+        comment: 'АТБ',
+      },
+    ],
+  );
+});
+
+test('parseFinanceScanAiPayload uses fallback when currency is missing', () => {
+  const [row] = parseFinanceScanAiPayload(
+    {
+      operations: [{ date: '2026-10-05', amount: 10, type: 'EXPENSE', comment: 'Coffee' }],
+    },
+    'PLN',
+  );
+  assert.equal(row?.currency, 'PLN');
+});
+
 test('parseFinanceScanAiPayload rejects empty photos', () => {
   assert.throws(
     () => parseFinanceScanAiPayload({ operations: [] }),

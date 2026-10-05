@@ -154,7 +154,7 @@
     "import": {
       "button": "Importar",
       "title": "Añadir desde un extracto",
-      "hint": "Pega un export del banco o fotografía un ticket. Revisa la lista y guarda. Incluido en Pro.",
+      "hint": "Pega un export del banco. Revisa la lista y guarda. Incluido en Pro.",
       "tabs": {
         "paste": "Texto",
         "photo": "Foto"
@@ -184,6 +184,31 @@
       "description": "Copia las operaciones de {{from}} a {{to}}. Las que ya están en este mes se omiten.",
       "save": "Copiar",
       "empty": "El mes anterior no tiene operaciones para copiar."
+    },
+    "scan": {
+      "button": "Escanear ticket",
+      "buttonShort": "Scan",
+      "gallery": "Fotos",
+      "hint": "Fotografía un ticket o una captura del banco. Revisa moneda y categoría, luego añade.",
+      "proOnly": "El escaneo de tickets está en Pro.",
+      "phoneOnly": "Disponible solo en el teléfono.",
+      "phoneBadge": "Solo teléfono",
+      "analyzing": "Leyendo la foto…",
+      "reviewTitle": "Revisa antes de añadir",
+      "reviewHint": "Cada importe se queda en su moneda. Elige una categoría y guarda.",
+      "category": "Categoría",
+      "add": "Añadir operaciones",
+      "cancel": "Descartar",
+      "privacy": "La foto solo sirve para leer operaciones y no se guarda.",
+      "errors": {
+        "unavailable": "El escaneo aún no está conectado.",
+        "proRequired": "El escaneo de tickets está en Pro.",
+        "notRecognized": "No se pudieron leer las operaciones de esta foto.",
+        "tooLarge": "La foto es demasiado grande.",
+        "badType": "Usa JPEG, PNG o WebP.",
+        "invalid": "Elige primero una foto.",
+        "failed": "No se pudo leer la foto. Inténtalo de nuevo."
+      }
     }
   },
   "tasks": {

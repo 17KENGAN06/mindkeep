@@ -62,7 +62,11 @@ export const financeApi = {
     apiClient.post<{ created: number }>('/api/finance/operations/bulk', payload),
   repeatMonth: (payload: RepeatFinanceMonthPayload) =>
     apiClient.post<{ created: number; skipped: number }>('/api/finance/operations/repeat', payload),
-  scanStatement: (payload: { image: string; mimeType: 'image/jpeg' | 'image/png' | 'image/webp' }) =>
+  scanStatement: (payload: {
+    image: string;
+    mimeType: 'image/jpeg' | 'image/png' | 'image/webp';
+    fallbackCurrency?: FinanceCurrency;
+  }) =>
     apiClient.post<{ operations: CreateOperationPayload[] }>('/api/finance/scan', payload, { timeoutMs: 35_000 }),
   removeOperation: (id: string) =>
     apiClient.delete<{ success: boolean }>(`/api/finance/operations/${id}`),

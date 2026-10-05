@@ -22,6 +22,7 @@ import {
   type FinanceCurrency,
 } from '@/features/finance/currencies';
 import { FinanceImportDialog } from '@/features/finance/FinanceImportDialog';
+import { FinanceScanReceipt } from '@/features/finance/FinanceScanReceipt';
 import type { FinanceDraftOperation } from '@/features/finance/parseFinanceImport';
 import {
   currentPeriodDefaults,
@@ -198,25 +199,29 @@ export function FinanceBudgetPage() {
     void navigate('/account');
   };
 
+  const saveDrafts = async (rows: FinanceDraftOperation[]) => {
+    await bulkCreate.mutateAsync({
+      operations: rows.map((row) => {
+        const category = row.categoryName
+          ? categories.find((item) => item.name.toLowerCase() === row.categoryName!.toLowerCase())
+          : null;
+        return {
+          date: row.date,
+          amount: row.amount,
+          currency: row.currency,
+          type: row.type,
+          moneyKind: row.moneyKind,
+          comment: row.comment,
+          categoryId: row.categoryId || category?.id || null,
+        };
+      }),
+    });
+  };
+
   const onImport = async (rows: FinanceDraftOperation[]) => {
     setImportError(null);
     try {
-      await bulkCreate.mutateAsync({
-        operations: rows.map((row) => {
-          const category = row.categoryName
-            ? categories.find((item) => item.name.toLowerCase() === row.categoryName!.toLowerCase())
-            : null;
-          return {
-            date: row.date,
-            amount: row.amount,
-            currency: row.currency,
-            type: row.type,
-            moneyKind: row.moneyKind,
-            comment: row.comment,
-            categoryId: category?.id ?? null,
-          };
-        }),
-      });
+      await saveDrafts(rows);
       setImportOpen(false);
     } catch (error) {
       setImportError(mutationErrorMessage(error, t));
@@ -288,6 +293,15 @@ export function FinanceBudgetPage() {
 
       <section className="min-w-0 overflow-visible rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         <h2 className="text-base font-semibold text-ink">{t('finance.addOperation')}</h2>
+        <div className="mt-4">
+          <FinanceScanReceipt
+            language={language}
+            fallbackCurrency={currency}
+            categories={categories}
+            isSaving={bulkCreate.isPending}
+            onSave={saveDrafts}
+          />
+        </div>
         <form className="mt-4 grid min-w-0 gap-3 md:grid-cols-2" onSubmit={(event) => void onCreate(event)}>
           <div className="grid min-w-0 gap-3 md:col-span-2 md:grid-cols-2 md:items-start">
             <Select

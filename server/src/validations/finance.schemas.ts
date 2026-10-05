@@ -73,6 +73,7 @@ export const scanFinanceSchema = z.object({
       return trimmed.startsWith('data:') && comma !== -1 ? trimmed.slice(comma + 1) : trimmed;
     }),
   mimeType: financeScanMimeType,
+  fallbackCurrency: financeCurrencySchema.optional(),
 });
 
 export type UpdateFinanceSettingsInput = z.infer<typeof updateFinanceSettingsSchema>;

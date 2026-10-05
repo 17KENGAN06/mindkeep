@@ -9,6 +9,7 @@ export type FinanceDraftOperation = {
   moneyKind: FinanceMoneyKind;
   comment: string;
   categoryName?: string;
+  categoryId?: string | null;
 };
 
 export type ParseFinanceImportResult = {

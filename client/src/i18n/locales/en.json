@@ -154,7 +154,7 @@
     "import": {
       "button": "Import",
       "title": "Add from a statement",
-      "hint": "Paste a bank export or photograph a receipt. Review the list, then save. Included in Pro.",
+      "hint": "Paste a bank export. Review the list, then save. Included in Pro.",
       "tabs": {
         "paste": "Paste",
         "photo": "Photo"
@@ -184,6 +184,31 @@
       "description": "Copy operations from {{from}} into {{to}}. Matching ones already in this month are skipped.",
       "save": "Copy",
       "empty": "The previous month has no operations to copy."
+    },
+    "scan": {
+      "button": "Scan receipt",
+      "buttonShort": "Scan",
+      "gallery": "Photos",
+      "hint": "Photo a receipt or a bank screenshot. Check the currency and category, then add.",
+      "proOnly": "Receipt scan is included in Pro.",
+      "phoneOnly": "Available only on a phone.",
+      "phoneBadge": "Phone only",
+      "analyzing": "Reading the photo…",
+      "reviewTitle": "Check before adding",
+      "reviewHint": "Each amount stays in its own currency. Pick a category, then save.",
+      "category": "Category",
+      "add": "Add operations",
+      "cancel": "Discard",
+      "privacy": "The photo is used only to read operations and is not saved.",
+      "errors": {
+        "unavailable": "Receipt scan is not connected yet.",
+        "proRequired": "Receipt scan is included in Pro.",
+        "notRecognized": "Could not read operations from this photo.",
+        "tooLarge": "The photo is too large.",
+        "badType": "Use a JPEG, PNG, or WebP photo.",
+        "invalid": "Choose a photo first.",
+        "failed": "Could not read the photo. Try again."
+      }
     }
   },
   "tasks": {

@@ -154,7 +154,7 @@
     "import": {
       "button": "Tuo",
       "title": "Lisää tiliotteesta",
-      "hint": "Liitä pankin vienti tai kuvaa kuitti. Tarkista lista ja tallenna. Sisältyy Prohon.",
+      "hint": "Liitä pankin vienti. Tarkista lista ja tallenna. Sisältyy Prohon.",
       "tabs": {
         "paste": "Teksti",
         "photo": "Kuva"
@@ -184,6 +184,31 @@
       "description": "Kopioi tapahtumat jaksosta {{from}} jaksoon {{to}}. Tässä kuussa jo olevat ohitetaan.",
       "save": "Kopioi",
       "empty": "Edellisessä kuussa ei ole kopioitavia tapahtumia."
+    },
+    "scan": {
+      "button": "Skannaa kuitti",
+      "buttonShort": "Skannaa",
+      "gallery": "Kuvat",
+      "hint": "Kuvaa kuitti tai pankin kuvakaappaus. Tarkista valuutta ja kategoria, sitten lisää.",
+      "proOnly": "Kuitin skannaus sisältyy Prohon.",
+      "phoneOnly": "Käytettävissä vain puhelimella.",
+      "phoneBadge": "Vain puhelin",
+      "analyzing": "Luetaan kuvaa…",
+      "reviewTitle": "Tarkista ennen lisäämistä",
+      "reviewHint": "Jokainen summa jää omaan valuuttaansa. Valitse kategoria ja tallenna.",
+      "category": "Kategoria",
+      "add": "Lisää tapahtumat",
+      "cancel": "Hylkää",
+      "privacy": "Kuvaa käytetään vain tapahtumien lukemiseen, eikä sitä tallenneta.",
+      "errors": {
+        "unavailable": "Skannausta ei ole vielä kytketty.",
+        "proRequired": "Kuitin skannaus sisältyy Prohon.",
+        "notRecognized": "Tapahtumia ei voitu lukea tästä kuvasta.",
+        "tooLarge": "Kuva on liian suuri.",
+        "badType": "Käytä JPEG-, PNG- tai WebP-kuvaa.",
+        "invalid": "Valitse ensin kuva.",
+        "failed": "Kuvaa ei voitu lukea. Yritä uudelleen."
+      }
     }
   },
   "tasks": {

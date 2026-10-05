@@ -154,7 +154,7 @@
     "import": {
       "button": "Importer",
       "title": "Ajouter depuis un relevé",
-      "hint": "Collez un export bancaire ou photographiez un ticket. Vérifiez la liste, puis enregistrez. Inclus dans Pro.",
+      "hint": "Collez un export bancaire. Vérifiez la liste, puis enregistrez. Inclus dans Pro.",
       "tabs": {
         "paste": "Texte",
         "photo": "Photo"
@@ -184,6 +184,31 @@
       "description": "Copier les opérations de {{from}} vers {{to}}. Celles déjà présentes ce mois-ci sont ignorées.",
       "save": "Copier",
       "empty": "Le mois précédent n’a aucune opération à copier."
+    },
+    "scan": {
+      "button": "Scanner un ticket",
+      "buttonShort": "Scan",
+      "gallery": "Photos",
+      "hint": "Photographie un ticket ou une capture bancaire. Vérifie la devise et la catégorie, puis ajoute.",
+      "proOnly": "Le scan de ticket est inclus dans Pro.",
+      "phoneOnly": "Disponible uniquement sur téléphone.",
+      "phoneBadge": "Téléphone",
+      "analyzing": "Lecture de la photo…",
+      "reviewTitle": "Vérifier avant d’ajouter",
+      "reviewHint": "Chaque montant reste dans sa devise. Choisis une catégorie, puis enregistre.",
+      "category": "Catégorie",
+      "add": "Ajouter les opérations",
+      "cancel": "Ignorer",
+      "privacy": "La photo sert uniquement à lire les opérations et n’est pas enregistrée.",
+      "errors": {
+        "unavailable": "Le scan n’est pas encore branché.",
+        "proRequired": "Le scan de ticket est inclus dans Pro.",
+        "notRecognized": "Impossible de lire les opérations sur cette photo.",
+        "tooLarge": "La photo est trop lourde.",
+        "badType": "Utilisez JPEG, PNG ou WebP.",
+        "invalid": "Choisis d’abord une photo.",
+        "failed": "Impossible de lire la photo. Réessaie."
+      }
     }
   },
   "tasks": {

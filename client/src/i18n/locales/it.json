@@ -154,7 +154,7 @@
     "import": {
       "button": "Importa",
       "title": "Aggiungi da un estratto",
-      "hint": "Incolla un export della banca o fotografa uno scontrino. Controlla l’elenco e salva. Incluso in Pro.",
+      "hint": "Incolla un export della banca. Controlla l’elenco e salva. Incluso in Pro.",
       "tabs": {
         "paste": "Testo",
         "photo": "Foto"
@@ -184,6 +184,31 @@
       "description": "Copia le operazioni da {{from}} a {{to}}. Quelle già presenti in questo mese vengono saltate.",
       "save": "Copia",
       "empty": "Il mese precedente non ha operazioni da copiare."
+    },
+    "scan": {
+      "button": "Scansiona scontrino",
+      "buttonShort": "Scan",
+      "gallery": "Foto",
+      "hint": "Fotografa uno scontrino o uno screenshot della banca. Controlla valuta e categoria, poi aggiungi.",
+      "proOnly": "La scansione dello scontrino è in Pro.",
+      "phoneOnly": "Disponibile solo sul telefono.",
+      "phoneBadge": "Solo telefono",
+      "analyzing": "Lettura della foto…",
+      "reviewTitle": "Controlla prima di aggiungere",
+      "reviewHint": "Ogni importo resta nella sua valuta. Scegli una categoria e salva.",
+      "category": "Categoria",
+      "add": "Aggiungi operazioni",
+      "cancel": "Scarta",
+      "privacy": "La foto serve solo a leggere le operazioni e non viene salvata.",
+      "errors": {
+        "unavailable": "La scansione non è ancora collegata.",
+        "proRequired": "La scansione dello scontrino è in Pro.",
+        "notRecognized": "Impossibile leggere le operazioni da questa foto.",
+        "tooLarge": "La foto è troppo grande.",
+        "badType": "Usa JPEG, PNG o WebP.",
+        "invalid": "Prima scegli una foto.",
+        "failed": "Impossibile leggere la foto. Riprova."
+      }
     }
   },
   "tasks": {
