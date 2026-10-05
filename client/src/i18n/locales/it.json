@@ -916,7 +916,7 @@
     "scan": {
       "button": "Scansiona il cibo",
       "buttonShort": "Scan",
-      "hint": "Puoi scrivere cosa hai mangiato e stimare le calorie — la foto è facoltativa. Oppure entrambi. Fino a 3 foto dello stesso pasto.",
+      "hint": "Puoi scrivere cosa hai mangiato e stimare le calorie — la foto è facoltativa. Oppure entrambi. Fino a 3 foto di piatti diversi — le calorie si sommano in un pasto.",
       "proOnly": "La scansione cibo è inclusa in Pro.",
       "phoneOnly": "Disponibile solo sul telefono.",
       "phoneBadge": "Solo telefono",
@@ -928,7 +928,7 @@
       "prepareOptional": "Basta il testo. Non è necessario aggiungere una foto.",
       "preparePlaceholder": "Ad esempio: borscht, due cotolette, insalata",
       "preparePhotos": "Foto di questo pasto",
-      "preparePhotosHint": "Facoltativo. Basta una foto. Fino a 3 angolazioni dello stesso pasto — un pasto, non tre.",
+      "preparePhotosHint": "Facoltativo. Basta una foto. Oppure scatta piatti diversi — riso con pollo, poi pomodori e cetrioli — le calorie si sommano in un pasto. Fino a 3 foto.",
       "prepareCamera": "Fotocamera",
       "prepareGallery": "Galleria",
       "prepareCount": "{{count}} di 3",

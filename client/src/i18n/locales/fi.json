@@ -916,7 +916,7 @@
     "scan": {
       "button": "Skannaa ruoka",
       "buttonShort": "Skan",
-      "hint": "Voit kirjoittaa, mitä söit, ja arvioida kalorit — kuva on vapaaehtoinen. Tai molemmat. Enintään 3 kuvaa samasta ateriasta.",
+      "hint": "Voit kirjoittaa, mitä söit, ja arvioida kalorit — kuva on vapaaehtoinen. Tai molemmat. Enintään 3 kuvaa eri lautasilta — kalorit lasketaan yhteen ateriaksi.",
       "proOnly": "Ruokaskannaus sisältyy Prohon.",
       "phoneOnly": "Käytettävissä vain puhelimella.",
       "phoneBadge": "Vain puhelin",
@@ -928,7 +928,7 @@
       "prepareOptional": "Teksti riittää. Kuvaa ei tarvitse lisätä.",
       "preparePlaceholder": "Esimerkiksi: borssi, kaksi pihviä, salaatti",
       "preparePhotos": "Tämän aterian kuvat",
-      "preparePhotosHint": "Vapaaehtoinen. Yksi kuva riittää. Enintään 3 kulmaa samasta ateriasta — yksi ateria, ei kolme.",
+      "preparePhotosHint": "Vapaaehtoinen. Yksi kuva riittää. Tai kuvaa eri lautasia — kanaa ja riisiä, sitten tomaattia ja kurkkua — kalorit lasketaan yhteen ateriaksi. Enintään 3 kuvaa.",
       "prepareCamera": "Kamera",
       "prepareGallery": "Galleria",
       "prepareCount": "{{count}} / 3",

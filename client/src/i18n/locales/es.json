@@ -916,7 +916,7 @@
     "scan": {
       "button": "Escanear comida",
       "buttonShort": "Scan",
-      "hint": "Puedes escribir qué comiste y estimar calorías — la foto es opcional. O ambas. Hasta 3 fotos de la misma comida.",
+      "hint": "Puedes escribir qué comiste y estimar calorías — la foto es opcional. O ambas. Hasta 3 fotos de platos distintos — las calorías se suman en una comida.",
       "proOnly": "El escaneo de comida está en Pro.",
       "phoneOnly": "Disponible solo en el teléfono.",
       "phoneBadge": "Solo móvil",
@@ -928,7 +928,7 @@
       "prepareOptional": "El texto basta. No hace falta añadir una foto.",
       "preparePlaceholder": "Por ejemplo: borscht, dos filetes, una ensalada",
       "preparePhotos": "Fotos de esta comida",
-      "preparePhotosHint": "Opcional. Basta una foto. Hasta 3 ángulos de la misma comida — una comida, no tres.",
+      "preparePhotosHint": "Opcional. Basta una foto. O fotografía platos distintos — arroz con pollo y luego tomates con pepino — las calorías se suman en una comida. Hasta 3 fotos.",
       "prepareCamera": "Cámara",
       "prepareGallery": "Galería",
       "prepareCount": "{{count}} de 3",

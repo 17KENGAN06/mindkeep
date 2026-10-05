@@ -916,7 +916,7 @@
     "scan": {
       "button": "Skanuj jedzenie",
       "buttonShort": "Skan",
-      "hint": "Możesz po prostu napisać, co zjadłeś, i oszacować kalorie — zdjęcie jest opcjonalne. Albo jedno i drugie. Do 3 zdjęć jednego posiłku.",
+      "hint": "Możesz po prostu napisać, co zjadłeś, i oszacować kalorie — zdjęcie jest opcjonalne. Albo jedno i drugie. Do 3 zdjęć różnych talerzy — kalorie zsumują się w jeden posiłek.",
       "proOnly": "Skan jedzenia jest w Pro.",
       "phoneOnly": "Dostępne tylko na telefonie.",
       "phoneBadge": "Tylko telefon",
@@ -928,7 +928,7 @@
       "prepareOptional": "Sam tekst wystarczy. Zdjęcia nie są wymagane.",
       "preparePlaceholder": "Na przykład: barszcz, dwa kotlety, sałatka",
       "preparePhotos": "Zdjęcia tego posiłku",
-      "preparePhotosHint": "Opcjonalnie. Wystarczy jedno zdjęcie. Do 3 ujęć tego samego posiłku — to jeden posiłek, nie trzy.",
+      "preparePhotosHint": "Opcjonalnie. Wystarczy jedno zdjęcie. Możesz sfotografować różne talerze — ryż z kurczakiem i pomidory z ogórkiem — kalorie zsumują się w jeden posiłek. Do 3 zdjęć.",
       "prepareCamera": "Aparat",
       "prepareGallery": "Galeria",
       "prepareCount": "{{count}} z 3",

@@ -916,7 +916,7 @@
     "scan": {
       "button": "Essen scannen",
       "buttonShort": "Scan",
-      "hint": "Du kannst einfach schreiben, was du gegessen hast, und Kalorien schätzen — ein Foto ist optional. Oder beides. Bis zu 3 Fotos derselben Mahlzeit.",
+      "hint": "Du kannst einfach schreiben, was du gegessen hast, und Kalorien schätzen — ein Foto ist optional. Oder beides. Bis zu 3 Fotos verschiedener Teller — die Kalorien werden zu einer Mahlzeit addiert.",
       "proOnly": "Essensscan ist in Pro enthalten.",
       "phoneOnly": "Nur auf dem Handy verfügbar.",
       "phoneBadge": "Nur Handy",
@@ -928,7 +928,7 @@
       "prepareOptional": "Der Text allein reicht. Ein Foto ist nicht nötig.",
       "preparePlaceholder": "Zum Beispiel: Borschtsch, zwei Buletten, Salat",
       "preparePhotos": "Fotos dieser Mahlzeit",
-      "preparePhotosHint": "Optional. Ein Foto reicht. Bis zu 3 Blickwinkel derselben Mahlzeit — eine Mahlzeit, nicht drei.",
+      "preparePhotosHint": "Optional. Ein Foto reicht. Oder fotografiere verschiedene Teller — Reis mit Hähnchen, dann Tomaten mit Gurken — die Kalorien werden zu einer Mahlzeit addiert. Bis zu 3 Fotos.",
       "prepareCamera": "Kamera",
       "prepareGallery": "Galerie",
       "prepareCount": "{{count}} von 3",

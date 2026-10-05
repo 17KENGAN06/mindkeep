@@ -167,7 +167,7 @@ export function foodScanPrompt(locale: AppLocale, note: string | undefined, phot
     photoCount === 0
       ? `Estimate calories for ONE meal from this text description only. There is no photo. Description: ${JSON.stringify(note ?? '')}`
       : photoCount > 1
-        ? `Estimate calories for ONE meal from these ${photoCount} photos. They are extra angles or parts of the same sitting — do not count the meal ${photoCount} times.`
+        ? `Estimate calories for ONE meal from these ${photoCount} photos. Each photo may be a different plate or side of the same sitting — for example rice with chicken in one photo and a tomato-cucumber salad in another. Estimate each distinct plate and SUM those calories into totalCalories. mealName should name the whole sitting. If two photos are clearly the same plate from another angle, count that plate only once.`
         : 'Estimate calories for one meal from this photo.';
   const hint =
     photoCount === 0

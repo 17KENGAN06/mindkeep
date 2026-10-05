@@ -916,7 +916,7 @@
     "scan": {
       "button": "Scanner le plat",
       "buttonShort": "Scan",
-      "hint": "Vous pouvez simplement écrire ce que vous avez mangé et estimer les calories — la photo est facultative. Ou les deux. Jusqu’à 3 photos du même repas.",
+      "hint": "Vous pouvez simplement écrire ce que vous avez mangé et estimer les calories — la photo est facultative. Ou les deux. Jusqu’à 3 photos d’assiettes différentes — les calories sont additionnées en un repas.",
       "proOnly": "Le scan alimentaire est inclus dans Pro.",
       "phoneOnly": "Disponible uniquement sur téléphone.",
       "phoneBadge": "Uniquement téléphone",
@@ -928,7 +928,7 @@
       "prepareOptional": "Le texte suffit. Vous n’êtes pas obligé d’ajouter une photo.",
       "preparePlaceholder": "Par exemple : bortsch, deux côtelettes, une salade",
       "preparePhotos": "Photos de ce repas",
-      "preparePhotosHint": "Facultatif. Une photo suffit. Jusqu’à 3 angles du même repas — un repas, pas trois.",
+      "preparePhotosHint": "Facultatif. Une photo suffit. Ou photographiez des assiettes différentes — riz au poulet, puis tomates et concombres — les calories sont additionnées en un repas. Jusqu’à 3 photos.",
       "prepareCamera": "Appareil photo",
       "prepareGallery": "Galerie",
       "prepareCount": "{{count}} sur 3",

@@ -925,7 +925,7 @@
     "scan": {
       "button": "Scan food",
       "buttonShort": "Scan",
-      "hint": "You can just write what you ate and estimate calories — a photo is optional. Or use both. Up to 3 photos of the same meal.",
+      "hint": "You can just write what you ate and estimate calories — a photo is optional. Or use both. Up to 3 photos of different plates — calories are summed into one meal.",
       "proOnly": "Food scan is included in Pro.",
       "phoneOnly": "Available only on a phone.",
       "phoneBadge": "Phone only",
@@ -937,7 +937,7 @@
       "prepareOptional": "Enough on its own. You do not have to add a photo.",
       "preparePlaceholder": "For example: borscht, two cutlets, a salad",
       "preparePhotos": "Photos of this meal",
-      "preparePhotosHint": "Optional. One photo is enough. Up to 3 angles of the same sitting — they become one meal, not three.",
+      "preparePhotosHint": "Optional. One photo is enough. Or shoot different plates — rice with chicken, then tomatoes and cucumbers — calories are summed into one meal. Up to 3 photos.",
       "prepareCamera": "Camera",
       "prepareGallery": "Gallery",
       "prepareCount": "{{count}} of 3",

@@ -20,7 +20,8 @@ test('foodScanPrompt mentions an optional dish hint and one meal for extra photo
 
   const many = foodScanPrompt('ru', 'борщ и котлета', 3);
   assert.match(many, /3 photos/);
-  assert.match(many, /do not count the meal 3 times/);
+  assert.match(many, /SUM those calories/i);
+  assert.match(many, /different plate/);
   assert.match(many, /борщ и котлета/);
   assert.match(many, /Russian/);
 
