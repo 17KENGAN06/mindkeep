@@ -39,7 +39,7 @@ export function HomePricing() {
               </Link>
             ),
             plus: (
-              <Link to="/plans" className="block">
+              <Link to={isAuthenticated ? '/plans' : '/register'} className="block">
                 <Button className="w-full gap-2 sm:w-full">
                   {t('plans.ctaPlus')}
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -47,7 +47,7 @@ export function HomePricing() {
               </Link>
             ),
             pro: (
-              <Link to="/plans" className="block">
+              <Link to={isAuthenticated ? '/plans' : '/register'} className="block">
                 <Button className="w-full gap-2 sm:w-full">
                   {t('plans.ctaPro')}
                   <ArrowRight className="h-4 w-4" aria-hidden />
