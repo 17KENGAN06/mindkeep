@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import type { UserPlan } from '@/types/auth';
 
 function asList(value: unknown): string[] {
-  return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+    : [];
 }
 
 function Line({
@@ -27,7 +29,7 @@ function Line({
 }
 
 type PlanCardsProps = {
-  currentPlan?: UserPlan;
+  currentPlan?: UserPlan | null;
   recommended?: 'plus' | 'pro';
   interval?: 'month' | 'year';
   actions: {
@@ -38,7 +40,7 @@ type PlanCardsProps = {
 };
 
 export function PlanCards({
-  currentPlan = 'FREE',
+  currentPlan = null,
   recommended = 'plus',
   interval,
   actions,

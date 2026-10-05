@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Plany",
     "title": "Trzy plany. Jeden produkt.",
-    "subtitle": "Free ma wszystkie moduły. Plus zdejmuje limity. Pro skanuje zdjęcia.",
+    "subtitle": "Free otwiera wszystkie moduły. Plus zdejmuje limity. Pro wypełnia posiłki i paragony ze zdjęcia.",
     "includes": "Co jest w planie",
     "limits": "Limity na Free",
     "removes": "Ten plan zdejmuje",
@@ -1609,41 +1609,40 @@
     "intervalMonth": "Miesiąc",
     "free": {
       "name": "Free",
-      "tagline": "Wszystkie moduły. Limity, nie kłódki.",
+      "tagline": "Zacznij dziś. Wszystkie moduły są otwarte.",
       "price": "€0",
       "billed": "Bez karty.",
       "includes": [
-        "Zadania, powtórki, notatki, nawyki, budżet, posiłki"
+        "Zadania, powtórki 3·7·30, notatki, nawyki, budżet, żywienie",
+        "Limity: 20 materiałów, 45 zadań/mies., 3 nawyki, 20 notatek",
+        "Dziennik posiłków 7 dni, 2 urządzenia",
+        "Posiłki i wydatki wpisujesz sam"
       ],
-      "limits": [
-        "20 materiałów · 45 zadań/mies.",
-        "3 nawyki · 20 notatek · posiłki 7 dni",
-        "2 urządzenia"
-      ],
+      "limits": [],
       "without": [
-        "Bez skanu zdjęcia"
+        "Skan posiłków i paragonów ze zdjęcia jest w Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Bez limitów. Posiłki i pieniądze wpisujesz sam.",
+      "tagline": "Bez limitów. Posiłki i pieniądze nadal wpisujesz sam.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / rok",
       "monthPrice": "€4.99",
       "includes": [
-        "Cały Free, bez limitów"
+        "Cały Free, bez limitów ilości",
+        "Pełny dziennik posiłków i więcej urządzeń",
+        "Posiłki i wydatki nadal wpisujesz sam"
       ],
-      "removes": [
-        "Pełna historia posiłków · więcej urządzeń"
-      ],
+      "removes": [],
       "without": [
-        "Bez skanu zdjęcia"
+        "Skan posiłków i paragonów ze zdjęcia jest w Pro"
       ],
       "monthCharged": "€4.99 / miesiąc"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus i aparat.",
+      "tagline": "Plus, a aparat wypełnia posiłki i paragony.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / rok",
       "monthPrice": "€7.99",
@@ -1651,8 +1650,8 @@
         "Cały Plus"
       ],
       "unlocks": [
-        "Skan posiłków",
-        "Skan paragonów"
+        "Zdjęcie posiłku — nazwa i kalorie uzupełniają się same",
+        "Zdjęcie paragonu — operacje do Budżetu, potem gotówka lub karta"
       ],
       "monthCharged": "€7.99 / miesiąc"
     },

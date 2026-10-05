@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Offres",
     "title": "Trois offres. Un produit.",
-    "subtitle": "Free a tous les modules. Plus lève les plafonds. Pro scanne les photos.",
+    "subtitle": "Free ouvre tous les modules. Plus lève les plafonds. Pro remplit repas et tickets depuis une photo.",
     "includes": "Ce qu’il y a dans cette offre",
     "limits": "Plafonds sur Free",
     "removes": "Cette offre enlève",
@@ -1609,41 +1609,40 @@
     "intervalMonth": "Mois",
     "free": {
       "name": "Free",
-      "tagline": "Tous les modules. Des plafonds, pas des cadenas.",
+      "tagline": "Commencez aujourd’hui. Tous les modules sont ouverts.",
       "price": "€0",
       "billed": "Sans carte.",
       "includes": [
-        "Tâches, révision, notes, habitudes, budget, repas"
+        "Tâches, révision 3·7·30, notes, habitudes, budget, nutrition",
+        "Plafonds : 20 matières, 45 tâches/mois, 3 habitudes, 20 notes",
+        "Journal des repas 7 jours, 2 appareils",
+        "Vous saisissez repas et dépenses à la main"
       ],
-      "limits": [
-        "20 matières · 45 tâches/mois",
-        "3 habitudes · 20 notes · repas 7 jours",
-        "2 appareils"
-      ],
+      "limits": [],
       "without": [
-        "Pas de scan photo"
+        "Le scan photo des repas et tickets est dans Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Sans plafonds. Vous saisissez repas et argent.",
+      "tagline": "Sans plafonds. Vous saisissez encore repas et argent.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / an",
       "monthPrice": "€4.99",
       "includes": [
-        "Tout Free, sans plafonds"
+        "Tout Free, sans plafonds de quantité",
+        "Journal des repas complet et plus d’appareils",
+        "Vous saisissez encore repas et dépenses à la main"
       ],
-      "removes": [
-        "Historique repas complet · plus d’appareils"
-      ],
+      "removes": [],
       "without": [
-        "Pas de scan photo"
+        "Le scan photo des repas et tickets est dans Pro"
       ],
       "monthCharged": "€4.99 / mois"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, avec l’appareil photo.",
+      "tagline": "Plus, et l’appareil photo remplit repas et tickets.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / an",
       "monthPrice": "€7.99",
@@ -1651,8 +1650,8 @@
         "Tout Plus"
       ],
       "unlocks": [
-        "Scanner les repas",
-        "Scanner les tickets"
+        "Photo d’un repas — nom et calories sont remplis",
+        "Photo d’un ticket — opérations dans Budget, puis espèces ou carte"
       ],
       "monthCharged": "€7.99 / mois"
     },

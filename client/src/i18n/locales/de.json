@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Pläne",
     "title": "Drei Pläne. Ein Produkt.",
-    "subtitle": "Free hat alle Module. Plus hebt Limits. Pro scannt Fotos.",
+    "subtitle": "Free öffnet alle Module. Plus hebt Limits. Pro füllt Essen und Belege per Foto.",
     "includes": "Was in diesem Plan ist",
     "limits": "Limits auf Free",
     "removes": "Dieser Plan hebt auf",
@@ -1609,41 +1609,40 @@
     "intervalMonth": "Monat",
     "free": {
       "name": "Free",
-      "tagline": "Alle Module. Limits, keine Schlösser.",
+      "tagline": "Heute starten. Alle Module sind offen.",
       "price": "€0",
       "billed": "Keine Karte.",
       "includes": [
-        "Aufgaben, Review, Notizen, Habits, Budget, Essen"
+        "Aufgaben, 3·7·30-Review, Notizen, Habits, Budget, Ernährung",
+        "Limits: 20 Materialien, 45 Aufgaben/Monat, 3 Habits, 20 Notizen",
+        "Essenstagebuch 7 Tage, 2 Geräte",
+        "Mahlzeiten und Ausgaben trägst du selbst ein"
       ],
-      "limits": [
-        "20 Materialien · 45 Aufgaben/Monat",
-        "3 Habits · 20 Notizen · Essen 7 Tage",
-        "2 Geräte"
-      ],
+      "limits": [],
       "without": [
-        "Kein Foto-Scan"
+        "Foto-Scan für Mahlzeiten und Belege ist in Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Keine Limits. Essen und Geld trägst du selbst ein.",
+      "tagline": "Keine Limits. Essen und Geld trägst du weiter selbst ein.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / Jahr",
       "monthPrice": "€4.99",
       "includes": [
-        "Alles aus Free, ohne Limits"
+        "Alles aus Free, ohne Mengenlimits",
+        "Volles Essenstagebuch und mehr Geräte",
+        "Mahlzeiten und Ausgaben trägst du weiter selbst ein"
       ],
-      "removes": [
-        "Volle Essenshistorie · mehr Geräte"
-      ],
+      "removes": [],
       "without": [
-        "Kein Foto-Scan"
+        "Foto-Scan für Mahlzeiten und Belege ist in Pro"
       ],
       "monthCharged": "€4.99 / Monat"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, mit Kamera.",
+      "tagline": "Plus, und die Kamera füllt Essen und Belege.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / Jahr",
       "monthPrice": "€7.99",
@@ -1651,8 +1650,8 @@
         "Alles aus Plus"
       ],
       "unlocks": [
-        "Mahlzeiten scannen",
-        "Belege scannen"
+        "Foto einer Mahlzeit — Name und Kalorien werden ausgefüllt",
+        "Foto eines Belegs — Buchungen ins Budget, dann Bar oder Karte"
       ],
       "monthCharged": "€7.99 / Monat"
     },

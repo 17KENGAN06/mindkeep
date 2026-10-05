@@ -1772,7 +1772,7 @@
   "plans": {
     "eyebrow": "Plans",
     "title": "Three plans. One product.",
-    "subtitle": "Free has every module. Plus removes the caps. Pro adds photo scan.",
+    "subtitle": "Every module is open on Free. Plus lifts the caps. Pro fills meals and receipts from a photo.",
     "includes": "What’s in this plan",
     "limits": "Limits on Free",
     "removes": "This plan removes",
@@ -1801,41 +1801,40 @@
     "refundNote": "You can stop renewal in Account. Access stays until the paid date. Unused time is not refunded.",
     "free": {
       "name": "Free",
-      "tagline": "All modules. Caps, not locks.",
+      "tagline": "Start today. Every module is open.",
       "price": "€0",
       "billed": "No card.",
       "includes": [
-        "Tasks, review, notes, habits, budget, food"
+        "Tasks, 3·7·30 review, notes, habits, budget, nutrition",
+        "Caps: 20 materials, 45 tasks/month, 3 habits, 20 notes",
+        "Food diary 7 days, 2 signed-in devices",
+        "You add meals and expenses by hand"
       ],
-      "limits": [
-        "20 materials · 45 tasks/mo",
-        "3 habits · 20 notes · meals 7 days",
-        "2 devices"
-      ],
+      "limits": [],
       "without": [
-        "No photo scan"
+        "Photo scan of meals and receipts is on Pro"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "No caps. You type meals and money.",
+      "tagline": "No caps. You still type meals and money.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / year",
       "monthPrice": "€4.99",
       "monthCharged": "€4.99 / month",
       "includes": [
-        "Everything in Free, without caps"
+        "Everything in Free, without quantity caps",
+        "Full food diary and more devices",
+        "You still add meals and expenses by hand"
       ],
-      "removes": [
-        "Full meal history · more devices"
-      ],
+      "removes": [],
       "without": [
-        "No photo scan"
+        "Photo scan of meals and receipts is on Pro"
       ]
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus, with the camera.",
+      "tagline": "Plus, and the camera fills meals and receipts.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / year",
       "monthPrice": "€7.99",
@@ -1844,8 +1843,8 @@
         "Everything in Plus"
       ],
       "unlocks": [
-        "Scan meals",
-        "Scan receipts"
+        "Photo a meal — name and calories are filled in",
+        "Photo a receipt — it goes to Budget, then you pick cash or card"
       ]
     }
   }

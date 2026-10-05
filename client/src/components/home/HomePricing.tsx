@@ -29,7 +29,7 @@ export function HomePricing() {
 
       <SnapReveal delay={0.1} className="mt-6 lg:mt-8">
         <PlanCards
-          currentPlan={current}
+          currentPlan={isAuthenticated ? current : null}
           actions={{
             free: (
               <Link to={isAuthenticated ? '/dashboard' : '/register'} className="block">

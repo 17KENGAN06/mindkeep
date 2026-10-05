@@ -1589,7 +1589,7 @@
   "plans": {
     "eyebrow": "Tilaukset",
     "title": "Kolme tasoa. Yksi tuote.",
-    "subtitle": "Freessä kaikki osiot. Plus poistaa rajat. Pro skannaa kuvat.",
+    "subtitle": "Free avaa kaikki osiot. Plus poistaa rajat. Pro täyttää ateriat ja kuitit kuvasta.",
     "includes": "Mitä tähän kuuluu",
     "limits": "Rajat Freessä",
     "removes": "Tämä taso poistaa",
@@ -1609,41 +1609,40 @@
     "intervalMonth": "Kuukausi",
     "free": {
       "name": "Free",
-      "tagline": "Kaikki osiot. Rajat, ei lukkoja.",
+      "tagline": "Aloita tänään. Kaikki osiot ovat auki.",
       "price": "€0",
       "billed": "Ei korttia.",
       "includes": [
-        "Tehtävät, kertaus, muistiinpanot, tavat, budjetti, ruoka"
+        "Tehtävät, kertaus 3·7·30, muistiinpanot, tavat, budjetti, ravinto",
+        "Rajat: 20 materiaalia, 45 tehtävää/kk, 3 tapaa, 20 muistiinpanoa",
+        "Ruokapäiväkirja 7 pv, 2 laitetta",
+        "Ateriat ja kulut syötät itse"
       ],
-      "limits": [
-        "20 materiaalia · 45 tehtävää/kk",
-        "3 tapaa · 20 muistiinpanoa · ruoka 7 pv",
-        "2 laitetta"
-      ],
+      "limits": [],
       "without": [
-        "Ei kuvaskannausta"
+        "Aterioiden ja kuittien kuvaskannaus on Prossa"
       ]
     },
     "plus": {
       "name": "Plus",
-      "tagline": "Ei rajoja. Ruoka ja raha syötetään itse.",
+      "tagline": "Ei rajoja. Ateriat ja raha syötetään yhä itse.",
       "yearPerMonth": "€3.33",
       "yearCharged": "€39.99 / vuosi",
       "monthPrice": "€4.99",
       "includes": [
-        "Kaikki Freestä, ilman rajoja"
+        "Kaikki Freestä ilman määrärajoja",
+        "Koko ruokapäiväkirja ja lisää laitteita",
+        "Ateriat ja kulut syötät yhä itse"
       ],
-      "removes": [
-        "Koko ruoka-historia · lisää laitteita"
-      ],
+      "removes": [],
       "without": [
-        "Ei kuvaskannausta"
+        "Aterioiden ja kuittien kuvaskannaus on Prossa"
       ],
       "monthCharged": "€4.99 / kuukausi"
     },
     "pro": {
       "name": "Pro",
-      "tagline": "Plus ja kamera.",
+      "tagline": "Plus, ja kamera täyttää ateriat ja kuitit.",
       "yearPerMonth": "€5.83",
       "yearCharged": "€69.99 / vuosi",
       "monthPrice": "€7.99",
@@ -1651,8 +1650,8 @@
         "Kaikki Plusista"
       ],
       "unlocks": [
-        "Skannaa ateriat",
-        "Skannaa kuitit"
+        "Kuva ateriasta — nimi ja kalorit täyttyvät",
+        "Kuva kuitista — tapahtumat Budjettiin, sitten käteinen tai kortti"
       ],
       "monthCharged": "€7.99 / kuukausi"
     },

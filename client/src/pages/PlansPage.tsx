@@ -223,8 +223,8 @@ export function PlansPage() {
         ) : null}
 
         <div className="mt-8">
-          <PlanCards
-            currentPlan={current}
+        <PlanCards
+          currentPlan={isAuthenticated ? current : null}
             interval={interval}
             actions={{
               free: isAuthenticated ? (
