@@ -49,7 +49,7 @@ function TaskTitle({
   return (
     <div className="min-w-0">
       <p
-        className={`break-words text-base leading-snug font-medium ${
+        className={`break-words text-[15px] leading-snug font-medium [overflow-wrap:anywhere] sm:text-base ${
           completed ? 'text-emerald-400 line-through' : 'text-ink'
         }`}
       >
@@ -101,7 +101,7 @@ export function DailyTaskList({
                   : 'bg-panel ring-line'
             }`}
           >
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-start gap-2 sm:items-center sm:gap-3">
               <button
                 type="button"
                 className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
@@ -119,17 +119,50 @@ export function DailyTaskList({
 
               <div className="min-w-0 flex-1">
                 <TaskTitle title={task.title} completed={task.completed} note={task.note} />
+                <div className="mt-2 flex items-center gap-1 sm:hidden">
+                  <p
+                    className={`mr-auto text-sm font-semibold tabular-nums ${
+                      task.completed ? 'text-emerald-400' : important ? 'text-amber-700' : 'text-brand-500'
+                    }`}
+                  >
+                    {formatMinutes(task.minutes, t)}
+                  </p>
+                  <button
+                    type="button"
+                    aria-pressed={important}
+                    aria-label={important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
+                    title={t('tasks.importantHint')}
+                    disabled={busy}
+                    onClick={() => onImportant(task)}
+                    className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                      important
+                        ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_16px_rgba(245,186,64,0.45)] ring-1 ring-amber-200/90'
+                        : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-700 hover:ring-amber-300/70'
+                    }`}
+                  >
+                    <Flag className={`h-4 w-4 ${important ? 'fill-current' : ''}`} aria-hidden />
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+                    aria-label={t('common.delete')}
+                    disabled={busy}
+                    onClick={() => onDelete(task.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
               <p
-                className={`min-w-[6.5rem] shrink-0 text-right text-sm font-semibold leading-none whitespace-nowrap tabular-nums sm:w-[7.25rem] ${
+                className={`hidden min-w-[6.5rem] shrink-0 text-right text-sm font-semibold leading-none whitespace-nowrap tabular-nums sm:block sm:w-[7.25rem] ${
                   task.completed ? 'text-emerald-400' : important ? 'text-amber-700' : 'text-brand-500'
                 }`}
               >
                 {formatMinutes(task.minutes, t)}
               </p>
 
-              <div className="flex shrink-0 items-center gap-1">
+              <div className="hidden shrink-0 items-center gap-1 sm:flex">
                 <button
                   type="button"
                   aria-pressed={important}
