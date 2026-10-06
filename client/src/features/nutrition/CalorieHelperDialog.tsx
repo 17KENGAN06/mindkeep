@@ -209,17 +209,37 @@ export function CalorieHelperDialog({
             />
           </div>
 
-          <Select
-            label={t('calories.helper.activity')}
-            variant="menu"
-            value={draft.activity}
-            placeholder={t('calories.helper.activityPlaceholder')}
-            options={ACTIVITIES.map((activity) => ({
-              value: activity,
-              label: t(`calories.helper.activityLevels.${activity}`),
-            }))}
-            onChange={(event) => edit({ activity: event.target.value as BodyActivity })}
-          />
+          {/* Stacked in-flow list — a menu dropdown would be clipped by the dialog overflow. */}
+          <div className="block min-w-0 space-y-1.5">
+            <span id="calorie-helper-activity" className="text-sm font-medium text-ink">
+              {t('calories.helper.activity')}
+            </span>
+            <div
+              role="listbox"
+              aria-labelledby="calorie-helper-activity"
+              className="grid min-w-0 grid-cols-1 gap-1.5 rounded-2xl bg-brand-50/40 p-1.5 ring-1 ring-line/70"
+            >
+              {ACTIVITIES.map((activity) => {
+                const active = draft.activity === activity;
+                return (
+                  <button
+                    key={activity}
+                    type="button"
+                    role="option"
+                    aria-selected={active}
+                    className={`min-h-10 rounded-xl px-3 py-2 text-left text-sm font-semibold leading-snug transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
+                      active
+                        ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                        : 'text-muted hover:bg-panel hover:text-ink'
+                    }`}
+                    onClick={() => edit({ activity })}
+                  >
+                    {t(`calories.helper.activityLevels.${activity}`)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           {estimate ? (
             <div className="space-y-3 rounded-2xl bg-brand-50/50 p-4 ring-1 ring-line">
