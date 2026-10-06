@@ -98,6 +98,7 @@ export const updateMeSchema = z
 
 export const onboardingSchema = z.object({
   modules: z.array(z.string().trim().min(1).max(32)).min(1).max(12),
+  nutritionMacros: z.boolean().optional(),
 });
 
 export const verifyEmailSchema = z.object({

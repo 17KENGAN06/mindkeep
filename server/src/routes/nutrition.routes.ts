@@ -6,6 +6,7 @@ import { foodScanRateLimit } from '@/middleware/foodScanRateLimit.js';
 import { validate } from '@/middleware/validate.js';
 import {
   createMealSchema,
+  estimateCaloriesSchema,
   mealIdParamsSchema,
   nutritionPeriodQuerySchema,
   scanFoodSchema,
@@ -26,10 +27,21 @@ nutritionRouter.get(
   asyncHandler((req, res) => nutritionController.listPeriod(req, res)),
 );
 
+nutritionRouter.get(
+  '/settings',
+  asyncHandler((req, res) => nutritionController.getSettings(req, res)),
+);
+
 nutritionRouter.patch(
   '/settings',
   validate(updateNutritionSettingsSchema),
   asyncHandler((req, res) => nutritionController.updateSettings(req, res)),
+);
+
+nutritionRouter.post(
+  '/calorie-estimate',
+  validate(estimateCaloriesSchema),
+  asyncHandler((req, res) => nutritionController.estimateCalories(req, res)),
 );
 
 nutritionRouter.put(

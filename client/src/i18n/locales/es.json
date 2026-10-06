@@ -930,6 +930,65 @@
     "weightUp": "Sube +{{kg}} kg",
     "weightDown": "Baja −{{kg}} kg",
     "weightFlat": "Sin cambios",
+    "helper": {
+      "open": "Calcular mi objetivo",
+      "openHint": "Hace unas preguntas y propone un objetivo diario y un peso objetivo.",
+      "title": "Calcular un objetivo diario",
+      "lead": "Cuéntanos sobre tu cuerpo y el peso al que quieres llegar. El resultado es solo un punto de partida.",
+      "sex": "Sexo",
+      "sexFemale": "Mujer",
+      "sexMale": "Hombre",
+      "age": "Edad, años",
+      "height": "Altura, cm",
+      "weight": "Peso actual, kg",
+      "target": "Peso objetivo, kg",
+      "activity": "Actividad",
+      "activityPlaceholder": "Elige qué tan activa es tu semana",
+      "activityLevels": {
+        "sedentary": "Casi siempre sentado",
+        "light": "Ligera, 1–3 entrenamientos por semana",
+        "moderate": "Media, 3–5 entrenamientos por semana",
+        "high": "Alta, 6–7 entrenamientos por semana",
+        "athlete": "Muy alta, trabajo físico o dos sesiones al día"
+      },
+      "calculate": "Calcular",
+      "recalculate": "Recalcular",
+      "apply": "Usar estos números",
+      "result": "Objetivo diario propuesto",
+      "maintenance": "Mantiene tu peso",
+      "bmi": "IMC en el peso objetivo",
+      "modeLose": "Un déficit moderado para acercarte al peso objetivo.",
+      "modeGain": "Un superávit moderado para acercarte al peso objetivo.",
+      "modeHold": "Lo justo para mantener tu peso actual.",
+      "notes": {
+        "targetBelowHealthy": "Ese peso objetivo está por debajo del rango de IMC saludable. Habla con un médico antes de buscarlo.",
+        "targetAboveHealthy": "Ese peso objetivo está por encima del rango de IMC saludable. Habla con un médico antes de buscarlo.",
+        "bigChange": "Es un cambio grande. Ve por pasos más pequeños y consúltalo con un médico.",
+        "floored": "Un déficit más profundo dejaría de cubrir tus necesidades básicas, así que el objetivo se subió a un mínimo seguro."
+      },
+      "disclaimer": "Es una estimación aproximada con una fórmula estándar. No sabe nada de tu salud, tu medicación, un embarazo ni tu historial de entrenamiento. Usa tu propio criterio y pregunta a un médico o a un dietista antes de cambiar cómo comes.",
+      "ack": "Entiendo que esto es solo una estimación y que decido yo.",
+      "errors": {
+        "invalid": "Rellena cada campo con números realistas: edad 10–120, altura 80–250 cm, peso 20–400 kg."
+      }
+    },
+    "macros": {
+      "title": "Proteínas, grasas, carbohidratos",
+      "on": "Activado",
+      "off": "Desactivado",
+      "offHint": "Actívalo para registrar los gramos de proteínas, grasas y carbohidratos junto a las calorías.",
+      "protein": "Proteínas",
+      "fat": "Grasas",
+      "carbs": "Carbohidratos",
+      "proteinShort": "P",
+      "fatShort": "G",
+      "carbsShort": "C",
+      "grams": "g",
+      "gramsShort": "gramos",
+      "partial": "Macros anotados en {{tracked}} de {{total}} comidas de hoy.",
+      "invalid": "Los gramos deben ser un número entre 0 y 2000",
+      "scanHint": "Con Pro esto se rellena desde la foto. Corrige lo que no cuadre."
+    },
     "errors": {
       "title": "Ponle un nombre a la comida",
       "calories": "Introduce las calorías",
@@ -1619,6 +1678,10 @@
         "title": "Nutrición y cuerpo",
         "text": "Comidas con calorías, agua del día y peso en un gráfico. Para ver cómo comes y cómo cambia el cuerpo, sin otra app."
       }
+    },
+    "nutritionMacros": {
+      "title": "Contar también proteínas, grasas y carbohidratos",
+      "text": "Añade tres campos en gramos junto a las calorías. Pro los rellena desde la foto. Puedes cambiarlo después en Ajustes."
     }
   },
   "settings": {
@@ -1626,6 +1689,8 @@
     "subtitle": "Elige qué aparece en el menú y en el resumen. Puedes cambiarlo cuando quieras.",
     "modulesTitle": "Servicios",
     "modulesHint": "Los servicios apagados desaparecen de la cabecera y del resumen. Tus datos se quedan.",
+    "macrosTitle": "Proteínas, grasas y carbohidratos",
+    "macrosHint": "Añade campos en gramos junto a las calorías en Nutrición. Pro los rellena desde la foto.",
     "appearanceTitle": "Apariencia",
     "saved": "Guardado.",
     "needOne": "Deja al menos un servicio activado."

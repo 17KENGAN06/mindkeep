@@ -930,6 +930,65 @@
     "weightUp": "Wzrost +{{kg}} kg",
     "weightDown": "Spadek −{{kg}} kg",
     "weightFlat": "Bez zmian",
+    "helper": {
+      "open": "Oblicz moją normę",
+      "openHint": "Zada kilka pytań i zaproponuje dzienną normę oraz wagę docelową.",
+      "title": "Obliczenie dziennej normy",
+      "lead": "Powiedz coś o sobie i o wadze, do której dążysz. Wynik to tylko punkt wyjścia.",
+      "sex": "Płeć",
+      "sexFemale": "Kobieta",
+      "sexMale": "Mężczyzna",
+      "age": "Wiek, lata",
+      "height": "Wzrost, cm",
+      "weight": "Obecna waga, kg",
+      "target": "Waga docelowa, kg",
+      "activity": "Aktywność",
+      "activityPlaceholder": "Wybierz, jak aktywny jest twój tydzień",
+      "activityLevels": {
+        "sedentary": "Głównie siedząca",
+        "light": "Niewielka, 1–3 treningi w tygodniu",
+        "moderate": "Średnia, 3–5 treningów w tygodniu",
+        "high": "Wysoka, 6–7 treningów w tygodniu",
+        "athlete": "Bardzo wysoka, praca fizyczna albo dwa treningi dziennie"
+      },
+      "calculate": "Oblicz",
+      "recalculate": "Przelicz",
+      "apply": "Użyj tych liczb",
+      "result": "Proponowana dzienna norma",
+      "maintenance": "Utrzymuje obecną wagę",
+      "bmi": "BMI przy wadze docelowej",
+      "modeLose": "Umiarkowany deficyt, żeby iść w stronę wagi docelowej.",
+      "modeGain": "Umiarkowana nadwyżka, żeby iść w stronę wagi docelowej.",
+      "modeHold": "Tyle, żeby utrzymać obecną wagę.",
+      "notes": {
+        "targetBelowHealthy": "Ta waga docelowa jest poniżej zdrowego zakresu BMI. Zanim do niej pójdziesz, porozmawiaj z lekarzem.",
+        "targetAboveHealthy": "Ta waga docelowa jest powyżej zdrowego zakresu BMI. Zanim do niej pójdziesz, porozmawiaj z lekarzem.",
+        "bigChange": "To duża zmiana. Idź do niej mniejszymi krokami i skonsultuj się z lekarzem.",
+        "floored": "Głębszy deficyt przestałby pokrywać podstawowe potrzeby, więc norma została podniesiona do bezpiecznego minimum."
+      },
+      "disclaimer": "To zgrubne oszacowanie według standardowego wzoru. Nie wie nic o twoim zdrowiu, lekach, ciąży ani historii treningów. Kieruj się własnym rozsądkiem i zapytaj lekarza albo dietetyka, zanim zmienisz sposób jedzenia.",
+      "ack": "Rozumiem, że to tylko oszacowanie, i decyduję sam.",
+      "errors": {
+        "invalid": "Wypełnij wszystkie pola realnymi liczbami: wiek 10–120, wzrost 80–250 cm, waga 20–400 kg."
+      }
+    },
+    "macros": {
+      "title": "Białko, tłuszcz, węglowodany",
+      "on": "Wł",
+      "off": "Wył",
+      "offHint": "Włącz, żeby obok kalorii zapisywać gramy białka, tłuszczu i węglowodanów.",
+      "protein": "Białko",
+      "fat": "Tłuszcz",
+      "carbs": "Węglowodany",
+      "proteinShort": "B",
+      "fatShort": "T",
+      "carbsShort": "W",
+      "grams": "g",
+      "gramsShort": "gramy",
+      "partial": "Makro wpisane w {{tracked}} z {{total}} posiłków na dziś.",
+      "invalid": "Gramy to liczba od 0 do 2000",
+      "scanHint": "W Pro wypełnia się to ze zdjęcia. Popraw, jeśli coś nie pasuje."
+    },
     "errors": {
       "title": "Nadaj posiłkowi nazwę",
       "calories": "Podaj kalorie",
@@ -1619,6 +1678,10 @@
         "title": "Odżywianie i ciało",
         "text": "Posiłki z kaloriami, woda w ciągu dnia i waga na wykresie. Żeby widzieć, jak jesz i jak zmienia się ciało, bez osobnej aplikacji."
       }
+    },
+    "nutritionMacros": {
+      "title": "Liczyć też białko, tłuszcz i węglowodany",
+      "text": "Doda trzy pola w gramach obok kalorii. Na Pro uzupełnia je zdjęcie jedzenia. Możesz to zmienić później w ustawieniach."
     }
   },
   "settings": {
@@ -1626,6 +1689,8 @@
     "subtitle": "Wybierz, co widać w menu i przeglądzie. Możesz to zmienić w każdej chwili.",
     "modulesTitle": "Usługi",
     "modulesHint": "Wyłączone usługi znikną z nagłówka i przeglądu. Dane zostaną.",
+    "macrosTitle": "Białko, tłuszcz i węglowodany",
+    "macrosHint": "Doda pola w gramach obok kalorii w żywieniu. Na Pro uzupełnia je zdjęcie jedzenia.",
     "appearanceTitle": "Wygląd",
     "saved": "Zapisano.",
     "needOne": "Zostaw włączoną przynajmniej jedną usługę."

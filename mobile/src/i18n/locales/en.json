@@ -184,6 +184,62 @@
     "weightHint": "Log weight for the selected day. The average is for this month.",
     "weightGuide": "The chart points are your weigh-ins. Keep logging to see the rise and fall.",
     "weightDecimalHint": "Decimals are fine: 84.1, 84.5, 92.3",
+    "helper": {
+      "open": "Estimate my goal",
+      "openHint": "Answers a few questions and suggests a daily goal plus a target weight.",
+      "title": "Estimate a daily goal",
+      "lead": "Tell us about your body and the weight you aim for. The result is only a starting point.",
+      "sex": "Sex",
+      "sexFemale": "Female",
+      "sexMale": "Male",
+      "age": "Age, years",
+      "height": "Height, cm",
+      "weight": "Current weight, kg",
+      "target": "Target weight, kg",
+      "activity": "Activity",
+      "activityLevels": {
+        "sedentary": "Sitting",
+        "light": "Light",
+        "moderate": "Moderate",
+        "high": "High",
+        "athlete": "Very high"
+      },
+      "calculate": "Calculate",
+      "recalculate": "Recalculate",
+      "apply": "Use these numbers",
+      "result": "Suggested daily goal",
+      "maintenance": "Holds your weight",
+      "bmi": "BMI at target weight",
+      "modeLose": "A moderate deficit to move toward the target weight.",
+      "modeGain": "A moderate surplus to move toward the target weight.",
+      "modeHold": "Enough to hold your current weight.",
+      "notes": {
+        "targetBelowHealthy": "That target weight is below the healthy BMI range. Talk to a doctor before aiming for it.",
+        "targetAboveHealthy": "That target weight is above the healthy BMI range. Talk to a doctor before aiming for it.",
+        "bigChange": "That is a large change. Take it in smaller steps and check in with a doctor.",
+        "floored": "A deeper deficit would stop covering your basic needs, so the goal was raised to a safe floor."
+      },
+      "disclaimer": "This is a rough estimate from a standard formula. It knows nothing about your health, medication, pregnancy, or training history. Use your own judgement and ask a doctor or dietitian before you change how you eat.",
+      "ack": "I understand this is only an estimate and I decide for myself.",
+      "errors": {
+        "invalid": "Fill every field with realistic numbers: age 10–120, height 80–250 cm, weight 20–400 kg."
+      }
+    },
+    "macros": {
+      "title": "Protein, fat, carbs",
+      "on": "On",
+      "off": "Off",
+      "offHint": "Turn it on to log grams of protein, fat and carbs next to calories.",
+      "protein": "Protein",
+      "fat": "Fat",
+      "carbs": "Carbs",
+      "proteinShort": "P",
+      "fatShort": "F",
+      "carbsShort": "C",
+      "grams": "g",
+      "gramsShort": "grams",
+      "invalid": "Grams should be a number between 0 and 2000"
+    },
     "weightGoal": "Target weight, kg",
     "weightToday": "Weight for the day, kg",
     "kg": "kg",
@@ -848,6 +904,10 @@
     "finishBody": "You can turn services on or off later in More → Settings.",
     "finish": "Go to workspace",
     "needOne": "Choose at least one service to continue.",
+    "nutritionMacros": {
+      "title": "Also count protein, fat and carbs",
+      "text": "Adds three gram fields next to calories. Pro fills them in from a food photo. You can switch this later in Settings."
+    },
     "modules": {
       "tasks": {
         "title": "Daily tasks",
@@ -880,6 +940,8 @@
     "subtitle": "Choose what appears in the menu and overview. You can change this anytime.",
     "modulesTitle": "Services",
     "modulesHint": "Services you switch off disappear from the header and overview. Your data stays.",
+    "macrosTitle": "Protein, fat and carbs",
+    "macrosHint": "Adds gram fields next to calories in Nutrition. Pro fills them in from a food photo.",
     "appearanceTitle": "Appearance",
     "saved": "Saved.",
     "needOne": "Keep at least one service on.",

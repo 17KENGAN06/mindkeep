@@ -184,6 +184,62 @@
     "weightHint": "Registra il peso per il giorno selezionato. La media è di questo mese.",
     "weightGuide": "I punti del grafico sono le tue pesate. Continua a registrare per vedere salita e discesa.",
     "weightDecimalHint": "I decimali vanno bene: 84.1, 84.5, 92.3",
+    "helper": {
+      "open": "Calcola il mio obiettivo",
+      "openHint": "Fa qualche domanda e propone un obiettivo giornaliero e un peso obiettivo.",
+      "title": "Calcola un obiettivo giornaliero",
+      "lead": "Raccontaci del tuo corpo e del peso a cui vuoi arrivare. Il risultato è solo un punto di partenza.",
+      "sex": "Sesso",
+      "sexFemale": "Femmina",
+      "sexMale": "Maschio",
+      "age": "Età, anni",
+      "height": "Altezza, cm",
+      "weight": "Peso attuale, kg",
+      "target": "Peso obiettivo, kg",
+      "activity": "Attività",
+      "activityLevels": {
+        "sedentary": "Seduto",
+        "light": "Leggera",
+        "moderate": "Media",
+        "high": "Alta",
+        "athlete": "Molto alta"
+      },
+      "calculate": "Calcola",
+      "recalculate": "Ricalcola",
+      "apply": "Usa questi numeri",
+      "result": "Obiettivo giornaliero proposto",
+      "maintenance": "Mantiene il tuo peso",
+      "bmi": "BMI al peso obiettivo",
+      "modeLose": "Un deficit moderato per avvicinarti al peso obiettivo.",
+      "modeGain": "Un surplus moderato per avvicinarti al peso obiettivo.",
+      "modeHold": "Quanto basta per mantenere il peso attuale.",
+      "notes": {
+        "targetBelowHealthy": "Questo peso obiettivo è sotto l’intervallo di BMI sano. Parlane con un medico prima di puntarci.",
+        "targetAboveHealthy": "Questo peso obiettivo è sopra l’intervallo di BMI sano. Parlane con un medico prima di puntarci.",
+        "bigChange": "È un cambiamento grande. Affrontalo a passi più piccoli e fai un controllo con un medico.",
+        "floored": "Un deficit più profondo non coprirebbe più i bisogni di base, quindi l’obiettivo è stato alzato a un minimo sicuro."
+      },
+      "disclaimer": "È una stima approssimativa da una formula standard. Non sa nulla della tua salute, dei farmaci, di una gravidanza o della tua storia di allenamenti. Usa il tuo giudizio e chiedi a un medico o a un dietista prima di cambiare come mangi.",
+      "ack": "Capisco che è solo una stima e che decido io.",
+      "errors": {
+        "invalid": "Compila ogni campo con numeri realistici: età 10–120, altezza 80–250 cm, peso 20–400 kg."
+      }
+    },
+    "macros": {
+      "title": "Proteine, grassi, carboidrati",
+      "on": "Attivo",
+      "off": "Spento",
+      "offHint": "Attivalo per registrare i grammi di proteine, grassi e carboidrati accanto alle calorie.",
+      "protein": "Proteine",
+      "fat": "Grassi",
+      "carbs": "Carboidrati",
+      "proteinShort": "P",
+      "fatShort": "G",
+      "carbsShort": "C",
+      "grams": "g",
+      "gramsShort": "grammi",
+      "invalid": "I grammi devono essere un numero tra 0 e 2000"
+    },
     "weightGoal": "Peso obiettivo, kg",
     "weightToday": "Peso del giorno, kg",
     "kg": "kg",
@@ -873,6 +929,10 @@
         "title": "Nutrizione e corpo",
         "text": "Pasti con calorie, acqua della giornata e peso sul grafico. Per vedere come mangi e come cambia il corpo, senza un’altra app."
       }
+    },
+    "nutritionMacros": {
+      "title": "Contare anche proteine, grassi e carboidrati",
+      "text": "Aggiunge tre campi in grammi accanto alle calorie. Pro li compila dalla foto. Puoi cambiarlo dopo nelle impostazioni."
     }
   },
   "settings": {
@@ -880,6 +940,8 @@
     "subtitle": "Scegli cosa compare nel menu e nella panoramica. Puoi cambiarlo quando vuoi.",
     "modulesTitle": "Servizi",
     "modulesHint": "I servizi spenti spariscono dall’intestazione e dalla panoramica. I dati restano.",
+    "macrosTitle": "Proteine, grassi e carboidrati",
+    "macrosHint": "Aggiunge campi in grammi accanto alle calorie in Alimentazione. Pro li compila dalla foto.",
     "appearanceTitle": "Aspetto",
     "saved": "Salvato.",
     "needOne": "Tieni acceso almeno un servizio.",

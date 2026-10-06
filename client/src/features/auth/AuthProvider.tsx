@@ -109,8 +109,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const completeOnboarding = useCallback(
-    async (modules: string[]) => {
-      const result = await authApi.completeOnboarding({ modules });
+    async (modules: string[], nutritionMacros?: boolean) => {
+      const result = await authApi.completeOnboarding({
+        modules,
+        ...(nutritionMacros === undefined ? {} : { nutritionMacros }),
+      });
       return applySession(result.user);
     },
     [applySession],

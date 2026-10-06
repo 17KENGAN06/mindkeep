@@ -1,7 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { nutritionApi } from '../../api/nutrition';
 import { touchPlanUsage } from '../billing/planLimit';
-import type { CreateMealPayload, NutritionSettings, UpdateMealPayload } from '../../types/nutrition';
+import type {
+  CalorieEstimatePayload,
+  CreateMealPayload,
+  NutritionSettings,
+  UpdateMealPayload,
+} from '../../types/nutrition';
 
 const nutritionKey = ['nutrition'] as const;
 
@@ -14,6 +19,20 @@ export function useNutritionPeriod(year: number, month: number, enabled = true) 
     queryKey: [...nutritionKey, year, month],
     queryFn: () => nutritionApi.getPeriod(year, month),
     enabled,
+  });
+}
+
+export function useNutritionSettings(enabled = true) {
+  return useQuery({
+    queryKey: [...nutritionKey, 'settings'],
+    queryFn: () => nutritionApi.getSettings(),
+    enabled,
+  });
+}
+
+export function useEstimateCalories() {
+  return useMutation({
+    mutationFn: (payload: CalorieEstimatePayload) => nutritionApi.estimateCalories(payload),
   });
 }
 

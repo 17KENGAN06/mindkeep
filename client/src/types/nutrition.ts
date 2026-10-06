@@ -1,14 +1,41 @@
+export type BodySex = 'male' | 'female';
+export type BodyActivity = 'sedentary' | 'light' | 'moderate' | 'high' | 'athlete';
+
 export type NutritionSettings = {
   calorieGoal: number;
   waterGoal: number;
   stepsGoal: number;
   weightGoal: number | null;
+  macrosEnabled: boolean;
+  bodySex: BodySex | null;
+  bodyAge: number | null;
+  bodyHeightCm: number | null;
+  bodyActivity: BodyActivity | null;
+};
+
+export type CalorieEstimateNote =
+  | 'targetBelowHealthy'
+  | 'targetAboveHealthy'
+  | 'bigChange'
+  | 'floored';
+
+export type CalorieEstimate = {
+  calories: number;
+  maintenance: number;
+  basal: number;
+  mode: 'lose' | 'gain' | 'hold';
+  targetWeightKg: number;
+  targetBmi: number;
+  notes: CalorieEstimateNote[];
 };
 
 export type Meal = {
   id: string;
   title: string;
   calories: number;
+  protein?: number | null;
+  fat?: number | null;
+  carbs?: number | null;
   date: string;
   kind?: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'extra' | null;
   userId: string;
@@ -35,6 +62,9 @@ export type NutritionDaySummary = {
   date: string;
   calories: number;
   mealCount: number;
+  protein?: number;
+  fat?: number;
+  carbs?: number;
   waterGlasses: number;
   weightKg: number | null;
   overeating: boolean;

@@ -8,6 +8,10 @@ import { detectDeviceTimezone } from '../../config/timezones';
 import { APP_MODULES, selectedModules, type AppModule } from '../../config/appModules';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
+import {
+  useNutritionSettings,
+  useUpdateNutritionSettings,
+} from '../../features/nutrition/useNutrition';
 import { useTheme } from '../../features/theme/useTheme';
 
 export function SettingsScreen() {
@@ -19,6 +23,13 @@ export function SettingsScreen() {
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
   const timezone = user?.timezone || detectDeviceTimezone();
+
+  const nutritionEnabled = modules.includes('nutrition');
+  const nutritionSettings = useNutritionSettings(nutritionEnabled);
+  const updateNutrition = useUpdateNutritionSettings();
+  const [macros, setMacros] = useState<boolean | null>(null);
+  const savedMacros = nutritionSettings.data?.settings.macrosEnabled ?? null;
+  const macrosOn = macros ?? savedMacros ?? false;
 
   const toggle = (module: AppModule) => {
     setSaved(false);
@@ -37,6 +48,9 @@ export function SettingsScreen() {
     setSaved(false);
     try {
       await updateWorkspace({ enabledModules: modules });
+      if (nutritionEnabled && macros != null && macros !== savedMacros) {
+        await updateNutrition.mutateAsync({ macrosEnabled: macros });
+      }
       setSaved(true);
     } catch (caught) {
       setError(mapAuthError(caught, t));
@@ -81,6 +95,41 @@ export function SettingsScreen() {
             </Pressable>
           );
         })}
+
+        {nutritionEnabled ? (
+          <Pressable
+            accessibilityRole="switch"
+            accessibilityState={{ checked: macrosOn }}
+            onPress={() => {
+              setSaved(false);
+              setMacros(!macrosOn);
+            }}
+            style={[
+              styles.card,
+              { borderColor: macrosOn ? colors.brand : colors.line, backgroundColor: colors.panel },
+            ]}
+          >
+            <View
+              style={[
+                styles.check,
+                {
+                  borderColor: macrosOn ? colors.brand : colors.line,
+                  backgroundColor: macrosOn ? colors.brand : 'transparent',
+                },
+              ]}
+            >
+              {macrosOn ? <AppIcon name="checkmark" color={colors.onBrand} size={14} /> : null}
+            </View>
+            <View style={styles.copy}>
+              <Text style={[styles.cardTitle, { color: colors.ink }]}>
+                {t('settings.macrosTitle')}
+              </Text>
+              <Text style={[styles.cardHint, { color: colors.muted }]}>
+                {t('settings.macrosHint')}
+              </Text>
+            </View>
+          </Pressable>
+        ) : null}
 
         <Pressable
           disabled={busy}

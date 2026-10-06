@@ -1,5 +1,7 @@
 import { apiClient } from './client';
 import type {
+  CalorieEstimate,
+  CalorieEstimatePayload,
   CreateMealPayload,
   Meal,
   NutritionPeriodResponse,
@@ -12,8 +14,11 @@ import type {
 export const nutritionApi = {
   getPeriod: (year: number, month: number) =>
     apiClient.get<NutritionPeriodResponse>(`/api/nutrition?year=${year}&month=${month}`),
+  getSettings: () => apiClient.get<{ settings: NutritionSettings }>('/api/nutrition/settings'),
   updateSettings: (payload: Partial<NutritionSettings>) =>
     apiClient.patch<{ settings: NutritionSettings }>('/api/nutrition/settings', payload),
+  estimateCalories: (payload: CalorieEstimatePayload) =>
+    apiClient.post<{ estimate: CalorieEstimate }>('/api/nutrition/calorie-estimate', payload),
   createMeal: (payload: CreateMealPayload) =>
     apiClient.post<{ meal: Meal }>('/api/nutrition/meals', payload),
   updateMeal: (id: string, payload: UpdateMealPayload) =>

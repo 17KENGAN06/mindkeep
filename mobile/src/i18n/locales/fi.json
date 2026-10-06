@@ -184,6 +184,62 @@
     "weightHint": "Kirjaa paino valitulle päivälle. Keskiarvo lasketaan tältä kuukaudelta.",
     "weightGuide": "Kaavion pisteet ovat mittauksiasi. Jatka kirjaamista, niin näet nousun ja laskun.",
     "weightDecimalHint": "Desimaalit käyvät: 84.1, 84.5, 92.3",
+    "helper": {
+      "open": "Laske tavoitteeni",
+      "openHint": "Kysyy pari kysymystä ja ehdottaa päivätavoitteen sekä tavoitepainon.",
+      "title": "Laske päivätavoite",
+      "lead": "Kerro kehostasi ja painosta, johon tähtäät. Tulos on vain lähtökohta.",
+      "sex": "Sukupuoli",
+      "sexFemale": "Nainen",
+      "sexMale": "Mies",
+      "age": "Ikä, vuotta",
+      "height": "Pituus, cm",
+      "weight": "Nykyinen paino, kg",
+      "target": "Tavoitepaino, kg",
+      "activity": "Aktiivisuus",
+      "activityLevels": {
+        "sedentary": "Istuva",
+        "light": "Kevyt",
+        "moderate": "Kohtalainen",
+        "high": "Korkea",
+        "athlete": "Erittäin korkea"
+      },
+      "calculate": "Laske",
+      "recalculate": "Laske uudelleen",
+      "apply": "Käytä näitä lukuja",
+      "result": "Ehdotettu päivätavoite",
+      "maintenance": "Pitää painon ennallaan",
+      "bmi": "BMI tavoitepainossa",
+      "modeLose": "Kohtuullinen vaje, jolla liikut kohti tavoitepainoa.",
+      "modeGain": "Kohtuullinen ylijäämä, jolla liikut kohti tavoitepainoa.",
+      "modeHold": "Riittää nykyisen painon ylläpitoon.",
+      "notes": {
+        "targetBelowHealthy": "Tämä tavoitepaino on terveen BMI-alueen alapuolella. Keskustele lääkärin kanssa ennen kuin tähtäät siihen.",
+        "targetAboveHealthy": "Tämä tavoitepaino on terveen BMI-alueen yläpuolella. Keskustele lääkärin kanssa ennen kuin tähtäät siihen.",
+        "bigChange": "Tämä on suuri muutos. Ota se pienemmin askelin ja käy lääkärin tarkastuksessa.",
+        "floored": "Syvempi vaje ei enää kattaisi perustarpeitasi, joten tavoite nostettiin turvalliseen alarajaan."
+      },
+      "disclaimer": "Tämä on karkea arvio vakiokaavalla. Se ei tiedä mitään terveydestäsi, lääkityksestäsi, raskaudesta tai harjoitushistoriastasi. Käytä omaa harkintaa ja kysy lääkäriltä tai ravitsemusterapeutilta, ennen kuin muutat syömistäsi.",
+      "ack": "Ymmärrän, että tämä on vain arvio ja päätän itse.",
+      "errors": {
+        "invalid": "Täytä kaikki kentät realistisilla luvuilla: ikä 10–120, pituus 80–250 cm, paino 20–400 kg."
+      }
+    },
+    "macros": {
+      "title": "Proteiini, rasva, hiilihydraatit",
+      "on": "Päällä",
+      "off": "Pois",
+      "offHint": "Kytke päälle, niin voit kirjata proteiinin, rasvan ja hiilihydraattien grammat kalorien rinnalle.",
+      "protein": "Proteiini",
+      "fat": "Rasva",
+      "carbs": "Hiilihydraatit",
+      "proteinShort": "P",
+      "fatShort": "R",
+      "carbsShort": "H",
+      "grams": "g",
+      "gramsShort": "grammat",
+      "invalid": "Grammojen tulee olla luku väliltä 0–2000"
+    },
     "weightGoal": "Tavoitepaino, kg",
     "weightToday": "Päivän paino, kg",
     "kg": "kg",
@@ -873,6 +929,10 @@
         "title": "Ravinto ja keho",
         "text": "Ateriat kaloreineen, päivän vesi ja paino käyrällä. Näet, miten syöt ja miten keho muuttuu, ilman erillistä sovellusta."
       }
+    },
+    "nutritionMacros": {
+      "title": "Laske myös proteiinit, rasvat ja hiilihydraatit",
+      "text": "Lisää kolme grammakenttää kalorien viereen. Pro täyttää ne ruoka-kuvasta. Voit vaihtaa tämän myöhemmin asetuksissa."
     }
   },
   "settings": {
@@ -880,6 +940,8 @@
     "subtitle": "Valitse, mitä näkyy valikossa ja yleiskatsauksessa. Voit muuttaa tätä milloin vain.",
     "modulesTitle": "Palvelut",
     "modulesHint": "Pois kytketyt palvelut katoavat yläpalkista ja yleiskatsauksesta. Tiedot säilyvät.",
+    "macrosTitle": "Proteiinit, rasvat ja hiilihydraatit",
+    "macrosHint": "Lisää grammakentät kalorien viereen Ravinnossa. Pro täyttää ne ruoka-kuvasta.",
     "appearanceTitle": "Ulkoasu",
     "saved": "Tallennettu.",
     "needOne": "Jätä vähintään yksi palvelu päälle.",

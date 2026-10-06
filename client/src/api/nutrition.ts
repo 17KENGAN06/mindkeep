@@ -1,5 +1,8 @@
 import { apiClient } from '@/api/client';
 import type {
+  BodyActivity,
+  BodySex,
+  CalorieEstimate,
   Meal,
   NutritionPeriodResponse,
   NutritionSettings,
@@ -10,28 +13,49 @@ import type {
 
 import type { MealKind } from '@/features/nutrition/mealKinds';
 
-export type CreateMealPayload = {
+export type MealMacrosPayload = {
+  protein?: number | null;
+  fat?: number | null;
+  carbs?: number | null;
+};
+
+export type CreateMealPayload = MealMacrosPayload & {
   title: string;
   calories: number;
   date: string;
   kind?: MealKind;
 };
 
-export type UpdateMealPayload = {
+export type UpdateMealPayload = MealMacrosPayload & {
   title?: string;
   calories?: number;
+};
+
+export type CalorieEstimatePayload = {
+  sex: BodySex;
+  age: number;
+  heightCm: number;
+  weightKg: number;
+  activity: BodyActivity;
+  targetWeightKg: number;
 };
 
 export type FoodScanEstimate = {
   mealName: string;
   totalCalories: number;
+  protein?: number;
+  fat?: number;
+  carbs?: number;
 };
 
 export const nutritionApi = {
   getPeriod: (year: number, month: number) =>
     apiClient.get<NutritionPeriodResponse>(`/api/nutrition?year=${year}&month=${month}`),
+  getSettings: () => apiClient.get<{ settings: NutritionSettings }>('/api/nutrition/settings'),
   updateSettings: (payload: Partial<NutritionSettings>) =>
     apiClient.patch<{ settings: NutritionSettings }>('/api/nutrition/settings', payload),
+  estimateCalories: (payload: CalorieEstimatePayload) =>
+    apiClient.post<{ estimate: CalorieEstimate }>('/api/nutrition/calorie-estimate', payload),
   scanFood: (payload: {
     note?: string;
     images?: Array<{ image: string; mimeType: 'image/jpeg' | 'image/png' | 'image/webp' }>;

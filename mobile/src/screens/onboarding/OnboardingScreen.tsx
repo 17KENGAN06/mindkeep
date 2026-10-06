@@ -14,6 +14,7 @@ export function OnboardingScreen() {
   const { completeOnboarding, logout } = useAuth();
   const [step, setStep] = useState(-1);
   const [picked, setPicked] = useState<AppModule[]>([]);
+  const [macros, setMacros] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const total = APP_MODULES.length;
@@ -25,6 +26,7 @@ export function OnboardingScreen() {
   const choose = (want: boolean) => {
     if (!module) return;
     setError(null);
+    if (module === 'nutrition' && !want) setMacros(false);
     setPicked((current) => {
       const next = current.filter((item) => item !== module);
       return want ? [...next, module] : next;
@@ -40,7 +42,7 @@ export function OnboardingScreen() {
     setBusy(true);
     setError(null);
     try {
-      await completeOnboarding(picked);
+      await completeOnboarding(picked, picked.includes('nutrition') ? macros : undefined);
     } catch (caught) {
       setError(mapAuthError(caught, t));
     } finally {
@@ -97,6 +99,32 @@ export function OnboardingScreen() {
           <Text style={[styles.text, { color: colors.muted }]}>
             {t(`onboarding.modules.${module}.text`)}
           </Text>
+          {module === 'nutrition' ? (
+            <Pressable
+              accessibilityRole="checkbox"
+              accessibilityState={{ checked: macros }}
+              onPress={() => setMacros((value) => !value)}
+              style={[styles.sub, { borderColor: macros ? colors.brand : colors.line }]}
+            >
+              <View
+                style={[
+                  styles.subCheck,
+                  {
+                    borderColor: macros ? colors.brand : colors.line,
+                    backgroundColor: macros ? colors.brand : 'transparent',
+                  },
+                ]}
+              />
+              <View style={styles.subCopy}>
+                <Text style={[styles.subTitle, { color: colors.ink }]}>
+                  {t('onboarding.nutritionMacros.title')}
+                </Text>
+                <Text style={[styles.subText, { color: colors.muted }]}>
+                  {t('onboarding.nutritionMacros.text')}
+                </Text>
+              </View>
+            </Pressable>
+          ) : null}
           <Pressable
             onPress={() => choose(true)}
             style={[styles.button, { backgroundColor: colors.brand }]}
@@ -167,4 +195,16 @@ const styles = StyleSheet.create({
   back: { textAlign: 'center', marginTop: 8, fontSize: 15, fontWeight: '600' },
   error: { marginBottom: 16, fontSize: 14 },
   pick: { borderRadius: 14, marginBottom: 8, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, fontWeight: '600' },
+  sub: {
+    borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 24,
+    padding: 14,
+  },
+  subCheck: { borderRadius: 6, borderWidth: 1, height: 20, marginTop: 2, width: 20 },
+  subCopy: { flex: 1 },
+  subTitle: { fontSize: 15, fontWeight: '700' },
+  subText: { fontSize: 13, lineHeight: 18, marginTop: 4 },
 });

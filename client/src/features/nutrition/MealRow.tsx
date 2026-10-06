@@ -7,10 +7,16 @@ import type { Meal } from '@/types/nutrition';
 type MealRowProps = {
   meal: Meal;
   busy: boolean;
+  showMacros?: boolean;
   onDelete: (id: string) => void;
 };
 
-export function MealRow({ meal, busy, onDelete }: MealRowProps) {
+function formatGrams(value: number): string {
+  const rounded = Math.round(value * 10) / 10;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
+
+export function MealRow({ meal, busy, showMacros = false, onDelete }: MealRowProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const lineRef = useRef<HTMLParagraphElement>(null);
@@ -52,20 +58,34 @@ export function MealRow({ meal, busy, onDelete }: MealRowProps) {
     </p>
   );
 
+  const macros = [
+    { label: t('calories.macros.proteinShort'), value: meal.protein },
+    { label: t('calories.macros.fatShort'), value: meal.fat },
+    { label: t('calories.macros.carbsShort'), value: meal.carbs },
+  ].filter((item): item is { label: string; value: number } => item.value != null);
+
   return (
     <li className="flex items-center gap-3 rounded-2xl bg-brand-50/40 px-3 py-3 ring-1 ring-line">
-      {expandable ? (
-        <button
-          type="button"
-          className="min-w-0 flex-1 rounded-lg text-left touch-manipulation"
-          aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
-        >
-          {text}
-        </button>
-      ) : (
-        <div className="min-w-0 flex-1">{text}</div>
-      )}
+      <div className="min-w-0 flex-1">
+        {expandable ? (
+          <button
+            type="button"
+            className="w-full min-w-0 rounded-lg text-left touch-manipulation"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {text}
+          </button>
+        ) : (
+          text
+        )}
+        {showMacros && macros.length > 0 ? (
+          <p className="mt-1 text-xs tabular-nums text-muted">
+            {macros.map((item) => `${item.label} ${formatGrams(item.value)}`).join(' · ')}{' '}
+            {t('calories.macros.grams')}
+          </p>
+        ) : null}
+      </div>
       <span className="shrink-0 text-sm tabular-nums whitespace-nowrap text-muted">
         {meal.calories} {t('calories.kcal')}
       </span>

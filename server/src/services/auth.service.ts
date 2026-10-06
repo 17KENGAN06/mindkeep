@@ -638,6 +638,15 @@ export class AuthService {
       },
       select: userRecordSelect,
     });
+
+    if (input.nutritionMacros !== undefined && modules.includes('nutrition')) {
+      await prisma.nutritionSettings.upsert({
+        where: { userId },
+        create: { userId, macrosEnabled: input.nutritionMacros },
+        update: { macrosEnabled: input.nutritionMacros },
+      });
+    }
+
     return toPublicUser(await ensureAdminRole(updated));
   }
 

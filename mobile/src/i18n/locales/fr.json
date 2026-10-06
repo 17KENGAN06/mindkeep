@@ -184,6 +184,62 @@
     "weightHint": "Enregistre le poids pour le jour choisi. La moyenne est celle de ce mois.",
     "weightGuide": "Les points du graphique sont tes pesées. Continue pour voir la montée et la descente.",
     "weightDecimalHint": "Les décimales sont acceptées : 84.1, 84.5, 92.3",
+    "helper": {
+      "open": "Estimer mon objectif",
+      "openHint": "Pose quelques questions et propose un objectif journalier et un poids cible.",
+      "title": "Estimer un objectif journalier",
+      "lead": "Parle-nous de ton corps et du poids que tu vises. Le résultat n’est qu’un point de départ.",
+      "sex": "Sexe",
+      "sexFemale": "Femme",
+      "sexMale": "Homme",
+      "age": "Âge, ans",
+      "height": "Taille, cm",
+      "weight": "Poids actuel, kg",
+      "target": "Poids cible, kg",
+      "activity": "Activité",
+      "activityLevels": {
+        "sedentary": "Assis",
+        "light": "Légère",
+        "moderate": "Modérée",
+        "high": "Élevée",
+        "athlete": "Très élevée"
+      },
+      "calculate": "Calculer",
+      "recalculate": "Recalculer",
+      "apply": "Utiliser ces valeurs",
+      "result": "Objectif journalier proposé",
+      "maintenance": "Maintient ton poids",
+      "bmi": "IMC au poids cible",
+      "modeLose": "Un déficit modéré pour aller vers le poids cible.",
+      "modeGain": "Un surplus modéré pour aller vers le poids cible.",
+      "modeHold": "De quoi maintenir ton poids actuel.",
+      "notes": {
+        "targetBelowHealthy": "Ce poids cible est sous la plage d’IMC saine. Parle à un médecin avant de le viser.",
+        "targetAboveHealthy": "Ce poids cible est au-dessus de la plage d’IMC saine. Parle à un médecin avant de le viser.",
+        "bigChange": "C’est un grand changement. Avance par étapes plus petites et fais le point avec un médecin.",
+        "floored": "Un déficit plus profond ne couvrirait plus tes besoins de base, l’objectif a donc été remonté à un plancher sûr."
+      },
+      "disclaimer": "C’est une estimation approximative issue d’une formule standard. Elle ne sait rien de ta santé, de tes médicaments, d’une grossesse ou de ton historique d’entraînement. Fie-toi à ton propre jugement et demande à un médecin ou à un diététicien avant de changer ton alimentation.",
+      "ack": "Je comprends que ce n’est qu’une estimation et que je décide moi-même.",
+      "errors": {
+        "invalid": "Remplis chaque champ avec des valeurs réalistes : âge 10–120, taille 80–250 cm, poids 20–400 kg."
+      }
+    },
+    "macros": {
+      "title": "Protéines, lipides, glucides",
+      "on": "Activé",
+      "off": "Désactivé",
+      "offHint": "Active-le pour noter les grammes de protéines, lipides et glucides à côté des calories.",
+      "protein": "Protéines",
+      "fat": "Lipides",
+      "carbs": "Glucides",
+      "proteinShort": "P",
+      "fatShort": "L",
+      "carbsShort": "G",
+      "grams": "g",
+      "gramsShort": "grammes",
+      "invalid": "Les grammes doivent être un nombre entre 0 et 2000"
+    },
     "weightGoal": "Poids cible, kg",
     "weightToday": "Poids du jour, kg",
     "kg": "kg",
@@ -873,6 +929,10 @@
         "title": "Nutrition et corps",
         "text": "Les repas avec calories, l’eau du jour et le poids sur un graphique. Pour voir comment tu manges et comment le corps change, sans une autre appli."
       }
+    },
+    "nutritionMacros": {
+      "title": "Compter aussi protéines, lipides et glucides",
+      "text": "Ajoute trois champs en grammes à côté des calories. Pro les remplit depuis la photo. Tu pourras le changer plus tard dans les réglages."
     }
   },
   "settings": {
@@ -880,6 +940,8 @@
     "subtitle": "Choisis ce qui apparaît dans le menu et l’aperçu. Tu peux changer ça à tout moment.",
     "modulesTitle": "Services",
     "modulesHint": "Les services désactivés disparaissent de l’en-tête et de l’aperçu. Tes données restent.",
+    "macrosTitle": "Protéines, lipides et glucides",
+    "macrosHint": "Ajoute des champs en grammes à côté des calories dans Nutrition. Pro les remplit depuis la photo.",
     "appearanceTitle": "Apparence",
     "saved": "Enregistré.",
     "needOne": "Garde au moins un service activé.",

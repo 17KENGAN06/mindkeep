@@ -25,6 +25,9 @@ const LANGUAGE_NAME: Record<AppLocale, string> = {
 export type FoodScanEstimate = {
   mealName: string;
   totalCalories: number;
+  protein?: number;
+  fat?: number;
+  carbs?: number;
 };
 
 function throwScan(code: string, message: string, statusCode: number): never {
@@ -82,6 +85,12 @@ export function decodeFoodScanImage(image: string, claimedType: FoodScanMime): F
   return { buffer, mimeType: detected };
 }
 
+function parseScanMacro(value: unknown): number | null {
+  const grams = Number(value);
+  if (!Number.isFinite(grams) || grams < 0 || grams > 2000) return null;
+  return Math.round(grams * 10) / 10;
+}
+
 export function parseFoodScanAiPayload(raw: unknown): FoodScanEstimate {
   if (!raw || typeof raw !== 'object') {
     throwScan('FOOD_NOT_RECOGNIZED', 'Could not recognize a dish', 422);
@@ -93,6 +102,15 @@ export function parseFoodScanAiPayload(raw: unknown): FoodScanEstimate {
     meal_name?: unknown;
     totalCalories?: unknown;
     total_calories?: unknown;
+    protein?: unknown;
+    proteinGrams?: unknown;
+    protein_grams?: unknown;
+    fat?: unknown;
+    fatGrams?: unknown;
+    fat_grams?: unknown;
+    carbs?: unknown;
+    carbsGrams?: unknown;
+    carbs_grams?: unknown;
   };
 
   if (body.recognized === false) {
@@ -112,7 +130,17 @@ export function parseFoodScanAiPayload(raw: unknown): FoodScanEstimate {
     throwScan('FOOD_NOT_RECOGNIZED', 'Could not recognize a dish', 422);
   }
 
-  return { mealName, totalCalories };
+  const protein = parseScanMacro(body.protein ?? body.proteinGrams ?? body.protein_grams);
+  const fat = parseScanMacro(body.fat ?? body.fatGrams ?? body.fat_grams);
+  const carbs = parseScanMacro(body.carbs ?? body.carbsGrams ?? body.carbs_grams);
+
+  return {
+    mealName,
+    totalCalories,
+    ...(protein === null ? {} : { protein }),
+    ...(fat === null ? {} : { fat }),
+    ...(carbs === null ? {} : { carbs }),
+  };
 }
 
 function unwrapJsonText(text: string): string {
@@ -178,10 +206,11 @@ export function foodScanPrompt(locale: AppLocale, note: string | undefined, phot
   return [
     source,
     hint,
-    'Reply with JSON only: {"recognized":boolean,"mealName":string,"totalCalories":integer}',
+    'Reply with JSON only: {"recognized":boolean,"mealName":string,"totalCalories":integer,"protein":number,"fat":number,"carbs":number}',
     `mealName must be in ${language}, max 80 characters.`,
     'If there is no food, set recognized to false, mealName to "", totalCalories to 0.',
     'totalCalories is a typical serving of the whole meal between 1 and 10000.',
+    'protein, fat and carbs are grams for the whole meal, one decimal, 0 to 2000.',
     'No extra keys or markdown.',
   ].join(' ');
 }

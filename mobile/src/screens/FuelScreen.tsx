@@ -4,6 +4,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -18,6 +19,7 @@ import { AppButton, Badge } from '../components/ui';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import { WaterGlasses } from '../components/WaterGlasses';
 import { WeightTrendChart } from '../components/WeightTrendChart';
+import { CalorieHelperModal } from '../features/nutrition/CalorieHelperModal';
 import {
   useCreateMeal,
   useDeleteMeal,
@@ -57,6 +59,40 @@ function clampPercent(value: number): number {
   return Math.min(100, Math.round(value));
 }
 
+type MacroDraft = { protein: string; fat: string; carbs: string };
+
+const emptyMacroDraft: MacroDraft = { protein: '', fat: '', carbs: '' };
+
+function macroDraftFrom(meal: Meal): MacroDraft {
+  return {
+    protein: meal.protein == null ? '' : String(meal.protein),
+    fat: meal.fat == null ? '' : String(meal.fat),
+    carbs: meal.carbs == null ? '' : String(meal.carbs),
+  };
+}
+
+function parseGrams(value: string): number | null | 'invalid' {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const parsed = Number(trimmed.replace(',', '.'));
+  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 2000) return 'invalid';
+  return Math.round(parsed * 10) / 10;
+}
+
+/** Returns null when any field holds something that is not a sane gram amount. */
+function parseMacroDraft(draft: MacroDraft) {
+  const protein = parseGrams(draft.protein);
+  const fat = parseGrams(draft.fat);
+  const carbs = parseGrams(draft.carbs);
+  if (protein === 'invalid' || fat === 'invalid' || carbs === 'invalid') return null;
+  return { protein, fat, carbs };
+}
+
+function formatGrams(value: number): string {
+  const rounded = Math.round(value * 10) / 10;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
+
 export function FuelScreen() {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
@@ -75,6 +111,8 @@ export function FuelScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [helperOpen, setHelperOpen] = useState(false);
+  const [macroDraft, setMacroDraft] = useState<MacroDraft>(emptyMacroDraft);
 
   const periodQuery = useNutritionPeriod(year, month);
   const updateSettings = useUpdateNutritionSettings();
@@ -104,6 +142,7 @@ export function FuelScreen() {
     setEditingId(null);
     setTitle('');
     setKcal('');
+    setMacroDraft(emptyMacroDraft);
     setFormError(null);
   }, [selectedDate]);
 
@@ -119,6 +158,15 @@ export function FuelScreen() {
   const weightGoal = settings?.weightGoal ?? null;
   const calorieGoal = settings?.calorieGoal ?? 2000;
   const waterGoal = settings?.waterGoal ?? 8;
+  const macrosEnabled = settings?.macrosEnabled ?? false;
+  const dayMacros = dayMeals.reduce(
+    (totals, meal) => ({
+      protein: totals.protein + (meal.protein ?? 0),
+      fat: totals.fat + (meal.fat ?? 0),
+      carbs: totals.carbs + (meal.carbs ?? 0),
+    }),
+    { protein: 0, fat: 0, carbs: 0 },
+  );
   const overeating = eaten > calorieGoal;
   const remaining = calorieGoal - eaten;
   const caloriePercent = clampPercent((eaten / Math.max(calorieGoal, 1)) * 100);
@@ -202,6 +250,7 @@ export function FuelScreen() {
     setEditingId(null);
     setTitle('');
     setKcal('');
+    setMacroDraft(emptyMacroDraft);
     setFormError(null);
   };
 
@@ -209,6 +258,7 @@ export function FuelScreen() {
     setEditingId(meal.id);
     setTitle(meal.title);
     setKcal(String(meal.calories));
+    setMacroDraft(macroDraftFrom(meal));
     setFormError(null);
   };
 
@@ -223,20 +273,55 @@ export function FuelScreen() {
       setFormError(t('fuel.errors.calories'));
       return;
     }
+    const macros = macrosEnabled
+      ? parseMacroDraft(macroDraft)
+      : { protein: null, fat: null, carbs: null };
+    if (!macros) {
+      setFormError(t('fuel.macros.invalid'));
+      return;
+    }
     try {
       if (editingId) {
         await updateMeal.mutateAsync({
           id: editingId,
-          payload: { title: title.trim(), calories: Math.round(calories) },
+          payload: {
+            title: title.trim(),
+            calories: Math.round(calories),
+            ...(macrosEnabled ? macros : {}),
+          },
         });
       } else {
         await createMeal.mutateAsync({
           title: title.trim(),
           calories: Math.round(calories),
           date: selectedDate,
+          ...(macros.protein == null ? {} : { protein: macros.protein }),
+          ...(macros.fat == null ? {} : { fat: macros.fat }),
+          ...(macros.carbs == null ? {} : { carbs: macros.carbs }),
         });
       }
       resetMealForm();
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
+    }
+  };
+
+  const onToggleMacros = async () => {
+    setFormError(null);
+    try {
+      await updateSettings.mutateAsync({ macrosEnabled: !macrosEnabled });
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
+    }
+  };
+
+  const onApplyHelper = async (calories: number, targetWeightKg: number) => {
+    setFormError(null);
+    try {
+      await updateSettings.mutateAsync({ calorieGoal: calories, weightGoal: targetWeightKg });
+      setCalorieGoalInput(String(calories));
+      setWeightGoalInput(formatKg(targetWeightKg));
+      setHelperOpen(false);
     } catch (caught) {
       setFormError(mapAuthError(caught, t));
     }
@@ -364,6 +449,12 @@ export function FuelScreen() {
               loading={updateSettings.isPending}
               onPress={() => void onSaveCalorieGoal()}
             />
+            <AppButton
+              variant="secondary"
+              label={t('fuel.helper.open')}
+              onPress={() => setHelperOpen(true)}
+            />
+            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.helper.openHint')}</Text>
 
             <View style={styles.stats}>
               <Stat label={t('fuel.statEaten')} value={`${eaten} ${t('fuel.kcal')}`} />
@@ -395,6 +486,48 @@ export function FuelScreen() {
               />
             </View>
 
+            <View style={styles.macroHead}>
+              <Text style={[styles.sectionTitle, { color: colors.ink }]}>{t('fuel.macros.title')}</Text>
+              <Pressable
+                accessibilityRole="switch"
+                accessibilityState={{ checked: macrosEnabled }}
+                disabled={updateSettings.isPending}
+                onPress={() => void onToggleMacros()}
+                style={[
+                  styles.macroSwitch,
+                  { borderColor: macrosEnabled ? colors.brand : colors.line },
+                  macrosEnabled && { backgroundColor: colors.brand },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.macroSwitchText,
+                    { color: macrosEnabled ? colors.onBrand : colors.muted },
+                  ]}
+                >
+                  {macrosEnabled ? t('fuel.macros.on') : t('fuel.macros.off')}
+                </Text>
+              </Pressable>
+            </View>
+            {macrosEnabled ? (
+              <View style={styles.stats}>
+                <Stat
+                  label={t('fuel.macros.protein')}
+                  value={`${formatGrams(dayMacros.protein)} ${t('fuel.macros.grams')}`}
+                />
+                <Stat
+                  label={t('fuel.macros.fat')}
+                  value={`${formatGrams(dayMacros.fat)} ${t('fuel.macros.grams')}`}
+                />
+                <Stat
+                  label={t('fuel.macros.carbs')}
+                  value={`${formatGrams(dayMacros.carbs)} ${t('fuel.macros.grams')}`}
+                />
+              </View>
+            ) : (
+              <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.macros.offHint')}</Text>
+            )}
+
             <Text style={[styles.sectionTitle, { color: colors.ink }]}>
               {editingId ? t('fuel.editMeal') : t('fuel.addMeal')}
             </Text>
@@ -419,6 +552,32 @@ export function FuelScreen() {
               value={kcal}
               onChangeText={setKcal}
             />
+            {macrosEnabled
+              ? (
+                  [
+                    { key: 'protein' as const, label: t('fuel.macros.protein') },
+                    { key: 'fat' as const, label: t('fuel.macros.fat') },
+                    { key: 'carbs' as const, label: t('fuel.macros.carbs') },
+                  ] as const
+                ).map((macro) => (
+                  <View key={macro.key}>
+                    <Text style={[styles.label, { color: colors.muted }]}>{macro.label}</Text>
+                    <TextInput
+                      keyboardType="decimal-pad"
+                      style={[
+                        styles.input,
+                        { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+                      ]}
+                      value={macroDraft[macro.key]}
+                      onChangeText={(next) =>
+                        setMacroDraft((current) => ({ ...current, [macro.key]: next }))
+                      }
+                      placeholder={t('fuel.macros.gramsShort')}
+                      placeholderTextColor={colors.muted}
+                    />
+                  </View>
+                ))
+              : null}
             <AppButton
               label={editingId ? t('common.save') : t('fuel.saveMeal')}
               loading={createMeal.isPending || updateMeal.isPending}
@@ -439,9 +598,30 @@ export function FuelScreen() {
                     editingId === meal.id && { borderColor: colors.brand, borderRadius: 12, borderWidth: 1, padding: 6 },
                   ]}
                 >
-                  <Text style={[styles.mealTitle, { color: colors.ink }]} numberOfLines={1}>
-                    {meal.title}
-                  </Text>
+                  <View style={styles.mealCopy}>
+                    <Text style={[styles.mealTitle, { color: colors.ink }]} numberOfLines={1}>
+                      {meal.title}
+                    </Text>
+                    {macrosEnabled &&
+                    (meal.protein != null || meal.fat != null || meal.carbs != null) ? (
+                      <Text style={[styles.mealMacros, { color: colors.muted }]}>
+                        {[
+                          meal.protein == null
+                            ? null
+                            : `${t('fuel.macros.proteinShort')} ${formatGrams(meal.protein)}`,
+                          meal.fat == null
+                            ? null
+                            : `${t('fuel.macros.fatShort')} ${formatGrams(meal.fat)}`,
+                          meal.carbs == null
+                            ? null
+                            : `${t('fuel.macros.carbsShort')} ${formatGrams(meal.carbs)}`,
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}{' '}
+                        {t('fuel.macros.grams')}
+                      </Text>
+                    ) : null}
+                  </View>
                   <Text style={[styles.muted, { color: colors.muted }]}>
                     {meal.calories} {t('fuel.kcal')}
                   </Text>
@@ -581,6 +761,15 @@ export function FuelScreen() {
           {formError ? <Text style={[styles.error, { color: colors.danger }]}>{formError}</Text> : null}
         </ScrollView>
       </KeyboardAvoidingView>
+
+      <CalorieHelperModal
+        visible={helperOpen}
+        settings={settings}
+        currentWeightKg={dayWeight}
+        applying={updateSettings.isPending}
+        onClose={() => setHelperOpen(false)}
+        onApply={(calories, targetWeightKg) => void onApplyHelper(calories, targetWeightKg)}
+      />
     </SafeAreaView>
   );
 }
@@ -640,5 +829,22 @@ const styles = StyleSheet.create({
   barTrack: { borderRadius: 999, height: 8, overflow: 'hidden' },
   barFill: { borderRadius: 999, height: '100%' },
   mealRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  mealTitle: { flex: 1, fontSize: 15, fontWeight: '600' },
+  mealCopy: { flex: 1, gap: 2, minWidth: 120 },
+  mealTitle: { fontSize: 15, fontWeight: '600' },
+  mealMacros: { fontSize: 12 },
+  macroHead: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'space-between',
+    marginTop: 4,
+  },
+  macroSwitch: {
+    borderRadius: 999,
+    borderWidth: 1,
+    justifyContent: 'center',
+    minHeight: 32,
+    paddingHorizontal: 12,
+  },
+  macroSwitchText: { fontSize: 12, fontWeight: '700' },
 });

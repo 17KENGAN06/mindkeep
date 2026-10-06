@@ -1,3 +1,4 @@
+import { Calculator } from 'lucide-react';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
@@ -11,6 +12,9 @@ import { Input } from '@/components/ui/Input';
 import { Loader } from '@/components/ui/Loader';
 import { mutationErrorMessage, isProAccount } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
+import { CalorieHelperDialog } from '@/features/nutrition/CalorieHelperDialog';
+import { MacroTotals } from '@/features/nutrition/MacroTotals';
+import { MealMacrosFields, emptyMacroDraft, parseMacroDraft, type MacroDraft } from '@/features/nutrition/MealMacrosFields';
 import { FoodScanMeal } from '@/features/nutrition/FoodScanMeal';
 import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
 import { MealRow } from '@/features/nutrition/MealRow';
@@ -71,6 +75,8 @@ export function CaloriesPage() {
   const [weightInput, setWeightInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [helperOpen, setHelperOpen] = useState(false);
+  const [macroDraft, setMacroDraft] = useState<MacroDraft>(() => emptyMacroDraft());
 
   const periodQuery = useNutritionPeriod(year, month);
   const updateSettings = useUpdateNutritionSettings();
@@ -142,6 +148,7 @@ export function CaloriesPage() {
   const stepsLocked = !canTrackSteps(selectedDate, joinKey, todayKey);
   const dayWeight = weight.find((row) => row.date === selectedDate)?.kg ?? null;
   const overeating = eaten > settings.calorieGoal;
+  const macrosEnabled = settings.macrosEnabled ?? false;
   const remaining = settings.calorieGoal - eaten;
   const caloriePercent = Math.min(100, Math.round((eaten / Math.max(settings.calorieGoal, 1)) * 100));
   const waterPercent = Math.min(100, Math.round((glasses / Math.max(settings.waterGoal, 1)) * 100));
@@ -219,18 +226,48 @@ export function CaloriesPage() {
       setFormError(t('calories.errors.kind'));
       return;
     }
+    const macros = macrosEnabled ? parseMacroDraft(macroDraft) : { protein: null, fat: null, carbs: null };
+    if (!macros) {
+      setFormError(t('calories.macros.invalid'));
+      return;
+    }
     try {
       await createMeal.mutateAsync({
         title: title.trim(),
         calories,
         date: selectedDate,
         ...(mealKind ? { kind: mealKind } : {}),
+        ...(macros.protein == null ? {} : { protein: macros.protein }),
+        ...(macros.fat == null ? {} : { fat: macros.fat }),
+        ...(macros.carbs == null ? {} : { carbs: macros.carbs }),
       });
       setTitle('');
       setKcal('');
       setMealKind(null);
+      setMacroDraft(emptyMacroDraft());
     } catch (error) {
       setFormError(mutationErrorMessage(error, t));
+    }
+  };
+
+  const onToggleMacros = async () => {
+    setFormError(null);
+    try {
+      await updateSettings.mutateAsync({ macrosEnabled: !macrosEnabled });
+    } catch {
+      setFormError(t('auth.errors.generic'));
+    }
+  };
+
+  const onApplyHelper = async (calories: number, targetWeightKg: number) => {
+    setFormError(null);
+    try {
+      await updateSettings.mutateAsync({ calorieGoal: calories, weightGoal: targetWeightKg });
+      setCalorieGoalInput(String(calories));
+      setWeightGoalInput(formatKg(targetWeightKg));
+      setHelperOpen(false);
+    } catch {
+      setFormError(t('auth.errors.generic'));
     }
   };
 
@@ -345,6 +382,18 @@ export function CaloriesPage() {
               </Button>
             </form>
 
+            <div>
+              <button
+                type="button"
+                className="inline-flex min-h-9 items-center gap-2 rounded-full px-3 text-xs font-semibold text-brand-700 ring-1 ring-line/70 transition touch-manipulation hover:bg-brand-50 hover:ring-brand-400"
+                onClick={() => setHelperOpen(true)}
+              >
+                <Calculator className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                {t('calories.helper.open')}
+              </button>
+              <p className="mt-2 text-xs text-muted">{t('calories.helper.openHint')}</p>
+            </div>
+
             <div className="grid grid-cols-3 gap-3">
               {[
                 { label: t('calories.statEaten'), value: `${eaten} ${t('calories.kcal')}` },
@@ -376,38 +425,65 @@ export function CaloriesPage() {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="text-sm font-medium text-ink">{t('calories.macros.title')}</p>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={macrosEnabled}
+                  disabled={updateSettings.isPending}
+                  className={`inline-flex min-h-8 shrink-0 items-center gap-2 rounded-full px-2.5 text-xs font-semibold transition touch-manipulation disabled:opacity-50 ${
+                    macrosEnabled
+                      ? 'bg-brand-500 text-[#07110d]'
+                      : 'text-muted ring-1 ring-line/70 hover:text-ink'
+                  }`}
+                  onClick={() => void onToggleMacros()}
+                >
+                  {macrosEnabled ? t('calories.macros.on') : t('calories.macros.off')}
+                </button>
+              </div>
+              {macrosEnabled ? (
+                <MacroTotals meals={dayMeals} />
+              ) : (
+                <p className="text-xs text-muted">{t('calories.macros.offHint')}</p>
+              )}
+            </div>
+
             <div>
               <h4 className="text-sm font-semibold text-ink">{t('calories.addMeal')}</h4>
               <div className="mt-3">
-                <FoodScanMeal date={selectedDate} />
+                <FoodScanMeal date={selectedDate} macrosEnabled={macrosEnabled} />
               </div>
               <div className="mt-3">
                 <MealKindPicker value={mealKind} pro={pro} onChange={setMealKind} />
               </div>
-              <form
-                className="mt-3 grid gap-3 sm:grid-cols-[1fr_140px_auto]"
-                onSubmit={(event) => void onAddMeal(event)}
-              >
-                <Input
-                  label={t('calories.mealTitle')}
-                  value={title}
-                  onChange={(event) => setTitle(event.target.value)}
-                  placeholder={t('calories.mealPlaceholder')}
-                  autoComplete="off"
-                />
-                <Input
-                  label={t('calories.mealCalories')}
-                  type="number"
-                  min="1"
-                  max="10000"
-                  value={kcal}
-                  onChange={(event) => setKcal(event.target.value)}
-                />
-                <div className="flex items-end">
-                  <Button type="submit" isLoading={createMeal.isPending} className="w-full sm:w-auto">
-                    {t('calories.saveMeal')}
-                  </Button>
+              <form className="mt-3 space-y-3" onSubmit={(event) => void onAddMeal(event)}>
+                <div className="grid gap-3 sm:grid-cols-[1fr_140px_auto]">
+                  <Input
+                    label={t('calories.mealTitle')}
+                    value={title}
+                    onChange={(event) => setTitle(event.target.value)}
+                    placeholder={t('calories.mealPlaceholder')}
+                    autoComplete="off"
+                  />
+                  <Input
+                    label={t('calories.mealCalories')}
+                    type="number"
+                    min="1"
+                    max="10000"
+                    value={kcal}
+                    onChange={(event) => setKcal(event.target.value)}
+                  />
+                  <div className="flex items-end">
+                    <Button type="submit" isLoading={createMeal.isPending} className="w-full sm:w-auto">
+                      {t('calories.saveMeal')}
+                    </Button>
+                  </div>
                 </div>
+                {macrosEnabled ? (
+                  <MealMacrosFields idPrefix="meal-macros" value={macroDraft} onChange={setMacroDraft} />
+                ) : null}
               </form>
             </div>
 
@@ -422,6 +498,7 @@ export function CaloriesPage() {
                     key={meal.id}
                     meal={meal}
                     busy={busyId === meal.id || deleteMeal.isPending}
+                    showMacros={macrosEnabled}
                     onDelete={(id) => void onDeleteMeal(id)}
                   />
                 ))
@@ -617,6 +694,15 @@ export function CaloriesPage() {
 
         <ErrorMessage message={formError ?? undefined} />
       </section>
+
+      <CalorieHelperDialog
+        open={helperOpen}
+        settings={settings}
+        currentWeightKg={dayWeight}
+        applying={updateSettings.isPending}
+        onClose={() => setHelperOpen(false)}
+        onApply={(calories, targetWeightKg) => void onApplyHelper(calories, targetWeightKg)}
+      />
     </div>
   );
 }

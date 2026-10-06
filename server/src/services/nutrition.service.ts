@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '@/config/prisma.js';
 import type {
   CreateMealInput,
+  EstimateCaloriesInput,
   NutritionPeriodQuery,
   UpdateMealInput,
   UpdateNutritionSettingsInput,
@@ -12,6 +13,19 @@ import type {
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
 import { assertMealDateAllowed, getEntitlement, mealHistoryFrom, weightHistoryFrom } from '@/services/entitlements.service.js';
+import {
+  addMacros,
+  emptyMacroTotals,
+  roundMacro,
+  roundMacroTotals,
+  type MacroTotals,
+} from '@/services/nutrition-macros.js';
+import {
+  estimateCalorieTarget,
+  parseBodyActivity,
+  parseBodySex,
+  type CalorieEstimate,
+} from '@/services/nutrition-profile.js';
 
 function rethrowNutritionError(error: unknown): never {
   if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2021') {
@@ -41,12 +55,22 @@ function serializeSettings(settings: {
   waterGoal: number;
   stepsGoal: number;
   weightGoal: number | null;
+  macrosEnabled: boolean;
+  bodySex: string | null;
+  bodyAge: number | null;
+  bodyHeightCm: number | null;
+  bodyActivity: string | null;
 }) {
   return {
     calorieGoal: settings.calorieGoal,
     waterGoal: settings.waterGoal,
     stepsGoal: settings.stepsGoal,
     weightGoal: settings.weightGoal === null ? null : roundKg(settings.weightGoal),
+    macrosEnabled: settings.macrosEnabled,
+    bodySex: parseBodySex(settings.bodySex),
+    bodyAge: settings.bodyAge,
+    bodyHeightCm: settings.bodyHeightCm,
+    bodyActivity: parseBodyActivity(settings.bodyActivity),
   };
 }
 
@@ -61,13 +85,22 @@ function serializeMeal(meal: {
   id: string;
   title: string;
   calories: number;
+  protein: number | null;
+  fat: number | null;
+  carbs: number | null;
   date: Date;
   kind: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'extra' | null;
   userId: string;
   createdAt: Date;
   updatedAt: Date;
 }) {
-  return { ...meal, date: toDateKey(meal.date) };
+  return {
+    ...meal,
+    date: toDateKey(meal.date),
+    protein: roundMacro(meal.protein),
+    fat: roundMacro(meal.fat),
+    carbs: roundMacro(meal.carbs),
+  };
 }
 
 export class NutritionService {
@@ -83,6 +116,10 @@ export class NutritionService {
     }
   }
 
+  async readSettings(userId: string) {
+    return serializeSettings(await this.getSettings(userId));
+  }
+
   async updateSettings(userId: string, input: UpdateNutritionSettingsInput) {
     await this.getSettings(userId);
     const settings = await prisma.nutritionSettings.update({
@@ -94,9 +131,29 @@ export class NutritionService {
         ...(input.weightGoal !== undefined
           ? { weightGoal: input.weightGoal === null ? null : roundKg(input.weightGoal) }
           : {}),
+        ...(input.macrosEnabled !== undefined ? { macrosEnabled: input.macrosEnabled } : {}),
+        ...(input.bodySex !== undefined ? { bodySex: input.bodySex } : {}),
+        ...(input.bodyAge !== undefined ? { bodyAge: input.bodyAge } : {}),
+        ...(input.bodyHeightCm !== undefined ? { bodyHeightCm: input.bodyHeightCm } : {}),
+        ...(input.bodyActivity !== undefined ? { bodyActivity: input.bodyActivity } : {}),
       },
     });
     return serializeSettings(settings);
+  }
+
+  /** Suggests a daily goal and remembers the body profile so the helper stays prefilled. */
+  async estimateCalories(userId: string, input: EstimateCaloriesInput): Promise<CalorieEstimate> {
+    await this.getSettings(userId);
+    await prisma.nutritionSettings.update({
+      where: { userId },
+      data: {
+        bodySex: input.sex,
+        bodyAge: input.age,
+        bodyHeightCm: input.heightCm,
+        bodyActivity: input.activity,
+      },
+    });
+    return estimateCalorieTarget(input);
   }
 
   async listPeriod(userId: string, query: NutritionPeriodQuery) {
@@ -129,13 +186,18 @@ export class NutritionService {
 
     const waterByDate = new Map(waterDays.map((row) => [toDateKey(row.date), row.glasses]));
     const weightByDate = new Map(weightDays.map((row) => [toDateKey(row.date), roundKg(row.kg)]));
-    const caloriesByDate = new Map<string, { calories: number; mealCount: number }>();
+    const caloriesByDate = new Map<
+      string,
+      { calories: number; mealCount: number; macros: MacroTotals }
+    >();
 
     for (const meal of meals) {
       const key = toDateKey(meal.date);
-      const bucket = caloriesByDate.get(key) ?? { calories: 0, mealCount: 0 };
+      const bucket =
+        caloriesByDate.get(key) ?? { calories: 0, mealCount: 0, macros: emptyMacroTotals() };
       bucket.calories += meal.calories;
       bucket.mealCount += 1;
+      bucket.macros = addMacros(bucket.macros, meal);
       caloriesByDate.set(key, bucket);
     }
 
@@ -143,14 +205,19 @@ export class NutritionService {
     const days = [...dayKeys]
       .sort((a, b) => a.localeCompare(b))
       .map((date) => {
-        const eaten = caloriesByDate.get(date)?.calories ?? 0;
-        const mealCount = caloriesByDate.get(date)?.mealCount ?? 0;
+        const bucket = caloriesByDate.get(date);
+        const eaten = bucket?.calories ?? 0;
+        const mealCount = bucket?.mealCount ?? 0;
+        const macros = roundMacroTotals(bucket?.macros ?? emptyMacroTotals());
         const waterGlasses = waterByDate.get(date) ?? 0;
         const weightKg = weightByDate.get(date) ?? null;
         return {
           date,
           calories: eaten,
           mealCount,
+          protein: macros.protein,
+          fat: macros.fat,
+          carbs: macros.carbs,
           waterGlasses,
           weightKg,
           overeating: eaten > settings.calorieGoal,
@@ -199,6 +266,9 @@ export class NutritionService {
         data: {
           title: input.title,
           calories: input.calories,
+          protein: roundMacro(input.protein),
+          fat: roundMacro(input.fat),
+          carbs: roundMacro(input.carbs),
           date: parseDateOnly(input.date),
           kind,
           userId,
@@ -227,6 +297,9 @@ export class NutritionService {
           ...(input.title !== undefined ? { title: input.title } : {}),
           ...(input.calories !== undefined ? { calories: input.calories } : {}),
           ...(kind !== undefined ? { kind } : {}),
+          ...(input.protein !== undefined ? { protein: roundMacro(input.protein) } : {}),
+          ...(input.fat !== undefined ? { fat: roundMacro(input.fat) } : {}),
+          ...(input.carbs !== undefined ? { carbs: roundMacro(input.carbs) } : {}),
         },
       }),
     );

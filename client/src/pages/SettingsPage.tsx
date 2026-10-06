@@ -9,6 +9,10 @@ import { Select } from '@/components/ui/Select';
 import { APP_MODULES, MODULE_HOME_KEY, selectedModules, type AppModule } from '@/config/appModules';
 import { mapAuthError } from '@/features/auth/mapAuthError';
 import { useAuth } from '@/features/auth/useAuth';
+import {
+  useNutritionSettings,
+  useUpdateNutritionSettings,
+} from '@/features/nutrition/useNutrition';
 
 const FALLBACK_ZONES = [
   'Europe/Helsinki',
@@ -29,6 +33,13 @@ export function SettingsPage() {
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
+
+  const nutritionEnabled = modules.includes('nutrition');
+  const nutritionSettings = useNutritionSettings(nutritionEnabled);
+  const updateNutrition = useUpdateNutritionSettings();
+  const [macros, setMacros] = useState<boolean | null>(null);
+  const savedMacros = nutritionSettings.data?.settings.macrosEnabled ?? null;
+  const macrosOn = macros ?? savedMacros ?? false;
 
   const zones = useMemo(() => {
     const supported =
@@ -54,6 +65,9 @@ export function SettingsPage() {
     setSaved(false);
     try {
       await updateWorkspace({ enabledModules: modules, timezone });
+      if (nutritionEnabled && macros != null && macros !== savedMacros) {
+        await updateNutrition.mutateAsync({ macrosEnabled: macros });
+      }
       setSaved(true);
     } catch (caught) {
       setError(mapAuthError(caught, t));
@@ -107,6 +121,31 @@ export function SettingsPage() {
             );
           })}
         </ul>
+
+        {nutritionEnabled ? (
+          <div className="space-y-2 border-t border-line/70 pt-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="text-sm font-medium text-ink">{t('settings.macrosTitle')}</span>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={macrosOn}
+                className={`inline-flex min-h-8 shrink-0 items-center rounded-full px-3 text-xs font-semibold transition ${
+                  macrosOn
+                    ? 'bg-brand-500 text-[#07110d]'
+                    : 'text-muted ring-1 ring-line/70 hover:text-ink'
+                }`}
+                onClick={() => {
+                  setSaved(false);
+                  setMacros(!macrosOn);
+                }}
+              >
+                {macrosOn ? t('calories.macros.on') : t('calories.macros.off')}
+              </button>
+            </div>
+            <p className="text-sm text-muted">{t('settings.macrosHint')}</p>
+          </div>
+        ) : null}
       </div>
 
       <div className="space-y-4 rounded-3xl border border-line bg-panel/80 p-5">

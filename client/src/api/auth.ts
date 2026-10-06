@@ -55,7 +55,7 @@ export const authApi = {
   me: () => apiClient.get<{ user: User }>('/api/auth/me'),
   updateMe: (payload: { timezone?: string; enabledModules?: string[] }) =>
     apiClient.patch<{ user: User }>('/api/auth/me', payload),
-  completeOnboarding: (payload: { modules: string[] }) =>
+  completeOnboarding: (payload: { modules: string[]; nutritionMacros?: boolean }) =>
     apiClient.post<{ user: User }>('/api/auth/onboarding', payload),
   sessions: () => apiClient.get<{ sessions: AuthDevice[] }>('/api/auth/sessions'),
   revokeSession: (id: string) =>

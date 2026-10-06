@@ -7,22 +7,43 @@ export const nutritionPeriodQuerySchema = z.object({
   month: z.coerce.number().int().min(1).max(12),
 });
 
+const bodySexSchema = z.enum(['male', 'female']);
+const bodyActivitySchema = z.enum(['sedentary', 'light', 'moderate', 'high', 'athlete']);
+const macroGrams = z.coerce.number().min(0).max(2000);
+
 export const updateNutritionSettingsSchema = z
   .object({
     calorieGoal: z.coerce.number().int().min(500).max(10000).optional(),
     waterGoal: z.coerce.number().int().min(1).max(20).optional(),
     stepsGoal: z.coerce.number().int().min(1000).max(100000).optional(),
     weightGoal: z.coerce.number().min(20).max(400).nullable().optional(),
+    macrosEnabled: z.boolean().optional(),
+    bodySex: bodySexSchema.nullable().optional(),
+    bodyAge: z.coerce.number().int().min(10).max(120).nullable().optional(),
+    bodyHeightCm: z.coerce.number().int().min(80).max(250).nullable().optional(),
+    bodyActivity: bodyActivitySchema.nullable().optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one field is required',
   });
+
+export const estimateCaloriesSchema = z.object({
+  sex: bodySexSchema,
+  age: z.coerce.number().int().min(10).max(120),
+  heightCm: z.coerce.number().int().min(80).max(250),
+  weightKg: z.coerce.number().min(20).max(400),
+  activity: bodyActivitySchema,
+  targetWeightKg: z.coerce.number().min(20).max(400),
+});
 
 export const createMealSchema = z.object({
   title: z.string().trim().min(1).max(120),
   calories: z.coerce.number().int().min(1).max(10000),
   date: dateOnly,
   kind: z.enum(['breakfast', 'lunch', 'dinner', 'snack', 'extra']).optional(),
+  protein: macroGrams.nullable().optional(),
+  fat: macroGrams.nullable().optional(),
+  carbs: macroGrams.nullable().optional(),
 });
 
 export const updateMealSchema = z
@@ -30,6 +51,9 @@ export const updateMealSchema = z
     title: z.string().trim().min(1).max(120).optional(),
     calories: z.coerce.number().int().min(1).max(10000).optional(),
     kind: z.enum(['breakfast', 'lunch', 'dinner', 'snack', 'extra']).nullable().optional(),
+    protein: macroGrams.nullable().optional(),
+    fat: macroGrams.nullable().optional(),
+    carbs: macroGrams.nullable().optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one field is required',
@@ -92,6 +116,7 @@ export const scanFoodSchema = z
 
 export type NutritionPeriodQuery = z.infer<typeof nutritionPeriodQuerySchema>;
 export type UpdateNutritionSettingsInput = z.infer<typeof updateNutritionSettingsSchema>;
+export type EstimateCaloriesInput = z.infer<typeof estimateCaloriesSchema>;
 export type CreateMealInput = z.infer<typeof createMealSchema>;
 export type UpdateMealInput = z.infer<typeof updateMealSchema>;
 export type UpsertWaterInput = z.infer<typeof upsertWaterSchema>;

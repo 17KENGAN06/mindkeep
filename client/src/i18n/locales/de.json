@@ -930,6 +930,65 @@
     "weightUp": "Auf +{{kg}} kg",
     "weightDown": "Ab −{{kg}} kg",
     "weightFlat": "Keine Änderung",
+    "helper": {
+      "open": "Ziel berechnen",
+      "openHint": "Stellt ein paar Fragen und schlägt ein Tagesziel und ein Zielgewicht vor.",
+      "title": "Tagesziel berechnen",
+      "lead": "Erzähl von deinem Körper und dem Gewicht, auf das du zugehst. Das Ergebnis ist nur ein Startpunkt.",
+      "sex": "Geschlecht",
+      "sexFemale": "Weiblich",
+      "sexMale": "Männlich",
+      "age": "Alter, Jahre",
+      "height": "Größe, cm",
+      "weight": "Aktuelles Gewicht, kg",
+      "target": "Zielgewicht, kg",
+      "activity": "Aktivität",
+      "activityPlaceholder": "Wähle, wie aktiv deine Woche ist",
+      "activityLevels": {
+        "sedentary": "Meist sitzend",
+        "light": "Leicht, 1–3 Einheiten pro Woche",
+        "moderate": "Mittel, 3–5 Einheiten pro Woche",
+        "high": "Hoch, 6–7 Einheiten pro Woche",
+        "athlete": "Sehr hoch, körperliche Arbeit oder zwei Einheiten am Tag"
+      },
+      "calculate": "Berechnen",
+      "recalculate": "Neu berechnen",
+      "apply": "Diese Werte übernehmen",
+      "result": "Vorgeschlagenes Tagesziel",
+      "maintenance": "Hält dein Gewicht",
+      "bmi": "BMI beim Zielgewicht",
+      "modeLose": "Ein moderates Defizit, um auf das Zielgewicht zuzugehen.",
+      "modeGain": "Ein moderater Überschuss, um auf das Zielgewicht zuzugehen.",
+      "modeHold": "Genug, um dein aktuelles Gewicht zu halten.",
+      "notes": {
+        "targetBelowHealthy": "Dieses Zielgewicht liegt unter dem gesunden BMI-Bereich. Sprich mit einem Arzt, bevor du darauf zugehst.",
+        "targetAboveHealthy": "Dieses Zielgewicht liegt über dem gesunden BMI-Bereich. Sprich mit einem Arzt, bevor du darauf zugehst.",
+        "bigChange": "Das ist eine große Veränderung. Geh sie in kleineren Schritten an und sprich mit einem Arzt.",
+        "floored": "Ein tieferes Defizit würde den Grundbedarf nicht mehr decken, deshalb wurde das Ziel auf einen sicheren Mindestwert gehoben."
+      },
+      "disclaimer": "Das ist eine grobe Schätzung nach einer Standardformel. Sie weiß nichts über deine Gesundheit, deine Medikamente, eine Schwangerschaft oder deine Trainingsgeschichte. Entscheide mit eigenem Urteil und frag einen Arzt oder eine Ernährungsberatung, bevor du dein Essen umstellst.",
+      "ack": "Ich verstehe, dass das nur eine Schätzung ist, und entscheide selbst.",
+      "errors": {
+        "invalid": "Füll jedes Feld mit realistischen Zahlen: Alter 10–120, Größe 80–250 cm, Gewicht 20–400 kg."
+      }
+    },
+    "macros": {
+      "title": "Eiweiß, Fett, Kohlenhydrate",
+      "on": "Ein",
+      "off": "Aus",
+      "offHint": "Schalte es ein, um neben den Kalorien Gramm Eiweiß, Fett und Kohlenhydrate zu erfassen.",
+      "protein": "Eiweiß",
+      "fat": "Fett",
+      "carbs": "Kohlenhydrate",
+      "proteinShort": "E",
+      "fatShort": "F",
+      "carbsShort": "K",
+      "grams": "g",
+      "gramsShort": "Gramm",
+      "partial": "Makros bei {{tracked}} von {{total}} Mahlzeiten heute erfasst.",
+      "invalid": "Gramm müssen eine Zahl zwischen 0 und 2000 sein",
+      "scanHint": "In Pro wird das aus dem Foto ausgefüllt. Korrigiere, was nicht passt."
+    },
     "errors": {
       "title": "Gib der Mahlzeit einen Namen",
       "calories": "Kalorien eingeben",
@@ -1619,6 +1678,10 @@
         "title": "Ernährung & Körper",
         "text": "Mahlzeiten mit Kalorien, Wasser am Tag und Gewicht auf einer Kurve. Damit du siehst, wie du isst und wie sich der Körper ändert — ohne extra App."
       }
+    },
+    "nutritionMacros": {
+      "title": "Auch Eiweiß, Fett und Kohlenhydrate zählen",
+      "text": "Fügt drei Grammfelder neben den Kalorien hinzu. Pro füllt sie aus dem Essensfoto. Später in den Einstellungen änderbar."
     }
   },
   "settings": {
@@ -1626,6 +1689,8 @@
     "subtitle": "Wähle, was im Menü und in der Übersicht erscheint. Das kannst du jederzeit ändern.",
     "modulesTitle": "Dienste",
     "modulesHint": "Ausgeschaltete Dienste verschwinden aus Kopfzeile und Übersicht. Daten bleiben.",
+    "macrosTitle": "Eiweiß, Fett und Kohlenhydrate",
+    "macrosHint": "Fügt Grammfelder neben den Kalorien in Ernährung hinzu. Pro füllt sie aus dem Essensfoto.",
     "appearanceTitle": "Darstellung",
     "saved": "Gespeichert.",
     "needOne": "Lass mindestens einen Dienst an."

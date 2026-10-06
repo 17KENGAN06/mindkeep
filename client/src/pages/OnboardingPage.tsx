@@ -24,6 +24,7 @@ export function OnboardingPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(-1);
   const [picked, setPicked] = useState<AppModule[]>([]);
+  const [macros, setMacros] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -37,6 +38,7 @@ export function OnboardingPage() {
   const choose = (want: boolean) => {
     if (!module) return;
     setError(null);
+    if (module === 'nutrition' && !want) setMacros(false);
     setPicked((current) => {
       const next = current.filter((item) => item !== module);
       return want ? [...next, module] : next;
@@ -52,7 +54,7 @@ export function OnboardingPage() {
     setBusy(true);
     setError(null);
     try {
-      await completeOnboarding(picked);
+      await completeOnboarding(picked, picked.includes('nutrition') ? macros : undefined);
       void navigate('/dashboard', { replace: true });
     } catch (caught) {
       setError(mapAuthError(caught, t));
@@ -117,6 +119,24 @@ export function OnboardingPage() {
           <p className="mt-3 text-base leading-relaxed text-muted">
             {t(`onboarding.modules.${module}.text`)}
           </p>
+          {module === 'nutrition' ? (
+            <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-2xl border border-line px-4 py-3">
+              <input
+                type="checkbox"
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-line accent-brand-500"
+                checked={macros}
+                onChange={(event) => setMacros(event.target.checked)}
+              />
+              <span>
+                <span className="block text-sm font-medium text-ink">
+                  {t('onboarding.nutritionMacros.title')}
+                </span>
+                <span className="mt-1 block text-sm text-muted">
+                  {t('onboarding.nutritionMacros.text')}
+                </span>
+              </span>
+            </label>
+          ) : null}
           <div className="mt-auto flex flex-col gap-3 pt-10 sm:flex-row">
             <Button type="button" className="w-full sm:flex-1" onClick={() => choose(true)}>
               {t('onboarding.wantThis')}

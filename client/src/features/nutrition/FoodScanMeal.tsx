@@ -15,6 +15,12 @@ import { useAuth } from '@/features/auth/useAuth';
 import { hasAutomation, mutationErrorMessage } from '@/features/billing/planLimit';
 import { compressMealPhoto, MealPhotoError } from '@/features/nutrition/compressMealPhoto';
 import { MealKindPicker } from '@/features/nutrition/MealKindPicker';
+import {
+  MealMacrosFields,
+  macroDraftFrom,
+  parseMacroDraft,
+  type MacroDraft,
+} from '@/features/nutrition/MealMacrosFields';
 import type { MealKind } from '@/features/nutrition/mealKinds';
 import { useCreateMeal } from '@/features/nutrition/useNutrition';
 import { usePhoneViewport } from '@/features/nutrition/usePhoneViewport';
@@ -26,6 +32,7 @@ type ReviewState = {
   mealName: string;
   totalCalories: string;
   kind: MealKind | null;
+  macros: MacroDraft;
 };
 
 type PickedPhoto = {
@@ -67,9 +74,10 @@ function scanErrorMessage(error: unknown, t: (key: string) => string): string {
 
 type FoodScanMealProps = {
   date: string;
+  macrosEnabled?: boolean;
 };
 
-export function FoodScanMeal({ date }: FoodScanMealProps) {
+export function FoodScanMeal({ date, macrosEnabled = false }: FoodScanMealProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -179,6 +187,11 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
         mealName: estimate.mealName,
         totalCalories: String(estimate.totalCalories),
         kind: null,
+        macros: macroDraftFrom({
+          protein: estimate.protein ?? null,
+          fat: estimate.fat ?? null,
+          carbs: estimate.carbs ?? null,
+        }),
       });
       closePrepare();
     } catch (caught) {
@@ -204,6 +217,13 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
       setError(t('calories.errors.kind'));
       return;
     }
+    const macros = macrosEnabled
+      ? parseMacroDraft(review.macros)
+      : { protein: null, fat: null, carbs: null };
+    if (!macros) {
+      setError(t('calories.macros.invalid'));
+      return;
+    }
 
     setError(null);
     try {
@@ -212,6 +232,9 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
         calories: Math.round(calories),
         date,
         ...(review.kind ? { kind: review.kind } : {}),
+        ...(macros.protein == null ? {} : { protein: macros.protein }),
+        ...(macros.fat == null ? {} : { fat: macros.fat }),
+        ...(macros.carbs == null ? {} : { carbs: macros.carbs }),
       });
       setReview(null);
     } catch (caught) {
@@ -447,6 +470,16 @@ export function FoodScanMeal({ date }: FoodScanMealProps) {
                 value={review.totalCalories}
                 onChange={(event) => setReview({ ...review, totalCalories: event.target.value })}
               />
+              {macrosEnabled ? (
+                <div className="space-y-2">
+                  <MealMacrosFields
+                    idPrefix="scan-macros"
+                    value={review.macros}
+                    onChange={(macros) => setReview({ ...review, macros })}
+                  />
+                  <p className="text-xs text-muted">{t('calories.macros.scanHint')}</p>
+                </div>
+              ) : null}
               <p className="text-xs text-muted">{t('calories.scan.privacy')}</p>
               <ErrorMessage message={error ?? undefined} />
             </div>

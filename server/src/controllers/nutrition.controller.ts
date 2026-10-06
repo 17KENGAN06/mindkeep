@@ -4,6 +4,7 @@ import { nutritionService } from '@/services/nutrition.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type {
   CreateMealInput,
+  EstimateCaloriesInput,
   NutritionPeriodQuery,
   ScanFoodInput,
   UpdateMealInput,
@@ -32,12 +33,25 @@ export class NutritionController {
     res.status(200).json(data);
   }
 
+  async getSettings(req: Request, res: Response): Promise<void> {
+    const settings = await nutritionService.readSettings(requireUserId(req));
+    res.status(200).json({ settings });
+  }
+
   async updateSettings(req: Request, res: Response): Promise<void> {
     const settings = await nutritionService.updateSettings(
       requireUserId(req),
       req.body as UpdateNutritionSettingsInput,
     );
     res.status(200).json({ settings });
+  }
+
+  async estimateCalories(req: Request, res: Response): Promise<void> {
+    const estimate = await nutritionService.estimateCalories(
+      requireUserId(req),
+      req.body as EstimateCaloriesInput,
+    );
+    res.status(200).json({ estimate });
   }
 
   async createMeal(req: Request, res: Response): Promise<void> {
