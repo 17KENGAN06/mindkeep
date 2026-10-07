@@ -1,4 +1,4 @@
-import { EmailTokenType, PlanInterval, Prisma, UserPlan, UserRole } from '@prisma/client';
+import { EmailTokenType, type PlanInterval, Prisma, UserPlan, UserRole } from '@prisma/client';
 import { OAuth2Client } from 'google-auth-library';
 import { env } from '@/config/env.js';
 import { prisma } from '@/config/prisma.js';

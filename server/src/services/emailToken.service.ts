@@ -96,7 +96,7 @@ export async function consumeLoginCode(email: string, code: string): Promise<voi
     invalid();
   }
 
-  let attempts = 0;
+  let attempts: number;
   try {
     const parsed = JSON.parse(row!.payload ?? '{}') as { attempts?: unknown };
     attempts = typeof parsed.attempts === 'number' ? parsed.attempts : 0;

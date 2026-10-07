@@ -91,6 +91,10 @@ const scanFoodPhotoSchema = z.object({
   mimeType: foodScanMimeType,
 });
 
+// Control characters in the dish note; stripping them is the point of this pattern.
+// eslint-disable-next-line no-control-regex
+const NOTE_CONTROL_CHARS = /[\u0000-\u001f\u007f]/g;
+
 export const scanFoodSchema = z
   .object({
     note: z.string().max(400).optional(),
@@ -100,7 +104,7 @@ export const scanFoodSchema = z
   })
   .transform((value, ctx) => {
     const note = value.note
-      ? value.note.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 240)
+      ? value.note.replace(NOTE_CONTROL_CHARS, ' ').replace(/\s+/g, ' ').trim().slice(0, 240)
       : '';
     const fromLegacy =
       value.image && value.mimeType

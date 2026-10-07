@@ -22,6 +22,7 @@ export function getAuthCookieOptions(): CookieOptions {
 
 /** Same flags as set, without maxAge — required for browsers to drop the cookie. */
 export function getAuthCookieClearOptions(): CookieOptions {
-  const { maxAge: _maxAge, ...options } = getAuthCookieOptions();
+  const options = getAuthCookieOptions();
+  delete options.maxAge;
   return options;
 }
