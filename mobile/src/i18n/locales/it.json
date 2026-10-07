@@ -18,7 +18,7 @@
     "safariHint": "Apre mindkeep.cloud nel browser.",
     "guideHint": "Come è pensata l'app.",
     "timezone": "Fuso orario",
-    "timezoneHint": "Preso automaticamente da questo telefono. I ripassi lo usano per oggi e i ritardi.",
+    "timezoneHint": "Oggi, i ripassi e le attività usano il fuso orario del tuo account. Cambialo qui quando viaggi o ti trasferisci.",
     "timezoneCurrent": "Ora: {{timezone}}",
     "timezoneDevice": "Telefono · {{timezone}}",
     "theme": "Tema",
@@ -33,6 +33,12 @@
     "body": "Hai modifiche non salvate. Se esci ora, andranno perse.",
     "keep": "Continua a modificare",
     "discard": "Scarta"
+  },
+  "timezone": {
+    "title": "Fuso orario diverso",
+    "body": "Il telefono è impostato su {{device}}. Oggi, i ripassi e le attività usano il fuso orario dell’account: {{account}}.",
+    "use": "Usa il fuso del telefono",
+    "keep": "Mantieni il fuso dell’account"
   },
   "tabs": {
     "today": "Oggi",

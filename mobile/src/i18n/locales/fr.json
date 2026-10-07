@@ -18,7 +18,7 @@
     "safariHint": "Ouvre mindkeep.cloud dans le navigateur.",
     "guideHint": "Comment l'app est conçue pour être utilisée.",
     "timezone": "Fuseau horaire",
-    "timezoneHint": "Pris automatiquement depuis ce téléphone. Les révisions s'en servent pour aujourd'hui et les retards.",
+    "timezoneHint": "Aujourd’hui, les révisions et les tâches utilisent le fuseau horaire de votre compte. Modifiez-le ici si vous voyagez ou déménagez.",
     "timezoneCurrent": "Maintenant : {{timezone}}",
     "timezoneDevice": "Téléphone · {{timezone}}",
     "theme": "Thème",
@@ -33,6 +33,12 @@
     "body": "Vous avez des modifications non enregistrées. Si vous quittez maintenant, elles seront perdues.",
     "keep": "Continuer",
     "discard": "Abandonner"
+  },
+  "timezone": {
+    "title": "Fuseau horaire différent",
+    "body": "Votre téléphone est réglé sur {{device}}. Aujourd’hui, les révisions et les tâches utilisent le fuseau de votre compte : {{account}}.",
+    "use": "Utiliser le fuseau du téléphone",
+    "keep": "Garder le fuseau du compte"
   },
   "tabs": {
     "today": "Aujourd'hui",

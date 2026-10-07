@@ -18,7 +18,7 @@
     "safariHint": "Otwiera mindkeep.cloud w przeglądarce.",
     "guideHint": "Jak aplikacja ma być używana.",
     "timezone": "Strefa czasowa",
-    "timezoneHint": "Pobierana automatycznie z tego telefonu. Powtórki używają jej dla dziś i zaległości.",
+    "timezoneHint": "Dziś, powtórki i zadania korzystają ze strefy czasowej konta. Zmień ją tutaj, gdy podróżujesz lub się przeprowadzasz.",
     "timezoneCurrent": "Teraz: {{timezone}}",
     "timezoneDevice": "Telefon · {{timezone}}",
     "theme": "Motyw",
@@ -33,6 +33,12 @@
     "body": "Masz niezapisane zmiany. Jeśli wyjdziesz teraz, zostaną utracone.",
     "keep": "Edytuj dalej",
     "discard": "Odrzuć"
+  },
+  "timezone": {
+    "title": "Strefa czasowa się różni",
+    "body": "Telefon ma ustawioną strefę {{device}}. Dziś, powtórki i zadania korzystają ze strefy konta: {{account}}.",
+    "use": "Użyj strefy telefonu",
+    "keep": "Zachowaj strefę konta"
   },
   "tabs": {
     "today": "Dziś",

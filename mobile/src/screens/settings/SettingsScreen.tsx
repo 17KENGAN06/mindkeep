@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../../components/LanguageSwitcher';
 import { AppIcon } from '../../components/AppIcon';
-import { detectDeviceTimezone } from '../../config/timezones';
+import { TimezoneSuggestion } from '../../components/TimezoneSuggestion';
 import { APP_MODULES, selectedModules, type AppModule } from '../../config/appModules';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
@@ -24,7 +24,6 @@ export function SettingsScreen() {
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
-  const timezone = user?.timezone || detectDeviceTimezone();
 
   const nutritionEnabled = modules.includes('nutrition');
   const nutritionSettings = useNutritionSettings(nutritionEnabled);
@@ -175,7 +174,7 @@ export function SettingsScreen() {
         <LanguageSwitcher />
         <Text style={[styles.section, { color: colors.ink }]}>{t('common.timezone')}</Text>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('common.timezoneHint')}</Text>
-        <Text style={[styles.zone, { color: colors.ink }]}>{t('common.timezoneCurrent', { timezone })}</Text>
+        <TimezoneSuggestion variant="settings" />
       </ScrollView>
     </SafeAreaView>
   );
@@ -206,5 +205,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
   },
-  zone: { fontSize: 14, fontWeight: '600' },
 });

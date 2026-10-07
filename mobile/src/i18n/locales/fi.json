@@ -18,7 +18,7 @@
     "safariHint": "Avaa mindkeep.cloud selaimessa.",
     "guideHint": "Näin sovellusta käytetään.",
     "timezone": "Aikavyöhyke",
-    "timezoneHint": "Otetaan puhelimesta automaattisesti. Kertaukset käyttävät sitä tänään ja myöhässä.",
+    "timezoneHint": "Tänään-näkymä, kertaukset ja tehtävät käyttävät tilisi aikavyöhykettä. Vaihda se täällä, kun matkustat tai muutat.",
     "timezoneCurrent": "Nyt: {{timezone}}",
     "timezoneDevice": "Puhelin · {{timezone}}",
     "theme": "Teema",
@@ -33,6 +33,12 @@
     "body": "Sinulla on tallentamattomia muutoksia. Jos poistut nyt, ne menetetään.",
     "keep": "Jatka muokkausta",
     "discard": "Hylkää"
+  },
+  "timezone": {
+    "title": "Aikavyöhyke on eri",
+    "body": "Puhelimesi aikavyöhyke on {{device}}. Tänään-näkymä, kertaukset ja tehtävät käyttävät tilin aikavyöhykettä {{account}}.",
+    "use": "Käytä puhelimen aikavyöhykettä",
+    "keep": "Pidä tilin aikavyöhyke"
   },
   "tabs": {
     "today": "Tänään",

@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { AppState } from 'react-native';
 import { authApi, type GoogleLoginPayload, type LoginCodePayload, type LoginPayload, type RegisterPayload } from '../../api/auth';
 import { ApiError, NetworkError, refreshAccessToken } from '../../api/client';
-import { detectDeviceTimezone } from '../../config/timezones';
 import type { User } from '../../types/auth';
 import { AuthContext } from './auth-context';
 import {
@@ -75,19 +74,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [updateWorkspace],
   );
 
-  const applyDeviceTimezone = useCallback(
-    async (user: User) => {
-      const timezone = detectDeviceTimezone();
-      if (!timezone || timezone === user.timezone) return user;
-      try {
-        return await updateTimezone(timezone);
-      } catch {
-        return user;
-      }
-    },
-    [updateTimezone],
-  );
-
   const persistUser = useCallback(
     async (user: User, token?: string, refreshToken?: string) => {
       if (!token) {
@@ -100,11 +86,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       queryClient.removeQueries({
         predicate: (query) => query.queryKey[0] !== 'auth',
       });
-      const synced = await applyDeviceTimezone(user);
-      queryClient.setQueryData(['auth', 'me'], synced);
-      return synced;
+      // The account time zone is never changed silently; TimezoneSuggestion asks first.
+      queryClient.setQueryData(['auth', 'me'], user);
+      return user;
     },
-    [applyDeviceTimezone, queryClient],
+    [queryClient],
   );
 
   const login = useCallback(
@@ -155,18 +141,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refetchMe]);
   const userRef = useRef(user);
   userRef.current = user;
-  const syncingRef = useRef(false);
-
-  useEffect(() => {
-    if (!user) return;
-    if (syncingRef.current) return;
-    const timezone = detectDeviceTimezone();
-    if (!timezone || timezone === user.timezone) return;
-    syncingRef.current = true;
-    void applyDeviceTimezone(user).finally(() => {
-      syncingRef.current = false;
-    });
-  }, [applyDeviceTimezone, user?.id, user?.timezone]);
 
   useEffect(() => {
     const sub = AppState.addEventListener('change', (state) => {
@@ -180,16 +154,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
       // auth/me and billing refetch through focusManager (App.tsx) when stale.
-      if (syncingRef.current) return;
-      const timezone = detectDeviceTimezone();
-      if (!timezone || timezone === current.timezone) return;
-      syncingRef.current = true;
-      void applyDeviceTimezone(current).finally(() => {
-        syncingRef.current = false;
-      });
     });
     return () => sub.remove();
-  }, [applyDeviceTimezone, queryClient]);
+  }, [queryClient]);
 
   const value = useMemo(
     () => ({

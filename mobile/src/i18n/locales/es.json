@@ -18,7 +18,7 @@
     "safariHint": "Abre mindkeep.cloud en el navegador.",
     "guideHint": "Cómo está pensada la app.",
     "timezone": "Zona horaria",
-    "timezoneHint": "Se toma automáticamente de este teléfono. Los repasos la usan para hoy y los atrasos.",
+    "timezoneHint": "Hoy, los repasos y las tareas usan la zona horaria de tu cuenta. Cámbiala aquí cuando viajes o te mudes.",
     "timezoneCurrent": "Ahora: {{timezone}}",
     "timezoneDevice": "Teléfono · {{timezone}}",
     "theme": "Tema",
@@ -33,6 +33,12 @@
     "body": "Tienes cambios sin guardar. Si sales ahora, se perderán.",
     "keep": "Seguir editando",
     "discard": "Descartar"
+  },
+  "timezone": {
+    "title": "La zona horaria es distinta",
+    "body": "Tu teléfono está en {{device}}. Hoy, los repasos y las tareas usan la zona horaria de tu cuenta: {{account}}.",
+    "use": "Usar la zona del teléfono",
+    "keep": "Mantener la zona de la cuenta"
   },
   "tabs": {
     "today": "Hoy",

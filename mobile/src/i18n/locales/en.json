@@ -18,7 +18,7 @@
     "safariHint": "Opens mindkeep.cloud in the browser.",
     "guideHint": "How the app is meant to be used.",
     "timezone": "Timezone",
-    "timezoneHint": "Taken from this phone automatically. Reviews use it for today and overdue.",
+    "timezoneHint": "Today, reviews and tasks use your account timezone. Change it here when you travel or move.",
     "timezoneCurrent": "Now: {{timezone}}",
     "timezoneDevice": "Phone · {{timezone}}",
     "theme": "Theme",
@@ -33,6 +33,12 @@
     "body": "You have unsaved changes. If you leave now, they will be lost.",
     "keep": "Keep editing",
     "discard": "Discard"
+  },
+  "timezone": {
+    "title": "Timezone differs",
+    "body": "Your phone is set to {{device}}. Today, reviews and tasks use your account timezone, {{account}}.",
+    "use": "Use phone timezone",
+    "keep": "Keep account timezone"
   },
   "tabs": {
     "today": "Today",

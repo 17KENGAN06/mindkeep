@@ -18,7 +18,7 @@
     "safariHint": "Öffnet mindkeep.cloud im Browser.",
     "guideHint": "Wie die App gemeint ist.",
     "timezone": "Zeitzone",
-    "timezoneHint": "Wird automatisch von diesem Telefon übernommen. Wiederholungen nutzen sie für heute und Überfälliges.",
+    "timezoneHint": "Heute, Wiederholungen und Aufgaben richten sich nach der Zeitzone deines Kontos. Ändere sie hier, wenn du reist oder umziehst.",
     "timezoneCurrent": "Jetzt: {{timezone}}",
     "timezoneDevice": "Telefon · {{timezone}}",
     "theme": "Design",
@@ -33,6 +33,12 @@
     "body": "Du hast ungespeicherte Änderungen. Wenn du jetzt gehst, gehen sie verloren.",
     "keep": "Weiter bearbeiten",
     "discard": "Verwerfen"
+  },
+  "timezone": {
+    "title": "Zeitzone weicht ab",
+    "body": "Dein Telefon ist auf {{device}} eingestellt. Heute, Wiederholungen und Aufgaben nutzen die Zeitzone deines Kontos: {{account}}.",
+    "use": "Telefon-Zeitzone verwenden",
+    "keep": "Konto-Zeitzone behalten"
   },
   "tabs": {
     "today": "Heute",

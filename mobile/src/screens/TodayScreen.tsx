@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { WaterGlasses } from '../components/WaterGlasses';
 import { AppIcon } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
+import { TimezoneSuggestion } from '../components/TimezoneSuggestion';
 import { userHasModule } from '../config/appModules';
 import { useAuth } from '../features/auth/useAuth';
 import { isProAccount } from '../features/billing/planLimit';
@@ -210,6 +211,7 @@ export function TodayScreen() {
           />
         }
       >
+        <TimezoneSuggestion />
         <View style={styles.helloRow}>
           <BrandMark size={44} />
           <View style={styles.helloCopy}>

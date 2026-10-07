@@ -108,6 +108,26 @@ export function zonedNoonIso(dateKey: string, timeZone: string): string {
   return new Date(wallNoon - second).toISOString();
 }
 
+/** Whether this device can resolve the IANA zone (unknown or unsupported zones return false). */
+export function isKnownTimeZone(timeZone: string): boolean {
+  return zonedParts(new Date(), timeZone) !== null;
+}
+
+/**
+ * True when two zones keep the same clock across the year (sampled every ~3 months, shorter
+ * than any summer/winter period), so aliases (Asia/Calcutta vs Asia/Kolkata) and zones with
+ * identical rules count as the same. An unknown zone also counts as the same, so it never
+ * triggers a suggestion.
+ */
+export function zonesShareClock(a: string, b: string, todayKey: string): boolean {
+  if (a === b) return true;
+  if (!isKnownTimeZone(a) || !isKnownTimeZone(b)) return true;
+  return [0, 91, 182, 273].every((days) => {
+    const key = shiftDateKey(todayKey, days);
+    return zonedNoonIso(key, a) === zonedNoonIso(key, b);
+  });
+}
+
 export function dateInputToIso(dateInput: string): string {
   const [year, month, day] = dateInput.split('-').map(Number);
   const local = new Date(year!, month! - 1, day!, 12, 0, 0, 0);
