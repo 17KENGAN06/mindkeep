@@ -953,6 +953,7 @@
     "subtitle": "Todas las funciones siguen abiertas. Free tiene límites de cantidad; Pro los quita.",
     "freeLabel": "Free",
     "proLabel": "Pro",
+    "plusLabel": "Plus",
     "subscribeMonth": "€4.99 / mes",
     "subscribeYear": "€39.99 / año",
     "yearlyHint": "El año ahorra unos dos meses frente al pago mensual.",
@@ -1011,6 +1012,10 @@
     "returnPortal": "Los cambios de suscripción están guardados. Puedes volver a la app.",
     "openApp": "Abrir la app",
     "stayOnSite": "Seguir en el sitio"
+  },
+  "plans": {
+    "viewPlans": "Ver planes",
+    "accountLead": "Plus: sin topes, comidas y gastos los apuntas tú. Pro: lo mismo, y una foto rellena comidas y tickets."
   },
   "home": {
     "pricing": {

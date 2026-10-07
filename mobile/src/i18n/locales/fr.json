@@ -953,6 +953,7 @@
     "subtitle": "Toutes les fonctions restent ouvertes. Free a des plafonds, Pro les enlève.",
     "freeLabel": "Free",
     "proLabel": "Pro",
+    "plusLabel": "Plus",
     "subscribeMonth": "4,99 € / mois",
     "subscribeYear": "39,99 € / an",
     "yearlyHint": "L’année équivaut à environ deux mois offerts par rapport au mois.",
@@ -1011,6 +1012,10 @@
     "returnPortal": "Les changements d’abonnement sont enregistrés. Vous pouvez revenir à l’app.",
     "openApp": "Ouvrir l’app",
     "stayOnSite": "Rester sur le site"
+  },
+  "plans": {
+    "viewPlans": "Voir les offres",
+    "accountLead": "Plus : sans plafonds, vous saisissez repas et dépenses. Pro : idem, et une photo remplit repas et tickets."
   },
   "home": {
     "pricing": {

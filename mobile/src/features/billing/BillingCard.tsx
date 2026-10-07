@@ -20,6 +20,8 @@ const USAGE_KEYS = [
   'sessions',
 ] as const;
 
+const PLANS_URL = 'https://mindkeep.cloud/plans';
+
 async function refreshPlan(queryClient: ReturnType<typeof useQueryClient>) {
   await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
   await queryClient.invalidateQueries({ queryKey: ['billing'] });
@@ -32,27 +34,19 @@ export function BillingCard() {
   const queryClient = useQueryClient();
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState<'month' | 'year' | 'portal' | null>(null);
+  const [busy, setBusy] = useState<'portal' | null>(null);
 
   const statusQuery = useQuery({
     queryKey: ['billing', 'status'],
     queryFn: () => billingApi.status(),
   });
 
-  const openCheckout = async (interval: 'month' | 'year') => {
+  // Prices, the paid-access consent and checkout live on the website's plans page (source of truth).
+  const openPlans = async () => {
     setError(null);
     setNotice(null);
-    setBusy(interval);
-    try {
-      const result = await billingApi.checkout(interval);
-      await WebBrowser.openBrowserAsync(result.url);
-      await refreshPlan(queryClient);
-      setNotice(t('billing.success'));
-    } catch (caught) {
-      setError(mapAuthError(caught, t));
-    } finally {
-      setBusy(null);
-    }
+    await WebBrowser.openBrowserAsync(PLANS_URL);
+    await refreshPlan(queryClient);
   };
 
   const openPortal = async () => {
@@ -84,11 +78,13 @@ export function BillingCard() {
 
   const planName = isAdmin
     ? t('billing.adminUnlimited')
-    : subscribed
-      ? t('billing.proLabel')
-      : isBeta
-        ? t('billing.betaLabel')
-        : t('billing.freeLabel');
+    : status?.plan === 'PLUS'
+      ? t('billing.plusLabel')
+      : subscribed
+        ? t('billing.proLabel')
+        : isBeta
+          ? t('billing.betaLabel')
+          : t('billing.freeLabel');
   const planCaption =
     subscribed && expires
       ? t(status?.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })
@@ -105,17 +101,15 @@ export function BillingCard() {
           <Text style={[styles.kicker, { color: colors.brand }]}>{t('billing.title')}</Text>
           {showSubscribe ? (
             <>
-              <View style={styles.priceRow}>
-                <Text style={[styles.price, { color: colors.ink }]}>{t('home.pricing.yearPerMonth')}</Text>
-                <Text style={[styles.per, { color: colors.muted }]}>{t('home.pricing.perMonth')}</Text>
-              </View>
-              <Text style={[styles.accent, { color: colors.brand }]}>{t('home.pricing.onlyIfYearly')}</Text>
-              <Text style={[styles.caption, { color: colors.muted }]}>{t('home.pricing.yearCharged')}</Text>
+              <Text style={[styles.price, { color: colors.ink }]}>{t('billing.freeLabel')}</Text>
+              <Text style={[styles.caption, { color: colors.muted }]}>{t('plans.accountLead')}</Text>
             </>
           ) : (
-            <Text style={[styles.price, { color: colors.ink }]}>{status ? planName : '…'}</Text>
+            <>
+              <Text style={[styles.price, { color: colors.ink }]}>{status ? planName : '…'}</Text>
+              <Text style={[styles.caption, { color: colors.muted }]}>{planCaption}</Text>
+            </>
           )}
-          <Text style={[styles.caption, { color: colors.muted }]}>{planCaption}</Text>
         </View>
         {status ? (
           <View
@@ -143,49 +137,7 @@ export function BillingCard() {
         <Text style={[styles.caption, { color: colors.muted }]}>{t('billing.unavailable')}</Text>
       ) : null}
 
-      {showSubscribe ? (
-        <View style={styles.plans}>
-          <View style={[styles.plan, { borderColor: colors.brand, backgroundColor: `${colors.brand}14` }]}>
-            <View style={styles.planHead}>
-              <Text style={[styles.planLabel, { color: colors.brand }]}>{t('billing.yearCard')}</Text>
-              <Text style={[styles.rec, { color: colors.onBrand, backgroundColor: colors.brand }]}>
-                {t('home.pricing.recommended')}
-              </Text>
-            </View>
-            <View style={styles.priceRow}>
-              <Text style={[styles.planPrice, { color: colors.ink }]}>{t('home.pricing.yearPerMonth')}</Text>
-              <Text style={[styles.per, { color: colors.muted }]}>{t('home.pricing.perMonth')}</Text>
-            </View>
-            <Text style={[styles.accent, { color: colors.brand }]}>{t('home.pricing.onlyIfYearly')}</Text>
-            <Text style={[styles.hint, { color: colors.muted }]}>{t('home.pricing.yearCharged')}</Text>
-            <AppButton
-              label={t('billing.ctaYear')}
-              loading={busy === 'year'}
-              disabled={busy !== null}
-              onPress={() => void openCheckout('year')}
-            />
-          </View>
-          <View style={[styles.plan, { borderColor: colors.line }]}>
-            <Text style={[styles.planLabel, { color: colors.muted }]}>{t('home.pricing.orMonthly')}</Text>
-            <View style={styles.priceRow}>
-              <Text style={[styles.planPrice, { color: colors.ink }]}>{t('home.pricing.monthPrice')}</Text>
-              <Text style={[styles.per, { color: colors.muted }]}>{t('home.pricing.perMonth')}</Text>
-            </View>
-            <Text style={[styles.hint, { color: colors.muted }]}>{t('home.pricing.monthBilled')}</Text>
-            <AppButton
-              label={t('billing.ctaMonth')}
-              variant="secondary"
-              loading={busy === 'month'}
-              disabled={busy !== null}
-              onPress={() => void openCheckout('month')}
-            />
-          </View>
-        </View>
-      ) : null}
-
-      {showSubscribe ? (
-        <Text style={[styles.hint, { color: colors.muted }]}>{t('billing.paidInBrowser')}</Text>
-      ) : null}
+      <AppButton label={t('plans.viewPlans')} disabled={busy !== null} onPress={() => void openPlans()} />
 
       {showManage ? (
         <AppButton
@@ -264,21 +216,12 @@ const styles = StyleSheet.create({
   head: { flexDirection: 'row', justifyContent: 'space-between', gap: 12 },
   headCopy: { flex: 1, gap: 6 },
   kicker: { fontSize: 11, fontWeight: '700', letterSpacing: 1.6, textTransform: 'uppercase' },
-  priceRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 6 },
   price: { fontSize: 32, fontWeight: '700' },
-  planPrice: { fontSize: 26, fontWeight: '700' },
-  per: { fontSize: 13, marginBottom: 4 },
-  accent: { fontSize: 14, fontWeight: '700' },
   caption: { fontSize: 14, lineHeight: 20 },
   badge: { alignSelf: 'flex-start', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 },
   badgeText: { fontSize: 13, fontWeight: '800' },
   notice: { fontSize: 14, fontWeight: '600' },
   error: { fontSize: 14 },
-  plans: { gap: 12 },
-  plan: { borderRadius: 18, borderWidth: 1, gap: 10, padding: 14 },
-  planHead: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
-  planLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 1.2, textTransform: 'uppercase' },
-  rec: { borderRadius: 999, fontSize: 10, fontWeight: '800', overflow: 'hidden', paddingHorizontal: 8, paddingVertical: 3 },
   hint: { fontSize: 13, lineHeight: 18 },
   usage: { borderRadius: 18, gap: 10, padding: 14 },
   usageTitle: { fontSize: 16, fontWeight: '700' },

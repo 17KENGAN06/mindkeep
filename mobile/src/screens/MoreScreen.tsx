@@ -144,7 +144,7 @@ export function MoreScreen() {
           title={t('auth.accountTitle')}
           hint={
             isProAccount(user)
-              ? t('billing.proLabel')
+              ? t(user?.plan === 'PLUS' ? 'billing.plusLabel' : 'billing.proLabel')
               : t('billing.freeLabel')
           }
           onPress={() => navigation.navigate('Account')}

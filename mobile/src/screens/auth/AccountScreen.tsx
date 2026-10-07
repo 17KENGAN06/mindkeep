@@ -154,7 +154,9 @@ export function AccountScreen() {
         <Text style={[styles.lead, { color: colors.muted }]}>{t('auth.accountSubtitle')}</Text>
         {user ? <Text style={[styles.email, { color: colors.ink }]}>{user.email}</Text> : null}
         {user && isProAccount(user) ? (
-          <Text style={[styles.plan, { color: colors.brand }]}>{t('billing.proLabel')}</Text>
+          <Text style={[styles.plan, { color: colors.brand }]}>
+            {t(user.plan === 'PLUS' ? 'billing.plusLabel' : 'billing.proLabel')}
+          </Text>
         ) : null}
         <BillingCard />
         <Text style={[styles.section, { color: colors.ink }]}>

@@ -953,6 +953,7 @@
     "subtitle": "Kaikki toiminnot pysyvät auki. Freellä on määrärajoja, Pro poistaa ne.",
     "freeLabel": "Free",
     "proLabel": "Pro",
+    "plusLabel": "Plus",
     "subscribeMonth": "€4.99 / kk",
     "subscribeYear": "€39.99 / vuosi",
     "yearlyHint": "Vuosi on noin kaksi kuukautta edullisempi kuin kuukausimaksu.",
@@ -1011,6 +1012,10 @@
     "returnPortal": "Tilauksen muutokset on tallennettu. Voit palata sovellukseen.",
     "openApp": "Avaa sovellus",
     "stayOnSite": "Jää sivustolle"
+  },
+  "plans": {
+    "viewPlans": "Katso tilaukset",
+    "accountLead": "Plus: ei rajoja, ateriat ja kulut syötät itse. Pro: sama, ja kuva täyttää ateriat ja kuitit."
   },
   "home": {
     "pricing": {
