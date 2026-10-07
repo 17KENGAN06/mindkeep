@@ -44,6 +44,8 @@ import type {
 
 export class AuthController {
   async challenge(_req: Request, res: Response): Promise<void> {
+    // One-time token: never let an HTTP cache hand out an old one.
+    res.setHeader('Cache-Control', 'no-store');
     res.status(200).json(createBotChallenge());
   }
 
