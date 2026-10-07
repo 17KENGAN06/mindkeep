@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { env } from '@/config/env.js';
+import { logger } from '@/config/logger.js';
 
 let client: Stripe | null = null;
 
@@ -106,6 +107,9 @@ export function planForPriceId(priceId: string | null | undefined): 'PLUS' | 'PR
     Boolean,
   );
   if (knownPro.includes(priceId)) return 'PRO';
+  // Unknown prices still count as Pro (never downgrade a payer by mistake), but say so in
+  // the logs: it usually means a STRIPE_PRICE_* env var is missing or a price was replaced.
+  logger.warn('Unknown Stripe price treated as Pro', { priceId });
   return 'PRO';
 }
 
