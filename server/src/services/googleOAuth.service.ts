@@ -2,6 +2,7 @@ import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypt
 import type { Request } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import { env } from '@/config/env.js';
+import { logger } from '@/config/logger.js';
 import { prisma } from '@/config/prisma.js';
 import { AppError } from '@/utils/AppError.js';
 
@@ -61,6 +62,15 @@ function invalidGoogleCredential(): AppError {
     statusCode: 400,
     code: 'INVALID_GOOGLE_CREDENTIAL',
   });
+}
+
+/** Scheme of a return URL for logs (e.g. "exp:", "mindkeep:"), or a placeholder. */
+export function returnUrlScheme(value: string): string {
+  try {
+    return new URL(value).protocol;
+  } catch {
+    return 'unparseable';
+  }
 }
 
 /** Production only returns to the installed app; Expo Go / tunnel URLs are for local development. */
@@ -185,6 +195,8 @@ export function buildGoogleAuthorizeUrl(
   }
 
   if (!isSafeAppReturnUrl(returnUrl)) {
+    // Only the scheme: enough to tell Expo Go (exp:) from a misbuilt app, without logging the URL.
+    logger.warn('Google sign-in return URL refused', { scheme: returnUrlScheme(returnUrl) });
     throw new AppError('Invalid Google sign-in return URL', {
       statusCode: 400,
       code: 'INVALID_GOOGLE_CREDENTIAL',

@@ -530,6 +530,7 @@
       "missingToken": "Serwer nie zwrócił tokenu sesji. Wdróż najnowsze API.",
       "timezone": "Wybierz poprawną strefę czasową.",
       "googleUnavailable": "Logowanie przez Google nie powiodło się. Spróbuj ponownie.",
+      "googleNeedsApp": "Logowanie przez Google działa tylko w zainstalowanej aplikacji MindKeep, nie w Expo Go. Tutaj zaloguj się e-mailem.",
       "googleEmailInUse": "Konto z tym e-mailem już istnieje. Zaloguj się hasłem.",
       "botRejected": "Ochrona przed botami odrzuciła żądanie. Odśwież i spróbuj ponownie.",
       "emailUnavailable": "Nie udało się wysłać e-maila. Spróbuj później.",

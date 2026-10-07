@@ -530,6 +530,7 @@
       "missingToken": "Il server non ha restituito un token di sessione. Fai il deploy dell'API più recente.",
       "timezone": "Scegli un fuso orario valido.",
       "googleUnavailable": "Accesso con Google non riuscito. Riprova.",
+      "googleNeedsApp": "L’accesso con Google funziona solo nell’app MindKeep installata, non in Expo Go. Qui accedi con l’email.",
       "googleEmailInUse": "Esiste già un account con questa email. Accedi con la password.",
       "botRejected": "La protezione anti-bot ha bloccato la richiesta. Aggiorna e riprova.",
       "emailUnavailable": "Impossibile inviare l’email. Riprova più tardi.",

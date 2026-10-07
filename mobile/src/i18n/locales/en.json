@@ -530,6 +530,7 @@
       "missingToken": "The server did not return a session token. Deploy the latest API.",
       "timezone": "Choose a valid timezone.",
       "googleUnavailable": "Google sign-in failed. Please try again.",
+      "googleNeedsApp": "Google sign-in works only in the installed MindKeep app, not in Expo Go. Sign in with email here.",
       "googleEmailInUse": "This email already has an account. Sign in with your password.",
       "botRejected": "Request blocked by bot protection. Refresh and try again.",
       "emailUnavailable": "Could not send email. Try again later.",

@@ -530,6 +530,7 @@
       "missingToken": "Palvelin ei palauttanut istuntotunnusta. API pitää deployata.",
       "timezone": "Valitse kelvollinen aikavyöhyke.",
       "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen.",
+      "googleNeedsApp": "Google-kirjautuminen toimii vain asennetussa MindKeep-sovelluksessa, ei Expo Gossa. Kirjaudu täällä sähköpostilla.",
       "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla.",
       "botRejected": "Bottisuoja hylkäsi pyynnön. Päivitä ja yritä uudelleen.",
       "emailUnavailable": "Sähköpostia ei voitu lähettää. Yritä myöhemmin.",

@@ -6,6 +6,7 @@ import {
   encodeState,
   hashFlowSecret,
   isSafeAppReturnUrl,
+  returnUrlScheme,
   ticketLookupHash,
 } from '@/services/googleOAuth.service.js';
 
@@ -18,6 +19,21 @@ describe('Google sign-in return URLs', () => {
     assert.equal(isSafeAppReturnUrl('exps://u.expo.dev/--/google', true), false);
     assert.equal(isSafeAppReturnUrl('exp://192.168.1.5:8081/--/google', true), false);
     assert.equal(isSafeAppReturnUrl('https://evil.example/google', true), false);
+  });
+
+  // What the mobile app sends (features/auth/googleSignIn.ts pins the "mindkeep" scheme).
+  test('production accepts the installed app in both URL forms, never the package-name scheme', () => {
+    assert.equal(isSafeAppReturnUrl('mindkeep:///google', true), true);
+    // expo-linking falls back to the Android package name when a build has no scheme.
+    assert.equal(isSafeAppReturnUrl('cloud.mindkeep.app://google', true), false);
+    // Expo Go on the LAN, as createURL builds it.
+    assert.equal(isSafeAppReturnUrl('exp://192.168.8.66:8081/--/google', true), false);
+  });
+
+  test('refused return URLs are logged by scheme only', () => {
+    assert.equal(returnUrlScheme('exp://192.168.8.66:8081/--/google'), 'exp:');
+    assert.equal(returnUrlScheme('cloud.mindkeep.app://google'), 'cloud.mindkeep.app:');
+    assert.equal(returnUrlScheme('not a url'), 'unparseable');
   });
 
   test('development still allows Expo Go and tunnel URLs', () => {

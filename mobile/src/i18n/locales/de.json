@@ -530,6 +530,7 @@
       "missingToken": "Der Server hat kein Sitzungstoken zurückgegeben. Deploye die neueste API.",
       "timezone": "Wähle eine gültige Zeitzone.",
       "googleUnavailable": "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut.",
+      "googleNeedsApp": "Die Google-Anmeldung funktioniert nur in der installierten MindKeep-App, nicht in Expo Go. Melde dich hier mit E-Mail an.",
       "googleEmailInUse": "Zu dieser E-Mail gibt es schon ein Konto. Melde dich mit dem Passwort an.",
       "botRejected": "Der Bot-Schutz hat die Anfrage abgelehnt. Bitte aktualisieren und erneut versuchen.",
       "emailUnavailable": "E-Mail konnte nicht gesendet werden. Später erneut versuchen.",

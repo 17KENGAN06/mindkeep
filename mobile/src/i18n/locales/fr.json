@@ -530,6 +530,7 @@
       "missingToken": "Le serveur n'a pas renvoyé de jeton de session. Déploie la dernière API.",
       "timezone": "Choisis un fuseau horaire valide.",
       "googleUnavailable": "La connexion Google a échoué. Réessaie.",
+      "googleNeedsApp": "La connexion Google fonctionne uniquement dans l’app MindKeep installée, pas dans Expo Go. Ici, connectez-vous par e-mail.",
       "googleEmailInUse": "Un compte existe déjà pour cet e-mail. Connecte-toi avec le mot de passe.",
       "botRejected": "La protection anti-bot a bloqué la requête. Actualise et réessaie.",
       "emailUnavailable": "Impossible d’envoyer l’e-mail. Réessaie plus tard.",

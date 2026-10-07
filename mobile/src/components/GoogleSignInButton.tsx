@@ -5,6 +5,7 @@ import { detectDeviceTimezone } from '../config/timezones';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import {
   GoogleSignInCancelledError,
+  GoogleSignInNeedsAppError,
   requestGoogleSignInCode,
 } from '../features/auth/googleSignIn';
 import { useAuth } from '../features/auth/useAuth';
@@ -31,6 +32,10 @@ export function GoogleSignInButton({ disabled = false, onError }: GoogleSignInBu
       await googleLogin({ code, flowSecret, timezone: detectDeviceTimezone() });
     } catch (caught) {
       if (caught instanceof GoogleSignInCancelledError) return;
+      if (caught instanceof GoogleSignInNeedsAppError) {
+        onError(t('auth.errors.googleNeedsApp'));
+        return;
+      }
       onError(mapAuthError(caught, t));
     } finally {
       setBusy(false);
