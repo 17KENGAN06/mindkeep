@@ -153,7 +153,7 @@ Templates: `.env.example`, `server/.env.example`, `client/.env.example`, `mobile
 - Two lockfiles (root + stale `mobile/`), custom Metro resolver. `npx expo install --check` reports `expo`/`expo-linking` patch updates, but installing just those nests a second copy of `expo-modules-core`/`expo-constants`/`@expo/cli` under `mobile/node_modules` — upgrade all `expo-*` packages together and check for duplicates (`npm ls expo-modules-core`).
 - `planForPriceId` falls back to `PRO` for unknown prices.
 - Mixed TypeScript versions (client ~6.0, server/mobile ~5.9).
-- Docs are outdated: README (old name, 4 languages, "no push/email"), `docs/ios-app.md` (says no refresh tokens), `docs/store-release.md` ("IAP: No" while the app shows Stripe checkout).
+- Docs: README and `docs/store-release.md` were corrected on 2026-10-07; `docs/ios-app.md` is a historical plan with a status note at the top — trust the code and this file over it.
 - No error tracking (console/morgan logging only). Email login depends on Resend.
 
 ## Store-release blockers (Google Play / App Store)

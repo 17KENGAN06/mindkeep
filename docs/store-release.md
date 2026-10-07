@@ -81,7 +81,9 @@ Delete the account anytime in Account. That removes your notes, tasks, reviews, 
 **Age:** 4+ / Everyone  
 **Price:** Free  
 **Ads:** No  
-**IAP:** No
+**IAP:** No — but see the blocker below before submitting.
+
+> **Store blocker (open):** the app sells nothing in-app, but Account → plan card still links to the website plans page and the Stripe portal, and limit messages say "Subscribe on Account". Apple 3.1.1 / 3.1.3 and Play payments policy do not allow steering to outside purchases in store builds. Before a store submission, hide those links and calls to action in store builds (web-bought Pro keeps working), or add StoreKit / Play Billing. See `CLAUDE.md` → Store-release blockers.
 
 Localized name can stay MindKeep. Paste the same description in RU/UK from the website voice if you add extra locales in the consoles.
 
@@ -143,3 +145,5 @@ Educational / productivity, no social network, no user-to-user chat, no location
 ## Review notes (attach if asked)
 
 MindKeep is a personal productivity app. Accounts are email or Google. There is no public feed. Support: https://mindkeep.cloud/contact, contact@mindkeep.cloud (questions and partnership), admin@mindkeep.cloud (bugs). Test account: create one before submit (App Review cannot use your Google login easily — leave a review email+password).
+
+> **Open:** password login always sends a one-time code by email, which App Review cannot read. A reviewer access path is still needed before submitting (see `CLAUDE.md` → Store-release blockers). Apple will also likely require Sign in with Apple because Google sign-in is offered (guideline 4.8).

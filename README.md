@@ -1,6 +1,6 @@
-# Learning Reminder
+# MindKeep
 
-Web app for consolidating recently learned material in long-term memory using a **fixed** review schedule:
+Repository name `learning-reminder` is historical. MindKeep is a personal daily desk (tasks, notes, nutrition, a multi-currency budget, habits, paid plans) on the web and in an Expo app, built around its original core: consolidating recently learned material in long-term memory using a **fixed** review schedule:
 
 - 1st review — **3 days** after the learning date  
 - 2nd review — **7 days** after the learning date  
@@ -8,7 +8,9 @@ Web app for consolidating recently learned material in long-term memory using a 
 
 Intervals are calculated only from the original `learnedAt` date. There is **no SM-2**, no “Remember / Forgot” scoring, and no interval changes after completion.
 
-Languages (i18n): **Russian**, **Ukrainian**, **English**, **Finnish**.
+Languages (i18n): 9 — `ru`, `uk`, `en`, `fi`, `de`, `es`, `fr`, `it`, `pl` (client and mobile each keep their own JSON files).
+
+For the current architecture, deployment and store-release status, see `CLAUDE.md`.
 
 ---
 
@@ -49,12 +51,12 @@ learning-reminder/
 - Dashboard + 7-day activity chart + statistics page
 - Review calendar by month
 - Profile timezone (IANA) for “today” / overdue calculations
-- UI in `ru` / `uk` / `en` / `fi`
+- UI in 9 languages (see above)
 
 ### Intentionally out of scope
 
 - Adaptive intervals / SM-2  
-- Email / Telegram / push (hooks prepared in `notificationService` + env vars)  
+- Telegram / push notifications (email is used only for sign-in codes, verification, password reset and the contact form, via Resend)  
 - Answer quality ratings  
 
 ---
