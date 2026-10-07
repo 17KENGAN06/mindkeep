@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ import {
   useDeleteMaterial,
   useMaterial,
 } from '../../features/materials/useMaterials';
+import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
@@ -27,6 +28,7 @@ export function MaterialDetailScreen() {
   const route = useRoute<RouteProp<ReviewStackParamList, 'MaterialDetail'>>();
   const materialQuery = useMaterial(route.params.id);
   const { data: material, isLoading, isError } = materialQuery;
+  const pull = usePullToRefresh(materialQuery);
   const archiveMaterial = useArchiveMaterial();
   const deleteMaterial = useDeleteMaterial();
   const [busy, setBusy] = useState(false);
@@ -64,7 +66,10 @@ export function MaterialDetailScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
+    <ScrollView
+      contentContainerStyle={styles.content}
+      refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
+    >
       {isError ? <InlineQueryError error={materialQuery.error} /> : null}
       <View style={styles.head}>
         <Text style={[styles.title, { color: colors.ink }]}>{material.title}</Text>

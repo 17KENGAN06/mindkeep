@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +6,7 @@ import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { SourceLink } from '../../components/SourceLink';
 import { AppButton } from '../../components/ui';
 import { useDeleteNote, useNote } from '../../features/notes/useNotes';
+import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
@@ -20,6 +21,7 @@ export function NoteDetailScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
   const route = useRoute<RouteProp<MoreStackParamList, 'NoteDetail'>>();
   const noteQuery = useNote(route.params.id);
+  const pull = usePullToRefresh(noteQuery);
   const deleteNote = useDeleteNote();
 
   const confirmDelete = () => {
@@ -59,7 +61,10 @@ export function NoteDetailScreen() {
   const note = noteQuery.data;
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
+    <ScrollView
+      contentContainerStyle={styles.content}
+      refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
+    >
       {noteQuery.isError ? (
         <InlineQueryError error={noteQuery.error} notFoundText={t('notes.notFound')} />
       ) : null}

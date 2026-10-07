@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../components/AppIcon';
 import { InlineQueryError } from '../components/QueryState';
@@ -13,6 +13,7 @@ import {
   useSetHabitCheck,
 } from '../features/rhythm/useRhythm';
 import type { RhythmHabit } from '../types/rhythm';
+import { usePullToRefresh } from '../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
@@ -136,6 +137,7 @@ export function RhythmScreen() {
 
   const periodQuery = useRhythmPeriod(year, month);
   usePrefetchRhythmNeighbors(year, month);
+  const pull = usePullToRefresh(periodQuery);
   const createHabit = useCreateHabit();
   const deleteHabit = useDeleteHabit();
   const setCheck = useSetHabitCheck();
@@ -171,6 +173,7 @@ export function RhythmScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       contentContainerStyle={styles.content}
       showsHorizontalScrollIndicator={false}
+      refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
     >
       <Text style={[styles.lead, { color: colors.muted }]}>{t('rhythm.subtitle', { days: cycleDays })}</Text>
 

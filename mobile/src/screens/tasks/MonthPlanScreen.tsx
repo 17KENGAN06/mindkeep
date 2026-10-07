@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTasksPeriod, useTasksYear } from '../../features/tasks/useDailyTasks';
+import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
@@ -24,6 +25,7 @@ export function MonthPlanScreen() {
   const yearQuery = useTasksYear(year);
   const monthQuery = useTasksPeriod(year, month);
   const query = view === 'year' ? yearQuery : monthQuery;
+  const pull = usePullToRefresh(query);
 
   if (query.isLoading && !query.data) {
     return (
@@ -46,7 +48,10 @@ export function MonthPlanScreen() {
   const byMonth = data?.byMonth ?? [];
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
+    <ScrollView
+      contentContainerStyle={styles.content}
+      refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
+    >
       <Text style={[styles.subtitle, { color: colors.muted }]}>{t('tasks.planSubtitle')}</Text>
       {query.isError ? (
         <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>

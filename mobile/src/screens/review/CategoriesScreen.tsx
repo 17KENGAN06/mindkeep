@@ -3,6 +3,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,6 +20,7 @@ import {
   useDeleteCategory,
   useUpdateCategory,
 } from '../../features/categories/useCategories';
+import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { Category } from '../../types/category';
@@ -28,6 +30,7 @@ export function CategoriesScreen() {
   useRefreshOnFocus('categories');
   const { colors } = useTheme();
   const categoriesQuery = useCategories();
+  const pull = usePullToRefresh(categoriesQuery);
   const createCategory = useCreateCategory();
   const updateCategory = useUpdateCategory();
   const deleteCategory = useDeleteCategory();
@@ -81,7 +84,11 @@ export function CategoriesScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+        refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
+      >
         <Text style={[styles.subtitle, { color: colors.muted }]}>{t('categories.subtitle')}</Text>
         <Text style={[styles.label, { color: colors.ink }]}>
           {editing ? t('categories.editTitle') : t('categories.createTitle')}

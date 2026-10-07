@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { MonthGrid } from '../../components/MonthGrid';
 import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { AppButton, Badge } from '../../components/ui';
 import { useReminderCalendar } from '../../features/reminders/useCalendar';
+import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
@@ -32,6 +33,7 @@ export function ReviewCalendarScreen() {
   const [month, setMonth] = useState(initial.getMonth() + 1);
   const [selectedDate, setSelectedDate] = useState<string | null>(today);
   const calendarQuery = useReminderCalendar(year, month);
+  const pull = usePullToRefresh(calendarQuery);
 
   const selectedReminders = useMemo(() => {
     if (!calendarQuery.data || !selectedDate) return [];
@@ -59,7 +61,10 @@ export function ReviewCalendarScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
+    <ScrollView
+      contentContainerStyle={styles.content}
+      refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
+    >
       {calendarQuery.isError ? <InlineQueryError error={calendarQuery.error} /> : null}
       <Text style={[styles.subtitle, { color: colors.muted }]}>{t('calendar.subtitle')}</Text>
       <Text style={[styles.timezone, { color: colors.muted }]}>{calendarQuery.data.timezone}</Text>
