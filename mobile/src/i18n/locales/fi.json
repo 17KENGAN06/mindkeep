@@ -1024,7 +1024,23 @@
     "returnCanceled": "Maksu peruttu. Mitään ei veloitettu.",
     "returnPortal": "Tilauksen muutokset on tallennettu. Voit palata sovellukseen.",
     "openApp": "Avaa sovellus",
-    "stayOnSite": "Jää sivustolle"
+    "stayOnSite": "Jää sivustolle",
+    "store": {
+      "planLead": "Tilisi paketti on käytössä kaikilla laitteilla, joilla kirjaudut sisään.",
+      "usageLead": "Tämän tilin nykyiset rajat.",
+      "limitReached": "Free-raja täynnä.",
+      "limits": {
+        "materials": "Free: 20 aktiivista materiaalia.",
+        "reviewCategories": "Free: 3 kertauskategoriaa.",
+        "habits": "Free: 3 tapaa.",
+        "notes": "Free: 20 muistiinpanoa.",
+        "tasks": "Free: 45 tehtävää kuukaudessa.",
+        "financeOperations": "Free: 25 tapahtumaa kuukaudessa.",
+        "financeCategories": "Free: 5 budjettikategoriaa.",
+        "meals": "Free tallentaa ateriat tältä päivältä ja 7 päivältä.",
+        "sessions": "Free: 2 laitetta."
+      }
+    }
   },
   "plans": {
     "viewPlans": "Katso tilaukset",

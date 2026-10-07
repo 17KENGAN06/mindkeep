@@ -1024,7 +1024,23 @@
     "returnCanceled": "Checkout annullato. Non è stato addebitato nulla.",
     "returnPortal": "Modifiche all’abbonamento salvate. Puoi tornare all’app.",
     "openApp": "Apri l’app",
-    "stayOnSite": "Resta sul sito"
+    "stayOnSite": "Resta sul sito",
+    "store": {
+      "planLead": "Il tuo piano vale su ogni dispositivo in cui accedi con questo account.",
+      "usageLead": "Limiti attuali di questo account.",
+      "limitReached": "Limite Free raggiunto.",
+      "limits": {
+        "materials": "Free: 20 materiali attivi.",
+        "reviewCategories": "Free: 3 categorie di ripasso.",
+        "habits": "Free: 3 abitudini.",
+        "notes": "Free: 20 note.",
+        "tasks": "Free: 45 attività al mese.",
+        "financeOperations": "Free: 25 operazioni al mese.",
+        "financeCategories": "Free: 5 categorie budget.",
+        "meals": "Free registra i pasti di oggi e degli ultimi 7 giorni.",
+        "sessions": "Free: 2 dispositivi."
+      }
+    }
   },
   "plans": {
     "viewPlans": "Vedi i piani",

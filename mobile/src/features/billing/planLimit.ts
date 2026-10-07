@@ -1,6 +1,7 @@
 import { useQuery, type QueryClient } from '@tanstack/react-query';
 import { ApiError } from '../../api/client';
 import { billingApi, type BillingStatus } from '../../api/billing';
+import { env } from '../../config/env';
 import type { User } from '../../types/auth';
 
 type Translate = (key: string) => string;
@@ -38,8 +39,10 @@ function featureOf(error: ApiError): PlanLimitFeature | null {
 export function planLimitMessage(error: unknown, t: Translate): string | null {
   if (!(error instanceof ApiError) || error.code !== 'PLAN_LIMIT') return null;
   const feature = featureOf(error);
-  if (feature) return t(`billing.limits.${feature}`);
-  return t('billing.limitReached');
+  // Store builds state the limit without pointing to a subscription (see config/env.ts).
+  const prefix = env.storeBuild ? 'billing.store.' : 'billing.';
+  if (feature) return t(`${prefix}limits.${feature}`);
+  return t(`${prefix}limitReached`);
 }
 
 export function touchPlanUsage(queryClient: QueryClient): void {

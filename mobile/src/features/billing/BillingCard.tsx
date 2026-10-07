@@ -5,6 +5,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
 import { billingApi, type BillingStatus } from '../../api/billing';
 import { AppButton } from '../../components/ui';
+import { env } from '../../config/env';
 import { mapAuthError } from '../auth/mapAuthError';
 import { useAuth } from '../auth/useAuth';
 import { useTheme } from '../theme/useTheme';
@@ -71,7 +72,9 @@ export function BillingCard() {
   const isBeta = Boolean((user?.betaTester || status?.betaTester) && !isAdmin);
   const isPro = status?.plan === 'PRO' || status?.plan === 'PLUS';
   const showSubscribe = Boolean(status?.configured && !subscribed && !isBeta);
-  const showManage = Boolean(status?.configured && billed);
+  // Store builds: plan status only, no way out to buying or managing it (see config/env.ts).
+  const showPlansLink = !env.storeBuild;
+  const showManage = Boolean(!env.storeBuild && status?.configured && billed);
   const expires = status?.planExpiresAt
     ? new Date(status.planExpiresAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
     : null;
@@ -92,7 +95,7 @@ export function BillingCard() {
         ? t('billing.betaHint')
         : isAdmin
           ? t('billing.adminHint')
-          : t('billing.subtitle');
+          : t(env.storeBuild ? 'billing.store.planLead' : 'billing.subtitle');
 
   return (
     <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.brand }]}>
@@ -102,7 +105,7 @@ export function BillingCard() {
           {showSubscribe ? (
             <>
               <Text style={[styles.price, { color: colors.ink }]}>{t('billing.freeLabel')}</Text>
-              <Text style={[styles.caption, { color: colors.muted }]}>{t('plans.accountLead')}</Text>
+              <Text style={[styles.caption, { color: colors.muted }]}>{t(env.storeBuild ? 'billing.store.planLead' : 'plans.accountLead')}</Text>
             </>
           ) : (
             <>
@@ -137,7 +140,9 @@ export function BillingCard() {
         <Text style={[styles.caption, { color: colors.muted }]}>{t('billing.unavailable')}</Text>
       ) : null}
 
-      <AppButton label={t('plans.viewPlans')} disabled={busy !== null} onPress={() => void openPlans()} />
+      {showPlansLink ? (
+        <AppButton label={t('plans.viewPlans')} disabled={busy !== null} onPress={() => void openPlans()} />
+      ) : null}
 
       {showManage ? (
         <AppButton
@@ -169,7 +174,7 @@ function UsageGrid({ usage }: { usage: BillingStatus['usage'] }) {
   return (
     <View style={[styles.usage, { backgroundColor: `${colors.brand}12` }]}>
       <Text style={[styles.usageTitle, { color: colors.ink }]}>{t('billing.usageTitle')}</Text>
-      <Text style={[styles.hint, { color: colors.muted }]}>{t('billing.usageLead')}</Text>
+      <Text style={[styles.hint, { color: colors.muted }]}>{t(env.storeBuild ? 'billing.store.usageLead' : 'billing.usageLead')}</Text>
       {USAGE_KEYS.map((key) => {
         const item = usage[key];
         const limit = item.limit;

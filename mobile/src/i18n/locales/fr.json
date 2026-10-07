@@ -1024,7 +1024,23 @@
     "returnCanceled": "Paiement annulé. Rien n’a été débité.",
     "returnPortal": "Les changements d’abonnement sont enregistrés. Vous pouvez revenir à l’app.",
     "openApp": "Ouvrir l’app",
-    "stayOnSite": "Rester sur le site"
+    "stayOnSite": "Rester sur le site",
+    "store": {
+      "planLead": "Votre offre s’applique sur chaque appareil où vous vous connectez avec ce compte.",
+      "usageLead": "Plafonds actuels de ce compte.",
+      "limitReached": "Plafond Free atteint.",
+      "limits": {
+        "materials": "Free : 20 matériaux actifs.",
+        "reviewCategories": "Free : 3 catégories de révision.",
+        "habits": "Free : 3 habitudes.",
+        "notes": "Free : 20 notes.",
+        "tasks": "Free : 45 tâches par mois.",
+        "financeOperations": "Free : 25 opérations par mois.",
+        "financeCategories": "Free : 5 catégories budget.",
+        "meals": "Free enregistre les repas d’aujourd’hui et des 7 derniers jours.",
+        "sessions": "Free : 2 appareils."
+      }
+    }
   },
   "plans": {
     "viewPlans": "Voir les offres",

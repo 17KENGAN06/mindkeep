@@ -1024,7 +1024,23 @@
     "returnCanceled": "Płatność anulowana. Nic nie pobrano.",
     "returnPortal": "Zmiany subskrypcji zapisane. Możesz wrócić do aplikacji.",
     "openApp": "Otwórz aplikację",
-    "stayOnSite": "Zostań na stronie"
+    "stayOnSite": "Zostań na stronie",
+    "store": {
+      "planLead": "Twój plan działa na każdym urządzeniu, na którym logujesz się na to konto.",
+      "usageLead": "Obecne limity tego konta.",
+      "limitReached": "Limit Free.",
+      "limits": {
+        "materials": "Free: 20 aktywnych materiałów.",
+        "reviewCategories": "Free: 3 kategorie powtórek.",
+        "habits": "Free: 3 nawyki.",
+        "notes": "Free: 20 notatek.",
+        "tasks": "Free: 45 zadań miesięcznie.",
+        "financeOperations": "Free: 25 operacji miesięcznie.",
+        "financeCategories": "Free: 5 kategorii budżetu.",
+        "meals": "Free zapisuje posiłki z dziś i 7 dni.",
+        "sessions": "Free: 2 urządzenia."
+      }
+    }
   },
   "plans": {
     "viewPlans": "Zobacz plany",

@@ -22,7 +22,8 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://api.mindkeep.cloud"
+        "EXPO_PUBLIC_API_URL": "https://api.mindkeep.cloud",
+        "EXPO_PUBLIC_STORE_BUILD": "true"
       }
     }
   },

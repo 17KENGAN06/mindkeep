@@ -1024,7 +1024,23 @@
     "returnCanceled": "Checkout was cancelled. Nothing was charged.",
     "returnPortal": "Subscription changes are saved. You can return to the app.",
     "openApp": "Open the app",
-    "stayOnSite": "Continue on the website"
+    "stayOnSite": "Continue on the website",
+    "store": {
+      "planLead": "Your plan applies on every device where you sign in with this account.",
+      "usageLead": "Current limits on this account.",
+      "limitReached": "Free limit reached.",
+      "limits": {
+        "materials": "Free includes 20 active materials.",
+        "reviewCategories": "Free includes 3 review categories.",
+        "habits": "Free includes 3 habits.",
+        "notes": "Free includes 20 notes.",
+        "tasks": "Free includes 45 tasks per month.",
+        "financeOperations": "Free includes 25 finance operations per month.",
+        "financeCategories": "Free includes 5 finance categories.",
+        "meals": "Free can log meals for today and the last 7 days.",
+        "sessions": "Free includes 2 signed-in devices."
+      }
+    }
   },
   "plans": {
     "viewPlans": "See all plans",

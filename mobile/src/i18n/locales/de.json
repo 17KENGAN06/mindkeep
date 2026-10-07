@@ -1024,7 +1024,23 @@
     "returnCanceled": "Checkout abgebrochen. Es wurde nichts berechnet.",
     "returnPortal": "Abo-Änderungen sind gespeichert. Du kannst zur App zurück.",
     "openApp": "App öffnen",
-    "stayOnSite": "Auf der Website bleiben"
+    "stayOnSite": "Auf der Website bleiben",
+    "store": {
+      "planLead": "Dein Tarif gilt auf jedem Gerät, auf dem du dich mit diesem Konto anmeldest.",
+      "usageLead": "Aktuelle Limits dieses Kontos.",
+      "limitReached": "Free-Limit erreicht.",
+      "limits": {
+        "materials": "Free: 20 aktive Materialien.",
+        "reviewCategories": "Free: 3 Wiederholungskategorien.",
+        "habits": "Free: 3 Gewohnheiten.",
+        "notes": "Free: 20 Notizen.",
+        "tasks": "Free: 45 Aufgaben pro Monat.",
+        "financeOperations": "Free: 25 Buchungen pro Monat.",
+        "financeCategories": "Free: 5 Budgetkategorien.",
+        "meals": "Free speichert Mahlzeiten für heute und 7 Tage.",
+        "sessions": "Free: 2 Geräte."
+      }
+    }
   },
   "plans": {
     "viewPlans": "Pläne ansehen",

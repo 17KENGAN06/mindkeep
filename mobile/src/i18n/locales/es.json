@@ -1024,7 +1024,23 @@
     "returnCanceled": "Pago cancelado. No se cobró nada.",
     "returnPortal": "Los cambios de suscripción están guardados. Puedes volver a la app.",
     "openApp": "Abrir la app",
-    "stayOnSite": "Seguir en el sitio"
+    "stayOnSite": "Seguir en el sitio",
+    "store": {
+      "planLead": "Tu plan se aplica en todos los dispositivos donde inicies sesión con esta cuenta.",
+      "usageLead": "Límites actuales de esta cuenta.",
+      "limitReached": "Límite Free.",
+      "limits": {
+        "materials": "Free: 20 materiales activos.",
+        "reviewCategories": "Free: 3 categorías de repaso.",
+        "habits": "Free: 3 hábitos.",
+        "notes": "Free: 20 notas.",
+        "tasks": "Free: 45 tareas al mes.",
+        "financeOperations": "Free: 25 operaciones al mes.",
+        "financeCategories": "Free: 5 categorías de presupuesto.",
+        "meals": "Free guarda comidas de hoy y 7 días.",
+        "sessions": "Free: 2 dispositivos."
+      }
+    }
   },
   "plans": {
     "viewPlans": "Ver planes",
