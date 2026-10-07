@@ -71,7 +71,6 @@
     },
     "platforms": ["ios", "android"],
     "runtimeVersion": "exposdk:57.0.0",
-    "newArchEnabled": true,
     "plugins": [
       "expo-secure-store",
       "expo-localization",
@@ -81,11 +80,11 @@
         {
           "android": {
             "minSdkVersion": 24,
-            "targetSdkVersion": 35,
-            "compileSdkVersion": 35
+            "targetSdkVersion": 36,
+            "compileSdkVersion": 36
           },
           "ios": {
-            "deploymentTarget": "15.1"
+            "deploymentTarget": "16.4"
           }
         }
       ]

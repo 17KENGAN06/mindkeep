@@ -40,19 +40,26 @@ function collectPackages(dir) {
   return out;
 }
 
+// Mobile-local copies last so they win: Expo's native-module resolution falls back to this map,
+// and autolinking links the mobile/ copy (e.g. react-native-screens).
 const extraNodeModules = {
-  ...collectPackages(nestedModules),
   ...collectPackages(rootModules),
+  ...collectPackages(nestedModules),
 };
 
 for (const name of ['expo', 'react', 'react-native']) {
   extraNodeModules[name] = path.join(rootModules, name);
 }
+// mobile/ pins its own React to match the React Native renderer; the root copy belongs to the website.
+if (fs.existsSync(path.join(nestedModules, 'react', 'package.json'))) {
+  extraNodeModules.react = path.join(nestedModules, 'react');
+}
 
 const config = getDefaultConfig(projectRoot);
 config.watchFolders = [projectRoot, rootModules];
 config.resolver.disableHierarchicalLookup = true;
-config.resolver.nodeModulesPaths = [rootModules, nestedModules];
+// Mobile-local packages first, so versions mobile pins (react, react-native-screens, react-i18next) win over hoisted web ones.
+config.resolver.nodeModulesPaths = [nestedModules, rootModules];
 config.resolver.extraNodeModules = extraNodeModules;
 
 module.exports = config;
