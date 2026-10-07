@@ -9,7 +9,7 @@ import type {
 } from '@/validations/dailyTask.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
-import { getDayBoundsInTimeZone } from '@/utils/timezone.js';
+import { getDayBoundsInTimeZone, todayKeyInTimeZone } from '@/utils/timezone.js';
 import { FREE_LIMITS } from '@/config/entitlements.js';
 import type { AppLocale } from '@/services/emailCopy.js';
 import {
@@ -45,8 +45,10 @@ function periodRange(query: DailyTaskPeriodQuery): { from: Date; to: Date } {
   };
 }
 
-function todayKey(): string {
-  return new Date().toISOString().slice(0, 10);
+/** "Today" in the account timezone (not UTC), so overdue tasks flip at the user's local midnight. */
+async function todayKeyForUser(userId: string): Promise<string> {
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { timezone: true } });
+  return todayKeyInTimeZone(user?.timezone || 'Europe/Helsinki');
 }
 
 export class DailyTaskService {
@@ -87,7 +89,7 @@ export class DailyTaskService {
       (task) => task.createdAt.getTime(),
     );
 
-    const today = todayKey();
+    const today = await todayKeyForUser(userId);
     const daysMap = new Map<
       string,
       {
