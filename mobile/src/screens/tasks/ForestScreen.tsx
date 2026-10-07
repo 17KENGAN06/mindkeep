@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -18,6 +18,7 @@ import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { TasksStackParamList } from '../../navigation/types';
+import { useAccountToday } from '../../features/time/useAccountToday';
 import { formatMonthTitle } from '../../utils/date';
 
 export function ForestScreen() {
@@ -26,9 +27,9 @@ export function ForestScreen() {
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const route = useRoute<RouteProp<TasksStackParamList, 'Forest'>>();
-  const now = useMemo(() => new Date(), []);
-  const [year, setYear] = useState(route.params?.year ?? now.getFullYear());
-  const [month, setMonth] = useState(route.params?.month ?? now.getMonth() + 1);
+  const { year: todayYear, month: todayMonth } = useAccountToday();
+  const [year, setYear] = useState(route.params?.year ?? todayYear);
+  const [month, setMonth] = useState(route.params?.month ?? todayMonth);
   const forestQuery = useForestSummary(year, month);
 
   const shiftMonth = (delta: number) => {

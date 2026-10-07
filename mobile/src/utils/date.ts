@@ -38,6 +38,76 @@ export function dateKey(value: Date): string {
   return todayDateKey(value);
 }
 
+type ZonedParts = { year: number; month: number; day: number; hour: number; minute: number; second: number };
+
+function zonedParts(at: Date, timeZone: string): ZonedParts | null {
+  try {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23',
+    }).formatToParts(at);
+    const get = (type: Intl.DateTimeFormatPartTypes) =>
+      Number(parts.find((part) => part.type === type)?.value);
+    const result = {
+      year: get('year'),
+      month: get('month'),
+      day: get('day'),
+      hour: get('hour') % 24,
+      minute: get('minute'),
+      second: get('second'),
+    };
+    return Object.values(result).every(Number.isFinite) ? result : null;
+  } catch {
+    // Unknown zone or no Intl time-zone support: callers fall back to the device clock.
+    return null;
+  }
+}
+
+function pad2(value: number): string {
+  return String(value).padStart(2, '0');
+}
+
+/** YYYY-MM-DD of `at` in an IANA time zone (the account zone); device date if the zone is unusable. */
+export function dateKeyInZone(at: Date, timeZone: string): string {
+  const parts = zonedParts(at, timeZone);
+  if (!parts) return todayDateKey(at);
+  return `${parts.year}-${pad2(parts.month)}-${pad2(parts.day)}`;
+}
+
+/** Shift a YYYY-MM-DD key by whole days (pure calendar math, no time zone involved). */
+export function shiftDateKey(key: string, days: number): string {
+  const [year, month, day] = key.split('-').map(Number);
+  const shifted = new Date(Date.UTC(year!, month! - 1, day! + days, 12));
+  return shifted.toISOString().slice(0, 10);
+}
+
+/** The `count` days ending on `todayKey`, oldest first. */
+export function lastNKeysFrom(todayKey: string, count: number): string[] {
+  return Array.from({ length: count }, (_, index) => shiftDateKey(todayKey, index - (count - 1)));
+}
+
+/** ISO instant of 12:00 on `dateKey` in `timeZone`, using that date's offset (DST-safe). */
+export function zonedNoonIso(dateKey: string, timeZone: string): string {
+  const [year, month, day] = dateKey.split('-').map(Number);
+  const wallNoon = Date.UTC(year!, month! - 1, day!, 12);
+  const offsetAt = (instant: number): number | null => {
+    const parts = zonedParts(new Date(instant), timeZone);
+    if (!parts) return null;
+    return Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second) - instant;
+  };
+  const first = offsetAt(wallNoon);
+  if (first === null) return dateInputToIso(dateKey);
+  // Second pass measures the offset at the real local noon (matters when DST changes in between).
+  const second = offsetAt(wallNoon - first) ?? first;
+  return new Date(wallNoon - second).toISOString();
+}
+
 export function dateInputToIso(dateInput: string): string {
   const [year, month, day] = dateInput.split('-').map(Number);
   const local = new Date(year!, month! - 1, day!, 12, 0, 0, 0);

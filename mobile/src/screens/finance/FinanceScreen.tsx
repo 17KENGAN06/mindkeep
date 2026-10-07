@@ -50,7 +50,8 @@ import type {
   FinanceOperationType,
   FinanceView,
 } from '../../types/finance';
-import { formatDate, formatMonthTitle, todayDateKey } from '../../utils/date';
+import { useAccountToday } from '../../features/time/useAccountToday';
+import { formatDate, formatMonthTitle } from '../../utils/date';
 
 function Chip({
   label,
@@ -190,15 +191,15 @@ export function FinanceScreen() {
   useRefreshOnFocus('finance');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
-  const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth() + 1);
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
   const [view, setView] = useState<FinanceView>('month');
   const [type, setType] = useState<FinanceOperationType>('EXPENSE');
   const [moneyKind, setMoneyKind] = useState<FinanceMoneyKind>('ELECTRONIC');
   const [currency, setCurrency] = useState<FinanceCurrency>('UAH');
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState(todayDateKey());
+  const [date, setDate] = useState(today);
   const [comment, setComment] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [categoryName, setCategoryName] = useState('');

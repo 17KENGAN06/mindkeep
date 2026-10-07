@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTasksPeriod, useTasksYear } from '../../features/tasks/useDailyTasks';
@@ -6,6 +6,7 @@ import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
+import { useAccountToday } from '../../features/time/useAccountToday';
 import { formatMonthTitle } from '../../utils/date';
 
 function clampPercent(value: number): number {
@@ -18,10 +19,10 @@ export function MonthPlanScreen() {
   useRefreshOnFocus('tasks');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
-  const now = useMemo(() => new Date(), []);
+  const { year: todayYear, month: todayMonth } = useAccountToday();
   const [view, setView] = useState<'year' | 'month'>('year');
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
   const yearQuery = useTasksYear(year);
   const monthQuery = useTasksPeriod(year, month);
   const query = view === 'year' ? yearQuery : monthQuery;

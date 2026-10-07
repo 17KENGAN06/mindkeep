@@ -203,7 +203,11 @@ export function formatSignedMoney(amount: number, language: AppLanguage, currenc
   return formatted;
 }
 
-export function currentPeriodDefaults(): { year: number; month: number; view: FinanceView } {
+/** Month containing `todayKey` (YYYY-MM-DD, account time zone); device month if omitted. */
+export function currentPeriodDefaults(todayKey?: string): { year: number; month: number; view: FinanceView } {
+  if (todayKey) {
+    return { view: 'month', year: Number(todayKey.slice(0, 4)), month: Number(todayKey.slice(5, 7)) };
+  }
   const now = new Date();
   return {
     view: 'month',

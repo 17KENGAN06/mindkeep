@@ -17,20 +17,13 @@ import { usePullToRefresh } from '../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
+import { useAccountToday } from '../features/time/useAccountToday';
 import { formatMonthTitle, monthCells, weekdayLabels } from '../utils/date';
 
 function habitsForMonth(habits: RhythmHabit[], year: number, month: number, ready: boolean): RhythmHabit[] {
   if (ready) return habits;
   const target = new Date(year, month, 0).getDate();
   return habits.map((habit) => ({ ...habit, checks: [], done: 0, target }));
-}
-
-function pad(value: number): string {
-  return String(value).padStart(2, '0');
-}
-
-function dateKey(year: number, month: number, day: number): string {
-  return `${year}-${pad(month)}-${pad(day)}`;
 }
 
 function HabitMonthCard({
@@ -129,9 +122,9 @@ export function RhythmScreen() {
   useRefreshOnFocus('rhythm');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
-  const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth() + 1);
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
   const [title, setTitle] = useState('');
   const [error, setError] = useState<string | null>(null);
 
@@ -142,7 +135,6 @@ export function RhythmScreen() {
   const deleteHabit = useDeleteHabit();
   const setCheck = useSetHabitCheck();
 
-  const today = dateKey(now.getFullYear(), now.getMonth() + 1, now.getDate());
   const periodReady = periodQuery.data?.year === year && periodQuery.data?.month === month;
   const habits = habitsForMonth(periodQuery.data?.habits ?? [], year, month, periodReady);
   const cycleDays = periodQuery.data?.cycleDays ?? 30;

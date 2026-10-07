@@ -26,7 +26,8 @@ import {
 } from '../../features/materials/useMaterials';
 import { useTheme } from '../../features/theme/useTheme';
 import type { ReviewStackParamList } from '../../navigation/types';
-import { dateInputToIso, isoToDateKey, todayDateKey } from '../../utils/date';
+import { useAccountToday } from '../../features/time/useAccountToday';
+import { dateKeyInZone, zonedNoonIso } from '../../utils/date';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -61,7 +62,9 @@ export function MaterialFormScreen() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
-  const [learnedAt, setLearnedAt] = useState(todayDateKey());
+  // Dates are days in the account time zone, sent as noon there, so 3/7/30 land on the chosen day.
+  const { today, timeZone } = useAccountToday();
+  const [learnedAt, setLearnedAt] = useState(today);
   const [initialLearnedAt, setInitialLearnedAt] = useState<string | null>(null);
   const [categoryId, setCategoryId] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -77,18 +80,18 @@ export function MaterialFormScreen() {
     setTitle(material.title);
     setContent(material.content ?? '');
     setSourceUrl(material.sourceUrl ?? '');
-    setLearnedAt(isoToDateKey(material.learnedAt));
-    setInitialLearnedAt(isoToDateKey(material.learnedAt));
+    setLearnedAt(dateKeyInZone(new Date(material.learnedAt), timeZone));
+    setInitialLearnedAt(dateKeyInZone(new Date(material.learnedAt), timeZone));
     setCategoryId(material.categoryId ?? '');
     setInitial({
       title: material.title,
       content: material.content ?? '',
       sourceUrl: material.sourceUrl ?? '',
-      learnedAt: isoToDateKey(material.learnedAt),
+      learnedAt: dateKeyInZone(new Date(material.learnedAt), timeZone),
       categoryId: material.categoryId ?? '',
     });
     setHydrated(true);
-  }, [hydrated, isEdit, materialQuery.data]);
+  }, [hydrated, isEdit, materialQuery.data, timeZone]);
 
   const dirty =
     initial !== null &&
@@ -127,7 +130,7 @@ export function MaterialFormScreen() {
         // unchanged date never reschedules reviews or fails on a different-timezone timestamp.
         const payload = {
           ...base,
-          ...(learnedAt !== initialLearnedAt ? { learnedAt: dateInputToIso(learnedAt) } : {}),
+          ...(learnedAt !== initialLearnedAt ? { learnedAt: zonedNoonIso(learnedAt, timeZone) } : {}),
         };
         await updateMaterial.mutateAsync({ id: materialId, payload });
         guard.allowLeave();
@@ -139,7 +142,7 @@ export function MaterialFormScreen() {
         description: '',
         question: null,
         answer: null,
-        learnedAt: dateInputToIso(learnedAt),
+        learnedAt: zonedNoonIso(learnedAt, timeZone),
       });
       guard.allowLeave();
       navigation.replace('MaterialDetail', { id: result.material.id });

@@ -12,7 +12,8 @@ import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
-import { formatDate, todayDateKey } from '../../utils/date';
+import { useAccountToday, useTodayRollover } from '../../features/time/useAccountToday';
+import { formatDate } from '../../utils/date';
 
 function statusTone(status: string) {
   if (status === 'OVERDUE') return 'danger' as const;
@@ -27,11 +28,17 @@ export function ReviewCalendarScreen() {
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();
-  const today = todayDateKey();
-  const initial = new Date();
-  const [year, setYear] = useState(initial.getFullYear());
-  const [month, setMonth] = useState(initial.getMonth() + 1);
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
   const [selectedDate, setSelectedDate] = useState<string | null>(today);
+  // At midnight, move along only if the user was still looking at the old "today".
+  useTodayRollover(today, (previous, next) => {
+    if (selectedDate !== previous) return;
+    setSelectedDate(next);
+    setYear(Number(next.slice(0, 4)));
+    setMonth(Number(next.slice(5, 7)));
+  });
   const calendarQuery = useReminderCalendar(year, month);
   const pull = usePullToRefresh(calendarQuery);
 

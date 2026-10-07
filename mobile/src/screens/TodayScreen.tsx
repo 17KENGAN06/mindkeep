@@ -30,7 +30,8 @@ import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { AppTabParamList } from '../navigation/types';
-import { lastNDateKeys, todayDateKey } from '../utils/date';
+import { useAccountToday } from '../features/time/useAccountToday';
+import { lastNKeysFrom } from '../utils/date';
 
 type WeekTab = 'tasks' | 'reviews';
 
@@ -80,12 +81,12 @@ export function TodayScreen() {
   const showNutrition = userHasModule(user, 'nutrition');
   const showFinance = userHasModule(user, 'finance');
   const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
-  const today = todayDateKey();
-  const period = currentPeriodDefaults();
+  const { today } = useAccountToday();
+  const period = currentPeriodDefaults(today);
   const [weekTab, setWeekTab] = useState<WeekTab>(showTasks ? 'tasks' : 'reviews');
   const weekTabId: WeekTab =
     showTasks && (!showReview || weekTab === 'tasks') ? 'tasks' : 'reviews';
-  const weekDays = useMemo(() => lastNDateKeys(7), []);
+  const weekDays = useMemo(() => lastNKeysFrom(today, 7), [today]);
 
   const tasksQuery = useTodayTasks(today, showTasks);
   const monthTasksQuery = useTasksPeriod(period.year, period.month, showTasks);

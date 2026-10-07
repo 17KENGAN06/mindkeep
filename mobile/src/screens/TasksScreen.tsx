@@ -35,7 +35,8 @@ import type { AppLanguage } from '../i18n';
 import type { TasksStackParamList } from '../navigation/types';
 import type { CalendarDaySummary } from '../types/calendar';
 import type { DailyTask } from '../types/dailyTask';
-import { formatDate, formatMonthTitle, todayDateKey } from '../utils/date';
+import { useAccountToday, useTodayRollover } from '../features/time/useAccountToday';
+import { formatDate, formatMonthTitle } from '../utils/date';
 
 function firstOfMonth(year: number, month: number): string {
   return `${year}-${String(month).padStart(2, '0')}-01`;
@@ -52,11 +53,17 @@ export function TasksScreen() {
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<TasksStackParamList>>();
-  const today = todayDateKey();
-  const initial = new Date();
-  const [year, setYear] = useState(initial.getFullYear());
-  const [month, setMonth] = useState(initial.getMonth() + 1);
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
   const [selectedDate, setSelectedDate] = useState(today);
+  // At midnight, move along only if the user was still looking at the old "today".
+  useTodayRollover(today, (previous, next) => {
+    if (selectedDate !== previous) return;
+    setSelectedDate(next);
+    setYear(Number(next.slice(0, 4)));
+    setMonth(Number(next.slice(5, 7)));
+  });
   const [title, setTitle] = useState('');
   const [minutes, setMinutes] = useState('30');
   const [formError, setFormError] = useState<string | null>(null);

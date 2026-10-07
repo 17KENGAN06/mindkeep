@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { CalendarDaySummary } from '../types/calendar';
-import { dateKey, formatMonthTitle, monthGrid, todayDateKey, weekdayLabels } from '../utils/date';
+import { useAccountToday } from '../features/time/useAccountToday';
+import { dateKey, formatMonthTitle, monthGrid, weekdayLabels } from '../utils/date';
 
 type MonthGridProps = {
   year: number;
@@ -35,7 +36,7 @@ export function MonthGrid({
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
-  const today = todayDateKey();
+  const { today } = useAccountToday();
   const labels = weekdayLabels(language);
   const grid = monthGrid(year, month);
   const summaryByDate = new Map(days.map((day) => [day.date, day]));
