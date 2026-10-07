@@ -28,6 +28,12 @@
     "admin": "Admin",
     "blog": "Blog"
   },
+  "drafts": {
+    "title": "¿Descartar cambios?",
+    "body": "Tienes cambios sin guardar. Si sales ahora, se perderán.",
+    "keep": "Seguir editando",
+    "discard": "Descartar"
+  },
   "tabs": {
     "today": "Hoy",
     "review": "Repaso",

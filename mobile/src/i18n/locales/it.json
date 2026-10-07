@@ -28,6 +28,12 @@
     "admin": "Admin",
     "blog": "Blog"
   },
+  "drafts": {
+    "title": "Scartare le modifiche?",
+    "body": "Hai modifiche non salvate. Se esci ora, andranno perse.",
+    "keep": "Continua a modificare",
+    "discard": "Scarta"
+  },
   "tabs": {
     "today": "Oggi",
     "review": "Ripasso",

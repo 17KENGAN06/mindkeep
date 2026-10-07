@@ -18,6 +18,7 @@ import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useCategories } from '../../features/categories/useCategories';
+import { useUnsavedChangesGuard } from '../../features/forms/useUnsavedChangesGuard';
 import {
   useCreateMaterial,
   useMaterial,
@@ -28,6 +29,14 @@ import type { ReviewStackParamList } from '../../navigation/types';
 import { dateInputToIso, isoToDateKey, todayDateKey } from '../../utils/date';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+type MaterialDraft = {
+  title: string;
+  content: string;
+  sourceUrl: string;
+  learnedAt: string;
+  categoryId: string;
+};
 
 function isValidUrl(value: string): boolean {
   try {
@@ -57,6 +66,10 @@ export function MaterialFormScreen() {
   const [categoryId, setCategoryId] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(!isEdit);
+  // What the form started from: the loaded material (edit) or the defaults (create). Null until loaded.
+  const [initial, setInitial] = useState<MaterialDraft | null>(() =>
+    isEdit ? null : { title: '', content: '', sourceUrl: '', learnedAt, categoryId: '' },
+  );
 
   useEffect(() => {
     if (!isEdit || !materialQuery.data || hydrated) return;
@@ -67,8 +80,24 @@ export function MaterialFormScreen() {
     setLearnedAt(isoToDateKey(material.learnedAt));
     setInitialLearnedAt(isoToDateKey(material.learnedAt));
     setCategoryId(material.categoryId ?? '');
+    setInitial({
+      title: material.title,
+      content: material.content ?? '',
+      sourceUrl: material.sourceUrl ?? '',
+      learnedAt: isoToDateKey(material.learnedAt),
+      categoryId: material.categoryId ?? '',
+    });
     setHydrated(true);
   }, [hydrated, isEdit, materialQuery.data]);
+
+  const dirty =
+    initial !== null &&
+    (title.trim() !== initial.title.trim() ||
+      content.trim() !== initial.content.trim() ||
+      sourceUrl.trim() !== initial.sourceUrl.trim() ||
+      learnedAt !== initial.learnedAt ||
+      categoryId !== initial.categoryId);
+  const guard = useUnsavedChangesGuard(dirty);
 
   const onSubmit = async () => {
     setError(null);
@@ -101,6 +130,7 @@ export function MaterialFormScreen() {
           ...(learnedAt !== initialLearnedAt ? { learnedAt: dateInputToIso(learnedAt) } : {}),
         };
         await updateMaterial.mutateAsync({ id: materialId, payload });
+        guard.allowLeave();
         navigation.goBack();
         return;
       }
@@ -111,6 +141,7 @@ export function MaterialFormScreen() {
         answer: null,
         learnedAt: dateInputToIso(learnedAt),
       });
+      guard.allowLeave();
       navigation.replace('MaterialDetail', { id: result.material.id });
     } catch (caught) {
       setError(mapAuthError(caught, t));

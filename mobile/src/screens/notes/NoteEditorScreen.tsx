@@ -15,12 +15,16 @@ import { useTranslation } from 'react-i18next';
 import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
+import { useUnsavedChangesGuard } from '../../features/forms/useUnsavedChangesGuard';
 import { useCreateNote, useNote, useUpdateNote } from '../../features/notes/useNotes';
 import { useTheme } from '../../features/theme/useTheme';
 import type { MoreStackParamList } from '../../navigation/types';
 
 const MAX_TITLE = 200;
 const MAX_CONTENT = 50000;
+
+type NoteDraft = { title: string; content: string; sourceUrl: string };
+const EMPTY_DRAFT: NoteDraft = { title: '', content: '', sourceUrl: '' };
 
 function isHttpUrl(value: string): boolean {
   try {
@@ -46,13 +50,29 @@ export function NoteEditorScreen() {
   const [content, setContent] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
   const [error, setError] = useState<string | null>(null);
+  // What the form started from: the loaded note (edit) or blank (create). Null until loaded.
+  const [initial, setInitial] = useState<NoteDraft | null>(isEdit ? null : EMPTY_DRAFT);
 
+  // Fill the form once; later refetches (focus/foreground) must not overwrite what is typed.
   useEffect(() => {
-    if (!noteQuery.data) return;
-    setTitle(noteQuery.data.title);
-    setContent(noteQuery.data.content);
-    setSourceUrl(noteQuery.data.sourceUrl ?? '');
-  }, [noteQuery.data]);
+    if (!noteQuery.data || initial) return;
+    const loaded: NoteDraft = {
+      title: noteQuery.data.title,
+      content: noteQuery.data.content,
+      sourceUrl: noteQuery.data.sourceUrl ?? '',
+    };
+    setTitle(loaded.title);
+    setContent(loaded.content);
+    setSourceUrl(loaded.sourceUrl);
+    setInitial(loaded);
+  }, [initial, noteQuery.data]);
+
+  const dirty =
+    initial !== null &&
+    (title.trim() !== initial.title.trim() ||
+      content.trim() !== initial.content.trim() ||
+      sourceUrl.trim() !== initial.sourceUrl.trim());
+  const guard = useUnsavedChangesGuard(dirty);
 
   const onSubmit = async () => {
     setError(null);
@@ -87,10 +107,12 @@ export function NoteEditorScreen() {
     try {
       if (isEdit && id) {
         await updateNote.mutateAsync({ id, payload });
+        guard.allowLeave();
         navigation.navigate('NoteDetail', { id });
         return;
       }
       const result = await createNote.mutateAsync(payload);
+      guard.allowLeave();
       navigation.replace('NoteDetail', { id: result.note.id });
     } catch (caught) {
       setError(mapAuthError(caught, t));

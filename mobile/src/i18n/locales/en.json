@@ -28,6 +28,12 @@
     "admin": "Admin",
     "blog": "Blog"
   },
+  "drafts": {
+    "title": "Discard changes?",
+    "body": "You have unsaved changes. If you leave now, they will be lost.",
+    "keep": "Keep editing",
+    "discard": "Discard"
+  },
   "tabs": {
     "today": "Today",
     "review": "Review",

@@ -28,6 +28,12 @@
     "admin": "Admin",
     "blog": "Blog"
   },
+  "drafts": {
+    "title": "Änderungen verwerfen?",
+    "body": "Du hast ungespeicherte Änderungen. Wenn du jetzt gehst, gehen sie verloren.",
+    "keep": "Weiter bearbeiten",
+    "discard": "Verwerfen"
+  },
   "tabs": {
     "today": "Heute",
     "review": "Wiederholen",

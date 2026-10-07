@@ -28,6 +28,12 @@
     "admin": "Admin",
     "blog": "Blog"
   },
+  "drafts": {
+    "title": "Odrzucić zmiany?",
+    "body": "Masz niezapisane zmiany. Jeśli wyjdziesz teraz, zostaną utracone.",
+    "keep": "Edytuj dalej",
+    "discard": "Odrzuć"
+  },
   "tabs": {
     "today": "Dziś",
     "review": "Powtórki",

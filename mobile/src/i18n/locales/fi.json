@@ -28,6 +28,12 @@
     "admin": "Admin",
     "blog": "Blogi"
   },
+  "drafts": {
+    "title": "Hylätäänkö muutokset?",
+    "body": "Sinulla on tallentamattomia muutoksia. Jos poistut nyt, ne menetetään.",
+    "keep": "Jatka muokkausta",
+    "discard": "Hylkää"
+  },
   "tabs": {
     "today": "Tänään",
     "review": "Kertaus",

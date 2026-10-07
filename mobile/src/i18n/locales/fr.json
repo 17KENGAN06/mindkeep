@@ -28,6 +28,12 @@
     "admin": "Admin",
     "blog": "Blog"
   },
+  "drafts": {
+    "title": "Abandonner les modifications ?",
+    "body": "Vous avez des modifications non enregistrées. Si vous quittez maintenant, elles seront perdues.",
+    "keep": "Continuer",
+    "discard": "Abandonner"
+  },
   "tabs": {
     "today": "Aujourd'hui",
     "review": "Révision",
