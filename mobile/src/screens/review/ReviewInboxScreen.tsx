@@ -22,6 +22,7 @@ import {
   useTodayReminders,
   useUpcomingReminders,
 } from '../../features/reminders/useReminders';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { ReviewStackParamList } from '../../navigation/types';
 import type { Reminder } from '../../types/reminder';
@@ -87,6 +88,7 @@ function ReminderSection({
 
 export function ReviewInboxScreen() {
   const { t } = useTranslation();
+  useRefreshOnFocus('reminders');
   const { colors } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();
   const overdueQuery = useOverdueReminders();

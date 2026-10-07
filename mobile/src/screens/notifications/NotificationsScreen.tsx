@@ -15,6 +15,7 @@ import {
   useMarkNotificationRead,
   useNotifications,
 } from '../../features/notifications/useNotifications';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { AppTabParamList } from '../../navigation/types';
@@ -29,6 +30,7 @@ function typeTone(type: AppNotification['type']) {
 
 export function NotificationsScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('notifications');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const tabNavigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();

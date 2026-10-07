@@ -18,11 +18,13 @@ import { mapAuthError } from '../../features/auth/mapAuthError';
 import { BillingCard } from '../../features/billing/BillingCard';
 import { isProAccount } from '../../features/billing/planLimit';
 import { useAuth } from '../../features/auth/useAuth';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AuthDevice } from '../../types/auth';
 
 export function AccountScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('auth', 'billing');
   const { colors } = useTheme();
   const queryClient = useQueryClient();
   const { user, logout } = useAuth();

@@ -19,11 +19,13 @@ import {
   useDeleteCategory,
   useUpdateCategory,
 } from '../../features/categories/useCategories';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { Category } from '../../types/category';
 
 export function CategoriesScreen() {
   const { t } = useTranslation();
+  useRefreshOnFocus('categories');
   const { colors } = useTheme();
   const categoriesQuery = useCategories();
   const createCategory = useCreateCategory();

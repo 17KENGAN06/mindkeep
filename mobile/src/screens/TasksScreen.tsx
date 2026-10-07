@@ -29,6 +29,7 @@ import {
   useToggleTask,
   useUpdateTask,
 } from '../features/tasks/useDailyTasks';
+import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { TasksStackParamList } from '../navigation/types';
@@ -47,6 +48,7 @@ function dateInMonth(date: string, year: number, month: number): boolean {
 
 export function TasksScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('tasks');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<TasksStackParamList>>();

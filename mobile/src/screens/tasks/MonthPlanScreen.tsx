@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTasksPeriod, useTasksYear } from '../../features/tasks/useDailyTasks';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import { formatMonthTitle } from '../../utils/date';
@@ -13,6 +14,7 @@ function clampPercent(value: number): number {
 
 export function MonthPlanScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('tasks');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const now = useMemo(() => new Date(), []);

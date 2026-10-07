@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { AppButton, Badge } from '../../components/ui';
 import { useCategories } from '../../features/categories/useCategories';
 import { useMaterials } from '../../features/materials/useMaterials';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
@@ -24,6 +25,7 @@ import { formatDate } from '../../utils/date';
 
 export function MaterialsScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('materials', 'categories');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();

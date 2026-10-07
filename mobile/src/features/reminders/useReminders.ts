@@ -38,6 +38,8 @@ export function useUpcomingReminders() {
 function invalidateReviewQueries(queryClient: ReturnType<typeof useQueryClient>) {
   void queryClient.invalidateQueries({ queryKey: reminderKeys.all });
   void queryClient.invalidateQueries({ queryKey: ['materials'] });
+  void queryClient.invalidateQueries({ queryKey: ['statistics'] });
+  void queryClient.invalidateQueries({ queryKey: ['notifications'] });
 }
 
 export function useCompleteReminder() {

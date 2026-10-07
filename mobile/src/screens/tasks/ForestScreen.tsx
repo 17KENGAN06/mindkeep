@@ -13,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ForestCard } from '../../components/forest/ForestCard';
 import { useForestSummary } from '../../features/tasks/useDailyTasks';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { TasksStackParamList } from '../../navigation/types';
@@ -20,6 +21,7 @@ import { formatMonthTitle } from '../../utils/date';
 
 export function ForestScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('tasks');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const route = useRoute<RouteProp<TasksStackParamList, 'Forest'>>();

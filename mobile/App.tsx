@@ -1,6 +1,12 @@
-import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+  focusManager,
+} from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, AppState, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ApiError } from './src/api/client';
 import { AuthProvider } from './src/features/auth/AuthProvider';
@@ -17,7 +23,29 @@ function signOutOnUnauthorized(error: unknown) {
   queryClient.setQueryData(['auth', 'me'], null);
 }
 
+// React Native has no window focus event: tell TanStack Query when the app is in the foreground,
+// so stale displayed data refetches on return and polling pauses in the background.
+focusManager.setEventListener((handleFocus) => {
+  const subscription = AppState.addEventListener('change', (state) => {
+    handleFocus(state === 'active');
+  });
+  return () => subscription.remove();
+});
+
+/** Client errors (4xx) will not change on retry; network, 429 and 5xx get at most two more tries. */
+function shouldRetryQuery(failureCount: number, error: Error): boolean {
+  if (error instanceof ApiError && error.status < 500 && error.status !== 429) return false;
+  return failureCount < 2;
+}
+
 const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Fresh for 30 s: quick app/tab switches do not refetch.
+      staleTime: 30_000,
+      retry: shouldRetryQuery,
+    },
+  },
   queryCache: new QueryCache({
     onError: (error: Error) => {
       signOutOnUnauthorized(error);

@@ -14,6 +14,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { AppButton } from '../../components/ui';
 import { useNotes } from '../../features/notes/useNotes';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
@@ -22,6 +23,7 @@ import { formatDate } from '../../utils/date';
 
 export function NotesScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('notes');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();

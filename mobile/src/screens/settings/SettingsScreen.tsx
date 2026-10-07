@@ -12,10 +12,12 @@ import {
   useNutritionSettings,
   useUpdateNutritionSettings,
 } from '../../features/nutrition/useNutrition';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 
 export function SettingsScreen() {
   const { t } = useTranslation();
+  useRefreshOnFocus('auth', 'nutrition');
   const { colors, theme, setTheme } = useTheme();
   const { user, updateWorkspace } = useAuth();
   const [modules, setModules] = useState<AppModule[]>(() => selectedModules(user));

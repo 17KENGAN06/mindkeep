@@ -9,12 +9,14 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useActivityStatistics, useDashboardStatistics } from '../../features/statistics/useStatistics';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import { formatDate } from '../../utils/date';
 
 export function StatisticsScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('statistics');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const dashboardQuery = useDashboardStatistics();

@@ -26,6 +26,7 @@ import { useNutritionPeriod, useSetWater } from '../features/nutrition/useNutrit
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useActivityStatistics, useDashboardStatistics } from '../features/statistics/useStatistics';
 import { useTasksPeriod, useTodayTasks, useToggleTask } from '../features/tasks/useDailyTasks';
+import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { AppTabParamList } from '../navigation/types';
@@ -69,6 +70,7 @@ function ProgressCard({
 
 export function TodayScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('statistics', 'tasks', 'nutrition', 'finance', 'notifications');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const { user } = useAuth();

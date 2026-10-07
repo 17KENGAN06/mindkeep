@@ -179,8 +179,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         return;
       }
-      void queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
-      void queryClient.invalidateQueries({ queryKey: ['billing'] });
+      // auth/me and billing refetch through focusManager (App.tsx) when stale.
       if (syncingRef.current) return;
       const timezone = detectDeviceTimezone();
       if (!timezone || timezone === current.timezone) return;

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../../components/MonthGrid';
 import { AppButton, Badge } from '../../components/ui';
 import { useReminderCalendar } from '../../features/reminders/useCalendar';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
@@ -20,6 +21,7 @@ function statusTone(status: string) {
 
 export function ReviewCalendarScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('reminders');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();

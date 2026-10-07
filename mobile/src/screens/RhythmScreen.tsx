@@ -12,6 +12,7 @@ import {
   useSetHabitCheck,
 } from '../features/rhythm/useRhythm';
 import type { RhythmHabit } from '../types/rhythm';
+import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import { formatMonthTitle, monthCells, weekdayLabels } from '../utils/date';
@@ -123,6 +124,7 @@ function HabitMonthCard({
 
 export function RhythmScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('rhythm');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const now = new Date();

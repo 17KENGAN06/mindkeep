@@ -29,6 +29,7 @@ import {
   useUpdateMeal,
   useUpdateNutritionSettings,
 } from '../features/nutrition/useNutrition';
+import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { CalendarDaySummary } from '../types/calendar';
@@ -95,6 +96,7 @@ function formatGrams(value: number): string {
 
 export function FuelScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('nutrition');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const today = todayDateKey();

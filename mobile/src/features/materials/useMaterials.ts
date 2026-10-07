@@ -64,6 +64,7 @@ export function useArchiveMaterial() {
       void queryClient.invalidateQueries({ queryKey: ['materials'] });
       void queryClient.invalidateQueries({ queryKey: ['materials', id] });
       void queryClient.invalidateQueries({ queryKey: ['reminders'] });
+      void queryClient.invalidateQueries({ queryKey: ['statistics'] });
     },
   });
 }
@@ -75,6 +76,7 @@ export function useDeleteMaterial() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['materials'] });
       void queryClient.invalidateQueries({ queryKey: ['reminders'] });
+      void queryClient.invalidateQueries({ queryKey: ['statistics'] });
     },
   });
 }

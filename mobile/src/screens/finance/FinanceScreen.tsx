@@ -41,6 +41,7 @@ import {
   useUpdateFinanceCategory,
   useUpdateFinanceSettings,
 } from '../../features/finance/useFinance';
+import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type {
@@ -186,6 +187,7 @@ function CurrencyLimitEditor({
 
 export function FinanceScreen() {
   const { t, i18n } = useTranslation();
+  useRefreshOnFocus('finance');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const now = new Date();
