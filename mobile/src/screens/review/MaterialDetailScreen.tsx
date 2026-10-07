@@ -4,6 +4,7 @@ import { useNavigation, useRoute, type RouteProp } from '@react-navigation/nativ
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { MaterialBody } from '../../components/MaterialBody';
+import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { SourceLink } from '../../components/SourceLink';
 import { AppButton, Badge } from '../../components/ui';
 import {
@@ -24,7 +25,8 @@ export function MaterialDetailScreen() {
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const navigation = useNavigation<NativeStackNavigationProp<ReviewStackParamList>>();
   const route = useRoute<RouteProp<ReviewStackParamList, 'MaterialDetail'>>();
-  const { data: material, isLoading, isError } = useMaterial(route.params.id);
+  const materialQuery = useMaterial(route.params.id);
+  const { data: material, isLoading, isError } = materialQuery;
   const archiveMaterial = useArchiveMaterial();
   const deleteMaterial = useDeleteMaterial();
   const [busy, setBusy] = useState(false);
@@ -51,16 +53,19 @@ export function MaterialDetailScreen() {
     );
   }
 
-  if (isError || !material) {
+  if (!material) {
     return (
-      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
-        <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
-      </View>
+      <QueryErrorView
+        error={materialQuery.error}
+        onRetry={() => void materialQuery.refetch()}
+        retrying={materialQuery.isFetching}
+      />
     );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
+      {isError ? <InlineQueryError error={materialQuery.error} /> : null}
       <View style={styles.head}>
         <Text style={[styles.title, { color: colors.ink }]}>{material.title}</Text>
         <Badge

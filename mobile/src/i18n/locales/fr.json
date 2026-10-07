@@ -5,6 +5,7 @@
     "language": "Langue",
     "logout": "Déconnexion",
     "retry": "Réessayer",
+    "notFound": "Cet élément est introuvable.",
     "comingNext": "Cette section arrive dans les prochaines phases.",
     "save": "Enregistrer",
     "cancel": "Annuler",

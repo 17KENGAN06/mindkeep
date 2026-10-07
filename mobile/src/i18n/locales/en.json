@@ -5,6 +5,7 @@
     "language": "Language",
     "logout": "Log out",
     "retry": "Retry",
+    "notFound": "This item was not found.",
     "comingNext": "This section arrives in the next phases.",
     "save": "Save",
     "cancel": "Cancel",

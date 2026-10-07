@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../../components/MonthGrid';
+import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { AppButton, Badge } from '../../components/ui';
 import { useReminderCalendar } from '../../features/reminders/useCalendar';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
@@ -47,16 +48,19 @@ export function ReviewCalendarScreen() {
     );
   }
 
-  if (calendarQuery.isError || !calendarQuery.data) {
+  if (!calendarQuery.data) {
     return (
-      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
-        <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
-      </View>
+      <QueryErrorView
+        error={calendarQuery.error}
+        onRetry={() => void calendarQuery.refetch()}
+        retrying={calendarQuery.isFetching}
+      />
     );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
+      {calendarQuery.isError ? <InlineQueryError error={calendarQuery.error} /> : null}
       <Text style={[styles.subtitle, { color: colors.muted }]}>{t('calendar.subtitle')}</Text>
       <Text style={[styles.timezone, { color: colors.muted }]}>{calendarQuery.data.timezone}</Text>
 

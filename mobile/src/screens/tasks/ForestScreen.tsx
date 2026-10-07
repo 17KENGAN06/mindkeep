@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ForestCard } from '../../components/forest/ForestCard';
+import { InlineQueryError } from '../../components/QueryState';
 import { useForestSummary } from '../../features/tasks/useDailyTasks';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
@@ -67,16 +68,15 @@ export function ForestScreen() {
         </Pressable>
       </View>
 
-      {forestQuery.isError || !forestQuery.data ? (
-        <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
-      ) : (
+      {forestQuery.isError ? <InlineQueryError error={forestQuery.error} /> : null}
+      {forestQuery.data ? (
         <ForestCard
           totalCompleted={forestQuery.data.totalCompleted}
           completedToday={forestQuery.data.completedToday}
           layout="expanded"
           monthLabel={formatMonthTitle(year, month, language)}
         />
-      )}
+      ) : null}
 
       <View style={[styles.rules, { backgroundColor: colors.panel, borderColor: colors.line }]}>
         <Text style={[styles.rulesTitle, { color: colors.ink }]}>{t('forest.rulesTitle')}</Text>
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   },
   periodBtnText: { fontSize: 22, fontWeight: '700' },
   periodLabel: { flex: 1, fontSize: 16, fontWeight: '700', textAlign: 'center' },
-  error: { fontSize: 14 },
   rules: { borderRadius: 20, borderWidth: 1, gap: 8, padding: 14 },
   rulesTitle: { fontSize: 16, fontWeight: '700' },
   rule: { fontSize: 14, lineHeight: 20 },

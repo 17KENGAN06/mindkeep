@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../api/auth';
+import { InlineQueryError } from '../../components/QueryState';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { BillingCard } from '../../features/billing/BillingCard';
@@ -214,6 +215,7 @@ export function AccountScreen() {
         </Text>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.devicesSubtitle')}</Text>
         {deviceError ? <Text style={[styles.error, { color: colors.danger }]}>{deviceError}</Text> : null}
+        {sessionsQuery.isError ? <InlineQueryError error={sessionsQuery.error} /> : null}
         {sessions.map((session) => (
           <View
             key={session.id}

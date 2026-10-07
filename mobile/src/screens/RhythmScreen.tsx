@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../components/AppIcon';
+import { InlineQueryError } from '../components/QueryState';
 import { AppButton, Badge } from '../components/ui';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import {
@@ -195,8 +196,21 @@ export function RhythmScreen() {
       <AppButton label={t('rhythm.add')} loading={createHabit.isPending} onPress={() => void onAdd()} />
       {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
 
+      {periodQuery.isError && periodQuery.data ? <InlineQueryError error={periodQuery.error} /> : null}
+
       {periodQuery.isPending && !periodQuery.data ? (
         <Text style={[styles.muted, { color: colors.muted }]}>{t('common.loading')}</Text>
+      ) : !periodQuery.data ? (
+        // Load failed with nothing cached: say so instead of "no habits".
+        <View style={styles.retry}>
+          <InlineQueryError error={periodQuery.error} />
+          <AppButton
+            label={t('common.retry')}
+            variant="secondary"
+            loading={periodQuery.isFetching}
+            onPress={() => void periodQuery.refetch()}
+          />
+        </View>
       ) : habits.length === 0 ? (
         <Text style={[styles.muted, { color: colors.muted }]}>{t('rhythm.empty')}</Text>
       ) : (
@@ -232,6 +246,7 @@ const styles = StyleSheet.create({
   input: { borderRadius: 14, borderWidth: 1, fontSize: 16, paddingHorizontal: 12, paddingVertical: 12 },
   error: { fontSize: 13 },
   muted: { fontSize: 13 },
+  retry: { gap: 8 },
   cards: { gap: 12 },
   cardsPending: { opacity: 0.6 },
   card: { borderRadius: 20, borderWidth: 1, gap: 10, padding: 14 },

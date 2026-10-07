@@ -90,10 +90,13 @@ export function NotificationsScreen() {
       ) : null}
 
       {notifications.length === 0 ? (
-        <View style={[styles.empty, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('notifications.emptyTitle')}</Text>
-          <Text style={[styles.emptyBody, { color: colors.muted }]}>{t('notifications.emptyDescription')}</Text>
-        </View>
+        // "Nothing here" only after a successful load, not when the request failed.
+        listQuery.isError ? null : (
+          <View style={[styles.empty, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+            <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('notifications.emptyTitle')}</Text>
+            <Text style={[styles.emptyBody, { color: colors.muted }]}>{t('notifications.emptyDescription')}</Text>
+          </View>
+        )
       ) : (
         notifications.map((notification) => (
           <View

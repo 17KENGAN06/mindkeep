@@ -2,6 +2,7 @@ import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 're
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { SourceLink } from '../../components/SourceLink';
 import { AppButton } from '../../components/ui';
 import { useDeleteNote, useNote } from '../../features/notes/useNotes';
@@ -44,11 +45,14 @@ export function NoteDetailScreen() {
     );
   }
 
-  if (noteQuery.isError || !noteQuery.data) {
+  if (!noteQuery.data) {
     return (
-      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
-        <Text style={{ color: colors.danger }}>{t('notes.notFound')}</Text>
-      </View>
+      <QueryErrorView
+        error={noteQuery.error}
+        onRetry={() => void noteQuery.refetch()}
+        retrying={noteQuery.isFetching}
+        notFoundText={t('notes.notFound')}
+      />
     );
   }
 
@@ -56,6 +60,9 @@ export function NoteDetailScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
+      {noteQuery.isError ? (
+        <InlineQueryError error={noteQuery.error} notFoundText={t('notes.notFound')} />
+      ) : null}
       <Text style={[styles.title, { color: colors.ink }]}>{note.title}</Text>
       <Text style={[styles.meta, { color: colors.muted }]}>
         {t('notes.updated')}: {formatDate(note.updatedAt, language)}

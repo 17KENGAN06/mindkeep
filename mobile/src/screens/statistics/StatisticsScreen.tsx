@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { InlineQueryError } from '../../components/QueryState';
 import { useActivityStatistics, useDashboardStatistics } from '../../features/statistics/useStatistics';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
@@ -51,9 +52,10 @@ export function StatisticsScreen() {
       }
     >
       <Text style={[styles.subtitle, { color: colors.muted }]}>{t('statistics.subtitle')}</Text>
-      {dashboardQuery.isError || activityQuery.isError || !stats ? (
-        <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
-      ) : (
+      {dashboardQuery.isError || activityQuery.isError ? (
+        <InlineQueryError error={dashboardQuery.error ?? activityQuery.error} />
+      ) : null}
+      {stats ? (
         <View style={styles.stats}>
           {(
             [
@@ -69,7 +71,7 @@ export function StatisticsScreen() {
             </View>
           ))}
         </View>
-      )}
+      ) : null}
 
       <View style={[styles.chart, { backgroundColor: colors.panel, borderColor: colors.line }]}>
         <Text style={[styles.chartTitle, { color: colors.ink }]}>{t('dashboard.activityTitle')}</Text>
@@ -104,7 +106,6 @@ const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 14, padding: 20, paddingBottom: 40 },
   subtitle: { fontSize: 14 },
-  error: { fontSize: 14 },
   stats: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   stat: {
     borderRadius: 16,

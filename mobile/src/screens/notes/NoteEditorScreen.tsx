@@ -12,6 +12,7 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useCreateNote, useNote, useUpdateNote } from '../../features/notes/useNotes';
@@ -104,11 +105,15 @@ export function NoteEditorScreen() {
     );
   }
 
-  if (isEdit && (noteQuery.isError || !noteQuery.data)) {
+  // Only when the note never loaded; a failed refresh keeps the form (and what was typed) on screen.
+  if (isEdit && !noteQuery.data) {
     return (
-      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
-        <Text style={{ color: colors.danger }}>{t('notes.notFound')}</Text>
-      </View>
+      <QueryErrorView
+        error={noteQuery.error}
+        onRetry={() => void noteQuery.refetch()}
+        retrying={noteQuery.isFetching}
+        notFoundText={t('notes.notFound')}
+      />
     );
   }
 
@@ -121,6 +126,9 @@ export function NoteEditorScreen() {
         <Text style={[styles.subtitle, { color: colors.muted }]}>
           {isEdit ? t('notes.editTitle') : t('notes.createSubtitle')}
         </Text>
+        {isEdit && noteQuery.isError ? (
+          <InlineQueryError error={noteQuery.error} notFoundText={t('notes.notFound')} />
+        ) : null}
 
         <Text style={[styles.label, { color: colors.muted }]}>{t('notes.fields.title')}</Text>
         <TextInput

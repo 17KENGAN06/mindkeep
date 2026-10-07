@@ -14,6 +14,7 @@ import { useNavigation, useRoute, type RouteProp } from '@react-navigation/nativ
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { MaterialContentEditor } from '../../components/MaterialContentEditor';
+import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useCategories } from '../../features/categories/useCategories';
@@ -124,11 +125,14 @@ export function MaterialFormScreen() {
     );
   }
 
-  if (isEdit && (materialQuery.isError || (!materialQuery.isLoading && !materialQuery.data))) {
+  // Only when the material never loaded; a failed refresh keeps the form (and what was typed) on screen.
+  if (isEdit && !materialQuery.isLoading && !materialQuery.data) {
     return (
-      <View style={[styles.centered, { backgroundColor: colors.bg }]}>
-        <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
-      </View>
+      <QueryErrorView
+        error={materialQuery.error}
+        onRetry={() => void materialQuery.refetch()}
+        retrying={materialQuery.isFetching}
+      />
     );
   }
 
@@ -141,6 +145,7 @@ export function MaterialFormScreen() {
         <Text style={[styles.subtitle, { color: colors.muted }]}>
           {isEdit ? t('materials.editSubtitle') : t('materials.createSubtitle')}
         </Text>
+        {isEdit && materialQuery.isError ? <InlineQueryError error={materialQuery.error} /> : null}
 
         <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.title')}</Text>
         <TextInput

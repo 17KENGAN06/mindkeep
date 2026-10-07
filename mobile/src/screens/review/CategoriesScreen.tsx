@@ -120,7 +120,10 @@ export function CategoriesScreen() {
           <Text style={{ color: colors.danger }}>{t('auth.errors.generic')}</Text>
         ) : null}
         {categories.length === 0 ? (
-          <Text style={[styles.empty, { color: colors.muted }]}>{t('categories.emptyDescription')}</Text>
+          // "No categories" only after a successful load, not when the request failed.
+          categoriesQuery.isError ? null : (
+            <Text style={[styles.empty, { color: colors.muted }]}>{t('categories.emptyDescription')}</Text>
+          )
         ) : (
           categories.map((category) => (
             <View
