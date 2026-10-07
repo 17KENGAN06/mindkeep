@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { ACCESS_TOKEN_COOKIE, getAuthCookieClearOptions } from '@/config/cookies.js';
+import { env } from '@/config/env.js';
 import { assertBotProtection, createBotChallenge } from '@/services/botProtection.service.js';
 import { authService } from '@/services/auth.service.js';
 import {
@@ -13,7 +14,9 @@ import { authSessionIssueFrom, sendAuthSession } from '@/utils/authSession.js';
 import {
   appRedirectWithCode,
   buildGoogleAuthorizeUrl,
+  createGoogleMobileFlow,
   decodeGoogleOAuthState,
+  googleAppUpdateRequired,
   googleCallbackPageHtml,
   issueGoogleSignInTicket,
 } from '@/services/googleOAuth.service.js';
@@ -27,6 +30,7 @@ import type {
   ForgotPasswordInput,
   GoogleFinishInput,
   GoogleLoginInput,
+  GoogleMobileStartInput,
   LoginCodeInput,
   LoginInput,
   OnboardingInput,
@@ -82,10 +86,21 @@ export class AuthController {
     sendAuthSession(req, res, 200, user, token, refreshToken);
   }
 
+  /** Legacy browser start without a flow secret. Kept for local development only. */
   async googleStart(req: Request, res: Response): Promise<void> {
+    if (env.NODE_ENV === 'production') {
+      throw googleAppUpdateRequired();
+    }
     const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '';
     const authorizeUrl = buildGoogleAuthorizeUrl(req, returnUrl);
     res.redirect(302, authorizeUrl);
+  }
+
+  async googleMobileStart(req: Request, res: Response): Promise<void> {
+    const { returnUrl } = req.body as GoogleMobileStartInput;
+    const flow = createGoogleMobileFlow(req, returnUrl);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json(flow);
   }
 
   googleCallback(_req: Request, res: Response): void {
@@ -102,7 +117,7 @@ export class AuthController {
   async googleFinish(req: Request, res: Response): Promise<void> {
     const { credential, state } = req.body as GoogleFinishInput;
     const parsed = decodeGoogleOAuthState(state);
-    const code = await issueGoogleSignInTicket(credential);
+    const code = await issueGoogleSignInTicket(credential, parsed.ch);
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({
       redirect: appRedirectWithCode(parsed.returnUrl, code),

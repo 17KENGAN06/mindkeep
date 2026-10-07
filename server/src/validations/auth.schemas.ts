@@ -75,12 +75,21 @@ export const googleLoginSchema = z
   .object({
     credential: z.string().min(100).max(10_000).optional(),
     code: z.string().trim().min(20).max(128).optional(),
+    /** Native flow secret from /google/mobile-start; required with `code` in production. */
+    flowSecret: z
+      .string()
+      .regex(/^[A-Za-z0-9_-]{43}$/)
+      .optional(),
     timezone: timezoneSchema.default('Europe/Helsinki'),
   })
   .refine((data) => Boolean(data.credential) !== Boolean(data.code), {
     message: 'Provide either a Google credential or a one-time code',
     path: ['credential'],
   });
+
+export const googleMobileStartSchema = z.object({
+  returnUrl: z.string().trim().min(1).max(500),
+});
 
 export const googleFinishSchema = z.object({
   credential: z.string().min(100).max(10_000),
@@ -151,6 +160,7 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export type LoginCodeInput = z.infer<typeof loginCodeSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
 export type GoogleFinishInput = z.infer<typeof googleFinishSchema>;
+export type GoogleMobileStartInput = z.infer<typeof googleMobileStartSchema>;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;
 export type OnboardingInput = z.infer<typeof onboardingSchema>;
 export type VerifyEmailInput = z.infer<typeof verifyEmailSchema>;

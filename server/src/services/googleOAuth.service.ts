@@ -13,7 +13,15 @@ type GoogleOAuthState = {
   returnUrl: string;
   nonce: string;
   iat: number;
+  /** SHA-256 of the app's flow secret. The secret itself never passes through the browser. */
+  ch?: string;
 };
+
+const FLOW_SECRET_HASH_RE = /^[A-Za-z0-9_-]{43}$/;
+
+function isProduction(): boolean {
+  return env.NODE_ENV === 'production';
+}
 
 function signingKey(): string {
   return env.JWT_SECRET ?? 'dev-google-oauth-state';
@@ -38,8 +46,14 @@ function isPrivateOrLocalHost(hostname: string): boolean {
   return false;
 }
 
-function hashTicketCode(code: string): string {
-  return createHash('sha256').update(code).digest('hex');
+export function hashFlowSecret(flowSecret: string): string {
+  return createHash('sha256').update(flowSecret).digest('base64url');
+}
+
+/** Binds a one-time code to the flow that started it: the wrong (or missing) secret finds no ticket. */
+export function ticketLookupHash(code: string, challengeHash?: string): string {
+  const input = challengeHash ? `${code}.${challengeHash}` : code;
+  return createHash('sha256').update(input).digest('hex');
 }
 
 function invalidGoogleCredential(): AppError {
@@ -49,11 +63,13 @@ function invalidGoogleCredential(): AppError {
   });
 }
 
-export function isSafeAppReturnUrl(value: string): boolean {
+/** Production only returns to the installed app; Expo Go / tunnel URLs are for local development. */
+export function isSafeAppReturnUrl(value: string, production = isProduction()): boolean {
   if (!value || value.length > 500) return false;
   try {
     const url = new URL(value);
     if (url.protocol === 'mindkeep:') return true;
+    if (production) return false;
     if (url.protocol !== 'exp:' && url.protocol !== 'exps:') return false;
     const host = url.hostname.toLowerCase();
     if (isPrivateOrLocalHost(host)) return true;
@@ -84,7 +100,7 @@ export function googleCallbackUrl(req: Request): string {
   return `${publicApiOrigin(req)}/api/auth/google/callback`;
 }
 
-function encodeState(data: GoogleOAuthState): string {
+export function encodeState(data: GoogleOAuthState): string {
   const payload = Buffer.from(JSON.stringify(data), 'utf8').toString('base64url');
   return `${payload}.${sign(payload)}`;
 }
@@ -111,6 +127,14 @@ export function decodeGoogleOAuthState(state: string): GoogleOAuthState {
     throw invalidGoogleCredential();
   }
 
+  if (data.ch !== undefined && !FLOW_SECRET_HASH_RE.test(data.ch)) {
+    throw invalidGoogleCredential();
+  }
+
+  if (isProduction() && !data.ch) {
+    throw googleAppUpdateRequired();
+  }
+
   if (Date.now() - data.iat > STATE_TTL_MS) {
     throw new AppError('Google sign-in expired. Try again.', {
       statusCode: 400,
@@ -128,7 +152,31 @@ export function decodeGoogleOAuthState(state: string): GoogleOAuthState {
   return data;
 }
 
-export function buildGoogleAuthorizeUrl(req: Request, returnUrl: string): string {
+export function googleAppUpdateRequired(): AppError {
+  return new AppError('Update the MindKeep app to sign in with Google', {
+    statusCode: 410,
+    code: 'GOOGLE_APP_UPDATE_REQUIRED',
+  });
+}
+
+/**
+ * Native sign-in start: the app receives a one-time flow secret over HTTPS and must send it
+ * back with the code, so a code delivered to someone else's app or URL cannot be redeemed.
+ */
+export function createGoogleMobileFlow(
+  req: Request,
+  returnUrl: string,
+): { authorizeUrl: string; flowSecret: string } {
+  const flowSecret = randomBytes(32).toString('base64url');
+  const authorizeUrl = buildGoogleAuthorizeUrl(req, returnUrl, hashFlowSecret(flowSecret));
+  return { authorizeUrl, flowSecret };
+}
+
+export function buildGoogleAuthorizeUrl(
+  req: Request,
+  returnUrl: string,
+  challengeHash?: string,
+): string {
   if (!env.GOOGLE_CLIENT_ID) {
     throw new AppError('Google sign-in is not configured', {
       statusCode: 503,
@@ -144,7 +192,12 @@ export function buildGoogleAuthorizeUrl(req: Request, returnUrl: string): string
   }
 
   const nonce = randomBytes(16).toString('base64url');
-  const state = encodeState({ returnUrl, nonce, iat: Date.now() });
+  const state = encodeState({
+    returnUrl,
+    nonce,
+    iat: Date.now(),
+    ...(challengeHash ? { ch: challengeHash } : {}),
+  });
   const params = new URLSearchParams({
     client_id: env.GOOGLE_CLIENT_ID,
     redirect_uri: googleCallbackUrl(req),
@@ -182,7 +235,10 @@ async function assertValidGoogleIdToken(idToken: string): Promise<void> {
   }
 }
 
-export async function issueGoogleSignInTicket(idToken: string): Promise<string> {
+export async function issueGoogleSignInTicket(
+  idToken: string,
+  challengeHash?: string,
+): Promise<string> {
   await assertValidGoogleIdToken(idToken);
   await prisma.googleSignInTicket.deleteMany({
     where: { expiresAt: { lt: new Date() } },
@@ -191,7 +247,7 @@ export async function issueGoogleSignInTicket(idToken: string): Promise<string> 
   const code = randomBytes(32).toString('base64url');
   await prisma.googleSignInTicket.create({
     data: {
-      codeHash: hashTicketCode(code),
+      codeHash: ticketLookupHash(code, challengeHash),
       idToken,
       expiresAt: new Date(Date.now() + TICKET_TTL_MS),
     },
@@ -199,8 +255,11 @@ export async function issueGoogleSignInTicket(idToken: string): Promise<string> 
   return code;
 }
 
-export async function consumeGoogleSignInTicket(code: string): Promise<string> {
-  const codeHash = hashTicketCode(code);
+export async function consumeGoogleSignInTicket(code: string, flowSecret?: string): Promise<string> {
+  if (isProduction() && !flowSecret) {
+    throw googleAppUpdateRequired();
+  }
+  const codeHash = ticketLookupHash(code, flowSecret ? hashFlowSecret(flowSecret) : undefined);
 
   return prisma.$transaction(async (tx) => {
     const ticket = await tx.googleSignInTicket.findUnique({ where: { codeHash } });

@@ -6,6 +6,10 @@ export type AuthContextValue = {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  /** Set when the first session check failed for a non-auth reason (offline, timeout, server error). */
+  connectionError: unknown;
+  isRetrying: boolean;
+  retrySession: () => Promise<void>;
   login: (payload: LoginPayload) => Promise<{ pending: true }>;
   confirmLogin: (payload: LoginCodePayload) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<{ pending: true }>;

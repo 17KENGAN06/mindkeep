@@ -1,15 +1,17 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { needsOnboarding, userHasModule } from '../config/appModules';
+import { mapAuthError } from '../features/auth/mapAuthError';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useTheme } from '../features/theme/useTheme';
 import { AppIcon, type AppIconName } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
+import { AppButton } from '../components/ui';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
@@ -107,7 +109,8 @@ function AppTabs() {
 }
 
 export function RootNavigator() {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { connectionError, isAuthenticated, isLoading, isRetrying, logout, retrySession, user } = useAuth();
+  const { t } = useTranslation();
   const { colors, theme } = useTheme();
   const navTheme = useMemo(
     () => ({
@@ -133,6 +136,25 @@ export function RootNavigator() {
     );
   }
 
+  // Stored session could not be checked (offline, timeout, server error): keep it and offer Retry.
+  if (connectionError && !isAuthenticated) {
+    return (
+      <View style={[styles.boot, { backgroundColor: colors.bg }]}>
+        <BrandMark size={72} />
+        <Text style={[styles.bootMessage, { color: colors.ink }]}>{mapAuthError(connectionError, t)}</Text>
+        <View style={styles.bootActions}>
+          <AppButton label={t('common.retry')} loading={isRetrying} onPress={() => void retrySession()} />
+          <AppButton
+            label={t('common.logout')}
+            variant="secondary"
+            disabled={isRetrying}
+            onPress={() => void logout()}
+          />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer theme={navTheme}>
       {isAuthenticated ? (
@@ -152,4 +174,6 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   bootSpinner: { marginTop: 4 },
+  bootMessage: { fontSize: 16, lineHeight: 22, paddingHorizontal: 32, textAlign: 'center' },
+  bootActions: { alignSelf: 'stretch', gap: 12, paddingHorizontal: 32 },
 });

@@ -10,8 +10,9 @@ import { hydrateLanguage } from './src/i18n';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { palettes, type ThemeMode } from './src/theme';
 
+/** Only a dead session signs out — a 401 like INVALID_PASSWORD is a form error. */
 function signOutOnUnauthorized(error: unknown) {
-  if (!(error instanceof ApiError) || error.status !== 401) return;
+  if (!(error instanceof ApiError) || error.status !== 401 || error.code !== 'UNAUTHORIZED') return;
   void clearStoredToken();
   queryClient.setQueryData(['auth', 'me'], null);
 }

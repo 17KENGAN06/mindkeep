@@ -28,6 +28,7 @@ export type RegisterPayload = {
 export type GoogleLoginPayload = {
   credential?: string;
   code?: string;
+  flowSecret?: string;
   timezone?: string;
 };
 
@@ -38,6 +39,10 @@ export const authApi = {
     apiClient.post<AuthResponse>('/api/auth/login/code', payload),
   register: (payload: RegisterPayload) =>
     apiClient.post<{ pending: true }>('/api/auth/register', payload),
+  googleMobileStart: (returnUrl: string) =>
+    apiClient.post<{ authorizeUrl: string; flowSecret: string }>('/api/auth/google/mobile-start', {
+      returnUrl,
+    }),
   googleLogin: (payload: GoogleLoginPayload) =>
     apiClient.post<AuthResponse>('/api/auth/google', payload),
   forgotPassword: (payload: { email: string; locale?: string; botToken?: string; website?: string }) =>

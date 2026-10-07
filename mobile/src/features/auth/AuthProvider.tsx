@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { AppState } from 'react-native';
 import { authApi, type GoogleLoginPayload, type LoginCodePayload, type LoginPayload, type RegisterPayload } from '../../api/auth';
-import { ApiError, refreshAccessToken } from '../../api/client';
+import { ApiError, NetworkError, refreshAccessToken } from '../../api/client';
 import { detectDeviceTimezone } from '../../config/timezones';
 import type { User } from '../../types/auth';
 import { AuthContext } from './auth-context';
@@ -19,19 +19,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const meQuery = useQuery({
     queryKey: ['auth', 'me'],
     queryFn: async () => {
-      let token = await getStoredToken();
+      const token = await getStoredToken();
       const refresh = await getStoredRefreshToken();
-      if (!token && refresh) {
-        const ok = await refreshAccessToken();
-        if (!ok) return null;
-        token = await getStoredToken();
+      if (!token && !refresh) return null;
+      if (!token) {
+        const result = await refreshAccessToken();
+        if (result === 'invalid') return null;
+        // Keep the tokens; the boot screen offers Retry instead of the login form.
+        if (result === 'unavailable') throw new NetworkError();
       }
-      if (!token) return null;
       try {
         const response = await authApi.me();
         return response.user;
       } catch (error) {
-        if (error instanceof ApiError && error.status === 401) {
+        if (error instanceof ApiError && error.status === 401 && error.code === 'UNAUTHORIZED') {
           await clearStoredToken();
           return null;
         }
@@ -146,6 +147,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [queryClient]);
 
   const user = meQuery.data ?? null;
+  // Only when the very first session check failed (no cached user): a refetch error keeps the signed-in user.
+  const connectionError = meQuery.isError && meQuery.data === undefined ? meQuery.error : null;
+  const { refetch: refetchMe } = meQuery;
+  const retrySession = useCallback(async () => {
+    await refetchMe();
+  }, [refetchMe]);
   const userRef = useRef(user);
   userRef.current = user;
   const syncingRef = useRef(false);
@@ -165,7 +172,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const sub = AppState.addEventListener('change', (state) => {
       if (state !== 'active') return;
       const current = userRef.current;
-      if (!current) return;
+      if (!current) {
+        // Back from airplane mode etc.: retry a session check that failed on the network.
+        if (queryClient.getQueryState(['auth', 'me'])?.status === 'error') {
+          void queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+        }
+        return;
+      }
       void queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
       void queryClient.invalidateQueries({ queryKey: ['billing'] });
       if (syncingRef.current) return;
@@ -184,6 +197,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       isAuthenticated: Boolean(user),
       isLoading: meQuery.isLoading,
+      connectionError,
+      isRetrying: meQuery.isFetching,
+      retrySession,
       login,
       confirmLogin,
       register,
@@ -193,7 +209,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       updateWorkspace,
       logout,
     }),
-    [completeOnboarding, confirmLogin, googleLogin, login, logout, meQuery.isLoading, register, updateTimezone, updateWorkspace, user],
+    [completeOnboarding, confirmLogin, connectionError, googleLogin, login, logout, meQuery.isFetching, meQuery.isLoading, register, retrySession, updateTimezone, updateWorkspace, user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

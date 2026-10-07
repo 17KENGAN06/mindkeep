@@ -19,6 +19,7 @@ import {
   forgotPasswordSchema,
   googleFinishSchema,
   googleLoginSchema,
+  googleMobileStartSchema,
   loginCodeSchema,
   loginSchema,
   onboardingSchema,
@@ -63,6 +64,13 @@ authRouter.get(
   '/google/start',
   googleAuthRateLimit,
   asyncHandler((req, res) => authController.googleStart(req, res)),
+);
+
+authRouter.post(
+  '/google/mobile-start',
+  googleAuthRateLimit,
+  validate(googleMobileStartSchema),
+  asyncHandler((req, res) => authController.googleMobileStart(req, res)),
 );
 
 authRouter.get('/google/callback', (req, res) => {

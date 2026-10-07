@@ -11,7 +11,7 @@
     "start": "node dist/server.js",
     "start:prod": "node ./scripts/start-prod.mjs",
     "lint": "eslint .",
-    "test": "tsx --test --test-concurrency=1 --import ./test-setup-env.ts src/owned.test.ts src/ownership.idor.test.ts src/jwt.test.ts src/auth.session.test.ts src/auth.refresh.test.ts src/auth.login-code.test.ts src/auth.onboarding.test.ts src/entitlements.test.ts src/stripe.config.test.ts src/billing.webhook.test.ts src/food-scan.test.ts src/finance-scan.test.ts src/finance.limits.test.ts src/nutrition.profile.test.ts",
+    "test": "tsx --test --test-concurrency=1 --import ./test-setup-env.ts src/owned.test.ts src/ownership.idor.test.ts src/jwt.test.ts src/auth.session.test.ts src/auth.refresh.test.ts src/auth.refresh-limit.test.ts src/auth.login-code.test.ts src/google.oauth.test.ts src/auth.onboarding.test.ts src/entitlements.test.ts src/stripe.config.test.ts src/billing.webhook.test.ts src/food-scan.test.ts src/finance-scan.test.ts src/finance.limits.test.ts src/nutrition.profile.test.ts",
     "format": "prettier --write .",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",

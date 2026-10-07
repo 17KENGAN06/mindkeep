@@ -27,8 +27,8 @@ export function GoogleSignInButton({ disabled = false, onError }: GoogleSignInBu
     onError(null);
     setBusy(true);
     try {
-      const code = await requestGoogleSignInCode();
-      await googleLogin({ code, timezone: detectDeviceTimezone() });
+      const { code, flowSecret } = await requestGoogleSignInCode();
+      await googleLogin({ code, flowSecret, timezone: detectDeviceTimezone() });
     } catch (caught) {
       if (caught instanceof GoogleSignInCancelledError) return;
       onError(mapAuthError(caught, t));

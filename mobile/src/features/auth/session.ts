@@ -12,7 +12,13 @@ async function read(key: string): Promise<string | null> {
       return null;
     }
   }
-  return SecureStore.getItemAsync(key);
+  try {
+    return await SecureStore.getItemAsync(key);
+  } catch {
+    // Unreadable value (e.g. its Keystore/Keychain key is gone): treat as signed out.
+    await SecureStore.deleteItemAsync(key).catch(() => undefined);
+    return null;
+  }
 }
 
 async function write(key: string, value: string): Promise<void> {
@@ -39,11 +45,15 @@ export async function getStoredRefreshToken(): Promise<string | null> {
   return read(REFRESH_KEY);
 }
 
+/**
+ * Refresh token first: if the app dies in between, the old access token just gets a 401
+ * and the new refresh token recovers the session. The reverse order would strand a rotated refresh token.
+ */
 export async function setStoredToken(token: string, refreshToken?: string): Promise<void> {
-  await write(ACCESS_KEY, token);
   if (refreshToken) {
     await write(REFRESH_KEY, refreshToken);
   }
+  await write(ACCESS_KEY, token);
 }
 
 export async function clearStoredToken(): Promise<void> {

@@ -358,7 +358,7 @@ export class AuthService {
     }
 
     const idToken = input.code
-      ? await consumeGoogleSignInTicket(input.code)
+      ? await consumeGoogleSignInTicket(input.code, input.flowSecret)
       : input.credential;
 
     if (!idToken) {

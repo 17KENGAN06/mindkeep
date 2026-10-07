@@ -21,6 +21,7 @@ const RATE_LIMIT_SKIP_PATHS = new Set([
   '/api/auth/login/code',
   '/api/auth/google',
   '/api/auth/google/start',
+  '/api/auth/google/mobile-start',
   '/api/auth/google/callback',
   '/api/auth/google/finish',
   '/api/auth/logout',
