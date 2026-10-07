@@ -37,6 +37,16 @@ const envSchema = z.object({
             .filter(Boolean)
         : [],
     ),
+  /** App Store / Play review account: this email gets REVIEW_LOGIN_CODE instead of an emailed code. */
+  REVIEW_LOGIN_EMAIL: z
+    .string()
+    .optional()
+    .transform((value) => value?.trim().toLowerCase() || undefined),
+  /** Fixed 6-digit login code for REVIEW_LOGIN_EMAIL (see config/reviewLogin.ts). */
+  REVIEW_LOGIN_CODE: z
+    .string()
+    .optional()
+    .transform((value) => value?.trim() || undefined),
   /** When true, only ADMIN users may sign in / use the API. */
   MAINTENANCE_MODE: z
     .enum(['true', 'false'])

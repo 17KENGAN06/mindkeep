@@ -130,7 +130,7 @@ All apps call the same REST API (`/api/*`, production `https://api.mindkeep.clou
 
 Templates: `.env.example`, `server/.env.example`, `client/.env.example`, `mobile/.env.example`. Real `.env` files are gitignored.
 
-- **server**: `DATABASE_URL`, `JWT_SECRET`, `CRON_SECRET`, `NODE_ENV`, `PORT`, `CLIENT_URL`, `CLIENT_URLS`, `API_PUBLIC_URL`, `ENABLE_NODE_CRON`, `MAINTENANCE_MODE`, `ADMIN_EMAILS`, `GOOGLE_CLIENT_ID`, `EMAIL_FROM`, `RESEND_API_KEY`, `TELEGRAM_BOT_TOKEN` (unused), `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_YEARLY`, `STRIPE_PRICE_PLUS_MONTHLY`, `STRIPE_PRICE_PLUS_YEARLY`, `STRIPE_PRICE_PRO_MONTHLY`, `STRIPE_PRICE_PRO_YEARLY`, `GEMINI_API_KEY`, `GEMINI_MODEL`.
+- **server**: `DATABASE_URL`, `JWT_SECRET`, `CRON_SECRET`, `NODE_ENV`, `PORT`, `CLIENT_URL`, `CLIENT_URLS`, `API_PUBLIC_URL`, `ENABLE_NODE_CRON`, `MAINTENANCE_MODE`, `ADMIN_EMAILS`, `REVIEW_LOGIN_EMAIL`, `REVIEW_LOGIN_CODE`, `GOOGLE_CLIENT_ID`, `EMAIL_FROM`, `RESEND_API_KEY`, `TELEGRAM_BOT_TOKEN` (unused), `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_YEARLY`, `STRIPE_PRICE_PLUS_MONTHLY`, `STRIPE_PRICE_PLUS_YEARLY`, `STRIPE_PRICE_PRO_MONTHLY`, `STRIPE_PRICE_PRO_YEARLY`, `GEMINI_API_KEY`, `GEMINI_MODEL`.
 - **client (build-time, public)**: `VITE_API_URL`, `VITE_GOOGLE_CLIENT_ID`, `VITE_MAINTENANCE_MODE`.
 - **mobile (build-time, public)**: `EXPO_PUBLIC_API_URL`.
 - `VITE_*` and `EXPO_PUBLIC_*` values ship inside the bundle — never put secrets in them.
@@ -148,7 +148,6 @@ Templates: `.env.example`, `server/.env.example`, `client/.env.example`, `mobile
 ## Known risks / technical debt
 
 - No CI; client and mobile have no tests.
-- Global rate limiter (`app.ts` `sessionToken`) treats any Bearer/cookie value >16 chars as a session key without verifying it, so fake tokens bypass the IP bucket.
 - Duplicated types, API clients and i18n between client and mobile → drift.
 - Two lockfiles (root + stale `mobile/`), custom Metro resolver. `npx expo install --check` reports `expo`/`expo-linking` patch updates, but installing just those nests a second copy of `expo-modules-core`/`expo-constants`/`@expo/cli` under `mobile/node_modules` — upgrade all `expo-*` packages together and check for duplicates (`npm ls expo-modules-core`).
 - `planForPriceId` falls back to `PRO` for unknown prices.
@@ -158,8 +157,8 @@ Templates: `.env.example`, `server/.env.example`, `client/.env.example`, `mobile
 
 ## Store-release blockers (Google Play / App Store)
 
-1. **In-app purchases**: mobile `BillingCard` shows prices and opens Stripe Checkout — violates Apple 3.1.1 and Google Play payments policy outside narrow regional exceptions. Either hide all purchase UI/prices/links in store builds (web-purchased Pro still works — Apple 3.1.3(b)) or implement StoreKit / Play Billing (e.g. RevenueCat) with server entitlement support.
-2. **App Review login**: password login always requires an emailed code, so reviewers can't use a demo account. Needs a safe reviewer access path.
+1. **In-app purchases**: mobile `BillingCard` no longer shows prices but still links to the website plans page and the Stripe portal, and limit messages say "Subscribe on Account" — not allowed by Apple 3.1.1 / Play payments policy. **Decided (2026-10-07): Option A** — a build-time flag (`EXPO_PUBLIC_STORE_BUILD=true` in the EAS `production` profile only) hides those links and calls to action in store builds; web-purchased Pro keeps working (Apple 3.1.3(b)). Not implemented yet. StoreKit / Play Billing stays a later option.
+2. **App Review login**: server support done — set `REVIEW_LOGIN_EMAIL` + `REVIEW_LOGIN_CODE` (6 digits, non-admin account) on Railway; that account gets the fixed code instead of an email (`config/reviewLogin.ts`). Create the demo account, then give reviewers email + password + code.
 3. **Android target SDK**: done — `targetSdkVersion`/`compileSdkVersion` are 36 (verify the current requirement in Play Console before submitting).
 4. **Sign in with Apple**: Google login is offered, so Apple guideline 4.8 likely requires Sign in with Apple (or an equivalent privacy-focused option).
 5. Setup items: Play ($25) / Apple Developer ($99/yr) accounts, store records, Data safety / App Privacy / age rating, screenshots, `ascAppId` in `eas.json`, Google OAuth redirect `https://api.mindkeep.cloud/api/auth/google/callback`, test Google sign-in in a standalone build, verify iOS deployment target vs Expo SDK 57.

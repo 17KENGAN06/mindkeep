@@ -2,9 +2,15 @@ import app from '@/app.js';
 import { assertRequiredSecrets, env } from '@/config/env.js';
 import { logger } from '@/config/logger.js';
 import { connectDatabase } from '@/config/prisma.js';
+import { reviewLoginConfigProblem } from '@/config/reviewLogin.js';
 import { startNodeCronScheduler } from '@/jobs/scheduler.js';
 
 assertRequiredSecrets();
+
+const reviewLoginProblem = reviewLoginConfigProblem();
+if (reviewLoginProblem) {
+  logger.warn(`Review login is off: ${reviewLoginProblem}`);
+}
 
 async function bootstrap(): Promise<void> {
   if (env.DATABASE_URL) {

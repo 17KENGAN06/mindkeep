@@ -8,6 +8,7 @@ import { isAllowedBrowserOrigin, env } from '@/config/env.js';
 import { billingController } from '@/controllers/billing.controller.js';
 import { asyncHandler } from '@/middleware/asyncHandler.js';
 import { getAccessTokenFromRequest } from '@/utils/accessToken.js';
+import { sessionRateLimitKey } from '@/utils/rateLimitKey.js';
 import { errorHandler } from '@/middleware/errorHandler.js';
 import { notFoundHandler } from '@/middleware/notFoundHandler.js';
 import { requireSameOrigin } from '@/middleware/requireSameOrigin.js';
@@ -37,9 +38,16 @@ function normalizePath(req: Request): string {
   return (req.originalUrl.split('?')[0] ?? req.path).replace(/\/$/, '') || '/';
 }
 
-function sessionToken(req: Request): string | undefined {
-  const token = getAccessTokenFromRequest(req);
-  return token && token.length > 16 ? token : undefined;
+// Verified once per request (limit and keyGenerator both ask); null = guest.
+const sessionKeys = new WeakMap<Request, string | null>();
+
+function sessionKey(req: Request): string | undefined {
+  let key = sessionKeys.get(req);
+  if (key === undefined) {
+    key = sessionRateLimitKey(getAccessTokenFromRequest(req)) ?? null;
+    sessionKeys.set(req, key);
+  }
+  return key ?? undefined;
 }
 
 const app = express();
@@ -86,14 +94,11 @@ app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
     // Logged-in work is keyed per session, so 20 people on one Wi-Fi do not share a bucket.
-    limit: (req) => (sessionToken(req) ? 20_000 : 800),
+    // Only a validly signed, unexpired token counts; anything else uses the IP bucket.
+    limit: (req) => (sessionKey(req) ? 20_000 : 800),
     standardHeaders: 'draft-7',
     legacyHeaders: false,
-    keyGenerator: (req) => {
-      const token = sessionToken(req);
-      if (token) return `session:${token}`;
-      return ipKeyGenerator(req.ip ?? 'anonymous');
-    },
+    keyGenerator: (req) => sessionKey(req) ?? ipKeyGenerator(req.ip ?? 'anonymous'),
     skip: (req) => RATE_LIMIT_SKIP_PATHS.has(normalizePath(req)),
     message: {
       error: {

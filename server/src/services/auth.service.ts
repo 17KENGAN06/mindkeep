@@ -1,6 +1,8 @@
 import { EmailTokenType, type PlanInterval, Prisma, UserPlan, UserRole } from '@prisma/client';
 import { OAuth2Client } from 'google-auth-library';
 import { env } from '@/config/env.js';
+import { logger } from '@/config/logger.js';
+import { reviewLoginCodeFor } from '@/config/reviewLogin.js';
 import { prisma } from '@/config/prisma.js';
 import { loginCodeEmail, resetPasswordEmail, resolveAppLocale, verifyAccountEmail } from '@/services/emailCopy.js';
 import { sendEmail } from '@/services/email.service.js';
@@ -304,6 +306,14 @@ export class AuthService {
     const withRole = await ensureAdminRole(user);
     const publicUser = toPublicUser(withRole);
     assertMaintenanceAccess(publicUser);
+
+    // Store review account: fixed code, no email (never for admins).
+    const reviewCode = withRole.role === UserRole.ADMIN ? null : reviewLoginCodeFor(email);
+    if (reviewCode) {
+      await issueLoginCode(email, reviewCode);
+      logger.info('Review login code issued', { userId: user.id });
+      return { pending: true };
+    }
 
     const code = await issueLoginCode(email);
     try {

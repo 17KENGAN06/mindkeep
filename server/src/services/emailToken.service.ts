@@ -54,7 +54,8 @@ export async function issueEmailToken(input: {
   return token;
 }
 
-export async function issueLoginCode(email: string): Promise<string> {
+/** `fixedCode` is only for the configured review account (config/reviewLogin.ts). */
+export async function issueLoginCode(email: string, fixedCode?: string): Promise<string> {
   const normalized = email.toLowerCase();
   await prisma.emailToken.deleteMany({
     where: {
@@ -62,7 +63,7 @@ export async function issueLoginCode(email: string): Promise<string> {
     },
   });
 
-  const code = String(randomInt(0, 1_000_000)).padStart(6, '0');
+  const code = fixedCode ?? String(randomInt(0, 1_000_000)).padStart(6, '0');
   await prisma.emailToken.create({
     data: {
       type: EmailTokenType.LOGIN_CODE,
