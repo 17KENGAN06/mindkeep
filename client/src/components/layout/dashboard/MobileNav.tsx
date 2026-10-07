@@ -39,11 +39,12 @@ function MobileAccordionGroup({
   const [open, setOpen] = useState(groupActive);
   const panelId = useId();
 
-  useEffect(() => {
-    if (groupActive) {
-      setOpen(true);
-    }
-  }, [groupActive, pathname]);
+  // Expand the group again when navigating to one of its pages (adjusted during render).
+  const [seenFor, setSeenFor] = useState({ groupActive, pathname });
+  if (seenFor.groupActive !== groupActive || seenFor.pathname !== pathname) {
+    setSeenFor({ groupActive, pathname });
+    if (groupActive) setOpen(true);
+  }
 
   return (
     <div className="rounded-2xl border border-line/60 bg-panel/60">
@@ -90,9 +91,12 @@ export function MobileNav({ entries, isAdmin, user, onLogout }: MobileNavProps) 
   const titleId = useId();
   const visible = filterNavForModules(filterNavForRole(entries, isAdmin), user);
 
-  useEffect(() => {
+  // Close on navigation (adjusted during render).
+  const [openedOn, setOpenedOn] = useState(pathname);
+  if (pathname !== openedOn) {
+    setOpenedOn(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!open) return;

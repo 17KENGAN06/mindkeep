@@ -31,7 +31,7 @@ function dateKey(year: number, month: number, day: number): string {
 function niceScale(minValue: number, maxValue: number): { min: number; max: number; ticks: number[] } {
   const paddedMin = minValue - 2;
   const paddedMax = maxValue + 2;
-  let min = Math.floor(paddedMin / 10) * 10;
+  const min = Math.floor(paddedMin / 10) * 10;
   let max = Math.ceil(paddedMax / 10) * 10;
   if (max <= min) max = min + 20;
   const ticks: number[] = [];

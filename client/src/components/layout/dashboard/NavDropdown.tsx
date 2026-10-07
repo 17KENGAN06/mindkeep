@@ -34,9 +34,12 @@ export function NavDropdown({ group, label, getChildLabel }: NavDropdownProps) {
   const menuId = useId();
   const groupActive = isNavGroupActive(pathname, group);
 
-  useEffect(() => {
+  // Close on navigation (adjusted during render).
+  const [openedOn, setOpenedOn] = useState(pathname);
+  if (pathname !== openedOn) {
+    setOpenedOn(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!open) return;

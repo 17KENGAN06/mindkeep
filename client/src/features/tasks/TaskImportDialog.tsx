@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
@@ -57,14 +57,18 @@ export function TaskImportDialog({
   const [pairCustom, setPairCustom] = useState('');
   const [cardCustom, setCardCustom] = useState('');
 
-  useEffect(() => {
-    if (!open) return;
-    setText('');
-    setPairChoice('tab');
-    setCardChoice('newline');
-    setPairCustom('');
-    setCardCustom('');
-  }, [open]);
+  // Start fresh each time the dialog opens (adjusted during render).
+  const [wasOpen, setWasOpen] = useState(open);
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (open) {
+      setText('');
+      setPairChoice('tab');
+      setCardChoice('newline');
+      setPairCustom('');
+      setCardCustom('');
+    }
+  }
 
   const pairSep = pairChoice === 'tab' ? '\t' : pairChoice === 'comma' ? ',' : pairCustom;
   const cardSep = cardChoice === 'newline' ? '\n' : cardChoice === 'semicolon' ? ';' : cardCustom;

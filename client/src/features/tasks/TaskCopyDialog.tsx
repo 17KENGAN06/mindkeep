@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -37,12 +37,20 @@ export function TaskCopyDialog({
   const [month, setMonth] = useState(initialMonth);
   const [picked, setPicked] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (!open) return;
-    setYear(initialYear);
-    setMonth(initialMonth);
-    setPicked([]);
-  }, [open, initialYear, initialMonth]);
+  // Start fresh when the dialog opens or its start month changes while open (adjusted during render).
+  const [resetFor, setResetFor] = useState({ open, initialYear, initialMonth });
+  if (
+    resetFor.open !== open ||
+    resetFor.initialYear !== initialYear ||
+    resetFor.initialMonth !== initialMonth
+  ) {
+    setResetFor({ open, initialYear, initialMonth });
+    if (open) {
+      setYear(initialYear);
+      setMonth(initialMonth);
+      setPicked([]);
+    }
+  }
   const labels = weekdayLabels(language);
   const cells = monthCells(year, month);
   const pickedSet = new Set(picked);

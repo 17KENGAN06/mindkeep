@@ -14,7 +14,22 @@ function useAutoHideNav(activeId: string) {
   const [pinned, setPinned] = useState(false);
   const timerRef = useRef<number | null>(null);
   const pinnedRef = useRef(false);
-  pinnedRef.current = pinned;
+  // Declared before the effects below, so they and the timers read the current value.
+  useEffect(() => {
+    pinnedRef.current = pinned;
+  }, [pinned]);
+
+  // Show the nav again when the section changes or it gets pinned (adjusted during render).
+  const [prevActiveId, setPrevActiveId] = useState(activeId);
+  if (activeId !== prevActiveId) {
+    setPrevActiveId(activeId);
+    setVisible(true);
+  }
+  const [prevPinned, setPrevPinned] = useState(pinned);
+  if (pinned !== prevPinned) {
+    setPrevPinned(pinned);
+    if (pinned) setVisible(true);
+  }
 
   const clearTimer = () => {
     if (timerRef.current != null) {
@@ -39,13 +54,11 @@ function useAutoHideNav(activeId: string) {
   }, [scheduleHide]);
 
   useEffect(() => {
-    setVisible(true);
     scheduleHide();
   }, [activeId, scheduleHide]);
 
   useEffect(() => {
     if (pinned) {
-      setVisible(true);
       clearTimer();
       return;
     }

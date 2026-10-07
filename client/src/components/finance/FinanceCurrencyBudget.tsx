@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -71,10 +71,13 @@ export function FinanceCurrencyBudget({
   const [draft, setDraft] = useState(monthlyLimit ? String(monthlyLimit) : '');
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // Reset the draft when the saved cap changes (adjusted during render).
+  const [draftFor, setDraftFor] = useState(monthlyLimit);
+  if (monthlyLimit !== draftFor) {
+    setDraftFor(monthlyLimit);
     setDraft(monthlyLimit ? String(monthlyLimit) : '');
     setError(null);
-  }, [monthlyLimit]);
+  }
 
   const previewMonthly = canEdit ? liveMonthlyCap(draft, monthlyLimit) : monthlyLimit;
   const target = periodBudgetTarget(previewMonthly);

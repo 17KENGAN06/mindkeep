@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { matchesDesktopSnap } from '@/config/desktopSnap';
 import { useSectionPlay } from '@/components/home/sectionPlayContext';
 
@@ -31,12 +31,10 @@ export function SnapReveal({
   const reduceMotion = useReducedMotion();
   const [stayVisible, setStayVisible] = useState(false);
 
-  useEffect(() => {
-    if (!play) return;
-    if (!matchesDesktopSnap()) {
-      setStayVisible(true);
-    }
-  }, [play]);
+  // Off the desktop snap layout, stay visible once played (adjusted during render).
+  if (play && !stayVisible && !matchesDesktopSnap()) {
+    setStayVisible(true);
+  }
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;

@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
@@ -67,13 +67,21 @@ export function CalorieHelperDialog({
   const [error, setError] = useState<string | null>(null);
   useLockBodyScroll(open);
 
-  useEffect(() => {
-    if (!open) return;
-    setDraft(emptyDraft(settings, currentWeightKg));
-    setEstimate(null);
-    setAcknowledged(false);
-    setError(null);
-  }, [open, settings, currentWeightKg]);
+  // Start fresh when the dialog opens or its inputs change while open (adjusted during render).
+  const [resetFor, setResetFor] = useState({ open, settings, currentWeightKg });
+  if (
+    resetFor.open !== open ||
+    resetFor.settings !== settings ||
+    resetFor.currentWeightKg !== currentWeightKg
+  ) {
+    setResetFor({ open, settings, currentWeightKg });
+    if (open) {
+      setDraft(emptyDraft(settings, currentWeightKg));
+      setEstimate(null);
+      setAcknowledged(false);
+      setError(null);
+    }
+  }
 
   if (!open) return null;
 

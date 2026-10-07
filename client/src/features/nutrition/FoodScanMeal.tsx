@@ -96,7 +96,9 @@ export function FoodScanMeal({ date, macrosEnabled = false }: FoodScanMealProps)
   useLockBodyScroll(preparing || review !== null);
 
   const photosRef = useRef<PickedPhoto[]>([]);
-  photosRef.current = photos;
+  useEffect(() => {
+    photosRef.current = photos;
+  }, [photos]);
 
   useEffect(() => {
     return () => {

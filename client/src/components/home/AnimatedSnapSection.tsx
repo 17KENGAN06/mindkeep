@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { matchesDesktopSnap } from '@/config/desktopSnap';
 import { SectionPlayProvider } from '@/components/home/sectionPlayContext';
 
@@ -22,18 +22,14 @@ export function AnimatedSnapSection({
   const active = activeId === id;
   const [play, setPlay] = useState(() => active || (typeof window !== 'undefined' && !matchesDesktopSnap()));
 
-  useEffect(() => {
-    const desktop = matchesDesktopSnap();
-
-    if (!desktop) {
-      setPlay(true);
-      return;
-    }
-
-    // Keep the active section visible immediately. A false→timeout→true
-    // flip often never fires after iPad/Safari back-forward cache restore.
-    setPlay(active);
-  }, [active]);
+  // Adjusted during render when `active` changes. Keep the active section visible
+  // immediately: a false→timeout→true flip often never fires after iPad/Safari
+  // back-forward cache restore.
+  const [playFor, setPlayFor] = useState(active);
+  if (active !== playFor) {
+    setPlayFor(active);
+    setPlay(matchesDesktopSnap() ? active : true);
+  }
 
   return (
     <section
