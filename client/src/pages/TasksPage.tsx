@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
@@ -71,14 +71,13 @@ export function TasksPage() {
   const updateTask = useUpdateDailyTask();
   const deleteTask = useDeleteDailyTask();
 
-  useEffect(() => {
-    if (view === 'month' && selectedDate) {
-      const [y, m] = selectedDate.split('-').map(Number);
-      if (y !== year || m !== month) {
-        setSelectedDate(`${year}-${String(month).padStart(2, '0')}-01`);
-      }
+  // Keep the selected day inside the shown month (adjusted during render, before paint).
+  if (view === 'month' && selectedDate) {
+    const [y, m] = selectedDate.split('-').map(Number);
+    if (y !== year || m !== month) {
+      setSelectedDate(`${year}-${String(month).padStart(2, '0')}-01`);
     }
-  }, [view, year, month, selectedDate]);
+  }
 
   if (periodQuery.isLoading) return <Loader />;
   if (periodQuery.isError || !periodQuery.data) {

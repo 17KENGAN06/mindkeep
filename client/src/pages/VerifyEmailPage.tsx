@@ -10,14 +10,12 @@ export function VerifyEmailPage() {
   const { verifyEmail } = useAuth();
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const [error, setError] = useState<string | null>(null);
+  const [requestError, setError] = useState<string | null>(null);
   const token = params.get('token') ?? '';
+  const error = token ? requestError : t('auth.errors.invalidEmailToken');
 
   useEffect(() => {
-    if (!token) {
-      setError(t('auth.errors.invalidEmailToken'));
-      return;
-    }
+    if (!token) return;
 
     let cancelled = false;
     void (async () => {

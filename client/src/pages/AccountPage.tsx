@@ -128,9 +128,14 @@ function BillingSection() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [notice, setNotice] = useState<string | null>(null);
+  // Stripe returns here with a full page load, so the URL is read once when the section mounts.
+  const [notice, setNotice] = useState<string | null>(() =>
+    searchParams.get('billing') === 'canceled' ? t('billing.canceled') : null,
+  );
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState<'portal' | 'sync' | 'cancel' | 'resume' | null>(null);
+  const [busy, setBusy] = useState<'portal' | 'sync' | 'cancel' | 'resume' | null>(() =>
+    searchParams.get('billing') === 'success' && searchParams.get('session_id') ? 'sync' : null,
+  );
   const [cancelOpen, setCancelOpen] = useState(false);
 
   const statusQuery = useQuery({
@@ -144,13 +149,11 @@ function BillingSection() {
     if (!billing) return;
 
     if (billing === 'canceled') {
-      setNotice(t('billing.canceled'));
       setSearchParams({}, { replace: true });
       return;
     }
 
     if (billing === 'success' && sessionId) {
-      setBusy('sync');
       void billingApi
         .sync(sessionId)
         .then((result) => {

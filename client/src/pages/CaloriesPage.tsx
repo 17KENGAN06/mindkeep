@@ -1,5 +1,5 @@
 import { Calculator } from 'lucide-react';
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
@@ -85,15 +85,18 @@ export function CaloriesPage() {
   const setSteps = useSetSteps();
   const setWeight = useSetWeight();
 
-  useEffect(() => {
+  // Keep the selected day inside the shown month (adjusted during render, before paint).
+  {
     const [y, m] = selectedDate.split('-').map(Number);
     if (y !== year || m !== month) {
       setSelectedDate(`${year}-${String(month).padStart(2, '0')}-01`);
     }
-  }, [year, month, selectedDate]);
+  }
 
-  useEffect(() => {
-    if (!periodQuery.data) return;
+  // Re-seed the goal inputs whenever fresh period data arrives.
+  const [goalsSeededFrom, setGoalsSeededFrom] = useState<typeof periodQuery.data>(undefined);
+  if (periodQuery.data && periodQuery.data !== goalsSeededFrom) {
+    setGoalsSeededFrom(periodQuery.data);
     setCalorieGoalInput(String(periodQuery.data.settings.calorieGoal));
     setWaterGoalInput(String(periodQuery.data.settings.waterGoal));
     setStepsGoalInput(String(periodQuery.data.settings.stepsGoal ?? 10000));
@@ -102,12 +105,15 @@ export function CaloriesPage() {
         ? ''
         : formatKg(periodQuery.data.settings.weightGoal),
     );
-  }, [periodQuery.data]);
+  }
 
-  useEffect(() => {
+  // Re-seed the weight input from the logged value when the data or the selected day changes.
+  const [weightSeededFrom, setWeightSeededFrom] = useState<{ data: typeof periodQuery.data; date: string } | null>(null);
+  if (weightSeededFrom?.data !== periodQuery.data || weightSeededFrom?.date !== selectedDate) {
+    setWeightSeededFrom({ data: periodQuery.data, date: selectedDate });
     const logged = periodQuery.data?.weight?.find((row) => row.date === selectedDate)?.kg;
     setWeightInput(logged == null ? '' : formatKg(logged));
-  }, [periodQuery.data, selectedDate]);
+  }
 
   if (periodQuery.isLoading) return <Loader />;
   if (periodQuery.isError || !periodQuery.data) {

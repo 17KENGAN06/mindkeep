@@ -118,7 +118,7 @@ export function FinanceBudgetPage() {
   const updateSettings = useUpdateFinanceSettings();
   const [savingLimit, setSavingLimit] = useState<string | null>(null);
 
-  const periodOperations = summaryQuery.data?.operations ?? [];
+  const periodOperations = useMemo(() => summaryQuery.data?.operations ?? [], [summaryQuery.data?.operations]);
   const periodLimits = summaryQuery.data?.settings.periodLimits ?? {};
   const monthlyLimits = capsForView(periodLimits, view, year, month);
 
