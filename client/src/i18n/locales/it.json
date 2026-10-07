@@ -14,6 +14,13 @@
     "themeDark": "Tema scuro",
     "theme": "Tema"
   },
+  "timezone": {
+    "title": "Fuso orario diverso",
+    "body": "Il browser è impostato su {{device}}. Oggi, i ripassi e le attività usano il fuso orario dell’account: {{account}}.",
+    "use": "Usa il fuso del browser",
+    "keep": "Mantieni il fuso dell’account",
+    "browserLine": "Browser: {{timezone}}"
+  },
   "nav": {
     "home": "Home",
     "login": "Accedi",

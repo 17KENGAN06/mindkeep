@@ -7,6 +7,7 @@ import {
   type LoginPayload,
   type RegisterPayload,
 } from '@/api/auth';
+import { ApiError } from '@/api/client';
 import { AuthContext } from '@/features/auth/auth-context';
 import type { User } from '@/types/auth';
 
@@ -27,12 +28,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const response = await authApi.me();
         return response.user;
-      } catch {
-        return null;
+      } catch (error) {
+        // Only a 401 means "signed out". Network/server errors are rethrown so a failed
+        // background refresh keeps the current user instead of looking like a logout.
+        if (error instanceof ApiError && error.status === 401) return null;
+        throw error;
       }
     },
     retry: false,
     staleTime: 60_000,
+    // Pick up account changes made on another device (e.g. time zone) when the tab is refocused.
+    refetchOnWindowFocus: true,
   });
 
   const applySession = useCallback(

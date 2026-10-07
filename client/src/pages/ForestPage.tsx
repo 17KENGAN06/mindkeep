@@ -7,17 +7,13 @@ import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
 import { yearOptions } from '@/features/finance/financeUtils';
 import { useForestSummary } from '@/features/tasks/useDailyTasks';
-
-function currentMonth() {
-  const now = new Date();
-  return { year: now.getFullYear(), month: now.getMonth() + 1 };
-}
+import { useAccountToday } from '@/features/time/useAccountToday';
 
 export function ForestPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const defaults = currentMonth();
+  const defaults = useAccountToday();
   const yearParam = Number(params.get('year'));
   const monthParam = Number(params.get('month'));
   const year = Number.isInteger(yearParam) && yearParam >= 2000 ? yearParam : defaults.year;

@@ -14,6 +14,13 @@
     "themeDark": "Tema oscuro",
     "theme": "Tema"
   },
+  "timezone": {
+    "title": "La zona horaria es distinta",
+    "body": "Tu navegador está en {{device}}. Hoy, los repasos y las tareas usan la zona horaria de tu cuenta: {{account}}.",
+    "use": "Usar la zona del navegador",
+    "keep": "Mantener la zona de la cuenta",
+    "browserLine": "Navegador: {{timezone}}"
+  },
   "nav": {
     "home": "Inicio",
     "login": "Iniciar sesión",

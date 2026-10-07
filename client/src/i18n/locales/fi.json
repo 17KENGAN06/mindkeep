@@ -14,6 +14,13 @@
     "themeDark": "Tumma teema",
     "theme": "Teema"
   },
+  "timezone": {
+    "title": "Aikavyöhyke on eri",
+    "body": "Selaimesi aikavyöhyke on {{device}}. Tänään-näkymä, kertaukset ja tehtävät käyttävät tilin aikavyöhykettä {{account}}.",
+    "use": "Käytä selaimen aikavyöhykettä",
+    "keep": "Pidä tilin aikavyöhyke",
+    "browserLine": "Selain: {{timezone}}"
+  },
   "nav": {
     "home": "Etusivu",
     "login": "Kirjaudu",

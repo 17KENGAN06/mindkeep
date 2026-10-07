@@ -7,6 +7,7 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { Select } from '@/components/ui/Select';
 import { currentPeriodDefaults } from '@/features/finance/financeUtils';
+import { useAccountToday } from '@/features/time/useAccountToday';
 import {
   useDeleteFinanceOperation,
   useFinanceSummary,
@@ -17,7 +18,8 @@ import type { FinanceOperationType, FinanceView } from '@/types/finance';
 export function FinanceTransactionsPage() {
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
-  const defaults = currentPeriodDefaults();
+  const { today } = useAccountToday();
+  const defaults = currentPeriodDefaults(today);
 
   const [view, setView] = useState<FinanceView>(defaults.view);
   const [year, setYear] = useState(defaults.year);

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
@@ -24,33 +24,31 @@ import {
   useUpdateDailyTask,
 } from '@/features/tasks/useDailyTasks';
 import type { DailyTask, DailyTaskView } from '@/types/dailyTask';
-import { toDateInputValue } from '@/utils/date';
+import { useAccountToday, useTodayRollover } from '@/features/time/useAccountToday';
 
 type LocationState = { year?: number; month?: number } | null;
-
-function currentDefaults() {
-  const now = new Date();
-  return {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1,
-    date: toDateInputValue(),
-  };
-}
 
 export function TasksPage() {
   const { t } = useTranslation();
   const location = useLocation();
   const navState = location.state as LocationState;
-  const defaults = useMemo(() => currentDefaults(), []);
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
 
   const [view, setView] = useState<DailyTaskView>('month');
-  const [year, setYear] = useState(navState?.year ?? defaults.year);
-  const [month, setMonth] = useState(navState?.month ?? defaults.month);
+  const [year, setYear] = useState(navState?.year ?? todayYear);
+  const [month, setMonth] = useState(navState?.month ?? todayMonth);
   const [selectedDate, setSelectedDate] = useState<string | null>(() => {
     if (navState?.year && navState?.month) {
       return `${navState.year}-${String(navState.month).padStart(2, '0')}-01`;
     }
-    return defaults.date;
+    return today;
+  });
+  // At midnight, move along only if the user was still looking at the old "today".
+  useTodayRollover(today, (previous, next) => {
+    if (selectedDate !== previous) return;
+    setSelectedDate(next);
+    setYear(Number(next.slice(0, 4)));
+    setMonth(Number(next.slice(5, 7)));
   });
   const [title, setTitle] = useState('');
   const [minutes, setMinutes] = useState('30');

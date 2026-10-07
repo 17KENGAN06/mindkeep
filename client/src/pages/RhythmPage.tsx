@@ -19,15 +19,8 @@ import {
 } from '@/features/rhythm/useRhythm';
 import type { AppLanguage } from '@/i18n';
 import type { RhythmHabit } from '@/types/rhythm';
+import { useAccountToday } from '@/features/time/useAccountToday';
 import { formatMonthTitle } from '@/utils/date';
-
-function pad(value: number): string {
-  return String(value).padStart(2, '0');
-}
-
-function dateKey(year: number, month: number, day: number): string {
-  return `${year}-${pad(month)}-${pad(day)}`;
-}
 
 function habitsForMonth(habits: RhythmHabit[], year: number, month: number, ready: boolean): RhythmHabit[] {
   if (ready) return habits;
@@ -38,9 +31,9 @@ function habitsForMonth(habits: RhythmHabit[], year: number, month: number, read
 export function RhythmPage() {
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
-  const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth() + 1);
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
   const [title, setTitle] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -51,7 +44,6 @@ export function RhythmPage() {
   const deleteHabit = useDeleteHabit();
   const setCheck = useSetHabitCheck();
 
-  const today = dateKey(now.getFullYear(), now.getMonth() + 1, now.getDate());
   const periodReady = periodQuery.data?.year === year && periodQuery.data?.month === month;
   const habits = habitsForMonth(periodQuery.data?.habits ?? [], year, month, periodReady);
   const cycleDays = periodQuery.data?.cycleDays ?? 30;

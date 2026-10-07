@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PlanRemain } from '@/components/billing/PlanRemain';
@@ -7,14 +7,15 @@ import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { useDailyTasksPeriod } from '@/features/tasks/useDailyTasks';
+import { useAccountToday } from '@/features/time/useAccountToday';
 import type { DailyTaskView } from '@/types/dailyTask';
 
 export function MonthPlanPage() {
   const { t } = useTranslation();
-  const now = useMemo(() => new Date(), []);
+  const { year: todayYear, month: todayMonth } = useAccountToday();
   const [view, setView] = useState<DailyTaskView>('year');
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth() + 1);
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
 
   const periodQuery = useDailyTasksPeriod({
     view,

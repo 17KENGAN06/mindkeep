@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import type { AppLanguage } from '@/i18n';
 import type { CalendarDaySummary } from '@/types/calendar';
-import { toDateInputValue } from '@/utils/date';
+import { useAccountToday } from '@/features/time/useAccountToday';
 
 const locales = { uk, ru, en: enUS, pl, de, fr, it, es, fi } as const;
 
@@ -105,7 +105,7 @@ export function Calendar({
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const locale = locales[language] ?? enUS;
-  const todayKey = toDateInputValue();
+  const { today: todayKey } = useAccountToday();
 
   const monthDate = new Date(year, month - 1, 1);
   const gridStart = startOfWeek(startOfMonth(monthDate), { weekStartsOn: 1 });

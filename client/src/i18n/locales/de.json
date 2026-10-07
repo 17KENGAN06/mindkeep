@@ -14,6 +14,13 @@
     "themeDark": "Dunkles Design",
     "theme": "Design"
   },
+  "timezone": {
+    "title": "Zeitzone weicht ab",
+    "body": "Dein Browser ist auf {{device}} eingestellt. Heute, Wiederholungen und Aufgaben nutzen die Zeitzone deines Kontos: {{account}}.",
+    "use": "Browser-Zeitzone verwenden",
+    "keep": "Konto-Zeitzone behalten",
+    "browserLine": "Browser: {{timezone}}"
+  },
   "nav": {
     "home": "Start",
     "login": "Anmelden",

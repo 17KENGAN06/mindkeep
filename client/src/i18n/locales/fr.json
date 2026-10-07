@@ -14,6 +14,13 @@
     "themeDark": "Thème sombre",
     "theme": "Thème"
   },
+  "timezone": {
+    "title": "Fuseau horaire différent",
+    "body": "Votre navigateur est réglé sur {{device}}. Aujourd’hui, les révisions et les tâches utilisent le fuseau de votre compte : {{account}}.",
+    "use": "Utiliser le fuseau du navigateur",
+    "keep": "Garder le fuseau du compte",
+    "browserLine": "Navigateur : {{timezone}}"
+  },
   "nav": {
     "home": "Accueil",
     "login": "Connexion",

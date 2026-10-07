@@ -9,17 +9,24 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Loader } from '@/components/ui/Loader';
 import { useReminderCalendar } from '@/features/reminders/useCalendar';
 import type { AppLanguage } from '@/i18n';
-import { formatDate, toDateInputValue } from '@/utils/date';
+import { useAccountToday, useTodayRollover } from '@/features/time/useAccountToday';
+import { formatDate } from '@/utils/date';
 
 export function CalendarPage() {
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
-  const today = toDateInputValue();
-  const initial = new Date();
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
 
-  const [year, setYear] = useState(initial.getFullYear());
-  const [month, setMonth] = useState(initial.getMonth() + 1);
+  const [year, setYear] = useState(todayYear);
+  const [month, setMonth] = useState(todayMonth);
   const [selectedDate, setSelectedDate] = useState<string | null>(today);
+  // At midnight, move along only if the user was still looking at the old "today".
+  useTodayRollover(today, (previous, next) => {
+    if (selectedDate !== previous) return;
+    setSelectedDate(next);
+    setYear(Number(next.slice(0, 4)));
+    setMonth(Number(next.slice(5, 7)));
+  });
 
   const { data, isLoading, isError } = useReminderCalendar(year, month);
 

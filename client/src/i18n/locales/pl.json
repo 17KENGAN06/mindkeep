@@ -14,6 +14,13 @@
     "themeDark": "Ciemny motyw",
     "theme": "Motyw"
   },
+  "timezone": {
+    "title": "Strefa czasowa się różni",
+    "body": "Przeglądarka ma ustawioną strefę {{device}}. Dziś, powtórki i zadania korzystają ze strefy konta: {{account}}.",
+    "use": "Użyj strefy przeglądarki",
+    "keep": "Zachowaj strefę konta",
+    "browserLine": "Przeglądarka: {{timezone}}"
+  },
   "nav": {
     "home": "Start",
     "login": "Zaloguj się",

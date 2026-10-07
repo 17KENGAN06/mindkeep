@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
+import { BrowserTimezoneHint } from '@/components/TimezoneSuggestion';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Select } from '@/components/ui/Select';
@@ -165,6 +166,13 @@ export function SettingsPage() {
           onChange={(event) => {
             setSaved(false);
             setTimezone(event.target.value);
+          }}
+        />
+        <BrowserTimezoneHint
+          selected={timezone}
+          onUseBrowser={(next) => {
+            setSaved(false);
+            setTimezone(next);
           }}
         />
       </div>

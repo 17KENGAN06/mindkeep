@@ -9,45 +9,39 @@ import { Select } from '@/components/ui/Select';
 import { createMaterialFormSchema, type MaterialFormValues } from '@/schemas/material';
 import type { Category } from '@/types/category';
 import type { Material } from '@/types/material';
-import { dateInputToIso, toDateInputValue } from '@/utils/date';
+import type { MaterialPayload } from '@/api/materials';
+import { useAccountToday } from '@/features/time/useAccountToday';
+import { dateKeyInZone, zonedNoonIso } from '@/utils/date';
 
-type MaterialFormProps = {
+type MaterialFormBaseProps = {
   categories: Category[];
-  initialMaterial?: Material;
   submitLabel: string;
   errorMessage?: string;
   isSubmitting?: boolean;
-  onSubmit: (payload: {
-    title: string;
-    description: string;
-    content: string;
-    question: string | null;
-    answer: string | null;
-    sourceUrl: string | null;
-    learnedAt: string;
-    categoryId: string | null;
-  }) => Promise<void>;
 };
 
-function toFormValues(material?: Material): MaterialFormValues {
+/** Create sends the full payload; edit sends only what this form edits (fields it doesn't own are kept). */
+type MaterialFormProps = MaterialFormBaseProps &
+  (
+    | { initialMaterial?: undefined; onSubmit: (payload: MaterialPayload) => Promise<void> }
+    | { initialMaterial: Material; onSubmit: (payload: Partial<MaterialPayload>) => Promise<void> }
+  );
+
+/** Dates are days in the account time zone (User.timezone), sent as noon there. */
+function toFormValues(material: Material | undefined, timeZone: string, today: string): MaterialFormValues {
   return {
     title: material?.title ?? '',
     content: material?.content ?? '',
     sourceUrl: material?.sourceUrl ?? '',
-    learnedAt: toDateInputValue(material?.learnedAt),
+    learnedAt: material ? dateKeyInZone(new Date(material.learnedAt), timeZone) : today,
     categoryId: material?.categoryId ?? '',
   };
 }
 
-export function MaterialForm({
-  categories,
-  initialMaterial,
-  submitLabel,
-  errorMessage,
-  isSubmitting = false,
-  onSubmit,
-}: MaterialFormProps) {
+export function MaterialForm(props: MaterialFormProps) {
+  const { categories, initialMaterial, submitLabel, errorMessage, isSubmitting = false } = props;
   const { t } = useTranslation();
+  const { timeZone, today } = useAccountToday();
 
   const {
     register,
@@ -56,19 +50,33 @@ export function MaterialForm({
     formState: { errors },
   } = useForm<MaterialFormValues>({
     resolver: zodResolver(createMaterialFormSchema(t)),
-    defaultValues: toFormValues(initialMaterial),
+    defaultValues: toFormValues(initialMaterial, timeZone, today),
   });
 
   const submit = handleSubmit(async (values) => {
-    await onSubmit({
+    const base = {
       title: values.title,
-      description: '',
       content: values.content ?? '',
-      question: initialMaterial ? initialMaterial.question : null,
-      answer: initialMaterial ? initialMaterial.answer : null,
       sourceUrl: values.sourceUrl?.trim() ? values.sourceUrl.trim() : null,
-      learnedAt: dateInputToIso(values.learnedAt),
       categoryId: values.categoryId ? values.categoryId : null,
+    };
+    if (props.initialMaterial) {
+      // Edit: send only what this form owns, and the date only when it changed, so an unchanged
+      // date never reschedules reviews or fails on a different-timezone timestamp, and
+      // question/answer edited elsewhere are not overwritten with stale values.
+      const initialDate = dateKeyInZone(new Date(props.initialMaterial.learnedAt), timeZone);
+      await props.onSubmit({
+        ...base,
+        ...(values.learnedAt !== initialDate ? { learnedAt: zonedNoonIso(values.learnedAt, timeZone) } : {}),
+      });
+      return;
+    }
+    await props.onSubmit({
+      ...base,
+      description: '',
+      question: null,
+      answer: null,
+      learnedAt: zonedNoonIso(values.learnedAt, timeZone),
     });
   });
 

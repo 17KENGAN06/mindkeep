@@ -31,6 +31,7 @@ import {
   summarizeByCurrency,
   withBudgetCurrencies,
 } from '@/features/finance/financeUtils';
+import { useAccountToday } from '@/features/time/useAccountToday';
 import {
   useBulkCreateFinanceOperations,
   useCreateFinanceOperation,
@@ -41,13 +42,6 @@ import {
 } from '@/features/finance/useFinance';
 import type { AppLanguage } from '@/i18n';
 import type { FinanceDraftOperation, FinanceMoneyKind, FinanceOperationType, FinanceView } from '@/types/finance';
-
-function todayInputValue(): string {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${now.getFullYear()}-${month}-${day}`;
-}
 
 type KindFilter = 'ALL' | FinanceMoneyKind;
 type CurrencyFilter = 'ALL' | string;
@@ -93,7 +87,8 @@ function FilterChips<T extends string>({
 export function FinanceBudgetPage() {
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
-  const defaults = currentPeriodDefaults();
+  const { today } = useAccountToday();
+  const defaults = currentPeriodDefaults(today);
 
   const [view, setView] = useState<FinanceView>(defaults.view);
   const [year, setYear] = useState(defaults.year);
@@ -107,7 +102,7 @@ export function FinanceBudgetPage() {
   const [moneyKind, setMoneyKind] = useState<FinanceMoneyKind>('ELECTRONIC');
   const [currency, setCurrency] = useState<FinanceCurrency>('UAH');
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState(todayInputValue());
+  const [date, setDate] = useState(today);
   const [comment, setComment] = useState('');
   const [categoryId, setCategoryId] = useState('');
 

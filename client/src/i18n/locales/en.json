@@ -14,6 +14,13 @@
     "themeDark": "Dark theme",
     "theme": "Theme"
   },
+  "timezone": {
+    "title": "Timezone differs",
+    "body": "Your browser is set to {{device}}. Today, reviews and tasks use your account timezone, {{account}}.",
+    "use": "Use browser timezone",
+    "keep": "Keep account timezone",
+    "browserLine": "Browser: {{timezone}}"
+  },
   "nav": {
     "home": "Home",
     "login": "Log in",

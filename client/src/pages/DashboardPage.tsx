@@ -30,7 +30,9 @@ import {
 import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
 import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
-import { formatDate, toDateInputValue } from '@/utils/date';
+import { TimezoneSuggestion } from '@/components/TimezoneSuggestion';
+import { useAccountToday } from '@/features/time/useAccountToday';
+import { formatDate, lastNKeysFrom } from '@/utils/date';
 
 type WeekTab = 'tasks' | 'reviews';
 
@@ -75,8 +77,8 @@ export function DashboardPage() {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
-  const period = currentPeriodDefaults();
-  const today = toDateInputValue();
+  const { today } = useAccountToday();
+  const period = currentPeriodDefaults(today);
   const showTasks = userHasModule(user, 'tasks');
   const showReview = userHasModule(user, 'review');
   const showHabits = userHasModule(user, 'habits');
@@ -117,16 +119,7 @@ export function DashboardPage() {
     (showFinance && financeQuery.isLoading) ||
     (showNutrition && nutritionQuery.isLoading);
 
-  const weekDays = useMemo(() => {
-    const days: string[] = [];
-    const base = new Date();
-    for (let i = 6; i >= 0; i -= 1) {
-      const day = new Date(base);
-      day.setDate(base.getDate() - i);
-      days.push(toDateInputValue(day));
-    }
-    return days;
-  }, []);
+  const weekDays = useMemo(() => lastNKeysFrom(today, 7), [today]);
 
   if (loading) return <Loader />;
 
@@ -209,6 +202,7 @@ export function DashboardPage() {
 
   return (
     <div className="min-w-0 space-y-6">
+      <TimezoneSuggestion />
       <section className="flex flex-wrap items-center gap-x-3 gap-y-2">
         <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
           {t('dashboard.welcome', { name: user?.name ?? '' })}

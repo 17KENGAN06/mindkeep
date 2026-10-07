@@ -1,5 +1,5 @@
 import { Calculator } from 'lucide-react';
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
@@ -32,7 +32,8 @@ import {
   useUpdateNutritionSettings,
 } from '@/features/nutrition/useNutrition';
 import type { CalendarDaySummary } from '@/types/calendar';
-import { toDateInputValue } from '@/utils/date';
+import { useAccountToday, useTodayRollover } from '@/features/time/useAccountToday';
+import { dateKeyInZone } from '@/utils/date';
 
 function formatKg(value: number): string {
   return (Math.round(value * 10) / 10).toFixed(1);
@@ -44,15 +45,6 @@ function parseKg(value: string): number | null {
   return Math.round(parsed * 10) / 10;
 }
 
-function currentDefaults() {
-  const now = new Date();
-  return {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1,
-    date: toDateInputValue(),
-  };
-}
-
 function yearMonthKey(year: number, month: number) {
   return `${year}-${String(month).padStart(2, '0')}`;
 }
@@ -61,10 +53,17 @@ export function CaloriesPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const pro = isProAccount(user);
-  const defaults = useMemo(() => currentDefaults(), []);
-  const [year, setYear] = useState(defaults.year);
-  const [month, setMonth] = useState(defaults.month);
-  const [selectedDate, setSelectedDate] = useState(defaults.date);
+  const { today: accountToday, timeZone, year: accountYear, month: accountMonth } = useAccountToday();
+  const [year, setYear] = useState(accountYear);
+  const [month, setMonth] = useState(accountMonth);
+  const [selectedDate, setSelectedDate] = useState(accountToday);
+  // At midnight, move along only if the user was still looking at the old "today".
+  useTodayRollover(accountToday, (previous, next) => {
+    if (selectedDate !== previous) return;
+    setSelectedDate(next);
+    setYear(Number(next.slice(0, 4)));
+    setMonth(Number(next.slice(5, 7)));
+  });
   const [title, setTitle] = useState('');
   const [kcal, setKcal] = useState('');
   const [mealKind, setMealKind] = useState<MealKind | null>(null);
@@ -138,8 +137,8 @@ export function CaloriesPage() {
   const glasses = water.find((row) => row.date === selectedDate)?.glasses ?? 0;
   const stepsGoal = settings.stepsGoal ?? 10000;
   const stepsDone = stepsDays.find((row) => row.date === selectedDate)?.done ?? false;
-  const todayKey = toDateInputValue();
-  const joinKey = user?.createdAt ? toDateInputValue(user.createdAt) : todayKey;
+  const todayKey = accountToday;
+  const joinKey = user?.createdAt ? dateKeyInZone(new Date(user.createdAt), timeZone) : todayKey;
   const daysInMonth = new Date(year, month, 0).getDate();
   const viewingCurrentMonth = todayKey.startsWith(`${yearMonthKey(year, month)}-`);
   const todayDay = Number(todayKey.slice(8, 10));
@@ -347,7 +346,7 @@ export function CaloriesPage() {
         onMonthChange={(nextYear, nextMonth) => {
           setYear(nextYear);
           setMonth(nextMonth);
-          const today = toDateInputValue();
+          const today = accountToday;
           const [todayYear, todayMonth] = today.split('-').map(Number);
           if (todayYear === nextYear && todayMonth === nextMonth) {
             setSelectedDate(today);
