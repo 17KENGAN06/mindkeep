@@ -15,9 +15,23 @@ export type DashboardRecentMaterial = {
   category: { id: string; name: string } | null;
 };
 
+export type DashboardNextReminder = {
+  id: string;
+  scheduledAt: string;
+  sequenceNumber: number;
+  status: 'PENDING' | 'COMPLETED' | 'OVERDUE' | 'SKIPPED';
+  intervalType: 'THREE_DAYS' | 'SEVEN_DAYS' | 'THIRTY_DAYS';
+  material: {
+    id: string;
+    title: string;
+    category: { id: string; name: string } | null;
+  };
+} | null;
+
 export type DashboardResponse = {
   timezone: string;
   stats: DashboardStats;
+  nextReminder?: DashboardNextReminder;
   recentMaterials: DashboardRecentMaterial[];
 };
 

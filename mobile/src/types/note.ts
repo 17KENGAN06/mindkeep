@@ -1,5 +1,8 @@
+export type NoteKind = 'page' | 'snippet';
+
 export type Note = {
   id: string;
+  kind?: NoteKind;
   title: string;
   content: string;
   sourceUrl: string | null;

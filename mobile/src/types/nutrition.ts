@@ -1,9 +1,12 @@
 export type BodySex = 'male' | 'female';
 export type BodyActivity = 'sedentary' | 'light' | 'moderate' | 'high' | 'athlete';
 
+export type MealKind = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'extra';
+
 export type NutritionSettings = {
   calorieGoal: number;
   waterGoal: number;
+  stepsGoal?: number;
   weightGoal: number | null;
   macrosEnabled?: boolean;
   bodySex?: BodySex | null;
@@ -45,11 +48,17 @@ export type Meal = {
   fat?: number | null;
   carbs?: number | null;
   date: string;
+  kind?: MealKind | null;
 };
 
 export type WaterDay = {
   date: string;
   glasses: number;
+};
+
+export type StepsDay = {
+  date: string;
+  done: boolean;
 };
 
 export type WeightDay = {
@@ -75,6 +84,7 @@ export type NutritionPeriodResponse = {
   days?: NutritionDaySummary[];
   meals: Meal[];
   water: WaterDay[];
+  steps?: StepsDay[];
   weight?: WeightDay[];
   weightTrend?: WeightDay[];
   weightAvg?: number | null;

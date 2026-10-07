@@ -52,6 +52,7 @@ export function MaterialFormScreen() {
   const [content, setContent] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
   const [learnedAt, setLearnedAt] = useState(todayDateKey());
+  const [initialLearnedAt, setInitialLearnedAt] = useState<string | null>(null);
   const [categoryId, setCategoryId] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(!isEdit);
@@ -63,6 +64,7 @@ export function MaterialFormScreen() {
     setContent(material.content ?? '');
     setSourceUrl(material.sourceUrl ?? '');
     setLearnedAt(isoToDateKey(material.learnedAt));
+    setInitialLearnedAt(isoToDateKey(material.learnedAt));
     setCategoryId(material.categoryId ?? '');
     setHydrated(true);
   }, [hydrated, isEdit, materialQuery.data]);
@@ -82,24 +84,32 @@ export function MaterialFormScreen() {
       return;
     }
 
-    const payload = {
+    const base = {
       title: title.trim(),
-      description: '',
       content: content.trim(),
-      question: isEdit ? (materialQuery.data?.question ?? null) : null,
-      answer: isEdit ? (materialQuery.data?.answer ?? null) : null,
       sourceUrl: sourceUrl.trim() ? sourceUrl.trim() : null,
-      learnedAt: dateInputToIso(learnedAt),
       categoryId: categoryId || null,
     };
 
     try {
       if (isEdit && materialId) {
+        // Edits send only what this form owns; the date only when the user changed it, so an
+        // unchanged date never reschedules reviews or fails on a different-timezone timestamp.
+        const payload = {
+          ...base,
+          ...(learnedAt !== initialLearnedAt ? { learnedAt: dateInputToIso(learnedAt) } : {}),
+        };
         await updateMaterial.mutateAsync({ id: materialId, payload });
         navigation.goBack();
         return;
       }
-      const result = await createMaterial.mutateAsync(payload);
+      const result = await createMaterial.mutateAsync({
+        ...base,
+        description: '',
+        question: null,
+        answer: null,
+        learnedAt: dateInputToIso(learnedAt),
+      });
       navigation.replace('MaterialDetail', { id: result.material.id });
     } catch (caught) {
       setError(mapAuthError(caught, t));

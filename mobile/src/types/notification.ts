@@ -1,5 +1,12 @@
 export type NotificationType = 'REVIEW_DUE' | 'REVIEW_OVERDUE' | 'TASK_IMPORTANT' | 'SYSTEM';
 
+export type NotificationInboxSummary = {
+  unreadCount: number;
+  dueToday: number;
+  overdue: number;
+  important: number;
+};
+
 export type AppNotification = {
   id: string;
   title: string;
@@ -13,5 +20,13 @@ export type AppNotification = {
   material: {
     id: string;
     title: string;
+  } | null;
+  dailyTask?: {
+    id: string;
+    title: string;
+    date: string;
+    minutes: number;
+    completed: boolean;
+    important: boolean;
   } | null;
 };

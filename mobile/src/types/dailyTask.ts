@@ -4,6 +4,7 @@ export type DailyTask = {
   minutes: number;
   date: string;
   completed: boolean;
+  completedAt?: string | null;
   note: string;
   splitCount?: number;
   splitDone?: number;
@@ -13,6 +14,13 @@ export type DailyTask = {
 export type DailyTaskDayResponse = {
   date: string;
   tasks: DailyTask[];
+  totals?: {
+    total: number;
+    completed: number;
+    pending: number;
+    minutes: number;
+    minutesDone: number;
+  };
 };
 
 export type DailyTaskDaySummary = {
@@ -41,6 +49,8 @@ export type DailyTaskPeriodResponse = {
     view: 'month' | 'year';
     year: number;
     month: number | null;
+    from?: string;
+    to?: string;
   };
   totals?: {
     total: number;
