@@ -125,7 +125,7 @@ All apps call the same REST API (`/api/*`, production `https://api.mindkeep.clou
 - `eas.json`: `preview` → Android APK (internal); `production` → AAB + iOS store build, `autoIncrement`, `appVersionSource: local`; Android submit → internal track draft. iOS submit lacks `ascAppId`.
 - `metro.config.js` is customized for the monorepo (hand-maps root + nested `node_modules`). The root `package-lock.json` is the real lockfile; `mobile/package-lock.json` is a stale leftover from the first mobile commit (it lacks later deps such as `expo-linking`). Handle both carefully.
 - Permissions: **camera + photo library** only, via `expo-image-picker` (food/receipt scan; `microphonePermission: false` blocks `RECORD_AUDIO`; storage permissions only up to Android 12). No location, push or tracking — do not add permission strings that aren't used. Store forms (Play Data safety, App Privacy) must mention photos sent to the server and Gemini for scans.
-- Status: works via Expo Go / preview APK (1.0.1, versionCode 2: Google sign-in verified on a real Android phone). No standalone iOS build has been made yet (Windows host, no Apple Developer account yet).
+- Status: works via Expo Go / preview APK (1.0.1, versionCode 2: Google sign-in verified on a real Android phone). No standalone iOS build has been made yet (Windows host — iOS builds go through EAS cloud + TestFlight). Google Play Console and Apple Developer accounts both exist and are paid (as of 2026-10-08); the apps themselves are not created/submitted yet.
 
 ## Environment variables (names only — never commit values)
 
@@ -162,5 +162,5 @@ Templates: `.env.example`, `server/.env.example`, `client/.env.example`, `mobile
 2. **App Review login**: server support done — set `REVIEW_LOGIN_EMAIL` + `REVIEW_LOGIN_CODE` (6 digits, non-admin account) on Railway; that account gets the fixed code instead of an email (`config/reviewLogin.ts`). Create the demo account, then give reviewers email + password + code.
 3. **Android target SDK**: done — `targetSdkVersion`/`compileSdkVersion` are 36 (verify the current requirement in Play Console before submitting).
 4. **Sign in with Apple**: Google login is offered, so Apple guideline 4.8 likely requires Sign in with Apple (or an equivalent privacy-focused option).
-5. Setup items: Play ($25) / Apple Developer ($99/yr) accounts, store records, Data safety / App Privacy / age rating, screenshots, `ascAppId` in `eas.json`, Google OAuth redirect `https://api.mindkeep.cloud/api/auth/google/callback` (works: Google sign-in verified on Android in preview APK 1.0.1 / versionCode 2 on 2026-10-08), verify iOS deployment target vs Expo SDK 57.
+5. Setup items: developer accounts done (Play + Apple, paid). Still: store records (Play app, App Store Connect app), Data safety / App Privacy / age rating, screenshots, `ascAppId` in `eas.json`, Google OAuth redirect `https://api.mindkeep.cloud/api/auth/google/callback` (works: Google sign-in verified on Android in preview APK 1.0.1 / versionCode 2 on 2026-10-08), verify iOS deployment target vs Expo SDK 57.
 6. Nice to have: push notifications (Expo Notifications + FCM/APNs); consider `appVersionSource: "remote"`.
