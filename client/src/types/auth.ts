@@ -7,6 +7,8 @@ export type User = {
   timezone: string;
   role: 'USER' | 'ADMIN';
   hasPassword?: boolean;
+  /** Google is linked for sign-in (older API responses omit it). */
+  hasGoogle?: boolean;
   plan?: UserPlan;
   planInterval?: 'MONTH' | 'YEAR' | null;
   planExpiresAt?: string | null;

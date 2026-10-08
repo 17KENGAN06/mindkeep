@@ -624,11 +624,14 @@
       "timezone": "Valitse kelvollinen aikavyöhyke.",
       "googleUnavailable": "Google-kirjautuminen epäonnistui. Yritä uudelleen.",
       "googleNeedsApp": "Google-kirjautuminen toimii vain asennetussa MindKeep-sovelluksessa, ei Expo Gossa. Kirjaudu täällä sähköpostilla.",
-      "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla.",
+      "googleEmailInUse": "Tällä sähköpostilla on jo tili. Kirjaudu salasanalla ja yhdistä Google Tili-osiossa.",
       "botRejected": "Bottisuoja hylkäsi pyynnön. Päivitä ja yritä uudelleen.",
       "emailUnavailable": "Sähköpostia ei voitu lähettää. Yritä myöhemmin.",
       "invalidEmailToken": "Linkki on virheellinen tai vanhentunut.",
-      "invalidLoginCode": "Koodi on väärä tai vanhentunut."
+      "invalidLoginCode": "Koodi on väärä tai vanhentunut.",
+      "googleAccountInUse": "Tämä Google-tili on jo yhdistetty toiseen MindKeep-tiliin.",
+      "googleAlreadyLinked": "Toinen Google-tili on jo yhdistetty. Poista se ensin.",
+      "passwordRequired": "Aseta ensin salasana, ettet menetä pääsyä tiliisi."
     },
     "checkEmailTitle": "Tarkista sähköposti",
     "checkEmailBody": "Lähetimme linkin osoitteeseen {{email}}. Tili syntyy vasta vahvistuksen jälkeen.",
@@ -660,7 +663,23 @@
     "deleteAccountHint": "Tämä poistaa pysyvästi muistiinpanot, tehtävät, kertaukset, talouden ja muut tiedot. Peruutus ei onnistu.",
     "deleteAccountConfirm": "Poistetaanko tämä MindKeep-tili ja kaikki sen tiedot?",
     "deleteAccountTypeLabel": "Kirjoita DELETE vahvistaaksesi",
-    "deleteAccountTypeHint": "Kirjoita DELETE isoilla kirjaimilla."
+    "deleteAccountTypeHint": "Kirjoita DELETE isoilla kirjaimilla.",
+    "methods": {
+      "title": "Kirjautumistavat",
+      "lead": "Tili on sama — kirjaudu tavalla, joka sopii sinulle.",
+      "password": "Sähköposti ja salasana",
+      "passwordOn": "Salasana asetettu",
+      "passwordOff": "Ei salasanaa — aseta se alla, niin voit kirjautua sähköpostilla",
+      "google": "Google",
+      "googleOn": "Yhdistetty",
+      "googleOff": "Ei yhdistetty",
+      "connect": "Yhdistä Google",
+      "connecting": "Yhdistetään…",
+      "disconnect": "Poista yhteys",
+      "disconnectNeedsPassword": "Aseta salasana ennen kuin poistat Google-yhteyden.",
+      "connected": "Google yhdistetty. Voit nyt kirjautua Googlella.",
+      "disconnected": "Google-yhteys poistettu. Kirjaudu sähköpostilla ja salasanalla."
+    }
   },
   "dashboard": {
     "tagline": "Tämän päivän tehtävät, kertaukset ja luvut — yhdellä näytöllä.",

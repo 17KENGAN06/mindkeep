@@ -11,6 +11,7 @@ import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
 import { mapAuthError } from '@/features/auth/mapAuthError';
 import { useAuth } from '@/features/auth/useAuth';
+import { SignInMethods } from '@/features/auth/SignInMethods';
 import type { AuthDevice } from '@/types/auth';
 
 export function AccountPage() {
@@ -66,7 +67,10 @@ export function AccountPage() {
         {user ? <p className="mt-2 text-sm text-ink">{user.email}</p> : null}
       </div>
 
+      <SignInMethods />
+
       <form
+        id="password"
         className="space-y-4 rounded-3xl border border-line bg-panel/80 p-5"
         onSubmit={(event) => void onSubmit(event)}
       >

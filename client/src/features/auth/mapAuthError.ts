@@ -26,6 +26,12 @@ export function mapAuthError(error: unknown, t: Translate): string {
     case 'GOOGLE_ACCOUNT_CONFLICT':
     case 'GOOGLE_AUTH_UNAVAILABLE':
       return t('auth.errors.googleUnavailable');
+    case 'GOOGLE_ACCOUNT_IN_USE':
+      return t('auth.errors.googleAccountInUse');
+    case 'GOOGLE_ALREADY_LINKED':
+      return t('auth.errors.googleAlreadyLinked');
+    case 'PASSWORD_REQUIRED':
+      return t('auth.errors.passwordRequired');
     case 'GOOGLE_EMAIL_IN_USE':
       return t('auth.errors.googleEmailInUse');
     case 'EMAIL_UNAVAILABLE':

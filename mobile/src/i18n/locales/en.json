@@ -624,11 +624,14 @@
       "timezone": "Choose a valid timezone.",
       "googleUnavailable": "Google sign-in failed. Please try again.",
       "googleNeedsApp": "Google sign-in works only in the installed MindKeep app, not in Expo Go. Sign in with email here.",
-      "googleEmailInUse": "This email already has an account. Sign in with your password.",
+      "googleEmailInUse": "This email already has an account. Sign in with your password, then connect Google in Account.",
       "botRejected": "Request blocked by bot protection. Refresh and try again.",
       "emailUnavailable": "Could not send email. Try again later.",
       "invalidEmailToken": "This link is invalid or has expired.",
-      "invalidLoginCode": "That code is incorrect or has expired."
+      "invalidLoginCode": "That code is incorrect or has expired.",
+      "googleAccountInUse": "This Google account is already connected to another MindKeep account.",
+      "googleAlreadyLinked": "Another Google account is already connected. Disconnect it first.",
+      "passwordRequired": "Set a password first so you do not lose access to your account."
     },
     "checkEmailTitle": "Check your email",
     "checkEmailBody": "We sent a confirmation link to {{email}}. The account is created only after you open it.",
@@ -660,7 +663,23 @@
     "deleteAccountHint": "This permanently removes your notes, tasks, reviews, finance, and other data. It cannot be undone.",
     "deleteAccountConfirm": "Delete this MindKeep account and all of its data?",
     "deleteAccountTypeLabel": "Type DELETE to confirm",
-    "deleteAccountTypeHint": "Type DELETE in capital letters."
+    "deleteAccountTypeHint": "Type DELETE in capital letters.",
+    "methods": {
+      "title": "Sign-in methods",
+      "lead": "It is the same account — sign in whichever way suits you.",
+      "password": "Email and password",
+      "passwordOn": "Password set",
+      "passwordOff": "No password yet — set one below to sign in with email",
+      "google": "Google",
+      "googleOn": "Connected",
+      "googleOff": "Not connected",
+      "connect": "Connect Google",
+      "connecting": "Connecting…",
+      "disconnect": "Disconnect",
+      "disconnectNeedsPassword": "Set a password before disconnecting Google.",
+      "connected": "Google connected. You can now sign in with Google.",
+      "disconnected": "Google disconnected. Sign in with email and password."
+    }
   },
   "dashboard": {
     "tagline": "Today’s tasks, reviews, and numbers — in one overview.",

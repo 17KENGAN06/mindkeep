@@ -832,11 +832,14 @@
       "server": "Der Server ist vorübergehend nicht erreichbar. Versuche es in Kürze erneut.",
       "serverOutdated": "Die API ist noch nicht aktualisiert. Warte auf das Deploy oder versuche es später erneut.",
       "googleUnavailable": "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut.",
-      "googleEmailInUse": "Zu dieser E-Mail gibt es schon ein Konto. Melde dich mit dem Passwort an.",
+      "googleEmailInUse": "Für diese E-Mail gibt es schon ein Konto. Melde dich mit dem Passwort an und verbinde Google unter Konto.",
       "maintenanceAdminOnly": "Derzeit ist nur die Administratoranmeldung verfügbar.",
       "emailUnavailable": "E-Mail konnte nicht gesendet werden. Später erneut versuchen.",
       "invalidEmailToken": "Dieser Link ist ungültig oder abgelaufen.",
-      "invalidLoginCode": "Dieser Code ist falsch oder abgelaufen."
+      "invalidLoginCode": "Dieser Code ist falsch oder abgelaufen.",
+      "googleAccountInUse": "Dieses Google-Konto ist bereits mit einem anderen MindKeep-Konto verbunden.",
+      "googleAlreadyLinked": "Ein anderes Google-Konto ist bereits verbunden. Trenne es zuerst.",
+      "passwordRequired": "Lege zuerst ein Passwort fest, damit du den Zugang nicht verlierst."
     },
     "checkEmailTitle": "Prüfe deine E-Mail",
     "checkEmailBody": "Wir haben einen Link an {{email}} gesendet. Das Konto entsteht erst nach der Bestätigung.",
@@ -868,7 +871,23 @@
     "deleteAccountHint": "Das entfernt Notizen, Aufgaben, Wiederholungen, Finanzen und alle anderen Daten endgültig. Das geht nicht rückgängig.",
     "deleteAccountConfirm": "Dieses MindKeep-Konto und alle Daten löschen?",
     "deleteAccountTypeLabel": "Tippe DELETE zur Bestätigung",
-    "deleteAccountTypeHint": "Tippe DELETE in Großbuchstaben."
+    "deleteAccountTypeHint": "Tippe DELETE in Großbuchstaben.",
+    "methods": {
+      "title": "Anmeldemethoden",
+      "lead": "Es ist dasselbe Konto — melde dich an, wie es dir passt.",
+      "password": "E-Mail und Passwort",
+      "passwordOn": "Passwort gesetzt",
+      "passwordOff": "Noch kein Passwort — lege unten eins fest, um dich per E-Mail anzumelden",
+      "google": "Google",
+      "googleOn": "Verbunden",
+      "googleOff": "Nicht verbunden",
+      "connect": "Google verbinden",
+      "connecting": "Wird verbunden…",
+      "disconnect": "Trennen",
+      "disconnectNeedsPassword": "Lege ein Passwort fest, bevor du Google trennst.",
+      "connected": "Google verbunden. Du kannst dich jetzt mit Google anmelden.",
+      "disconnected": "Google getrennt. Melde dich mit E-Mail und Passwort an."
+    }
   },
   "maintenance": {
     "eyebrow": "Wartung",

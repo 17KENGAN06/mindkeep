@@ -624,11 +624,14 @@
       "timezone": "Scegli un fuso orario valido.",
       "googleUnavailable": "Accesso con Google non riuscito. Riprova.",
       "googleNeedsApp": "L’accesso con Google funziona solo nell’app MindKeep installata, non in Expo Go. Qui accedi con l’email.",
-      "googleEmailInUse": "Esiste già un account con questa email. Accedi con la password.",
+      "googleEmailInUse": "Questa email ha già un account. Accedi con la password, poi collega Google in Account.",
       "botRejected": "La protezione anti-bot ha bloccato la richiesta. Aggiorna e riprova.",
       "emailUnavailable": "Impossibile inviare l’email. Riprova più tardi.",
       "invalidEmailToken": "Questo link non è valido o è scaduto.",
-      "invalidLoginCode": "Il codice non è corretto o è scaduto."
+      "invalidLoginCode": "Il codice non è corretto o è scaduto.",
+      "googleAccountInUse": "Questo account Google è già collegato a un altro account MindKeep.",
+      "googleAlreadyLinked": "È già collegato un altro account Google. Scollegalo prima.",
+      "passwordRequired": "Imposta prima una password per non perdere l’accesso all’account."
     },
     "checkEmailTitle": "Controlla l’email",
     "checkEmailBody": "Abbiamo inviato un link a {{email}}. L’account nasce solo dopo la conferma.",
@@ -660,7 +663,23 @@
     "deleteAccountHint": "Questo cancella per sempre note, compiti, ripassi, finanze e gli altri dati. Non si può annullare.",
     "deleteAccountConfirm": "Eliminare questo account MindKeep e tutti i suoi dati?",
     "deleteAccountTypeLabel": "Scrivi DELETE per confermare",
-    "deleteAccountTypeHint": "Scrivi DELETE in maiuscolo."
+    "deleteAccountTypeHint": "Scrivi DELETE in maiuscolo.",
+    "methods": {
+      "title": "Metodi di accesso",
+      "lead": "È lo stesso account: accedi nel modo che preferisci.",
+      "password": "Email e password",
+      "passwordOn": "Password impostata",
+      "passwordOff": "Nessuna password: impostala qui sotto per accedere con l’email",
+      "google": "Google",
+      "googleOn": "Collegato",
+      "googleOff": "Non collegato",
+      "connect": "Collega Google",
+      "connecting": "Collegamento…",
+      "disconnect": "Scollega",
+      "disconnectNeedsPassword": "Imposta una password prima di scollegare Google.",
+      "connected": "Google collegato. Ora puoi accedere con Google.",
+      "disconnected": "Google scollegato. Accedi con email e password."
+    }
   },
   "dashboard": {
     "tagline": "Compiti, ripassi e numeri di oggi — in una schermata.",

@@ -29,6 +29,7 @@ import type {
   DeleteAccountInput,
   ForgotPasswordInput,
   GoogleFinishInput,
+  GoogleLinkInput,
   GoogleLoginInput,
   GoogleMobileStartInput,
   LoginCodeInput,
@@ -209,6 +210,24 @@ export class AuthController {
     );
     await recordAdminAudit({ action: 'PASSWORD_RESET', actorUserId: user.id });
     sendAuthSession(req, res, 200, user, token, refreshToken);
+  }
+
+  async linkGoogle(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    const user = await authService.linkGoogle(req.user.id, req.body as GoogleLinkInput);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json({ user });
+  }
+
+  async unlinkGoogle(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    const user = await authService.unlinkGoogle(req.user.id);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json({ user });
   }
 
   async changePassword(req: Request, res: Response): Promise<void> {

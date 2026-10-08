@@ -6,6 +6,8 @@ type GoogleSignInProps = {
   onCredential: (credential: string) => void;
   onError: () => void;
   disabled?: boolean;
+  /** The "or" divider above the button (sign-in pages); off inside Account. */
+  showDivider?: boolean;
 };
 
 type GoogleIdentity = {
@@ -40,7 +42,7 @@ declare global {
 const SCRIPT_ID = 'google-identity-services';
 const SCRIPT_URL = 'https://accounts.google.com/gsi/client';
 
-export function GoogleSignIn({ onCredential, onError, disabled = false }: GoogleSignInProps) {
+export function GoogleSignIn({ onCredential, onError, disabled = false, showDivider = true }: GoogleSignInProps) {
   const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const credentialRef = useRef(onCredential);
@@ -112,11 +114,13 @@ export function GoogleSignIn({ onCredential, onError, disabled = false }: Google
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3" aria-hidden>
-        <span className="h-px flex-1 bg-line" />
-        <span className="text-xs tracking-[0.14em] text-muted uppercase">{t('auth.or')}</span>
-        <span className="h-px flex-1 bg-line" />
-      </div>
+      {showDivider ? (
+        <div className="flex items-center gap-3" aria-hidden>
+          <span className="h-px flex-1 bg-line" />
+          <span className="text-xs tracking-[0.14em] text-muted uppercase">{t('auth.or')}</span>
+          <span className="h-px flex-1 bg-line" />
+        </div>
+      ) : null}
       <div className="relative min-h-10 w-full overflow-hidden rounded-full">
         <div ref={containerRef} className="flex w-full justify-center" />
         {disabled ? (

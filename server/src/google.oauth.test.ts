@@ -83,3 +83,17 @@ describe('Google sign-in flow secret', () => {
     assert.throws(() => decodeGoogleOAuthState(badHash), isAuthError);
   });
 });
+
+describe('linking Google to an existing account', () => {
+  test('accepts exactly one of a web credential or a native code + flow secret', async () => {
+    const { googleLinkSchema } = await import('@/validations/auth.schemas.js');
+    const credential = 'x'.repeat(120);
+    const code = 'c'.repeat(43);
+    const flowSecret = 'A'.repeat(43);
+    assert.equal(googleLinkSchema.safeParse({ credential }).success, true);
+    assert.equal(googleLinkSchema.safeParse({ code, flowSecret }).success, true);
+    assert.equal(googleLinkSchema.safeParse({}).success, false);
+    assert.equal(googleLinkSchema.safeParse({ credential, code }).success, false);
+    assert.equal(googleLinkSchema.safeParse({ code, flowSecret: 'short' }).success, false);
+  });
+});

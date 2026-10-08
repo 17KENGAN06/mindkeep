@@ -19,6 +19,7 @@ import {
   forgotPasswordSchema,
   googleFinishSchema,
   googleLoginSchema,
+  googleLinkSchema,
   googleMobileStartSchema,
   loginCodeSchema,
   loginSchema,
@@ -148,6 +149,20 @@ authRouter.post(
   requireAuth,
   validate(onboardingSchema),
   asyncHandler((req, res) => authController.completeOnboarding(req, res)),
+);
+
+authRouter.post(
+  '/google/link',
+  requireAuth,
+  googleAuthRateLimit,
+  validate(googleLinkSchema),
+  asyncHandler((req, res) => authController.linkGoogle(req, res)),
+);
+
+authRouter.post(
+  '/google/unlink',
+  requireAuth,
+  asyncHandler((req, res) => authController.unlinkGoogle(req, res)),
 );
 
 authRouter.post(

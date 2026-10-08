@@ -624,11 +624,14 @@
       "timezone": "Choisis un fuseau horaire valide.",
       "googleUnavailable": "La connexion Google a échoué. Réessaie.",
       "googleNeedsApp": "La connexion Google fonctionne uniquement dans l’app MindKeep installée, pas dans Expo Go. Ici, connectez-vous par e-mail.",
-      "googleEmailInUse": "Un compte existe déjà pour cet e-mail. Connecte-toi avec le mot de passe.",
+      "googleEmailInUse": "Cet e-mail a déjà un compte. Connectez-vous avec votre mot de passe, puis connectez Google dans Compte.",
       "botRejected": "La protection anti-bot a bloqué la requête. Actualise et réessaie.",
       "emailUnavailable": "Impossible d’envoyer l’e-mail. Réessaie plus tard.",
       "invalidEmailToken": "Ce lien est invalide ou a expiré.",
-      "invalidLoginCode": "Ce code est incorrect ou a expiré."
+      "invalidLoginCode": "Ce code est incorrect ou a expiré.",
+      "googleAccountInUse": "Ce compte Google est déjà lié à un autre compte MindKeep.",
+      "googleAlreadyLinked": "Un autre compte Google est déjà connecté. Déconnectez-le d’abord.",
+      "passwordRequired": "Définissez d’abord un mot de passe pour ne pas perdre l’accès à votre compte."
     },
     "checkEmailTitle": "Vérifie tes e-mails",
     "checkEmailBody": "Nous avons envoyé un lien à {{email}}. Le compte n’existe qu’après confirmation.",
@@ -660,7 +663,23 @@
     "deleteAccountHint": "Cela efface définitivement notes, tâches, révisions, finances et le reste. Impossible d’annuler.",
     "deleteAccountConfirm": "Supprimer ce compte MindKeep et toutes ses données ?",
     "deleteAccountTypeLabel": "Tape DELETE pour confirmer",
-    "deleteAccountTypeHint": "Tape DELETE en majuscules."
+    "deleteAccountTypeHint": "Tape DELETE en majuscules.",
+    "methods": {
+      "title": "Modes de connexion",
+      "lead": "C’est le même compte : connectez-vous comme vous préférez.",
+      "password": "E-mail et mot de passe",
+      "passwordOn": "Mot de passe défini",
+      "passwordOff": "Pas encore de mot de passe : définissez-le ci-dessous pour vous connecter par e-mail",
+      "google": "Google",
+      "googleOn": "Connecté",
+      "googleOff": "Non connecté",
+      "connect": "Connecter Google",
+      "connecting": "Connexion…",
+      "disconnect": "Déconnecter",
+      "disconnectNeedsPassword": "Définissez un mot de passe avant de déconnecter Google.",
+      "connected": "Google connecté. Vous pouvez maintenant vous connecter avec Google.",
+      "disconnected": "Google déconnecté. Connectez-vous avec votre e-mail et votre mot de passe."
+    }
   },
   "dashboard": {
     "tagline": "Tâches, révisions et chiffres du jour — sur un seul écran.",

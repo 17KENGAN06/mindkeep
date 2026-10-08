@@ -624,11 +624,14 @@
       "timezone": "Elige una zona horaria válida.",
       "googleUnavailable": "El inicio de sesión con Google falló. Inténtalo de nuevo.",
       "googleNeedsApp": "El inicio con Google solo funciona en la app MindKeep instalada, no en Expo Go. Aquí inicia sesión con tu correo.",
-      "googleEmailInUse": "Ya hay una cuenta con este correo. Entra con tu contraseña.",
+      "googleEmailInUse": "Este correo ya tiene una cuenta. Entra con tu contraseña y luego conecta Google en Cuenta.",
       "botRejected": "La protección anti-bots rechazó la solicitud. Actualiza e inténtalo de nuevo.",
       "emailUnavailable": "No se pudo enviar el correo. Inténtalo más tarde.",
       "invalidEmailToken": "Este enlace no es válido o ha caducado.",
-      "invalidLoginCode": "Ese código es incorrecto o ha caducado."
+      "invalidLoginCode": "Ese código es incorrecto o ha caducado.",
+      "googleAccountInUse": "Esta cuenta de Google ya está conectada a otra cuenta de MindKeep.",
+      "googleAlreadyLinked": "Ya hay otra cuenta de Google conectada. Desconéctala primero.",
+      "passwordRequired": "Crea primero una contraseña para no perder el acceso a tu cuenta."
     },
     "checkEmailTitle": "Revisa tu correo",
     "checkEmailBody": "Enviamos un enlace a {{email}}. La cuenta se crea solo al confirmarlo.",
@@ -660,7 +663,23 @@
     "deleteAccountHint": "Esto borra para siempre notas, tareas, repasos, finanzas y el resto de datos. No se puede deshacer.",
     "deleteAccountConfirm": "¿Eliminar esta cuenta de MindKeep y todos sus datos?",
     "deleteAccountTypeLabel": "Escribe DELETE para confirmar",
-    "deleteAccountTypeHint": "Escribe DELETE en mayúsculas."
+    "deleteAccountTypeHint": "Escribe DELETE en mayúsculas.",
+    "methods": {
+      "title": "Formas de iniciar sesión",
+      "lead": "Es la misma cuenta: entra como te resulte más cómodo.",
+      "password": "Correo y contraseña",
+      "passwordOn": "Contraseña establecida",
+      "passwordOff": "Sin contraseña: crea una abajo para entrar con tu correo",
+      "google": "Google",
+      "googleOn": "Conectado",
+      "googleOff": "No conectado",
+      "connect": "Conectar Google",
+      "connecting": "Conectando…",
+      "disconnect": "Desconectar",
+      "disconnectNeedsPassword": "Crea una contraseña antes de desconectar Google.",
+      "connected": "Google conectado. Ya puedes entrar con Google.",
+      "disconnected": "Google desconectado. Entra con tu correo y contraseña."
+    }
   },
   "dashboard": {
     "tagline": "Tareas, repasos y cifras de hoy — en una sola pantalla.",

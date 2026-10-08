@@ -16,6 +16,7 @@ import {
 } from '@/services/emailToken.service.js';
 import { consumeGoogleSignInTicket } from '@/services/googleOAuth.service.js';
 import type {
+  GoogleLinkInput,
   ChangePasswordInput,
   DeleteAccountInput,
   ForgotPasswordInput,
@@ -42,6 +43,7 @@ const userRecordSelect = {
   timezone: true,
   role: true,
   passwordHash: true,
+  googleId: true,
   plan: true,
   planInterval: true,
   planExpiresAt: true,
@@ -65,6 +67,8 @@ export type PublicUser = {
   timezone: string;
   role: UserRole;
   hasPassword: boolean;
+  /** A Google account is linked (sign in with Google works). Additive: older clients ignore it. */
+  hasGoogle: boolean;
   plan: UserPlan;
   planInterval: PlanInterval | null;
   planExpiresAt: Date | null;
@@ -83,6 +87,7 @@ type UserRecord = {
   timezone: string;
   role: UserRole;
   passwordHash: string | null;
+  googleId: string | null;
   plan: UserPlan;
   planInterval: PlanInterval | null;
   planExpiresAt: Date | null;
@@ -103,6 +108,7 @@ function toPublicUser(user: UserRecord): PublicUser {
     timezone: user.timezone,
     role: user.role,
     hasPassword: Boolean(user.passwordHash),
+    hasGoogle: Boolean(user.googleId),
     plan: paid
       ? user.plan === UserPlan.FREE
         ? UserPlan.PRO
@@ -121,6 +127,57 @@ function toPublicUser(user: UserRecord): PublicUser {
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };
+}
+
+/**
+ * Google identity from a web credential or a native one-time code + flow secret: verified
+ * signature, audience and a verified email. Used by sign in and by linking.
+ */
+async function verifyGoogleIdentity(input: {
+  credential?: string;
+  code?: string;
+  flowSecret?: string;
+}): Promise<{ sub: string; email: string; name?: string }> {
+  if (!env.GOOGLE_CLIENT_ID) {
+    throw new AppError('Google sign-in is not configured', {
+      statusCode: 503,
+      code: 'GOOGLE_AUTH_UNAVAILABLE',
+    });
+  }
+
+  const idToken = input.code
+    ? await consumeGoogleSignInTicket(input.code, input.flowSecret)
+    : input.credential;
+
+  if (!idToken) {
+    throw new AppError('Invalid Google credential', {
+      statusCode: 401,
+      code: 'INVALID_GOOGLE_CREDENTIAL',
+    });
+  }
+
+  let payload;
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken,
+      audience: env.GOOGLE_CLIENT_ID,
+    });
+    payload = ticket.getPayload();
+  } catch {
+    throw new AppError('Invalid Google credential', {
+      statusCode: 401,
+      code: 'INVALID_GOOGLE_CREDENTIAL',
+    });
+  }
+
+  if (!payload?.sub || !payload.email || payload.email_verified !== true) {
+    throw new AppError('Google account email is not verified', {
+      statusCode: 401,
+      code: 'INVALID_GOOGLE_CREDENTIAL',
+    });
+  }
+
+  return { sub: payload.sub, email: payload.email, name: payload.name };
 }
 
 function shouldBeAdmin(email: string): boolean {
@@ -367,37 +424,7 @@ export class AuthService {
       });
     }
 
-    const idToken = input.code
-      ? await consumeGoogleSignInTicket(input.code, input.flowSecret)
-      : input.credential;
-
-    if (!idToken) {
-      throw new AppError('Invalid Google credential', {
-        statusCode: 401,
-        code: 'INVALID_GOOGLE_CREDENTIAL',
-      });
-    }
-
-    let payload;
-    try {
-      const ticket = await googleClient.verifyIdToken({
-        idToken,
-        audience: env.GOOGLE_CLIENT_ID,
-      });
-      payload = ticket.getPayload();
-    } catch {
-      throw new AppError('Invalid Google credential', {
-        statusCode: 401,
-        code: 'INVALID_GOOGLE_CREDENTIAL',
-      });
-    }
-
-    if (!payload?.sub || !payload.email || payload.email_verified !== true) {
-      throw new AppError('Google account email is not verified', {
-        statusCode: 401,
-        code: 'INVALID_GOOGLE_CREDENTIAL',
-      });
-    }
+    const payload = await verifyGoogleIdentity(input);
 
     const email = payload.email.toLowerCase();
     const name = payload.name?.trim().slice(0, 100) || email.split('@')[0] || 'Mindkeep user';
@@ -449,6 +476,63 @@ export class AuthService {
     const publicUser = toPublicUser(withRole);
     assertMaintenanceAccess(publicUser);
     return sessionFor(publicUser, issue);
+  }
+
+  /**
+   * Links a Google account to the signed-in account (any Google email: the user proves both).
+   * A Google account can belong to only one MindKeep account.
+   */
+  async linkGoogle(userId: string, input: GoogleLinkInput): Promise<PublicUser> {
+    const identity = await verifyGoogleIdentity(input);
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: userRecordSelect });
+    if (!user) {
+      throw new AppError('User not found', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    if (user.googleId === identity.sub) {
+      return toPublicUser(await ensureAdminRole(user));
+    }
+    if (user.googleId) {
+      throw new AppError('Another Google account is already connected. Disconnect it first.', {
+        statusCode: 409,
+        code: 'GOOGLE_ALREADY_LINKED',
+      });
+    }
+    const owner = await prisma.user.findUnique({ where: { googleId: identity.sub }, select: { id: true } });
+    if (owner && owner.id !== user.id) {
+      throw new AppError('This Google account is connected to another MindKeep account.', {
+        statusCode: 409,
+        code: 'GOOGLE_ACCOUNT_IN_USE',
+      });
+    }
+    const updated = await prisma.user.update({
+      where: { id: user.id },
+      data: { googleId: identity.sub },
+      select: userRecordSelect,
+    });
+    return toPublicUser(await ensureAdminRole(updated));
+  }
+
+  /** Disconnects Google; only when a password is set, so the account stays reachable. */
+  async unlinkGoogle(userId: string): Promise<PublicUser> {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: userRecordSelect });
+    if (!user) {
+      throw new AppError('User not found', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    if (!user.passwordHash) {
+      throw new AppError('Set a password before disconnecting Google.', {
+        statusCode: 400,
+        code: 'PASSWORD_REQUIRED',
+      });
+    }
+    if (!user.googleId) {
+      return toPublicUser(await ensureAdminRole(user));
+    }
+    const updated = await prisma.user.update({
+      where: { id: user.id },
+      data: { googleId: null },
+      select: userRecordSelect,
+    });
+    return toPublicUser(await ensureAdminRole(updated));
   }
 
   async forgotPassword(input: ForgotPasswordInput): Promise<void> {

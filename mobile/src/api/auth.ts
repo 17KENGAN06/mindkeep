@@ -47,6 +47,9 @@ export const authApi = {
     apiClient.post<AuthResponse>('/api/auth/google', payload),
   forgotPassword: (payload: { email: string; locale?: string; botToken?: string; website?: string }) =>
     apiClient.post<{ sent: true }>('/api/auth/forgot-password', payload),
+  linkGoogle: (payload: { code: string; flowSecret: string }) =>
+    apiClient.post<{ user: User }>('/api/auth/google/link', payload),
+  unlinkGoogle: () => apiClient.post<{ user: User }>('/api/auth/google/unlink'),
   changePassword: (payload: {
     currentPassword?: string;
     password: string;
