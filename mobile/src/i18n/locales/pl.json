@@ -253,7 +253,8 @@
       "carbsShort": "W",
       "grams": "g",
       "gramsShort": "gramy",
-      "invalid": "Gramy to liczba od 0 do 2000"
+      "invalid": "Gramy to liczba od 0 do 2000",
+      "scanHint": "W Pro wypełnia się to ze zdjęcia. Popraw, jeśli coś nie pasuje."
     },
     "weightGoal": "Waga docelowa, kg",
     "weightToday": "Waga dnia, kg",
@@ -299,7 +300,8 @@
       "waterGoal": "Ustaw co najmniej 1 szklankę",
       "weight": "Podaj wagę między 20 a 400 kg",
       "weightGoal": "Waga docelowa powinna wynosić 20–400 kg",
-      "stepsGoal": "Ustaw co najmniej 1000 kroków"
+      "stepsGoal": "Ustaw co najmniej 1000 kroków",
+      "kind": "Wybierz śniadanie, obiad, kolację, przekąskę albo inne"
     },
     "stepsTitle": "Kroki",
     "stepsHint": "Ustaw dzienny cel i odhaczaj dni. Dni sprzed startu nie liczą się jako pominięte.",
@@ -307,7 +309,59 @@
     "stepsCheck": "Cel dnia zaliczony",
     "stepsDayOfMonth": "Dzień {{day}} z {{days}}",
     "stepsMonthLength": "{{days}} dni",
-    "stepsMarked": "odhaczone {{count}}"
+    "stepsMarked": "odhaczone {{count}}",
+    "scan": {
+      "button": "Skanuj jedzenie",
+      "buttonShort": "Skan",
+      "hint": "Możesz po prostu napisać, co zjadłeś, i oszacować kalorie — zdjęcie jest opcjonalne. Albo jedno i drugie. Do 3 zdjęć różnych talerzy — kalorie zsumują się w jeden posiłek.",
+      "desktopHint": "Na komputerze wpisz, co zjadłeś, i wgraj zdjęcia w oknie. Do 3 talerzy — kalorie zsumują się w jeden posiłek.",
+      "proOnly": "Skan jedzenia jest w Pro.",
+      "phoneOnly": "Dostępne tylko na telefonie.",
+      "phoneBadge": "Tylko telefon",
+      "upgrade": "Przejdź na Pro",
+      "analyzing": "Szacujemy kalorie…",
+      "prepareTitle": "Przed skanem",
+      "prepareLead": "Możesz oszacować sam tekst: napisz, co zjadłeś, i naciśnij „Oszacuj kalorie”. Zdjęcie nie jest wymagane, ale z nim ocena jest dokładniejsza. Możesz połączyć tekst i zdjęcia.",
+      "prepareLabel": "Co jest na talerzu?",
+      "prepareOptional": "Sam tekst wystarczy. Zdjęcia nie są wymagane.",
+      "preparePlaceholder": "Na przykład: barszcz, dwa kotlety, sałatka",
+      "preparePhotos": "Zdjęcia tego posiłku",
+      "preparePhotosHint": "Opcjonalnie. Wystarczy jedno zdjęcie. Możesz sfotografować różne talerze — ryż z kurczakiem i pomidory z ogórkiem — kalorie zsumują się w jeden posiłek. Do 3 zdjęć.",
+      "prepareCamera": "Aparat",
+      "prepareGallery": "Galeria",
+      "prepareUpload": "Wgraj zdjęcia",
+      "prepareDrop": "Upuść pliki tutaj lub kliknij, aby wybrać. Do 3 zdjęć.",
+      "prepareCount": "{{count}} z 3",
+      "prepareSubmit": "Oszacuj kalorie",
+      "prepareNeedPhoto": "Napisz, co zjadłeś, albo dodaj zdjęcie.",
+      "removePhoto": "Usuń zdjęcie",
+      "reviewTitle": "Sprawdź przed dodaniem",
+      "reviewHint": "Jeśli szacunek wygląda źle, popraw nazwę lub kalorie.",
+      "add": "Dodaj posiłek",
+      "cancel": "Odrzuć",
+      "pickPhoto": "Wybierz zdjęcie",
+      "privacy": "Jeśli dodasz zdjęcie, służy tylko do oceny kalorii i nie jest zapisywane.",
+      "errors": {
+        "unavailable": "Skan jedzenia nie jest jeszcze podłączony.",
+        "proRequired": "Skan jedzenia jest w Pro.",
+        "notRecognized": "Nie rozpoznano dania. Dodaj więcej szczegółów albo wyraźniejsze zdjęcie.",
+        "failed": "Nie udało się oszacować. Spróbuj ponownie.",
+        "tooLarge": "Zdjęcie jest za duże. Zrób bliższe ujęcie.",
+        "badType": "Użyj zdjęcia JPEG, PNG lub WebP.",
+        "invalid": "Najpierw wybierz zdjęcie posiłku."
+      },
+      "gallery": "Foto",
+      "cameraDenied": "Brak dostępu do aparatu. Zezwól na niego w ustawieniach telefonu lub wybierz zdjęcie z galerii."
+    },
+    "kinds": {
+      "label": "Który posiłek",
+      "proHint": "Rodzaje posiłków są w Pro.",
+      "breakfast": "Śniadanie",
+      "lunch": "Obiad",
+      "dinner": "Kolacja",
+      "snack": "Przekąska",
+      "extra": "Inne"
+    }
   },
   "tasks": {
     "title": "Zadania",

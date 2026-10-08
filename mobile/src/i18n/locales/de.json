@@ -253,7 +253,8 @@
       "carbsShort": "K",
       "grams": "g",
       "gramsShort": "Gramm",
-      "invalid": "Gramm müssen eine Zahl zwischen 0 und 2000 sein"
+      "invalid": "Gramm müssen eine Zahl zwischen 0 und 2000 sein",
+      "scanHint": "In Pro wird das aus dem Foto ausgefüllt. Korrigiere, was nicht passt."
     },
     "weightGoal": "Zielgewicht, kg",
     "weightToday": "Gewicht des Tages, kg",
@@ -299,7 +300,8 @@
       "waterGoal": "Lege mindestens 1 Glas fest",
       "weight": "Gib ein Gewicht zwischen 20 und 400 kg ein",
       "weightGoal": "Das Zielgewicht sollte 20–400 kg betragen",
-      "stepsGoal": "Lege mindestens 1000 Schritte fest"
+      "stepsGoal": "Lege mindestens 1000 Schritte fest",
+      "kind": "Wähle Frühstück, Mittag, Abendessen, Snack oder Sonstiges"
     },
     "stepsTitle": "Schritte",
     "stepsHint": "Lege ein Tagesziel fest und hake die Tage ab. Tage vor dem Start zählen nicht als verpasst.",
@@ -307,7 +309,59 @@
     "stepsCheck": "Tagesziel erledigt",
     "stepsDayOfMonth": "Tag {{day}} von {{days}}",
     "stepsMonthLength": "{{days}} Tage",
-    "stepsMarked": "{{count}} erledigt"
+    "stepsMarked": "{{count}} erledigt",
+    "scan": {
+      "button": "Essen scannen",
+      "buttonShort": "Scan",
+      "hint": "Du kannst einfach schreiben, was du gegessen hast, und Kalorien schätzen — ein Foto ist optional. Oder beides. Bis zu 3 Fotos verschiedener Teller — die Kalorien werden zu einer Mahlzeit addiert.",
+      "desktopHint": "Am Computer schreibst du, was du gegessen hast, und lädst Fotos im Fenster hoch. Bis zu 3 Teller — Kalorien werden addiert.",
+      "proOnly": "Essensscan ist in Pro enthalten.",
+      "phoneOnly": "Nur auf dem Handy verfügbar.",
+      "phoneBadge": "Nur Handy",
+      "upgrade": "Zu Pro wechseln",
+      "analyzing": "Kalorien werden geschätzt…",
+      "prepareTitle": "Vor dem Scan",
+      "prepareLead": "Du kannst nur mit Text schätzen: schreib, was du gegessen hast, und tippe auf „Kalorien schätzen“. Ein Foto ist optional, macht die Schätzung aber genauer. Text und Fotos kannst du kombinieren.",
+      "prepareLabel": "Was liegt auf dem Teller?",
+      "prepareOptional": "Der Text allein reicht. Ein Foto ist nicht nötig.",
+      "preparePlaceholder": "Zum Beispiel: Borschtsch, zwei Buletten, Salat",
+      "preparePhotos": "Fotos dieser Mahlzeit",
+      "preparePhotosHint": "Optional. Ein Foto reicht. Oder fotografiere verschiedene Teller — Reis mit Hähnchen, dann Tomaten mit Gurken — die Kalorien werden zu einer Mahlzeit addiert. Bis zu 3 Fotos.",
+      "prepareCamera": "Kamera",
+      "prepareGallery": "Galerie",
+      "prepareUpload": "Fotos hochladen",
+      "prepareDrop": "Dateien hierher ziehen oder klicken zum Auswählen. Bis zu 3 Fotos.",
+      "prepareCount": "{{count}} von 3",
+      "prepareSubmit": "Kalorien schätzen",
+      "prepareNeedPhoto": "Schreib, was du gegessen hast, oder füge ein Foto hinzu.",
+      "removePhoto": "Foto entfernen",
+      "reviewTitle": "Vor dem Hinzufügen prüfen",
+      "reviewHint": "Wenn die Schätzung nicht passt, ändere Name oder Kalorien.",
+      "add": "Mahlzeit hinzufügen",
+      "cancel": "Verwerfen",
+      "pickPhoto": "Foto wählen",
+      "privacy": "Wenn du ein Foto hinzufügst, dient es nur der Kalorienschätzung und wird nicht gespeichert.",
+      "errors": {
+        "unavailable": "Essensscan ist noch nicht verbunden.",
+        "proRequired": "Essensscan ist in Pro enthalten.",
+        "notRecognized": "Gericht nicht erkannt. Ergänze Details oder nimm ein schärferes Foto.",
+        "failed": "Schätzung fehlgeschlagen. Bitte erneut versuchen.",
+        "tooLarge": "Das Foto ist zu groß. Nimm eine nähere Aufnahme.",
+        "badType": "Bitte ein JPEG-, PNG- oder WebP-Foto verwenden.",
+        "invalid": "Wähle zuerst ein Foto der Mahlzeit."
+      },
+      "gallery": "Fotos",
+      "cameraDenied": "Kein Kamerazugriff. Erlaube ihn in den Telefoneinstellungen oder wähle ein Foto aus der Galerie."
+    },
+    "kinds": {
+      "label": "Welche Mahlzeit",
+      "proHint": "Mahlzeitentypen sind in Pro enthalten.",
+      "breakfast": "Frühstück",
+      "lunch": "Mittagessen",
+      "dinner": "Abendessen",
+      "snack": "Snack",
+      "extra": "Sonstiges"
+    }
   },
   "tasks": {
     "title": "Aufgaben",

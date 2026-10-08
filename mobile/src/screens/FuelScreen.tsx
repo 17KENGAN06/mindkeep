@@ -18,10 +18,19 @@ import { MonthGrid } from '../components/MonthGrid';
 import { AppButton, Badge } from '../components/ui';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import { useAuth } from '../features/auth/useAuth';
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { AppTabParamList } from '../navigation/types';
 import { StepsCheck, StepsMonthGrid, canTrackSteps } from '../components/StepsTracker';
 import { WaterGlasses } from '../components/WaterGlasses';
 import { WeightTrendChart } from '../components/WeightTrendChart';
 import { CalorieHelperModal } from '../features/nutrition/CalorieHelperModal';
+import { FoodScanMeal } from '../features/nutrition/FoodScanMeal';
+import { emptyMacroDraft, macroDraftFrom, parseMacroDraft, type MacroDraft } from '../features/nutrition/macros';
+import { MealKindPicker } from '../features/nutrition/MealKindPicker';
+import { isMealKind, type MealKind } from '../features/nutrition/mealKinds';
+import { hasAutomation } from '../features/billing/planLimit';
+import { env } from '../config/env';
 import {
   useCreateMeal,
   useDeleteMeal,
@@ -64,35 +73,6 @@ function clampPercent(value: number): number {
   return Math.min(100, Math.round(value));
 }
 
-type MacroDraft = { protein: string; fat: string; carbs: string };
-
-const emptyMacroDraft: MacroDraft = { protein: '', fat: '', carbs: '' };
-
-function macroDraftFrom(meal: Meal): MacroDraft {
-  return {
-    protein: meal.protein == null ? '' : String(meal.protein),
-    fat: meal.fat == null ? '' : String(meal.fat),
-    carbs: meal.carbs == null ? '' : String(meal.carbs),
-  };
-}
-
-function parseGrams(value: string): number | null | 'invalid' {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const parsed = Number(trimmed.replace(',', '.'));
-  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 2000) return 'invalid';
-  return Math.round(parsed * 10) / 10;
-}
-
-/** Returns null when any field holds something that is not a sane gram amount. */
-function parseMacroDraft(draft: MacroDraft) {
-  const protein = parseGrams(draft.protein);
-  const fat = parseGrams(draft.fat);
-  const carbs = parseGrams(draft.carbs);
-  if (protein === 'invalid' || fat === 'invalid' || carbs === 'invalid') return null;
-  return { protein, fat, carbs };
-}
-
 function formatGrams(value: number): string {
   const rounded = Math.round(value * 10) / 10;
   return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
@@ -104,6 +84,10 @@ export function FuelScreen() {
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const { user } = useAuth();
+  const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
+  const pro = hasAutomation(user);
+  // Plans live on Account; store builds have no purchase path (see config/env.ts).
+  const onNeedPro = env.storeBuild ? undefined : () => navigation.navigate('More', { screen: 'Account' });
   const { today, timeZone, year: todayYear, month: todayMonth } = useAccountToday();
   const [year, setYear] = useState(todayYear);
   const [month, setMonth] = useState(todayMonth);
@@ -127,6 +111,7 @@ export function FuelScreen() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [helperOpen, setHelperOpen] = useState(false);
   const [macroDraft, setMacroDraft] = useState<MacroDraft>(emptyMacroDraft);
+  const [mealKind, setMealKind] = useState<MealKind | null>(null);
 
   const periodQuery = useNutritionPeriod(year, month);
   const updateSettings = useUpdateNutritionSettings();
@@ -298,6 +283,7 @@ export function FuelScreen() {
     setEditingId(null);
     setTitle('');
     setKcal('');
+    setMealKind(null);
     setMacroDraft(emptyMacroDraft);
     setFormError(null);
   };
@@ -306,6 +292,7 @@ export function FuelScreen() {
     setEditingId(meal.id);
     setTitle(meal.title);
     setKcal(String(meal.calories));
+    setMealKind(isMealKind(meal.kind) ? meal.kind : null);
     setMacroDraft(macroDraftFrom(meal));
     setFormError(null);
   };
@@ -319,6 +306,10 @@ export function FuelScreen() {
     }
     if (!Number.isFinite(calories) || calories < 1) {
       setFormError(t('fuel.errors.calories'));
+      return;
+    }
+    if (pro && !editingId && !mealKind) {
+      setFormError(t('fuel.errors.kind'));
       return;
     }
     const macros = macrosEnabled
@@ -335,6 +326,7 @@ export function FuelScreen() {
           payload: {
             title: title.trim(),
             calories: Math.round(calories),
+            ...(pro && mealKind ? { kind: mealKind } : {}),
             ...(macrosEnabled ? macros : {}),
           },
         });
@@ -343,6 +335,7 @@ export function FuelScreen() {
           title: title.trim(),
           calories: Math.round(calories),
           date: selectedDate,
+          ...(mealKind ? { kind: mealKind } : {}),
           ...(macros.protein == null ? {} : { protein: macros.protein }),
           ...(macros.fat == null ? {} : { fat: macros.fat }),
           ...(macros.carbs == null ? {} : { carbs: macros.carbs }),
@@ -579,6 +572,15 @@ export function FuelScreen() {
             <Text style={[styles.sectionTitle, { color: colors.ink }]}>
               {editingId ? t('fuel.editMeal') : t('fuel.addMeal')}
             </Text>
+            {editingId ? null : (
+              <FoodScanMeal
+                date={selectedDate}
+                canScan={pro}
+                macrosEnabled={macrosEnabled}
+                onNeedPro={onNeedPro}
+              />
+            )}
+            <MealKindPicker value={mealKind} pro={pro} onChange={setMealKind} onNeedPro={onNeedPro} />
             <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.mealTitle')}</Text>
             <TextInput
               style={[
@@ -647,6 +649,9 @@ export function FuelScreen() {
                   ]}
                 >
                   <View style={styles.mealCopy}>
+                    {isMealKind(meal.kind) ? (
+                      <Text style={[styles.mealKind, { color: colors.brand }]}>{t(`fuel.kinds.${meal.kind}`)}</Text>
+                    ) : null}
                     <Text style={[styles.mealTitle, { color: colors.ink }]} numberOfLines={1}>
                       {meal.title}
                     </Text>
@@ -926,6 +931,7 @@ const styles = StyleSheet.create({
   mealRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   mealCopy: { flex: 1, gap: 2, minWidth: 120 },
   mealTitle: { fontSize: 15, fontWeight: '600' },
+  mealKind: { fontSize: 12, fontWeight: '700', textTransform: 'uppercase' },
   mealMacros: { fontSize: 12 },
   macroHead: {
     alignItems: 'center',

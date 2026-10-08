@@ -76,6 +76,14 @@
       "expo-localization",
       "expo-web-browser",
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "MindKeep uses your photos only when you pick them to estimate a meal or read a receipt.",
+          "cameraPermission": "MindKeep uses the camera only when you take a photo of a meal or a receipt to estimate it.",
+          "microphonePermission": false
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {

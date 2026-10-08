@@ -56,6 +56,14 @@ export type WaterDay = {
   glasses: number;
 };
 
+export type FoodScanEstimate = {
+  mealName: string;
+  totalCalories: number;
+  protein?: number;
+  fat?: number;
+  carbs?: number;
+};
+
 export type StepsDay = {
   date: string;
   done: boolean;
@@ -100,9 +108,12 @@ export type CreateMealPayload = MealMacrosPayload & {
   title: string;
   calories: number;
   date: string;
+  /** Pro only on the server; same values as the site. */
+  kind?: MealKind;
 };
 
 export type UpdateMealPayload = MealMacrosPayload & {
   title?: string;
   calories?: number;
+  kind?: MealKind | null;
 };

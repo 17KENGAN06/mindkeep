@@ -253,7 +253,8 @@
       "carbsShort": "H",
       "grams": "g",
       "gramsShort": "grammat",
-      "invalid": "Grammojen tulee olla luku väliltä 0–2000"
+      "invalid": "Grammojen tulee olla luku väliltä 0–2000",
+      "scanHint": "Pro täyttää nämä kuvasta. Korjaa, jos jokin näyttää väärältä."
     },
     "weightGoal": "Tavoitepaino, kg",
     "weightToday": "Päivän paino, kg",
@@ -299,7 +300,8 @@
       "waterGoal": "Aseta vähintään 1 lasi",
       "weight": "Anna paino väliltä 20–400 kg",
       "weightGoal": "Tavoitepainon tulee olla 20–400 kg",
-      "stepsGoal": "Aseta vähintään 1 000 askelta"
+      "stepsGoal": "Aseta vähintään 1 000 askelta",
+      "kind": "Valitse aamiainen, lounas, illallinen, välipala tai muu"
     },
     "stepsTitle": "Askeleet",
     "stepsHint": "Aseta päivätavoite ja merkitse päivät. Ennen aloitusta olevat päivät eivät ole väliin jääneitä.",
@@ -307,7 +309,59 @@
     "stepsCheck": "Päivän tavoite tehty",
     "stepsDayOfMonth": "Päivä {{day}} / {{days}}",
     "stepsMonthLength": "{{days}} päivää",
-    "stepsMarked": "{{count}} tehty"
+    "stepsMarked": "{{count}} tehty",
+    "scan": {
+      "button": "Skannaa ruoka",
+      "buttonShort": "Skan",
+      "hint": "Voit kirjoittaa, mitä söit, ja arvioida kalorit — kuva on vapaaehtoinen. Tai molemmat. Enintään 3 kuvaa eri lautasilta — kalorit lasketaan yhteen ateriaksi.",
+      "desktopHint": "Tietokoneella kirjoita, mitä söit, ja lataa kuvat ikkunaan. Enintään 3 lautasta — kalorit lasketaan yhteen.",
+      "proOnly": "Ruokaskannaus sisältyy Prohon.",
+      "phoneOnly": "Käytettävissä vain puhelimella.",
+      "phoneBadge": "Vain puhelin",
+      "upgrade": "Siirry Prohon",
+      "analyzing": "Arvioidaan kaloreita…",
+      "prepareTitle": "Ennen skannausta",
+      "prepareLead": "Voit arvioida pelkällä tekstillä: kirjoita, mitä söit, ja napauta «Arvioi kalorit». Kuva ei ole pakollinen, mutta se tarkentaa arviota. Voit yhdistää tekstin ja kuvat.",
+      "prepareLabel": "Mitä lautasella on?",
+      "prepareOptional": "Teksti riittää. Kuvaa ei tarvitse lisätä.",
+      "preparePlaceholder": "Esimerkiksi: borssi, kaksi pihviä, salaatti",
+      "preparePhotos": "Tämän aterian kuvat",
+      "preparePhotosHint": "Vapaaehtoinen. Yksi kuva riittää. Tai kuvaa eri lautasia — kanaa ja riisiä, sitten tomaattia ja kurkkua — kalorit lasketaan yhteen ateriaksi. Enintään 3 kuvaa.",
+      "prepareCamera": "Kamera",
+      "prepareGallery": "Galleria",
+      "prepareUpload": "Lataa kuvat",
+      "prepareDrop": "Pudota tiedostot tähän tai napsauta valitaksesi. Enintään 3 kuvaa.",
+      "prepareCount": "{{count}} / 3",
+      "prepareSubmit": "Arvioi kalorit",
+      "prepareNeedPhoto": "Kirjoita, mitä söit, tai lisää kuva.",
+      "removePhoto": "Poista kuva",
+      "reviewTitle": "Tarkista ennen lisäämistä",
+      "reviewHint": "Jos arvio näyttää väärältä, muuta nimeä tai kaloreita.",
+      "add": "Lisää ateria",
+      "cancel": "Hylkää",
+      "pickPhoto": "Valitse kuva",
+      "privacy": "Jos lisäät kuvan, sitä käytetään vain kaloriarvioon, eikä sitä tallenneta.",
+      "errors": {
+        "unavailable": "Ruokaskannausta ei ole vielä kytketty.",
+        "proRequired": "Ruokaskannaus sisältyy Prohon.",
+        "notRecognized": "Annosta ei tunnistettu. Lisää tarkempia tietoja tai terävämpi kuva.",
+        "failed": "Arvio epäonnistui. Yritä uudelleen.",
+        "tooLarge": "Kuva on liian suuri. Ota lähempi otos.",
+        "badType": "Käytä JPEG-, PNG- tai WebP-kuvaa.",
+        "invalid": "Valitse ensin kuva ateriasta."
+      },
+      "gallery": "Kuvat",
+      "cameraDenied": "Ei pääsyä kameraan. Salli se puhelimen asetuksista tai valitse kuva galleriasta."
+    },
+    "kinds": {
+      "label": "Mikä ateria",
+      "proHint": "Ateriatyypit sisältyvät Prohon.",
+      "breakfast": "Aamiainen",
+      "lunch": "Lounas",
+      "dinner": "Illallinen",
+      "snack": "Välipala",
+      "extra": "Muu"
+    }
   },
   "tasks": {
     "title": "Tehtävät",

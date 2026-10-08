@@ -57,6 +57,12 @@ export function usePlanUsage() {
   });
 }
 
+/** Photo scans and meal types: Pro only (admins and beta testers count as Pro), like the site. */
+export function hasAutomation(user?: Pick<User, 'plan' | 'role' | 'betaTester'> | null): boolean {
+  if (!user) return false;
+  return user.plan === 'PRO' || user.role === 'ADMIN' || Boolean(user.betaTester);
+}
+
 export function isProAccount(user?: Pick<User, 'plan' | 'role' | 'betaTester'> | null): boolean {
   if (!user) return false;
   return user.plan === 'PRO' || user.plan === 'PLUS' || user.role === 'ADMIN' || Boolean(user.betaTester);

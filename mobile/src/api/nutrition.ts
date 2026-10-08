@@ -3,6 +3,7 @@ import type {
   CalorieEstimate,
   CalorieEstimatePayload,
   CreateMealPayload,
+  FoodScanEstimate,
   Meal,
   NutritionPeriodResponse,
   NutritionSettings,
@@ -20,6 +21,10 @@ export const nutritionApi = {
     apiClient.patch<{ settings: NutritionSettings }>('/api/nutrition/settings', payload),
   estimateCalories: (payload: CalorieEstimatePayload) =>
     apiClient.post<{ estimate: CalorieEstimate }>('/api/nutrition/calorie-estimate', payload),
+  scanFood: (payload: {
+    note?: string;
+    images?: Array<{ image: string; mimeType: 'image/jpeg' }>;
+  }) => apiClient.post<FoodScanEstimate>('/api/nutrition/scan', payload, { timeoutMs: 50_000 }),
   createMeal: (payload: CreateMealPayload) =>
     apiClient.post<{ meal: Meal }>('/api/nutrition/meals', payload),
   updateMeal: (id: string, payload: UpdateMealPayload) =>

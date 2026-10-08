@@ -253,7 +253,8 @@
       "carbsShort": "C",
       "grams": "g",
       "gramsShort": "grams",
-      "invalid": "Grams should be a number between 0 and 2000"
+      "invalid": "Grams should be a number between 0 and 2000",
+      "scanHint": "Pro fills these in from the photo. Edit anything that looks off."
     },
     "weightGoal": "Target weight, kg",
     "weightToday": "Weight for the day, kg",
@@ -299,7 +300,8 @@
       "waterGoal": "Set at least 1 glass",
       "weight": "Enter a weight between 20 and 400 kg",
       "weightGoal": "Target weight should be 20–400 kg",
-      "stepsGoal": "Set at least 1,000 steps"
+      "stepsGoal": "Set at least 1,000 steps",
+      "kind": "Choose breakfast, lunch, dinner, a snack, or other"
     },
     "stepsTitle": "Steps",
     "stepsHint": "Set a daily goal and tick the days you reach it. Days before you started stay empty.",
@@ -307,7 +309,59 @@
     "stepsCheck": "Goal done today",
     "stepsDayOfMonth": "Day {{day}} of {{days}}",
     "stepsMonthLength": "{{days}} days",
-    "stepsMarked": "{{count}} done"
+    "stepsMarked": "{{count}} done",
+    "scan": {
+      "button": "Scan food",
+      "buttonShort": "Scan",
+      "hint": "You can just write what you ate and estimate calories — a photo is optional. Or use both. Up to 3 photos of different plates — calories are summed into one meal.",
+      "desktopHint": "On a computer, write what you ate and upload photos in the popup. Up to 3 plates — calories are summed into one meal.",
+      "proOnly": "Food scan is included in Pro.",
+      "phoneOnly": "Available only on a phone.",
+      "phoneBadge": "Phone only",
+      "upgrade": "Upgrade to Pro",
+      "analyzing": "Estimating calories…",
+      "prepareTitle": "Before the scan",
+      "prepareLead": "You can estimate from text only: write what you ate and tap Estimate calories. A photo is optional — it makes the estimate more accurate. You can also combine text and photos.",
+      "prepareLabel": "What is on the plate?",
+      "prepareOptional": "Enough on its own. You do not have to add a photo.",
+      "preparePlaceholder": "For example: borscht, two cutlets, a salad",
+      "preparePhotos": "Photos of this meal",
+      "preparePhotosHint": "Optional. One photo is enough. Or shoot different plates — rice with chicken, then tomatoes and cucumbers — calories are summed into one meal. Up to 3 photos.",
+      "prepareCamera": "Camera",
+      "prepareGallery": "Gallery",
+      "prepareUpload": "Upload photos",
+      "prepareDrop": "Drop files here or click to choose. Up to 3 photos.",
+      "prepareCount": "{{count}} of 3",
+      "prepareSubmit": "Estimate calories",
+      "prepareNeedPhoto": "Write what you ate or add a photo.",
+      "removePhoto": "Remove photo",
+      "reviewTitle": "Check before adding",
+      "reviewHint": "Edit the name or calories if the estimate looks off.",
+      "add": "Add meal",
+      "cancel": "Discard",
+      "pickPhoto": "Choose a photo",
+      "gallery": "Photos",
+      "privacy": "Photos, if you add them, are used only to estimate calories and are not saved.",
+      "errors": {
+        "unavailable": "Food scan is not connected yet.",
+        "proRequired": "Food scan is included in Pro.",
+        "notRecognized": "Could not recognize a dish. Add more detail or a clearer photo.",
+        "failed": "Could not estimate. Try again.",
+        "tooLarge": "The photo is too large. Try a closer shot.",
+        "badType": "Use a JPEG, PNG, or WebP photo.",
+        "invalid": "Choose a photo of the meal first."
+      },
+      "cameraDenied": "No camera access. Allow it in the phone settings or pick a photo from the gallery."
+    },
+    "kinds": {
+      "label": "Which meal",
+      "proHint": "Meal types are included in Pro.",
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snack",
+      "extra": "Other"
+    }
   },
   "tasks": {
     "title": "Tasks",

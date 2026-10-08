@@ -253,7 +253,8 @@
       "carbsShort": "G",
       "grams": "g",
       "gramsShort": "grammes",
-      "invalid": "Les grammes doivent être un nombre entre 0 et 2000"
+      "invalid": "Les grammes doivent être un nombre entre 0 et 2000",
+      "scanHint": "En Pro, c’est rempli depuis la photo. Corrige ce qui semble faux."
     },
     "weightGoal": "Poids cible, kg",
     "weightToday": "Poids du jour, kg",
@@ -299,7 +300,8 @@
       "waterGoal": "Indique au moins 1 verre",
       "weight": "Saisis un poids entre 20 et 400 kg",
       "weightGoal": "Le poids cible doit être entre 20 et 400 kg",
-      "stepsGoal": "Indique au moins 1 000 pas"
+      "stepsGoal": "Indique au moins 1 000 pas",
+      "kind": "Choisis petit-déjeuner, déjeuner, dîner, collation ou autre"
     },
     "stepsTitle": "Pas",
     "stepsHint": "Fixe un objectif quotidien et coche les jours. Les jours avant le début ne comptent pas comme manqués.",
@@ -307,7 +309,59 @@
     "stepsCheck": "Objectif du jour atteint",
     "stepsDayOfMonth": "Jour {{day}} sur {{days}}",
     "stepsMonthLength": "{{days}} jours",
-    "stepsMarked": "{{count}} faits"
+    "stepsMarked": "{{count}} faits",
+    "scan": {
+      "button": "Scanner le plat",
+      "buttonShort": "Scan",
+      "hint": "Vous pouvez simplement écrire ce que vous avez mangé et estimer les calories — la photo est facultative. Ou les deux. Jusqu’à 3 photos d’assiettes différentes — les calories sont additionnées en un repas.",
+      "desktopHint": "Sur ordinateur, décrivez le plat et importez des photos dans la fenêtre. Jusqu’à 3 assiettes — les calories sont additionnées.",
+      "proOnly": "Le scan alimentaire est inclus dans Pro.",
+      "phoneOnly": "Disponible uniquement sur téléphone.",
+      "phoneBadge": "Uniquement téléphone",
+      "upgrade": "Passer à Pro",
+      "analyzing": "Estimation des calories…",
+      "prepareTitle": "Avant le scan",
+      "prepareLead": "Vous pouvez estimer avec le texte seul : décrivez le plat et appuyez sur « Estimer les calories ». La photo est facultative, mais elle rend l’estimation plus précise. Vous pouvez combiner texte et photos.",
+      "prepareLabel": "Qu’y a-t-il dans l’assiette ?",
+      "prepareOptional": "Le texte suffit. Vous n’êtes pas obligé d’ajouter une photo.",
+      "preparePlaceholder": "Par exemple : bortsch, deux côtelettes, une salade",
+      "preparePhotos": "Photos de ce repas",
+      "preparePhotosHint": "Facultatif. Une photo suffit. Ou photographiez des assiettes différentes — riz au poulet, puis tomates et concombres — les calories sont additionnées en un repas. Jusqu’à 3 photos.",
+      "prepareCamera": "Appareil photo",
+      "prepareGallery": "Galerie",
+      "prepareUpload": "Importer des photos",
+      "prepareDrop": "Déposez des fichiers ici ou cliquez pour choisir. Jusqu’à 3 photos.",
+      "prepareCount": "{{count}} sur 3",
+      "prepareSubmit": "Estimer les calories",
+      "prepareNeedPhoto": "Écrivez ce que vous avez mangé ou ajoutez une photo.",
+      "removePhoto": "Retirer la photo",
+      "reviewTitle": "Vérifier avant d’ajouter",
+      "reviewHint": "Si l’estimation paraît fausse, corrige le nom ou les calories.",
+      "add": "Ajouter le repas",
+      "cancel": "Annuler",
+      "pickPhoto": "Choisir une photo",
+      "privacy": "Si vous ajoutez une photo, elle sert uniquement à estimer les calories et n’est pas enregistrée.",
+      "errors": {
+        "unavailable": "Le scan alimentaire n’est pas encore branché.",
+        "proRequired": "Le scan alimentaire est inclus dans Pro.",
+        "notRecognized": "Plat non reconnu. Ajoute plus de détails ou une photo plus nette.",
+        "failed": "Impossible d’estimer. Réessaie.",
+        "tooLarge": "La photo est trop lourde. Prends un plan plus serré.",
+        "badType": "Utilise une photo JPEG, PNG ou WebP.",
+        "invalid": "Choisis d’abord une photo du repas."
+      },
+      "gallery": "Photos",
+      "cameraDenied": "Pas d’accès à l’appareil photo. Autorisez-le dans les réglages du téléphone ou choisissez une photo dans la galerie."
+    },
+    "kinds": {
+      "label": "Quel repas",
+      "proHint": "Les types de repas sont inclus dans Pro.",
+      "breakfast": "Petit-déj.",
+      "lunch": "Déjeuner",
+      "dinner": "Dîner",
+      "snack": "Collation",
+      "extra": "Autre"
+    }
   },
   "tasks": {
     "title": "Tâches",

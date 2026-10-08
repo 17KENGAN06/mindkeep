@@ -123,7 +123,7 @@ All apps call the same REST API (`/api/*`, production `https://api.mindkeep.clou
 - `app.json`: name MindKeep, scheme `mindkeep`, bundle/package `cloud.mindkeep.app`, iPhone only (`supportsTablet: false`), `ITSAppUsesNonExemptEncryption: false`, adaptive + monochrome icons, `expo-build-properties` (Android min 24 / target 36 / compile 36; iOS deployment target 16.4).
 - `eas.json`: `preview` → Android APK (internal); `production` → AAB + iOS store build, `autoIncrement`, `appVersionSource: local`; Android submit → internal track draft. iOS submit lacks `ascAppId`.
 - `metro.config.js` is customized for the monorepo (hand-maps root + nested `node_modules`). The root `package-lock.json` is the real lockfile; `mobile/package-lock.json` is a stale leftover from the first mobile commit (it lacks later deps such as `expo-linking`). Handle both carefully.
-- No camera, location, push, or tracking permissions are used — do not add permission strings that aren't used.
+- Permissions: **camera + photo library** only, via `expo-image-picker` (food/receipt scan; `microphonePermission: false` blocks `RECORD_AUDIO`; storage permissions only up to Android 12). No location, push or tracking — do not add permission strings that aren't used. Store forms (Play Data safety, App Privacy) must mention photos sent to the server and Gemini for scans.
 - Status: works via Expo Go / preview APK (1.0.1, versionCode 2: Google sign-in verified on a real Android phone). No standalone iOS build has been made yet (Windows host, no Apple Developer account yet).
 
 ## Environment variables (names only — never commit values)

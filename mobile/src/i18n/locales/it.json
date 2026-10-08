@@ -253,7 +253,8 @@
       "carbsShort": "C",
       "grams": "g",
       "gramsShort": "grammi",
-      "invalid": "I grammi devono essere un numero tra 0 e 2000"
+      "invalid": "I grammi devono essere un numero tra 0 e 2000",
+      "scanHint": "Con Pro vengono compilati dalla foto. Correggi ciò che non torna."
     },
     "weightGoal": "Peso obiettivo, kg",
     "weightToday": "Peso del giorno, kg",
@@ -299,7 +300,8 @@
       "waterGoal": "Imposta almeno 1 bicchiere",
       "weight": "Inserisci un peso tra 20 e 400 kg",
       "weightGoal": "Il peso obiettivo deve essere tra 20 e 400 kg",
-      "stepsGoal": "Imposta almeno 1000 passi"
+      "stepsGoal": "Imposta almeno 1000 passi",
+      "kind": "Scegli colazione, pranzo, cena, spuntino o altro"
     },
     "stepsTitle": "Passi",
     "stepsHint": "Imposta un obiettivo giornaliero e spunta i giorni. I giorni prima dell'inizio non contano come saltati.",
@@ -307,7 +309,59 @@
     "stepsCheck": "Obiettivo del giorno fatto",
     "stepsDayOfMonth": "Giorno {{day}} di {{days}}",
     "stepsMonthLength": "{{days}} giorni",
-    "stepsMarked": "{{count}} fatti"
+    "stepsMarked": "{{count}} fatti",
+    "scan": {
+      "button": "Scansiona il cibo",
+      "buttonShort": "Scan",
+      "hint": "Puoi scrivere cosa hai mangiato e stimare le calorie — la foto è facoltativa. Oppure entrambi. Fino a 3 foto di piatti diversi — le calorie si sommano in un pasto.",
+      "desktopHint": "Sul computer scrivi cosa hai mangiato e carica le foto nella finestra. Fino a 3 piatti — le calorie si sommano.",
+      "proOnly": "La scansione cibo è inclusa in Pro.",
+      "phoneOnly": "Disponibile solo sul telefono.",
+      "phoneBadge": "Solo telefono",
+      "upgrade": "Passa a Pro",
+      "analyzing": "Stima delle calorie…",
+      "prepareTitle": "Prima della scansione",
+      "prepareLead": "Puoi stimare solo con il testo: scrivi cosa hai mangiato e tocca «Stima le calorie». La foto è facoltativa, ma rende la stima più precisa. Puoi combinare testo e foto.",
+      "prepareLabel": "Cosa c’è nel piatto?",
+      "prepareOptional": "Basta il testo. Non è necessario aggiungere una foto.",
+      "preparePlaceholder": "Ad esempio: borscht, due cotolette, insalata",
+      "preparePhotos": "Foto di questo pasto",
+      "preparePhotosHint": "Facoltativo. Basta una foto. Oppure scatta piatti diversi — riso con pollo, poi pomodori e cetrioli — le calorie si sommano in un pasto. Fino a 3 foto.",
+      "prepareCamera": "Fotocamera",
+      "prepareGallery": "Galleria",
+      "prepareUpload": "Carica foto",
+      "prepareDrop": "Trascina i file qui o clicca per scegliere. Fino a 3 foto.",
+      "prepareCount": "{{count}} di 3",
+      "prepareSubmit": "Stima le calorie",
+      "prepareNeedPhoto": "Scrivi cosa hai mangiato oppure aggiungi una foto.",
+      "removePhoto": "Rimuovi foto",
+      "reviewTitle": "Controlla prima di aggiungere",
+      "reviewHint": "Se la stima non torna, modifica nome o calorie.",
+      "add": "Aggiungi pasto",
+      "cancel": "Scarta",
+      "pickPhoto": "Scegli una foto",
+      "privacy": "Se aggiungi una foto, serve solo a stimare le calorie e non viene salvata.",
+      "errors": {
+        "unavailable": "La scansione cibo non è ancora collegata.",
+        "proRequired": "La scansione cibo è inclusa in Pro.",
+        "notRecognized": "Piatto non riconosciuto. Aggiungi dettagli o una foto più nitida.",
+        "failed": "Impossibile stimare. Riprova.",
+        "tooLarge": "La foto è troppo grande. Fai uno scatto più ravvicinato.",
+        "badType": "Usa una foto JPEG, PNG o WebP.",
+        "invalid": "Scegli prima una foto del pasto."
+      },
+      "gallery": "Foto",
+      "cameraDenied": "Nessun accesso alla fotocamera. Consentilo nelle impostazioni del telefono o scegli una foto dalla galleria."
+    },
+    "kinds": {
+      "label": "Quale pasto",
+      "proHint": "I tipi di pasto sono inclusi in Pro.",
+      "breakfast": "Colazione",
+      "lunch": "Pranzo",
+      "dinner": "Cena",
+      "snack": "Spuntino",
+      "extra": "Altro"
+    }
   },
   "tasks": {
     "title": "Attività",

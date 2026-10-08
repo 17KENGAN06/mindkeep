@@ -35,6 +35,8 @@ export class NetworkError extends TypeError {
 
 type RequestOptions = Omit<RequestInit, 'body'> & {
   body?: unknown;
+  /** Overrides the default 15 s timeout (e.g. photo scans). */
+  timeoutMs?: number;
 };
 
 /** Outcome of a refresh: only `invalid` ends the session; `unavailable` keeps the stored tokens. */
@@ -52,9 +54,13 @@ const SKIP_REFRESH = new Set([
   '/api/auth/forgot-password',
 ]);
 
-async function fetchWithTimeout(url: string, init: RequestInit): Promise<Response> {
+async function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number = REQUEST_TIMEOUT_MS,
+): Promise<Response> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   const outer = init.signal;
   const onOuterAbort = () => controller.abort();
   outer?.addEventListener('abort', onOuterAbort);
@@ -143,11 +149,16 @@ async function request<T>(path: string, options: RequestOptions = {}, retried = 
     headers.set('Authorization', `Bearer ${token}`);
   }
 
-  const response = await fetchWithTimeout(`${env.apiUrl}${path}`, {
-    ...options,
-    headers,
-    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
-  });
+  const { timeoutMs, ...init } = options;
+  const response = await fetchWithTimeout(
+    `${env.apiUrl}${path}`,
+    {
+      ...init,
+      headers,
+      body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+    },
+    timeoutMs,
+  );
 
   if (response.status === 204) {
     return undefined as T;
@@ -193,7 +204,8 @@ async function request<T>(path: string, options: RequestOptions = {}, retried = 
 
 export const apiClient = {
   get: <T>(path: string) => request<T>(path),
-  post: <T>(path: string, body?: unknown) => request<T>(path, { method: 'POST', body }),
+  post: <T>(path: string, body?: unknown, options?: { timeoutMs?: number }) =>
+    request<T>(path, { method: 'POST', body, ...options }),
   put: <T>(path: string, body?: unknown) => request<T>(path, { method: 'PUT', body }),
   patch: <T>(path: string, body?: unknown) => request<T>(path, { method: 'PATCH', body }),
   delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),

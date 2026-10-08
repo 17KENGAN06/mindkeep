@@ -253,7 +253,8 @@
       "carbsShort": "C",
       "grams": "g",
       "gramsShort": "gramos",
-      "invalid": "Los gramos deben ser un número entre 0 y 2000"
+      "invalid": "Los gramos deben ser un número entre 0 y 2000",
+      "scanHint": "Con Pro esto se rellena desde la foto. Corrige lo que no cuadre."
     },
     "weightGoal": "Peso objetivo, kg",
     "weightToday": "Peso del día, kg",
@@ -299,7 +300,8 @@
       "waterGoal": "Indica al menos 1 vaso",
       "weight": "Introduce un peso entre 20 y 400 kg",
       "weightGoal": "El peso objetivo debe estar entre 20 y 400 kg",
-      "stepsGoal": "Indica al menos 1.000 pasos"
+      "stepsGoal": "Indica al menos 1.000 pasos",
+      "kind": "Elige desayuno, comida, cena, tentempié u otro"
     },
     "stepsTitle": "Pasos",
     "stepsHint": "Pon un objetivo diario y marca los días. Los días anteriores al inicio no cuentan como fallos.",
@@ -307,7 +309,59 @@
     "stepsCheck": "Objetivo del día hecho",
     "stepsDayOfMonth": "Día {{day}} de {{days}}",
     "stepsMonthLength": "{{days}} días",
-    "stepsMarked": "{{count}} hechos"
+    "stepsMarked": "{{count}} hechos",
+    "scan": {
+      "button": "Escanear comida",
+      "buttonShort": "Scan",
+      "hint": "Puedes escribir qué comiste y estimar calorías — la foto es opcional. O ambas. Hasta 3 fotos de platos distintos — las calorías se suman en una comida.",
+      "desktopHint": "En el ordenador escribe qué comiste y sube fotos en la ventana. Hasta 3 platos — las calorías se suman.",
+      "proOnly": "El escaneo de comida está en Pro.",
+      "phoneOnly": "Disponible solo en el teléfono.",
+      "phoneBadge": "Solo móvil",
+      "upgrade": "Pasar a Pro",
+      "analyzing": "Estimando calorías…",
+      "prepareTitle": "Antes del escaneo",
+      "prepareLead": "Puedes estimar solo con texto: escribe qué comiste y pulsa «Estimar calorías». La foto es opcional, pero hace la estimación más precisa. Puedes combinar texto y fotos.",
+      "prepareLabel": "¿Qué hay en el plato?",
+      "prepareOptional": "El texto basta. No hace falta añadir una foto.",
+      "preparePlaceholder": "Por ejemplo: borscht, dos filetes, una ensalada",
+      "preparePhotos": "Fotos de esta comida",
+      "preparePhotosHint": "Opcional. Basta una foto. O fotografía platos distintos — arroz con pollo y luego tomates con pepino — las calorías se suman en una comida. Hasta 3 fotos.",
+      "prepareCamera": "Cámara",
+      "prepareGallery": "Galería",
+      "prepareUpload": "Subir fotos",
+      "prepareDrop": "Suelta archivos aquí o haz clic para elegir. Hasta 3 fotos.",
+      "prepareCount": "{{count}} de 3",
+      "prepareSubmit": "Estimar calorías",
+      "prepareNeedPhoto": "Escribe qué comiste o añade una foto.",
+      "removePhoto": "Quitar foto",
+      "reviewTitle": "Revisa antes de añadir",
+      "reviewHint": "Si la estimación no cuadra, edita el nombre o las calorías.",
+      "add": "Añadir comida",
+      "cancel": "Descartar",
+      "pickPhoto": "Elegir una foto",
+      "privacy": "Si añades una foto, solo se usa para estimar calorías y no se guarda.",
+      "errors": {
+        "unavailable": "El escaneo de comida aún no está conectado.",
+        "proRequired": "El escaneo de comida está en Pro.",
+        "notRecognized": "No se reconoció el plato. Añade más detalle o una foto más nítida.",
+        "failed": "No se pudo estimar. Inténtalo de nuevo.",
+        "tooLarge": "La foto es demasiado grande. Haz un plano más cercano.",
+        "badType": "Usa una foto JPEG, PNG o WebP.",
+        "invalid": "Elige primero una foto de la comida."
+      },
+      "gallery": "Fotos",
+      "cameraDenied": "Sin acceso a la cámara. Permítelo en los ajustes del teléfono o elige una foto de la galería."
+    },
+    "kinds": {
+      "label": "Cuál comida",
+      "proHint": "Los tipos de comida están en Pro.",
+      "breakfast": "Desayuno",
+      "lunch": "Comida",
+      "dinner": "Cena",
+      "snack": "Tentempié",
+      "extra": "Otro"
+    }
   },
   "tasks": {
     "title": "Tareas",
