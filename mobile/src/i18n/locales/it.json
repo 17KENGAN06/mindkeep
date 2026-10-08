@@ -666,7 +666,9 @@
       "invalidLoginCode": "Il codice non è corretto o è scaduto.",
       "googleAccountInUse": "Questo account Google è già collegato a un altro account MindKeep.",
       "googleAlreadyLinked": "È già collegato un altro account Google. Scollegalo prima.",
-      "passwordRequired": "Imposta prima una password per non perdere l’accesso all’account."
+      "passwordRequired": "Imposta prima una password per non perdere l’accesso all’account.",
+      "appleUnavailable": "Accesso con Apple non riuscito. Riprova.",
+      "appleEmailMissing": "Apple non ha condiviso un’email. Riprova o usa un altro metodo di accesso."
     },
     "checkEmailTitle": "Controlla l’email",
     "checkEmailBody": "Abbiamo inviato un link a {{email}}. L’account nasce solo dopo la conferma.",

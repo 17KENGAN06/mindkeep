@@ -29,6 +29,7 @@ import type {
   DeleteAccountInput,
   ForgotPasswordInput,
   GoogleFinishInput,
+  AppleLoginInput,
   GoogleLinkInput,
   GoogleLoginInput,
   GoogleMobileStartInput,
@@ -209,6 +210,13 @@ export class AuthController {
       issue,
     );
     await recordAdminAudit({ action: 'PASSWORD_RESET', actorUserId: user.id });
+    sendAuthSession(req, res, 200, user, token, refreshToken);
+  }
+
+  async appleLogin(req: Request, res: Response): Promise<void> {
+    const input = req.body as AppleLoginInput;
+    const issue = authSessionIssueFrom(req);
+    const { user, token, refreshToken } = await authService.appleLogin(input, issue);
     sendAuthSession(req, res, 200, user, token, refreshToken);
   }
 

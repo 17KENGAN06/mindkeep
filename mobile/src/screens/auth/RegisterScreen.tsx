@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../../components/LanguageSwitcher';
 import { BrandMark } from '../../components/BrandMark';
+import { AppleSignInButton } from '../../components/AppleSignInButton';
 import { GoogleSignInButton } from '../../components/GoogleSignInButton';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { issueBotToken } from '../../features/auth/botChallenge';
@@ -175,6 +176,7 @@ export function RegisterScreen({ onGoLogin }: RegisterScreenProps) {
         </Pressable>
 
         <GoogleSignInButton disabled={busy} onError={setError} />
+            <AppleSignInButton disabled={busy} onError={setError} />
 
         <Pressable onPress={onGoLogin} style={styles.linkWrap}>
           <Text style={[styles.link, { color: colors.brand }]}>

@@ -24,6 +24,13 @@ const envSchema = z.object({
   RESEND_API_KEY: z.string().optional(),
   TELEGRAM_BOT_TOKEN: z.string().optional(),
   GOOGLE_CLIENT_ID: z.string().trim().min(1).optional(),
+  /** Sign in with Apple: token audience (the iOS bundle id). */
+  APPLE_BUNDLE_ID: z.string().trim().min(1).default('cloud.mindkeep.app'),
+  /** Apple Developer team, Sign in with Apple key id and its .p8 private key (PEM; 
+ escapes allowed). Needed to revoke on account deletion. */
+  APPLE_TEAM_ID: z.string().trim().optional().transform((value) => value || undefined),
+  APPLE_KEY_ID: z.string().trim().optional().transform((value) => value || undefined),
+  APPLE_PRIVATE_KEY: z.string().optional().transform((value) => value?.trim() || undefined),
   /** Canonical API origin for Google redirect_uri. Ignored Host header in production. */
   API_PUBLIC_URL: z.url().optional(),
   ADMIN_EMAILS: z

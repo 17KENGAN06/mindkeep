@@ -7,6 +7,8 @@ export type User = {
   hasPassword?: boolean;
   /** Google is linked for sign-in (older API responses omit it). */
   hasGoogle?: boolean;
+  /** Sign in with Apple is linked (iOS). */
+  hasApple?: boolean;
   plan?: 'FREE' | 'PLUS' | 'PRO';
   planInterval?: 'MONTH' | 'YEAR' | null;
   planExpiresAt?: string | null;

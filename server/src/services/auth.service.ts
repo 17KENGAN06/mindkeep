@@ -15,7 +15,13 @@ import {
   issueLoginCode,
 } from '@/services/emailToken.service.js';
 import { consumeGoogleSignInTicket } from '@/services/googleOAuth.service.js';
+import {
+  exchangeAppleAuthorizationCode,
+  revokeAppleRefreshToken,
+  verifyAppleIdentityToken,
+} from '@/services/appleAuth.service.js';
 import type {
+  AppleLoginInput,
   GoogleLinkInput,
   ChangePasswordInput,
   DeleteAccountInput,
@@ -44,6 +50,7 @@ const userRecordSelect = {
   role: true,
   passwordHash: true,
   googleId: true,
+  appleId: true,
   plan: true,
   planInterval: true,
   planExpiresAt: true,
@@ -69,6 +76,8 @@ export type PublicUser = {
   hasPassword: boolean;
   /** A Google account is linked (sign in with Google works). Additive: older clients ignore it. */
   hasGoogle: boolean;
+  /** Sign in with Apple is linked (iOS). Additive: older clients ignore it. */
+  hasApple: boolean;
   plan: UserPlan;
   planInterval: PlanInterval | null;
   planExpiresAt: Date | null;
@@ -88,6 +97,7 @@ type UserRecord = {
   role: UserRole;
   passwordHash: string | null;
   googleId: string | null;
+  appleId: string | null;
   plan: UserPlan;
   planInterval: PlanInterval | null;
   planExpiresAt: Date | null;
@@ -109,6 +119,7 @@ function toPublicUser(user: UserRecord): PublicUser {
     role: user.role,
     hasPassword: Boolean(user.passwordHash),
     hasGoogle: Boolean(user.googleId),
+    hasApple: Boolean(user.appleId),
     plan: paid
       ? user.plan === UserPlan.FREE
         ? UserPlan.PRO
@@ -479,6 +490,80 @@ export class AuthService {
   }
 
   /**
+   * Sign in with Apple (iOS). Same account rules as Google: an existing email is never linked
+   * automatically. The refresh token is kept only to revoke access when the account is deleted.
+   */
+  async appleLogin(
+    input: AppleLoginInput,
+    issue?: AuthSessionIssue,
+  ): Promise<{ user: PublicUser; token: string; refreshToken?: string }> {
+    const identity = await verifyAppleIdentityToken(input.identityToken);
+
+    let user = await prisma.user.findUnique({
+      where: { appleId: identity.sub },
+      select: { ...userRecordSelect, appleRefreshToken: true },
+    });
+
+    if (user && !user.appleRefreshToken && input.authorizationCode) {
+      const refresh = await exchangeAppleAuthorizationCode(input.authorizationCode);
+      if (refresh) {
+        await prisma.user.update({ where: { id: user.id }, data: { appleRefreshToken: refresh } });
+      }
+    }
+
+    if (!user) {
+      const email = identity.email;
+      if (!email) {
+        throw new AppError('Apple did not share an email. Try again or use another sign-in method.', {
+          statusCode: 400,
+          code: 'APPLE_EMAIL_MISSING',
+        });
+      }
+
+      const existingUser = await prisma.user.findUnique({ where: { email }, select: { id: true } });
+      if (existingUser) {
+        throw new AppError('This email already has an account. Sign in with your password.', {
+          statusCode: 409,
+          code: 'APPLE_EMAIL_IN_USE',
+        });
+      }
+
+      if (env.MAINTENANCE_MODE && !shouldBeAdmin(email)) {
+        throw new AppError('Service is under maintenance. Admin access only.', {
+          statusCode: 403,
+          code: 'MAINTENANCE_ADMIN_ONLY',
+        });
+      }
+
+      await deleteEmailTokens(email, EmailTokenType.VERIFY_EMAIL);
+      const refresh = input.authorizationCode
+        ? await exchangeAppleAuthorizationCode(input.authorizationCode)
+        : null;
+      const name = input.fullName?.trim().slice(0, 100) || email.split('@')[0] || 'Mindkeep user';
+      user = await prisma.user.create({
+        data: {
+          name,
+          email,
+          appleId: identity.sub,
+          appleRefreshToken: refresh,
+          timezone: input.timezone,
+          role: shouldBeAdmin(email) ? UserRole.ADMIN : UserRole.USER,
+          emailVerified: true,
+          onboardingCompletedAt: null,
+          enabledModules: [],
+        },
+        select: { ...userRecordSelect, appleRefreshToken: true },
+      });
+    }
+
+    const { appleRefreshToken: _stored, ...record } = user;
+    void _stored;
+    const publicUser = toPublicUser(await ensureAdminRole(record));
+    assertMaintenanceAccess(publicUser);
+    return sessionFor(publicUser, issue);
+  }
+
+  /**
    * Links a Google account to the signed-in account (any Google email: the user proves both).
    * A Google account can belong to only one MindKeep account.
    */
@@ -639,7 +724,7 @@ export class AuthService {
   async deleteAccount(userId: string, input: DeleteAccountInput): Promise<void> {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, email: true, passwordHash: true },
+      select: { id: true, email: true, passwordHash: true, appleRefreshToken: true },
     });
 
     if (!user) {
@@ -660,6 +745,10 @@ export class AuthService {
     }
 
     await cancelStripeForDeletedUser(user.id);
+    // Apple requires revoking Sign in with Apple when the account is deleted (best effort).
+    if (user.appleRefreshToken) {
+      await revokeAppleRefreshToken(user.appleRefreshToken);
+    }
     try {
       await prisma.$transaction(
         async (tx) => {

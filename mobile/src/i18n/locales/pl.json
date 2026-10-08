@@ -666,7 +666,9 @@
       "invalidLoginCode": "Ten kod jest niepoprawny lub wygasł.",
       "googleAccountInUse": "To konto Google jest już połączone z innym kontem MindKeep.",
       "googleAlreadyLinked": "Połączone jest już inne konto Google. Najpierw je odłącz.",
-      "passwordRequired": "Najpierw ustaw hasło, aby nie stracić dostępu do konta."
+      "passwordRequired": "Najpierw ustaw hasło, aby nie stracić dostępu do konta.",
+      "appleUnavailable": "Nie udało się zalogować przez Apple. Spróbuj ponownie.",
+      "appleEmailMissing": "Apple nie przekazało e-maila. Spróbuj ponownie lub użyj innej metody logowania."
     },
     "checkEmailTitle": "Sprawdź e-mail",
     "checkEmailBody": "Wysłaliśmy link na {{email}}. Konto powstanie dopiero po potwierdzeniu.",

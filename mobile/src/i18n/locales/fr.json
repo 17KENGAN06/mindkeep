@@ -666,7 +666,9 @@
       "invalidLoginCode": "Ce code est incorrect ou a expiré.",
       "googleAccountInUse": "Ce compte Google est déjà lié à un autre compte MindKeep.",
       "googleAlreadyLinked": "Un autre compte Google est déjà connecté. Déconnectez-le d’abord.",
-      "passwordRequired": "Définissez d’abord un mot de passe pour ne pas perdre l’accès à votre compte."
+      "passwordRequired": "Définissez d’abord un mot de passe pour ne pas perdre l’accès à votre compte.",
+      "appleUnavailable": "Connexion avec Apple impossible. Réessayez.",
+      "appleEmailMissing": "Apple n’a pas transmis d’e-mail. Réessayez ou utilisez un autre mode de connexion."
     },
     "checkEmailTitle": "Vérifie tes e-mails",
     "checkEmailBody": "Nous avons envoyé un lien à {{email}}. Le compte n’existe qu’après confirmation.",

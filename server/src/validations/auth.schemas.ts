@@ -87,6 +87,15 @@ export const googleLoginSchema = z
     path: ['credential'],
   });
 
+/** Sign in with Apple from the iOS app (identity token + one-time authorization code). */
+export const appleLoginSchema = z.object({
+  identityToken: z.string().min(100).max(10_000),
+  authorizationCode: z.string().trim().min(10).max(1000).optional(),
+  /** Apple shares the name only on the very first sign-in. */
+  fullName: z.string().trim().max(100).optional(),
+  timezone: timezoneSchema.default('Europe/Helsinki'),
+});
+
 /** Link Google to the signed-in account: a web credential, or a native code + flow secret. */
 export const googleLinkSchema = z
   .object({
@@ -175,6 +184,7 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export type LoginCodeInput = z.infer<typeof loginCodeSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
 export type GoogleLinkInput = z.infer<typeof googleLinkSchema>;
+export type AppleLoginInput = z.infer<typeof appleLoginSchema>;
 export type GoogleFinishInput = z.infer<typeof googleFinishSchema>;
 export type GoogleMobileStartInput = z.infer<typeof googleMobileStartSchema>;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;

@@ -666,7 +666,9 @@
       "invalidLoginCode": "Dieser Code ist falsch oder abgelaufen.",
       "googleAccountInUse": "Dieses Google-Konto ist bereits mit einem anderen MindKeep-Konto verbunden.",
       "googleAlreadyLinked": "Ein anderes Google-Konto ist bereits verbunden. Trenne es zuerst.",
-      "passwordRequired": "Lege zuerst ein Passwort fest, damit du den Zugang nicht verlierst."
+      "passwordRequired": "Lege zuerst ein Passwort fest, damit du den Zugang nicht verlierst.",
+      "appleUnavailable": "Anmeldung mit Apple fehlgeschlagen. Bitte versuche es erneut.",
+      "appleEmailMissing": "Apple hat keine E-Mail übermittelt. Versuche es erneut oder nutze eine andere Anmeldung."
     },
     "checkEmailTitle": "Prüfe deine E-Mail",
     "checkEmailBody": "Wir haben einen Link an {{email}} gesendet. Das Konto entsteht erst nach der Bestätigung.",

@@ -1,7 +1,14 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { AppState } from 'react-native';
-import { authApi, type GoogleLoginPayload, type LoginCodePayload, type LoginPayload, type RegisterPayload } from '../../api/auth';
+import {
+  authApi,
+  type AppleLoginPayload,
+  type GoogleLoginPayload,
+  type LoginCodePayload,
+  type LoginPayload,
+  type RegisterPayload,
+} from '../../api/auth';
 import { ApiError, NetworkError, refreshAccessToken } from '../../api/client';
 import type { User } from '../../types/auth';
 import { AuthContext } from './auth-context';
@@ -120,6 +127,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [persistUser],
   );
 
+  const appleLogin = useCallback(
+    async (payload: AppleLoginPayload) => {
+      const result = await authApi.appleLogin(payload);
+      return persistUser(result.user, result.token, result.refreshToken);
+    },
+    [persistUser],
+  );
+
   const logout = useCallback(async () => {
     const refreshToken = (await getStoredRefreshToken()) ?? undefined;
     try {
@@ -170,12 +185,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       confirmLogin,
       register,
       googleLogin,
+      appleLogin,
       completeOnboarding,
       updateTimezone,
       updateWorkspace,
       logout,
     }),
-    [completeOnboarding, confirmLogin, connectionError, googleLogin, login, logout, meQuery.isFetching, meQuery.isLoading, register, retrySession, updateTimezone, updateWorkspace, user],
+    [appleLogin, completeOnboarding, confirmLogin, connectionError, googleLogin, login, logout, meQuery.isFetching, meQuery.isLoading, register, retrySession, updateTimezone, updateWorkspace, user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

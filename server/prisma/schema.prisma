@@ -92,6 +92,9 @@ model User {
   email        String   @unique
   passwordHash String?
   googleId     String?  @unique
+  /// Sign in with Apple: stable user id (sub) and the refresh token needed to revoke it on account deletion
+  appleId      String?  @unique
+  appleRefreshToken String?
   timezone     String   @default("Europe/Helsinki")
   role         UserRole @default(USER)
   emailVerified Boolean @default(true)

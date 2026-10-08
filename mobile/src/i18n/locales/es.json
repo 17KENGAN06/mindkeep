@@ -666,7 +666,9 @@
       "invalidLoginCode": "Ese código es incorrecto o ha caducado.",
       "googleAccountInUse": "Esta cuenta de Google ya está conectada a otra cuenta de MindKeep.",
       "googleAlreadyLinked": "Ya hay otra cuenta de Google conectada. Desconéctala primero.",
-      "passwordRequired": "Crea primero una contraseña para no perder el acceso a tu cuenta."
+      "passwordRequired": "Crea primero una contraseña para no perder el acceso a tu cuenta.",
+      "appleUnavailable": "No se pudo iniciar sesión con Apple. Inténtalo de nuevo.",
+      "appleEmailMissing": "Apple no compartió un correo. Inténtalo de nuevo o usa otro método."
     },
     "checkEmailTitle": "Revisa tu correo",
     "checkEmailBody": "Enviamos un enlace a {{email}}. La cuenta se crea solo al confirmarlo.",

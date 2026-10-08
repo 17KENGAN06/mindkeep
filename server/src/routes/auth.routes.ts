@@ -19,6 +19,7 @@ import {
   forgotPasswordSchema,
   googleFinishSchema,
   googleLoginSchema,
+  appleLoginSchema,
   googleLinkSchema,
   googleMobileStartSchema,
   loginCodeSchema,
@@ -149,6 +150,13 @@ authRouter.post(
   requireAuth,
   validate(onboardingSchema),
   asyncHandler((req, res) => authController.completeOnboarding(req, res)),
+);
+
+authRouter.post(
+  '/apple',
+  googleAuthRateLimit,
+  validate(appleLoginSchema),
+  asyncHandler((req, res) => authController.appleLogin(req, res)),
 );
 
 authRouter.post(

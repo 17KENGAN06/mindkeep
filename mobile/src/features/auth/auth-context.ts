@@ -1,5 +1,11 @@
 import { createContext } from 'react';
-import type { GoogleLoginPayload, LoginCodePayload, LoginPayload, RegisterPayload } from '../../api/auth';
+import type {
+  AppleLoginPayload,
+  GoogleLoginPayload,
+  LoginCodePayload,
+  LoginPayload,
+  RegisterPayload,
+} from '../../api/auth';
 import type { User } from '../../types/auth';
 
 export type AuthContextValue = {
@@ -14,6 +20,8 @@ export type AuthContextValue = {
   confirmLogin: (payload: LoginCodePayload) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<{ pending: true }>;
   googleLogin: (payload: GoogleLoginPayload) => Promise<User>;
+  /** Sign in with Apple (iOS only). */
+  appleLogin: (payload: AppleLoginPayload) => Promise<User>;
   completeOnboarding: (modules: string[], nutritionMacros?: boolean) => Promise<User>;
   updateTimezone: (timezone: string) => Promise<User>;
   updateWorkspace: (payload: { timezone?: string; enabledModules?: string[] }) => Promise<User>;

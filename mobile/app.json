@@ -27,6 +27,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "cloud.mindkeep.app",
+      "usesAppleSignIn": true,
       "buildNumber": "1",
       "infoPlist": {
         "CFBundleDisplayName": "MindKeep",
@@ -75,6 +76,7 @@
       "expo-secure-store",
       "expo-localization",
       "expo-web-browser",
+      "expo-apple-authentication",
       [
         "expo-image-picker",
         {

@@ -25,6 +25,13 @@ export type RegisterPayload = {
   website?: string;
 };
 
+export type AppleLoginPayload = {
+  identityToken: string;
+  authorizationCode?: string;
+  fullName?: string;
+  timezone?: string;
+};
+
 export type GoogleLoginPayload = {
   credential?: string;
   code?: string;
@@ -43,6 +50,7 @@ export const authApi = {
     apiClient.post<{ authorizeUrl: string; flowSecret: string }>('/api/auth/google/mobile-start', {
       returnUrl,
     }),
+  appleLogin: (payload: AppleLoginPayload) => apiClient.post<AuthResponse>('/api/auth/apple', payload),
   googleLogin: (payload: GoogleLoginPayload) =>
     apiClient.post<AuthResponse>('/api/auth/google', payload),
   forgotPassword: (payload: { email: string; locale?: string; botToken?: string; website?: string }) =>
