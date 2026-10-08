@@ -26,7 +26,8 @@
     "themeDark": "Tumma",
     "statistics": "Tilastot",
     "admin": "Admin",
-    "blog": "Blogi"
+    "blog": "Blogi",
+    "close": "Sulje"
   },
   "drafts": {
     "title": "Hylätäänkö muutokset?",

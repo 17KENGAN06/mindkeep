@@ -26,7 +26,8 @@
     "themeDark": "Scuro",
     "statistics": "Statistiche",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "close": "Chiudi"
   },
   "drafts": {
     "title": "Scartare le modifiche?",

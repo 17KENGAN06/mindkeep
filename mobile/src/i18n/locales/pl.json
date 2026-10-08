@@ -26,7 +26,8 @@
     "themeDark": "Ciemny",
     "statistics": "Statystyki",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "close": "Zamknij"
   },
   "drafts": {
     "title": "Odrzucić zmiany?",

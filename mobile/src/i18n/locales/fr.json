@@ -26,7 +26,8 @@
     "themeDark": "Sombre",
     "statistics": "Statistiques",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "close": "Fermer"
   },
   "drafts": {
     "title": "Abandonner les modifications ?",

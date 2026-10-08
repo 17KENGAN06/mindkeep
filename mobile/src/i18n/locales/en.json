@@ -26,7 +26,8 @@
     "themeDark": "Dark",
     "statistics": "Statistics",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "close": "Close"
   },
   "drafts": {
     "title": "Discard changes?",

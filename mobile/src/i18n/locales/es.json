@@ -26,7 +26,8 @@
     "themeDark": "Oscuro",
     "statistics": "Estadísticas",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "close": "Cerrar"
   },
   "drafts": {
     "title": "¿Descartar cambios?",

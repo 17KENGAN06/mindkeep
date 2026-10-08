@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import {
-  Modal,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SheetModal } from '../../components/SheetModal';
 import { useTranslation } from 'react-i18next';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../auth/mapAuthError';
@@ -70,7 +68,6 @@ export function CalorieHelperModal({
 }: CalorieHelperModalProps) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
   const estimateCalories = useEstimateCalories();
   const [draft, setDraft] = useState<Draft>(() => emptyDraft(settings, currentWeightKg));
   const [estimate, setEstimate] = useState<CalorieEstimate | null>(null);
@@ -180,31 +177,12 @@ export function CalorieHelperModal({
     : '';
 
   return (
-    // Full-screen backdrop on edge-to-edge Android (no undimmed strip under the status bar); the
-    // sheet keeps clear of the status bar at the top and the system navigation bar at the bottom.
-    <Modal
+    <SheetModal
       visible={visible}
-      animationType="slide"
-      transparent
-      statusBarTranslucent
-      navigationBarTranslucent
-      onRequestClose={onClose}
+      title={t('fuel.helper.title')}
+      subtitle={t('fuel.helper.lead')}
+      onClose={onClose}
     >
-      <View style={styles.backdrop}>
-        <View
-          style={[
-            styles.sheet,
-            {
-              backgroundColor: colors.panel,
-              borderColor: colors.line,
-              marginTop: insets.top + 16,
-              paddingBottom: insets.bottom,
-            },
-          ]}
-        >
-          <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
-            <Text style={[styles.title, { color: colors.ink }]}>{t('fuel.helper.title')}</Text>
-            <Text style={[styles.lead, { color: colors.muted }]}>{t('fuel.helper.lead')}</Text>
 
             <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.helper.sex')}</Text>
             <View style={styles.pillRow}>
@@ -295,23 +273,11 @@ export function CalorieHelperModal({
               />
             ) : null}
             <AppButton variant="ghost" label={t('common.cancel')} onPress={onClose} />
-          </ScrollView>
-        </View>
-      </View>
-    </Modal>
+    </SheetModal>
   );
 }
 
 const styles = StyleSheet.create({
-  backdrop: { backgroundColor: 'rgba(7,17,13,0.55)', flex: 1, justifyContent: 'flex-end' },
-  sheet: {
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    borderWidth: 1,
-    flexShrink: 1,
-  },
-  body: { gap: 10, padding: 20, paddingBottom: 32 },
-  title: { fontSize: 20, fontWeight: '700' },
   lead: { fontSize: 13, lineHeight: 18 },
   label: { fontSize: 13, fontWeight: '600' },
   field: { gap: 6 },

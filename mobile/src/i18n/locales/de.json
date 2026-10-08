@@ -26,7 +26,8 @@
     "themeDark": "Dunkel",
     "statistics": "Statistik",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "close": "Schließen"
   },
   "drafts": {
     "title": "Änderungen verwerfen?",
