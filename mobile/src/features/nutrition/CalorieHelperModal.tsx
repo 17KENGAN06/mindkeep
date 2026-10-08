@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../auth/mapAuthError';
@@ -69,6 +70,7 @@ export function CalorieHelperModal({
 }: CalorieHelperModalProps) {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const estimateCalories = useEstimateCalories();
   const [draft, setDraft] = useState<Draft>(() => emptyDraft(settings, currentWeightKg));
   const [estimate, setEstimate] = useState<CalorieEstimate | null>(null);
@@ -178,9 +180,28 @@ export function CalorieHelperModal({
     : '';
 
   return (
-    <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
+    // Full-screen backdrop on edge-to-edge Android (no undimmed strip under the status bar); the
+    // sheet keeps clear of the status bar at the top and the system navigation bar at the bottom.
+    <Modal
+      visible={visible}
+      animationType="slide"
+      transparent
+      statusBarTranslucent
+      navigationBarTranslucent
+      onRequestClose={onClose}
+    >
       <View style={styles.backdrop}>
-        <View style={[styles.sheet, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+        <View
+          style={[
+            styles.sheet,
+            {
+              backgroundColor: colors.panel,
+              borderColor: colors.line,
+              marginTop: insets.top + 16,
+              paddingBottom: insets.bottom,
+            },
+          ]}
+        >
           <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
             <Text style={[styles.title, { color: colors.ink }]}>{t('fuel.helper.title')}</Text>
             <Text style={[styles.lead, { color: colors.muted }]}>{t('fuel.helper.lead')}</Text>
@@ -287,7 +308,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     borderWidth: 1,
-    maxHeight: '92%',
+    flexShrink: 1,
   },
   body: { gap: 10, padding: 20, paddingBottom: 32 },
   title: { fontSize: 20, fontWeight: '700' },

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useMemo } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { needsOnboarding, userHasModule } from '../config/appModules';
 import { mapAuthError } from '../features/auth/mapAuthError';
@@ -65,6 +66,9 @@ function AppTabs() {
   const showReview = userHasModule(user, 'review');
   const showTasks = userHasModule(user, 'tasks');
   const showFuel = userHasModule(user, 'nutrition');
+  // Taller bar with bigger icons and labels; the system navigation bar stays below it.
+  const insets = useSafeAreaInsets();
+  const bottomInset = Math.max(insets.bottom, 8);
 
   return (
     <Tabs.Navigator
@@ -78,9 +82,13 @@ function AppTabs() {
           tabBarStyle: {
             backgroundColor: colors.panel,
             borderTopColor: colors.line,
+            height: 64 + bottomInset,
+            paddingTop: 8,
+            paddingBottom: bottomInset,
           },
-          tabBarIcon: ({ color, size, focused }) => (
-            <AppIcon name={focused ? icons.active : icons.idle} color={color} size={size} />
+          tabBarLabelStyle: { fontSize: 12, fontWeight: '600', marginTop: 2 },
+          tabBarIcon: ({ color, focused }) => (
+            <AppIcon name={focused ? icons.active : icons.idle} color={color} size={26} />
           ),
         };
       }}
