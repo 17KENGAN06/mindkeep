@@ -86,7 +86,7 @@ All apps call the same REST API (`/api/*`, production `https://api.mindkeep.clou
 - **Browser vs native** is decided in `utils/authSession.ts`: request with an allowed browser `Origin` → cookie only, 7-day access token. No allowed Origin → JSON `{ user, token, refreshToken }`, **15-minute access token + rotating refresh token** (hash stored in `AuthSession.refreshTokenHash`).
 - Mobile stores tokens in SecureStore (Keychain/Keystore) — `mobile/src/features/auth/session.ts`.
 - Password login is two-step: `POST /auth/login` validates the password and **emails a one-time code**; `POST /auth/login/code` issues the session. Registration also uses an emailed code (Resend). Resend outage = no email login.
-- Google: web uses Google Identity; mobile opens `/api/auth/google/start?returnUrl=…` in the system browser → `/google/callback` → returns to `mindkeep://google` (or `exp://` in Expo Go) with a code → app exchanges it. Uses `GoogleSignInTicket`.
+- Google: web uses Google Identity. Mobile calls `POST /api/auth/google/mobile-start` (gets the authorize URL + a one-time flow secret) → system browser → `/google/callback` → `/google/finish` → returns to `mindkeep://google?code=…` → app exchanges code + flow secret at `POST /api/auth/google`. Uses `GoogleSignInTicket`. Production accepts only `mindkeep://` return URLs, so **Google sign-in cannot be tested in Expo Go against production** (the app shows `auth.errors.googleNeedsApp`); test it in an APK. Refused return URLs are logged by scheme. Expo Go also sends `okhttp/4.12.0`, so the user agent does not tell Expo Go from the APK.
 - Bot protection: `GET /auth/challenge` token required on signup flows.
 - CSRF (`requireSameOrigin`): unsafe methods need an allowed Origin, or no Origin + `X-Requested-With: learning-reminder`. Cron and Stripe webhook are exempt.
 - Admin: `role=ADMIN` or email in `ADMIN_EMAILS` (auto-promoted). `MAINTENANCE_MODE=true` locks out non-admins.
@@ -107,7 +107,7 @@ All apps call the same REST API (`/api/*`, production `https://api.mindkeep.clou
 - Webhook `POST /api/billing/webhook` (raw body, signature verified, idempotent via `StripeEvent`). Events: `checkout.session.completed`, `customer.subscription.created|updated|deleted`, `invoice.paid`, `invoice.payment_failed`.
 - Production only accepts **live** keys (`sk_live_`/`rk_live_`); test keys are ignored when `NODE_ENV=production`.
 - Native clients get return URLs under `CLIENT_URL/billing/return` (`X-Mindkeep-Client: native`).
-- Mobile `features/billing/BillingCard.tsx` currently shows prices and opens Stripe Checkout in the browser — see store blockers.
+- Mobile `features/billing/BillingCard.tsx` shows no prices; it links to the website plans page and the Stripe portal, and store builds hide both (see store blocker 1).
 - `planForPriceId` defaults unknown price IDs to `PRO` — be careful when changing prices.
 
 ## Deployment
