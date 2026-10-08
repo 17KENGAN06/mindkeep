@@ -150,7 +150,7 @@ Templates: `.env.example`, `server/.env.example`, `client/.env.example`, `mobile
 
 - No CI; client and mobile have no tests.
 - Duplicated types, API clients and i18n between client and mobile → drift.
-- Two lockfiles (root + stale `mobile/`), custom Metro resolver. `npx expo install --check` reports `expo`/`expo-linking` patch updates, but installing just those nests a second copy of `expo-modules-core`/`expo-constants`/`@expo/cli` under `mobile/node_modules` — upgrade all `expo-*` packages together and check for duplicates (`npm ls expo-modules-core`).
+- Two lockfiles (root + stale `mobile/`), custom Metro resolver. `npx expo install --check` reports `expo`/`expo-linking` patch updates, but installing just those nests a second copy of `expo-modules-core`/`expo-constants`/`@expo/cli` under `mobile/node_modules` — and `npm install expo@~57.0.27 expo-linking@~57.0.12` + `npm dedupe` (crashes with ERR_INVALID_ARG_TYPE) leaves the lockfile recording nested copies that `npm ci` on EAS would install. Tried and reverted on 2026-10-08; stay on expo 57.0.22 (builds and works) and do the bump together with the next SDK upgrade on a regenerated lockfile.
 - `planForPriceId` falls back to `PRO` for unknown prices (now logs "Unknown Stripe price treated as Pro" with the price id — check Railway logs before changing the fallback).
 - Mixed TypeScript versions (client ~6.0, server/mobile ~5.9).
 - Docs: README and `docs/store-release.md` were corrected on 2026-10-07; `docs/ios-app.md` is a historical plan with a status note at the top — trust the code and this file over it.
