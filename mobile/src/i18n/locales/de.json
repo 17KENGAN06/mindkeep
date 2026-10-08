@@ -1190,11 +1190,21 @@
         "meals": "Free speichert Mahlzeiten für heute und 7 Tage.",
         "sessions": "Free: 2 Geräte."
       }
-    }
+    },
+    "cancelCta": "Verlängerung stoppen",
+    "cancelHint": "Zugang bis zum bereits bezahlten Datum. Resttage werden nicht erstattet. Ausnahmen nur in der Erstattungsrichtlinie.",
+    "cancelTitle": "Verlängerung ohne Erstattung stoppen?",
+    "cancelConfirm": "Zugang bleibt bis {{date}}. Danach Free. Wir erstatten keine Resttage, keine Meinungsänderung und keinen kaum genutzten Tarif. Das ist keine Stripe-Erstattung.",
+    "cancelConfirmCta": "Verlängerung stoppen, kein Geld zurück",
+    "cancelDone": "Verlängerung gestoppt. Zugang bis zum bezahlten Datum.",
+    "resumeCta": "Abo behalten",
+    "resumeDone": "Verlängerung ist wieder an.",
+    "pendingSwitch": "{{plan}} beginnt am {{date}}. Bis dahin bleibt der bezahlte Plan. Ungenutzte Zeit wird nicht erstattet."
   },
   "plans": {
     "viewPlans": "Pläne ansehen",
-    "accountLead": "Plus: keine Limits, Essen und Geld trägst du selbst ein. Pro: dasselbe, und ein Foto füllt Mahlzeiten und Belege."
+    "accountLead": "Plus: keine Limits, Essen und Geld trägst du selbst ein. Pro: dasselbe, und ein Foto füllt Mahlzeiten und Belege.",
+    "periodEnd": "Ende dieser Periode"
   },
   "home": {
     "pricing": {

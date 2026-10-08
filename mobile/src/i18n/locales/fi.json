@@ -1190,11 +1190,21 @@
         "meals": "Free tallentaa ateriat tältä päivältä ja 7 päivältä.",
         "sessions": "Free: 2 laitetta."
       }
-    }
+    },
+    "cancelCta": "Pysäytä uusiminen",
+    "cancelHint": "Käyttöoikeus jatkuu jo maksettuun päivään. Jäljellä olevia päiviä ei palauteta. Poikkeukset: palautuskäytäntö.",
+    "cancelTitle": "Pysäytetäänkö uusiminen ilman palautusta?",
+    "cancelConfirm": "Käyttöoikeus jatkuu {{date}} asti. Sitten Free. Emme palauta jäljellä olevia päiviä, mielenmuutosta emmekä vähän käytettyä pakettia. Tämä ei ole Stripe-palautus.",
+    "cancelConfirmCta": "Pysäytä uusiminen, ei rahaa takaisin",
+    "cancelDone": "Uusiminen pysäytetty. Käyttöoikeus maksettuun päivään.",
+    "resumeCta": "Pidä tilaus",
+    "resumeDone": "Uusiminen on taas päällä.",
+    "pendingSwitch": "{{plan}} alkaa {{date}}. Siihen asti säilyy jo maksettu paketti. Käyttämätöntä aikaa ei palauteta."
   },
   "plans": {
     "viewPlans": "Katso tilaukset",
-    "accountLead": "Plus: ei rajoja, ateriat ja kulut syötät itse. Pro: sama, ja kuva täyttää ateriat ja kuitit."
+    "accountLead": "Plus: ei rajoja, ateriat ja kulut syötät itse. Pro: sama, ja kuva täyttää ateriat ja kuitit.",
+    "periodEnd": "tämän kauden lopussa"
   },
   "home": {
     "pricing": {

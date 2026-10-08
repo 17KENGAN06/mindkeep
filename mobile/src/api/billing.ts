@@ -13,6 +13,9 @@ export type BillingStatus = {
   planInterval: 'MONTH' | 'YEAR' | null;
   planExpiresAt: string | null;
   cancelAtPeriodEnd: boolean;
+  /** Scheduled Plus↔Pro switch at the end of the paid period (older servers omit it). */
+  pendingPlan?: 'PLUS' | 'PRO' | null;
+  pendingChangeAt?: string | null;
   hasStripeCustomer: boolean;
   subscribed: boolean;
   betaTester: boolean;
@@ -35,4 +38,6 @@ export const billingApi = {
     apiClient.post<{ url: string }>('/api/billing/checkout', { interval, plan }),
   portal: () => apiClient.post<{ url: string }>('/api/billing/portal'),
   sync: (sessionId: string) => apiClient.post<{ user: User }>('/api/billing/sync', { sessionId }),
+  cancel: () => apiClient.post<{ ok: true }>('/api/billing/cancel'),
+  resume: () => apiClient.post<{ ok: true }>('/api/billing/resume'),
 };

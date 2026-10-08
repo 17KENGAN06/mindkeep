@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import * as WebBrowser from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,7 @@ export function BillingCard() {
   const queryClient = useQueryClient();
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState<'portal' | null>(null);
+  const [busy, setBusy] = useState<'portal' | 'cancel' | 'resume' | null>(null);
 
   const statusQuery = useQuery({
     queryKey: ['billing', 'status'],
@@ -58,6 +58,36 @@ export function BillingCard() {
       const result = await billingApi.portal();
       await WebBrowser.openBrowserAsync(result.url);
       await refreshPlan(queryClient);
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const cancelSubscription = async () => {
+    setError(null);
+    setNotice(null);
+    setBusy('cancel');
+    try {
+      await billingApi.cancel();
+      await refreshPlan(queryClient);
+      setNotice(t('billing.cancelDone'));
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const resumeSubscription = async () => {
+    setError(null);
+    setNotice(null);
+    setBusy('resume');
+    try {
+      await billingApi.resume();
+      await refreshPlan(queryClient);
+      setNotice(t('billing.resumeDone'));
     } catch (caught) {
       setError(mapAuthError(caught, t));
     } finally {
@@ -136,6 +166,16 @@ export function BillingCard() {
       {status?.cancelAtPeriodEnd ? (
         <Text style={[styles.caption, { color: colors.ink }]}>{t('billing.cancelScheduled')}</Text>
       ) : null}
+      {status?.pendingPlan ? (
+        <Text style={[styles.caption, { color: colors.ink }]}>
+          {t('billing.pendingSwitch', {
+            plan: status.pendingPlan === 'PLUS' ? t('billing.plusLabel') : t('billing.proLabel'),
+            date: status.pendingChangeAt
+              ? new Date(status.pendingChangeAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
+              : expires ?? t('plans.periodEnd'),
+          })}
+        </Text>
+      ) : null}
       {status && !status.configured ? (
         <Text style={[styles.caption, { color: colors.muted }]}>{t('billing.unavailable')}</Text>
       ) : null}
@@ -151,6 +191,38 @@ export function BillingCard() {
           loading={busy === 'portal'}
           disabled={busy !== null}
           onPress={() => void openPortal()}
+        />
+      ) : null}
+
+      {/* Cancel / resume like the site's Account page; hidden in store builds with the other payment controls. */}
+      {showManage && subscribed && !status?.cancelAtPeriodEnd ? (
+        <>
+          <AppButton
+            variant="ghost"
+            label={t('billing.cancelCta')}
+            loading={busy === 'cancel'}
+            disabled={busy !== null}
+            onPress={() =>
+              Alert.alert(
+                t('billing.cancelTitle'),
+                t('billing.cancelConfirm', { date: expires ?? t('plans.periodEnd') }),
+                [
+                  { text: t('common.cancel'), style: 'cancel' },
+                  { text: t('billing.cancelConfirmCta'), style: 'destructive', onPress: () => void cancelSubscription() },
+                ],
+              )
+            }
+          />
+          <Text style={[styles.hint, { color: colors.muted }]}>{t('billing.cancelHint')}</Text>
+        </>
+      ) : null}
+      {showManage && subscribed && status?.cancelAtPeriodEnd ? (
+        <AppButton
+          variant="secondary"
+          label={t('billing.resumeCta')}
+          loading={busy === 'resume'}
+          disabled={busy !== null}
+          onPress={() => void resumeSubscription()}
         />
       ) : null}
 

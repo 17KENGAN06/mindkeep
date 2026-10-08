@@ -1190,11 +1190,21 @@
         "meals": "Free zapisuje posiłki z dziś i 7 dni.",
         "sessions": "Free: 2 urządzenia."
       }
-    }
+    },
+    "cancelCta": "Zatrzymaj odnawianie",
+    "cancelHint": "Dostęp do już opłaconej daty. Nie zwracamy pozostałych dni. Wyjątki: polityka zwrotów.",
+    "cancelTitle": "Zatrzymać odnawianie bez zwrotu?",
+    "cancelConfirm": "Dostęp zostaje do {{date}}. Potem Free. Nie zwracamy pozostałych dni, zmiany zdania ani planu, z którego prawie nie korzystano. To nie zwrot w Stripe.",
+    "cancelConfirmCta": "Zatrzymaj odnawianie, bez zwrotu pieniędzy",
+    "cancelDone": "Odnawianie zatrzymane. Dostęp do opłaconej daty.",
+    "resumeCta": "Zostaw subskrypcję",
+    "resumeDone": "Odnawianie znów włączone.",
+    "pendingSwitch": "{{plan}} zaczyna się {{date}}. Do wtedy zostaje opłacony plan. Niewykorzystany czas nie jest zwracany."
   },
   "plans": {
     "viewPlans": "Zobacz plany",
-    "accountLead": "Plus: bez limitów, posiłki i wydatki wpisujesz sam. Pro: to samo, a zdjęcie wypełnia posiłki i paragony."
+    "accountLead": "Plus: bez limitów, posiłki i wydatki wpisujesz sam. Pro: to samo, a zdjęcie wypełnia posiłki i paragony.",
+    "periodEnd": "końca tego okresu"
   },
   "home": {
     "pricing": {

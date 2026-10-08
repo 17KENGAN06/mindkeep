@@ -1190,11 +1190,21 @@
         "meals": "Free enregistre les repas d’aujourd’hui et des 7 derniers jours.",
         "sessions": "Free : 2 appareils."
       }
-    }
+    },
+    "cancelCta": "Arrêter le renouvellement",
+    "cancelHint": "L’accès reste jusqu’à la date déjà payée. Pas de remboursement des jours restants. Exceptions : politique de remboursement.",
+    "cancelTitle": "Arrêter le renouvellement sans remboursement ?",
+    "cancelConfirm": "L’accès reste jusqu’au {{date}}. Puis Free. Pas de remboursement des jours restants, d’un changement d’avis ou d’une offre peu utilisée. Ce n’est pas un remboursement Stripe.",
+    "cancelConfirmCta": "Arrêter le renouvellement, aucun remboursement",
+    "cancelDone": "Renouvellement arrêté. Accès jusqu’à la date payée.",
+    "resumeCta": "Garder l’abonnement",
+    "resumeDone": "Le renouvellement est de nouveau actif.",
+    "pendingSwitch": "{{plan}} commence le {{date}}. Jusque-là, l’offre déjà payée reste. Le temps non utilisé n’est pas remboursé."
   },
   "plans": {
     "viewPlans": "Voir les offres",
-    "accountLead": "Plus : sans plafonds, vous saisissez repas et dépenses. Pro : idem, et une photo remplit repas et tickets."
+    "accountLead": "Plus : sans plafonds, vous saisissez repas et dépenses. Pro : idem, et une photo remplit repas et tickets.",
+    "periodEnd": "la fin de cette période"
   },
   "home": {
     "pricing": {

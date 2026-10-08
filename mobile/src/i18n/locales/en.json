@@ -1190,11 +1190,21 @@
         "meals": "Free can log meals for today and the last 7 days.",
         "sessions": "Free includes 2 signed-in devices."
       }
-    }
+    },
+    "cancelCta": "Stop renewal",
+    "cancelHint": "You keep access until the date you already paid for. We do not refund remaining days. See the refund policy for the only exceptional cases.",
+    "cancelTitle": "Stop renewal without a refund?",
+    "cancelConfirm": "Access stays until {{date}}. After that the account returns to Free. We do not refund unused days, a change of mind, or a plan you did not use. This is not a Stripe refund.",
+    "cancelConfirmCta": "Stop renewal, keep no money back",
+    "cancelDone": "Renewal is stopped. Access stays until the paid date.",
+    "resumeCta": "Keep the subscription",
+    "resumeDone": "Renewal is on again.",
+    "pendingSwitch": "{{plan}} starts on {{date}}. Until then you keep the plan you already paid for. Unused time is not refunded."
   },
   "plans": {
     "viewPlans": "See all plans",
-    "accountLead": "Plus: no caps, you type meals and money. Pro: the same, and a photo fills meals and receipts."
+    "accountLead": "Plus: no caps, you type meals and money. Pro: the same, and a photo fills meals and receipts.",
+    "periodEnd": "the end of this period"
   },
   "home": {
     "pricing": {

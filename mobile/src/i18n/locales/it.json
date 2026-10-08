@@ -1190,11 +1190,21 @@
         "meals": "Free registra i pasti di oggi e degli ultimi 7 giorni.",
         "sessions": "Free: 2 dispositivi."
       }
-    }
+    },
+    "cancelCta": "Ferma il rinnovo",
+    "cancelHint": "L’accesso resta fino alla data già pagata. Non rimborsiamo i giorni restanti. Eccezioni: policy rimborsi.",
+    "cancelTitle": "Fermare il rinnovo senza rimborso?",
+    "cancelConfirm": "L’accesso resta fino al {{date}}. Poi Free. Non rimborsiamo giorni restanti, un ripensamento o un piano quasi inutilizzato. Non è un rimborso Stripe.",
+    "cancelConfirmCta": "Ferma il rinnovo, nessun rimborso",
+    "cancelDone": "Rinnovo fermato. Accesso fino alla data pagata.",
+    "resumeCta": "Tieni l’abbonamento",
+    "resumeDone": "Il rinnovo è di nuovo attivo.",
+    "pendingSwitch": "{{plan}} inizia il {{date}}. Fino ad allora resta il piano già pagato. Il tempo non usato non viene rimborsato."
   },
   "plans": {
     "viewPlans": "Vedi i piani",
-    "accountLead": "Plus: senza tetti, pasti e spese li inserisci tu. Pro: lo stesso, e una foto riempie pasti e scontrini."
+    "accountLead": "Plus: senza tetti, pasti e spese li inserisci tu. Pro: lo stesso, e una foto riempie pasti e scontrini.",
+    "periodEnd": "la fine di questo periodo"
   },
   "home": {
     "pricing": {
