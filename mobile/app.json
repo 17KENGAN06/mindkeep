@@ -4,7 +4,7 @@
     "slug": "mindkeep",
     "owner": "17kengan06",
     "scheme": "mindkeep",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "primaryColor": "#8eefb4",
@@ -45,7 +45,7 @@
     },
     "android": {
       "package": "cloud.mindkeep.app",
-      "versionCode": 2,
+      "versionCode": 3,
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "backgroundColor": "#07110d",
