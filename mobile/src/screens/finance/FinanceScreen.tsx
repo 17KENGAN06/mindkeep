@@ -16,6 +16,13 @@ import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton, Badge } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
+import { useAuth } from '../../features/auth/useAuth';
+import { hasAutomation } from '../../features/billing/planLimit';
+import { FinanceScanReceipt } from '../../features/finance/FinanceScanReceipt';
+import { env } from '../../config/env';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { MoreStackParamList } from '../../navigation/types';
 import {
   currencyLabel,
   FINANCE_CURRENCIES,
@@ -32,6 +39,7 @@ import {
   withBudgetCurrencies,
 } from '../../features/finance/financeUtils';
 import {
+  useBulkCreateFinanceOperations,
   useCreateFinanceCategory,
   useCreateFinanceOperation,
   useDeleteFinanceCategory,
@@ -219,6 +227,11 @@ export function FinanceScreen() {
   const updateCategory = useUpdateFinanceCategory();
   const deleteCategory = useDeleteFinanceCategory();
   const createOperation = useCreateFinanceOperation();
+  const bulkCreate = useBulkCreateFinanceOperations();
+  const { user } = useAuth();
+  const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
+  // Plans live on Account; store builds have no purchase path (see config/env.ts).
+  const onNeedPro = env.storeBuild ? undefined : () => navigation.navigate('Account');
   const deleteOperation = useDeleteFinanceOperation();
   const updateSettings = useUpdateFinanceSettings();
   const [savingLimit, setSavingLimit] = useState<string | null>(null);
@@ -616,6 +629,17 @@ export function FinanceScreen() {
 
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('finance.addOperation')}</Text>
+          <FinanceScanReceipt
+            canScan={hasAutomation(user)}
+            fallbackCurrency={currency}
+            defaultMoneyKind={moneyKind}
+            categories={categories}
+            saving={bulkCreate.isPending}
+            onNeedPro={onNeedPro}
+            onSave={async (operations) => {
+              await bulkCreate.mutateAsync(operations);
+            }}
+          />
           <Text style={[styles.label, { color: colors.muted }]}>{t('finance.moneyKind.label')}</Text>
           <View style={styles.pair}>
             <View style={styles.pairSlot}>

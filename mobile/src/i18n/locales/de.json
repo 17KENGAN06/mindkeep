@@ -577,6 +577,41 @@
       "addHint": "Wähle eine Währung und ein monatliches Ausgabelimit. Du kannst es vor der ersten Buchung setzen.",
       "allSpending": "Der Balken zählt alle Ausgaben in dieser Währung, bar und Karte.",
       "invalid": "Gib einen gültigen Budgetbetrag ein"
+    },
+    "scan": {
+      "button": "Beleg scannen",
+      "buttonShort": "Scan",
+      "gallery": "Fotos",
+      "hint": "Fotografiere einen Beleg. Dann Bargeld oder Karte wählen, Kategorie, speichern.",
+      "desktopHint": "Am Computer lädst du ein Belegfoto im Fenster hoch, prüfst die Buchungen und speicherst.",
+      "proOnly": "Belegscan ist in Pro enthalten.",
+      "phoneOnly": "Nur auf dem Telefon verfügbar.",
+      "phoneBadge": "Nur Telefon",
+      "analyzing": "Foto wird gelesen…",
+      "prepareTitle": "Beleg hochladen",
+      "prepareLead": "Zieh ein Foto eines Papierbelegs oder einen Bank-Screenshot hierher, dann lies die Buchungen.",
+      "prepareUpload": "Foto hochladen",
+      "prepareDrop": "Datei hierher ziehen oder klicken zum Auswählen.",
+      "prepareSubmit": "Beleg lesen",
+      "removePhoto": "Foto entfernen",
+      "reviewTitle": "Vor dem Hinzufügen prüfen",
+      "reviewHint": "Auf dem Beleg steht meist nicht, ob Bargeld oder Karte. Den Kaufnamen kannst du ändern, dann Bargeld oder Karte und die Kategorie wählen und speichern.",
+      "category": "Kategorie",
+      "moneyKind": "Bargeld oder Karte",
+      "card": "Karte",
+      "item": "Was gekauft wurde",
+      "add": "Buchungen hinzufügen",
+      "cancel": "Verwerfen",
+      "privacy": "Das Foto dient nur zum Auslesen der Buchungen und wird nicht gespeichert.",
+      "errors": {
+        "unavailable": "Belegscan ist noch nicht verbunden.",
+        "proRequired": "Belegscan ist in Pro enthalten.",
+        "notRecognized": "Buchungen auf dem Foto konnten nicht gelesen werden.",
+        "tooLarge": "Das Foto ist zu groß.",
+        "badType": "Bitte JPEG, PNG oder WebP verwenden.",
+        "invalid": "Zuerst ein Foto wählen.",
+        "failed": "Das Foto konnte nicht gelesen werden. Bitte erneut versuchen."
+      }
     }
   },
   "auth": {

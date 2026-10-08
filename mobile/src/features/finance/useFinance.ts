@@ -79,6 +79,17 @@ export function useCreateFinanceOperation() {
   });
 }
 
+export function useBulkCreateFinanceOperations() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (operations: CreateOperationPayload[]) => financeApi.bulkCreateOperations({ operations }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: financeKey });
+      touchPlanUsage(queryClient);
+    },
+  });
+}
+
 export function useDeleteFinanceOperation() {
   const queryClient = useQueryClient();
   return useMutation({

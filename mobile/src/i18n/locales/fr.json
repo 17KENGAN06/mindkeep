@@ -577,6 +577,41 @@
       "addHint": "Choisissez une devise et un plafond mensuel. Vous pouvez le fixer avant la première opération.",
       "allSpending": "La barre compte toutes les dépenses de cette devise, espèces et carte.",
       "invalid": "Saisissez un montant de budget valide"
+    },
+    "scan": {
+      "button": "Scanner un ticket",
+      "buttonShort": "Scan",
+      "gallery": "Photos",
+      "hint": "Photographie un ticket. Puis choisis espèces ou carte, une catégorie, et ajoute.",
+      "desktopHint": "Sur ordinateur, importez une photo de ticket dans la fenêtre, vérifiez les opérations et enregistrez.",
+      "proOnly": "Le scan de ticket est inclus dans Pro.",
+      "phoneOnly": "Disponible uniquement sur téléphone.",
+      "phoneBadge": "Téléphone",
+      "analyzing": "Lecture de la photo…",
+      "prepareTitle": "Importer un ticket",
+      "prepareLead": "Déposez une photo de ticket papier ou une capture bancaire, puis lisez les opérations.",
+      "prepareUpload": "Importer une photo",
+      "prepareDrop": "Déposez un fichier ici ou cliquez pour choisir.",
+      "prepareSubmit": "Lire le ticket",
+      "removePhoto": "Retirer la photo",
+      "reviewTitle": "Vérifier avant d’ajouter",
+      "reviewHint": "Le ticket ne dit généralement pas si c’est espèces ou carte. Vous pouvez corriger ce qui a été acheté, puis choisir espèces ou carte, une catégorie, et enregistrer.",
+      "category": "Catégorie",
+      "moneyKind": "Espèces ou carte",
+      "card": "Carte",
+      "item": "Ce qui a été acheté",
+      "add": "Ajouter les opérations",
+      "cancel": "Ignorer",
+      "privacy": "La photo sert uniquement à lire les opérations et n’est pas enregistrée.",
+      "errors": {
+        "unavailable": "Le scan n’est pas encore branché.",
+        "proRequired": "Le scan de ticket est inclus dans Pro.",
+        "notRecognized": "Impossible de lire les opérations sur cette photo.",
+        "tooLarge": "La photo est trop lourde.",
+        "badType": "Utilisez JPEG, PNG ou WebP.",
+        "invalid": "Choisis d’abord une photo.",
+        "failed": "Impossible de lire la photo. Réessaie."
+      }
     }
   },
   "auth": {

@@ -47,6 +47,10 @@ export const financeApi = {
     apiClient.patch<{ category: FinanceCategory }>(`/api/finance/categories/${id}`, payload),
   removeCategory: (id: string) =>
     apiClient.delete<{ success: boolean }>(`/api/finance/categories/${id}`),
+  bulkCreateOperations: (payload: { operations: CreateOperationPayload[] }) =>
+    apiClient.post<{ created: number }>('/api/finance/operations/bulk', payload, { timeoutMs: 30_000 }),
+  scanStatement: (payload: { image: string; mimeType: 'image/jpeg'; fallbackCurrency?: FinanceCurrency }) =>
+    apiClient.post<{ operations: CreateOperationPayload[] }>('/api/finance/scan', payload, { timeoutMs: 35_000 }),
   createOperation: (payload: CreateOperationPayload) =>
     apiClient.post<{ operation: FinanceOperation }>('/api/finance/operations', payload),
   removeOperation: (id: string) =>

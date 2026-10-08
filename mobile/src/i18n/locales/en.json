@@ -577,6 +577,41 @@
       "addHint": "Choose a currency and a monthly spend cap. You can set it before the first operation.",
       "allSpending": "The bar counts all spending in this currency, including cash and card.",
       "invalid": "Enter a valid budget amount"
+    },
+    "scan": {
+      "button": "Scan receipt",
+      "buttonShort": "Scan",
+      "gallery": "Photos",
+      "hint": "Photo a receipt. Then choose cash or card, a category, and add.",
+      "desktopHint": "On a computer, upload a receipt photo in the popup, then check the operations and save.",
+      "proOnly": "Receipt scan is included in Pro.",
+      "phoneOnly": "Available only on a phone.",
+      "phoneBadge": "Phone only",
+      "analyzing": "Reading the photo…",
+      "prepareTitle": "Upload a receipt",
+      "prepareLead": "Drop a photo of a paper receipt or a bank screenshot, then read the operations.",
+      "prepareUpload": "Upload a photo",
+      "prepareDrop": "Drop a file here or click to choose.",
+      "prepareSubmit": "Read the receipt",
+      "removePhoto": "Remove photo",
+      "reviewTitle": "Check before adding",
+      "reviewHint": "A receipt usually does not say cash or card. You can edit what was bought, then choose cash or card, a category, and save.",
+      "category": "Category",
+      "moneyKind": "Cash or card",
+      "card": "Card",
+      "item": "What was bought",
+      "add": "Add operations",
+      "cancel": "Discard",
+      "privacy": "The photo is used only to read operations and is not saved.",
+      "errors": {
+        "unavailable": "Receipt scan is not connected yet.",
+        "proRequired": "Receipt scan is included in Pro.",
+        "notRecognized": "Could not read operations from this photo.",
+        "tooLarge": "The photo is too large.",
+        "badType": "Use a JPEG, PNG, or WebP photo.",
+        "invalid": "Choose a photo first.",
+        "failed": "Could not read the photo. Try again."
+      }
     }
   },
   "auth": {

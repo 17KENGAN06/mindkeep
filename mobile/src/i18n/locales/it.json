@@ -577,6 +577,41 @@
       "addHint": "Scegli una valuta e un tetto di spesa mensile. Puoi impostarlo prima della prima operazione.",
       "allSpending": "La barra conta tutta la spesa in questa valuta, contanti e carta.",
       "invalid": "Inserisci un importo di budget valido"
+    },
+    "scan": {
+      "button": "Scansiona scontrino",
+      "buttonShort": "Scan",
+      "gallery": "Foto",
+      "hint": "Fotografa lo scontrino. Poi scegli contanti o carta, una categoria e aggiungi.",
+      "desktopHint": "Sul computer carica una foto dello scontrino nella finestra, controlla le operazioni e salva.",
+      "proOnly": "La scansione dello scontrino è in Pro.",
+      "phoneOnly": "Disponibile solo sul telefono.",
+      "phoneBadge": "Solo telefono",
+      "analyzing": "Lettura della foto…",
+      "prepareTitle": "Carica uno scontrino",
+      "prepareLead": "Trascina una foto dello scontrino o uno screenshot della banca, poi leggi le operazioni.",
+      "prepareUpload": "Carica una foto",
+      "prepareDrop": "Trascina un file qui o clicca per scegliere.",
+      "prepareSubmit": "Leggi lo scontrino",
+      "removePhoto": "Rimuovi foto",
+      "reviewTitle": "Controlla prima di aggiungere",
+      "reviewHint": "Sullo scontrino di solito non c’è se è contanti o carta. Puoi modificare cosa è stato comprato, poi scegli contanti o carta, la categoria e salva.",
+      "category": "Categoria",
+      "moneyKind": "Contanti o carta",
+      "card": "Carta",
+      "item": "Cosa è stato comprato",
+      "add": "Aggiungi operazioni",
+      "cancel": "Scarta",
+      "privacy": "La foto serve solo a leggere le operazioni e non viene salvata.",
+      "errors": {
+        "unavailable": "La scansione non è ancora collegata.",
+        "proRequired": "La scansione dello scontrino è in Pro.",
+        "notRecognized": "Impossibile leggere le operazioni da questa foto.",
+        "tooLarge": "La foto è troppo grande.",
+        "badType": "Usa JPEG, PNG o WebP.",
+        "invalid": "Prima scegli una foto.",
+        "failed": "Impossibile leggere la foto. Riprova."
+      }
     }
   },
   "auth": {

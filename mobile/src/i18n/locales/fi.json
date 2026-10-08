@@ -577,6 +577,41 @@
       "addHint": "Valitse valuutta ja kuukausittainen menokatto. Voit asettaa sen ennen ensimmäistä tapahtumaa.",
       "allSpending": "Palkki laskee kaikki tämän valuutan menot, käteisen ja kortin.",
       "invalid": "Anna kelvollinen budjettisumma"
+    },
+    "scan": {
+      "button": "Skannaa kuitti",
+      "buttonShort": "Skannaa",
+      "gallery": "Kuvat",
+      "hint": "Ota kuva kuitista. Valitse sitten käteinen tai kortti, kategoria ja lisää.",
+      "desktopHint": "Tietokoneella lataa kuva kuitista ikkunaan, tarkista tapahtumat ja tallenna.",
+      "proOnly": "Kuitin skannaus sisältyy Prohon.",
+      "phoneOnly": "Käytettävissä vain puhelimella.",
+      "phoneBadge": "Vain puhelin",
+      "analyzing": "Luetaan kuvaa…",
+      "prepareTitle": "Lataa kuitti",
+      "prepareLead": "Pudota kuva paperikuitista tai pankin kuvakaappaus, sitten lue tapahtumat.",
+      "prepareUpload": "Lataa kuva",
+      "prepareDrop": "Pudota tiedosto tähän tai napsauta valitaksesi.",
+      "prepareSubmit": "Lue kuitti",
+      "removePhoto": "Poista kuva",
+      "reviewTitle": "Tarkista ennen lisäämistä",
+      "reviewHint": "Kuitissa ei yleensä lue, onko kyseessä käteinen vai kortti. Ostoksen nimeä voi muokata, sitten valitse käteinen tai kortti, kategoria ja tallenna.",
+      "category": "Kategoria",
+      "moneyKind": "Käteinen vai kortti",
+      "card": "Kortti",
+      "item": "Mitä ostettiin",
+      "add": "Lisää tapahtumat",
+      "cancel": "Hylkää",
+      "privacy": "Kuvaa käytetään vain tapahtumien lukemiseen, eikä sitä tallenneta.",
+      "errors": {
+        "unavailable": "Skannausta ei ole vielä kytketty.",
+        "proRequired": "Kuitin skannaus sisältyy Prohon.",
+        "notRecognized": "Tapahtumia ei voitu lukea tästä kuvasta.",
+        "tooLarge": "Kuva on liian suuri.",
+        "badType": "Käytä JPEG-, PNG- tai WebP-kuvaa.",
+        "invalid": "Valitse ensin kuva.",
+        "failed": "Kuvaa ei voitu lukea. Yritä uudelleen."
+      }
     }
   },
   "auth": {

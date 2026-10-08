@@ -577,6 +577,41 @@
       "addHint": "Wybierz walutę i miesięczny limit wydatków. Możesz ustawić go przed pierwszą operacją.",
       "allSpending": "Pasek liczy wszystkie wydatki w tej walucie, gotówkę i kartę.",
       "invalid": "Podaj poprawną kwotę budżetu"
+    },
+    "scan": {
+      "button": "Skanuj paragon",
+      "buttonShort": "Skan",
+      "gallery": "Foto",
+      "hint": "Zrób zdjęcie paragonu. Potem wybierz gotówkę lub kartę, kategorię i dodaj.",
+      "desktopHint": "Na komputerze wgraj zdjęcie paragonu w oknie, sprawdź operacje i zapisz.",
+      "proOnly": "Skan paragonu jest w Pro.",
+      "phoneOnly": "Dostępne tylko na telefonie.",
+      "phoneBadge": "Tylko telefon",
+      "analyzing": "Czytanie zdjęcia…",
+      "prepareTitle": "Wgraj paragon",
+      "prepareLead": "Upuść zdjęcie papierowego paragonu lub zrzut z banku, potem odczytaj operacje.",
+      "prepareUpload": "Wgraj zdjęcie",
+      "prepareDrop": "Upuść plik tutaj lub kliknij, aby wybrać.",
+      "prepareSubmit": "Odczytaj paragon",
+      "removePhoto": "Usuń zdjęcie",
+      "reviewTitle": "Sprawdź przed dodaniem",
+      "reviewHint": "Na paragonie zwykle nie ma, czy to gotówka, czy karta. Nazwę zakupu możesz poprawić, potem wybierz gotówkę lub kartę, kategorię i zapisz.",
+      "category": "Kategoria",
+      "moneyKind": "Gotówka czy karta",
+      "card": "Karta",
+      "item": "Co kupiono",
+      "add": "Dodaj operacje",
+      "cancel": "Odrzuć",
+      "privacy": "Zdjęcie służy tylko do odczytu operacji i nie jest zapisywane.",
+      "errors": {
+        "unavailable": "Skan paragonu nie jest jeszcze podłączony.",
+        "proRequired": "Skan paragonu jest w Pro.",
+        "notRecognized": "Nie udało się odczytać operacji ze zdjęcia.",
+        "tooLarge": "Zdjęcie jest za duże.",
+        "badType": "Użyj JPEG, PNG lub WebP.",
+        "invalid": "Najpierw wybierz zdjęcie.",
+        "failed": "Nie udało się odczytać zdjęcia. Spróbuj ponownie."
+      }
     }
   },
   "auth": {

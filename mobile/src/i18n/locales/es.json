@@ -577,6 +577,41 @@
       "addHint": "Elige una moneda y un tope mensual. Puedes fijarlo antes de la primera operación.",
       "allSpending": "La barra cuenta todo el gasto de esta moneda, efectivo y tarjeta.",
       "invalid": "Introduce un importe de presupuesto válido"
+    },
+    "scan": {
+      "button": "Escanear ticket",
+      "buttonShort": "Scan",
+      "gallery": "Fotos",
+      "hint": "Fotografía el ticket. Luego elige efectivo o tarjeta, una categoría y añade.",
+      "desktopHint": "En el ordenador sube una foto del ticket en la ventana, revisa las operaciones y guarda.",
+      "proOnly": "El escaneo de tickets está en Pro.",
+      "phoneOnly": "Disponible solo en el teléfono.",
+      "phoneBadge": "Solo teléfono",
+      "analyzing": "Leyendo la foto…",
+      "prepareTitle": "Subir un ticket",
+      "prepareLead": "Suelta una foto de un ticket en papel o una captura del banco, luego lee las operaciones.",
+      "prepareUpload": "Subir una foto",
+      "prepareDrop": "Suelta un archivo aquí o haz clic para elegir.",
+      "prepareSubmit": "Leer el ticket",
+      "removePhoto": "Quitar foto",
+      "reviewTitle": "Revisa antes de añadir",
+      "reviewHint": "En el ticket casi nunca pone si es efectivo o tarjeta. Puedes editar qué se compró, luego elige efectivo o tarjeta, la categoría y guarda.",
+      "category": "Categoría",
+      "moneyKind": "Efectivo o tarjeta",
+      "card": "Tarjeta",
+      "item": "Qué se compró",
+      "add": "Añadir operaciones",
+      "cancel": "Descartar",
+      "privacy": "La foto solo sirve para leer operaciones y no se guarda.",
+      "errors": {
+        "unavailable": "El escaneo aún no está conectado.",
+        "proRequired": "El escaneo de tickets está en Pro.",
+        "notRecognized": "No se pudieron leer las operaciones de esta foto.",
+        "tooLarge": "La foto es demasiado grande.",
+        "badType": "Usa JPEG, PNG o WebP.",
+        "invalid": "Elige primero una foto.",
+        "failed": "No se pudo leer la foto. Inténtalo de nuevo."
+      }
     }
   },
   "auth": {
