@@ -297,8 +297,16 @@
       "calorieGoal": "L'objectif doit être d'au moins 500 kcal",
       "waterGoal": "Indique au moins 1 verre",
       "weight": "Saisis un poids entre 20 et 400 kg",
-      "weightGoal": "Le poids cible doit être entre 20 et 400 kg"
-    }
+      "weightGoal": "Le poids cible doit être entre 20 et 400 kg",
+      "stepsGoal": "Indique au moins 1 000 pas"
+    },
+    "stepsTitle": "Pas",
+    "stepsHint": "Fixe un objectif quotidien et coche les jours. Les jours avant le début ne comptent pas comme manqués.",
+    "stepsGoal": "Pas par jour",
+    "stepsCheck": "Objectif du jour atteint",
+    "stepsDayOfMonth": "Jour {{day}} sur {{days}}",
+    "stepsMonthLength": "{{days}} jours",
+    "stepsMarked": "{{count}} faits"
   },
   "tasks": {
     "title": "Tâches",
@@ -333,12 +341,39 @@
     "unsplit": "Réunir",
     "errors": {
       "title": "Donne un nom à la tâche",
-      "minutes": "Les minutes doivent être d'au moins 1"
+      "minutes": "Les minutes doivent être d'au moins 1",
+      "importEmpty": "Rien à importer. Vérifie les séparateurs.",
+      "copyEmpty": "Ce jour n’a pas de tâches à copier",
+      "copyNoDays": "Choisis au moins un autre jour"
     },
     "markImportant": "Marquer comme très importante",
     "unmarkImportant": "Retirer l’importance",
     "important": "Important",
-    "importantHint": "Apparaît tout de suite dans les notifications"
+    "importantHint": "Apparaît tout de suite dans les notifications",
+    "minShort": "min",
+    "import": "Importer",
+    "importTitle": "Importer des tâches",
+    "importHint": "Word est le titre, definition les minutes. Elles iront sur {{date}}.",
+    "importPaste": "Colle la liste",
+    "importPairSep": "Entre titre et minutes",
+    "importCardSep": "Entre les tâches",
+    "importTab": "Tabulation",
+    "importComma": "Virgule",
+    "importNewline": "Nouvelle ligne",
+    "importSemicolon": "Point-virgule",
+    "importCustom": "Personnalisé",
+    "importPreview": "Aperçu · {{count}}",
+    "importEmptyPreview": "Rien à afficher pour l’instant.",
+    "importSubmit": "Importer",
+    "copy": "Copier le jour",
+    "copyTitle": "Copier le plan du jour",
+    "copyHint": "Choisis des jours similaires. Les mêmes tâches s’y ajoutent à neuf, sans être cochées.",
+    "copyFrom": "{{date}} · {{count}} tâches",
+    "copyPicked": "{{count}} jours choisis",
+    "copySubmit": "Copier vers {{count}} jours",
+    "copyNone": "Ajoute d’abord des tâches pour ce jour",
+    "copyPrevMonth": "Mois précédent",
+    "copyNextMonth": "Mois suivant"
   },
   "rhythm": {
     "title": "Habitudes",

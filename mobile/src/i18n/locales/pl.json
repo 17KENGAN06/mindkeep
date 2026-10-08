@@ -297,8 +297,16 @@
       "calorieGoal": "Cel powinien wynosić co najmniej 500 kcal",
       "waterGoal": "Ustaw co najmniej 1 szklankę",
       "weight": "Podaj wagę między 20 a 400 kg",
-      "weightGoal": "Waga docelowa powinna wynosić 20–400 kg"
-    }
+      "weightGoal": "Waga docelowa powinna wynosić 20–400 kg",
+      "stepsGoal": "Ustaw co najmniej 1000 kroków"
+    },
+    "stepsTitle": "Kroki",
+    "stepsHint": "Ustaw dzienny cel i odhaczaj dni. Dni sprzed startu nie liczą się jako pominięte.",
+    "stepsGoal": "Kroków dziennie",
+    "stepsCheck": "Cel dnia zaliczony",
+    "stepsDayOfMonth": "Dzień {{day}} z {{days}}",
+    "stepsMonthLength": "{{days}} dni",
+    "stepsMarked": "odhaczone {{count}}"
   },
   "tasks": {
     "title": "Zadania",
@@ -333,12 +341,39 @@
     "unsplit": "Połącz",
     "errors": {
       "title": "Nadaj zadaniu nazwę",
-      "minutes": "Minuty muszą wynosić co najmniej 1"
+      "minutes": "Minuty muszą wynosić co najmniej 1",
+      "importEmpty": "Nie ma czego importować. Sprawdź separatory.",
+      "copyEmpty": "Ten dzień nie ma zadań do skopiowania",
+      "copyNoDays": "Wybierz przynajmniej jeden inny dzień"
     },
     "markImportant": "Oznacz jako bardzo ważne",
     "unmarkImportant": "Usuń ważność",
     "important": "Ważne",
-    "importantHint": "Od razu w powiadomieniach"
+    "importantHint": "Od razu w powiadomieniach",
+    "minShort": "min",
+    "import": "Import",
+    "importTitle": "Import zadań",
+    "importHint": "Word to tytuł, definition to minuty. Trafią na {{date}}.",
+    "importPaste": "Wklej listę",
+    "importPairSep": "Między tytułem a minutami",
+    "importCardSep": "Między zadaniami",
+    "importTab": "Tabulator",
+    "importComma": "Przecinek",
+    "importNewline": "Nowa linia",
+    "importSemicolon": "Średnik",
+    "importCustom": "Własny",
+    "importPreview": "Podgląd · {{count}}",
+    "importEmptyPreview": "Na razie nic do podglądu.",
+    "importSubmit": "Importuj",
+    "copy": "Kopiuj dzień",
+    "copyTitle": "Skopiuj plan dnia",
+    "copyHint": "Zaznacz podobne dni. Te same zadania dodadzą się tam od nowa, bez odhaczenia.",
+    "copyFrom": "{{date}} · {{count}} zadań",
+    "copyPicked": "Wybrano dni: {{count}}",
+    "copySubmit": "Kopiuj na {{count}} dni",
+    "copyNone": "Najpierw dodaj zadania na ten dzień",
+    "copyPrevMonth": "Poprzedni miesiąc",
+    "copyNextMonth": "Następny miesiąc"
   },
   "rhythm": {
     "title": "Nawyki",

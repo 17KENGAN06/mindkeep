@@ -81,6 +81,29 @@ export function useCreateTask() {
   });
 }
 
+export function useBulkCreateTasks() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: { date: string; tasks: { title: string; minutes: number }[] }) =>
+      dailyTasksApi.bulkCreate(payload),
+    onSuccess: () => {
+      void invalidateTasks(queryClient);
+      touchPlanUsage(queryClient);
+    },
+  });
+}
+
+export function useCopyTasks() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: { from: string; to: string[] }) => dailyTasksApi.copyDay(payload),
+    onSuccess: () => {
+      void invalidateTasks(queryClient);
+      touchPlanUsage(queryClient);
+    },
+  });
+}
+
 export function useDeleteTask() {
   const queryClient = useQueryClient();
   return useMutation({

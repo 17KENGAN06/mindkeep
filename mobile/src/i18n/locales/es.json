@@ -297,8 +297,16 @@
       "calorieGoal": "El objetivo debe ser de al menos 500 kcal",
       "waterGoal": "Indica al menos 1 vaso",
       "weight": "Introduce un peso entre 20 y 400 kg",
-      "weightGoal": "El peso objetivo debe estar entre 20 y 400 kg"
-    }
+      "weightGoal": "El peso objetivo debe estar entre 20 y 400 kg",
+      "stepsGoal": "Indica al menos 1.000 pasos"
+    },
+    "stepsTitle": "Pasos",
+    "stepsHint": "Pon un objetivo diario y marca los días. Los días anteriores al inicio no cuentan como fallos.",
+    "stepsGoal": "Pasos al día",
+    "stepsCheck": "Objetivo del día hecho",
+    "stepsDayOfMonth": "Día {{day}} de {{days}}",
+    "stepsMonthLength": "{{days}} días",
+    "stepsMarked": "{{count}} hechos"
   },
   "tasks": {
     "title": "Tareas",
@@ -333,12 +341,39 @@
     "unsplit": "Unir",
     "errors": {
       "title": "Ponle un nombre a la tarea",
-      "minutes": "Los minutos deben ser al menos 1"
+      "minutes": "Los minutos deben ser al menos 1",
+      "importEmpty": "Nada que importar. Revisa los separadores.",
+      "copyEmpty": "Este día no tiene tareas para copiar",
+      "copyNoDays": "Elige al menos otro día"
     },
     "markImportant": "Marcar como muy importante",
     "unmarkImportant": "Quitar importancia",
     "important": "Importante",
-    "importantHint": "Aparece al momento en notificaciones"
+    "importantHint": "Aparece al momento en notificaciones",
+    "minShort": "min",
+    "import": "Importar",
+    "importTitle": "Importar tareas",
+    "importHint": "Word es el título, definition los minutos. Se añadirán a {{date}}.",
+    "importPaste": "Pega la lista",
+    "importPairSep": "Entre título y minutos",
+    "importCardSep": "Entre tareas",
+    "importTab": "Tabulador",
+    "importComma": "Coma",
+    "importNewline": "Nueva línea",
+    "importSemicolon": "Punto y coma",
+    "importCustom": "Personalizado",
+    "importPreview": "Vista previa · {{count}}",
+    "importEmptyPreview": "Aún no hay nada que mostrar.",
+    "importSubmit": "Importar",
+    "copy": "Copiar día",
+    "copyTitle": "Copiar el plan del día",
+    "copyHint": "Elige días parecidos. Allí se añaden las mismas tareas de nuevo, sin marcar como hechas.",
+    "copyFrom": "{{date}} · {{count}} tareas",
+    "copyPicked": "{{count}} días elegidos",
+    "copySubmit": "Copiar a {{count}} días",
+    "copyNone": "Añade primero tareas para este día",
+    "copyPrevMonth": "Mes anterior",
+    "copyNextMonth": "Mes siguiente"
   },
   "rhythm": {
     "title": "Hábitos",

@@ -297,8 +297,16 @@
       "calorieGoal": "L'obiettivo deve essere di almeno 500 kcal",
       "waterGoal": "Imposta almeno 1 bicchiere",
       "weight": "Inserisci un peso tra 20 e 400 kg",
-      "weightGoal": "Il peso obiettivo deve essere tra 20 e 400 kg"
-    }
+      "weightGoal": "Il peso obiettivo deve essere tra 20 e 400 kg",
+      "stepsGoal": "Imposta almeno 1000 passi"
+    },
+    "stepsTitle": "Passi",
+    "stepsHint": "Imposta un obiettivo giornaliero e spunta i giorni. I giorni prima dell'inizio non contano come saltati.",
+    "stepsGoal": "Passi al giorno",
+    "stepsCheck": "Obiettivo del giorno fatto",
+    "stepsDayOfMonth": "Giorno {{day}} di {{days}}",
+    "stepsMonthLength": "{{days}} giorni",
+    "stepsMarked": "{{count}} fatti"
   },
   "tasks": {
     "title": "Attività",
@@ -333,12 +341,39 @@
     "unsplit": "Unisci",
     "errors": {
       "title": "Dai un nome all'attività",
-      "minutes": "I minuti devono essere almeno 1"
+      "minutes": "I minuti devono essere almeno 1",
+      "importEmpty": "Niente da importare. Controlla i separatori.",
+      "copyEmpty": "Questo giorno non ha attività da copiare",
+      "copyNoDays": "Scegli almeno un altro giorno"
     },
     "markImportant": "Segna come molto importante",
     "unmarkImportant": "Rimuovi importanza",
     "important": "Importante",
-    "importantHint": "Compare subito nelle notifiche"
+    "importantHint": "Compare subito nelle notifiche",
+    "minShort": "min",
+    "import": "Importa",
+    "importTitle": "Importa attività",
+    "importHint": "Word è il titolo, definition i minuti. Verranno aggiunte a {{date}}.",
+    "importPaste": "Incolla l’elenco",
+    "importPairSep": "Tra titolo e minuti",
+    "importCardSep": "Tra attività",
+    "importTab": "Tab",
+    "importComma": "Virgola",
+    "importNewline": "Nuova riga",
+    "importSemicolon": "Punto e virgola",
+    "importCustom": "Personalizzato",
+    "importPreview": "Anteprima · {{count}}",
+    "importEmptyPreview": "Ancora niente da mostrare.",
+    "importSubmit": "Importa",
+    "copy": "Copia giorno",
+    "copyTitle": "Copia il piano del giorno",
+    "copyHint": "Scegli i giorni simili. Le stesse attività si aggiungono lì da zero, non come fatte.",
+    "copyFrom": "{{date}} · {{count}} attività",
+    "copyPicked": "{{count}} giorni scelti",
+    "copySubmit": "Copia su {{count}} giorni",
+    "copyNone": "Aggiungi prima le attività di questo giorno",
+    "copyPrevMonth": "Mese precedente",
+    "copyNextMonth": "Mese successivo"
   },
   "rhythm": {
     "title": "Abitudini",

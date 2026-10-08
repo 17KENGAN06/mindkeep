@@ -6,6 +6,7 @@ import type {
   Meal,
   NutritionPeriodResponse,
   NutritionSettings,
+  StepsDay,
   UpdateMealPayload,
   WaterDay,
   WeightDay,
@@ -26,6 +27,8 @@ export const nutritionApi = {
   removeMeal: (id: string) => apiClient.delete<{ success: boolean }>(`/api/nutrition/meals/${id}`),
   setWater: (date: string, glasses: number) =>
     apiClient.put<{ water: WaterDay }>('/api/nutrition/water', { date, glasses }),
+  setSteps: (date: string, done: boolean) =>
+    apiClient.put<{ steps: StepsDay }>('/api/nutrition/steps', { date, done }),
   setWeight: (date: string, kg: number) =>
     apiClient.put<{ weight: WeightDay }>('/api/nutrition/weight', { date, kg }),
 };

@@ -297,8 +297,16 @@
       "calorieGoal": "Goal should be at least 500 kcal",
       "waterGoal": "Set at least 1 glass",
       "weight": "Enter a weight between 20 and 400 kg",
-      "weightGoal": "Target weight should be 20–400 kg"
-    }
+      "weightGoal": "Target weight should be 20–400 kg",
+      "stepsGoal": "Set at least 1,000 steps"
+    },
+    "stepsTitle": "Steps",
+    "stepsHint": "Set a daily goal and tick the days you reach it. Days before you started stay empty.",
+    "stepsGoal": "Steps per day",
+    "stepsCheck": "Goal done today",
+    "stepsDayOfMonth": "Day {{day}} of {{days}}",
+    "stepsMonthLength": "{{days}} days",
+    "stepsMarked": "{{count}} done"
   },
   "tasks": {
     "title": "Tasks",
@@ -333,12 +341,39 @@
     "unsplit": "Join",
     "errors": {
       "title": "Give the task a name",
-      "minutes": "Minutes must be at least 1"
+      "minutes": "Minutes must be at least 1",
+      "importEmpty": "Nothing to import. Check the separators.",
+      "copyEmpty": "This day has no tasks to copy",
+      "copyNoDays": "Pick at least one other day"
     },
     "markImportant": "Mark as very important",
     "unmarkImportant": "Remove importance",
     "important": "Important",
-    "importantHint": "Shows in notifications right away"
+    "importantHint": "Shows in notifications right away",
+    "minShort": "min",
+    "import": "Import",
+    "importTitle": "Import tasks",
+    "importHint": "Word is the title, definition is minutes. They will be added to {{date}}.",
+    "importPaste": "Paste the list",
+    "importPairSep": "Between title and minutes",
+    "importCardSep": "Between tasks",
+    "importTab": "Tab",
+    "importComma": "Comma",
+    "importNewline": "New line",
+    "importSemicolon": "Semicolon",
+    "importCustom": "Custom",
+    "importPreview": "Preview · {{count}}",
+    "importEmptyPreview": "Nothing to preview yet.",
+    "importSubmit": "Import",
+    "copy": "Copy day",
+    "copyTitle": "Copy this day’s plan",
+    "copyHint": "Pick similar days. The same tasks are added there as a fresh plan, not marked done.",
+    "copyFrom": "{{date}} · {{count}} tasks",
+    "copyPicked": "{{count}} days selected",
+    "copySubmit": "Copy to {{count}} days",
+    "copyNone": "Add tasks for this day first",
+    "copyPrevMonth": "Previous month",
+    "copyNextMonth": "Next month"
   },
   "rhythm": {
     "title": "Habits",

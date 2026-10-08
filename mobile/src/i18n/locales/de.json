@@ -297,8 +297,16 @@
       "calorieGoal": "Das Ziel sollte mindestens 500 kcal betragen",
       "waterGoal": "Lege mindestens 1 Glas fest",
       "weight": "Gib ein Gewicht zwischen 20 und 400 kg ein",
-      "weightGoal": "Das Zielgewicht sollte 20–400 kg betragen"
-    }
+      "weightGoal": "Das Zielgewicht sollte 20–400 kg betragen",
+      "stepsGoal": "Lege mindestens 1000 Schritte fest"
+    },
+    "stepsTitle": "Schritte",
+    "stepsHint": "Lege ein Tagesziel fest und hake die Tage ab. Tage vor dem Start zählen nicht als verpasst.",
+    "stepsGoal": "Schritte pro Tag",
+    "stepsCheck": "Tagesziel erledigt",
+    "stepsDayOfMonth": "Tag {{day}} von {{days}}",
+    "stepsMonthLength": "{{days}} Tage",
+    "stepsMarked": "{{count}} erledigt"
   },
   "tasks": {
     "title": "Aufgaben",
@@ -333,12 +341,39 @@
     "unsplit": "Zusammenführen",
     "errors": {
       "title": "Gib der Aufgabe einen Namen",
-      "minutes": "Minuten müssen mindestens 1 betragen"
+      "minutes": "Minuten müssen mindestens 1 betragen",
+      "importEmpty": "Nichts zu importieren. Prüfe die Trennzeichen.",
+      "copyEmpty": "Dieser Tag hat keine Aufgaben zum Kopieren",
+      "copyNoDays": "Wähle mindestens einen anderen Tag"
     },
     "markImportant": "Als sehr wichtig markieren",
     "unmarkImportant": "Wichtigkeit entfernen",
     "important": "Wichtig",
-    "importantHint": "Sofort in den Benachrichtigungen"
+    "importantHint": "Sofort in den Benachrichtigungen",
+    "minShort": "Min.",
+    "import": "Import",
+    "importTitle": "Aufgaben importieren",
+    "importHint": "Word ist der Titel, Definition die Minuten. Sie landen auf {{date}}.",
+    "importPaste": "Liste einfügen",
+    "importPairSep": "Zwischen Titel und Minuten",
+    "importCardSep": "Zwischen Aufgaben",
+    "importTab": "Tab",
+    "importComma": "Komma",
+    "importNewline": "Neue Zeile",
+    "importSemicolon": "Semikolon",
+    "importCustom": "Eigenes",
+    "importPreview": "Vorschau · {{count}}",
+    "importEmptyPreview": "Noch nichts anzuzeigen.",
+    "importSubmit": "Importieren",
+    "copy": "Tag kopieren",
+    "copyTitle": "Tagesplan kopieren",
+    "copyHint": "Wähle ähnliche Tage. Dieselben Aufgaben werden dort neu angelegt, nicht als erledigt.",
+    "copyFrom": "{{date}} · {{count}} Aufgaben",
+    "copyPicked": "{{count}} Tage gewählt",
+    "copySubmit": "Auf {{count}} Tage kopieren",
+    "copyNone": "Füge zuerst Aufgaben für diesen Tag hinzu",
+    "copyPrevMonth": "Vorheriger Monat",
+    "copyNextMonth": "Nächster Monat"
   },
   "rhythm": {
     "title": "Gewohnheiten",

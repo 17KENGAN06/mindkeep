@@ -89,6 +89,16 @@ export function useSetWater(_year?: number, _month?: number) {
   });
 }
 
+export function useSetSteps() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ date, done }: { date: string; done: boolean }) => nutritionApi.setSteps(date, done),
+    onSuccess: () => {
+      void invalidateNutrition(queryClient);
+    },
+  });
+}
+
 export function useSetWeight() {
   const queryClient = useQueryClient();
   return useMutation({

@@ -19,9 +19,14 @@ import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
 import { AppIcon } from '../components/AppIcon';
 import { AppButton } from '../components/ui';
+import { ApiError } from '../api/client';
 import { mapAuthError } from '../features/auth/mapAuthError';
+import { TaskCopyModal } from '../features/tasks/TaskCopyModal';
+import { TaskImportModal } from '../features/tasks/TaskImportModal';
 import { ForestCard } from '../components/forest/ForestCard';
 import {
+  useBulkCreateTasks,
+  useCopyTasks,
   useCreateTask,
   useDeleteTask,
   useForestSummary,
@@ -70,12 +75,18 @@ export function TasksScreen() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [pickingId, setPickingId] = useState<string | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [copyOpen, setCopyOpen] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState<string | null>(null);
 
   const periodQuery = useTasksPeriod(year, month);
   const toggleTask = useToggleTask(selectedDate);
   const createTask = useCreateTask();
   const updateTask = useUpdateTask(selectedDate);
   const deleteTask = useDeleteTask();
+  const bulkCreate = useBulkCreateTasks();
+  const copyTasks = useCopyTasks();
   const forestQuery = useForestSummary(year, month);
 
   const resetForm = () => {
@@ -113,6 +124,35 @@ export function TasksScreen() {
       if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
       return 0;
     });
+
+  const onImport = async (tasks: { title: string; minutes: number }[]) => {
+    setImportError(null);
+    try {
+      await bulkCreate.mutateAsync({ date: selectedDate, tasks });
+      setImportOpen(false);
+    } catch (caught) {
+      setImportError(mapAuthError(caught, t));
+    }
+  };
+
+  const onCopy = async (dates: string[]) => {
+    setCopyError(null);
+    try {
+      await copyTasks.mutateAsync({ from: selectedDate, to: dates });
+      setCopyOpen(false);
+    } catch (caught) {
+      const code = caught instanceof ApiError ? caught.code : null;
+      if (code === 'COPY_EMPTY') {
+        setCopyError(t('tasks.errors.copyEmpty'));
+        return;
+      }
+      if (code === 'COPY_NO_DAYS') {
+        setCopyError(t('tasks.errors.copyNoDays'));
+        return;
+      }
+      setCopyError(mapAuthError(caught, t));
+    }
+  };
 
   const onMonthChange = (nextYear: number, nextMonth: number) => {
     setYear(nextYear);
@@ -451,6 +491,31 @@ export function TasksScreen() {
             <Text style={[styles.formTitle, { color: colors.ink }]}>
               {editingId ? t('tasks.edit') : t('tasks.add')}
             </Text>
+            {editingId ? null : (
+              <View style={styles.formActions}>
+                <View style={styles.formAction}>
+                  <AppButton
+                    variant="secondary"
+                    label={t('tasks.import')}
+                    onPress={() => {
+                      setImportError(null);
+                      setImportOpen(true);
+                    }}
+                  />
+                </View>
+                <View style={styles.formAction}>
+                  <AppButton
+                    variant="secondary"
+                    label={t('tasks.copy')}
+                    disabled={dayTasks.length === 0}
+                    onPress={() => {
+                      setCopyError(null);
+                      setCopyOpen(true);
+                    }}
+                  />
+                </View>
+              </View>
+            )}
             <Text style={[styles.label, { color: colors.muted }]}>{t('tasks.fields.title')}</Text>
             <TextInput
               style={[
@@ -484,11 +549,33 @@ export function TasksScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      <TaskImportModal
+        visible={importOpen}
+        date={selectedDate}
+        loading={bulkCreate.isPending}
+        error={importError}
+        onClose={() => setImportOpen(false)}
+        onImport={(tasks) => void onImport(tasks)}
+      />
+      <TaskCopyModal
+        visible={copyOpen}
+        from={selectedDate}
+        taskCount={dayTasks.length}
+        year={year}
+        month={month}
+        loading={copyTasks.isPending}
+        error={copyError}
+        onClose={() => setCopyOpen(false)}
+        onCopy={(dates) => void onCopy(dates)}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  formActions: { flexDirection: 'row', gap: 8 },
+  formAction: { flex: 1 },
   safe: { flex: 1 },
   flex: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },

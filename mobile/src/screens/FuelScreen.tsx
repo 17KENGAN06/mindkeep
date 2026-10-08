@@ -17,6 +17,8 @@ import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
 import { AppButton, Badge } from '../components/ui';
 import { mapAuthError } from '../features/auth/mapAuthError';
+import { useAuth } from '../features/auth/useAuth';
+import { StepsCheck, StepsMonthGrid, canTrackSteps } from '../components/StepsTracker';
 import { WaterGlasses } from '../components/WaterGlasses';
 import { WeightTrendChart } from '../components/WeightTrendChart';
 import { CalorieHelperModal } from '../features/nutrition/CalorieHelperModal';
@@ -24,6 +26,7 @@ import {
   useCreateMeal,
   useDeleteMeal,
   useNutritionPeriod,
+  useSetSteps,
   useSetWater,
   useSetWeight,
   useUpdateMeal,
@@ -35,7 +38,7 @@ import type { AppLanguage } from '../i18n';
 import type { CalendarDaySummary } from '../types/calendar';
 import type { Meal } from '../types/nutrition';
 import { useAccountToday, useTodayRollover } from '../features/time/useAccountToday';
-import { formatDate } from '../utils/date';
+import { dateKeyInZone, formatDate } from '../utils/date';
 
 function firstOfMonth(year: number, month: number): string {
   return `${year}-${String(month).padStart(2, '0')}-01`;
@@ -100,7 +103,8 @@ export function FuelScreen() {
   useRefreshOnFocus('nutrition');
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
-  const { today, year: todayYear, month: todayMonth } = useAccountToday();
+  const { user } = useAuth();
+  const { today, timeZone, year: todayYear, month: todayMonth } = useAccountToday();
   const [year, setYear] = useState(todayYear);
   const [month, setMonth] = useState(todayMonth);
   const [selectedDate, setSelectedDate] = useState(today);
@@ -115,6 +119,7 @@ export function FuelScreen() {
   const [kcal, setKcal] = useState('');
   const [calorieGoalInput, setCalorieGoalInput] = useState('');
   const [waterGoalInput, setWaterGoalInput] = useState('');
+  const [stepsGoalInput, setStepsGoalInput] = useState('');
   const [weightGoalInput, setWeightGoalInput] = useState('');
   const [weightInput, setWeightInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
@@ -129,12 +134,14 @@ export function FuelScreen() {
   const updateMeal = useUpdateMeal();
   const deleteMeal = useDeleteMeal();
   const setWater = useSetWater();
+  const setSteps = useSetSteps();
   const setWeight = useSetWeight();
 
   useEffect(() => {
     if (!periodQuery.data) return;
     setCalorieGoalInput(String(periodQuery.data.settings.calorieGoal));
     setWaterGoalInput(String(periodQuery.data.settings.waterGoal));
+    setStepsGoalInput(String(periodQuery.data.settings.stepsGoal ?? 10000));
     setWeightGoalInput(
       periodQuery.data.settings.weightGoal == null
         ? ''
@@ -167,6 +174,15 @@ export function FuelScreen() {
   const weightGoal = settings?.weightGoal ?? null;
   const calorieGoal = settings?.calorieGoal ?? 2000;
   const waterGoal = settings?.waterGoal ?? 8;
+  // Steps: same rules as the site — days from the account start (in its time zone) up to today.
+  const stepsGoal = settings?.stepsGoal ?? 10000;
+  const stepsDays = periodQuery.data?.steps ?? [];
+  const stepsDoneDates = new Set(stepsDays.filter((row) => row.done).map((row) => row.date));
+  const stepsDone = stepsDoneDates.has(selectedDate);
+  const joinKey = user?.createdAt ? dateKeyInZone(new Date(user.createdAt), timeZone) : today;
+  const stepsLocked = !canTrackSteps(selectedDate, joinKey, today);
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const viewingCurrentMonth = today.startsWith(`${year}-${String(month).padStart(2, '0')}-`);
   const macrosEnabled = settings?.macrosEnabled ?? false;
   const dayMacros = dayMeals.reduce(
     (totals, meal) => ({
@@ -250,6 +266,29 @@ export function FuelScreen() {
     }
     try {
       await updateSettings.mutateAsync({ waterGoal: Math.round(next) });
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
+    }
+  };
+
+  const onSaveStepsGoal = async () => {
+    setFormError(null);
+    const next = Number(stepsGoalInput);
+    if (!Number.isFinite(next) || next < 1000 || next > 100000) {
+      setFormError(t('fuel.errors.stepsGoal'));
+      return;
+    }
+    try {
+      await updateSettings.mutateAsync({ stepsGoal: Math.round(next) });
+    } catch (caught) {
+      setFormError(mapAuthError(caught, t));
+    }
+  };
+
+  const onStepsChange = async (date: string, done: boolean) => {
+    setFormError(null);
+    try {
+      await setSteps.mutateAsync({ date, done });
     } catch (caught) {
       setFormError(mapAuthError(caught, t));
     }
@@ -686,6 +725,52 @@ export function FuelScreen() {
               disabled={setWater.isPending}
               onChange={(next) => void onWaterChange(next)}
             />
+
+            <View style={[styles.divider, { backgroundColor: colors.line }]} />
+            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('fuel.stepsTitle')}</Text>
+            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.stepsHint')}</Text>
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.stepsGoal')}</Text>
+            <TextInput
+              keyboardType="number-pad"
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
+              value={stepsGoalInput}
+              onChangeText={setStepsGoalInput}
+            />
+            <AppButton
+              label={t('common.save')}
+              loading={updateSettings.isPending}
+              onPress={() => void onSaveStepsGoal()}
+            />
+            <StepsCheck
+              done={stepsDone}
+              goal={stepsGoal}
+              disabled={setSteps.isPending || stepsLocked}
+              label={t('fuel.stepsCheck')}
+              hint={t('fuel.stepsGoal')}
+              onChange={(done) => void onStepsChange(selectedDate, done)}
+            />
+            <View style={styles.progressRow}>
+              <Text style={[styles.muted, { color: colors.muted }]}>
+                {viewingCurrentMonth
+                  ? t('fuel.stepsDayOfMonth', { day: Number(today.slice(8, 10)), days: daysInMonth })
+                  : t('fuel.stepsMonthLength', { days: daysInMonth })}
+              </Text>
+              <Text style={[styles.progressValue, { color: colors.ink }]}>
+                {t('fuel.stepsMarked', { count: stepsDoneDates.size })}
+              </Text>
+            </View>
+            <StepsMonthGrid
+              year={year}
+              month={month}
+              today={today}
+              startedOn={joinKey}
+              doneDates={stepsDoneDates}
+              disabled={setSteps.isPending}
+              onToggle={(date, done) => void onStepsChange(date, done)}
+            />
           </View>
 
           <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
@@ -836,6 +921,7 @@ const styles = StyleSheet.create({
   progressRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
   progressValue: { fontSize: 13, fontWeight: '700' },
   barTrack: { borderRadius: 999, height: 8, overflow: 'hidden' },
+  divider: { height: 1, marginVertical: 6 },
   barFill: { borderRadius: 999, height: '100%' },
   mealRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   mealCopy: { flex: 1, gap: 2, minWidth: 120 },

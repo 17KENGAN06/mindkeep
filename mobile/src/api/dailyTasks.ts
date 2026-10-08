@@ -22,4 +22,8 @@ export const dailyTasksApi = {
   update: (id: string, payload: UpdateDailyTaskPayload) =>
     apiClient.patch<{ task: DailyTask }>(`/api/tasks/${id}`, payload),
   remove: (id: string) => apiClient.delete<{ success: boolean }>(`/api/tasks/${id}`),
+  bulkCreate: (payload: { date: string; tasks: { title: string; minutes: number }[] }) =>
+    apiClient.post<{ created: number }>('/api/tasks/bulk', payload),
+  copyDay: (payload: { from: string; to: string[] }) =>
+    apiClient.post<{ created: number }>('/api/tasks/copy', payload),
 };

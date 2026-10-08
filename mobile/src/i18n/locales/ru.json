@@ -297,8 +297,16 @@
       "calorieGoal": "Норма не меньше 500 ккал",
       "waterGoal": "Нужен хотя бы 1 стакан",
       "weight": "Укажите вес от 20 до 400 кг",
-      "weightGoal": "Желаемый вес — от 20 до 400 кг"
-    }
+      "weightGoal": "Желаемый вес — от 20 до 400 кг",
+      "stepsGoal": "Нужно хотя бы 1 000 шагов"
+    },
+    "stepsTitle": "Шаги",
+    "stepsHint": "Поставьте дневную цель и отмечайте дни. Дни до начала не считаются пропусками.",
+    "stepsGoal": "Шагов в день",
+    "stepsCheck": "Цель за день выполнена",
+    "stepsDayOfMonth": "День {{day}} из {{days}}",
+    "stepsMonthLength": "{{days}} дней",
+    "stepsMarked": "отмечено {{count}}"
   },
   "tasks": {
     "title": "Задачи",
@@ -333,12 +341,39 @@
     "unsplit": "Собрать",
     "errors": {
       "title": "Назовите задачу",
-      "minutes": "Минуты — хотя бы 1"
+      "minutes": "Минуты — хотя бы 1",
+      "importEmpty": "Нечего импортировать. Проверьте разделители.",
+      "copyEmpty": "На этот день нет задач для копирования",
+      "copyNoDays": "Выберите хотя бы один другой день"
     },
     "markImportant": "Сделать очень важной",
     "unmarkImportant": "Снять важность",
     "important": "Важно",
-    "importantHint": "Сразу появится в уведомлениях"
+    "importantHint": "Сразу появится в уведомлениях",
+    "minShort": "мин",
+    "import": "Импорт",
+    "importTitle": "Импорт задач",
+    "importHint": "Word — название, definition — минуты. Добавится на {{date}}.",
+    "importPaste": "Вставьте список",
+    "importPairSep": "Между названием и минутами",
+    "importCardSep": "Между задачами",
+    "importTab": "Таб",
+    "importComma": "Запятая",
+    "importNewline": "Новая строка",
+    "importSemicolon": "Точка с запятой",
+    "importCustom": "Своё",
+    "importPreview": "Предпросмотр · {{count}}",
+    "importEmptyPreview": "Пока нечего показать.",
+    "importSubmit": "Импортировать",
+    "copy": "Копировать день",
+    "copyTitle": "Скопировать план дня",
+    "copyHint": "Отметьте похожие дни. Туда добавятся те же задачи заново, без отметок о выполнении.",
+    "copyFrom": "{{date}} · {{count}} задач",
+    "copyPicked": "Выбрано дней: {{count}}",
+    "copySubmit": "Скопировать на {{count}} дн.",
+    "copyNone": "Сначала добавьте задачи на этот день",
+    "copyPrevMonth": "Предыдущий месяц",
+    "copyNextMonth": "Следующий месяц"
   },
   "rhythm": {
     "title": "Привычки",
