@@ -57,10 +57,12 @@ type FoodScanMealProps = {
   canScan: boolean;
   macrosEnabled?: boolean;
   onNeedPro?: () => void;
+  /** Changes when quick add asks to open the scan straight away. */
+  openRequest?: number;
 };
 
 /** Photo (or text) → calorie estimate → review → meal (site: features/nutrition/FoodScanMeal). */
-export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro }: FoodScanMealProps) {
+export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro, openRequest }: FoodScanMealProps) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const createMeal = useCreateMeal();
@@ -70,6 +72,16 @@ export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro }
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState<ReviewState | null>(null);
+
+  // Quick add → "Scan food": open the prepare dialog once per request (adjusted during render).
+  const [handledRequest, setHandledRequest] = useState<number | undefined>(undefined);
+  if (openRequest !== handledRequest) {
+    setHandledRequest(openRequest);
+    if (openRequest && canScan) {
+      setError(null);
+      setPreparing(true);
+    }
+  }
 
   const closePrepare = () => {
     setPhotos([]);

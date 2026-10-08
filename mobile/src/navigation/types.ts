@@ -6,7 +6,17 @@ export type AuthStackParamList = {
   ForgotPassword: undefined;
 };
 
-export type ReviewStackParamList = {
+/**
+ * The "Sections" stack holds every section: the hub (MoreHome), tasks, review, nutrition,
+ * notes, finance, account… Opened from the hub tiles, the dashboard or quick add.
+ */
+export type MoreStackParamList = {
+  MoreHome: undefined;
+  // Tasks
+  TasksHome: undefined;
+  MonthPlan: undefined;
+  Forest: { year?: number; month?: number };
+  // Review
   ReviewInbox: undefined;
   ReviewCalendar: undefined;
   Materials: undefined;
@@ -14,16 +24,10 @@ export type ReviewStackParamList = {
   MaterialEdit: { id: string };
   MaterialDetail: { id: string };
   Categories: undefined;
-};
-
-export type TasksStackParamList = {
-  TasksHome: undefined;
-  MonthPlan: undefined;
-  Forest: { year?: number; month?: number };
-};
-
-export type MoreStackParamList = {
-  MoreHome: undefined;
+  // Nutrition
+  /** openScan: timestamp from quick add — opens the food scan once per value. */
+  Fuel: { openScan?: number } | undefined;
+  // Everything else
   Rhythm: undefined;
   Notes: undefined;
   NoteCreate: undefined;
@@ -42,10 +46,13 @@ export type MoreStackParamList = {
   AdminUser: { id: string };
 };
 
+/** Former per-section stacks now live in the Sections stack; kept as aliases for screen props. */
+export type TasksStackParamList = MoreStackParamList;
+export type ReviewStackParamList = MoreStackParamList;
+
+/** Bottom bar: Home (dashboard), Add (quick-add button, no screen), Sections (everything). */
 export type AppTabParamList = {
   Today: undefined;
-  Review: NavigatorScreenParams<ReviewStackParamList>;
-  Tasks: NavigatorScreenParams<TasksStackParamList>;
-  Fuel: undefined;
+  Add: undefined;
   More: NavigatorScreenParams<MoreStackParamList>;
 };

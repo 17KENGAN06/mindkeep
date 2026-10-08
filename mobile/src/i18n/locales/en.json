@@ -46,7 +46,10 @@
     "review": "Review",
     "tasks": "Tasks",
     "fuel": "Nutrition",
-    "more": "More"
+    "more": "More",
+    "home": "Home",
+    "add": "Add",
+    "sections": "Sections"
   },
   "today": {
     "hello": "Hello, {{name}}",
@@ -1178,5 +1181,22 @@
       "help": "Help",
       "admin": "Administration"
     }
+  },
+  "quickAdd": {
+    "title": "Quick add",
+    "task": "Task for today",
+    "meal": "Meal",
+    "scan": "Scan food",
+    "water": "+1 glass of water",
+    "note": "Note",
+    "material": "Material",
+    "expense": "Expense",
+    "add": "Add task",
+    "taskDone": "Task added for today",
+    "waterDone": "Water: {{count}} / {{goal}}"
+  },
+  "hub": {
+    "tasksToday": "Today: {{count}}",
+    "reviewsDue": "Due: {{count}}"
   }
 }

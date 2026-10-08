@@ -46,7 +46,10 @@
     "review": "Ripasso",
     "tasks": "Attività",
     "fuel": "Nutrizione",
-    "more": "Altro"
+    "more": "Altro",
+    "home": "Home",
+    "add": "Aggiungi",
+    "sections": "Sezioni"
   },
   "today": {
     "hello": "Ciao, {{name}}",
@@ -1178,5 +1181,22 @@
       "help": "Aiuto",
       "admin": "Amministrazione"
     }
+  },
+  "quickAdd": {
+    "title": "Aggiunta rapida",
+    "task": "Attività per oggi",
+    "meal": "Pasto",
+    "scan": "Scansiona cibo",
+    "water": "+1 bicchiere d’acqua",
+    "note": "Nota",
+    "material": "Materiale",
+    "expense": "Spesa",
+    "add": "Aggiungi attività",
+    "taskDone": "Attività aggiunta per oggi",
+    "waterDone": "Acqua: {{count}} / {{goal}}"
+  },
+  "hub": {
+    "tasksToday": "Oggi: {{count}}",
+    "reviewsDue": "Da ripassare: {{count}}"
   }
 }

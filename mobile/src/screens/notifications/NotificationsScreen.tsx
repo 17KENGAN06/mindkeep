@@ -46,9 +46,10 @@ export function NotificationsScreen() {
       void markRead.mutateAsync(notification.id);
     }
     if (notification.materialId) {
-      tabNavigation.navigate('Review', {
+      tabNavigation.navigate('More', {
         screen: 'MaterialDetail',
         params: { id: notification.materialId },
+        initial: false,
       });
     }
   };
@@ -138,7 +139,7 @@ export function NotificationsScreen() {
                     if (!notification.isRead) {
                       void markRead.mutateAsync(notification.id);
                     }
-                    tabNavigation.navigate('Tasks', { screen: 'TasksHome' });
+                    tabNavigation.navigate('More', { screen: 'TasksHome', initial: false });
                   }}
                 />
               ) : (
@@ -146,7 +147,7 @@ export function NotificationsScreen() {
                   variant="ghost"
                   label={t('tabs.review')}
                   onPress={() =>
-                    tabNavigation.navigate('Review', { screen: 'ReviewInbox' })
+                    tabNavigation.navigate('More', { screen: 'ReviewInbox', initial: false })
                   }
                 />
               )}

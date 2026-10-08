@@ -46,7 +46,10 @@
     "review": "Kertaus",
     "tasks": "Tehtävät",
     "fuel": "Ravinto",
-    "more": "Lisää"
+    "more": "Lisää",
+    "home": "Koti",
+    "add": "Lisää",
+    "sections": "Osiot"
   },
   "today": {
     "hello": "Hei, {{name}}",
@@ -1178,5 +1181,22 @@
       "help": "Ohje",
       "admin": "Ylläpito"
     }
+  },
+  "quickAdd": {
+    "title": "Pikalisäys",
+    "task": "Tehtävä tälle päivälle",
+    "meal": "Ateria",
+    "scan": "Skannaa ruoka",
+    "water": "+1 lasi vettä",
+    "note": "Muistiinpano",
+    "material": "Materiaali",
+    "expense": "Meno",
+    "add": "Lisää tehtävä",
+    "taskDone": "Tehtävä lisätty tälle päivälle",
+    "waterDone": "Vesi: {{count}} / {{goal}}"
+  },
+  "hub": {
+    "tasksToday": "Tänään: {{count}}",
+    "reviewsDue": "Odottaa: {{count}}"
   }
 }

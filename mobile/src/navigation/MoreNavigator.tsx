@@ -17,6 +17,16 @@ import { BlogScreen } from '../screens/blog/BlogScreen';
 import { BlogArticleScreen } from '../screens/blog/BlogArticleScreen';
 import { AdminScreen } from '../screens/admin/AdminScreen';
 import { AdminUserScreen } from '../screens/admin/AdminUserScreen';
+import { FuelScreen } from '../screens/FuelScreen';
+import { TasksScreen } from '../screens/TasksScreen';
+import { MonthPlanScreen } from '../screens/tasks/MonthPlanScreen';
+import { ForestScreen } from '../screens/tasks/ForestScreen';
+import { CategoriesScreen } from '../screens/review/CategoriesScreen';
+import { MaterialFormScreen } from '../screens/review/MaterialFormScreen';
+import { MaterialDetailScreen } from '../screens/review/MaterialDetailScreen';
+import { MaterialsScreen } from '../screens/review/MaterialsScreen';
+import { ReviewCalendarScreen } from '../screens/review/ReviewCalendarScreen';
+import { ReviewInboxScreen } from '../screens/review/ReviewInboxScreen';
 import type { MoreStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<MoreStackParamList>();
@@ -37,6 +47,18 @@ export function MoreNavigator() {
       }}
     >
       <Stack.Screen name="MoreHome" component={MoreScreen} options={{ headerShown: false }} />
+      {/* Section home screens keep their own big title; the header only carries the back button. */}
+      <Stack.Screen name="TasksHome" component={TasksScreen} options={{ title: '' }} />
+      <Stack.Screen name="MonthPlan" component={MonthPlanScreen} options={{ title: t('tasks.planTitle') }} />
+      <Stack.Screen name="Forest" component={ForestScreen} options={{ title: t('forest.pageTitle') }} />
+      <Stack.Screen name="ReviewInbox" component={ReviewInboxScreen} options={{ title: '' }} />
+      <Stack.Screen name="ReviewCalendar" component={ReviewCalendarScreen} options={{ title: t('calendar.title') }} />
+      <Stack.Screen name="Materials" component={MaterialsScreen} options={{ title: t('materials.title') }} />
+      <Stack.Screen name="MaterialCreate" component={MaterialFormScreen} options={{ title: t('materials.createTitle') }} />
+      <Stack.Screen name="MaterialEdit" component={MaterialFormScreen} options={{ title: t('materials.editTitle') }} />
+      <Stack.Screen name="MaterialDetail" component={MaterialDetailScreen} options={{ title: t('materials.detailTitle') }} />
+      <Stack.Screen name="Categories" component={CategoriesScreen} options={{ title: t('categories.title') }} />
+      <Stack.Screen name="Fuel" component={FuelScreen} options={{ title: '' }} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: t('settings.title') }} />
       <Stack.Screen name="Rhythm" component={RhythmScreen} options={{ title: t('rhythm.title') }} />
       <Stack.Screen name="Notes" component={NotesScreen} options={{ title: t('notes.title') }} />

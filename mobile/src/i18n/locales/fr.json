@@ -46,7 +46,10 @@
     "review": "Révision",
     "tasks": "Tâches",
     "fuel": "Nutrition",
-    "more": "Plus"
+    "more": "Plus",
+    "home": "Accueil",
+    "add": "Ajouter",
+    "sections": "Rubriques"
   },
   "today": {
     "hello": "Bonjour, {{name}}",
@@ -1178,5 +1181,22 @@
       "help": "Aide",
       "admin": "Administration"
     }
+  },
+  "quickAdd": {
+    "title": "Ajout rapide",
+    "task": "Tâche pour aujourd’hui",
+    "meal": "Repas",
+    "scan": "Scanner un repas",
+    "water": "+1 verre d’eau",
+    "note": "Note",
+    "material": "Matériel",
+    "expense": "Dépense",
+    "add": "Ajouter la tâche",
+    "taskDone": "Tâche ajoutée pour aujourd’hui",
+    "waterDone": "Eau : {{count}} / {{goal}}"
+  },
+  "hub": {
+    "tasksToday": "Aujourd’hui : {{count}}",
+    "reviewsDue": "À revoir : {{count}}"
   }
 }

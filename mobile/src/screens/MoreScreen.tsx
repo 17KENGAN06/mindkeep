@@ -10,6 +10,9 @@ import { userHasModule } from '../config/appModules';
 import { isProAccount } from '../features/billing/planLimit';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
+import { useDashboardStatistics } from '../features/statistics/useStatistics';
+import { useTodayTasks } from '../features/tasks/useDailyTasks';
+import { useAccountToday } from '../features/time/useAccountToday';
 import { useTheme } from '../features/theme/useTheme';
 import type { MoreStackParamList } from '../navigation/types';
 
@@ -73,6 +76,39 @@ function MenuGroup({ title, items }: { title: string; items: MenuItem[] }) {
   );
 }
 
+type Tile = { key: string; icon: AppIconName; title: string; meta?: string; onPress: () => void };
+
+/** Big two-column tiles for the sections people open most (the hub's main block). */
+function TileGrid({ tiles }: { tiles: Tile[] }) {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.tiles}>
+      {tiles.map((tile) => (
+        <Pressable
+          key={tile.key}
+          accessibilityRole="button"
+          onPress={tile.onPress}
+          style={({ pressed }) => [
+            styles.tile,
+            { backgroundColor: colors.panel, borderColor: colors.line },
+            pressed && { backgroundColor: `${colors.brand}12` },
+          ]}
+        >
+          <View style={[styles.tileIcon, { backgroundColor: `${colors.brand}22` }]}>
+            <AppIcon name={tile.icon} color={colors.brand} size={22} />
+          </View>
+          <Text style={[styles.tileTitle, { color: colors.ink }]} numberOfLines={1}>
+            {tile.title}
+          </Text>
+          <Text style={[styles.tileMeta, { color: tile.meta ? colors.brand : colors.muted }]} numberOfLines={1}>
+            {tile.meta ?? ' '}
+          </Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+}
+
 function ProfileCard({ children, onPress }: { children: ReactNode; onPress: () => void }) {
   const { colors } = useTheme();
   return (
@@ -101,18 +137,30 @@ export function MoreScreen() {
     ? t(user?.plan === 'PLUS' ? 'billing.plusLabel' : 'billing.proLabel')
     : t('billing.freeLabel');
 
-  const modules: MenuItem[] = [
-    userHasModule(user, 'notes')
-      ? { key: 'notes', icon: 'document-text-outline', title: t('notes.title'), onPress: () => navigation.navigate('Notes') }
+  const { today } = useAccountToday();
+  const showTasks = userHasModule(user, 'tasks');
+  const showReview = userHasModule(user, 'review');
+  const tasksQuery = useTodayTasks(today, showTasks);
+  const statsQuery = useDashboardStatistics();
+  const pendingTasks = tasksQuery.data?.totals?.pending ?? 0;
+  const dueReviews = (statsQuery.data?.stats.todayReminders ?? 0) + (statsQuery.data?.stats.overdueReminders ?? 0);
+  // Opens a section inside this stack (the hub stays underneath for Back).
+  const open = (screen: 'TasksHome' | 'ReviewInbox' | 'Fuel' | 'Notes' | 'Rhythm' | 'Finance' | 'Statistics') =>
+    navigation.navigate(screen);
+
+  const tiles: Tile[] = [
+    showTasks
+      ? { key: 'tasks', icon: 'checkbox-outline', title: t('tabs.tasks'), meta: pendingTasks > 0 ? t('hub.tasksToday', { count: pendingTasks }) : undefined, onPress: () => open('TasksHome') }
       : null,
-    userHasModule(user, 'habits')
-      ? { key: 'rhythm', icon: 'repeat-outline', title: t('rhythm.title'), onPress: () => navigation.navigate('Rhythm') }
+    showReview
+      ? { key: 'review', icon: 'sync-outline', title: t('tabs.review'), meta: dueReviews > 0 ? t('hub.reviewsDue', { count: dueReviews }) : undefined, onPress: () => open('ReviewInbox') }
       : null,
-    userHasModule(user, 'finance')
-      ? { key: 'finance', icon: 'wallet-outline', title: t('finance.title'), onPress: () => navigation.navigate('Finance') }
-      : null,
-    { key: 'statistics', icon: 'stats-chart-outline', title: t('statistics.title'), onPress: () => navigation.navigate('Statistics') },
-  ].filter((item): item is MenuItem => item !== null);
+    userHasModule(user, 'nutrition') ? { key: 'fuel', icon: 'restaurant-outline', title: t('tabs.fuel'), onPress: () => open('Fuel') } : null,
+    userHasModule(user, 'notes') ? { key: 'notes', icon: 'document-text-outline', title: t('notes.title'), onPress: () => open('Notes') } : null,
+    userHasModule(user, 'habits') ? { key: 'rhythm', icon: 'repeat-outline', title: t('rhythm.title'), onPress: () => open('Rhythm') } : null,
+    userHasModule(user, 'finance') ? { key: 'finance', icon: 'wallet-outline', title: t('finance.title'), onPress: () => open('Finance') } : null,
+    { key: 'statistics', icon: 'stats-chart-outline', title: t('statistics.title'), onPress: () => open('Statistics') },
+  ].filter((tile): tile is Tile => tile !== null);
 
   const account: MenuItem[] = [
     {
@@ -147,7 +195,7 @@ export function MoreScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['top']}>
       <ScrollView style={styles.root} contentContainerStyle={styles.content}>
-        <Text style={[styles.title, { color: colors.ink }]}>{t('tabs.more')}</Text>
+        <Text style={[styles.title, { color: colors.ink }]}>{t('tabs.sections')}</Text>
 
         <ProfileCard onPress={() => navigation.navigate('Account')}>
           <BrandMark size={44} />
@@ -168,7 +216,7 @@ export function MoreScreen() {
           </View>
         </ProfileCard>
 
-        <MenuGroup title={t('more.sections.modules')} items={modules} />
+        <TileGrid tiles={tiles} />
         <MenuGroup title={t('more.sections.account')} items={account} />
         <MenuGroup title={t('more.sections.help')} items={help} />
         <MenuGroup title={t('more.sections.admin')} items={admin} />
@@ -204,6 +252,19 @@ const styles = StyleSheet.create({
   email: { fontSize: 13, marginTop: 2 },
   planChip: { borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 },
   planText: { fontSize: 13, fontWeight: '700' },
+  tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  tile: {
+    borderRadius: 20,
+    borderWidth: 1,
+    flexBasis: '47%',
+    flexGrow: 1,
+    gap: 6,
+    minHeight: 112,
+    padding: 14,
+  },
+  tileIcon: { alignItems: 'center', borderRadius: 12, height: 40, justifyContent: 'center', marginBottom: 4, width: 40 },
+  tileTitle: { fontSize: 16, fontWeight: '700' },
+  tileMeta: { fontSize: 13, fontWeight: '600' },
   group: { gap: 8 },
   groupTitle: {
     fontSize: 12,

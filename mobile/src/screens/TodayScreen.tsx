@@ -220,7 +220,7 @@ export function TodayScreen() {
                 {t('today.hello', { name: user?.name ?? '' })}
               </Text>
               <Pressable
-                onPress={() => navigation.navigate('More', { screen: 'Account' })}
+                onPress={() => navigation.navigate('More', { screen: 'Account', initial: false })}
                 style={[
                   styles.planChip,
                   entitled
@@ -248,7 +248,7 @@ export function TodayScreen() {
             title={t('dashboard.cards.tasksToday')}
             valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
             percent={todayTotal > 0 ? (todayDone / todayTotal) * 100 : 0}
-            onPress={() => navigation.navigate('Tasks', { screen: 'TasksHome' })}
+            onPress={() => navigation.navigate('More', { screen: 'TasksHome', initial: false })}
           />
           ) : null}
           {showReview ? (
@@ -259,7 +259,7 @@ export function TodayScreen() {
               total: reviewsPlanned,
             })}
             percent={reviewsPlanned > 0 ? (completedReviews / reviewsPlanned) * 100 : 0}
-            onPress={() => navigation.navigate('Review', { screen: 'ReviewInbox' })}
+            onPress={() => navigation.navigate('More', { screen: 'ReviewInbox', initial: false })}
           />
           ) : null}
           {showNutrition ? (
@@ -267,7 +267,7 @@ export function TodayScreen() {
             title={t('dashboard.cards.caloriesToday')}
             valueText={`${eaten} / ${calorieGoal}`}
             percent={(eaten / Math.max(calorieGoal, 1)) * 100}
-            onPress={() => navigation.navigate('Fuel')}
+            onPress={() => navigation.navigate('More', { screen: 'Fuel', initial: false })}
           />
           ) : null}
           {showNutrition ? (
@@ -275,7 +275,7 @@ export function TodayScreen() {
             title={t('dashboard.cards.waterToday')}
             valueText={`${glasses} / ${waterGoal} ${t('fuel.glasses')}`}
             percent={(glasses / Math.max(waterGoal, 1)) * 100}
-            onPress={() => navigation.navigate('Fuel')}
+            onPress={() => navigation.navigate('More', { screen: 'Fuel', initial: false })}
           />
           ) : null}
         </View>
@@ -284,7 +284,7 @@ export function TodayScreen() {
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.upcomingTasks')}</Text>
-            <Pressable onPress={() => navigation.navigate('Tasks', { screen: 'TasksHome' })}>
+            <Pressable onPress={() => navigation.navigate('More', { screen: 'TasksHome', initial: false })}>
               <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.allTasks')}</Text>
             </Pressable>
           </View>
@@ -340,7 +340,7 @@ export function TodayScreen() {
 
         {showReview ? (
         <Pressable
-          onPress={() => navigation.navigate('Review', { screen: 'ReviewInbox' })}
+          onPress={() => navigation.navigate('More', { screen: 'ReviewInbox', initial: false })}
           style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
         >
           <View style={styles.cardHead}>
@@ -358,7 +358,7 @@ export function TodayScreen() {
         ) : null}
 
         <Pressable
-          onPress={() => navigation.navigate('More', { screen: 'Notifications' })}
+          onPress={() => navigation.navigate('More', { screen: 'Notifications', initial: false })}
           style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
         >
           <View style={styles.cardHead}>
@@ -374,7 +374,7 @@ export function TodayScreen() {
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.fuelTitle')}</Text>
-            <Pressable onPress={() => navigation.navigate('Fuel')}>
+            <Pressable onPress={() => navigation.navigate('More', { screen: 'Fuel', initial: false })}>
               <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.allFuel')}</Text>
             </Pressable>
           </View>
@@ -490,7 +490,7 @@ export function TodayScreen() {
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.recentTitle')}</Text>
-            <Pressable onPress={() => navigation.navigate('Review', { screen: 'Materials' })}>
+            <Pressable onPress={() => navigation.navigate('More', { screen: 'Materials', initial: false })}>
               <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.viewAllMaterials')}</Text>
             </Pressable>
           </View>
@@ -501,7 +501,7 @@ export function TodayScreen() {
               <Pressable
                 key={material.id}
                 onPress={() =>
-                  navigation.navigate('Review', { screen: 'MaterialDetail', params: { id: material.id } })
+                  navigation.navigate('More', { screen: 'MaterialDetail', params: { id: material.id }, initial: false })
                 }
                 style={[styles.materialRow, { borderColor: colors.line }]}
               >
@@ -524,7 +524,7 @@ export function TodayScreen() {
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           <View style={styles.cardHead}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.financeTitle')}</Text>
-            <Pressable onPress={() => navigation.navigate('More', { screen: 'Finance' })}>
+            <Pressable onPress={() => navigation.navigate('More', { screen: 'Finance', initial: false })}>
               <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.allFinance')}</Text>
             </Pressable>
           </View>

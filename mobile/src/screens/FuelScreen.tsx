@@ -18,9 +18,9 @@ import { MonthGrid } from '../components/MonthGrid';
 import { AppButton, Badge } from '../components/ui';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import { useAuth } from '../features/auth/useAuth';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import type { AppTabParamList } from '../navigation/types';
+import type { AppTabParamList, MoreStackParamList } from '../navigation/types';
 import { StepsCheck, StepsMonthGrid, canTrackSteps } from '../components/StepsTracker';
 import { WaterGlasses } from '../components/WaterGlasses';
 import { WeightTrendChart } from '../components/WeightTrendChart';
@@ -86,8 +86,11 @@ export function FuelScreen() {
   const { user } = useAuth();
   const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
   const pro = hasAutomation(user);
+  // Quick add "Scan food" passes a fresh timestamp; FoodScanMeal opens once per value.
+  const route = useRoute<RouteProp<MoreStackParamList, 'Fuel'>>();
+  const openScanRequest = route.params?.openScan;
   // Plans live on Account; store builds have no purchase path (see config/env.ts).
-  const onNeedPro = env.storeBuild ? undefined : () => navigation.navigate('More', { screen: 'Account' });
+  const onNeedPro = env.storeBuild ? undefined : () => navigation.navigate('More', { screen: 'Account', initial: false });
   const { today, timeZone, year: todayYear, month: todayMonth } = useAccountToday();
   const [year, setYear] = useState(todayYear);
   const [month, setMonth] = useState(todayMonth);
@@ -428,7 +431,7 @@ export function FuelScreen() {
 
   if (periodQuery.isLoading && !periodQuery.data) {
     return (
-      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -437,7 +440,7 @@ export function FuelScreen() {
   }
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView
           contentContainerStyle={styles.content}
@@ -578,6 +581,7 @@ export function FuelScreen() {
                 canScan={pro}
                 macrosEnabled={macrosEnabled}
                 onNeedPro={onNeedPro}
+                openRequest={openScanRequest}
               />
             )}
             <MealKindPicker value={mealKind} pro={pro} onChange={setMealKind} onNeedPro={onNeedPro} />
