@@ -1,3 +1,4 @@
+import { Fragment, type ReactNode } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -16,47 +17,75 @@ const SITE_URLS = {
   privacy: 'https://mindkeep.cloud/privacy',
 } as const;
 
-function MenuCard({
-  icon,
-  title,
-  hint,
-  badge,
-  first,
-  onPress,
-}: {
+type MenuItem = {
+  key: string;
   icon: AppIconName;
   title: string;
-  hint: string;
+  /** Short value on the right (plan, count) instead of a long hint. */
+  value?: string;
   badge?: string | number;
-  first?: boolean;
+  external?: boolean;
   onPress: () => void;
-}) {
+};
+
+/** One grouped card of rows (settings-style), like the site's grouped mobile menu. */
+function MenuGroup({ title, items }: { title: string; items: MenuItem[] }) {
+  const { colors } = useTheme();
+  if (items.length === 0) return null;
+  return (
+    <View style={styles.group}>
+      <Text style={[styles.groupTitle, { color: colors.muted }]}>{title}</Text>
+      <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+        {items.map((item, index) => (
+          <Fragment key={item.key}>
+            {index > 0 ? <View style={[styles.divider, { backgroundColor: colors.line }]} /> : null}
+            <Pressable
+              accessibilityRole="button"
+              onPress={item.onPress}
+              style={({ pressed }) => [styles.row, pressed && { backgroundColor: `${colors.brand}12` }]}
+            >
+              <View style={[styles.iconWrap, { backgroundColor: `${colors.brand}22` }]}>
+                <AppIcon name={item.icon} color={colors.brand} size={19} />
+              </View>
+              <Text style={[styles.rowTitle, { color: colors.ink }]} numberOfLines={1}>
+                {item.title}
+              </Text>
+              {item.badge ? (
+                <View style={[styles.badge, { backgroundColor: colors.danger }]}>
+                  <Text style={styles.badgeText}>{item.badge}</Text>
+                </View>
+              ) : null}
+              {item.value ? (
+                <Text style={[styles.rowValue, { color: colors.muted }]} numberOfLines={1}>
+                  {item.value}
+                </Text>
+              ) : null}
+              <AppIcon
+                name={item.external ? 'open-outline' : 'chevron-forward'}
+                color={colors.muted}
+                size={18}
+              />
+            </Pressable>
+          </Fragment>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function ProfileCard({ children, onPress }: { children: ReactNode; onPress: () => void }) {
   const { colors } = useTheme();
   return (
     <Pressable
+      accessibilityRole="button"
       onPress={onPress}
-      style={[
-        first ? styles.menuItem : styles.menuItemTight,
+      style={({ pressed }) => [
+        styles.profile,
         { backgroundColor: colors.panel, borderColor: colors.line },
+        pressed && { backgroundColor: `${colors.brand}12` },
       ]}
     >
-      <View style={styles.menuRow}>
-        <View style={[styles.iconWrap, { backgroundColor: `${colors.brand}22` }]}>
-          <AppIcon name={icon} color={colors.brand} size={20} />
-        </View>
-        <View style={styles.menuCopy}>
-          <View style={styles.menuHead}>
-            <Text style={[styles.menuTitle, { color: colors.ink }]}>{title}</Text>
-            {badge ? (
-              <View style={[styles.badge, { backgroundColor: colors.danger }]}>
-                <Text style={styles.badgeText}>{badge}</Text>
-              </View>
-            ) : null}
-          </View>
-          <Text style={[styles.menuHint, { color: colors.muted }]}>{hint}</Text>
-        </View>
-        <AppIcon name="chevron-forward" color={colors.muted} size={18} />
-      </View>
+      {children}
     </Pressable>
   );
 }
@@ -68,107 +97,87 @@ export function MoreScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
   const unreadQuery = useUnreadNotificationsCount();
   const unread = unreadQuery.data ?? 0;
+  const planLabel = isProAccount(user)
+    ? t(user?.plan === 'PLUS' ? 'billing.plusLabel' : 'billing.proLabel')
+    : t('billing.freeLabel');
+
+  const modules: MenuItem[] = [
+    userHasModule(user, 'notes')
+      ? { key: 'notes', icon: 'document-text-outline', title: t('notes.title'), onPress: () => navigation.navigate('Notes') }
+      : null,
+    userHasModule(user, 'habits')
+      ? { key: 'rhythm', icon: 'repeat-outline', title: t('rhythm.title'), onPress: () => navigation.navigate('Rhythm') }
+      : null,
+    userHasModule(user, 'finance')
+      ? { key: 'finance', icon: 'wallet-outline', title: t('finance.title'), onPress: () => navigation.navigate('Finance') }
+      : null,
+    { key: 'statistics', icon: 'stats-chart-outline', title: t('statistics.title'), onPress: () => navigation.navigate('Statistics') },
+  ].filter((item): item is MenuItem => item !== null);
+
+  const account: MenuItem[] = [
+    {
+      key: 'notifications',
+      icon: 'notifications-outline',
+      title: t('notifications.title'),
+      badge: unread > 0 ? (unread > 99 ? '99+' : unread) : undefined,
+      onPress: () => navigation.navigate('Notifications'),
+    },
+    { key: 'account', icon: 'person-outline', title: t('auth.accountTitle'), value: planLabel, onPress: () => navigation.navigate('Account') },
+    { key: 'settings', icon: 'settings-outline', title: t('settings.title'), onPress: () => navigation.navigate('Settings') },
+  ];
+
+  const help: MenuItem[] = [
+    { key: 'guide', icon: 'help-circle-outline', title: t('common.guide'), onPress: () => navigation.navigate('Guide') },
+    { key: 'blog', icon: 'newspaper-outline', title: t('blog.title'), onPress: () => navigation.navigate('Blog') },
+    { key: 'contact', icon: 'mail-outline', title: t('common.contact'), onPress: () => navigation.navigate('Contact') },
+    {
+      key: 'privacy',
+      icon: 'lock-closed-outline',
+      title: t('common.privacy'),
+      external: true,
+      onPress: () => void Linking.openURL(SITE_URLS.privacy),
+    },
+  ];
+
+  const admin: MenuItem[] =
+    user?.role === 'ADMIN'
+      ? [{ key: 'admin', icon: 'shield-outline', title: t('admin.title'), onPress: () => navigation.navigate('Admin') }]
+      : [];
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <ScrollView style={[styles.root, { backgroundColor: colors.bg }]} contentContainerStyle={styles.content}>
-        <View style={styles.profile}>
-          <BrandMark size={52} />
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['top']}>
+      <ScrollView style={styles.root} contentContainerStyle={styles.content}>
+        <Text style={[styles.title, { color: colors.ink }]}>{t('tabs.more')}</Text>
+
+        <ProfileCard onPress={() => navigation.navigate('Account')}>
+          <BrandMark size={44} />
           <View style={styles.profileCopy}>
-            <Text style={[styles.title, { color: colors.ink }]}>{t('tabs.more')}</Text>
-            {user ? <Text style={[styles.meta, { color: colors.ink }]}>{user.name}</Text> : null}
-            {user ? <Text style={[styles.muted, { color: colors.muted }]}>{user.email}</Text> : null}
+            {user ? (
+              <Text style={[styles.name, { color: colors.ink }]} numberOfLines={1}>
+                {user.name}
+              </Text>
+            ) : null}
+            {user ? (
+              <Text style={[styles.email, { color: colors.muted }]} numberOfLines={1}>
+                {user.email}
+              </Text>
+            ) : null}
           </View>
-        </View>
+          <View style={[styles.planChip, { backgroundColor: `${colors.brand}22` }]}>
+            <Text style={[styles.planText, { color: colors.brand }]}>{planLabel}</Text>
+          </View>
+        </ProfileCard>
 
-        <MenuCard
-          first
-          icon="settings-outline"
-          title={t('settings.title')}
-          hint={t('settings.menuHint')}
-          onPress={() => navigation.navigate('Settings')}
-        />
-        {userHasModule(user, 'habits') ? (
-        <MenuCard
-          icon="repeat-outline"
-          title={t('rhythm.title')}
-          hint={t('rhythm.menuHint')}
-          onPress={() => navigation.navigate('Rhythm')}
-        />
-        ) : null}
-        {userHasModule(user, 'notes') ? (
-        <MenuCard
-          icon="document-text-outline"
-          title={t('notes.title')}
-          hint={t('notes.menuHint')}
-          onPress={() => navigation.navigate('Notes')}
-        />
-        ) : null}
-        <MenuCard
-          icon="notifications-outline"
-          title={t('notifications.title')}
-          hint={t('notifications.menuHint')}
-          badge={unread > 0 ? (unread > 99 ? '99+' : unread) : undefined}
-          onPress={() => navigation.navigate('Notifications')}
-        />
-        {userHasModule(user, 'finance') ? (
-        <MenuCard
-          icon="wallet-outline"
-          title={t('finance.title')}
-          hint={t('finance.menuHint')}
-          onPress={() => navigation.navigate('Finance')}
-        />
-        ) : null}
-        <MenuCard
-          icon="stats-chart-outline"
-          title={t('statistics.title')}
-          hint={t('statistics.subtitle')}
-          onPress={() => navigation.navigate('Statistics')}
-        />
-        <MenuCard
-          icon="newspaper-outline"
-          title={t('blog.title')}
-          hint={t('blog.subtitle')}
-          onPress={() => navigation.navigate('Blog')}
-        />
-        {user?.role === 'ADMIN' ? (
-          <MenuCard
-            icon="shield-outline"
-            title={t('admin.title')}
-            hint={t('admin.subtitle')}
-            onPress={() => navigation.navigate('Admin')}
-          />
-        ) : null}
-        <MenuCard
-          icon="person-outline"
-          title={t('auth.accountTitle')}
-          hint={
-            isProAccount(user)
-              ? t(user?.plan === 'PLUS' ? 'billing.plusLabel' : 'billing.proLabel')
-              : t('billing.freeLabel')
-          }
-          onPress={() => navigation.navigate('Account')}
-        />
-        <MenuCard
-          icon="help-circle-outline"
-          title={t('common.guide')}
-          hint={t('common.guideHint')}
-          onPress={() => navigation.navigate('Guide')}
-        />
-        <MenuCard
-          icon="mail-outline"
-          title={t('common.contact')}
-          hint={t('contact.menuHint')}
-          onPress={() => navigation.navigate('Contact')}
-        />
-        <MenuCard
-          icon="lock-closed-outline"
-          title={t('common.privacy')}
-          hint={t('common.safariHint')}
-          onPress={() => void Linking.openURL(SITE_URLS.privacy)}
-        />
+        <MenuGroup title={t('more.sections.modules')} items={modules} />
+        <MenuGroup title={t('more.sections.account')} items={account} />
+        <MenuGroup title={t('more.sections.help')} items={help} />
+        <MenuGroup title={t('more.sections.admin')} items={admin} />
 
-        <Pressable onPress={() => void logout()} style={[styles.logout, { borderColor: colors.line }]}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => void logout()}
+          style={[styles.logout, { backgroundColor: colors.panel, borderColor: colors.line }]}
+        >
           <AppIcon name="log-out-outline" color={colors.danger} size={18} />
           <Text style={[styles.logoutText, { color: colors.danger }]}>{t('common.logout')}</Text>
         </Pressable>
@@ -180,65 +189,58 @@ export function MoreScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   root: { flex: 1 },
-  content: { padding: 24, paddingBottom: 40 },
-  profile: { alignItems: 'center', flexDirection: 'row', gap: 14 },
-  profileCopy: { flex: 1 },
+  content: { gap: 22, paddingBottom: 32, paddingHorizontal: 20, paddingTop: 12 },
   title: { fontSize: 28, fontWeight: '700' },
-  meta: { fontSize: 16, marginTop: 6 },
-  muted: { fontSize: 14, marginTop: 4 },
-  menuItem: {
-    borderRadius: 16,
-    borderWidth: 1,
-    marginTop: 28,
-    padding: 16,
-  },
-  menuItemTight: {
-    borderRadius: 16,
-    borderWidth: 1,
-    marginTop: 12,
-    padding: 16,
-  },
-  menuRow: { alignItems: 'center', flexDirection: 'row', gap: 12 },
-  iconWrap: {
+  profile: {
     alignItems: 'center',
-    borderRadius: 12,
-    height: 36,
-    justifyContent: 'center',
-    width: 36,
-  },
-  menuCopy: { flex: 1 },
-  menuHead: { alignItems: 'center', flexDirection: 'row', gap: 8 },
-  menuTitle: { flex: 1, fontSize: 17, fontWeight: '700' },
-  menuHint: { fontSize: 13, marginTop: 4 },
-  badge: {
-    borderRadius: 999,
-    minWidth: 22,
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-  },
-  badgeText: { color: '#fff', fontSize: 12, fontWeight: '700', textAlign: 'center' },
-  section: { fontSize: 13, marginTop: 32, marginBottom: 8 },
-  sectionHint: { fontSize: 13, marginBottom: 10 },
-  currentZone: { fontSize: 14, fontWeight: '600', marginBottom: 10 },
-  row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: {
-    alignItems: 'center',
-    borderRadius: 999,
+    borderRadius: 20,
     borderWidth: 1,
     flexDirection: 'row',
-    gap: 6,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    gap: 12,
+    padding: 14,
   },
+  profileCopy: { flex: 1, minWidth: 0 },
+  name: { fontSize: 17, fontWeight: '700' },
+  email: { fontSize: 13, marginTop: 2 },
+  planChip: { borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 },
+  planText: { fontSize: 13, fontWeight: '700' },
+  group: { gap: 8 },
+  groupTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.6,
+    paddingHorizontal: 4,
+    textTransform: 'uppercase',
+  },
+  card: { borderRadius: 18, borderWidth: 1, overflow: 'hidden' },
+  divider: { height: StyleSheet.hairlineWidth, marginLeft: 62 },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 12,
+    minHeight: 56,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  iconWrap: {
+    alignItems: 'center',
+    borderRadius: 10,
+    height: 34,
+    justifyContent: 'center',
+    width: 34,
+  },
+  rowTitle: { flex: 1, fontSize: 16, fontWeight: '600' },
+  rowValue: { fontSize: 14, maxWidth: 110 },
+  badge: { borderRadius: 999, minWidth: 22, paddingHorizontal: 7, paddingVertical: 2 },
+  badgeText: { color: '#fff', fontSize: 12, fontWeight: '700', textAlign: 'center' },
   logout: {
     alignItems: 'center',
-    borderRadius: 14,
+    borderRadius: 18,
     borderWidth: 1,
     flexDirection: 'row',
     gap: 8,
     justifyContent: 'center',
-    marginTop: 40,
-    paddingVertical: 14,
+    minHeight: 52,
   },
   logoutText: { fontSize: 16, fontWeight: '600' },
 });

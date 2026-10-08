@@ -1170,5 +1170,13 @@
         "body": "25 opérations / mois · repas 7 jours · 2 appareils"
       }
     }
+  },
+  "more": {
+    "sections": {
+      "modules": "Rubriques",
+      "account": "Compte",
+      "help": "Aide",
+      "admin": "Administration"
+    }
   }
 }

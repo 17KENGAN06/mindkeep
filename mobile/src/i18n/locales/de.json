@@ -1170,5 +1170,13 @@
         "body": "25 Finanzeinträge / Monat · Mahlzeiten 7 Tage · 2 Geräte"
       }
     }
+  },
+  "more": {
+    "sections": {
+      "modules": "Bereiche",
+      "account": "Konto",
+      "help": "Hilfe",
+      "admin": "Verwaltung"
+    }
   }
 }

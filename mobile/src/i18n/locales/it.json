@@ -1170,5 +1170,13 @@
         "body": "25 movimenti / mese · pasti 7 giorni · 2 dispositivi"
       }
     }
+  },
+  "more": {
+    "sections": {
+      "modules": "Sezioni",
+      "account": "Account",
+      "help": "Aiuto",
+      "admin": "Amministrazione"
+    }
   }
 }

@@ -1170,5 +1170,13 @@
         "body": "25 movimientos / mes · comidas 7 días · 2 dispositivos"
       }
     }
+  },
+  "more": {
+    "sections": {
+      "modules": "Secciones",
+      "account": "Cuenta",
+      "help": "Ayuda",
+      "admin": "Administración"
+    }
   }
 }

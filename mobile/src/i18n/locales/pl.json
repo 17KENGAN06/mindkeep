@@ -1170,5 +1170,13 @@
         "body": "25 wpisów finansów / miesiąc · posiłki 7 dni · 2 urządzenia"
       }
     }
+  },
+  "more": {
+    "sections": {
+      "modules": "Sekcje",
+      "account": "Konto",
+      "help": "Pomoc",
+      "admin": "Administracja"
+    }
   }
 }

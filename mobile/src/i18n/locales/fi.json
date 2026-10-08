@@ -1170,5 +1170,13 @@
         "body": "25 talousmerkintää / kk · ateriat 7 pv · 2 laitetta"
       }
     }
+  },
+  "more": {
+    "sections": {
+      "modules": "Osiot",
+      "account": "Tili",
+      "help": "Ohje",
+      "admin": "Ylläpito"
+    }
   }
 }
