@@ -924,7 +924,9 @@
       "users": "Utilisateurs",
       "admins": "Admins",
       "materials": "Fiches",
-      "reminders": "Rappels"
+      "reminders": "Rappels",
+      "subscribers": "Abonnés",
+      "beta": "Bêta-testeurs"
     },
     "columns": {
       "name": "Nom",
@@ -987,6 +989,30 @@
       "completed": "a terminé",
       "logged": "a consigné",
       "checked": "s'est pointé"
+    },
+    "subscribersTitle": "Abonnés payants",
+    "subscribersHint": "Comptes avec un abonnement Stripe actif.",
+    "subscribersEmpty": "Pas encore d’abonnés payants",
+    "betaTitle": "Bêta-testeurs",
+    "betaHint": "Cherchez un utilisateur par nom ou e-mail. Il aura l’accès Pro complet, et le compte affichera Bêta-test — pas Admin.",
+    "betaEmpty": "Pas encore de bêta-testeurs",
+    "betaGrant": "Donner l’accès bêta",
+    "betaRevoke": "Retirer",
+    "betaSelect": "Utilisateur",
+    "betaSelectPlaceholder": "Nom ou e-mail",
+    "betaSearchEmpty": "Aucun résultat",
+    "auditTitle": "Journal des connexions",
+    "auditHint": "Qui s'est connecté. Les e-mails et mots de passe n'y figurent pas.",
+    "auditEmpty": "Aucun événement pour l'instant",
+    "auditAnonymous": "Compte inconnu",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Connecté",
+      "LOGIN_FAILURE": "Échec de connexion",
+      "GOOGLE_LOGIN": "Connecté avec Google",
+      "PASSWORD_CHANGED": "Mot de passe modifié",
+      "PASSWORD_RESET": "Mot de passe réinitialisé",
+      "BETA_GRANTED": "Accès bêta accordé",
+      "BETA_REVOKED": "Accès bêta retiré"
     }
   },
   "statistics": {

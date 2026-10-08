@@ -924,7 +924,9 @@
       "users": "Käyttäjät",
       "admins": "Adminit",
       "materials": "Materiaalit",
-      "reminders": "Muistutukset"
+      "reminders": "Muistutukset",
+      "subscribers": "Tilaajat",
+      "beta": "Beta-testaajat"
     },
     "columns": {
       "name": "Nimi",
@@ -987,6 +989,30 @@
       "completed": "valmisti",
       "logged": "kirjasi",
       "checked": "merkitsi"
+    },
+    "subscribersTitle": "Maksavat tilaajat",
+    "subscribersHint": "Tilit, joilla on aktiivinen Stripe-tilaus.",
+    "subscribersEmpty": "Ei vielä maksavia tilaajia",
+    "betaTitle": "Beta-testaajat",
+    "betaHint": "Hae käyttäjää nimellä tai sähköpostilla. Hän saa täyden Pro-oikeuden, ja Tilillä näkyy Beta-testi — ei Admin.",
+    "betaEmpty": "Ei vielä beta-testaajia",
+    "betaGrant": "Anna beta-oikeus",
+    "betaRevoke": "Poista",
+    "betaSelect": "Käyttäjä",
+    "betaSelectPlaceholder": "Nimi tai sähköposti",
+    "betaSearchEmpty": "Ei osumia",
+    "auditTitle": "Kirjautumisloki",
+    "auditHint": "Kuka kirjautui. Sähköposteja ja salasanoja ei tallenneta tähän.",
+    "auditEmpty": "Ei tapahtumia vielä",
+    "auditAnonymous": "Tuntematon tili",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Kirjautui sisään",
+      "LOGIN_FAILURE": "Kirjautuminen epäonnistui",
+      "GOOGLE_LOGIN": "Kirjautui Googlella",
+      "PASSWORD_CHANGED": "Vaihtoi salasanan",
+      "PASSWORD_RESET": "Nollasi salasanan",
+      "BETA_GRANTED": "Antoi beta-oikeuden",
+      "BETA_REVOKED": "Poisti beta-oikeuden"
     }
   },
   "statistics": {

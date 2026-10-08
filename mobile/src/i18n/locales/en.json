@@ -924,7 +924,9 @@
       "users": "Users",
       "admins": "Admins",
       "materials": "Materials",
-      "reminders": "Reminders"
+      "reminders": "Reminders",
+      "subscribers": "Subscribers",
+      "beta": "Beta testers"
     },
     "columns": {
       "name": "Name",
@@ -987,6 +989,30 @@
       "completed": "completed",
       "logged": "logged",
       "checked": "checked in"
+    },
+    "subscribersTitle": "Paid subscribers",
+    "subscribersHint": "Accounts with an active Stripe subscription.",
+    "subscribersEmpty": "No paid subscribers yet",
+    "betaTitle": "Beta testers",
+    "betaHint": "Search any user by name or email. They get full Pro access without paying, and Account will show Beta test instead of Admin.",
+    "betaEmpty": "No beta testers yet",
+    "betaGrant": "Grant beta access",
+    "betaRevoke": "Revoke",
+    "betaSelect": "User",
+    "betaSelectPlaceholder": "Type a name or email",
+    "betaSearchEmpty": "No matching users",
+    "auditTitle": "Sign-in log",
+    "auditHint": "Who signed in. Emails and passwords are not stored here.",
+    "auditEmpty": "No audit events yet",
+    "auditAnonymous": "Unknown account",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Signed in",
+      "LOGIN_FAILURE": "Failed sign-in",
+      "GOOGLE_LOGIN": "Signed in with Google",
+      "PASSWORD_CHANGED": "Changed password",
+      "PASSWORD_RESET": "Reset password",
+      "BETA_GRANTED": "Granted beta access",
+      "BETA_REVOKED": "Revoked beta access"
     }
   },
   "statistics": {

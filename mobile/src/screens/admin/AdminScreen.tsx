@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
+  TextInput,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -11,11 +13,43 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../features/auth/useAuth';
-import { useAdminOverview, useAdminUsers } from '../../features/admin/useAdmin';
+import {
+  useAdminAudit,
+  useAdminBetaTesters,
+  useAdminOverview,
+  useAdminSubscribers,
+  useAdminUsers,
+  useSetBetaTester,
+} from '../../features/admin/useAdmin';
+import { AppButton } from '../../components/ui';
+import type { AdminUser } from '../../api/admin';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
 import { formatDate } from '../../utils/date';
+
+const BETA_SEARCH_LIMIT = 8;
+
+/** Same ranking as the site: exact, prefix, email local part, then substring. */
+function matchBetaUsers(users: AdminUser[], query: string): AdminUser[] {
+  const needle = query.trim().toLowerCase();
+  if (!needle) return [];
+  return users
+    .map((user) => {
+      const name = user.name.toLowerCase();
+      const email = user.email.toLowerCase();
+      let score = 99;
+      if (name === needle || email === needle) score = 0;
+      else if (name.startsWith(needle) || email.startsWith(needle)) score = 1;
+      else if (email.split('@')[0]?.startsWith(needle)) score = 2;
+      else if (`${name} ${email}`.includes(needle)) score = 3;
+      return { user, score };
+    })
+    .filter((item) => item.score < 99)
+    .sort((a, b) => a.score - b.score || a.user.name.localeCompare(b.user.name))
+    .slice(0, BETA_SEARCH_LIMIT)
+    .map((item) => item.user);
+}
 
 export function AdminScreen() {
   const { t, i18n } = useTranslation();
@@ -26,6 +60,11 @@ export function AdminScreen() {
   const enabled = user?.role === 'ADMIN';
   const overviewQuery = useAdminOverview(enabled);
   const usersQuery = useAdminUsers(enabled);
+  const subscribersQuery = useAdminSubscribers(enabled);
+  const testersQuery = useAdminBetaTesters(enabled);
+  const auditQuery = useAdminAudit(enabled);
+  const setBeta = useSetBetaTester();
+  const [betaQuery, setBetaQuery] = useState('');
   const loading =
     enabled &&
     ((overviewQuery.isLoading && !overviewQuery.data) || (usersQuery.isLoading && !usersQuery.data));
@@ -58,6 +97,9 @@ export function AdminScreen() {
           onRefresh={() => {
             void overviewQuery.refetch();
             void usersQuery.refetch();
+            void subscribersQuery.refetch();
+            void testersQuery.refetch();
+            void auditQuery.refetch();
           }}
           tintColor={colors.brand}
         />
@@ -74,6 +116,8 @@ export function AdminScreen() {
             [
               [t('admin.stats.users'), overview.usersTotal],
               [t('admin.stats.admins'), overview.adminsTotal],
+              [t('admin.stats.subscribers'), overview.subscribersTotal ?? '—'],
+              [t('admin.stats.beta'), overview.betaTestersTotal ?? '—'],
               [t('admin.stats.materials'), overview.materialsTotal],
               [t('admin.stats.reminders'), overview.remindersTotal],
             ] as const
@@ -85,6 +129,109 @@ export function AdminScreen() {
           ))}
         </View>
       ) : null}
+
+      {/* Subscribers */}
+      <Text style={[styles.section, { color: colors.ink }]}>{t('admin.subscribersTitle')}</Text>
+      <Text style={[styles.meta, { color: colors.muted }]}>{t('admin.subscribersHint')}</Text>
+      {(subscribersQuery.data ?? []).length === 0 ? (
+        <Text style={[styles.empty, { color: colors.muted }]}>{t('admin.subscribersEmpty')}</Text>
+      ) : (
+        (subscribersQuery.data ?? []).map((item) => (
+          <Pressable
+            key={item.id}
+            onPress={() => navigation.navigate('AdminUser', { id: item.id })}
+            style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
+          >
+            <Text style={[styles.cardTitle, { color: colors.ink }]}>{item.name}</Text>
+            <Text style={[styles.meta, { color: colors.muted }]}>{item.email}</Text>
+            <Text style={[styles.meta, { color: colors.ink }]}>
+              {item.planInterval === 'YEAR'
+                ? t('billing.yearCard')
+                : item.planInterval === 'MONTH'
+                  ? t('billing.monthCard')
+                  : t('billing.proLabel')}
+              {item.planExpiresAt
+                ? ` · ${formatDate(item.planExpiresAt, language)}${item.cancelAtPeriodEnd ? ` · ${t('billing.cancelScheduled')}` : ''}`
+                : ''}
+            </Text>
+          </Pressable>
+        ))
+      )}
+
+      {/* Beta testers */}
+      <Text style={[styles.section, { color: colors.ink }]}>{t('admin.betaTitle')}</Text>
+      <Text style={[styles.meta, { color: colors.muted }]}>{t('admin.betaHint')}</Text>
+      <Text style={[styles.label, { color: colors.ink }]}>{t('admin.betaSelect')}</Text>
+      <TextInput
+        autoCapitalize="none"
+        autoCorrect={false}
+        value={betaQuery}
+        onChangeText={setBetaQuery}
+        placeholder={t('admin.betaSelectPlaceholder')}
+        placeholderTextColor={colors.muted}
+        style={[styles.input, { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink }]}
+      />
+      {betaQuery.trim() ? (
+        <View style={[styles.matches, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+          {matchBetaUsers(users.filter((item) => item.role !== 'ADMIN' && !item.betaTester), betaQuery).length === 0 ? (
+            <Text style={[styles.meta, { color: colors.muted }]}>{t('admin.betaSearchEmpty')}</Text>
+          ) : (
+            matchBetaUsers(users.filter((item) => item.role !== 'ADMIN' && !item.betaTester), betaQuery).map((item) => (
+              <View key={item.id} style={styles.matchRow}>
+                <View style={styles.matchCopy}>
+                  <Text style={[styles.cardTitle, { color: colors.ink }]} numberOfLines={1}>{item.name}</Text>
+                  <Text style={[styles.meta, { color: colors.muted }]} numberOfLines={1}>{item.email}</Text>
+                </View>
+                <AppButton
+                  label={t('admin.betaGrant')}
+                  disabled={setBeta.isPending}
+                  onPress={() => {
+                    setBeta.mutate({ id: item.id, betaTester: true });
+                    setBetaQuery('');
+                  }}
+                />
+              </View>
+            ))
+          )}
+        </View>
+      ) : null}
+      {(testersQuery.data ?? []).length === 0 ? (
+        <Text style={[styles.empty, { color: colors.muted }]}>{t('admin.betaEmpty')}</Text>
+      ) : (
+        (testersQuery.data ?? []).map((item) => (
+          <View key={item.id} style={[styles.card, styles.matchRow, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+            <Pressable style={styles.matchCopy} onPress={() => navigation.navigate('AdminUser', { id: item.id })}>
+              <Text style={[styles.cardTitle, { color: colors.ink }]} numberOfLines={1}>{item.name}</Text>
+              <Text style={[styles.meta, { color: colors.muted }]} numberOfLines={1}>{item.email}</Text>
+            </Pressable>
+            <AppButton
+              variant="secondary"
+              label={t('admin.betaRevoke')}
+              disabled={setBeta.isPending}
+              onPress={() => setBeta.mutate({ id: item.id, betaTester: false })}
+            />
+          </View>
+        ))
+      )}
+
+      {/* Audit log */}
+      <Text style={[styles.section, { color: colors.ink }]}>{t('admin.auditTitle')}</Text>
+      <Text style={[styles.meta, { color: colors.muted }]}>{t('admin.auditHint')}</Text>
+      {(auditQuery.data ?? []).length === 0 ? (
+        <Text style={[styles.empty, { color: colors.muted }]}>{t('admin.auditEmpty')}</Text>
+      ) : (
+        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
+          {(auditQuery.data ?? []).map((event) => (
+            <View key={event.id} style={styles.auditRow}>
+              <Text style={[styles.meta, styles.matchCopy, { color: colors.ink }]}>
+                {event.actor?.name ?? t('admin.auditAnonymous')}
+                <Text style={{ color: colors.muted }}> · {t(`admin.auditActions.${event.action}`)}</Text>
+              </Text>
+              <Text style={[styles.meta, { color: colors.muted }]}>{formatDate(event.createdAt, language)}</Text>
+            </View>
+          ))}
+        </View>
+      )}
 
       <Text style={[styles.section, { color: colors.ink }]}>{t('admin.usersTitle')}</Text>
       {users.length === 0 ? (
@@ -142,4 +289,10 @@ const styles = StyleSheet.create({
   card: { borderRadius: 16, borderWidth: 1, gap: 6, padding: 14 },
   cardTitle: { fontSize: 16, fontWeight: '700' },
   meta: { fontSize: 13 },
+  label: { fontSize: 14, fontWeight: '600' },
+  input: { borderRadius: 12, borderWidth: 1, fontSize: 15, minHeight: 46, paddingHorizontal: 12 },
+  matches: { borderRadius: 16, borderWidth: 1, gap: 10, padding: 10 },
+  matchRow: { alignItems: 'center', flexDirection: 'row', gap: 10 },
+  matchCopy: { flex: 1, minWidth: 0 },
+  auditRow: { alignItems: 'baseline', flexDirection: 'row', gap: 8, justifyContent: 'space-between' },
 });

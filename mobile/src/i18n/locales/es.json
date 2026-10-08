@@ -924,7 +924,9 @@
       "users": "Usuarios",
       "admins": "Admins",
       "materials": "Materiales",
-      "reminders": "Recordatorios"
+      "reminders": "Recordatorios",
+      "subscribers": "Suscriptores",
+      "beta": "Beta testers"
     },
     "columns": {
       "name": "Nombre",
@@ -987,6 +989,30 @@
       "completed": "completó",
       "logged": "registró",
       "checked": "marcó asistencia"
+    },
+    "subscribersTitle": "Suscriptores de pago",
+    "subscribersHint": "Cuentas con una suscripción Stripe activa.",
+    "subscribersEmpty": "Aún no hay suscriptores de pago",
+    "betaTitle": "Beta testers",
+    "betaHint": "Busca un usuario por nombre o email. Tendrá acceso Pro completo, y en Cuenta verá Beta test — no Admin.",
+    "betaEmpty": "Aún no hay beta testers",
+    "betaGrant": "Dar acceso beta",
+    "betaRevoke": "Quitar",
+    "betaSelect": "Usuario",
+    "betaSelectPlaceholder": "Nombre o email",
+    "betaSearchEmpty": "Sin resultados",
+    "auditTitle": "Registro de accesos",
+    "auditHint": "Quién inició sesión. Aquí no se guardan correos ni contraseñas.",
+    "auditEmpty": "Aún no hay eventos",
+    "auditAnonymous": "Cuenta desconocida",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Inició sesión",
+      "LOGIN_FAILURE": "Inicio de sesión fallido",
+      "GOOGLE_LOGIN": "Inició sesión con Google",
+      "PASSWORD_CHANGED": "Cambió la contraseña",
+      "PASSWORD_RESET": "Restableció la contraseña",
+      "BETA_GRANTED": "Concedió acceso beta",
+      "BETA_REVOKED": "Retiró acceso beta"
     }
   },
   "statistics": {

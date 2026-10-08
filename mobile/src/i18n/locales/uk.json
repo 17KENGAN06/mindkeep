@@ -924,7 +924,9 @@
       "users": "Користувачі",
       "admins": "Адміни",
       "materials": "Матеріали",
-      "reminders": "Нагадування"
+      "reminders": "Нагадування",
+      "subscribers": "Підписники",
+      "beta": "Бета-тестери"
     },
     "columns": {
       "name": "Імʼя",
@@ -987,6 +989,30 @@
       "completed": "закрив",
       "logged": "записав",
       "checked": "позначив"
+    },
+    "subscribersTitle": "Платні підписники",
+    "subscribersHint": "Акаунти з активною підпискою Stripe.",
+    "subscribersEmpty": "Платних підписників ще немає",
+    "betaTitle": "Бета-тестери",
+    "betaHint": "Знайдіть користувача за імʼям або поштою. У нього буде повний доступ як у Pro, а в кабінеті статус Бета-тест — не Адмін.",
+    "betaEmpty": "Бета-тестерів ще немає",
+    "betaGrant": "Надати бета-доступ",
+    "betaRevoke": "Зняти",
+    "betaSelect": "Користувач",
+    "betaSelectPlaceholder": "Імʼя або email",
+    "betaSearchEmpty": "Нікого не знайдено",
+    "auditTitle": "Журнал входів",
+    "auditHint": "Хто входив. Пошта і паролі сюди не пишуться.",
+    "auditEmpty": "Поки немає подій",
+    "auditAnonymous": "Невідомий акаунт",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Увійшов",
+      "LOGIN_FAILURE": "Невдалий вхід",
+      "GOOGLE_LOGIN": "Увійшов через Google",
+      "PASSWORD_CHANGED": "Змінив пароль",
+      "PASSWORD_RESET": "Скинув пароль",
+      "BETA_GRANTED": "Надав бета-доступ",
+      "BETA_REVOKED": "Зняв бета-доступ"
     }
   },
   "statistics": {

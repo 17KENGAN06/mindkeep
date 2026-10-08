@@ -924,7 +924,9 @@
       "users": "Пользователи",
       "admins": "Админы",
       "materials": "Материалы",
-      "reminders": "Напоминания"
+      "reminders": "Напоминания",
+      "subscribers": "Подписчики",
+      "beta": "Бета-тестеры"
     },
     "columns": {
       "name": "Имя",
@@ -987,6 +989,30 @@
       "completed": "закрыл",
       "logged": "записал",
       "checked": "отметил"
+    },
+    "subscribersTitle": "Платные подписчики",
+    "subscribersHint": "Аккаунты с активной подпиской Stripe.",
+    "subscribersEmpty": "Платных подписчиков пока нет",
+    "betaTitle": "Бета-тестеры",
+    "betaHint": "Найдите пользователя по имени или почте. У него будет полный доступ как у Pro, а в кабинете статус Бета-тест — не Админ.",
+    "betaEmpty": "Бета-тестеров пока нет",
+    "betaGrant": "Выдать бета-доступ",
+    "betaRevoke": "Снять",
+    "betaSelect": "Пользователь",
+    "betaSelectPlaceholder": "Имя или email",
+    "betaSearchEmpty": "Никого не найдено",
+    "auditTitle": "Журнал входов",
+    "auditHint": "Кто входил. Почта и пароли сюда не пишутся.",
+    "auditEmpty": "Пока нет событий",
+    "auditAnonymous": "Неизвестный аккаунт",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Вошёл",
+      "LOGIN_FAILURE": "Неудачный вход",
+      "GOOGLE_LOGIN": "Вошёл через Google",
+      "PASSWORD_CHANGED": "Сменил пароль",
+      "PASSWORD_RESET": "Сбросил пароль",
+      "BETA_GRANTED": "Выдал бета-доступ",
+      "BETA_REVOKED": "Снял бета-доступ"
     }
   },
   "statistics": {

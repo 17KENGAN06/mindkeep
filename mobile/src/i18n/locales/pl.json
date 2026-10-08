@@ -924,7 +924,9 @@
       "users": "Użytkownicy",
       "admins": "Administratorzy",
       "materials": "Materiały",
-      "reminders": "Przypomnienia"
+      "reminders": "Przypomnienia",
+      "subscribers": "Subskrybenci",
+      "beta": "Testerzy beta"
     },
     "columns": {
       "name": "Imię",
@@ -987,6 +989,30 @@
       "completed": "ukończył",
       "logged": "zapisał",
       "checked": "odhaczył"
+    },
+    "subscribersTitle": "Płatni subskrybenci",
+    "subscribersHint": "Konta z aktywną subskrypcją Stripe.",
+    "subscribersEmpty": "Nie ma jeszcze płatnych subskrybentów",
+    "betaTitle": "Testerzy beta",
+    "betaHint": "Szukaj użytkownika po imieniu lub e-mailu. Dostanie pełny dostęp jak Pro, a w Koncie zobaczy Beta test — nie Admin.",
+    "betaEmpty": "Nie ma jeszcze testerów beta",
+    "betaGrant": "Nadaj dostęp beta",
+    "betaRevoke": "Odbierz",
+    "betaSelect": "Użytkownik",
+    "betaSelectPlaceholder": "Imię lub e-mail",
+    "betaSearchEmpty": "Brak wyników",
+    "auditTitle": "Dziennik logowań",
+    "auditHint": "Kto się logował. E-maile i hasła tu nie trafiają.",
+    "auditEmpty": "Brak zdarzeń",
+    "auditAnonymous": "Nieznane konto",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Zalogował się",
+      "LOGIN_FAILURE": "Nieudane logowanie",
+      "GOOGLE_LOGIN": "Zalogował się przez Google",
+      "PASSWORD_CHANGED": "Zmienił hasło",
+      "PASSWORD_RESET": "Zresetował hasło",
+      "BETA_GRANTED": "Przyznał dostęp beta",
+      "BETA_REVOKED": "Odebrał dostęp beta"
     }
   },
   "statistics": {

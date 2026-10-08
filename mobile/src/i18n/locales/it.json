@@ -924,7 +924,9 @@
       "users": "Utenti",
       "admins": "Admin",
       "materials": "Materiali",
-      "reminders": "Promemoria"
+      "reminders": "Promemoria",
+      "subscribers": "Abbonati",
+      "beta": "Beta tester"
     },
     "columns": {
       "name": "Nome",
@@ -987,6 +989,30 @@
       "completed": "ha completato",
       "logged": "ha registrato",
       "checked": "ha fatto check-in"
+    },
+    "subscribersTitle": "Abbonati a pagamento",
+    "subscribersHint": "Account con abbonamento Stripe attivo.",
+    "subscribersEmpty": "Nessun abbonato a pagamento per ora",
+    "betaTitle": "Beta tester",
+    "betaHint": "Cerca un utente per nome o email. Avrà l’accesso Pro completo e in Account vedrà Beta test — non Admin.",
+    "betaEmpty": "Nessun beta tester per ora",
+    "betaGrant": "Concedi accesso beta",
+    "betaRevoke": "Revoca",
+    "betaSelect": "Utente",
+    "betaSelectPlaceholder": "Nome o email",
+    "betaSearchEmpty": "Nessun risultato",
+    "auditTitle": "Registro di accessi",
+    "auditHint": "Chi ha effettuato l'accesso. Email e password non vengono salvate qui.",
+    "auditEmpty": "Nessun evento ancora",
+    "auditAnonymous": "Account sconosciuto",
+    "auditActions": {
+      "LOGIN_SUCCESS": "Accesso effettuato",
+      "LOGIN_FAILURE": "Accesso non riuscito",
+      "GOOGLE_LOGIN": "Accesso con Google",
+      "PASSWORD_CHANGED": "Password modificata",
+      "PASSWORD_RESET": "Password reimpostata",
+      "BETA_GRANTED": "Accesso beta concesso",
+      "BETA_REVOKED": "Accesso beta revocato"
     }
   },
   "statistics": {
