@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { USER_NAME_MAX } from '@/utils/name';
 
 export function createLoginSchema(t: (key: string) => string) {
   return z.object({
@@ -11,7 +12,7 @@ export function createLoginSchema(t: (key: string) => string) {
 export function createRegisterSchema(t: (key: string) => string) {
   return z
     .object({
-      name: z.string().trim().min(1, t('auth.errors.required')).max(100),
+      name: z.string().trim().min(1, t('auth.errors.required')).max(USER_NAME_MAX),
       email: z.email(t('auth.errors.email')),
       password: z.string().min(8, t('auth.errors.passwordMin')).max(72, t('auth.errors.passwordMax')),
       confirmPassword: z

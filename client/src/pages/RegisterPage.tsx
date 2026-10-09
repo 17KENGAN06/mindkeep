@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/Input';
 import { mapAuthError } from '@/features/auth/mapAuthError';
 import { useAuth } from '@/features/auth/useAuth';
 import { createRegisterSchema, type RegisterFormValues } from '@/schemas/auth';
+import { USER_NAME_MAX } from '@/utils/name';
 
 function detectTimezone(): string {
   try {
@@ -120,6 +121,7 @@ export function RegisterPage() {
         <Input
           label={t('auth.name')}
           autoComplete="name"
+          maxLength={USER_NAME_MAX}
           error={errors.name?.message}
           {...register('name')}
         />

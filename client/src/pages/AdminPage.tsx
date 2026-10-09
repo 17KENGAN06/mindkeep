@@ -145,7 +145,7 @@ export function AdminPage() {
                     className="cursor-pointer border-t border-line hover:bg-brand-50/70"
                     onClick={() => navigate(`/admin/users/${item.id}`)}
                   >
-                    <td className="px-4 py-3 font-medium text-ink">{item.name}</td>
+                    <td className="max-w-[14rem] truncate px-4 py-3 font-medium text-ink">{item.name}</td>
                     <td className="px-4 py-3 text-muted">{item.email}</td>
                     <td className="px-4 py-3 text-muted">
                       {item.planInterval === 'YEAR'
@@ -248,7 +248,7 @@ export function AdminPage() {
                   className="min-w-0 text-left"
                   onClick={() => navigate(`/admin/users/${item.id}`)}
                 >
-                  <p className="font-medium text-ink">{item.name}</p>
+                  <p className="truncate font-medium text-ink">{item.name}</p>
                   <p className="text-xs text-muted">{item.email}</p>
                 </button>
                 <Button
@@ -278,8 +278,8 @@ export function AdminPage() {
           <ul className="divide-y divide-line">
             {auditEvents.map((event) => (
               <li key={event.id} className="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
-                <div>
-                  <p className="text-sm text-ink">
+                <div className="min-w-0">
+                  <p className="truncate text-sm text-ink">
                     {event.actor?.name ?? t('admin.auditAnonymous')}
                     <span className="text-muted"> · {t(`admin.auditActions.${event.action}`)}</span>
                   </p>
@@ -321,7 +321,7 @@ export function AdminPage() {
                     className="cursor-pointer border-t border-line hover:bg-brand-50/70"
                     onClick={() => navigate(`/admin/users/${item.id}`)}
                   >
-                    <td className="px-4 py-3 font-medium text-ink">{item.name}</td>
+                    <td className="max-w-[14rem] truncate px-4 py-3 font-medium text-ink">{item.name}</td>
                     <td className="px-4 py-3 text-muted">{item.email}</td>
                     <td className="px-4 py-3">
                       <span

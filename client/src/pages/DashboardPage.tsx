@@ -33,6 +33,7 @@ import type { DailyTask } from '@/types/dailyTask';
 import { TimezoneSuggestion } from '@/components/TimezoneSuggestion';
 import { useAccountToday } from '@/features/time/useAccountToday';
 import { formatDate, lastNKeysFrom } from '@/utils/date';
+import { firstName } from '@/utils/name';
 
 type WeekTab = 'tasks' | 'reviews';
 
@@ -204,8 +205,8 @@ export function DashboardPage() {
     <div className="min-w-0 space-y-6">
       <TimezoneSuggestion />
       <section className="flex flex-wrap items-center gap-x-3 gap-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-          {t('dashboard.welcome', { name: user?.name ?? '' })}
+        <h1 className="min-w-0 max-w-full truncate text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+          {t('dashboard.welcome', { name: firstName(user?.name) })}
         </h1>
         <PlanChip user={user} />
       </section>
