@@ -13,14 +13,22 @@ export function useNotifications() {
   });
 }
 
-export function useUnreadNotificationsCount() {
+/** Unread count + what is waiting (due / overdue reviews, important tasks). Polled every minute. */
+export function useNotificationSummary() {
   return useQuery({
     queryKey: notificationKeys.unread,
-    queryFn: async () => {
-      const response = await notificationsApi.unreadCount();
-      return response.unreadCount;
-    },
+    queryFn: () => notificationsApi.unreadCount(),
     refetchInterval: 60_000,
+  });
+}
+
+export function useUnreadNotificationsCount() {
+  // Same query as the summary, so the bell and the badges never poll twice.
+  return useQuery({
+    queryKey: notificationKeys.unread,
+    queryFn: () => notificationsApi.unreadCount(),
+    refetchInterval: 60_000,
+    select: (summary) => summary.unreadCount,
   });
 }
 

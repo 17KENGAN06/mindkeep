@@ -23,6 +23,7 @@ import { SignInMethods } from '../../features/auth/SignInMethods';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AuthDevice } from '../../types/auth';
+import { fonts } from '../../config/fonts';
 
 export function AccountScreen() {
   const { t, i18n } = useTranslation();
@@ -147,6 +148,7 @@ export function AccountScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
         refreshControl={
@@ -162,7 +164,8 @@ export function AccountScreen() {
         ) : null}
         <BillingCard />
         <SignInMethods />
-        <Text style={[styles.section, { color: colors.ink }]}>
+        {/* Same gap as the other sections below; without it this block sat against the one above. */}
+        <Text style={[styles.section, { color: colors.ink, marginTop: 28 }]}>
           {hasPassword ? t('auth.changePassword') : t('auth.setPassword')}
         </Text>
         {!hasPassword ? (
@@ -286,22 +289,23 @@ export function AccountScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { padding: 24, paddingBottom: 40 },
-  lead: { fontSize: 15, marginBottom: 8 },
-  email: { fontSize: 16, fontWeight: '600', marginBottom: 8 },
-  plan: { fontSize: 14, fontWeight: '700', marginBottom: 16 },
-  section: { fontSize: 18, fontWeight: '700', marginBottom: 8 },
-  hint: { fontSize: 13, marginBottom: 16 },
-  label: { fontSize: 13, marginBottom: 6 },
+  lead: { fontFamily: fonts.regular, fontSize: 15, marginBottom: 8 },
+  email: { fontSize: 16, fontFamily: fonts.semibold, marginBottom: 8 },
+  plan: { fontSize: 14, fontFamily: fonts.bold, marginBottom: 16 },
+  section: { fontSize: 18, fontFamily: fonts.bold, marginBottom: 8 },
+  hint: { fontFamily: fonts.regular, fontSize: 13, marginBottom: 16 },
+  label: { fontFamily: fonts.regular, fontSize: 13, marginBottom: 6 },
   input: {
     borderRadius: 14,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     marginBottom: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   error: { marginBottom: 16 },
-  done: { marginBottom: 16, fontSize: 14, fontWeight: '600' },
+  done: { marginBottom: 16, fontSize: 14, fontFamily: fonts.semibold },
   device: {
     borderRadius: 16,
     borderWidth: 1,
@@ -309,6 +313,6 @@ const styles = StyleSheet.create({
     padding: 14,
     gap: 8,
   },
-  deviceTitle: { fontSize: 15, fontWeight: '700' },
-  deviceMeta: { fontSize: 13, marginBottom: 8 },
+  deviceTitle: { fontSize: 15, fontFamily: fonts.bold },
+  deviceMeta: { fontFamily: fonts.regular, fontSize: 13, marginBottom: 8 },
 });

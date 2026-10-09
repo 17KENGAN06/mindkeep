@@ -1,34 +1,34 @@
 import { createBottomTabNavigator, type BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DarkTheme, DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useMemo, useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { needsOnboarding } from '../config/appModules';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import { useAuth } from '../features/auth/useAuth';
 import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
 import { useTheme } from '../features/theme/useTheme';
-import { AppIcon, type AppIconName } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
 import { AppButton } from '../components/ui';
+import { WelcomeScreen } from '../screens/auth/WelcomeScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
 import { OnboardingScreen } from '../screens/onboarding/OnboardingScreen';
 import { TodayScreen } from '../screens/TodayScreen';
 import { QuickAddSheet } from '../features/quickAdd/QuickAddSheet';
+import { ReminderPrompt } from '../features/notifications/ReminderPrompt';
+import { useLocalReminderSync } from '../features/notifications/useLocalReminders';
+import { AmbientGlow } from '../components/AmbientGlow';
+import { AppTabBar } from './AppTabBar';
+import { isOnHome, openSectionFromHome } from './openSection';
 import { MoreNavigator } from './MoreNavigator';
 import type { AppTabParamList, AuthStackParamList } from './types';
+import { fonts } from '../config/fonts';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const Tabs = createBottomTabNavigator<AppTabParamList>();
-
-const TAB_ICONS: Record<'Today' | 'More', { idle: AppIconName; active: AppIconName }> = {
-  Today: { idle: 'home-outline', active: 'home' },
-  More: { idle: 'grid-outline', active: 'grid' },
-};
 
 /** The Add tab never shows a screen: its button opens the quick-add sheet. */
 function EmptyScreen() {
@@ -37,7 +37,15 @@ function EmptyScreen() {
 
 function AuthNavigator() {
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+    <AuthStack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
+      <AuthStack.Screen name="Welcome">
+        {(props) => (
+          <WelcomeScreen
+            onStart={() => props.navigation.navigate('Register')}
+            onLogin={() => props.navigation.navigate('Login')}
+          />
+        )}
+      </AuthStack.Screen>
       <AuthStack.Screen name="Login">
         {(props) => (
           <LoginScreen
@@ -59,73 +67,35 @@ function AuthNavigator() {
 function AppTabs() {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
   const unreadQuery = useUnreadNotificationsCount();
   const unread = unreadQuery.data ?? 0;
   const badge = unread > 0 ? (unread > 99 ? '99+' : unread) : undefined;
   const [quickAddOpen, setQuickAddOpen] = useState(false);
-  // Taller bar with bigger icons and labels; the system navigation bar stays below it.
-  const bottomInset = Math.max(insets.bottom, 8);
 
   return (
-    <>
+    <View style={[styles.tabsRoot, { backgroundColor: colors.bg }]}>
+      <AmbientGlow />
       <Tabs.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarActiveTintColor: colors.brand,
-          tabBarInactiveTintColor: colors.muted,
-          tabBarBadgeStyle: { backgroundColor: colors.danger, color: '#fff' },
-          tabBarStyle: {
-            backgroundColor: colors.panel,
-            borderTopColor: colors.line,
-            height: 66 + bottomInset,
-            paddingTop: 8,
-            paddingBottom: bottomInset,
-          },
-          tabBarLabelStyle: { fontSize: 12, fontWeight: '600', marginTop: 2 },
-          tabBarIcon: ({ color, focused }) => {
-            const icons = route.name === 'Add' ? null : TAB_ICONS[route.name];
-            return icons ? <AppIcon name={focused ? icons.active : icons.idle} color={color} size={26} /> : null;
-          },
-        })}
+        tabBar={(props) => <AppTabBar {...props} badge={badge} onAdd={() => setQuickAddOpen(true)} />}
+        screenOptions={{ headerShown: false }}
       >
         <Tabs.Screen name="Today" component={TodayScreen} options={{ tabBarLabel: t('tabs.home') }} />
-        <Tabs.Screen
-          name="Add"
-          component={EmptyScreen}
-          options={{
-            tabBarLabel: t('tabs.add'),
-            tabBarAccessibilityLabel: t('quickAdd.title'),
-            tabBarButton: (props) => (
-              <View style={styles.addSlot}>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel={t('quickAdd.title')}
-                  onPress={() => setQuickAddOpen(true)}
-                  style={({ pressed }) => [
-                    styles.addButton,
-                    { backgroundColor: colors.brand, borderColor: colors.panel },
-                    pressed && styles.addPressed,
-                  ]}
-                  testID={props.testID}
-                >
-                  <AppIcon name="add" color={colors.onBrand} size={32} />
-                </Pressable>
-              </View>
-            ),
-          }}
-          listeners={{
-            tabPress: (event) => {
-              event.preventDefault();
-              setQuickAddOpen(true);
-            },
-          }}
-        />
-        <Tabs.Screen name="More" component={MoreNavigator} options={{ tabBarLabel: t('tabs.sections'), tabBarBadge: badge }} />
+        {/* Never shown: the bar's "+" opens the quick-add sheet instead. */}
+        <Tabs.Screen name="Add" component={EmptyScreen} options={{ tabBarLabel: t('tabs.add') }} />
+        <Tabs.Screen name="More" component={MoreNavigator} options={{ tabBarLabel: t('tabs.sections') }} />
       </Tabs.Navigator>
       <QuickAddRoot open={quickAddOpen} onClose={() => setQuickAddOpen(false)} />
-    </>
+      <RemindersRoot />
+    </View>
   );
+}
+
+/** Phone reminders: keeps the schedule fresh, opens the tapped section, asks once to turn them on. */
+function RemindersRoot() {
+  const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
+  // A tapped reminder opens its section on its own, so back leads Home.
+  useLocalReminderSync((target) => openSectionFromHome(navigation, target));
+  return <ReminderPrompt />;
 }
 
 /** Lives inside the tabs so it can navigate into the Sections stack. */
@@ -135,13 +105,15 @@ function QuickAddRoot({ open, onClose }: { open: boolean; onClose: () => void })
     <QuickAddSheet
       visible={open}
       onClose={onClose}
-      onOpen={(target) =>
-        navigation.navigate('More', {
-          screen: target.screen,
-          params: 'params' in target ? target.params : undefined,
-          initial: false,
-        } as never)
-      }
+      onOpen={(target) => {
+        const params = 'params' in target ? target.params : undefined;
+        // From Home: back returns Home. From inside Sections: the section opens on top as before.
+        if (isOnHome(navigation)) {
+          openSectionFromHome(navigation, target.screen, params as never);
+        } else {
+          navigation.navigate('More', { screen: target.screen, params, initial: false } as never);
+        }
+      }}
     />
   );
 }
@@ -205,22 +177,7 @@ export function RootNavigator() {
 }
 
 const styles = StyleSheet.create({
-  addSlot: { alignItems: 'center', flex: 1, justifyContent: 'flex-start' },
-  addButton: {
-    alignItems: 'center',
-    borderRadius: 999,
-    borderWidth: 4,
-    elevation: 6,
-    height: 62,
-    justifyContent: 'center',
-    marginTop: -22,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    width: 62,
-  },
-  addPressed: { opacity: 0.85, transform: [{ scale: 0.96 }] },
+  tabsRoot: { flex: 1 },
   boot: {
     alignItems: 'center',
     flex: 1,
@@ -228,6 +185,6 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   bootSpinner: { marginTop: 4 },
-  bootMessage: { fontSize: 16, lineHeight: 22, paddingHorizontal: 32, textAlign: 'center' },
+  bootMessage: { fontFamily: fonts.regular, fontSize: 16, lineHeight: 22, paddingHorizontal: 32, textAlign: 'center' },
   bootActions: { alignSelf: 'stretch', gap: 12, paddingHorizontal: 32 },
 });

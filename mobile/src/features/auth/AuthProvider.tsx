@@ -11,6 +11,7 @@ import {
 } from '../../api/auth';
 import { ApiError, NetworkError, refreshAccessToken } from '../../api/client';
 import type { User } from '../../types/auth';
+import { cancelReminders } from '../notifications/localReminders';
 import { AuthContext } from './auth-context';
 import {
   clearStoredToken,
@@ -143,6 +144,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Token is cleared locally even if the API is unreachable.
     }
     await clearStoredToken();
+    // Reminders scheduled for this account must not fire after it signs out.
+    await cancelReminders().catch(() => undefined);
     queryClient.setQueryData(['auth', 'me'], null);
     queryClient.clear();
   }, [queryClient]);

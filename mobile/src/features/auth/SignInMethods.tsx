@@ -9,6 +9,7 @@ import { useTheme } from '../theme/useTheme';
 import { GoogleSignInCancelledError, GoogleSignInNeedsAppError, requestGoogleSignInCode } from './googleSignIn';
 import { mapAuthError } from './mapAuthError';
 import { useAuth } from './useAuth';
+import { fonts } from '../../config/fonts';
 
 function MethodRow({
   icon,
@@ -133,15 +134,15 @@ export function SignInMethods() {
 
 const styles = StyleSheet.create({
   card: { borderRadius: 22, borderWidth: 1, gap: 12, marginTop: 20, padding: 16 },
-  title: { fontSize: 17, fontWeight: '700' },
-  lead: { fontSize: 13, lineHeight: 18 },
+  title: { fontSize: 17, fontFamily: fonts.bold },
+  lead: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
   row: { borderRadius: 16, borderWidth: 1, gap: 12, padding: 12 },
   rowHead: { alignItems: 'center', flexDirection: 'row', gap: 12 },
   icon: { alignItems: 'center', borderRadius: 12, height: 40, justifyContent: 'center', width: 40 },
   rowCopy: { flex: 1, minWidth: 0 },
-  rowTitle: { fontSize: 15, fontWeight: '700' },
-  rowStatus: { fontSize: 13, marginTop: 2 },
-  rowStatusOn: { fontWeight: '700' },
-  hint: { fontSize: 12 },
-  notice: { fontSize: 14, fontWeight: '600' },
+  rowTitle: { fontSize: 15, fontFamily: fonts.bold },
+  rowStatus: { fontFamily: fonts.regular, fontSize: 13, marginTop: 2 },
+  rowStatusOn: { fontFamily: fonts.bold },
+  hint: { fontFamily: fonts.regular, fontSize: 12 },
+  notice: { fontSize: 14, fontFamily: fonts.semibold },
 });

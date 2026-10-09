@@ -1,75 +1,61 @@
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import { BlurTargetView } from 'expo-blur';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   ActivityIndicator,
+  Animated,
   Pressable,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { WaterGlasses } from '../components/WaterGlasses';
-import { AppIcon } from '../components/AppIcon';
 import { BrandMark } from '../components/BrandMark';
 import { TimezoneSuggestion } from '../components/TimezoneSuggestion';
 import { userHasModule } from '../config/appModules';
 import { useAuth } from '../features/auth/useAuth';
-import { isProAccount } from '../features/billing/planLimit';
-import { currencyLabel } from '../features/finance/currencies';
-import { currentPeriodDefaults, formatSignedMoney, summarizeByCurrency } from '../features/finance/financeUtils';
+import { hasAutomation, isProAccount } from '../features/billing/planLimit';
+import {
+  currentPeriodDefaults,
+  formatMoney,
+  summarizeByCurrency,
+} from '../features/finance/financeUtils';
 import { useFinanceSummary } from '../features/finance/useFinance';
+import { DayRings, type DayRing } from '../features/home/DayRings';
+import { NowFeed, type NowItem } from '../features/home/NowFeed';
+import { OverviewTiles, type OverviewTile } from '../features/home/OverviewTiles';
+import { QuickActions, type QuickAction } from '../features/home/QuickActions';
+import { StarterCard, type StarterStep } from '../features/home/StarterCard';
+import { useReminderSettings } from '../features/notifications/useLocalReminders';
 import { useNutritionPeriod, useSetWater } from '../features/nutrition/useNutrition';
-import { useUnreadNotificationsCount } from '../features/notifications/useNotifications';
-import { useActivityStatistics, useDashboardStatistics } from '../features/statistics/useStatistics';
+import { useOverdueReminders, useTodayReminders } from '../features/reminders/useReminders';
+import {
+  useActivityStatistics,
+  useDashboardStatistics,
+} from '../features/statistics/useStatistics';
 import { useTasksPeriod, useTodayTasks, useToggleTask } from '../features/tasks/useDailyTasks';
 import { useRefreshOnFocus } from '../features/sync/useRefreshOnFocus';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
-import type { AppTabParamList } from '../navigation/types';
+import { openSectionFromHome } from '../navigation/openSection';
+import type { AppTabParamList, MoreStackParamList } from '../navigation/types';
 import { useAccountToday } from '../features/time/useAccountToday';
-import { lastNKeysFrom } from '../utils/date';
+import { dateKeyInZone, lastNKeysFrom } from '../utils/date';
+import { firstName } from '../utils/name';
+import { fonts } from '../config/fonts';
+import { AmbientGlow } from '../components/AmbientGlow';
+import { NotificationBell, type BellTarget } from '../features/notifications/NotificationBell';
+import { GlassBackground } from '../components/GlassBackground';
 
-type WeekTab = 'tasks' | 'reviews';
-
-function clampPercent(value: number): number {
-  if (!Number.isFinite(value) || value <= 0) return 0;
-  return Math.min(100, Math.round(value));
-}
-
-function ProgressCard({
-  title,
-  valueText,
-  percent,
-  onPress,
-}: {
-  title: string;
-  valueText: string;
-  percent: number;
-  onPress?: () => void;
-}) {
-  const { colors } = useTheme();
-  const safe = clampPercent(percent);
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={!onPress}
-      style={[styles.progressCard, { backgroundColor: colors.panel, borderColor: colors.line }]}
-    >
-      <Text style={[styles.progressTitle, { color: colors.muted }]}>{title}</Text>
-      <Text style={[styles.progressValue, { color: colors.ink }]}>{valueText}</Text>
-      <View style={[styles.barTrack, { backgroundColor: colors.line }]}>
-        <View style={[styles.barFill, { backgroundColor: colors.brand, width: `${safe}%` }]} />
-      </View>
-      <Text style={[styles.progressPct, { color: colors.brand }]}>{safe}%</Text>
-    </Pressable>
-  );
-}
-
+/**
+ * Home, built around the question "what do I do now?":
+ * rings (progress at a glance) → "Now" (one prioritised to-do list) → quick logging →
+ * a collapsible overview. Details live in the sections; nothing here repeats another block.
+ */
 export function TodayScreen() {
   const { t, i18n } = useTranslation();
   useRefreshOnFocus('statistics', 'tasks', 'nutrition', 'finance', 'notifications');
@@ -82,11 +68,17 @@ export function TodayScreen() {
   const showNutrition = userHasModule(user, 'nutrition');
   const showFinance = userHasModule(user, 'finance');
   const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
-  const { today } = useAccountToday();
+  const insets = useSafeAreaInsets();
+  // The status-bar strip turns into frosted glass as soon as the page scrolls under it.
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const statusGlass = scrollY.interpolate({
+    inputRange: [0, 16],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  });
+  const blurTarget = useRef<View>(null);
+  const { today, timeZone } = useAccountToday();
   const period = currentPeriodDefaults(today);
-  const [weekTab, setWeekTab] = useState<WeekTab>(showTasks ? 'tasks' : 'reviews');
-  const weekTabId: WeekTab =
-    showTasks && (!showReview || weekTab === 'tasks') ? 'tasks' : 'reviews';
   const weekDays = useMemo(() => lastNKeysFrom(today, 7), [today]);
 
   const tasksQuery = useTodayTasks(today, showTasks);
@@ -98,52 +90,261 @@ export function TodayScreen() {
   const financeQuery = useFinanceSummary(period, showFinance);
   const dashboardQuery = useDashboardStatistics();
   const activityQuery = useActivityStatistics();
-  const unreadQuery = useUnreadNotificationsCount();
+  const todayRemindersQuery = useTodayReminders();
+  const overdueRemindersQuery = useOverdueReminders();
+  const reminderSettings = useReminderSettings();
   const toggleTask = useToggleTask(today);
   const setWater = useSetWater(period.year, period.month);
   const [busyTaskId, setBusyTaskId] = useState<string | null>(null);
   const [actionError, setActionError] = useState(false);
 
+  // Sections opened from Home return here with their back arrow (not to the Sections hub).
+  const open = <S extends keyof MoreStackParamList>(screen: S, params?: MoreStackParamList[S]) =>
+    openSectionFromHome(navigation, screen, params);
+
+  // --- Day numbers -------------------------------------------------------------------------
   const tasks = tasksQuery.data?.tasks ?? [];
+  const todayDone = tasks.filter((task) => task.completed).length;
   const meals = (nutritionQuery.data?.meals ?? []).filter((meal) => meal.date === today);
   const calorieGoal = nutritionQuery.data?.settings.calorieGoal ?? 2000;
   const waterGoal = nutritionQuery.data?.settings.waterGoal ?? 8;
   const glasses = nutritionQuery.data?.water.find((row) => row.date === today)?.glasses ?? 0;
   const eaten = meals.reduce((sum, meal) => sum + meal.calories, 0);
-  const overeating = eaten > calorieGoal;
   const stats = dashboardQuery.data?.stats;
-  const reviewToday = stats?.todayReminders ?? 0;
-  const reviewOverdue = stats?.overdueReminders ?? 0;
-  const reviewTotal = reviewToday + reviewOverdue;
-  const completedReviews = stats?.completedReviews ?? 0;
-  const reviewsPlanned = completedReviews + reviewTotal;
-  const unread = unreadQuery.data ?? 0;
-  const recentMaterials = dashboardQuery.data?.recentMaterials ?? [];
+  const reviewsLeft = (stats?.todayReminders ?? 0) + (stats?.overdueReminders ?? 0);
+  // Reviews done today (activity is per day), so the ring compares today with today.
+  const reviewsDoneToday =
+    activityQuery.data?.activity.find((point) => point.date === today)?.count ?? 0;
+  const reviewsPlanned = reviewsDoneToday + reviewsLeft;
 
-  const todayDone = tasks.filter((task) => task.completed).length;
-  const todayTotal = tasks.length;
-  const currencyBuckets = summarizeByCurrency(financeQuery.data?.operations ?? []);
+  const rings = (
+    [
+      showTasks
+        ? {
+            key: 'tasks',
+            label: t('todayHub.rings.tasks'),
+            value: `${todayDone}/${tasks.length}`,
+            progress: tasks.length > 0 ? todayDone / tasks.length : 0,
+            onPress: () => open('TasksHome'),
+          }
+        : null,
+      showReview
+        ? {
+            key: 'reviews',
+            label: t('todayHub.rings.reviews'),
+            value: `${reviewsDoneToday}/${reviewsPlanned}`,
+            progress: reviewsPlanned > 0 ? reviewsDoneToday / reviewsPlanned : 0,
+            onPress: () => open('ReviewInbox'),
+          }
+        : null,
+      showNutrition
+        ? {
+            key: 'calories',
+            label: t('todayHub.rings.calories'),
+            value: `${Math.round((eaten / Math.max(calorieGoal, 1)) * 100)}%`,
+            progress: eaten / Math.max(calorieGoal, 1),
+            over: eaten > calorieGoal,
+            onPress: () => open('Fuel'),
+          }
+        : null,
+      showNutrition
+        ? {
+            key: 'water',
+            label: t('todayHub.rings.water'),
+            value: `${glasses}/${waterGoal}`,
+            progress: glasses / Math.max(waterGoal, 1),
+            onPress: () => open('Fuel'),
+          }
+        : null,
+    ] as (DayRing | null)[]
+  ).filter((ring): ring is DayRing => ring !== null);
 
-  const weekTaskPool = [...(monthTasksQuery.data?.tasks ?? []), ...(prevTasksQuery.data?.tasks ?? [])];
-  const weekSeries = weekDays.map((date) => {
-    const reviewsDone = activityQuery.data?.activity.find((point) => point.date === date)?.count ?? 0;
-    const dayTasks = weekTaskPool.filter((task) => task.date === date);
-    return {
-      date,
-      tasksDone: dayTasks.filter((task) => task.completed).length,
-      tasksPlanned: dayTasks.length,
-      reviewsDone,
-    };
-  });
+  // --- "Now": most urgent first ----------------------------------------------------------------
+  const nowItems: NowItem[] = [];
+  if (showReview) {
+    const overdue = [...(overdueRemindersQuery.data ?? [])].sort(
+      (a, b) => b.daysOverdue - a.daysOverdue,
+    );
+    for (const reminder of overdue) {
+      nowItems.push({
+        kind: 'overdue',
+        id: reminder.id,
+        title: reminder.material.title,
+        materialId: reminder.material.id,
+      });
+    }
+  }
+  const openTasks = showTasks ? tasks.filter((task) => !task.completed) : [];
+  for (const task of openTasks.filter((item) => item.important)) {
+    nowItems.push({
+      kind: 'task',
+      id: task.id,
+      title: task.title,
+      minutes: task.minutes,
+      important: true,
+    });
+  }
+  if (showReview) {
+    for (const reminder of todayRemindersQuery.data ?? []) {
+      if (reminder.status !== 'PENDING') continue;
+      nowItems.push({
+        kind: 'review',
+        id: reminder.id,
+        title: reminder.material.title,
+        materialId: reminder.material.id,
+      });
+    }
+  }
+  for (const task of openTasks.filter((item) => !item.important)) {
+    nowItems.push({
+      kind: 'task',
+      id: task.id,
+      title: task.title,
+      minutes: task.minutes,
+      important: false,
+    });
+  }
 
-  const chartMax = Math.max(
-    1,
-    ...weekSeries.map((day) => {
-      if (weekTabId === 'tasks') return Math.max(day.tasksPlanned, day.tasksDone);
-      return day.reviewsDone;
-    }),
+  // --- Quick logging ---------------------------------------------------------------------------
+  const onAddWater = () => {
+    setActionError(false);
+    void setWater
+      .mutateAsync({ date: today, glasses: glasses + 1 })
+      .catch(() => setActionError(true));
+  };
+  const quickActions = (
+    [
+      showNutrition
+        ? {
+            key: 'water',
+            icon: 'water-outline' as const,
+            label: t('todayHub.quick.water'),
+            value: `${glasses}/${waterGoal}`,
+            busy: setWater.isPending,
+            onPress: onAddWater,
+          }
+        : null,
+      showNutrition && hasAutomation(user)
+        ? {
+            key: 'scan',
+            icon: 'camera-outline' as const,
+            label: t('todayHub.quick.scan'),
+            onPress: () => open('Fuel', { openScan: Date.now() }),
+          }
+        : null,
+      showNutrition
+        ? {
+            key: 'meal',
+            icon: 'restaurant-outline' as const,
+            label: t('todayHub.quick.meal'),
+            onPress: () => open('Fuel'),
+          }
+        : null,
+      showFinance
+        ? {
+            key: 'expense',
+            icon: 'wallet-outline' as const,
+            label: t('todayHub.quick.expense'),
+            onPress: () => open('Finance'),
+          }
+        : null,
+    ] as (QuickAction | null)[]
+  ).filter((action): action is QuickAction => action !== null);
+
+  // --- Overview tiles --------------------------------------------------------------------------
+  const weekTaskPool = [
+    ...(monthTasksQuery.data?.tasks ?? []),
+    ...(prevTasksQuery.data?.tasks ?? []),
+  ];
+  const weekTasks = weekTaskPool.filter((task) => weekDays.includes(task.date));
+  const weekReviews = weekDays.reduce(
+    (sum, date) =>
+      sum + (activityQuery.data?.activity.find((point) => point.date === date)?.count ?? 0),
+    0,
   );
+  const mainExpense = summarizeByCurrency(financeQuery.data?.operations ?? []).find(
+    (bucket) => bucket.expense > 0,
+  );
+  const overviewTiles = (
+    [
+      showNutrition
+        ? {
+            key: 'nutrition',
+            icon: 'restaurant-outline' as const,
+            label: t('todayHub.overview.nutrition'),
+            value: `${eaten} ${t('today.kcal')}`,
+            onPress: () => open('Fuel'),
+          }
+        : null,
+      showFinance
+        ? {
+            key: 'finance',
+            icon: 'wallet-outline' as const,
+            label: t('todayHub.overview.finance'),
+            value: mainExpense
+              ? formatMoney(mainExpense.expense, language, mainExpense.currency)
+              : t('todayHub.overview.noExpenses'),
+            muted: !mainExpense,
+            onPress: () => open('Finance'),
+          }
+        : null,
+      showTasks || showReview
+        ? {
+            key: 'week',
+            icon: 'stats-chart-outline' as const,
+            label: t('todayHub.overview.week'),
+            value: showTasks
+              ? t('todayHub.overview.weekValue', {
+                  done: weekTasks.filter((task) => task.completed).length,
+                  total: weekTasks.length,
+                })
+              : String(weekReviews),
+            onPress: () => open('Statistics'),
+          }
+        : null,
+    ] as (OverviewTile | null)[]
+  ).filter((tile): tile is OverviewTile => tile !== null);
 
+  // --- First days ------------------------------------------------------------------------------
+  const hasAnyTask = tasks.length > 0 || weekTaskPool.length > 0;
+  const starterSteps = (
+    [
+      showTasks
+        ? {
+            key: 'task',
+            label: t('todayHub.start.task'),
+            done: hasAnyTask,
+            onPress: () => open('TasksHome'),
+          }
+        : null,
+      showReview
+        ? {
+            key: 'material',
+            label: t('todayHub.start.material'),
+            done: (stats?.activeMaterials ?? 0) > 0,
+            onPress: () => open('MaterialCreate'),
+          }
+        : null,
+      {
+        key: 'reminders',
+        label: t('todayHub.start.reminders'),
+        done: Boolean(reminderSettings?.enabled),
+        onPress: () => open('Settings'),
+      },
+    ] as (StarterStep | null)[]
+  ).filter((step): step is StarterStep => step !== null);
+  // Only for genuinely new accounts: an established one never gets the checklist pushed at it.
+  const accountAgeDays = user?.createdAt
+    ? Math.round(
+        (Date.parse(`${today}T12:00:00Z`) -
+          Date.parse(`${dateKeyInZone(new Date(user.createdAt), timeZone)}T12:00:00Z`)) /
+          86_400_000,
+      )
+    : 0;
+  const isNewAccount =
+    accountAgeDays <= 14 && (!stats || stats.activeMaterials === 0 || !hasAnyTask);
+
+  // --- Loading, refresh, actions ---------------------------------------------------------------
   const loading =
     dashboardQuery.isLoading ||
     (showTasks && tasksQuery.isLoading) ||
@@ -153,7 +354,9 @@ export function TodayScreen() {
     tasksQuery.isRefetching ||
     nutritionQuery.isRefetching ||
     financeQuery.isRefetching ||
-    activityQuery.isRefetching;
+    activityQuery.isRefetching ||
+    todayRemindersQuery.isRefetching ||
+    overdueRemindersQuery.isRefetching;
   const error =
     actionError ||
     dashboardQuery.isError ||
@@ -164,21 +367,23 @@ export function TodayScreen() {
     setActionError(false);
     void queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
     void queryClient.invalidateQueries({ queryKey: ['billing'] });
+    void queryClient.invalidateQueries({ queryKey: ['notifications'] });
     void tasksQuery.refetch();
     void nutritionQuery.refetch();
     void dashboardQuery.refetch();
     void activityQuery.refetch();
     void financeQuery.refetch();
-    void unreadQuery.refetch();
     void monthTasksQuery.refetch();
     void prevTasksQuery.refetch();
+    void todayRemindersQuery.refetch();
+    void overdueRemindersQuery.refetch();
   };
 
-  const onToggle = async (id: string, completed: boolean) => {
+  const onToggle = async (id: string) => {
     setBusyTaskId(id);
     setActionError(false);
     try {
-      await toggleTask.mutateAsync({ id, completed: !completed });
+      await toggleTask.mutateAsync({ id, completed: true });
     } catch {
       setActionError(true);
     } finally {
@@ -187,10 +392,13 @@ export function TodayScreen() {
   };
 
   const entitled = isProAccount(user);
+  const openBellTarget = (target: BellTarget) =>
+    'params' in target ? open(target.screen, target.params) : open(target.screen);
 
   if (loading && !tasksQuery.data && !nutritionQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -198,360 +406,97 @@ export function TodayScreen() {
     );
   }
 
+  const showFeed = showTasks || showReview;
+  // New account with nothing planned yet: the checklist takes the empty "Now" card's place.
+  const starterInsteadOfFeed =
+    isNewAccount && nowItems.length === 0 && starterSteps.some((step) => !step.done);
+
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.content}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing && !loading}
-            onRefresh={onRefresh}
-            tintColor={colors.brand}
-          />
-        }
-      >
-        <TimezoneSuggestion />
-        <View style={styles.helloRow}>
-          <BrandMark size={44} />
-          <View style={styles.helloCopy}>
-            <View style={styles.helloTitleRow}>
-              <Text style={[styles.hello, { color: colors.ink, flexShrink: 1 }]} numberOfLines={1}>
-                {t('today.hello', { name: user?.name ?? '' })}
+    // Top edge handled by hand, so the glass strip can reach under the status bar.
+    <SafeAreaView edges={['left', 'right']} style={[styles.safe, { backgroundColor: colors.bg }]}>
+      <BlurTargetView ref={blurTarget} style={styles.safe}>
+        <AmbientGlow />
+        <Animated.ScrollView
+          style={styles.scroll}
+          contentContainerStyle={[styles.content, { paddingTop: insets.top + 12 }]}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+            useNativeDriver: true,
+          })}
+          scrollEventThrottle={16}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing && !loading}
+              onRefresh={onRefresh}
+              tintColor={colors.brand}
+              progressViewOffset={insets.top}
+            />
+          }
+        >
+          <TimezoneSuggestion />
+          {/* Header like the site's mobile dashboard: logo · greeting + plan · bell, on one line. */}
+          <View style={styles.helloRow}>
+            <BrandMark size={46} />
+            <View style={styles.helloCopy}>
+              <Text style={[styles.hello, { color: colors.ink }]} numberOfLines={1}>
+                {t('today.hello', { name: firstName(user?.name) })}
               </Text>
               <Pressable
-                onPress={() => navigation.navigate('More', { screen: 'Account', initial: false })}
+                onPress={() => open('Account')}
                 style={[
                   styles.planChip,
                   entitled
                     ? { backgroundColor: colors.brand }
-                    : { backgroundColor: colors.panel, borderColor: colors.line, borderWidth: 1 },
+                    : {
+                        backgroundColor: `${colors.panel}e6`,
+                        borderColor: colors.line,
+                        borderWidth: 1,
+                      },
                 ]}
               >
                 <Text
-                  style={[
-                    styles.planChipText,
-                    { color: entitled ? colors.onBrand : colors.muted },
-                  ]}
+                  style={[styles.planChipText, { color: entitled ? colors.onBrand : colors.muted }]}
                 >
                   {entitled ? t('dashboard.planPro') : t('dashboard.planFree')}
                 </Text>
               </Pressable>
             </View>
+            <NotificationBell onOpen={openBellTarget} />
           </View>
-        </View>
-        {error ? <Text style={[styles.error, { color: colors.danger }]}>{t('today.error')}</Text> : null}
-
-        <View style={styles.grid}>
-          {showTasks ? (
-          <ProgressCard
-            title={t('dashboard.cards.tasksToday')}
-            valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
-            percent={todayTotal > 0 ? (todayDone / todayTotal) * 100 : 0}
-            onPress={() => navigation.navigate('More', { screen: 'TasksHome', initial: false })}
-          />
+          {error ? (
+            <Text style={[styles.error, { color: colors.danger }]}>{t('today.error')}</Text>
           ) : null}
-          {showReview ? (
-          <ProgressCard
-            title={t('dashboard.cards.reviews')}
-            valueText={t('dashboard.cards.ofPlanned', {
-              done: completedReviews,
-              total: reviewsPlanned,
-            })}
-            percent={reviewsPlanned > 0 ? (completedReviews / reviewsPlanned) * 100 : 0}
-            onPress={() => navigation.navigate('More', { screen: 'ReviewInbox', initial: false })}
-          />
-          ) : null}
-          {showNutrition ? (
-          <ProgressCard
-            title={t('dashboard.cards.caloriesToday')}
-            valueText={`${eaten} / ${calorieGoal}`}
-            percent={(eaten / Math.max(calorieGoal, 1)) * 100}
-            onPress={() => navigation.navigate('More', { screen: 'Fuel', initial: false })}
-          />
-          ) : null}
-          {showNutrition ? (
-          <ProgressCard
-            title={t('dashboard.cards.waterToday')}
-            valueText={`${glasses} / ${waterGoal} ${t('fuel.glasses')}`}
-            percent={(glasses / Math.max(waterGoal, 1)) * 100}
-            onPress={() => navigation.navigate('More', { screen: 'Fuel', initial: false })}
-          />
-          ) : null}
-        </View>
 
-        {showTasks ? (
-        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <View style={styles.cardHead}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.upcomingTasks')}</Text>
-            <Pressable onPress={() => navigation.navigate('More', { screen: 'TasksHome', initial: false })}>
-              <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.allTasks')}</Text>
-            </Pressable>
-          </View>
-          {tasks.length === 0 ? (
-            <Text style={[styles.empty, { color: colors.muted }]}>{t('dashboard.modules.noTasksToday')}</Text>
-          ) : (
-            tasks.slice(0, 6).map((task) => (
-              <Pressable
-                key={task.id}
-                disabled={busyTaskId === task.id}
-                onPress={() => void onToggle(task.id, task.completed)}
-                style={[
-                  styles.taskRow,
-                  { borderColor: colors.line },
-                  task.completed && { borderColor: `${colors.brand}59` },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.check,
-                    { borderColor: colors.line },
-                    task.completed && { backgroundColor: colors.brand, borderColor: colors.brand },
-                  ]}
-                >
-                  {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
-                </View>
-                <View style={styles.taskCopy}>
-                  <Text
-                    style={[
-                      styles.taskTitle,
-                      { color: colors.ink },
-                      task.completed && { color: colors.muted, textDecorationLine: 'line-through' },
-                    ]}
-                  >
-                    {task.title}
-                  </Text>
-                  <View style={styles.taskMeta}>
-                    {(task.splitCount ?? 1) > 1 ? (
-                      <Text style={[styles.splitBadge, { color: colors.brand }]}>
-                        {t('tasks.splitProgress', { done: task.splitDone ?? 0, count: task.splitCount })}
-                      </Text>
-                    ) : null}
-                    <Text style={[styles.minutes, { color: colors.muted }]}>
-                      {task.minutes} {t('today.min')}
-                    </Text>
-                  </View>
-                </View>
-              </Pressable>
-            ))
-          )}
-        </View>
-        ) : null}
+          <DayRings rings={rings} />
 
-        {showReview ? (
-        <Pressable
-          onPress={() => navigation.navigate('More', { screen: 'ReviewInbox', initial: false })}
-          style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
-        >
-          <View style={styles.cardHead}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('today.reviews')}</Text>
-            <Text style={[styles.link, { color: colors.brand }]}>{t('today.openReview')}</Text>
-          </View>
-          {reviewTotal === 0 ? (
-            <Text style={[styles.empty, { color: colors.muted }]}>{t('today.noReviews')}</Text>
-          ) : (
-            <Text style={[styles.reviewCount, { color: colors.ink }]}>
-              {t('today.reviewsDue', { today: reviewToday, overdue: reviewOverdue })}
-            </Text>
-          )}
-        </Pressable>
-        ) : null}
-
-        <Pressable
-          onPress={() => navigation.navigate('More', { screen: 'Notifications', initial: false })}
-          style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
-        >
-          <View style={styles.cardHead}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('notifications.title')}</Text>
-            <Text style={[styles.link, { color: colors.brand }]}>{t('notifications.open')}</Text>
-          </View>
-          <Text style={[styles.reviewCount, { color: colors.ink }]}>
-            {t('notifications.unreadCount', { count: unread })}
-          </Text>
-        </Pressable>
-
-        {showNutrition ? (
-        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <View style={styles.cardHead}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.fuelTitle')}</Text>
-            <Pressable onPress={() => navigation.navigate('More', { screen: 'Fuel', initial: false })}>
-              <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.allFuel')}</Text>
-            </Pressable>
-          </View>
-          {overeating ? <Text style={[styles.over, { color: colors.danger }]}>{t('today.overeating')}</Text> : null}
-          {meals.length === 0 ? (
-            <Text style={[styles.empty, { color: colors.muted }]}>{t('dashboard.noMealsToday')}</Text>
-          ) : null}
-          <Text style={[styles.progressLabel, { color: colors.muted }, overeating && { color: colors.danger }]}>
-            {eaten} / {calorieGoal} {t('today.kcal')}
-          </Text>
-          <View style={[styles.barTrack, { backgroundColor: colors.line }]}>
-            <View
-              style={[
-                styles.barFill,
-                { backgroundColor: overeating ? colors.danger : colors.brand },
-                { width: `${clampPercent((eaten / Math.max(calorieGoal, 1)) * 100)}%` },
-              ]}
+          {starterInsteadOfFeed ? <StarterCard steps={starterSteps} /> : null}
+          {showFeed && !starterInsteadOfFeed ? (
+            <NowFeed
+              items={nowItems}
+              doneToday={todayDone}
+              busyTaskId={busyTaskId}
+              onToggleTask={(id) => void onToggle(id)}
+              onOpenReview={(materialId) => open('MaterialDetail', { id: materialId })}
+              onOpenReviews={() => open('ReviewInbox')}
+              onOpenTasks={() => open('TasksHome')}
             />
-          </View>
-          {meals.slice(0, 4).map((meal) => (
-            <View key={meal.id} style={styles.mealRow}>
-              <Text style={[styles.mealTitle, { color: colors.ink }]} numberOfLines={1}>
-                {meal.title}
-              </Text>
-              <Text style={[styles.minutes, { color: colors.muted }]}>
-                {meal.calories} {t('today.kcal')}
-              </Text>
-            </View>
-          ))}
-          <Text style={[styles.progressLabel, styles.waterLabel, { color: colors.muted }]}>
-            {glasses} / {waterGoal} {t('fuel.glasses')}
-          </Text>
-          <View style={styles.waterWrap}>
-            <WaterGlasses
-              glasses={glasses}
-              goal={waterGoal}
-              disabled={setWater.isPending}
-              onChange={(next) => {
-                setActionError(false);
-                void setWater.mutateAsync({ date: today, glasses: next }).catch(() => {
-                  setActionError(true);
-                });
-              }}
-            />
-          </View>
-        </View>
-        ) : null}
-
-        {(showTasks || showReview) ? (
-        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <View style={styles.cardHead}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.weekTitle')}</Text>
-          </View>
-          {showTasks && showReview ? (
-          <View style={styles.tabs}>
-            {(['tasks', 'reviews'] as const).map((id) => (
-              <Pressable
-                key={id}
-                onPress={() => setWeekTab(id)}
-                style={[
-                  styles.tab,
-                  { borderColor: colors.line },
-                  weekTabId === id && { backgroundColor: colors.brand, borderColor: colors.brand },
-                ]}
-              >
-                <Text
-                  style={[
-                    { color: colors.muted, fontSize: 12, fontWeight: '700' },
-                    weekTabId === id && { color: colors.onBrand },
-                  ]}
-                >
-                  {t(`dashboard.weekTabs.${id}`)}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
           ) : null}
-          <View style={styles.chartRow}>
-            {weekSeries.map((day) => {
-              const planned = weekTabId === 'tasks' ? day.tasksPlanned : day.reviewsDone;
-              const done = weekTabId === 'tasks' ? day.tasksDone : day.reviewsDone;
-              const plannedHeight = Math.max((planned / chartMax) * 100, planned > 0 ? 8 : 4);
-              const doneHeight = Math.max((done / chartMax) * 100, done > 0 ? 8 : 0);
-              return (
-                <View key={day.date} style={styles.chartCol}>
-                  <View style={styles.chartBars}>
-                    <View
-                      style={[
-                        styles.chartPlanned,
-                        { height: `${plannedHeight}%`, backgroundColor: `${colors.brand}47` },
-                      ]}
-                    />
-                    <View
-                      style={[
-                        styles.chartDone,
-                        { height: `${doneHeight}%`, backgroundColor: colors.brand },
-                      ]}
-                    />
-                  </View>
-                  <Text style={[styles.chartLabel, { color: colors.muted }]}>{day.date.slice(8)}</Text>
-                </View>
-              );
-            })}
-          </View>
-          <View style={styles.legend}>
-            <Text style={[styles.legendItem, { color: colors.brand }]}>● {t('dashboard.legendDone')}</Text>
-            <Text style={[styles.legendMuted, { color: colors.muted }]}>● {t('dashboard.legendPlanned')}</Text>
-          </View>
-        </View>
-        ) : null}
 
-        {showReview ? (
-        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <View style={styles.cardHead}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.recentTitle')}</Text>
-            <Pressable onPress={() => navigation.navigate('More', { screen: 'Materials', initial: false })}>
-              <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.viewAllMaterials')}</Text>
-            </Pressable>
-          </View>
-          {recentMaterials.length === 0 ? (
-            <Text style={[styles.empty, { color: colors.muted }]}>{t('materials.emptyDescription')}</Text>
-          ) : (
-            recentMaterials.slice(0, 4).map((material) => (
-              <Pressable
-                key={material.id}
-                onPress={() =>
-                  navigation.navigate('More', { screen: 'MaterialDetail', params: { id: material.id }, initial: false })
-                }
-                style={[styles.materialRow, { borderColor: colors.line }]}
-              >
-                <View style={styles.materialBody}>
-                  <Text style={[styles.materialTitle, { color: colors.ink }]} numberOfLines={1}>
-                    {material.title}
-                  </Text>
-                  <Text style={[styles.meta, { color: colors.muted }]}>
-                    {material.category?.name ?? t('materials.fields.noCategory')}
-                  </Text>
-                </View>
-                <Text style={[styles.link, { color: colors.brand }]}>{t('today.openReview')}</Text>
-              </Pressable>
-            ))
-          )}
-        </View>
-        ) : null}
+          <QuickActions actions={quickActions} />
 
-        {showFinance ? (
-        <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-          <View style={styles.cardHead}>
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('dashboard.financeTitle')}</Text>
-            <Pressable onPress={() => navigation.navigate('More', { screen: 'Finance', initial: false })}>
-              <Text style={[styles.link, { color: colors.brand }]}>{t('dashboard.allFinance')}</Text>
-            </Pressable>
-          </View>
-          {currencyBuckets.length === 0 ? (
-            <Text style={[styles.empty, { color: colors.muted }]}>{t('dashboard.modules.noFinance')}</Text>
-          ) : (
-            currencyBuckets.map((bucket) => (
-              <View key={bucket.currency} style={[styles.financeRow, { borderColor: colors.line }]}>
-                <View style={styles.materialBody}>
-                  <Text style={[styles.materialTitle, { color: colors.ink }]} numberOfLines={1}>
-                    {currencyLabel(bucket.currency, language)}
-                  </Text>
-                  <Text style={[styles.meta, { color: colors.muted }]}>
-                    {t('finance.income')} {formatSignedMoney(bucket.income, language, bucket.currency)}
-                    {' · '}
-                    {t('finance.expense')} {formatSignedMoney(-bucket.expense, language, bucket.currency)}
-                  </Text>
-                </View>
-                <Text style={[styles.minutes, { color: colors.ink }]}>
-                  {formatSignedMoney(bucket.balance, language, bucket.currency)}
-                </Text>
-              </View>
-            ))
-          )}
-        </View>
-        ) : null}
-      </ScrollView>
+          {/* A new account that already has something to do still sees its checklist, lower down. */}
+          {isNewAccount && !starterInsteadOfFeed ? <StarterCard steps={starterSteps} /> : null}
+
+          <OverviewTiles tiles={overviewTiles} />
+        </Animated.ScrollView>
+      </BlurTargetView>
+      {/* Status-bar strip: once the page scrolls up under the clock and battery, it turns into
+          frosted glass instead of cutting the content off at a solid black band. */}
+      <Animated.View
+        pointerEvents="none"
+        style={[styles.statusGlass, { height: insets.top, opacity: statusGlass }]}
+      >
+        <GlassBackground target={blurTarget} />
+      </Animated.View>
     </SafeAreaView>
   );
 }
@@ -561,120 +506,22 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: { padding: 20, paddingBottom: 40, width: '100%' },
-  helloRow: { alignItems: 'flex-start', flexDirection: 'row', gap: 12, marginBottom: 16, maxWidth: '100%' },
-  helloCopy: { flex: 1, minWidth: 0 },
-  helloTitleRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  hello: { fontSize: 28, fontWeight: '700' },
-  planChip: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 5 },
-  planChipText: { fontSize: 10, fontWeight: '800', letterSpacing: 1.2, textTransform: 'uppercase' },
-  error: { marginBottom: 12 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 14, maxWidth: '100%' },
-  progressCard: {
-    borderRadius: 20,
-    borderWidth: 1,
-    padding: 14,
-    width: '48%',
-    flexGrow: 1,
-    maxWidth: '100%',
-  },
-  progressTitle: { fontSize: 13 },
-  progressValue: { fontSize: 16, fontWeight: '700', marginTop: 8, marginBottom: 10 },
-  progressPct: { fontSize: 12, fontWeight: '700', marginTop: 6 },
-  card: {
-    borderRadius: 24,
-    borderWidth: 1,
-    marginBottom: 14,
-    padding: 16,
-    maxWidth: '100%',
-    overflow: 'hidden',
-  },
-  cardHead: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    gap: 8,
-    maxWidth: '100%',
-  },
-  cardTitle: { fontSize: 16, fontWeight: '700', marginBottom: 10, flexGrow: 1, flexShrink: 1 },
-  link: { fontSize: 13, fontWeight: '600', marginBottom: 10, flexShrink: 0 },
-  empty: { fontSize: 14, paddingVertical: 8 },
-  taskRow: {
-    alignItems: 'flex-start',
-    borderRadius: 16,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 8,
-    padding: 10,
-    maxWidth: '100%',
-  },
-  check: {
+  statusGlass: { left: 0, position: 'absolute', right: 0, top: 0, zIndex: 10 },
+  helloRow: {
     alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    height: 36,
-    justifyContent: 'center',
-    width: 36,
-    flexShrink: 0,
-  },
-  checkMark: { fontWeight: '800' },
-  taskTitle: { fontSize: 15, fontWeight: '600' },
-  taskCopy: { flex: 1, gap: 4, minWidth: 0, paddingTop: 2 },
-  taskMeta: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  minutes: { fontSize: 13 },
-  splitBadge: { fontSize: 12, fontWeight: '700', flexShrink: 0 },
-  reviewCount: { fontSize: 20, fontWeight: '700', marginTop: 4 },
-  over: { fontSize: 13, fontWeight: '700', marginBottom: 8 },
-  progressLabel: { fontSize: 14, marginBottom: 8 },
-  waterLabel: { marginTop: 14 },
-  barTrack: { borderRadius: 999, height: 8, overflow: 'hidden' },
-  barFill: { height: '100%', borderRadius: 999 },
-  mealRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     gap: 12,
-    marginTop: 10,
+    marginBottom: 18,
+    maxWidth: '100%',
   },
-  mealTitle: { flex: 1, fontSize: 14 },
-  waterWrap: { marginTop: 8 },
-  tabs: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12, maxWidth: '100%' },
-  tab: {
-    borderRadius: 12,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+  helloCopy: { alignItems: 'flex-start', flex: 1, gap: 6, minWidth: 0 },
+  hello: { fontSize: 21, fontFamily: fonts.display, letterSpacing: -0.4, maxWidth: '100%' },
+  planChip: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 },
+  planChipText: {
+    fontSize: 10,
+    fontFamily: fonts.bold,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
-  chartRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 4, height: 140, width: '100%', maxWidth: '100%' },
-  chartCol: { flex: 1, alignItems: 'center', height: '100%', minWidth: 0 },
-  chartBars: { flex: 1, width: '70%', justifyContent: 'flex-end', alignItems: 'center' },
-  chartPlanned: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
-  chartDone: {
-    width: '100%',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
-  chartLabel: { fontSize: 10, marginTop: 6, maxWidth: '100%' },
-  legend: { flexDirection: 'row', gap: 16, marginTop: 10 },
-  legendItem: { fontSize: 12 },
-  legendMuted: { fontSize: 12 },
-  materialRow: {
-    alignItems: 'center',
-    borderRadius: 16,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 8,
-    padding: 12,
-  },
-  materialBody: { flex: 1 },
-  materialTitle: { fontSize: 15, fontWeight: '600' },
-  meta: { fontSize: 13, marginTop: 8 },
-  financeRow: { alignItems: 'center', flexDirection: 'row', gap: 8, marginTop: 10 },
-  dot: { borderRadius: 999, height: 10, width: 10 },
+  error: { fontFamily: fonts.medium, marginBottom: 12 },
 });

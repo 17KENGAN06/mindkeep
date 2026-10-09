@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import {
   ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../api/auth';
-import { BrandMark } from '../../components/BrandMark';
-import { LanguageSwitcher } from '../../components/LanguageSwitcher';
+import { AuthScreenFrame } from '../../components/AuthScreenFrame';
+import { fonts } from '../../config/fonts';
 import { issueBotToken } from '../../features/auth/botChallenge';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useTheme } from '../../features/theme/useTheme';
@@ -56,14 +52,7 @@ export function ForgotPasswordScreen({ onGoLogin }: ForgotPasswordScreenProps) {
   };
 
   return (
-    <SafeAreaView style={[styles.root, { backgroundColor: colors.bg }]}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-          <LanguageSwitcher />
-          <BrandMark size={64} style={styles.mark} />
+    <AuthScreenFrame>
           <Text style={[styles.title, { color: colors.ink }]}>{t('auth.forgotTitle')}</Text>
           <Text style={[styles.subtitle, { color: colors.muted }]}>
             {sent ? t('auth.forgotSent') : t('auth.forgotSubtitle')}
@@ -77,7 +66,7 @@ export function ForgotPasswordScreen({ onGoLogin }: ForgotPasswordScreenProps) {
                 keyboardType="email-address"
                 style={[
                   styles.input,
-                  { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+                  { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
                 ]}
                 value={email}
                 onChangeText={setEmail}
@@ -99,32 +88,27 @@ export function ForgotPasswordScreen({ onGoLogin }: ForgotPasswordScreenProps) {
           <Pressable onPress={onGoLogin} style={styles.linkWrap}>
             <Text style={[styles.link, { color: colors.brand }]}>{t('auth.submitLogin')}</Text>
           </Pressable>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    </AuthScreenFrame>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 },
-  flex: { flex: 1 },
-  content: { flexGrow: 1, justifyContent: 'center', padding: 24 },
-  mark: { marginBottom: 16, marginTop: 12 },
-  title: { fontSize: 28, fontWeight: '700' },
-  subtitle: { fontSize: 15, marginTop: 8, marginBottom: 28 },
-  label: { fontSize: 13, marginBottom: 6 },
+  title: { fontFamily: fonts.bold, fontSize: 24, letterSpacing: -0.3 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, marginTop: 6, marginBottom: 24 },
+  label: { fontFamily: fonts.semibold, fontSize: 14, marginBottom: 8 },
   input: {
     borderRadius: 14,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     marginBottom: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  error: { marginBottom: 16 },
-  button: { alignItems: 'center', borderRadius: 14, paddingVertical: 14 },
+  error: { fontFamily: fonts.medium, marginBottom: 16 },
+  button: { alignItems: 'center', borderRadius: 14, justifyContent: 'center', minHeight: 52 },
   buttonDisabled: { opacity: 0.7 },
-  buttonText: { fontSize: 16, fontWeight: '700' },
-  linkWrap: { marginTop: 20, alignItems: 'center' },
-  link: { fontSize: 14 },
+  buttonText: { fontFamily: fonts.semibold, fontSize: 16 },
+  linkWrap: { marginTop: 18, alignItems: 'center' },
+  link: { fontFamily: fonts.medium, fontSize: 14 },
 });

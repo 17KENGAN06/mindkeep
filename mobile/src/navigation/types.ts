@@ -1,6 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 export type AuthStackParamList = {
+  Welcome: undefined;
   Login: undefined;
   Register: undefined;
   ForgotPassword: undefined;
@@ -13,7 +14,8 @@ export type AuthStackParamList = {
 export type MoreStackParamList = {
   MoreHome: undefined;
   // Tasks
-  TasksHome: undefined;
+  /** open + at: quick add asks to open Import / Copy day once per timestamp. */
+  TasksHome: { open?: 'import' | 'copy'; at?: number } | undefined;
   MonthPlan: undefined;
   Forest: { year?: number; month?: number };
   // Review
@@ -40,8 +42,6 @@ export type MoreStackParamList = {
   Settings: undefined;
   Guide: undefined;
   Statistics: undefined;
-  Blog: undefined;
-  BlogArticle: { slug: string };
   Admin: undefined;
   AdminUser: { id: string };
 };

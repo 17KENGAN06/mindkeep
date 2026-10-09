@@ -1,18 +1,14 @@
 import { useState } from 'react';
 import {
   ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { LanguageSwitcher } from '../../components/LanguageSwitcher';
-import { BrandMark } from '../../components/BrandMark';
+import { AuthScreenFrame } from '../../components/AuthScreenFrame';
+import { fonts } from '../../config/fonts';
 import { AppleSignInButton } from '../../components/AppleSignInButton';
 import { GoogleSignInButton } from '../../components/GoogleSignInButton';
 import { mapAuthError } from '../../features/auth/mapAuthError';
@@ -70,16 +66,16 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
     }
   };
 
-  const onConfirm = async () => {
-    if (!pendingEmail) return;
+  const onConfirm = async (value = code) => {
+    if (!pendingEmail || busy) return;
     setError(null);
-    if (!/^\d{6}$/.test(code.trim())) {
+    if (!/^\d{6}$/.test(value.trim())) {
       setError(t('auth.errors.invalidLoginCode'));
       return;
     }
     setBusy(true);
     try {
-      await confirmLogin({ email: pendingEmail, code: code.trim() });
+      await confirmLogin({ email: pendingEmail, code: value.trim() });
     } catch (caught) {
       setError(mapAuthError(caught, t));
     } finally {
@@ -107,16 +103,7 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
   };
 
   return (
-    <SafeAreaView style={[styles.root, { backgroundColor: colors.bg }]}>
-    <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <LanguageSwitcher />
-        <BrandMark size={64} style={styles.mark} />
-        <Text style={[styles.brand, { color: colors.brand }]}>{t('common.appName')}</Text>
-
+    <AuthScreenFrame>
         {pendingEmail ? (
           <>
             <Text style={[styles.title, { color: colors.ink }]}>{t('auth.loginCodeTitle')}</Text>
@@ -131,10 +118,17 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
               maxLength={6}
               style={[
                 styles.input,
-                { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
               ]}
               value={code}
-              onChangeText={(value) => setCode(value.replace(/\D/g, '').slice(0, 6))}
+              returnKeyType="done"
+              onSubmitEditing={() => void onConfirm()}
+              onChangeText={(value) => {
+                const next = value.replace(/\D/g, '').slice(0, 6);
+                setCode(next);
+                // Sign in as soon as the sixth digit is in: the button can sit under the keyboard.
+                if (next.length === 6) void onConfirm(next);
+              }}
             />
 
             {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
@@ -180,7 +174,7 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
               keyboardType="email-address"
               style={[
                 styles.input,
-                { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
               ]}
               value={email}
               onChangeText={setEmail}
@@ -192,7 +186,7 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
               secureTextEntry
               style={[
                 styles.input,
-                { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
               ]}
               value={password}
               onChangeText={setPassword}
@@ -213,6 +207,7 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
               )}
             </Pressable>
 
+
             <GoogleSignInButton disabled={busy} onError={setError} />
             <AppleSignInButton disabled={busy} onError={setError} />
 
@@ -227,37 +222,27 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
             </Pressable>
           </>
         )}
-      </ScrollView>
-    </KeyboardAvoidingView>
-    </SafeAreaView>
+    </AuthScreenFrame>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 },
-  flex: { flex: 1 },
-  content: { flexGrow: 1, justifyContent: 'center', padding: 24 },
-  mark: { marginBottom: 16, marginTop: 12 },
-  brand: { fontSize: 14, fontWeight: '600', marginBottom: 12 },
-  title: { fontSize: 28, fontWeight: '700' },
-  subtitle: { fontSize: 15, marginTop: 8, marginBottom: 28 },
-  label: { fontSize: 13, marginBottom: 6 },
+  title: { fontFamily: fonts.bold, fontSize: 24, letterSpacing: -0.3 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, marginTop: 6, marginBottom: 24 },
+  label: { fontFamily: fonts.semibold, fontSize: 14, marginBottom: 8 },
   input: {
     borderRadius: 14,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     marginBottom: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  error: { marginBottom: 16 },
-  button: {
-    alignItems: 'center',
-    borderRadius: 14,
-    paddingVertical: 14,
-  },
+  error: { fontFamily: fonts.medium, marginBottom: 16 },
+  button: { alignItems: 'center', borderRadius: 14, justifyContent: 'center', minHeight: 52 },
   buttonDisabled: { opacity: 0.7 },
-  buttonText: { fontSize: 16, fontWeight: '700' },
-  linkWrap: { marginTop: 20, alignItems: 'center' },
-  link: { fontSize: 14 },
+  buttonText: { fontFamily: fonts.semibold, fontSize: 16 },
+  linkWrap: { marginTop: 18, alignItems: 'center' },
+  link: { fontFamily: fonts.medium, fontSize: 14 },
 });
