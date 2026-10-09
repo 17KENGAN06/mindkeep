@@ -14,6 +14,7 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
+import { fonts } from '../config/fonts';
 
 type SheetModalProps = {
   visible: boolean;
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  title: { flex: 1, fontSize: 19, fontWeight: '700', lineHeight: 24 },
+  title: { flex: 1, fontSize: 19, fontFamily: fonts.bold, lineHeight: 24 },
   close: {
     alignItems: 'center',
     borderRadius: 999,
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   body: { gap: 12, padding: 20, paddingBottom: 24 },
-  subtitle: { fontSize: 14, lineHeight: 20 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
   footer: {
     borderTopWidth: StyleSheet.hairlineWidth,
     gap: 8,

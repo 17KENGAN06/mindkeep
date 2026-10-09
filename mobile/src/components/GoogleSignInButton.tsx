@@ -11,6 +11,7 @@ import {
 import { useAuth } from '../features/auth/useAuth';
 import { AppIcon } from '../components/AppIcon';
 import { useTheme } from '../features/theme/useTheme';
+import { fonts } from '../config/fonts';
 
 type GoogleSignInButtonProps = {
   disabled?: boolean;
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
   },
   line: { flex: 1, height: 1 },
   or: {
+    fontFamily: fonts.regular,
     fontSize: 12,
     letterSpacing: 1.4,
     textTransform: 'uppercase',
@@ -99,5 +101,5 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   buttonDisabled: { opacity: 0.7 },
-  buttonText: { fontSize: 16, fontWeight: '700' },
+  buttonText: { fontSize: 16, fontFamily: fonts.bold },
 });

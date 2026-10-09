@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
 import { parseContentBlocks } from '../utils/contentBlocks';
 import { HighlightedCode } from '../utils/highlightCode';
+import { fonts } from '../config/fonts';
 
 type MaterialBodyProps = {
   content: string;
@@ -44,8 +45,8 @@ export function MaterialBody({ content }: MaterialBodyProps) {
 
 const styles = StyleSheet.create({
   wrap: { gap: 10 },
-  text: { fontSize: 15, lineHeight: 22 },
-  bold: { fontWeight: '700' },
+  text: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 22 },
+  bold: { fontFamily: fonts.bold },
   code: {
     borderRadius: 16,
     borderWidth: 1,
@@ -53,5 +54,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 16,
   },
-  codeLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase' },
+  codeLabel: { fontSize: 11, fontFamily: fonts.bold, letterSpacing: 0.4, textTransform: 'uppercase' },
 });

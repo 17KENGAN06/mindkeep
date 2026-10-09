@@ -27,7 +27,8 @@
     "statistics": "Statistics",
     "admin": "Admin",
     "blog": "Blog",
-    "close": "Close"
+    "close": "Close",
+    "systemLanguage": "Phone language"
   },
   "drafts": {
     "title": "Discard changes?",
@@ -505,7 +506,36 @@
       "SYSTEM": "System",
       "TASK_IMPORTANT": "Important"
     },
-    "openTask": "Open tasks"
+    "openTask": "Open tasks",
+    "bellImportant": "Important",
+    "bellToday": "Today",
+    "bellOverdue": "Overdue",
+    "bellEmpty": "No reviews waiting right now",
+    "bellEmptyImportant": "No important tasks",
+    "bellEmptyOverdue": "Nothing overdue",
+    "seeAll": "All notifications",
+    "openReviews": "Open reviews",
+    "importantCount": "{{count}} important",
+    "dueCount": "{{count}} today",
+    "overdueCount": "{{count}} overdue",
+    "push": {
+      "promptTitle": "Get reminders on time?",
+      "promptBody": "Mindkeep will remind you in the morning about today's reviews and important tasks. Only what you planned yourself.",
+      "enable": "Turn on reminders",
+      "later": "Not now",
+      "settingsTitle": "Phone reminders",
+      "settingsHint": "In the morning at your chosen time: today's reviews and important tasks.",
+      "toggle": "Send reminders",
+      "time": "Reminder time",
+      "denied": "Notifications are turned off in your phone settings.",
+      "openSettings": "Open settings",
+      "todayTitle": "Today in Mindkeep",
+      "reviews": "To review: {{count}}",
+      "important": "Important tasks: {{count}}",
+      "overdueTitle": "You have overdue reviews",
+      "overdueBody": "Overdue: {{count}}. Come back before it fades.",
+      "channel": "Reminders"
+    }
   },
   "finance": {
     "title": "Budget",
@@ -611,7 +641,8 @@
         "badType": "Use a JPEG, PNG, or WebP photo.",
         "invalid": "Choose a photo first.",
         "failed": "Could not read the photo. Try again."
-      }
+      },
+      "added": "Operations added: {{count}}"
     }
   },
   "auth": {
@@ -1019,65 +1050,6 @@
     "title": "Statistics",
     "subtitle": "Review activity and counts for your learning schedule."
   },
-  "blog": {
-    "eyebrow": "Journal",
-    "title": "Notes on memory & focus",
-    "subtitle": "Three themes that shape how Mindkeep thinks about learning.",
-    "viewAll": "Open blog",
-    "back": "All articles",
-    "byAuthor": "By {{author}}",
-    "originLabel": "Who shaped this idea",
-    "moreTitle": "Keep reading",
-    "topics": {
-      "spaced-repetition": {
-        "label": "Spaced repetition",
-        "description": "How timed revisits turn fragile memory into lasting recall."
-      },
-      "pomodoro": {
-        "label": "Pomodoro",
-        "description": "Short focused sprints that protect attention while you learn."
-      },
-      "pareto": {
-        "label": "80/20 results",
-        "description": "Find the vital few inputs that move most of your progress."
-      }
-    },
-    "articles": {
-      "spaced-repetition-memory": {
-        "title": "Why revisiting on day 3, 7 and 30 works",
-        "excerpt": "A calm guide to spaced repetition — and why Mindkeep keeps intervals fixed.",
-        "originNote": "Hermann Ebbinghaus mapped the forgetting curve in the 1880s. His work inspired spaced revisits that strengthen memory before it fades.",
-        "body": [
-          "Learning is not a single moment — it is a series of returns. When you meet an idea once, the trace is fragile. When you meet it again at the right distance, the mind rebuilds the path with less effort and more clarity.",
-          "Spaced repetition grew from that insight: schedule reviews before forgetting wins. Classic systems adapt the gap after every answer. Mindkeep chooses a gentler contract — fixed revisits on day 3, day 7 and day 30 from the day you learned something.",
-          "Fixed intervals remove the noise of scoring yourself. You still revisit on purpose. You still protect long-term memory. You simply trust a clear rhythm instead of an ever-shifting algorithm.",
-          "Use this template whenever you write about memory: start with the feeling of forgetting, name the method, credit the originator, then connect it to how Mindkeep behaves in practice."
-        ]
-      },
-      "pomodoro-focus": {
-        "title": "Pomodoro: learn in bright, short windows",
-        "excerpt": "How 25-minute focus blocks help you study without burning out.",
-        "originNote": "Francesco Cirillo created the Pomodoro Technique in the late 1980s, naming it after a tomato-shaped kitchen timer.",
-        "body": [
-          "Deep learning needs attention — and attention loves edges. A short, protected block tells your mind: this window is for one thing only.",
-          "The Pomodoro pattern is simple: focus for about 25 minutes, then rest briefly. After a few cycles, take a longer pause. The point is not perfection. The point is a repeatable cadence that keeps energy available for the next return.",
-          "Pair Pomodoro with Mindkeep: use a focus block to capture what you learned, then let the 3 · 7 · 30 schedule bring you back later. Capture now. Revisit later. Protect both intensity and memory.",
-          "When you draft future articles on focus, keep this shape: problem of distraction → Cirillo’s method → practical pairing with Mindkeep → one gentle invitation to try today."
-        ]
-      },
-      "pareto-learning-results": {
-        "title": "The 80/20 rule in learning",
-        "excerpt": "How Vilfredo Pareto’s insight helps you choose what is worth remembering.",
-        "originNote": "Economist Vilfredo Pareto observed that a minority of causes often drive a majority of outcomes — later popularized as the 80/20 principle.",
-        "body": [
-          "Not every fact deserves the same space in your mind. Some ideas unlock many others. Some only decorate the surface.",
-          "The Pareto principle suggests a useful bias: look for the vital few. In language learning that may be high-frequency words. In coding it may be the patterns you reuse weekly. In work it may be the principles behind your best decisions.",
-          "Mindkeep helps you keep what you chose — not everything you touched. Capture the material that compounds. Review it on a fixed rhythm. Leave the rest outside the schedule so attention stays sharp.",
-          "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
-        ]
-      }
-    }
-  },
   "nav": {
     "account": "Account"
   },
@@ -1285,10 +1257,90 @@
     "expense": "Expense",
     "add": "Add task",
     "taskDone": "Task added for today",
-    "waterDone": "Water: {{count}} / {{goal}}"
+    "waterDone": "Water: {{count}} / {{goal}}",
+    "hints": {
+      "task": "Plan for today",
+      "meal": "Calories by hand",
+      "scan": "Photo → calories",
+      "note": "A thought or notes",
+      "material": "Review 3 · 7 · 30",
+      "expense": "Straight to budget",
+      "water": "One glass per tap"
+    }
   },
   "hub": {
     "tasksToday": "Today: {{count}}",
-    "reviewsDue": "Due: {{count}}"
+    "reviewsDue": "Due: {{count}}",
+    "desc": {
+      "tasks": "Day and month plan",
+      "review": "Review 3 · 7 · 30",
+      "fuel": "Calories, water, steps",
+      "notes": "Thoughts and notes",
+      "rhythm": "Daily habits",
+      "finance": "Income and expenses",
+      "statistics": "Progress and totals"
+    }
+  },
+  "welcome": {
+    "eyebrow": "Tasks · Review · Budget",
+    "title": "Tasks, reviews, and money — in one workspace.",
+    "subtitle": "Plan the day, save what you learned with a 3 · 7 · 30 return, and keep each currency on its own. After signup you choose which services to use.",
+    "start": "Start free",
+    "login": "Log in",
+    "heroVisual": {
+      "tasksTitle": "Today",
+      "tasksItem1": "Review notes — 25 min",
+      "tasksItem2": "Important · in notifications",
+      "reviewTitle": "Learning",
+      "reviewQuestion": "Return on day 3",
+      "reviewHint": "Then day 7 and day 30",
+      "financeTitle": "Budget",
+      "financeLabel": "Cash · EUR",
+      "financeValue": "€420"
+    }
+  },
+  "todayHub": {
+    "rings": {
+      "tasks": "Tasks",
+      "reviews": "Reviews",
+      "calories": "Calories",
+      "water": "Water"
+    },
+    "now": {
+      "title": "Now",
+      "more": "{{count}} more",
+      "less": "Show less",
+      "allDone": "All done for today",
+      "allDoneHint": "Take a breath, or add something with “+”.",
+      "overdue": "overdue",
+      "today": "today",
+      "important": "important",
+      "doneToday": "Done today: {{count}}",
+      "reviews": "Reviews",
+      "tasks": "Tasks",
+      "all": "All"
+    },
+    "quick": {
+      "water": "Water +1",
+      "meal": "Meal",
+      "scan": "Food scan",
+      "expense": "Expense"
+    },
+    "overview": {
+      "title": "Overview",
+      "nutrition": "Nutrition",
+      "finance": "Spent this month",
+      "week": "Week",
+      "noExpenses": "No expenses yet",
+      "weekValue": "{{done}} of {{total}}"
+    },
+    "start": {
+      "title": "Get started",
+      "hint": "A couple of steps and your home comes alive.",
+      "task": "Add your first task",
+      "material": "Save a material to review",
+      "reminders": "Turn on reminders",
+      "hide": "Hide"
+    }
   }
 }

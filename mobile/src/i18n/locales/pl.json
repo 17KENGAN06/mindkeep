@@ -27,7 +27,8 @@
     "statistics": "Statystyki",
     "admin": "Admin",
     "blog": "Blog",
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "systemLanguage": "Jak w telefonie"
   },
   "drafts": {
     "title": "Odrzucić zmiany?",
@@ -505,7 +506,36 @@
       "SYSTEM": "System",
       "TASK_IMPORTANT": "Ważne"
     },
-    "openTask": "Do zadań"
+    "openTask": "Do zadań",
+    "bellImportant": "Ważne",
+    "bellToday": "Dziś",
+    "bellOverdue": "Zaległe",
+    "bellEmpty": "Nie ma teraz powtórek",
+    "bellEmptyImportant": "Brak ważnych zadań",
+    "bellEmptyOverdue": "Brak zaległych",
+    "seeAll": "Wszystkie powiadomienia",
+    "openReviews": "Do powtórek",
+    "importantCount": "{{count}} ważnych",
+    "dueCount": "{{count}} dziś",
+    "overdueCount": "{{count}} zaległych",
+    "push": {
+      "promptTitle": "Przypominać na czas?",
+      "promptBody": "Mindkeep przypomni rano o dzisiejszych powtórkach i ważnych zadaniach. Tylko to, co sam zaplanujesz.",
+      "enable": "Włącz przypomnienia",
+      "later": "Nie teraz",
+      "settingsTitle": "Przypomnienia w telefonie",
+      "settingsHint": "Rano o wybranej godzinie: dzisiejsze powtórki i ważne zadania.",
+      "toggle": "Wysyłaj przypomnienia",
+      "time": "Godzina przypomnienia",
+      "denied": "Powiadomienia są wyłączone w ustawieniach telefonu.",
+      "openSettings": "Otwórz ustawienia",
+      "todayTitle": "Dziś w Mindkeep",
+      "reviews": "Do powtórki: {{count}}",
+      "important": "Ważne zadania: {{count}}",
+      "overdueTitle": "Masz zaległe powtórki",
+      "overdueBody": "Zaległe: {{count}}. Wróć, zanim zapomnisz.",
+      "channel": "Przypomnienia"
+    }
   },
   "finance": {
     "title": "Budżet",
@@ -611,7 +641,8 @@
         "badType": "Użyj JPEG, PNG lub WebP.",
         "invalid": "Najpierw wybierz zdjęcie.",
         "failed": "Nie udało się odczytać zdjęcia. Spróbuj ponownie."
-      }
+      },
+      "added": "Dodano operacji: {{count}}"
     }
   },
   "auth": {
@@ -1019,65 +1050,6 @@
     "title": "Statystyki",
     "subtitle": "Aktywność powtórek i liczby z twojego harmonogramu nauki."
   },
-  "blog": {
-    "eyebrow": "Dziennik",
-    "title": "Notatki o pamięci i skupieniu",
-    "subtitle": "Trzy tematy, które kształtują to, jak Mindkeep myśli o nauce.",
-    "viewAll": "Otwórz bloga",
-    "back": "Wszystkie artykuły",
-    "byAuthor": "Autor: {{author}}",
-    "originLabel": "Kto ukształtował ten pomysł",
-    "moreTitle": "Czytaj dalej",
-    "topics": {
-      "spaced-repetition": {
-        "label": "Powtórki rozłożone w czasie",
-        "description": "Jak zaplanowane powroty zamieniają kruchą pamięć w trwałe przypominanie."
-      },
-      "pomodoro": {
-        "label": "Pomodoro",
-        "description": "Krótkie, skupione sprinty, które chronią uwagę podczas nauki."
-      },
-      "pareto": {
-        "label": "Wyniki 80/20",
-        "description": "Znajdź te nieliczne wejścia, które dają większość postępu."
-      }
-    },
-    "articles": {
-      "spaced-repetition-memory": {
-        "title": "Dlaczego powroty w dniu 3, 7 i 30 działają",
-        "excerpt": "Spokojny przewodnik po powtórkach rozłożonych w czasie — i dlaczego Mindkeep zostawia odstępy stałe.",
-        "originNote": "Hermann Ebbinghaus opisał krzywą zapominania w latach 80. XIX wieku. Jego praca zainspirowała rozłożone powroty, które wzmacniają pamięć, zanim ślad zblednie.",
-        "body": [
-          "Nauka nie jest jednym momentem — to seria powrotów. Gdy spotykasz ideę raz, ślad jest kruchy. Gdy spotykasz ją ponownie w odpowiednim odstępie, umysł odbudowuje ścieżkę mniejszym wysiłkiem i z większą jasnością.",
-          "Powtórki rozłożone w czasie wyrosły z tej obserwacji: planuj powroty, zanim zwycięży zapominanie. Klasyczne systemy dostosowują przerwę po każdej odpowiedzi. Mindkeep wybiera łagodniejszą umowę — stałe powroty w dniu 3, 7 i 30 od dnia, w którym czegoś się nauczyłeś.",
-          "Stałe odstępy usuwają szum oceniania siebie. Nadal wracasz celowo. Nadal chronisz pamięć długoterminową. Po prostu ufasz czytelnemu rytmowi zamiast wciąż zmieniającemu się algorytmowi.",
-          "Korzystaj z tego szablonu, gdy piszesz o pamięci: zacznij od uczucia zapominania, nazwij metodę, oddaj sprawiedliwość twórcy, a potem połącz to z tym, jak Mindkeep działa w praktyce."
-        ]
-      },
-      "pomodoro-focus": {
-        "title": "Pomodoro: ucz się w jasnych, krótkich oknach",
-        "excerpt": "Jak 25-minutowe bloki skupienia pomagają się uczyć bez wypalenia.",
-        "originNote": "Francesco Cirillo stworzył technikę Pomodoro pod koniec lat 80. XX wieku i nazwał ją od kuchennego timera w kształcie pomidora.",
-        "body": [
-          "Głęboka nauka potrzebuje uwagi — a uwaga lubi krawędzie. Krótki, chroniony blok mówi umysłowi: to okno jest tylko na jedną rzecz.",
-          "Wzorzec Pomodoro jest prosty: skup się mniej więcej na 25 minut, potem krótko odpocznij. Po kilku cyklach zrób dłuższą przerwę. Chodzi nie o perfekcję. Chodzi o powtarzalny rytm, który zostawia energię na kolejny powrót.",
-          "Połącz Pomodoro z Mindkeep: użyj bloku skupienia, żeby zapisać to, czego się nauczyłeś, a potem pozwól harmonogramowi 3 · 7 · 30 wrócić do ciebie później. Zapisuj teraz. Wracaj później. Chroń zarówno intensywność, jak i pamięć.",
-          "Gdy będziesz pisać kolejne teksty o skupieniu, trzymaj ten kształt: problem rozproszenia → metoda Cirillo → praktyczne połączenie z Mindkeep → jedno spokojne zaproszenie, żeby spróbować już dziś."
-        ]
-      },
-      "pareto-learning-results": {
-        "title": "Zasada 80/20 w nauce",
-        "excerpt": "Jak spostrzeżenie Vilfreda Pareto pomaga wybrać to, co warto zapamiętać.",
-        "originNote": "Ekonomista Vilfredo Pareto zauważył, że mniejszość przyczyn często napędza większość skutków — później spopularyzowano to jako zasadę 80/20.",
-        "body": [
-          "Nie każdy fakt zasługuje na to samo miejsce w umyśle. Niektóre idee otwierają wiele innych. Inne tylko zdobią powierzchnię.",
-          "Zasada Pareto podpowiada przydatne nastawienie: szukaj tych nielicznych, które naprawdę mają znaczenie. W nauce języka mogą to być słowa o wysokiej częstotliwości. W programowaniu — wzorce, których używasz co tydzień. W pracy — zasady stojące za najlepszymi decyzjami.",
-          "Mindkeep pomaga zatrzymać to, co wybrałeś — nie wszystko, czego dotknąłeś. Zapisuj materiał, który się kumuluje. Powtarzaj go w stałym rytmie. Resztę zostaw poza harmonogramem, żeby uwaga zostawała ostra.",
-          "Szablon na przyszłe notatki 80/20: nazwij przeładowany wysiłek → wprowadź Pareto → podaj jeden konkretny przykład z nauki → pokaż, jak Mindkeep chroni to, co naprawdę ważne, powrotami 3 · 7 · 30."
-        ]
-      }
-    }
-  },
   "nav": {
     "account": "Konto"
   },
@@ -1285,10 +1257,90 @@
     "expense": "Wydatek",
     "add": "Dodaj zadanie",
     "taskDone": "Zadanie dodane na dziś",
-    "waterDone": "Woda: {{count}} / {{goal}}"
+    "waterDone": "Woda: {{count}} / {{goal}}",
+    "hints": {
+      "task": "Plan na dziś",
+      "meal": "Kalorie ręcznie",
+      "scan": "Zdjęcie → kalorie",
+      "note": "Myśl lub notatka",
+      "material": "Powtórki 3 · 7 · 30",
+      "expense": "Prosto do budżetu",
+      "water": "Szklanka na dotyk"
+    }
   },
   "hub": {
     "tasksToday": "Dziś: {{count}}",
-    "reviewsDue": "Czeka: {{count}}"
+    "reviewsDue": "Czeka: {{count}}",
+    "desc": {
+      "tasks": "Plan dnia i miesiąca",
+      "review": "Powtórki 3 · 7 · 30",
+      "fuel": "Kalorie, woda, kroki",
+      "notes": "Myśli i notatki",
+      "rhythm": "Codzienne nawyki",
+      "finance": "Przychody i wydatki",
+      "statistics": "Postępy i podsumowania"
+    }
+  },
+  "welcome": {
+    "eyebrow": "Zadania · Powtórki · Budżet",
+    "title": "Zadania, nauka i budżet — w jednym miejscu.",
+    "subtitle": "Plan dnia, powrót do materiału po 3, 7 i 30 dniach, budżet osobno dla każdej waluty. Po rejestracji wybierasz, z czego korzystasz.",
+    "start": "Zacznij za darmo",
+    "login": "Zaloguj się",
+    "heroVisual": {
+      "tasksTitle": "Dziś",
+      "tasksItem1": "Powtórzyć notatki — 25 min",
+      "tasksItem2": "Ważne · w powiadomieniach",
+      "reviewTitle": "Nauka",
+      "reviewQuestion": "Powrót po 3 dniach",
+      "reviewHint": "Potem 7 i 30",
+      "financeTitle": "Budżet",
+      "financeLabel": "Gotówka · EUR",
+      "financeValue": "€420"
+    }
+  },
+  "todayHub": {
+    "rings": {
+      "tasks": "Zadania",
+      "reviews": "Powtórki",
+      "calories": "Kalorie",
+      "water": "Woda"
+    },
+    "now": {
+      "title": "Teraz",
+      "more": "Jeszcze {{count}}",
+      "less": "Zwiń",
+      "allDone": "Wszystko na dziś zrobione",
+      "allDoneHint": "Odetchnij albo dodaj coś przez „+”.",
+      "overdue": "zaległe",
+      "today": "dziś",
+      "important": "ważne",
+      "doneToday": "Zrobione dziś: {{count}}",
+      "reviews": "Powtórki",
+      "tasks": "Zadania",
+      "all": "Wszystkie"
+    },
+    "quick": {
+      "water": "Woda +1",
+      "meal": "Posiłek",
+      "scan": "Skan jedzenia",
+      "expense": "Wydatek"
+    },
+    "overview": {
+      "title": "Przegląd",
+      "nutrition": "Odżywianie",
+      "finance": "Wydatki w miesiącu",
+      "week": "Tydzień",
+      "noExpenses": "Brak wydatków",
+      "weekValue": "{{done}} z {{total}}"
+    },
+    "start": {
+      "title": "Na start",
+      "hint": "Kilka kroków i ekran główny ożyje.",
+      "task": "Dodaj pierwsze zadanie",
+      "material": "Zapisz materiał do powtórki",
+      "reminders": "Włącz przypomnienia",
+      "hide": "Ukryj"
+    }
   }
 }

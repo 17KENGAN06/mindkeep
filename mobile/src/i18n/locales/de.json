@@ -27,7 +27,8 @@
     "statistics": "Statistik",
     "admin": "Admin",
     "blog": "Blog",
-    "close": "Schließen"
+    "close": "Schließen",
+    "systemLanguage": "Wie am Handy"
   },
   "drafts": {
     "title": "Änderungen verwerfen?",
@@ -505,7 +506,36 @@
       "SYSTEM": "System",
       "TASK_IMPORTANT": "Wichtig"
     },
-    "openTask": "Zu den Aufgaben"
+    "openTask": "Zu den Aufgaben",
+    "bellImportant": "Wichtig",
+    "bellToday": "Heute",
+    "bellOverdue": "Überfällig",
+    "bellEmpty": "Gerade keine Wiederholungen",
+    "bellEmptyImportant": "Keine wichtigen Aufgaben",
+    "bellEmptyOverdue": "Nichts überfällig",
+    "seeAll": "Alle Hinweise",
+    "openReviews": "Zu den Wiederholungen",
+    "importantCount": "{{count}} wichtig",
+    "dueCount": "{{count}} heute",
+    "overdueCount": "{{count}} überfällig",
+    "push": {
+      "promptTitle": "Rechtzeitig erinnern?",
+      "promptBody": "Mindkeep erinnert dich morgens an die heutigen Wiederholungen und wichtigen Aufgaben. Nur was du selbst geplant hast.",
+      "enable": "Erinnerungen einschalten",
+      "later": "Nicht jetzt",
+      "settingsTitle": "Erinnerungen auf dem Handy",
+      "settingsHint": "Morgens zur gewählten Zeit: heutige Wiederholungen und wichtige Aufgaben.",
+      "toggle": "Erinnerungen senden",
+      "time": "Uhrzeit der Erinnerung",
+      "denied": "Benachrichtigungen sind in den Handy-Einstellungen ausgeschaltet.",
+      "openSettings": "Einstellungen öffnen",
+      "todayTitle": "Heute in Mindkeep",
+      "reviews": "Wiederholen: {{count}}",
+      "important": "Wichtige Aufgaben: {{count}}",
+      "overdueTitle": "Überfällige Wiederholungen",
+      "overdueBody": "Überfällig: {{count}}. Komm zurück, bevor es verblasst.",
+      "channel": "Erinnerungen"
+    }
   },
   "finance": {
     "title": "Budget",
@@ -611,7 +641,8 @@
         "badType": "Bitte JPEG, PNG oder WebP verwenden.",
         "invalid": "Zuerst ein Foto wählen.",
         "failed": "Das Foto konnte nicht gelesen werden. Bitte erneut versuchen."
-      }
+      },
+      "added": "Buchungen hinzugefügt: {{count}}"
     }
   },
   "auth": {
@@ -1019,65 +1050,6 @@
     "title": "Statistik",
     "subtitle": "Wiederholungsaktivität und Zahlen zu deinem Lernplan."
   },
-  "blog": {
-    "eyebrow": "Journal",
-    "title": "Notizen zu Gedächtnis und Fokus",
-    "subtitle": "Drei Themen, die prägen, wie Mindkeep über Lernen denkt.",
-    "viewAll": "Blog öffnen",
-    "back": "Alle Artikel",
-    "byAuthor": "Von {{author}}",
-    "originLabel": "Wer diese Idee geprägt hat",
-    "moreTitle": "Weiterlesen",
-    "topics": {
-      "spaced-repetition": {
-        "label": "Verteiltes Wiederholen",
-        "description": "Wie zeitlich gestaffelte Rückkehren fragiles Gedächtnis in dauerhaftes Abrufen verwandeln."
-      },
-      "pomodoro": {
-        "label": "Pomodoro",
-        "description": "Kurze, fokussierte Sprints, die die Aufmerksamkeit beim Lernen schützen."
-      },
-      "pareto": {
-        "label": "80/20-Ergebnisse",
-        "description": "Finde die wenigen Inputs, die den Großteil deines Fortschritts bewegen."
-      }
-    },
-    "articles": {
-      "spaced-repetition-memory": {
-        "title": "Warum Rückkehren an Tag 3, 7 und 30 wirken",
-        "excerpt": "Ein ruhiger Leitfaden zum verteilten Wiederholen — und warum Mindkeep Intervalle fest lässt.",
-        "originNote": "Hermann Ebbinghaus kartierte in den 1880er-Jahren die Vergessenskurve. Seine Arbeit inspirierte gestaffelte Rückkehren, die das Gedächtnis stärken, bevor die Spur verblasst.",
-        "body": [
-          "Lernen ist kein einzelner Moment — es ist eine Reihe von Rückkehren. Triffst du eine Idee einmal, ist die Spur fragil. Triffst du sie wieder im richtigen Abstand, baut der Geist den Weg mit weniger Mühe und mehr Klarheit neu.",
-          "Verteiltes Wiederholen wuchs aus dieser Einsicht: plane Wiederholungen, bevor das Vergessen gewinnt. Klassische Systeme passen den Abstand nach jeder Antwort an. Mindkeep wählt einen sanfteren Vertrag — feste Rückkehren an Tag 3, Tag 7 und Tag 30 ab dem Tag, an dem du etwas gelernt hast.",
-          "Feste Intervalle nehmen den Lärm des Selbstbewertens. Du kehrst trotzdem bewusst zurück. Du schützt trotzdem das Langzeitgedächtnis. Du vertraust einfach einem klaren Rhythmus statt einem ständig wechselnden Algorithmus.",
-          "Nutze diese Vorlage, wenn du über Gedächtnis schreibst: beginne mit dem Gefühl des Vergessens, benenne die Methode, nenne den Ursprung, und verbinde sie dann damit, wie Mindkeep in der Praxis arbeitet."
-        ]
-      },
-      "pomodoro-focus": {
-        "title": "Pomodoro: in hellen, kurzen Fenstern lernen",
-        "excerpt": "Wie 25-Minuten-Fokusblöcke beim Lernen helfen, ohne auszubrennen.",
-        "originNote": "Francesco Cirillo entwickelte die Pomodoro-Technik Ende der 1980er-Jahre und benannte sie nach einem tomatenförmigen Küchentimer.",
-        "body": [
-          "Tiefes Lernen braucht Aufmerksamkeit — und Aufmerksamkeit mag Kanten. Ein kurzer, geschützter Block sagt dem Geist: dieses Fenster gilt nur einer Sache.",
-          "Das Pomodoro-Muster ist einfach: etwa 25 Minuten fokussieren, dann kurz ruhen. Nach ein paar Zyklen eine längere Pause. Es geht nicht um Perfektion. Es geht um einen wiederholbaren Takt, der Energie für die nächste Rückkehr bereithält.",
-          "Verbinde Pomodoro mit Mindkeep: nutze einen Fokusblock, um festzuhalten, was du gelernt hast, und lass den 3 · 7 · 30-Plan dich später zurückholen. Jetzt erfassen. Später zurückkehren. Intensität und Gedächtnis schützen.",
-          "Wenn du künftige Texte zu Fokus entwirfst, behalte diese Form: Problem der Ablenkung → Cirillos Methode → praktische Verbindung mit Mindkeep → eine sanfte Einladung, es heute zu versuchen."
-        ]
-      },
-      "pareto-learning-results": {
-        "title": "Die 80/20-Regel beim Lernen",
-        "excerpt": "Wie Vilfredo Paretos Einsicht hilft zu wählen, was sich zu merken lohnt.",
-        "originNote": "Der Ökonom Vilfredo Pareto beobachtete, dass eine Minderheit der Ursachen oft die Mehrheit der Ergebnisse treibt — später popularisiert als 80/20-Prinzip.",
-        "body": [
-          "Nicht jede Tatsache verdient denselben Platz im Kopf. Manche Ideen öffnen viele andere. Manche schmücken nur die Oberfläche.",
-          "Das Pareto-Prinzip schlägt eine nützliche Neigung vor: suche die wenigen, die zählen. Beim Sprachenlernen können das hochfrequente Wörter sein. Beim Programmieren die Muster, die du wöchentlich nutzt. Bei der Arbeit die Prinzipien hinter deinen besten Entscheidungen.",
-          "Mindkeep hilft dir, das zu behalten, was du gewählt hast — nicht alles, was du berührt hast. Erfasse das Material, das sich vermehrt. Wiederhole es in festem Rhythmus. Lass den Rest außerhalb des Plans, damit die Aufmerksamkeit scharf bleibt.",
-          "Vorlage für künftige 80/20-Notizen: benenne die überfüllte Anstrengung → führe Pareto ein → gib ein konkretes Lernbeispiel → zeige, wie Mindkeep das Wesentliche mit 3 · 7 · 30-Rückkehren schützt."
-        ]
-      }
-    }
-  },
   "nav": {
     "account": "Konto"
   },
@@ -1285,10 +1257,90 @@
     "expense": "Ausgabe",
     "add": "Aufgabe hinzufügen",
     "taskDone": "Aufgabe für heute hinzugefügt",
-    "waterDone": "Wasser: {{count}} / {{goal}}"
+    "waterDone": "Wasser: {{count}} / {{goal}}",
+    "hints": {
+      "task": "Plan für heute",
+      "meal": "Kalorien von Hand",
+      "scan": "Foto → Kalorien",
+      "note": "Gedanke oder Notiz",
+      "material": "Wiederholung 3 · 7 · 30",
+      "expense": "Direkt ins Budget",
+      "water": "Ein Glas pro Tipp"
+    }
   },
   "hub": {
     "tasksToday": "Heute: {{count}}",
-    "reviewsDue": "Fällig: {{count}}"
+    "reviewsDue": "Fällig: {{count}}",
+    "desc": {
+      "tasks": "Tages- und Monatsplan",
+      "review": "Wiederholung 3 · 7 · 30",
+      "fuel": "Kalorien, Wasser, Schritte",
+      "notes": "Gedanken und Notizen",
+      "rhythm": "Tägliche Gewohnheiten",
+      "finance": "Einnahmen und Ausgaben",
+      "statistics": "Fortschritt und Bilanz"
+    }
+  },
+  "welcome": {
+    "eyebrow": "Aufgaben · Wiederholung · Budget",
+    "title": "Aufgaben, Lernen und Budget — in einem Arbeitsbereich.",
+    "subtitle": "Tagesplan, Rückkehr zum Gelernten nach 3, 7 und 30 Tagen, Budget je Währung getrennt. Nach der Anmeldung wählst du, was du nutzt.",
+    "start": "Kostenlos starten",
+    "login": "Anmelden",
+    "heroVisual": {
+      "tasksTitle": "Heute",
+      "tasksItem1": "Notizen wiederholen — 25 Min.",
+      "tasksItem2": "Wichtig · in Benachrichtigungen",
+      "reviewTitle": "Lernen",
+      "reviewQuestion": "Rückkehr nach 3 Tagen",
+      "reviewHint": "Danach 7 und 30",
+      "financeTitle": "Budget",
+      "financeLabel": "Bargeld · EUR",
+      "financeValue": "€420"
+    }
+  },
+  "todayHub": {
+    "rings": {
+      "tasks": "Aufgaben",
+      "reviews": "Wiederholungen",
+      "calories": "Kalorien",
+      "water": "Wasser"
+    },
+    "now": {
+      "title": "Jetzt",
+      "more": "Noch {{count}}",
+      "less": "Weniger",
+      "allDone": "Für heute alles erledigt",
+      "allDoneHint": "Durchatmen oder etwas über „+“ hinzufügen.",
+      "overdue": "überfällig",
+      "today": "heute",
+      "important": "wichtig",
+      "doneToday": "Heute erledigt: {{count}}",
+      "reviews": "Wiederholungen",
+      "tasks": "Aufgaben",
+      "all": "Alle"
+    },
+    "quick": {
+      "water": "Wasser +1",
+      "meal": "Mahlzeit",
+      "scan": "Essens-Scan",
+      "expense": "Ausgabe"
+    },
+    "overview": {
+      "title": "Überblick",
+      "nutrition": "Ernährung",
+      "finance": "Ausgaben im Monat",
+      "week": "Woche",
+      "noExpenses": "Noch keine Ausgaben",
+      "weekValue": "{{done}} von {{total}}"
+    },
+    "start": {
+      "title": "Erste Schritte",
+      "hint": "Ein paar Schritte und deine Startseite wird lebendig.",
+      "task": "Erste Aufgabe anlegen",
+      "material": "Lernstoff zum Wiederholen speichern",
+      "reminders": "Erinnerungen einschalten",
+      "hide": "Ausblenden"
+    }
   }
 }

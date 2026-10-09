@@ -13,6 +13,7 @@ import {
 import { useTheme } from '../../features/theme/useTheme';
 import { ForestGrove } from './ForestGrove';
 import { ForestStats } from './ForestStats';
+import { fonts } from '../../config/fonts';
 
 type ForestBanner = 'grove-1' | 'grove-2' | 'grove-3' | 'zone' | 'new-grove' | 'new-zone' | null;
 
@@ -105,6 +106,6 @@ const styles = StyleSheet.create({
     gap: 4,
     padding: 10,
   },
-  bannerTitle: { fontSize: 14, fontWeight: '700' },
-  bannerHint: { fontSize: 12 },
+  bannerTitle: { fontSize: 14, fontFamily: fonts.bold },
+  bannerHint: { fontFamily: fonts.regular, fontSize: 12 },
 });

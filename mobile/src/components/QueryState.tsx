@@ -4,6 +4,7 @@ import { ApiError } from '../api/client';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import { useTheme } from '../features/theme/useTheme';
 import { AppButton } from './ui';
+import { fonts } from '../config/fonts';
 
 export function isNotFoundError(error: unknown): boolean {
   return error instanceof ApiError && error.status === 404;
@@ -51,7 +52,7 @@ export function InlineQueryError({ error, notFoundText }: { error: unknown; notF
 
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, gap: 16, justifyContent: 'center', padding: 24 },
-  message: { fontSize: 16, lineHeight: 22, textAlign: 'center' },
+  message: { fontFamily: fonts.regular, fontSize: 16, lineHeight: 22, textAlign: 'center' },
   action: { alignSelf: 'stretch' },
-  inline: { fontSize: 14, lineHeight: 20 },
+  inline: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
 });

@@ -7,8 +7,11 @@ import {
 } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, AppState, StyleSheet, View } from 'react-native';
+import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ApiError } from './src/api/client';
+import { fontAssets } from './src/config/fonts';
+import { configureNotificationHandler } from './src/features/notifications/localReminders';
 import { AuthProvider } from './src/features/auth/AuthProvider';
 import { clearStoredToken } from './src/features/auth/session';
 import { ThemeProvider, hydrateTheme } from './src/features/theme/ThemeProvider';
@@ -25,6 +28,9 @@ function signOutOnUnauthorized(error: unknown) {
 
 // React Native has no window focus event: tell TanStack Query when the app is in the foreground,
 // so stale displayed data refetches on return and polling pauses in the background.
+// Phone reminders show as banners even while the app is open.
+configureNotificationHandler();
+
 focusManager.setEventListener((handleFocus) => {
   const subscription = AppState.addEventListener('change', (state) => {
     handleFocus(state === 'active');
@@ -60,6 +66,8 @@ const queryClient = new QueryClient({
 
 export default function App() {
   const [theme, setTheme] = useState<ThemeMode | null>(null);
+  // A font that fails to load falls back to the system font instead of blocking the app.
+  const [fontsLoaded, fontError] = useFonts(fontAssets);
 
   useEffect(() => {
     void Promise.all([hydrateLanguage(), hydrateTheme()]).then(([, nextTheme]) => {
@@ -67,7 +75,7 @@ export default function App() {
     });
   }, []);
 
-  if (!theme) {
+  if (!theme || (!fontsLoaded && !fontError)) {
     return (
       <View style={styles.boot}>
         <ActivityIndicator color={palettes.dark.brand} size="large" />

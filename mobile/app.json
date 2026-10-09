@@ -76,6 +76,13 @@
       "expo-secure-store",
       "expo-localization",
       "expo-web-browser",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/android-icon-monochrome.png",
+          "color": "#8eefb4"
+        }
+      ],
       "expo-apple-authentication",
       [
         "expo-image-picker",

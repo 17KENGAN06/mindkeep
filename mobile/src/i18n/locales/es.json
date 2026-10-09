@@ -27,7 +27,8 @@
     "statistics": "Estadísticas",
     "admin": "Admin",
     "blog": "Blog",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "systemLanguage": "Como el teléfono"
   },
   "drafts": {
     "title": "¿Descartar cambios?",
@@ -505,7 +506,36 @@
       "SYSTEM": "Sistema",
       "TASK_IMPORTANT": "Importante"
     },
-    "openTask": "Abrir tareas"
+    "openTask": "Abrir tareas",
+    "bellImportant": "Importante",
+    "bellToday": "Hoy",
+    "bellOverdue": "Atrasado",
+    "bellEmpty": "No hay repasos esperando",
+    "bellEmptyImportant": "No hay tareas importantes",
+    "bellEmptyOverdue": "Nada atrasado",
+    "seeAll": "Todas las notificaciones",
+    "openReviews": "Abrir repasos",
+    "importantCount": "{{count}} importantes",
+    "dueCount": "{{count}} hoy",
+    "overdueCount": "{{count}} atrasados",
+    "push": {
+      "promptTitle": "¿Recibir recordatorios a tiempo?",
+      "promptBody": "Mindkeep te recordará por la mañana los repasos de hoy y las tareas importantes. Solo lo que tú planificaste.",
+      "enable": "Activar recordatorios",
+      "later": "Ahora no",
+      "settingsTitle": "Recordatorios en el teléfono",
+      "settingsHint": "Por la mañana a la hora elegida: repasos de hoy y tareas importantes.",
+      "toggle": "Enviar recordatorios",
+      "time": "Hora del recordatorio",
+      "denied": "Las notificaciones están desactivadas en los ajustes del teléfono.",
+      "openSettings": "Abrir ajustes",
+      "todayTitle": "Hoy en Mindkeep",
+      "reviews": "Para repasar: {{count}}",
+      "important": "Tareas importantes: {{count}}",
+      "overdueTitle": "Tienes repasos atrasados",
+      "overdueBody": "Atrasados: {{count}}. Vuelve antes de olvidarlo.",
+      "channel": "Recordatorios"
+    }
   },
   "finance": {
     "title": "Presupuesto",
@@ -611,7 +641,8 @@
         "badType": "Usa JPEG, PNG o WebP.",
         "invalid": "Elige primero una foto.",
         "failed": "No se pudo leer la foto. Inténtalo de nuevo."
-      }
+      },
+      "added": "Operaciones añadidas: {{count}}"
     }
   },
   "auth": {
@@ -1019,65 +1050,6 @@
     "title": "Estadísticas",
     "subtitle": "Actividad de repaso y conteos de tu calendario de aprendizaje."
   },
-  "blog": {
-    "eyebrow": "Diario",
-    "title": "Notas sobre memoria y atención",
-    "subtitle": "Tres temas que dan forma a cómo Mindkeep piensa el aprendizaje.",
-    "viewAll": "Abrir el blog",
-    "back": "Todos los artículos",
-    "byAuthor": "Por {{author}}",
-    "originLabel": "Quién dio forma a esta idea",
-    "moreTitle": "Seguir leyendo",
-    "topics": {
-      "spaced-repetition": {
-        "label": "Repetición espaciada",
-        "description": "Cómo las revisitas a tiempo convierten una memoria frágil en un recuerdo duradero."
-      },
-      "pomodoro": {
-        "label": "Pomodoro",
-        "description": "Sprints cortos y concentrados que protegen la atención mientras aprendes."
-      },
-      "pareto": {
-        "label": "Resultados 80/20",
-        "description": "Encuentra las pocas entradas vitales que mueven la mayor parte de tu progreso."
-      }
-    },
-    "articles": {
-      "spaced-repetition-memory": {
-        "title": "Por qué funciona volver en los días 3, 7 y 30",
-        "excerpt": "Una guía serena de la repetición espaciada — y por qué Mindkeep mantiene intervalos fijos.",
-        "originNote": "Hermann Ebbinghaus mapeó la curva del olvido en la década de 1880. Su trabajo inspiró revisitas espaciadas que refuerzan la memoria antes de que se desvanezca.",
-        "body": [
-          "Aprender no es un instante único — es una serie de regresos. Cuando encuentras una idea una vez, la huella es frágil. Cuando la vuelves a ver a la distancia correcta, la mente reconstruye el camino con menos esfuerzo y más claridad.",
-          "La repetición espaciada nació de esa intuición: programa los repasos antes de que gane el olvido. Los sistemas clásicos adaptan el intervalo después de cada respuesta. Mindkeep elige un pacto más suave — regresos fijos en los días 3, 7 y 30 desde el día en que aprendiste algo.",
-          "Los intervalos fijos quitan el ruido de puntuarte a ti mismo. Sigues volviendo a propósito. Sigues protegiendo la memoria a largo plazo. Simplemente confías en un ritmo claro en lugar de un algoritmo que no deja de moverse.",
-          "Usa esta plantilla cada vez que escribas sobre memoria: empieza por la sensación de olvidar, nombra el método, reconoce el origen y luego conéctalo con cómo se comporta Mindkeep en la práctica."
-        ]
-      },
-      "pomodoro-focus": {
-        "title": "Pomodoro: aprende en ventanas cortas y luminosas",
-        "excerpt": "Cómo bloques de 25 minutos te ayudan a estudiar sin agotarte.",
-        "originNote": "Francesco Cirillo creó la técnica Pomodoro a finales de los años 80, nombrándola por un temporizador de cocina con forma de tomate.",
-        "body": [
-          "El aprendizaje profundo necesita atención — y la atención ama los bordes. Un bloque corto y protegido le dice a tu mente: esta ventana es para una sola cosa.",
-          "El esquema Pomodoro es simple: concéntrate unos 25 minutos y luego descansa un momento. Tras unos ciclos, toma una pausa más larga. El punto no es la perfección. El punto es una cadencia repetible que deja energía para el siguiente regreso.",
-          "Junta Pomodoro con Mindkeep: usa un bloque de foco para capturar lo que aprendiste y deja que el calendario 3 · 7 · 30 te traiga de vuelta más tarde. Captura ahora. Revisa después. Protege la intensidad y la memoria.",
-          "Cuando redactes artículos futuros sobre atención, mantén esta forma: problema de la distracción → método de Cirillo → emparejamiento práctico con Mindkeep → una invitación suave a probarlo hoy."
-        ]
-      },
-      "pareto-learning-results": {
-        "title": "La regla 80/20 en el aprendizaje",
-        "excerpt": "Cómo la intuición de Vilfredo Pareto te ayuda a elegir qué vale la pena recordar.",
-        "originNote": "El economista Vilfredo Pareto observó que una minoría de causas suele impulsar una mayoría de resultados — idea popularizada después como el principio 80/20.",
-        "body": [
-          "No todo hecho merece el mismo espacio en tu mente. Algunas ideas desbloquean muchas otras. Otras solo decoran la superficie.",
-          "El principio de Pareto sugiere un sesgo útil: busca las pocas piezas vitales. En idiomas pueden ser las palabras más frecuentes. En código, los patrones que reutilizas cada semana. En el trabajo, los principios detrás de tus mejores decisiones.",
-          "Mindkeep te ayuda a conservar lo que elegiste — no todo lo que tocaste. Captura el material que se compone. Repásalo con un ritmo fijo. Deja el resto fuera del calendario para que la atención se mantenga nítida.",
-          "Plantilla para futuras notas 80/20: nombra el esfuerzo abarrotado → presenta a Pareto → da un ejemplo concreto de aprendizaje → muestra cómo Mindkeep protege lo esencial con regresos 3 · 7 · 30."
-        ]
-      }
-    }
-  },
   "nav": {
     "account": "Cuenta"
   },
@@ -1285,10 +1257,90 @@
     "expense": "Gasto",
     "add": "Añadir tarea",
     "taskDone": "Tarea añadida para hoy",
-    "waterDone": "Agua: {{count}} / {{goal}}"
+    "waterDone": "Agua: {{count}} / {{goal}}",
+    "hints": {
+      "task": "Plan de hoy",
+      "meal": "Calorías a mano",
+      "scan": "Foto → calorías",
+      "note": "Idea o apuntes",
+      "material": "Repaso 3 · 7 · 30",
+      "expense": "Directo al presupuesto",
+      "water": "Un vaso por toque"
+    }
   },
   "hub": {
     "tasksToday": "Hoy: {{count}}",
-    "reviewsDue": "Pendientes: {{count}}"
+    "reviewsDue": "Pendientes: {{count}}",
+    "desc": {
+      "tasks": "Plan del día y del mes",
+      "review": "Repaso 3 · 7 · 30",
+      "fuel": "Calorías, agua, pasos",
+      "notes": "Ideas y apuntes",
+      "rhythm": "Hábitos diarios",
+      "finance": "Ingresos y gastos",
+      "statistics": "Progreso y resumen"
+    }
+  },
+  "welcome": {
+    "eyebrow": "Tareas · Repasos · Presupuesto",
+    "title": "Tareas, estudio y presupuesto — en un solo espacio.",
+    "subtitle": "Plan del día, vuelta a lo aprendido a los 3, 7 y 30 días, presupuesto por moneda. Tras registrarte eliges qué servicios usar.",
+    "start": "Empezar gratis",
+    "login": "Iniciar sesión",
+    "heroVisual": {
+      "tasksTitle": "Hoy",
+      "tasksItem1": "Repasar apuntes — 25 min",
+      "tasksItem2": "Importante · en notificaciones",
+      "reviewTitle": "Estudio",
+      "reviewQuestion": "Vuelta el día 3",
+      "reviewHint": "Luego 7 y 30",
+      "financeTitle": "Presupuesto",
+      "financeLabel": "Efectivo · EUR",
+      "financeValue": "€420"
+    }
+  },
+  "todayHub": {
+    "rings": {
+      "tasks": "Tareas",
+      "reviews": "Repasos",
+      "calories": "Calorías",
+      "water": "Agua"
+    },
+    "now": {
+      "title": "Ahora",
+      "more": "{{count}} más",
+      "less": "Mostrar menos",
+      "allDone": "Todo hecho por hoy",
+      "allDoneHint": "Respira, o añade algo con «+».",
+      "overdue": "atrasado",
+      "today": "hoy",
+      "important": "importante",
+      "doneToday": "Hecho hoy: {{count}}",
+      "reviews": "Repasos",
+      "tasks": "Tareas",
+      "all": "Todo"
+    },
+    "quick": {
+      "water": "Agua +1",
+      "meal": "Comida",
+      "scan": "Escaneo de comida",
+      "expense": "Gasto"
+    },
+    "overview": {
+      "title": "Resumen",
+      "nutrition": "Nutrición",
+      "finance": "Gastos del mes",
+      "week": "Semana",
+      "noExpenses": "Aún no hay gastos",
+      "weekValue": "{{done}} de {{total}}"
+    },
+    "start": {
+      "title": "Para empezar",
+      "hint": "Unos pasos y tu inicio cobra vida.",
+      "task": "Añadir la primera tarea",
+      "material": "Guardar un material para repasar",
+      "reminders": "Activar recordatorios",
+      "hide": "Ocultar"
+    }
   }
 }

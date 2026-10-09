@@ -2,6 +2,7 @@ import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
 import { parseSourceUrl } from '../utils/url';
+import { fonts } from '../config/fonts';
 
 export function SourceLink({ href }: { href: string }) {
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   copy: { flex: 1, minWidth: 0 },
-  host: { fontSize: 14, fontWeight: '700' },
-  path: { fontSize: 12, marginTop: 2 },
-  action: { fontSize: 13, fontWeight: '700' },
+  host: { fontSize: 14, fontFamily: fonts.bold },
+  path: { fontFamily: fonts.regular, fontSize: 12, marginTop: 2 },
+  action: { fontSize: 13, fontFamily: fonts.bold },
 });

@@ -9,6 +9,7 @@ import { useTheme } from '../features/theme/useTheme';
 import { useAccountToday } from '../features/time/useAccountToday';
 import { zonesShareClock } from '../utils/date';
 import { AppButton } from './ui';
+import { fonts } from '../config/fonts';
 
 const KEEP_KEY_PREFIX = 'mindkeep.timezoneKeep:';
 
@@ -114,10 +115,10 @@ export function TimezoneSuggestion({ variant = 'banner' }: TimezoneSuggestionPro
 
 const styles = StyleSheet.create({
   banner: { borderRadius: 18, borderWidth: 1, gap: 8, padding: 14 },
-  title: { fontSize: 16, fontWeight: '700' },
-  body: { fontSize: 14, lineHeight: 20 },
+  title: { fontSize: 16, fontFamily: fonts.bold },
+  body: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
   actions: { gap: 8, marginTop: 4 },
   settings: { gap: 8 },
-  zone: { fontSize: 15 },
-  error: { fontSize: 14 },
+  zone: { fontFamily: fonts.regular, fontSize: 15 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
 });

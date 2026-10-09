@@ -5,6 +5,7 @@ import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { WeightDay } from '../types/nutrition';
 import { formatDate, formatMonthShort } from '../utils/date';
+import { fonts } from '../config/fonts';
 
 export const WEIGHT_TREND_RANGES = [1, 3, 6, 12] as const;
 export type WeightTrendRange = (typeof WEIGHT_TREND_RANGES)[number];
@@ -244,7 +245,7 @@ export function WeightTrendChart({
 const styles = StyleSheet.create({
   wrap: { gap: 8 },
   rangeHead: { gap: 8 },
-  rangeLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
+  rangeLabel: { fontSize: 11, fontFamily: fonts.semibold, textTransform: 'uppercase' },
   rangeRow: {
     borderRadius: 16,
     borderWidth: 1,
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
     minHeight: 36,
     justifyContent: 'center',
   },
-  rangeText: { fontSize: 14, fontWeight: '700' },
+  rangeText: { fontSize: 14, fontFamily: fonts.bold },
   empty: {
     alignItems: 'center',
     borderRadius: 16,
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
     minHeight: 140,
     paddingHorizontal: 16,
   },
-  emptyText: { fontSize: 14, textAlign: 'center' },
+  emptyText: { fontFamily: fonts.regular, fontSize: 14, textAlign: 'center' },
   chart: { overflow: 'visible', width: '100%' },
   gridRow: {
     alignItems: 'center',
@@ -277,9 +278,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-  axis: { fontSize: 11, width: 28 },
+  axis: { fontFamily: fonts.regular, fontSize: 11, width: 28 },
   gridLine: { flex: 1, height: 1, opacity: 0.7 },
-  month: { bottom: 0, fontSize: 11, position: 'absolute', textAlign: 'center', width: 32 },
+  month: { bottom: 0, fontFamily: fonts.regular, fontSize: 11, position: 'absolute', textAlign: 'center', width: 32 },
   segment: { height: 3, position: 'absolute' },
   dotHit: {
     alignItems: 'center',
@@ -290,6 +291,6 @@ const styles = StyleSheet.create({
   },
   dot: {},
   caption: { alignItems: 'center' },
-  captionValue: { fontSize: 16, fontWeight: '700' },
-  captionDate: { fontSize: 13, marginTop: 2 },
+  captionValue: { fontSize: 16, fontFamily: fonts.bold },
+  captionDate: { fontFamily: fonts.regular, fontSize: 13, marginTop: 2 },
 });

@@ -7,6 +7,7 @@ import { formatDate } from '../utils/date';
 import { MaterialBody } from './MaterialBody';
 import { SourceLink } from './SourceLink';
 import { AppButton, Badge } from './ui';
+import { fonts } from '../config/fonts';
 
 type ReminderCardProps = {
   reminder: Reminder;
@@ -124,11 +125,11 @@ const styles = StyleSheet.create({
   },
   head: { flexDirection: 'row', justifyContent: 'space-between', gap: 10, alignItems: 'flex-start' },
   headText: { flex: 1 },
-  title: { fontSize: 17, fontWeight: '700' },
-  meta: { fontSize: 13, marginTop: 4 },
-  row: { fontSize: 14, marginTop: 8 },
-  rowLabel: { fontWeight: '600' },
+  title: { fontSize: 17, fontFamily: fonts.bold },
+  meta: { fontFamily: fonts.regular, fontSize: 13, marginTop: 4 },
+  row: { fontFamily: fonts.regular, fontSize: 14, marginTop: 8 },
+  rowLabel: { fontFamily: fonts.semibold },
   block: { marginTop: 14 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 16 },
-  notDue: { fontSize: 13, flex: 1, paddingVertical: 10 },
+  notDue: { fontFamily: fonts.regular, fontSize: 13, flex: 1, paddingVertical: 10 },
 });

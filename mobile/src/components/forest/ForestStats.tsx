@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { GROVES_PER_ZONE } from '../../features/forest/forestProgress';
 import { useTheme } from '../../features/theme/useTheme';
+import { fonts } from '../../config/fonts';
 
 type ForestStatsProps = {
   trees: number;
@@ -127,22 +128,22 @@ export function ForestStats({
 
 const styles = StyleSheet.create({
   root: { gap: 6 },
-  kicker: { fontSize: 11, fontWeight: '600', letterSpacing: 0.6, textTransform: 'uppercase' },
-  month: { fontSize: 12 },
+  kicker: { fontSize: 11, fontFamily: fonts.semibold, letterSpacing: 0.6, textTransform: 'uppercase' },
+  month: { fontFamily: fonts.regular, fontSize: 12 },
   treesRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  trees: { fontSize: 22, fontWeight: '700' },
+  trees: { fontSize: 22, fontFamily: fonts.bold },
   plus: { borderRadius: 999, paddingHorizontal: 8, paddingVertical: 2 },
-  plusText: { fontSize: 11, fontWeight: '700' },
-  today: { fontSize: 12, fontWeight: '600' },
-  grove: { fontSize: 12, fontWeight: '600', marginTop: 6 },
+  plusText: { fontSize: 11, fontFamily: fonts.bold },
+  today: { fontSize: 12, fontFamily: fonts.semibold },
+  grove: { fontSize: 12, fontFamily: fonts.semibold, marginTop: 6 },
   pips: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 4 },
   pip: { borderRadius: 999, height: 8, width: 8 },
   divider: { height: 12, width: 1 },
   zonePip: { height: 8, transform: [{ rotate: '45deg' }], width: 8 },
-  zoneLabel: { fontSize: 11, fontWeight: '700' },
+  zoneLabel: { fontSize: 11, fontFamily: fonts.bold },
   track: { borderRadius: 999, height: 6, marginTop: 4, overflow: 'hidden' },
   fill: { height: '100%', borderRadius: 999 },
-  remaining: { fontSize: 12 },
+  remaining: { fontFamily: fonts.regular, fontSize: 12 },
   explore: { alignSelf: 'flex-start', marginTop: 4, paddingVertical: 4 },
-  exploreText: { fontSize: 14, fontWeight: '700' },
+  exploreText: { fontSize: 14, fontFamily: fonts.bold },
 });

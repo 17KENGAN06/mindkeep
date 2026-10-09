@@ -11,6 +11,7 @@ import {
   type ContentBlock,
 } from '../utils/contentBlocks';
 import { containsCodeFence, normalizePastedText } from '../utils/pasteText';
+import { fonts } from '../config/fonts';
 
 type MaterialContentEditorProps = {
   value: string;
@@ -144,12 +145,13 @@ export function MaterialContentEditor({ value, onChange }: MaterialContentEditor
 const styles = StyleSheet.create({
   wrap: { gap: 8 },
   head: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
-  label: { fontSize: 13 },
-  action: { fontSize: 13, fontWeight: '700' },
+  label: { fontFamily: fonts.regular, fontSize: 13 },
+  action: { fontSize: 13, fontFamily: fonts.bold },
   textWrap: { gap: 8 },
   input: {
     borderRadius: 14,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 100,
     paddingHorizontal: 14,
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingTop: 14,
   },
-  language: { flex: 1, fontSize: 16, marginRight: 8 },
+  language: { flex: 1, fontFamily: fonts.regular, fontSize: 16, marginRight: 8 },
   codeInput: {
     fontFamily: 'monospace',
     fontSize: 16,

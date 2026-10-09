@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
+import { fonts } from '../config/fonts';
 
 type AnswerRevealProps = {
   question: string;
@@ -33,9 +34,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 14,
   },
-  label: { fontSize: 12, fontWeight: '700', textTransform: 'uppercase' },
-  question: { fontSize: 16, fontWeight: '600', marginTop: 8 },
+  label: { fontSize: 12, fontFamily: fonts.bold, textTransform: 'uppercase' },
+  question: { fontSize: 16, fontFamily: fonts.semibold, marginTop: 8 },
   toggle: { marginTop: 12 },
-  toggleText: { fontSize: 14, fontWeight: '700' },
-  answer: { fontSize: 15, lineHeight: 22, marginTop: 10 },
+  toggleText: { fontSize: 14, fontFamily: fonts.bold },
+  answer: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, marginTop: 10 },
 });

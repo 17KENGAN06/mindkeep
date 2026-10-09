@@ -26,7 +26,8 @@ export const supportedLanguages = [
 
 export type AppLanguage = (typeof supportedLanguages)[number]['code'];
 
-const LANGUAGE_KEY = 'lr_language';
+// v2: earlier builds saved every pick for good; starting over makes everyone follow the phone again.
+const LANGUAGE_KEY = 'lr_language_v2';
 const supportedCodes = supportedLanguages.map((item) => item.code);
 
 function deviceLanguage(): AppLanguage {
@@ -52,17 +53,34 @@ void i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
 });
 
+/** True while the app follows the phone's language (no manual pick saved). */
+let followingSystem = true;
+
+export function isSystemLanguage(): boolean {
+  return followingSystem;
+}
+
 export async function hydrateLanguage(): Promise<void> {
   const stored = await AsyncStorage.getItem(LANGUAGE_KEY);
   if (stored && supportedCodes.includes(stored as AppLanguage)) {
+    followingSystem = false;
     await i18n.changeLanguage(stored);
     return;
   }
+  followingSystem = true;
   await i18n.changeLanguage(deviceLanguage());
 }
 
-export async function setAppLanguage(code: AppLanguage): Promise<void> {
+/** 'system' forgets the manual pick and goes back to the phone's language. */
+export async function setAppLanguage(code: AppLanguage | 'system'): Promise<void> {
+  if (code === 'system') {
+    await AsyncStorage.removeItem(LANGUAGE_KEY);
+    followingSystem = true;
+    await i18n.changeLanguage(deviceLanguage());
+    return;
+  }
   await AsyncStorage.setItem(LANGUAGE_KEY, code);
+  followingSystem = false;
   await i18n.changeLanguage(code);
 }
 

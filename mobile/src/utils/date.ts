@@ -94,18 +94,34 @@ export function lastNKeysFrom(todayKey: string, count: number): string[] {
 
 /** ISO instant of 12:00 on `dateKey` in `timeZone`, using that date's offset (DST-safe). */
 export function zonedNoonIso(dateKey: string, timeZone: string): string {
+  const instant = zonedWallTime(dateKey, 12, 0, timeZone);
+  return instant === null ? dateInputToIso(dateKey) : new Date(instant).toISOString();
+}
+
+/**
+ * Instant of hour:minute on `dateKey` in `timeZone` (DST-safe). Falls back to the device's
+ * own clock when the zone cannot be resolved.
+ */
+export function zonedTime(dateKey: string, hour: number, minute: number, timeZone: string): Date {
+  const instant = zonedWallTime(dateKey, hour, minute, timeZone);
+  if (instant !== null) return new Date(instant);
   const [year, month, day] = dateKey.split('-').map(Number);
-  const wallNoon = Date.UTC(year!, month! - 1, day!, 12);
+  return new Date(year!, month! - 1, day!, hour, minute);
+}
+
+function zonedWallTime(dateKey: string, hour: number, minute: number, timeZone: string): number | null {
+  const [year, month, day] = dateKey.split('-').map(Number);
+  const wall = Date.UTC(year!, month! - 1, day!, hour, minute);
   const offsetAt = (instant: number): number | null => {
     const parts = zonedParts(new Date(instant), timeZone);
     if (!parts) return null;
     return Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second) - instant;
   };
-  const first = offsetAt(wallNoon);
-  if (first === null) return dateInputToIso(dateKey);
-  // Second pass measures the offset at the real local noon (matters when DST changes in between).
-  const second = offsetAt(wallNoon - first) ?? first;
-  return new Date(wallNoon - second).toISOString();
+  const first = offsetAt(wall);
+  if (first === null) return null;
+  // Second pass measures the offset at the real local time (matters when DST changes in between).
+  const second = offsetAt(wall - first) ?? first;
+  return wall - second;
 }
 
 /** Whether this device can resolve the IANA zone (unknown or unsupported zones return false). */

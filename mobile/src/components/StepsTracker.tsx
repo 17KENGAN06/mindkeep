@@ -4,10 +4,11 @@ import { AppIcon } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import { monthCells, weekdayLabels } from '../utils/date';
+import { fonts } from '../config/fonts';
 
-/** Same rule as the site: only days from the account start up to today can be ticked. */
-export function canTrackSteps(date: string, startedOn: string, today: string): boolean {
-  return date >= startedOn && date <= today;
+/** Any day up to today can be ticked (a forgotten day can be filled in later); future days cannot. */
+export function canTrackSteps(date: string, today: string): boolean {
+  return date <= today;
 }
 
 type StepsCheckProps = {
@@ -62,7 +63,6 @@ type StepsMonthGridProps = {
   year: number;
   month: number;
   today: string;
-  startedOn: string;
   doneDates: ReadonlySet<string>;
   disabled?: boolean;
   onToggle: (date: string, done: boolean) => void;
@@ -73,7 +73,6 @@ export function StepsMonthGrid({
   year,
   month,
   today,
-  startedOn,
   doneDates,
   disabled = false,
   onToggle,
@@ -99,17 +98,14 @@ export function StepsMonthGrid({
 
           const done = doneDates.has(cell.date);
           const isToday = cell.date === today;
-          const trackable = canTrackSteps(cell.date, startedOn, today);
-          const beforeStart = cell.date < startedOn;
+          const trackable = canTrackSteps(cell.date, today);
           const boxStyle = done
             ? { backgroundColor: colors.brand, borderColor: colors.brand }
             : isToday && trackable
               ? { backgroundColor: `${colors.brand}1f`, borderColor: colors.brand }
               : trackable
                 ? { backgroundColor: colors.panel, borderColor: colors.line }
-                : beforeStart
-                  ? { backgroundColor: `${colors.line}33`, borderColor: 'transparent' }
-                  : { backgroundColor: 'transparent', borderColor: `${colors.line}59` };
+                : { backgroundColor: 'transparent', borderColor: `${colors.line}59` };
           const textColor = done ? colors.onBrand : trackable ? colors.ink : colors.muted;
 
           return (
@@ -154,14 +150,14 @@ const styles = StyleSheet.create({
     width: 32,
   },
   checkCopy: { flex: 1, minWidth: 0 },
-  checkLabel: { fontSize: 14, fontWeight: '600' },
-  checkHint: { fontSize: 12, marginTop: 2 },
+  checkLabel: { fontSize: 14, fontFamily: fonts.semibold },
+  checkHint: { fontFamily: fonts.regular, fontSize: 12, marginTop: 2 },
   grid: { gap: 6 },
   row: { flexDirection: 'row' },
   weekday: {
     flex: 1,
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     letterSpacing: 0.5,
     textAlign: 'center',
     textTransform: 'uppercase',
@@ -175,5 +171,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  dayText: { fontSize: 12, fontWeight: '700' },
+  dayText: { fontSize: 12, fontFamily: fonts.bold },
 });

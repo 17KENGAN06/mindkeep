@@ -5,6 +5,7 @@ import type { AppLanguage } from '../i18n';
 import type { CalendarDaySummary } from '../types/calendar';
 import { useAccountToday } from '../features/time/useAccountToday';
 import { dateKey, formatMonthTitle, monthGrid, weekdayLabels } from '../utils/date';
+import { fonts } from '../config/fonts';
 
 type MonthGridProps = {
   year: number;
@@ -152,10 +153,10 @@ const styles = StyleSheet.create({
   },
   nav: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
   navBtn: { height: 40, justifyContent: 'center', width: 40 },
-  navText: { fontSize: 28, textAlign: 'center' },
-  title: { fontSize: 16, fontWeight: '700', textTransform: 'capitalize' },
+  navText: { fontFamily: fonts.regular, fontSize: 28, textAlign: 'center' },
+  title: { fontSize: 16, fontFamily: fonts.bold, textTransform: 'capitalize' },
   weekRow: { flexDirection: 'row' },
-  weekday: { flex: 1, fontSize: 11, fontWeight: '600', textAlign: 'center' },
+  weekday: { flex: 1, fontSize: 11, fontFamily: fonts.semibold, textAlign: 'center' },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
   cell: {
     alignItems: 'center',
@@ -164,12 +165,12 @@ const styles = StyleSheet.create({
     width: '14.285%',
   },
   cellOutside: { opacity: 0.4 },
-  day: { fontSize: 14, fontWeight: '600' },
+  day: { fontSize: 14, fontFamily: fonts.semibold },
   dots: { flexDirection: 'row', gap: 3, height: 6, marginTop: 4 },
   dot: { borderRadius: 3, height: 6, width: 6 },
   dotSpacer: { height: 10 },
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 8, paddingHorizontal: 4 },
   legendItem: { alignItems: 'center', flexDirection: 'row', gap: 6 },
   legendDot: { borderRadius: 4, height: 8, width: 8 },
-  legendText: { fontSize: 12 },
+  legendText: { fontFamily: fonts.regular, fontSize: 12 },
 });
