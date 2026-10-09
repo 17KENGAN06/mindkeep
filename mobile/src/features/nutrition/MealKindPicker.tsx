@@ -1,8 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Badge } from '../../components/ui';
+import { Badge, ChoiceChip } from '../../components/ui';
 import { useTheme } from '../theme/useTheme';
 import { MEAL_KINDS, type MealKind } from './mealKinds';
+import { fonts } from '../../config/fonts';
 
 type MealKindPickerProps = {
   value: MealKind | null;
@@ -24,25 +25,15 @@ export function MealKindPicker({ value, onChange, pro, onNeedPro }: MealKindPick
       </View>
       <View style={styles.chips}>
         {MEAL_KINDS.map((kind) => {
-          const selected = value === kind;
           return (
-            <Pressable
-              key={kind}
-              accessibilityRole="button"
-              accessibilityState={{ selected }}
-              onPress={() => (pro ? onChange(kind) : onNeedPro?.())}
-              style={[
-                styles.chip,
-                selected
-                  ? { backgroundColor: colors.brand, borderColor: colors.brand }
-                  : { backgroundColor: colors.panel, borderColor: colors.line },
-                !pro && styles.locked,
-              ]}
-            >
-              <Text style={[styles.chipText, { color: selected ? colors.onBrand : colors.ink }]}>
-                {t(`fuel.kinds.${kind}`)}
-              </Text>
-            </Pressable>
+            // Locked for Free: still tappable, it explains Pro instead of choosing.
+            <View key={kind} style={!pro ? styles.locked : undefined}>
+              <ChoiceChip
+                label={t(`fuel.kinds.${kind}`)}
+                selected={value === kind}
+                onPress={() => (pro ? onChange(kind) : onNeedPro?.())}
+              />
+            </View>
           );
         })}
       </View>
@@ -54,10 +45,8 @@ export function MealKindPicker({ value, onChange, pro, onNeedPro }: MealKindPick
 const styles = StyleSheet.create({
   wrap: { gap: 8 },
   head: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  label: { fontSize: 14, fontWeight: '600' },
+  label: { fontSize: 14, fontFamily: fonts.semibold },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: { borderRadius: 999, borderWidth: 1, justifyContent: 'center', minHeight: 40, paddingHorizontal: 14 },
-  chipText: { fontSize: 14, fontWeight: '600' },
   locked: { opacity: 0.7 },
-  hint: { fontSize: 12 },
+  hint: { fontFamily: fonts.regular, fontSize: 12 },
 });

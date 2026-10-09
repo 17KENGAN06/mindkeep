@@ -8,6 +8,7 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import { useAccountToday } from '../../features/time/useAccountToday';
 import { formatMonthTitle } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 function clampPercent(value: number): number {
   if (!Number.isFinite(value) || value <= 0) return 0;
@@ -50,6 +51,7 @@ export function MonthPlanScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
     >
@@ -69,7 +71,7 @@ export function MonthPlanScreen() {
         >
           <Text
             style={[
-              { color: colors.muted, fontSize: 13, fontWeight: '700' },
+              { color: colors.muted, fontSize: 13, fontFamily: fonts.bold },
               view === 'year' && { color: colors.onBrand },
             ]}
           >
@@ -86,7 +88,7 @@ export function MonthPlanScreen() {
         >
           <Text
             style={[
-              { color: colors.muted, fontSize: 13, fontWeight: '700' },
+              { color: colors.muted, fontSize: 13, fontFamily: fonts.bold },
               view === 'month' && { color: colors.onBrand },
             ]}
           >
@@ -219,8 +221,8 @@ export function MonthPlanScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
-  error: { fontSize: 14 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
   tabs: { flexDirection: 'row', gap: 8 },
   tab: {
     borderRadius: 12,
@@ -237,8 +239,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
   },
-  yearBtnText: { fontSize: 22, fontWeight: '700' },
-  yearLabel: { fontSize: 16, fontWeight: '700' },
+  yearBtnText: { fontSize: 22, fontFamily: fonts.bold },
+  yearLabel: { fontSize: 16, fontFamily: fonts.bold },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   stat: {
     borderRadius: 18,
@@ -247,26 +249,26 @@ const styles = StyleSheet.create({
     padding: 14,
     width: '47%',
   },
-  statLabel: { fontSize: 12, fontWeight: '700' },
-  statValue: { fontSize: 24, fontWeight: '700', marginTop: 8 },
+  statLabel: { fontSize: 12, fontFamily: fonts.bold },
+  statValue: { fontSize: 24, fontFamily: fonts.display, marginTop: 8 },
   card: {
     borderRadius: 22,
     borderWidth: 1,
     padding: 16,
   },
-  cardTitle: { fontSize: 16, fontWeight: '700', marginBottom: 8 },
-  empty: { fontSize: 14, paddingVertical: 8 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold, marginBottom: 8 },
+  empty: { fontFamily: fonts.regular, fontSize: 14, paddingVertical: 8 },
   monthRow: {
     borderRadius: 16,
     borderWidth: 1,
     marginTop: 8,
     padding: 12,
   },
-  monthName: { fontSize: 15, fontWeight: '700' },
-  meta: { fontSize: 13, marginTop: 4 },
+  monthName: { fontSize: 15, fontFamily: fonts.bold },
+  meta: { fontFamily: fonts.regular, fontSize: 13, marginTop: 4 },
   barTrack: { borderRadius: 999, height: 8, marginTop: 10, overflow: 'hidden' },
   barFill: { borderRadius: 999, height: '100%' },
-  rate: { fontSize: 12, fontWeight: '700', marginTop: 8 },
+  rate: { fontSize: 12, fontFamily: fonts.bold, marginTop: 8 },
   dayRow: {
     alignItems: 'center',
     borderRadius: 16,

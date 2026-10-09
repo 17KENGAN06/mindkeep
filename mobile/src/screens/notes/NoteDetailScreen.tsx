@@ -12,6 +12,7 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 export function NoteDetailScreen() {
   const { t, i18n } = useTranslation();
@@ -62,6 +63,7 @@ export function NoteDetailScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
     >
@@ -95,8 +97,8 @@ export function NoteDetailScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  title: { fontSize: 26, fontWeight: '700' },
-  meta: { fontSize: 13 },
-  body: { fontSize: 16, lineHeight: 24 },
+  title: { fontSize: 26, fontFamily: fonts.display },
+  meta: { fontFamily: fonts.regular, fontSize: 13 },
+  body: { fontFamily: fonts.regular, fontSize: 16, lineHeight: 24 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
 });

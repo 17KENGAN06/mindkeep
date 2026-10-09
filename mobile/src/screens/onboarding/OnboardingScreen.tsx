@@ -7,6 +7,8 @@ import { APP_MODULES, type AppModule } from '../../config/appModules';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
 import { useTheme } from '../../features/theme/useTheme';
+import { fonts } from '../../config/fonts';
+import { AmbientGlow } from '../../components/AmbientGlow';
 
 export function OnboardingScreen() {
   const { t } = useTranslation();
@@ -52,6 +54,7 @@ export function OnboardingScreen() {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.bg }]}>
+      <AmbientGlow />
       <View style={styles.top}>
         <BrandMark size={40} />
         <Pressable onPress={() => void logout()}>
@@ -181,20 +184,20 @@ export function OnboardingScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1, padding: 24 },
   top: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  logout: { fontSize: 14, fontWeight: '600' },
+  logout: { fontSize: 14, fontFamily: fonts.semibold },
   dots: { flexDirection: 'row', gap: 6, marginTop: 24 },
   dot: { flex: 1, height: 6, borderRadius: 99 },
-  progress: { marginTop: 12, fontSize: 12, letterSpacing: 1, textTransform: 'uppercase' },
+  progress: { marginTop: 12, fontFamily: fonts.regular, fontSize: 12, letterSpacing: 1, textTransform: 'uppercase' },
   body: { flexGrow: 1, paddingTop: 28, paddingBottom: 32 },
-  eyebrow: { fontSize: 12, fontWeight: '700', letterSpacing: 1.4, textTransform: 'uppercase' },
-  title: { fontSize: 32, fontWeight: '700', marginTop: 16 },
-  text: { fontSize: 16, lineHeight: 24, marginTop: 12, marginBottom: 28 },
+  eyebrow: { fontSize: 12, fontFamily: fonts.bold, letterSpacing: 1.4, textTransform: 'uppercase' },
+  title: { fontSize: 28, fontFamily: fonts.display, marginTop: 16 },
+  text: { fontFamily: fonts.regular, fontSize: 16, lineHeight: 24, marginTop: 12, marginBottom: 28 },
   button: { alignItems: 'center', borderRadius: 16, paddingVertical: 16, marginBottom: 12 },
   secondary: { borderWidth: 1, backgroundColor: 'transparent' },
-  buttonText: { fontSize: 16, fontWeight: '700' },
-  back: { textAlign: 'center', marginTop: 8, fontSize: 15, fontWeight: '600' },
-  error: { marginBottom: 16, fontSize: 14 },
-  pick: { borderRadius: 14, marginBottom: 8, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, fontWeight: '600' },
+  buttonText: { fontSize: 16, fontFamily: fonts.bold },
+  back: { textAlign: 'center', marginTop: 8, fontSize: 15, fontFamily: fonts.semibold },
+  error: { marginBottom: 16, fontFamily: fonts.regular, fontSize: 14 },
+  pick: { borderRadius: 14, marginBottom: 8, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, fontFamily: fonts.semibold },
   sub: {
     borderRadius: 16,
     borderWidth: 1,
@@ -205,6 +208,6 @@ const styles = StyleSheet.create({
   },
   subCheck: { borderRadius: 6, borderWidth: 1, height: 20, marginTop: 2, width: 20 },
   subCopy: { flex: 1 },
-  subTitle: { fontSize: 15, fontWeight: '700' },
-  subText: { fontSize: 13, lineHeight: 18, marginTop: 4 },
+  subTitle: { fontSize: 15, fontFamily: fonts.bold },
+  subText: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18, marginTop: 4 },
 });

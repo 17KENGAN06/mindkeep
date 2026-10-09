@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
-import { AppButton, Badge } from '../../components/ui';
+import { AppButton, Badge, ChoiceChip } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
 import { hasAutomation } from '../../features/billing/planLimit';
@@ -60,6 +60,8 @@ import type {
 } from '../../types/finance';
 import { useAccountToday } from '../../features/time/useAccountToday';
 import { formatDate, formatMonthTitle } from '../../utils/date';
+import { fonts } from '../../config/fonts';
+import { DatePickerField } from '../../components/DatePickerField';
 
 function Chip({
   label,
@@ -72,28 +74,7 @@ function Chip({
   onPress: () => void;
   fill?: boolean;
 }) {
-  const { colors } = useTheme();
-  return (
-    <Pressable
-      onPress={onPress}
-      style={[
-        styles.chip,
-        { borderColor: colors.line },
-        fill && styles.chipFill,
-        active && { backgroundColor: colors.brand, borderColor: colors.brand },
-      ]}
-    >
-      <Text
-        numberOfLines={2}
-        style={[
-          { color: colors.ink, fontSize: 13, textAlign: 'center' },
-          active && { color: colors.onBrand, fontWeight: '700' },
-        ]}
-      >
-        {label}
-      </Text>
-    </Pressable>
-  );
+  return <ChoiceChip label={label} selected={active} onPress={onPress} fill={fill} />;
 }
 
 function CurrencyLimitEditor({
@@ -420,6 +401,7 @@ export function FinanceScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
         refreshControl={
@@ -696,17 +678,7 @@ export function FinanceScreen() {
             placeholderTextColor={colors.muted}
           />
           <Text style={[styles.label, { color: colors.muted }]}>{t('finance.date')}</Text>
-          <TextInput
-            style={[
-              styles.input,
-              { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
-            ]}
-            value={date}
-            onChangeText={setDate}
-            autoCapitalize="none"
-            placeholder="YYYY-MM-DD"
-            placeholderTextColor={colors.muted}
-          />
+          <DatePickerField value={date} onChange={setDate} />
           <Text style={[styles.label, { color: colors.muted }]}>{t('finance.category')}</Text>
           <View style={styles.row}>
             <Chip
@@ -862,9 +834,9 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   monthRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
-  monthTitle: { fontSize: 18, fontWeight: '700' },
+  monthTitle: { fontSize: 18, fontFamily: fonts.bold },
   navBtn: {
     alignItems: 'center',
     borderRadius: 12,
@@ -873,7 +845,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
   },
-  navText: { fontSize: 22, lineHeight: 24 },
+  navText: { fontFamily: fonts.regular, fontSize: 22, lineHeight: 24 },
   stats: { flexDirection: 'row', gap: 8 },
   stat: {
     borderRadius: 14,
@@ -881,31 +853,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 12,
   },
-  statLabel: { fontSize: 11, fontWeight: '600' },
-  statValue: { fontSize: 15, fontWeight: '700', marginTop: 4 },
+  statLabel: { fontSize: 11, fontFamily: fonts.semibold },
+  statValue: { fontSize: 15, fontFamily: fonts.bold, marginTop: 4 },
   card: {
     borderRadius: 20,
     borderWidth: 1,
     gap: 10,
     padding: 14,
   },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  label: { fontSize: 13, fontWeight: '600' },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  label: { fontSize: 13, fontFamily: fonts.semibold },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   pair: { flexDirection: 'row', gap: 8 },
   pairSlot: { flex: 1 },
-  chip: {
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    borderRadius: 14,
-    borderWidth: 1,
-    justifyContent: 'center',
-    maxWidth: '100%',
-    minHeight: 44,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  chipFill: { alignSelf: 'stretch', width: '100%' },
   limitBox: {
     borderRadius: 14,
     borderWidth: 1,
@@ -917,13 +877,14 @@ const styles = StyleSheet.create({
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
-  empty: { fontSize: 14, paddingVertical: 8 },
-  error: { fontSize: 14 },
+  empty: { fontFamily: fonts.regular, fontSize: 14, paddingVertical: 8 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
   opRow: {
     borderRadius: 16,
     borderWidth: 1,
@@ -931,9 +892,9 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   opBody: { gap: 6 },
-  opMeta: { fontSize: 12 },
-  opComment: { fontSize: 14 },
-  opAmount: { fontSize: 16, fontWeight: '700' },
+  opMeta: { fontFamily: fonts.regular, fontSize: 12 },
+  opComment: { fontFamily: fonts.regular, fontSize: 14 },
+  opAmount: { fontSize: 16, fontFamily: fonts.bold },
   monthStat: {
     borderRadius: 14,
     borderWidth: 1,

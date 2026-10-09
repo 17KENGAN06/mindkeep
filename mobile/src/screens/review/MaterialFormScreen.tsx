@@ -15,7 +15,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { MaterialContentEditor } from '../../components/MaterialContentEditor';
 import { InlineQueryError, QueryErrorView } from '../../components/QueryState';
-import { AppButton } from '../../components/ui';
+import { AppButton, ChoiceChip } from '../../components/ui';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useCategories } from '../../features/categories/useCategories';
 import { useUnsavedChangesGuard } from '../../features/forms/useUnsavedChangesGuard';
@@ -28,6 +28,8 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { ReviewStackParamList } from '../../navigation/types';
 import { useAccountToday } from '../../features/time/useAccountToday';
 import { dateKeyInZone, zonedNoonIso } from '../../utils/date';
+import { fonts } from '../../config/fonts';
+import { DatePickerField } from '../../components/DatePickerField';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -175,7 +177,7 @@ export function MaterialFormScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <Text style={[styles.subtitle, { color: colors.muted }]}>
           {isEdit ? t('materials.editSubtitle') : t('materials.createSubtitle')}
         </Text>
@@ -206,56 +208,22 @@ export function MaterialFormScreen() {
         />
 
         <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.learnedAt')}</Text>
-        <TextInput
-          autoCapitalize="none"
-          placeholder="YYYY-MM-DD"
-          placeholderTextColor={colors.muted}
-          style={[
-            styles.input,
-            { backgroundColor: colors.panel, borderColor: colors.line, color: colors.ink },
-          ]}
-          value={learnedAt}
-          onChangeText={setLearnedAt}
-        />
+        <DatePickerField value={learnedAt} onChange={setLearnedAt} title={t('materials.fields.learnedAt')} />
 
         <Text style={[styles.label, { color: colors.muted }]}>{t('materials.fields.category')}</Text>
         <View style={styles.chips}>
-          <Pressable
+          <ChoiceChip
+            label={t('materials.fields.noCategory')}
+            selected={!categoryId}
             onPress={() => setCategoryId('')}
-            style={[
-              styles.chip,
-              { backgroundColor: colors.panel, borderColor: colors.line },
-              !categoryId && { backgroundColor: colors.brand, borderColor: colors.brand },
-            ]}
-          >
-            <Text
-              style={[
-                { color: colors.ink, fontSize: 13, fontWeight: '600' },
-                !categoryId && { color: colors.onBrand },
-              ]}
-            >
-              {t('materials.fields.noCategory')}
-            </Text>
-          </Pressable>
+          />
           {categories.map((category) => (
-            <Pressable
+            <ChoiceChip
               key={category.id}
+              label={category.name}
+              selected={categoryId === category.id}
               onPress={() => setCategoryId(category.id)}
-              style={[
-                styles.chip,
-                { backgroundColor: colors.panel, borderColor: colors.line },
-                categoryId === category.id && { backgroundColor: colors.brand, borderColor: colors.brand },
-              ]}
-            >
-              <Text
-                style={[
-                  { color: colors.ink, fontSize: 13, fontWeight: '600' },
-                  categoryId === category.id && { color: colors.onBrand },
-                ]}
-              >
-                {category.name}
-              </Text>
-            </Pressable>
+            />
           ))}
         </View>
 
@@ -274,21 +242,16 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 8, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14, marginBottom: 8 },
-  label: { fontSize: 13, marginTop: 8 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14, marginBottom: 8 },
+  label: { fontFamily: fonts.regular, fontSize: 13, marginTop: 8 },
   input: {
     borderRadius: 14,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 8 },
-  chip: {
-    borderRadius: 999,
-    borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
   error: { marginVertical: 8 },
 });

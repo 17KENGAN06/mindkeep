@@ -19,6 +19,7 @@ import { useUnsavedChangesGuard } from '../../features/forms/useUnsavedChangesGu
 import { useCreateNote, useNote, useUpdateNote } from '../../features/notes/useNotes';
 import { useTheme } from '../../features/theme/useTheme';
 import type { MoreStackParamList } from '../../navigation/types';
+import { fonts } from '../../config/fonts';
 
 const MAX_TITLE = 200;
 const MAX_CONTENT = 50000;
@@ -144,7 +145,7 @@ export function NoteEditorScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <Text style={[styles.subtitle, { color: colors.muted }]}>
           {isEdit ? t('notes.editTitle') : t('notes.createSubtitle')}
         </Text>
@@ -210,12 +211,13 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 10, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
-  label: { fontSize: 13, fontWeight: '600', marginTop: 4 },
-  hint: { fontSize: 12 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
+  label: { fontSize: 13, fontFamily: fonts.semibold, marginTop: 4 },
+  hint: { fontFamily: fonts.regular, fontSize: 12 },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,

@@ -11,6 +11,7 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
 import { formatDate, formatDateLong } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 function moduleHint(
   id: AdminActivityModuleId,
@@ -102,6 +103,7 @@ export function AdminUserScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl
@@ -221,10 +223,10 @@ export function AdminUserScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center', padding: 20 },
   content: { gap: 10, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
-  error: { fontSize: 14 },
-  empty: { fontSize: 14 },
-  hint: { fontSize: 13, marginTop: -4 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
+  empty: { fontFamily: fonts.regular, fontSize: 14 },
+  hint: { fontFamily: fonts.regular, fontSize: 13, marginTop: -4 },
   stats: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   stat: {
     borderRadius: 16,
@@ -233,9 +235,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 12,
   },
-  statLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  statValue: { fontSize: 16, fontWeight: '700', marginTop: 6 },
-  section: { fontSize: 16, fontWeight: '700', marginTop: 8 },
+  statLabel: { fontSize: 11, fontFamily: fonts.semibold, textTransform: 'uppercase' },
+  statValue: { fontSize: 16, fontFamily: fonts.bold, marginTop: 6 },
+  section: { fontSize: 16, fontFamily: fonts.bold, marginTop: 8 },
   chart: { borderRadius: 16, borderWidth: 1, padding: 12 },
   bars: { alignItems: 'flex-end', flexDirection: 'row', gap: 2, height: 76 },
   barWrap: { alignItems: 'center', flex: 1, height: 76, justifyContent: 'flex-end' },
@@ -243,10 +245,10 @@ const styles = StyleSheet.create({
   chartMeta: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
   card: { borderRadius: 16, borderWidth: 1, gap: 6, padding: 14 },
   row: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  badge: { fontSize: 12, fontWeight: '700' },
-  count: { fontSize: 24, fontWeight: '700' },
-  meta: { fontSize: 13 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  badge: { fontSize: 12, fontFamily: fonts.bold },
+  count: { fontSize: 24, fontFamily: fonts.display },
+  meta: { fontFamily: fonts.regular, fontSize: 13 },
   event: { borderRadius: 16, borderWidth: 1, gap: 4, padding: 12 },
-  eventTitle: { fontSize: 14, fontWeight: '600' },
+  eventTitle: { fontSize: 14, fontFamily: fonts.semibold },
 });

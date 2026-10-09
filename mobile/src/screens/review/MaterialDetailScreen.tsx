@@ -18,6 +18,7 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 export function MaterialDetailScreen() {
   const { t, i18n } = useTranslation();
@@ -67,6 +68,7 @@ export function MaterialDetailScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
     >
@@ -156,8 +158,8 @@ const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
   head: { flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
-  title: { flex: 1, fontSize: 24, fontWeight: '700' },
-  meta: { fontSize: 13 },
+  title: { flex: 1, fontSize: 24, fontFamily: fonts.display },
+  meta: { fontFamily: fonts.regular, fontSize: 13 },
   labelChip: {
     alignSelf: 'flex-start',
     borderRadius: 16,
@@ -167,8 +169,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  labelKey: { fontSize: 12, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase' },
-  labelValue: { fontSize: 14, fontWeight: '700' },
+  labelKey: { fontSize: 12, fontFamily: fonts.bold, letterSpacing: 0.4, textTransform: 'uppercase' },
+  labelValue: { fontSize: 14, fontFamily: fonts.bold },
   sectionHead: {
     borderRadius: 14,
     borderWidth: 1,
@@ -181,8 +183,8 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 14,
   },
-  blockTitle: { fontSize: 15, fontWeight: '700' },
+  blockTitle: { fontSize: 15, fontFamily: fonts.bold },
   reminderRow: { gap: 6, marginTop: 8 },
-  reminderText: { fontSize: 14, fontWeight: '600' },
+  reminderText: { fontSize: 14, fontFamily: fonts.semibold },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
 });

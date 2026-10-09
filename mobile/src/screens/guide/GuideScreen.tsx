@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../features/theme/useTheme';
+import { fonts } from '../../config/fonts';
 
 type GuideStep = { title: string; body: string };
 type GuideFaq = { question: string; answer: string };
@@ -14,6 +15,7 @@ export function GuideScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       style={[styles.root, { backgroundColor: colors.bg }]}
       contentContainerStyle={styles.content}
     >
@@ -68,10 +70,10 @@ export function GuideScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { padding: 24, paddingBottom: 40 },
-  eyebrow: { fontSize: 12, fontWeight: '700', letterSpacing: 2, textTransform: 'uppercase' },
-  title: { fontSize: 28, fontWeight: '700', marginTop: 10 },
-  intro: { fontSize: 16, lineHeight: 24, marginTop: 12 },
-  section: { fontSize: 20, fontWeight: '700', marginTop: 28, marginBottom: 12 },
+  eyebrow: { fontSize: 12, fontFamily: fonts.bold, letterSpacing: 2, textTransform: 'uppercase' },
+  title: { fontSize: 24, fontFamily: fonts.display, marginTop: 10 },
+  intro: { fontFamily: fonts.regular, fontSize: 16, lineHeight: 24, marginTop: 12 },
+  section: { fontSize: 20, fontFamily: fonts.bold, marginTop: 28, marginBottom: 12 },
   card: {
     borderRadius: 16,
     borderWidth: 1,
@@ -79,9 +81,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   rulesCard: { marginTop: 8 },
-  stepLabel: { fontSize: 12, fontWeight: '700', letterSpacing: 1.6, textTransform: 'uppercase' },
-  cardTitle: { fontSize: 17, fontWeight: '700', marginTop: 8 },
-  body: { fontSize: 15, lineHeight: 22, marginTop: 8 },
+  stepLabel: { fontSize: 12, fontFamily: fonts.bold, letterSpacing: 1.6, textTransform: 'uppercase' },
+  cardTitle: { fontSize: 17, fontFamily: fonts.bold, marginTop: 8 },
+  body: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, marginTop: 8 },
   ruleRow: { flexDirection: 'row', gap: 10, marginTop: 10 },
   dot: { borderRadius: 4, height: 8, marginTop: 8, width: 8 },
   ruleText: { flex: 1, marginTop: 0 },

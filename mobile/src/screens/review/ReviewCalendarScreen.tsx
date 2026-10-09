@@ -14,6 +14,7 @@ import type { AppLanguage } from '../../i18n';
 import type { ReviewStackParamList } from '../../navigation/types';
 import { useAccountToday, useTodayRollover } from '../../features/time/useAccountToday';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 function statusTone(status: string) {
   if (status === 'OVERDUE') return 'danger' as const;
@@ -69,6 +70,7 @@ export function ReviewCalendarScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
     >
@@ -140,11 +142,11 @@ export function ReviewCalendarScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
-  timezone: { fontSize: 12 },
-  dayTitle: { fontSize: 18, fontWeight: '700', marginTop: 8 },
-  counts: { fontSize: 13 },
-  empty: { fontSize: 14, marginTop: 8 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
+  timezone: { fontFamily: fonts.regular, fontSize: 12 },
+  dayTitle: { fontSize: 18, fontFamily: fonts.bold, marginTop: 8 },
+  counts: { fontFamily: fonts.regular, fontSize: 13 },
+  empty: { fontFamily: fonts.regular, fontSize: 14, marginTop: 8 },
   card: {
     borderRadius: 20,
     borderWidth: 1,
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
   },
   cardHead: { flexDirection: 'row', gap: 8, justifyContent: 'space-between' },
   cardText: { flex: 1 },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  meta: { fontSize: 13, marginTop: 4 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  meta: { fontFamily: fonts.regular, fontSize: 13, marginTop: 4 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 },
 });

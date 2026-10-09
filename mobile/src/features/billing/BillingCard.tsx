@@ -9,6 +9,7 @@ import { env } from '../../config/env';
 import { mapAuthError } from '../auth/mapAuthError';
 import { useAuth } from '../auth/useAuth';
 import { useTheme } from '../theme/useTheme';
+import { fonts } from '../../config/fonts';
 
 const USAGE_KEYS = [
   'materials',
@@ -292,20 +293,20 @@ const styles = StyleSheet.create({
   },
   head: { flexDirection: 'row', justifyContent: 'space-between', gap: 12 },
   headCopy: { flex: 1, gap: 6 },
-  kicker: { fontSize: 11, fontWeight: '700', letterSpacing: 1.6, textTransform: 'uppercase' },
-  price: { fontSize: 32, fontWeight: '700' },
-  caption: { fontSize: 14, lineHeight: 20 },
+  kicker: { fontSize: 11, fontFamily: fonts.bold, letterSpacing: 1.6, textTransform: 'uppercase' },
+  price: { fontSize: 28, fontFamily: fonts.display },
+  caption: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
   badge: { alignSelf: 'flex-start', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 },
-  badgeText: { fontSize: 13, fontWeight: '800' },
-  notice: { fontSize: 14, fontWeight: '600' },
-  error: { fontSize: 14 },
-  hint: { fontSize: 13, lineHeight: 18 },
+  badgeText: { fontSize: 13, fontFamily: fonts.bold },
+  notice: { fontSize: 14, fontFamily: fonts.semibold },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
+  hint: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
   usage: { borderRadius: 18, gap: 10, padding: 14 },
-  usageTitle: { fontSize: 16, fontWeight: '700' },
+  usageTitle: { fontSize: 16, fontFamily: fonts.bold },
   usageRow: { gap: 6 },
   usageHead: { flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
-  usageLabel: { flex: 1, fontSize: 14 },
-  usageCount: { fontSize: 13, fontWeight: '700' },
+  usageLabel: { flex: 1, fontFamily: fonts.regular, fontSize: 14 },
+  usageCount: { fontSize: 13, fontFamily: fonts.bold },
   bar: { borderRadius: 999, height: 6, overflow: 'hidden' },
   barFill: { height: 6 },
 });

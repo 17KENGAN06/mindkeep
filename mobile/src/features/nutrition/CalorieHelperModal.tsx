@@ -18,6 +18,7 @@ import type {
   CalorieEstimate,
   NutritionSettings,
 } from '../../types/nutrition';
+import { fonts } from '../../config/fonts';
 
 const ACTIVITIES: BodyActivity[] = ['sedentary', 'light', 'moderate', 'high', 'athlete'];
 
@@ -278,12 +279,13 @@ export function CalorieHelperModal({
 }
 
 const styles = StyleSheet.create({
-  lead: { fontSize: 13, lineHeight: 18 },
-  label: { fontSize: 13, fontWeight: '600' },
+  lead: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
+  label: { fontSize: 13, fontFamily: fonts.semibold },
   field: { gap: 6 },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,
@@ -297,14 +299,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 14,
   },
-  pillText: { fontSize: 13, fontWeight: '700' },
+  pillText: { fontSize: 13, fontFamily: fonts.bold },
   result: { borderRadius: 18, borderWidth: 1, gap: 6, padding: 14 },
-  resultKicker: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  resultValue: { fontSize: 26, fontWeight: '700' },
-  note: { fontSize: 13, fontWeight: '600' },
-  disclaimer: { fontSize: 12, lineHeight: 17 },
+  resultKicker: { fontSize: 11, fontFamily: fonts.semibold, textTransform: 'uppercase' },
+  resultValue: { fontSize: 26, fontFamily: fonts.display },
+  note: { fontSize: 13, fontFamily: fonts.semibold },
+  disclaimer: { fontFamily: fonts.regular, fontSize: 12, lineHeight: 17 },
   ackRow: { alignItems: 'flex-start', flexDirection: 'row', gap: 10, paddingTop: 4 },
   checkbox: { borderRadius: 6, borderWidth: 1, height: 20, marginTop: 1, width: 20 },
-  ackText: { flex: 1, fontSize: 13, lineHeight: 18 },
-  error: { fontSize: 13 },
+  ackText: { flex: 1, fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
+  error: { fontFamily: fonts.regular, fontSize: 13 },
 });

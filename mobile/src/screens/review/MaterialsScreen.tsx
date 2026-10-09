@@ -12,7 +12,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { AppButton, Badge } from '../../components/ui';
+import { AppButton, Badge, ChoiceChip } from '../../components/ui';
 import { useCategories } from '../../features/categories/useCategories';
 import { useMaterials } from '../../features/materials/useMaterials';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
@@ -22,6 +22,7 @@ import type { ReviewStackParamList } from '../../navigation/types';
 import type { MaterialStatus } from '../../types/material';
 import { previewContent } from '../../utils/contentBlocks';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 export function MaterialsScreen() {
   const { t, i18n } = useTranslation();
@@ -49,6 +50,7 @@ export function MaterialsScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
       refreshControl={
@@ -159,53 +161,29 @@ function FilterChip({
   active: boolean;
   onPress: () => void;
 }) {
-  const { colors } = useTheme();
-  return (
-    <Pressable
-      onPress={onPress}
-      style={[
-        styles.chip,
-        { backgroundColor: colors.panel, borderColor: colors.line },
-        active && { backgroundColor: colors.brand, borderColor: colors.brand },
-      ]}
-    >
-      <Text
-        style={[
-          { color: colors.ink, fontSize: 13, fontWeight: '600' },
-          active && { color: colors.onBrand },
-        ]}
-      >
-        {label}
-      </Text>
-    </Pressable>
-  );
+  return <ChoiceChip label={label} selected={active} onPress={onPress} />;
 }
 
 const styles = StyleSheet.create({
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   input: {
     borderRadius: 14,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: {
-    borderRadius: 999,
-    borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  empty: { fontSize: 14 },
+  empty: { fontFamily: fonts.regular, fontSize: 14 },
   card: {
     borderRadius: 20,
     borderWidth: 1,
     padding: 14,
   },
   cardHead: { flexDirection: 'row', gap: 8, justifyContent: 'space-between' },
-  cardTitle: { flex: 1, fontSize: 16, fontWeight: '700' },
-  preview: { fontSize: 14, marginTop: 8 },
-  meta: { fontSize: 12, marginTop: 6 },
+  cardTitle: { flex: 1, fontSize: 16, fontFamily: fonts.bold },
+  preview: { fontFamily: fonts.regular, fontSize: 14, marginTop: 8 },
+  meta: { fontFamily: fonts.regular, fontSize: 12, marginTop: 6 },
 });

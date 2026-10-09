@@ -7,6 +7,7 @@ import { AppButton } from '../../components/ui';
 import type { AppLanguage } from '../../i18n';
 import { formatMonthTitle, monthCells, weekdayLabels } from '../../utils/date';
 import { useTheme } from '../theme/useTheme';
+import { fonts } from '../../config/fonts';
 
 const MAX_DAYS = 21;
 
@@ -158,17 +159,17 @@ export function TaskCopyModal({
 }
 
 const styles = StyleSheet.create({
-  from: { fontSize: 14, fontWeight: '600' },
-  muted: { fontSize: 13 },
-  error: { fontSize: 14 },
+  from: { fontSize: 14, fontFamily: fonts.semibold },
+  muted: { fontFamily: fonts.regular, fontSize: 13 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
   monthRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   navBtn: { alignItems: 'center', borderRadius: 12, height: 40, justifyContent: 'center', width: 40 },
-  monthTitle: { fontSize: 15, fontWeight: '700' },
+  monthTitle: { fontSize: 15, fontFamily: fonts.bold },
   row: { flexDirection: 'row' },
   weekday: {
     flex: 1,
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     letterSpacing: 0.5,
     textAlign: 'center',
     textTransform: 'uppercase',
@@ -177,5 +178,5 @@ const styles = StyleSheet.create({
   cell: { aspectRatio: 1, maxHeight: 44, padding: 2, width: `${100 / 7}%` },
   day: { alignItems: 'center', borderRadius: 8, borderWidth: 1, flex: 1, justifyContent: 'center' },
   source: { opacity: 0.4 },
-  dayText: { fontSize: 13, fontWeight: '700' },
+  dayText: { fontSize: 13, fontFamily: fonts.bold },
 });

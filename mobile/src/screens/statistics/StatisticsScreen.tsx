@@ -14,6 +14,7 @@ import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 export function StatisticsScreen() {
   const { t, i18n } = useTranslation();
@@ -39,6 +40,7 @@ export function StatisticsScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl
@@ -105,7 +107,7 @@ export function StatisticsScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 14, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   stats: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   stat: {
     borderRadius: 16,
@@ -114,14 +116,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 12,
   },
-  statLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  statValue: { fontSize: 26, fontWeight: '700', marginTop: 8 },
+  statLabel: { fontSize: 11, fontFamily: fonts.semibold, textTransform: 'uppercase' },
+  statValue: { fontSize: 26, fontFamily: fonts.display, marginTop: 8 },
   chart: { borderRadius: 20, borderWidth: 1, gap: 8, padding: 14 },
-  chartTitle: { fontSize: 16, fontWeight: '700' },
+  chartTitle: { fontSize: 16, fontFamily: fonts.bold },
   bars: { alignItems: 'flex-end', flexDirection: 'row', gap: 6, minHeight: 140 },
   barCol: { alignItems: 'center', flex: 1, gap: 4 },
   barTrack: { alignItems: 'center', flex: 1, height: 100, justifyContent: 'flex-end', width: '100%' },
   barFill: { borderTopLeftRadius: 8, borderTopRightRadius: 8, minHeight: 4, width: '70%' },
-  barLabel: { fontSize: 9, textAlign: 'center' },
-  barCount: { fontSize: 11, fontWeight: '700' },
+  barLabel: { fontFamily: fonts.regular, fontSize: 9, textAlign: 'center' },
+  barCount: { fontSize: 11, fontFamily: fonts.bold },
 });

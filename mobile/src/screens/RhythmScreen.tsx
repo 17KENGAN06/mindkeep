@@ -19,6 +19,7 @@ import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import { useAccountToday } from '../features/time/useAccountToday';
 import { formatMonthTitle, monthCells, weekdayLabels } from '../utils/date';
+import { fonts } from '../config/fonts';
 
 function habitsForMonth(habits: RhythmHabit[], year: number, month: number, ready: boolean): RhythmHabit[] {
   if (ready) return habits;
@@ -162,6 +163,7 @@ export function RhythmScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       style={[styles.root, { backgroundColor: colors.bg }]}
       contentContainerStyle={styles.content}
       showsHorizontalScrollIndicator={false}
@@ -234,22 +236,22 @@ export function RhythmScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { gap: 12, padding: 16, paddingBottom: 32 },
-  lead: { fontSize: 14, lineHeight: 20 },
+  lead: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
   monthRow: { alignItems: 'center', flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
   monthBtn: { borderRadius: 12, borderWidth: 1, padding: 8 },
-  monthTitle: { flex: 1, fontSize: 16, fontWeight: '700', textAlign: 'center', textTransform: 'capitalize' },
-  input: { borderRadius: 14, borderWidth: 1, fontSize: 16, paddingHorizontal: 12, paddingVertical: 12 },
-  error: { fontSize: 13 },
-  muted: { fontSize: 13 },
+  monthTitle: { flex: 1, fontSize: 16, fontFamily: fonts.bold, textAlign: 'center', textTransform: 'capitalize' },
+  input: { borderRadius: 14, borderWidth: 1, fontFamily: fonts.regular, fontSize: 16, paddingHorizontal: 12, paddingVertical: 12 },
+  error: { fontFamily: fonts.regular, fontSize: 13 },
+  muted: { fontFamily: fonts.regular, fontSize: 13 },
   retry: { gap: 8 },
   cards: { gap: 12 },
   cardsPending: { opacity: 0.6 },
   card: { borderRadius: 20, borderWidth: 1, gap: 10, padding: 14 },
   habitHead: { alignItems: 'center', flexDirection: 'row', gap: 8 },
   habitCopy: { flex: 1, minWidth: 0 },
-  habitTitle: { fontSize: 16, fontWeight: '700' },
+  habitTitle: { fontSize: 16, fontFamily: fonts.bold },
   weekLabels: { flexDirection: 'row' },
-  weekLabel: { flex: 1, fontSize: 11, fontWeight: '600', textAlign: 'center', textTransform: 'uppercase' },
+  weekLabel: { flex: 1, fontSize: 11, fontFamily: fonts.semibold, textAlign: 'center', textTransform: 'uppercase' },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
   cell: {
     alignItems: 'center',
@@ -261,5 +263,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
   },
-  cellDay: { fontSize: 12, fontWeight: '600' },
+  cellDay: { fontSize: 12, fontFamily: fonts.semibold },
 });

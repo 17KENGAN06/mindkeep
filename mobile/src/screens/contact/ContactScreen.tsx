@@ -12,12 +12,13 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { contactApi } from '../../api/contact';
-import { AppButton } from '../../components/ui';
+import { AppButton, ChoiceChip } from '../../components/ui';
 import { CONTACT_INBOX, CONTACT_TOPICS, inboxForTopic, type ContactTopic } from '../../config/contact';
 import { issueBotToken } from '../../features/auth/botChallenge';
 import { mapContactError } from '../../features/contact/mapContactError';
 import { useAuth } from '../../features/auth/useAuth';
 import { useTheme } from '../../features/theme/useTheme';
+import { fonts } from '../../config/fonts';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -81,7 +82,7 @@ export function ContactScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <Text style={[styles.intro, { color: colors.muted }]}>{t('contact.intro')}</Text>
 
         <Pressable
@@ -111,24 +112,12 @@ export function ContactScreen() {
             <Text style={[styles.label, { color: colors.muted }]}>{t('contact.fields.topic')}</Text>
             <View style={styles.row}>
               {CONTACT_TOPICS.map((item) => (
-                <Pressable
+                <ChoiceChip
                   key={item}
+                  label={t(`contact.topics.${item}`)}
+                  selected={topic === item}
                   onPress={() => setTopic(item)}
-                  style={[
-                    styles.chip,
-                    { borderColor: colors.line },
-                    topic === item && { backgroundColor: colors.brand, borderColor: colors.brand },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      { color: colors.ink, fontSize: 13 },
-                      topic === item && { color: colors.onBrand, fontWeight: '700' },
-                    ]}
-                  >
-                    {t(`contact.topics.${item}`)}
-                  </Text>
-                </Pressable>
+                />
               ))}
             </View>
             {destination ? (
@@ -185,39 +174,34 @@ export function ContactScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  intro: { fontSize: 14, lineHeight: 20 },
+  intro: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
   mailCard: {
     borderRadius: 18,
     borderWidth: 1,
     padding: 14,
   },
-  mailTitle: { fontSize: 16, fontWeight: '700' },
-  mailBody: { fontSize: 13, marginTop: 6 },
-  link: { fontSize: 13, marginTop: 8 },
+  mailTitle: { fontSize: 16, fontFamily: fonts.bold },
+  mailBody: { fontFamily: fonts.regular, fontSize: 13, marginTop: 6 },
+  link: { fontFamily: fonts.regular, fontSize: 13, marginTop: 8 },
   card: {
     borderRadius: 20,
     borderWidth: 1,
     gap: 8,
     padding: 14,
   },
-  cardTitle: { fontSize: 18, fontWeight: '700' },
-  label: { fontSize: 13, fontWeight: '600', marginTop: 6 },
+  cardTitle: { fontSize: 18, fontFamily: fonts.bold },
+  label: { fontSize: 13, fontFamily: fonts.semibold, marginTop: 6 },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: {
-    borderRadius: 999,
-    borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  meta: { fontSize: 12 },
+  meta: { fontFamily: fonts.regular, fontSize: 12 },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
   area: { minHeight: 120, textAlignVertical: 'top' },
-  error: { fontSize: 14 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
 });

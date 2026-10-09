@@ -21,6 +21,7 @@ import type { AppLanguage } from '../../i18n';
 import type { AppTabParamList } from '../../navigation/types';
 import type { AppNotification } from '../../types/notification';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 function typeTone(type: AppNotification['type']) {
   if (type === 'REVIEW_OVERDUE') return 'danger' as const;
@@ -64,6 +65,7 @@ export function NotificationsScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl
@@ -170,15 +172,15 @@ export function NotificationsScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
-  unread: { fontSize: 14, fontWeight: '700' },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
+  unread: { fontSize: 14, fontFamily: fonts.bold },
   empty: {
     borderRadius: 20,
     borderWidth: 1,
     padding: 16,
   },
-  emptyTitle: { fontSize: 16, fontWeight: '700' },
-  emptyBody: { fontSize: 14, marginTop: 6 },
+  emptyTitle: { fontSize: 16, fontFamily: fonts.bold },
+  emptyBody: { fontFamily: fonts.regular, fontSize: 14, marginTop: 6 },
   card: {
     borderRadius: 20,
     borderWidth: 1,
@@ -186,8 +188,8 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   head: { alignItems: 'flex-start', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  title: { flex: 1, fontSize: 16, fontWeight: '700' },
-  message: { fontSize: 14 },
-  meta: { fontSize: 12 },
+  title: { flex: 1, fontSize: 16, fontFamily: fonts.bold },
+  message: { fontFamily: fonts.regular, fontSize: 14 },
+  meta: { fontFamily: fonts.regular, fontSize: 12 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
 });

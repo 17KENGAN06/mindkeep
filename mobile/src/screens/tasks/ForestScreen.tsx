@@ -20,6 +20,7 @@ import type { AppLanguage } from '../../i18n';
 import type { TasksStackParamList } from '../../navigation/types';
 import { useAccountToday } from '../../features/time/useAccountToday';
 import { formatMonthTitle } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 export function ForestScreen() {
   const { t, i18n } = useTranslation();
@@ -48,6 +49,7 @@ export function ForestScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl
@@ -95,7 +97,7 @@ export function ForestScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 14, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   period: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'center' },
   periodBtn: {
     alignItems: 'center',
@@ -105,9 +107,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
   },
-  periodBtnText: { fontSize: 22, fontWeight: '700' },
-  periodLabel: { flex: 1, fontSize: 16, fontWeight: '700', textAlign: 'center' },
+  periodBtnText: { fontSize: 22, fontFamily: fonts.bold },
+  periodLabel: { flex: 1, fontSize: 16, fontFamily: fonts.bold, textAlign: 'center' },
   rules: { borderRadius: 20, borderWidth: 1, gap: 8, padding: 14 },
-  rulesTitle: { fontSize: 16, fontWeight: '700' },
-  rule: { fontSize: 14, lineHeight: 20 },
+  rulesTitle: { fontSize: 16, fontFamily: fonts.bold },
+  rule: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
 });

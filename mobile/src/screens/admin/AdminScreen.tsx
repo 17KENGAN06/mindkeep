@@ -27,6 +27,7 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 const BETA_SEARCH_LIMIT = 8;
 
@@ -90,6 +91,7 @@ export function AdminScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl
@@ -142,7 +144,7 @@ export function AdminScreen() {
             onPress={() => navigation.navigate('AdminUser', { id: item.id })}
             style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
           >
-            <Text style={[styles.cardTitle, { color: colors.ink }]}>{item.name}</Text>
+            <Text style={[styles.cardTitle, { color: colors.ink }]} numberOfLines={1}>{item.name}</Text>
             <Text style={[styles.meta, { color: colors.muted }]}>{item.email}</Text>
             <Text style={[styles.meta, { color: colors.ink }]}>
               {item.planInterval === 'YEAR'
@@ -223,7 +225,7 @@ export function AdminScreen() {
         <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
           {(auditQuery.data ?? []).map((event) => (
             <View key={event.id} style={styles.auditRow}>
-              <Text style={[styles.meta, styles.matchCopy, { color: colors.ink }]}>
+              <Text style={[styles.meta, styles.matchCopy, { color: colors.ink }]} numberOfLines={1}>
                 {event.actor?.name ?? t('admin.auditAnonymous')}
                 <Text style={{ color: colors.muted }}> · {t(`admin.auditActions.${event.action}`)}</Text>
               </Text>
@@ -245,7 +247,7 @@ export function AdminScreen() {
               onPress={() => navigation.navigate('AdminUser', { id: item.id })}
               style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}
             >
-              <Text style={[styles.cardTitle, { color: colors.ink }]}>{item.name}</Text>
+              <Text style={[styles.cardTitle, { color: colors.ink }]} numberOfLines={1}>{item.name}</Text>
               <Text style={[styles.meta, { color: colors.muted }]}>{item.email}</Text>
               <Text style={[styles.meta, { color: colors.ink }]}>
                 {item.role === 'ADMIN' ? t('admin.roles.admin') : t('admin.roles.user')}
@@ -272,9 +274,9 @@ export function AdminScreen() {
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center', padding: 20 },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
-  error: { fontSize: 14 },
-  empty: { fontSize: 14 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
+  empty: { fontFamily: fonts.regular, fontSize: 14 },
   stats: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   stat: {
     borderRadius: 16,
@@ -283,14 +285,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 12,
   },
-  statLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  statValue: { fontSize: 24, fontWeight: '700', marginTop: 6 },
-  section: { fontSize: 16, fontWeight: '700', marginTop: 8 },
+  statLabel: { fontSize: 11, fontFamily: fonts.semibold, textTransform: 'uppercase' },
+  statValue: { fontSize: 24, fontFamily: fonts.display, marginTop: 6 },
+  section: { fontSize: 16, fontFamily: fonts.bold, marginTop: 8 },
   card: { borderRadius: 16, borderWidth: 1, gap: 6, padding: 14 },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  meta: { fontSize: 13 },
-  label: { fontSize: 14, fontWeight: '600' },
-  input: { borderRadius: 12, borderWidth: 1, fontSize: 15, minHeight: 46, paddingHorizontal: 12 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  meta: { fontFamily: fonts.regular, fontSize: 13 },
+  label: { fontSize: 14, fontFamily: fonts.semibold },
+  input: { borderRadius: 12, borderWidth: 1, fontFamily: fonts.regular, fontSize: 15, minHeight: 46, paddingHorizontal: 12 },
   matches: { borderRadius: 16, borderWidth: 1, gap: 10, padding: 10 },
   matchRow: { alignItems: 'center', flexDirection: 'row', gap: 10 },
   matchCopy: { flex: 1, minWidth: 0 },

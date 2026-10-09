@@ -14,6 +14,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { ReminderCard } from '../../components/ReminderCard';
+import { ChoiceChip } from '../../components/ui';
 import { AppIcon } from '../../components/AppIcon';
 import {
   useCompleteReminder,
@@ -26,6 +27,8 @@ import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { ReviewStackParamList } from '../../navigation/types';
 import type { Reminder } from '../../types/reminder';
+import { fonts } from '../../config/fonts';
+import { AmbientGlow } from '../../components/AmbientGlow';
 
 function ReminderSection({
   title,
@@ -144,6 +147,7 @@ export function ReviewInboxScreen() {
   if (loading && !overdueQuery.data && !todayQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
+        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -153,7 +157,9 @@ export function ReviewInboxScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
+      <AmbientGlow />
       <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         refreshControl={
           <RefreshControl refreshing={refreshing && !loading} onRefresh={onRefresh} tintColor={colors.brand} />
@@ -171,22 +177,21 @@ export function ReviewInboxScreen() {
               { screen: 'ReviewCalendar' as const, icon: 'calendar-outline' as const, label: t('calendar.title') },
             ] as const
           ).map((item) => (
-            <Pressable
+            <ChoiceChip
               key={item.screen}
+              icon={item.icon}
+              label={item.label}
+              selected={false}
               onPress={() => navigation.navigate(item.screen)}
-              style={[styles.chip, { backgroundColor: colors.panel, borderColor: colors.line }]}
-            >
-              <AppIcon name={item.icon} color={colors.brand} size={16} />
-              <Text style={[styles.chipText, { color: colors.ink }]}>{item.label}</Text>
-            </Pressable>
+            />
           ))}
-          <Pressable
+          {/* The one action here: shown in the brand colour. */}
+          <ChoiceChip
+            icon="add"
+            label={t('materials.create')}
+            selected
             onPress={() => navigation.navigate('MaterialCreate')}
-            style={[styles.chip, { backgroundColor: colors.brand, borderColor: colors.brand }]}
-          >
-            <AppIcon name="add" color={colors.onBrand} size={16} />
-            <Text style={[styles.chipText, { color: colors.onBrand }]}>{t('materials.create')}</Text>
-          </Pressable>
+          />
         </View>
 
         {message ? <Text style={[styles.success, { color: colors.brand }]}>{message}</Text> : null}
@@ -245,30 +250,20 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  title: { fontSize: 28, fontWeight: '700' },
-  subtitle: { fontSize: 14, marginTop: 4 },
-  open: { fontSize: 14, fontWeight: '600', marginTop: 8 },
+  title: { fontSize: 24, fontFamily: fonts.display },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14, marginTop: 4 },
+  open: { fontSize: 14, fontFamily: fonts.semibold, marginTop: 8 },
   shortcuts: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginVertical: 8 },
-  chip: {
-    alignItems: 'center',
-    borderRadius: 999,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  chipText: { fontSize: 13, fontWeight: '600' },
-  success: { fontSize: 14 },
-  error: { fontSize: 14 },
+  success: { fontFamily: fonts.regular, fontSize: 14 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
   section: { gap: 10, marginTop: 8 },
-  sectionTitle: { fontSize: 18, fontWeight: '700' },
-  count: { fontSize: 14, fontWeight: '500' },
+  sectionTitle: { fontSize: 18, fontFamily: fonts.bold },
+  count: { fontSize: 14, fontFamily: fonts.medium },
   empty: {
     borderRadius: 20,
     borderWidth: 1,
     padding: 16,
   },
-  emptyTitle: { fontSize: 15, fontWeight: '600' },
-  emptyBody: { fontSize: 13, marginTop: 4 },
+  emptyTitle: { fontSize: 15, fontFamily: fonts.semibold },
+  emptyBody: { fontFamily: fonts.regular, fontSize: 13, marginTop: 4 },
 });

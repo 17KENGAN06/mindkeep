@@ -12,8 +12,9 @@ import { useTheme } from '../theme/useTheme';
 import { compressMealPhoto, MealPhotoError, type PickedPhoto } from './compressMealPhoto';
 import { macroDraftFrom, parseMacroDraft, type MacroDraft } from './macros';
 import { MealKindPicker } from './MealKindPicker';
-import type { MealKind } from './mealKinds';
+import { suggestMealKind, type MealKind } from './mealKinds';
 import { useCreateMeal } from './useNutrition';
+import { fonts } from '../../config/fonts';
 
 const MAX_PHOTOS = 3;
 
@@ -143,7 +144,8 @@ export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro, 
       setReview({
         mealName: estimate.mealName,
         totalCalories: String(estimate.totalCalories),
-        kind: null,
+        // Pre-picked so "Add" works straight away; the picker above still changes it.
+        kind: suggestMealKind(),
         macros: macroDraftFrom({
           protein: estimate.protein ?? null,
           fat: estimate.fat ?? null,
@@ -202,9 +204,16 @@ export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro, 
       accessibilityRole="button"
       disabled={analyzing}
       onPress={onPress}
-      style={[styles.sourceBtn, { backgroundColor: colors.panel, borderColor: colors.line }, analyzing && styles.disabled]}
+      style={({ pressed }) => [
+        styles.sourceBtn,
+        { backgroundColor: `${colors.panel}e6`, borderColor: pressed ? `${colors.brand}66` : colors.line },
+        pressed && styles.sourcePressed,
+        analyzing && styles.disabled,
+      ]}
     >
-      <AppIcon name={icon} color={colors.ink} size={18} />
+      <View style={[styles.sourceIcon, { backgroundColor: `${colors.brand}1f` }]}>
+        <AppIcon name={icon} color={colors.brand} size={16} />
+      </View>
       <Text style={[styles.sourceText, { color: colors.ink }]} numberOfLines={1}>
         {label}
       </Text>
@@ -228,9 +237,11 @@ export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro, 
         <Pressable
           accessibilityRole="button"
           onPress={onNeedPro}
-          style={[styles.sourceBtn, styles.locked, { backgroundColor: colors.panel, borderColor: colors.line }]}
+          style={[styles.sourceBtn, styles.locked, { backgroundColor: `${colors.panel}e6`, borderColor: colors.line }]}
         >
-          <AppIcon name="camera-outline" color={colors.ink} size={18} />
+          <View style={[styles.sourceIcon, { backgroundColor: `${colors.brand}1f` }]}>
+            <AppIcon name="camera-outline" color={colors.brand} size={16} />
+          </View>
           <Text style={[styles.sourceText, { color: colors.ink }]}>{t('fuel.scan.button')}</Text>
           <Badge tone="neutral" label="Pro" />
         </Pressable>
@@ -322,6 +333,8 @@ export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro, 
         }}
         footer={
           <>
+            {/* Shown above the button: at the end of the scrolling body it was out of sight. */}
+            {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
             <AppButton label={t('fuel.scan.add')} loading={createMeal.isPending} onPress={() => void onConfirm()} />
             <AppButton
               variant="secondary"
@@ -365,7 +378,6 @@ export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro, 
               : null}
             {macrosEnabled ? <Text style={[styles.hint, { color: colors.muted }]}>{t('fuel.macros.scanHint')}</Text> : null}
             <Text style={[styles.hint, { color: colors.muted }]}>{t('fuel.scan.privacy')}</Text>
-            {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
           </>
         ) : null}
       </SheetModal>
@@ -379,25 +391,28 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', gap: 8 },
   sourceBtn: {
     alignItems: 'center',
-    borderRadius: 14,
+    borderRadius: 16,
     borderWidth: 1,
     flex: 1,
     flexDirection: 'row',
-    gap: 6,
+    gap: 8,
     justifyContent: 'center',
-    minHeight: 46,
+    minHeight: 52,
     paddingHorizontal: 8,
   },
-  sourceText: { flexShrink: 1, fontSize: 14, fontWeight: '600' },
+  sourceIcon: { alignItems: 'center', borderRadius: 999, height: 30, justifyContent: 'center', width: 30 },
+  sourcePressed: { transform: [{ scale: 0.98 }] },
+  sourceText: { flexShrink: 1, fontSize: 14, fontFamily: fonts.semibold },
   locked: { opacity: 0.85 },
   disabled: { opacity: 0.5 },
-  hint: { fontSize: 12, lineHeight: 17 },
-  error: { fontSize: 14 },
-  label: { fontSize: 14, fontWeight: '600' },
+  hint: { fontFamily: fonts.regular, fontSize: 12, lineHeight: 17 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
+  label: { fontSize: 14, fontFamily: fonts.semibold },
   field: { gap: 6 },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 46,
     paddingHorizontal: 12,

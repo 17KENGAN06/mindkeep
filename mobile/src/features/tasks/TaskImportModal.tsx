@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SheetModal } from '../../components/SheetModal';
-import { AppButton } from '../../components/ui';
+import { AppButton, ChoiceChip } from '../../components/ui';
 import { useTheme } from '../theme/useTheme';
 import { parseTaskImport } from './parseTaskImport';
+import { fonts } from '../../config/fonts';
 
 type PairChoice = 'tab' | 'comma' | 'custom';
 type CardChoice = 'newline' | 'semicolon' | 'custom';
@@ -46,20 +47,7 @@ export function TaskImportModal({ visible, date, loading = false, error, onClose
   const parsed = useMemo(() => parseTaskImport(text, pairSep, cardSep), [text, pairSep, cardSep]);
 
   const chip = (selected: boolean, label: string, onPress: () => void) => (
-    <Pressable
-      key={label}
-      accessibilityRole="button"
-      accessibilityState={{ selected }}
-      onPress={onPress}
-      style={[
-        styles.chip,
-        selected
-          ? { backgroundColor: colors.brand, borderColor: colors.brand }
-          : { backgroundColor: colors.panel, borderColor: colors.line },
-      ]}
-    >
-      <Text style={[styles.chipText, { color: selected ? colors.onBrand : colors.ink }]}>{label}</Text>
-    </Pressable>
+    <ChoiceChip key={label} label={label} selected={selected} onPress={onPress} />
   );
 
   const inputStyle = [styles.input, { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink }];
@@ -157,12 +145,13 @@ export function TaskImportModal({ visible, date, loading = false, error, onClose
 }
 
 const styles = StyleSheet.create({
-  label: { fontSize: 14, fontWeight: '600' },
-  muted: { fontSize: 13 },
-  error: { fontSize: 14 },
+  label: { fontSize: 14, fontFamily: fonts.semibold },
+  muted: { fontFamily: fonts.regular, fontSize: 13 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 15,
     minHeight: 44,
     paddingHorizontal: 12,
@@ -170,15 +159,7 @@ const styles = StyleSheet.create({
   },
   textarea: { fontFamily: 'monospace', fontSize: 13, minHeight: 140, textAlignVertical: 'top' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: {
-    borderRadius: 999,
-    borderWidth: 1,
-    justifyContent: 'center',
-    minHeight: 40,
-    paddingHorizontal: 14,
-  },
-  chipText: { fontSize: 14, fontWeight: '600' },
   preview: { borderRadius: 12, borderWidth: 1, gap: 4, padding: 12 },
   previewRow: { flexDirection: 'row', gap: 12, justifyContent: 'space-between' },
-  previewTitle: { flex: 1, fontSize: 14 },
+  previewTitle: { flex: 1, fontFamily: fonts.regular, fontSize: 14 },
 });

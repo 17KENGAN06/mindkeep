@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -42,6 +42,8 @@ import type { CalendarDaySummary } from '../types/calendar';
 import type { DailyTask } from '../types/dailyTask';
 import { useAccountToday, useTodayRollover } from '../features/time/useAccountToday';
 import { formatDate, formatMonthTitle } from '../utils/date';
+import { fonts } from '../config/fonts';
+import { AmbientGlow } from '../components/AmbientGlow';
 
 function firstOfMonth(year: number, month: number): string {
   return `${year}-${String(month).padStart(2, '0')}-01`;
@@ -79,6 +81,22 @@ export function TasksScreen() {
   const [copyOpen, setCopyOpen] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
   const [copyError, setCopyError] = useState<string | null>(null);
+
+  // Quick add's Import / Copy day: open the dialog once per request timestamp.
+  const route = useRoute<RouteProp<TasksStackParamList, 'TasksHome'>>();
+  const handledRequest = useRef<number | undefined>(undefined);
+  useEffect(() => {
+    const request = route.params;
+    if (!request?.open || request.at === undefined || handledRequest.current === request.at) return;
+    handledRequest.current = request.at;
+    if (request.open === 'import') {
+      setImportError(null);
+      setImportOpen(true);
+    } else {
+      setCopyError(null);
+      setCopyOpen(true);
+    }
+  }, [route.params]);
 
   const periodQuery = useTasksPeriod(year, month);
   const toggleTask = useToggleTask(selectedDate);
@@ -279,6 +297,7 @@ export function TasksScreen() {
   if (periodQuery.isLoading && !periodQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
+        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -288,11 +307,13 @@ export function TasksScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
+      <AmbientGlow />
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
           refreshControl={
@@ -580,8 +601,8 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  title: { fontSize: 28, fontWeight: '700' },
-  subtitle: { fontSize: 14 },
+  title: { fontSize: 24, fontFamily: fonts.display },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   planLink: {
     alignItems: 'center',
     alignSelf: 'flex-start',
@@ -592,10 +613,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  planLinkText: { fontSize: 14, fontWeight: '700' },
-  dayTitle: { fontSize: 18, fontWeight: '700', marginTop: 8 },
-  empty: { fontSize: 14 },
-  error: { fontSize: 14 },
+  planLinkText: { fontSize: 14, fontFamily: fonts.bold },
+  dayTitle: { fontSize: 18, fontFamily: fonts.bold, marginTop: 8 },
+  empty: { fontFamily: fonts.regular, fontSize: 14 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
   taskCard: {
     borderRadius: 16,
     borderWidth: 1,
@@ -640,7 +661,7 @@ const styles = StyleSheet.create({
   },
   importantLabel: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   splitRow: {
     alignItems: 'center',
@@ -657,9 +678,9 @@ const styles = StyleSheet.create({
     minWidth: 32,
     paddingHorizontal: 8,
   },
-  splitChipText: { fontSize: 13, fontWeight: '700' },
-  splitLabel: { fontSize: 13, fontWeight: '700' },
-  splitAction: { fontSize: 12, fontWeight: '600' },
+  splitChipText: { fontSize: 13, fontFamily: fonts.bold },
+  splitLabel: { fontSize: 13, fontFamily: fonts.bold },
+  splitAction: { fontSize: 12, fontFamily: fonts.semibold },
   splitBtn: {
     alignItems: 'center',
     alignSelf: 'flex-start',
@@ -671,7 +692,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
   },
-  splitBtnText: { fontSize: 13, fontWeight: '700' },
+  splitBtnText: { fontSize: 13, fontFamily: fonts.bold },
   check: {
     alignItems: 'center',
     borderRadius: 10,
@@ -681,9 +702,9 @@ const styles = StyleSheet.create({
     width: 36,
     flexShrink: 0,
   },
-  checkMark: { fontWeight: '800' },
-  taskTitle: { fontSize: 15, fontWeight: '600' },
-  minutes: { fontSize: 13 },
+  checkMark: { fontFamily: fonts.bold },
+  taskTitle: { fontSize: 15, fontFamily: fonts.semibold },
+  minutes: { fontFamily: fonts.regular, fontSize: 13 },
   form: {
     borderRadius: 20,
     borderWidth: 1,
@@ -691,11 +712,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
     padding: 14,
   },
-  formTitle: { fontSize: 16, fontWeight: '700' },
-  label: { fontSize: 13, fontWeight: '600' },
+  formTitle: { fontSize: 16, fontFamily: fonts.bold },
+  label: { fontSize: 13, fontFamily: fonts.semibold },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,

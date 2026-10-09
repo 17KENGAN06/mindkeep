@@ -24,6 +24,7 @@ import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import type { Category } from '../../types/category';
+import { fonts } from '../../config/fonts';
 
 export function CategoriesScreen() {
   const { t } = useTranslation();
@@ -85,6 +86,7 @@ export function CategoriesScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
         refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
@@ -166,17 +168,18 @@ export function CategoriesScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
-  label: { fontSize: 15, fontWeight: '700' },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
+  label: { fontSize: 15, fontFamily: fonts.bold },
   input: {
     borderRadius: 14,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  empty: { fontSize: 14 },
+  empty: { fontFamily: fonts.regular, fontSize: 14 },
   card: {
     borderRadius: 20,
     borderWidth: 1,
@@ -184,6 +187,6 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   cardText: { gap: 4 },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  meta: { fontSize: 13 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  meta: { fontFamily: fonts.regular, fontSize: 13 },
 });

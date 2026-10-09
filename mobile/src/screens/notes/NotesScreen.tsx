@@ -12,7 +12,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { AppButton } from '../../components/ui';
+import { AppButton, ChoiceChip } from '../../components/ui';
 import { useNotes } from '../../features/notes/useNotes';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
@@ -20,6 +20,7 @@ import type { AppLanguage } from '../../i18n';
 import type { MoreStackParamList } from '../../navigation/types';
 import type { NotesQuery } from '../../types/note';
 import { formatDate } from '../../utils/date';
+import { fonts } from '../../config/fonts';
 
 export function NotesScreen() {
   const { t, i18n } = useTranslation();
@@ -51,6 +52,7 @@ export function NotesScreen() {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
       refreshControl={
@@ -78,26 +80,13 @@ export function NotesScreen() {
 
       <View style={styles.sortRow}>
         {(['newest', 'oldest'] as const).map((option) => {
-          const active = sort === option;
           return (
-            <Pressable
+            <ChoiceChip
               key={option}
+              label={option === 'newest' ? t('notes.sortNewest') : t('notes.sortOldest')}
+              selected={sort === option}
               onPress={() => setSort(option)}
-              style={[
-                styles.chip,
-                { borderColor: colors.line },
-                active && { backgroundColor: colors.brand, borderColor: colors.brand },
-              ]}
-            >
-              <Text
-                style={[
-                  { color: colors.ink, fontSize: 14 },
-                  active && { color: colors.onBrand, fontWeight: '700' },
-                ]}
-              >
-                {option === 'newest' ? t('notes.sortNewest') : t('notes.sortOldest')}
-              </Text>
-            </Pressable>
+            />
           );
         })}
       </View>
@@ -141,36 +130,31 @@ export function NotesScreen() {
 
 const styles = StyleSheet.create({
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  subtitle: { fontSize: 14 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
   sortRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: {
-    borderRadius: 999,
-    borderWidth: 1,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-  },
   loader: { marginTop: 16 },
   empty: {
     borderRadius: 20,
     borderWidth: 1,
     padding: 16,
   },
-  emptyTitle: { fontSize: 16, fontWeight: '700' },
-  emptyBody: { fontSize: 14, marginTop: 6 },
+  emptyTitle: { fontSize: 16, fontFamily: fonts.bold },
+  emptyBody: { fontFamily: fonts.regular, fontSize: 14, marginTop: 6 },
   card: {
     borderRadius: 20,
     borderWidth: 1,
     padding: 14,
   },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  cardBody: { fontSize: 14, marginTop: 6 },
-  meta: { fontSize: 12, marginTop: 10 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  cardBody: { fontFamily: fonts.regular, fontSize: 14, marginTop: 6 },
+  meta: { fontFamily: fonts.regular, fontSize: 12, marginTop: 10 },
 });

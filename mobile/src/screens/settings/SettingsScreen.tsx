@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../../components/LanguageSwitcher';
 import { AppIcon } from '../../components/AppIcon';
+import { ChoiceChip } from '../../components/ui';
 import { TimezoneSuggestion } from '../../components/TimezoneSuggestion';
 import { APP_MODULES, selectedModules, type AppModule } from '../../config/appModules';
 import { mapAuthError } from '../../features/auth/mapAuthError';
@@ -12,8 +13,11 @@ import {
   useNutritionSettings,
   useUpdateNutritionSettings,
 } from '../../features/nutrition/useNutrition';
+import { ReminderSettingsCard } from '../../features/notifications/ReminderSettingsCard';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
+import { fonts } from '../../config/fonts';
+import { AmbientGlow } from '../../components/AmbientGlow';
 
 export function SettingsScreen() {
   const { t } = useTranslation();
@@ -62,7 +66,8 @@ export function SettingsScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['bottom']}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <AmbientGlow />
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
         <Text style={[styles.lead, { color: colors.muted }]}>{t('settings.subtitle')}</Text>
         <Text style={[styles.section, { color: colors.ink }]}>{t('settings.modulesTitle')}</Text>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('settings.modulesHint')}</Text>
@@ -151,27 +156,21 @@ export function SettingsScreen() {
               { mode: 'dark' as const, label: t('common.themeDark'), icon: 'moon-outline' as const },
             ]
           ).map((option) => {
-            const active = theme === option.mode;
             return (
-              <Pressable
+              <ChoiceChip
                 key={option.mode}
+                icon={option.icon}
+                label={option.label}
+                selected={theme === option.mode}
                 onPress={() => setTheme(option.mode)}
-                style={[
-                  styles.chip,
-                  { borderColor: colors.line },
-                  active && { backgroundColor: colors.brand, borderColor: colors.brand },
-                ]}
-              >
-                <AppIcon name={option.icon} color={active ? colors.onBrand : colors.ink} size={16} />
-                <Text style={[{ color: colors.ink, fontSize: 14 }, active && { color: colors.onBrand, fontWeight: '700' }]}>
-                  {option.label}
-                </Text>
-              </Pressable>
+              />
             );
           })}
         </View>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('common.language')}</Text>
         <LanguageSwitcher />
+        <Text style={[styles.section, { color: colors.ink }]}>{t('notifications.push.settingsTitle')}</Text>
+        <ReminderSettingsCard />
         <Text style={[styles.section, { color: colors.ink }]}>{t('common.timezone')}</Text>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('common.timezoneHint')}</Text>
         <TimezoneSuggestion variant="settings" />
@@ -183,26 +182,17 @@ export function SettingsScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   content: { padding: 20, paddingBottom: 40 },
-  lead: { fontSize: 15, marginBottom: 20 },
-  section: { fontSize: 18, fontWeight: '700', marginTop: 20, marginBottom: 8 },
-  hint: { fontSize: 13, marginBottom: 12 },
+  lead: { fontFamily: fonts.regular, fontSize: 15, marginBottom: 20 },
+  section: { fontSize: 18, fontFamily: fonts.bold, marginTop: 20, marginBottom: 8 },
+  hint: { fontFamily: fonts.regular, fontSize: 13, marginBottom: 12 },
   card: { borderRadius: 16, borderWidth: 1, flexDirection: 'row', gap: 12, marginBottom: 10, padding: 14 },
   check: { alignItems: 'center', borderRadius: 6, borderWidth: 1, height: 22, justifyContent: 'center', marginTop: 2, width: 22 },
   copy: { flex: 1 },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  cardHint: { fontSize: 13, marginTop: 4 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  cardHint: { fontFamily: fonts.regular, fontSize: 13, marginTop: 4 },
   save: { alignItems: 'center', borderRadius: 14, marginTop: 8, paddingVertical: 14 },
-  saveText: { fontSize: 16, fontWeight: '700' },
+  saveText: { fontSize: 16, fontFamily: fonts.bold },
   error: { marginTop: 10 },
-  ok: { marginTop: 10, fontWeight: '600' },
+  ok: { marginTop: 10, fontFamily: fonts.semibold },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 16 },
-  chip: {
-    alignItems: 'center',
-    borderRadius: 999,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 6,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-  },
 });

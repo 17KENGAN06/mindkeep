@@ -28,7 +28,7 @@ import { CalorieHelperModal } from '../features/nutrition/CalorieHelperModal';
 import { FoodScanMeal } from '../features/nutrition/FoodScanMeal';
 import { emptyMacroDraft, macroDraftFrom, parseMacroDraft, type MacroDraft } from '../features/nutrition/macros';
 import { MealKindPicker } from '../features/nutrition/MealKindPicker';
-import { isMealKind, type MealKind } from '../features/nutrition/mealKinds';
+import { isMealKind, suggestMealKind, type MealKind } from '../features/nutrition/mealKinds';
 import { hasAutomation } from '../features/billing/planLimit';
 import { env } from '../config/env';
 import {
@@ -47,7 +47,9 @@ import type { AppLanguage } from '../i18n';
 import type { CalendarDaySummary } from '../types/calendar';
 import type { Meal } from '../types/nutrition';
 import { useAccountToday, useTodayRollover } from '../features/time/useAccountToday';
-import { dateKeyInZone, formatDate } from '../utils/date';
+import { formatDate } from '../utils/date';
+import { fonts } from '../config/fonts';
+import { AmbientGlow } from '../components/AmbientGlow';
 
 function firstOfMonth(year: number, month: number): string {
   return `${year}-${String(month).padStart(2, '0')}-01`;
@@ -91,7 +93,7 @@ export function FuelScreen() {
   const openScanRequest = route.params?.openScan;
   // Plans live on Account; store builds have no purchase path (see config/env.ts).
   const onNeedPro = env.storeBuild ? undefined : () => navigation.navigate('More', { screen: 'Account', initial: false });
-  const { today, timeZone, year: todayYear, month: todayMonth } = useAccountToday();
+  const { today, year: todayYear, month: todayMonth } = useAccountToday();
   const [year, setYear] = useState(todayYear);
   const [month, setMonth] = useState(todayMonth);
   const [selectedDate, setSelectedDate] = useState(today);
@@ -110,11 +112,13 @@ export function FuelScreen() {
   const [weightGoalInput, setWeightGoalInput] = useState('');
   const [weightInput, setWeightInput] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
+  // Meal form errors sit right above its button (formError renders at the very end of the screen).
+  const [mealError, setMealError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [helperOpen, setHelperOpen] = useState(false);
   const [macroDraft, setMacroDraft] = useState<MacroDraft>(emptyMacroDraft);
-  const [mealKind, setMealKind] = useState<MealKind | null>(null);
+  const [mealKind, setMealKind] = useState<MealKind | null>(() => (pro ? suggestMealKind() : null));
 
   const periodQuery = useNutritionPeriod(year, month);
   const updateSettings = useUpdateNutritionSettings();
@@ -162,13 +166,12 @@ export function FuelScreen() {
   const weightGoal = settings?.weightGoal ?? null;
   const calorieGoal = settings?.calorieGoal ?? 2000;
   const waterGoal = settings?.waterGoal ?? 8;
-  // Steps: same rules as the site — days from the account start (in its time zone) up to today.
+  // Steps: any day up to today can be ticked, so a forgotten day can be filled in later.
   const stepsGoal = settings?.stepsGoal ?? 10000;
   const stepsDays = periodQuery.data?.steps ?? [];
   const stepsDoneDates = new Set(stepsDays.filter((row) => row.done).map((row) => row.date));
   const stepsDone = stepsDoneDates.has(selectedDate);
-  const joinKey = user?.createdAt ? dateKeyInZone(new Date(user.createdAt), timeZone) : today;
-  const stepsLocked = !canTrackSteps(selectedDate, joinKey, today);
+  const stepsLocked = !canTrackSteps(selectedDate, today);
   const daysInMonth = new Date(year, month, 0).getDate();
   const viewingCurrentMonth = today.startsWith(`${year}-${String(month).padStart(2, '0')}-`);
   const macrosEnabled = settings?.macrosEnabled ?? false;
@@ -286,9 +289,10 @@ export function FuelScreen() {
     setEditingId(null);
     setTitle('');
     setKcal('');
-    setMealKind(null);
+    setMealKind(pro ? suggestMealKind() : null);
     setMacroDraft(emptyMacroDraft);
     setFormError(null);
+    setMealError(null);
   };
 
   const onStartEditMeal = (meal: Meal) => {
@@ -301,25 +305,25 @@ export function FuelScreen() {
   };
 
   const onSaveMeal = async () => {
-    setFormError(null);
+    setMealError(null);
     const calories = Number(kcal);
     if (!title.trim()) {
-      setFormError(t('fuel.errors.title'));
+      setMealError(t('fuel.errors.title'));
       return;
     }
     if (!Number.isFinite(calories) || calories < 1) {
-      setFormError(t('fuel.errors.calories'));
+      setMealError(t('fuel.errors.calories'));
       return;
     }
     if (pro && !editingId && !mealKind) {
-      setFormError(t('fuel.errors.kind'));
+      setMealError(t('fuel.errors.kind'));
       return;
     }
     const macros = macrosEnabled
       ? parseMacroDraft(macroDraft)
       : { protein: null, fat: null, carbs: null };
     if (!macros) {
-      setFormError(t('fuel.macros.invalid'));
+      setMealError(t('fuel.macros.invalid'));
       return;
     }
     try {
@@ -346,7 +350,7 @@ export function FuelScreen() {
       }
       resetMealForm();
     } catch (caught) {
-      setFormError(mapAuthError(caught, t));
+      setMealError(mapAuthError(caught, t));
     }
   };
 
@@ -432,6 +436,7 @@ export function FuelScreen() {
   if (periodQuery.isLoading && !periodQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
+        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -441,8 +446,10 @@ export function FuelScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
+      <AmbientGlow />
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
           refreshControl={
@@ -632,6 +639,7 @@ export function FuelScreen() {
                   </View>
                 ))
               : null}
+            {mealError ? <Text style={[styles.error, { color: colors.danger }]}>{mealError}</Text> : null}
             <AppButton
               label={editingId ? t('common.save') : t('fuel.saveMeal')}
               loading={createMeal.isPending || updateMeal.isPending}
@@ -775,7 +783,6 @@ export function FuelScreen() {
               year={year}
               month={month}
               today={today}
-              startedOn={joinKey}
               doneDates={stepsDoneDates}
               disabled={setSteps.isPending}
               onToggle={(date, done) => void onStepsChange(date, done)}
@@ -892,25 +899,26 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  title: { fontSize: 28, fontWeight: '700' },
-  subtitle: { fontSize: 14 },
+  title: { fontSize: 24, fontFamily: fonts.display },
+  subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   dayHead: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  dayTitle: { flex: 1, fontSize: 18, fontWeight: '700' },
+  dayTitle: { flex: 1, fontSize: 18, fontFamily: fonts.bold },
   card: {
     borderRadius: 20,
     borderWidth: 1,
     gap: 10,
     padding: 14,
   },
-  cardTitle: { fontSize: 16, fontWeight: '700' },
-  sectionTitle: { fontSize: 15, fontWeight: '700', marginTop: 4 },
-  label: { fontSize: 13, fontWeight: '600' },
-  muted: { fontSize: 13 },
-  empty: { fontSize: 14, paddingVertical: 8 },
-  error: { fontSize: 14 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bold },
+  sectionTitle: { fontSize: 15, fontFamily: fonts.bold, marginTop: 4 },
+  label: { fontSize: 13, fontFamily: fonts.semibold },
+  muted: { fontFamily: fonts.regular, fontSize: 13 },
+  empty: { fontFamily: fonts.regular, fontSize: 14, paddingVertical: 8 },
+  error: { fontFamily: fonts.regular, fontSize: 14 },
   input: {
     borderRadius: 12,
     borderWidth: 1,
+    fontFamily: fonts.regular,
     fontSize: 16,
     minHeight: 44,
     paddingHorizontal: 12,
@@ -925,18 +933,18 @@ const styles = StyleSheet.create({
     minWidth: 120,
     padding: 10,
   },
-  statLabel: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  statValue: { fontSize: 13, fontWeight: '700', marginTop: 4 },
+  statLabel: { fontSize: 11, fontFamily: fonts.semibold, textTransform: 'uppercase' },
+  statValue: { fontSize: 13, fontFamily: fonts.bold, marginTop: 4 },
   progressRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
-  progressValue: { fontSize: 13, fontWeight: '700' },
+  progressValue: { fontSize: 13, fontFamily: fonts.bold },
   barTrack: { borderRadius: 999, height: 8, overflow: 'hidden' },
   divider: { height: 1, marginVertical: 6 },
   barFill: { borderRadius: 999, height: '100%' },
   mealRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   mealCopy: { flex: 1, gap: 2, minWidth: 120 },
-  mealTitle: { fontSize: 15, fontWeight: '600' },
-  mealKind: { fontSize: 12, fontWeight: '700', textTransform: 'uppercase' },
-  mealMacros: { fontSize: 12 },
+  mealTitle: { fontSize: 15, fontFamily: fonts.semibold },
+  mealKind: { fontSize: 12, fontFamily: fonts.bold, textTransform: 'uppercase' },
+  mealMacros: { fontFamily: fonts.regular, fontSize: 12 },
   macroHead: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -951,5 +959,5 @@ const styles = StyleSheet.create({
     minHeight: 32,
     paddingHorizontal: 12,
   },
-  macroSwitchText: { fontSize: 12, fontWeight: '700' },
+  macroSwitchText: { fontSize: 12, fontFamily: fonts.bold },
 });
