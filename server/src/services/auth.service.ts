@@ -35,6 +35,7 @@ import type {
   UpdateMeInput,
   VerifyEmailInput,
 } from '@/validations/auth.schemas.js';
+import { USER_NAME_MAX } from '@/validations/auth.schemas.js';
 import { ALL_APP_MODULES, normalizeAppModules, type AppModule } from '@/config/appModules.js';
 import { issueAuthSession, revokeAuthSessionsForUser, type AuthSessionIssue } from '@/services/session.service.js';
 import { cancelStripeForDeletedUser } from '@/services/billing.service.js';
@@ -189,6 +190,16 @@ async function verifyGoogleIdentity(input: {
   }
 
   return { sub: payload.sub, email: payload.email, name: payload.name };
+}
+
+/**
+ * Name for an account created through Google or Apple: their profile name, else the email's
+ * local part, capped at USER_NAME_MAX so it fits every screen (never a reason to refuse sign-in).
+ */
+export function displayNameFrom(profileName: string | null | undefined, email: string): string {
+  const fromProfile = profileName?.trim().replace(/\s+/g, ' ') ?? '';
+  const raw = fromProfile || email.split('@')[0]?.trim() || 'Mindkeep user';
+  return raw.slice(0, USER_NAME_MAX).trim();
 }
 
 function shouldBeAdmin(email: string): boolean {
@@ -438,7 +449,7 @@ export class AuthService {
     const payload = await verifyGoogleIdentity(input);
 
     const email = payload.email.toLowerCase();
-    const name = payload.name?.trim().slice(0, 100) || email.split('@')[0] || 'Mindkeep user';
+    const name = displayNameFrom(payload.name, email);
 
     let user = await prisma.user.findUnique({
       where: { googleId: payload.sub },
@@ -539,7 +550,7 @@ export class AuthService {
       const refresh = input.authorizationCode
         ? await exchangeAppleAuthorizationCode(input.authorizationCode)
         : null;
-      const name = input.fullName?.trim().slice(0, 100) || email.split('@')[0] || 'Mindkeep user';
+      const name = displayNameFrom(input.fullName, email);
       user = await prisma.user.create({
         data: {
           name,

@@ -40,9 +40,12 @@ const timezoneSchema = z
   .max(100)
   .refine(isIanaTimeZone, 'Invalid timezone');
 
+/** Longest display name accepted, so it fits greetings and headers on every screen. */
+export const USER_NAME_MAX = 40;
+
 export const registerSchema = z
   .object({
-    name: z.string().trim().min(1, 'Name is required').max(100),
+    name: z.string().trim().min(1, 'Name is required').max(USER_NAME_MAX),
     email: z.email('Invalid email'),
     password: passwordSchema,
     confirmPassword: passwordSchema,

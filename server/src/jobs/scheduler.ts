@@ -2,6 +2,7 @@ import cron from 'node-cron';
 import { env } from '@/config/env.js';
 import { logger } from '@/config/logger.js';
 import { runReminderJob } from '@/jobs/reminderJob.js';
+import { pruneAdminAudit } from '@/services/audit.service.js';
 
 let started = false;
 
@@ -23,6 +24,7 @@ export function startNodeCronScheduler(): void {
     void runReminderJob().catch((error: unknown) => {
       logger.error('Scheduled reminder job failed', error);
     });
+    void pruneAdminAudit();
   });
 
   started = true;

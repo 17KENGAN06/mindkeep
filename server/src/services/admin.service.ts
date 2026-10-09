@@ -638,8 +638,9 @@ export class AdminService {
   }
 
   async listAuditEvents() {
+    // The admin screens show only the latest events; the hourly job keeps 30 days in the database.
     return prisma.adminAuditEvent.findMany({
-      take: 80,
+      take: 20,
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,
