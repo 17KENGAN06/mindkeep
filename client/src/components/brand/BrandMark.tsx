@@ -22,7 +22,8 @@ export function BrandMark({ className = 'h-8 w-8', title = 'Mindkeep' }: BrandMa
         r="15"
         className="stroke-brand-200"
         strokeWidth="1.5"
-        strokeDasharray="3 5"
+        strokeDasharray="2.305 3.585"
+        strokeDashoffset="1.153"
         fill="none"
       />
       <path
@@ -36,9 +37,9 @@ export function BrandMark({ className = 'h-8 w-8', title = 'Mindkeep' }: BrandMa
         strokeLinecap="round"
         opacity="0.55"
       />
-      <circle cx="46" cy="20" r="2.4" className="fill-brand-400" />
-      <circle cx="50" cy="32" r="2.4" className="fill-brand-500" />
-      <circle cx="46" cy="44" r="2.4" className="fill-brand-600" />
+      <circle cx="48.85" cy="17.86" r="2.4" className="fill-brand-400" />
+      <circle cx="54" cy="32" r="2.4" className="fill-brand-500" />
+      <circle cx="48.85" cy="46.14" r="2.4" className="fill-brand-600" />
     </svg>
   );
 }
