@@ -4,12 +4,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton } from '../../components/ui';
@@ -85,7 +85,7 @@ export function CategoriesScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView
+      <SectionScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
@@ -160,7 +160,7 @@ export function CategoriesScreen() {
             </View>
           ))
         )}
-      </ScrollView>
+      </SectionScrollView>
     </KeyboardAvoidingView>
   );
 }

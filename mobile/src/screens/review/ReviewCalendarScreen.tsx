@@ -1,5 +1,12 @@
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -69,7 +76,7 @@ export function ReviewCalendarScreen() {
   }
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
@@ -135,7 +142,7 @@ export function ReviewCalendarScreen() {
           </View>
         ))
       )}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

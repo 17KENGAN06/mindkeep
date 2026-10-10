@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { AppIcon, type AppIconName } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
+import { glow } from '../utils/glow';
 
 type GradientIconProps = {
   name: AppIconName;
@@ -21,8 +22,8 @@ export function GradientIcon({ name, size = 48 }: GradientIconProps) {
     <View
       style={[
         styles.plate,
-        // A solid fill under the SVG so Android draws the elevation shadow.
-        { width: size, height: size, borderRadius: radius, backgroundColor: deep, shadowColor: colors.brand },
+        { width: size, height: size, borderRadius: radius, backgroundColor: deep },
+        glow(colors.brand, { y: 4, blur: 14, opacity: 0.4, spread: -3 }),
       ]}
     >
       <Svg style={StyleSheet.absoluteFill} width={size} height={size}>
@@ -47,10 +48,6 @@ export function GradientIcon({ name, size = 48 }: GradientIconProps) {
 const styles = StyleSheet.create({
   plate: {
     alignItems: 'center',
-    elevation: 6,
     justifyContent: 'center',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
   },
 });

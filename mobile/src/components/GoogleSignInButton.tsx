@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { detectDeviceTimezone } from '../config/timezones';
 import { mapAuthError } from '../features/auth/mapAuthError';
@@ -9,7 +9,7 @@ import {
   requestGoogleSignInCode,
 } from '../features/auth/googleSignIn';
 import { useAuth } from '../features/auth/useAuth';
-import { AppIcon } from '../components/AppIcon';
+import { AppButton } from './ui';
 import { useTheme } from '../features/theme/useTheme';
 import { fonts } from '../config/fonts';
 
@@ -23,7 +23,6 @@ export function GoogleSignInButton({ disabled = false, onError }: GoogleSignInBu
   const { colors } = useTheme();
   const { googleLogin } = useAuth();
   const [busy, setBusy] = useState(false);
-  const blocked = disabled || busy;
 
   const onPress = async () => {
     onError(null);
@@ -50,26 +49,15 @@ export function GoogleSignInButton({ disabled = false, onError }: GoogleSignInBu
         <Text style={[styles.or, { color: colors.muted }]}>{t('auth.or')}</Text>
         <View style={[styles.line, { backgroundColor: colors.line }]} />
       </View>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={t('auth.continueWithGoogle')}
-        disabled={blocked}
+      <AppButton
+        size="large"
+        variant="secondary"
+        icon="logo-google"
+        label={t('auth.continueWithGoogle')}
+        loading={busy}
+        disabled={disabled}
         onPress={() => void onPress()}
-        style={[
-          styles.button,
-          { backgroundColor: colors.panel, borderColor: colors.line },
-          blocked && styles.buttonDisabled,
-        ]}
-      >
-        {busy ? (
-          <ActivityIndicator color={colors.ink} />
-        ) : (
-          <View style={styles.buttonInner}>
-            <AppIcon name="logo-google" color={colors.ink} size={18} />
-            <Text style={[styles.buttonText, { color: colors.ink }]}>{t('auth.continueWithGoogle')}</Text>
-          </View>
-        )}
-      </Pressable>
+      />
     </View>
   );
 }
@@ -89,17 +77,4 @@ const styles = StyleSheet.create({
     letterSpacing: 1.4,
     textTransform: 'uppercase',
   },
-  button: {
-    alignItems: 'center',
-    borderRadius: 14,
-    borderWidth: 1,
-    paddingVertical: 14,
-  },
-  buttonInner: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: 10,
-  },
-  buttonDisabled: { opacity: 0.7 },
-  buttonText: { fontSize: 16, fontFamily: fonts.bold },
 });

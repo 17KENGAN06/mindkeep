@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { useTasksPeriod, useTasksYear } from '../../features/tasks/useDailyTasks';
 import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
@@ -50,7 +58,7 @@ export function MonthPlanScreen() {
   const byMonth = data?.byMonth ?? [];
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
@@ -214,7 +222,7 @@ export function MonthPlanScreen() {
           )}
         </View>
       )}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

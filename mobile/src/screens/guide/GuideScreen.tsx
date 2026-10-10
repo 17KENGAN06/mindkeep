@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../features/theme/useTheme';
 import { fonts } from '../../config/fonts';
@@ -14,7 +15,7 @@ export function GuideScreen() {
   const faq = t('guide.faq', { returnObjects: true });
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       style={[styles.root, { backgroundColor: colors.bg }]}
       contentContainerStyle={styles.content}
@@ -63,7 +64,7 @@ export function GuideScreen() {
             </View>
           ))
         : null}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { AppIcon, type AppIconName } from '../components/AppIcon';
 import { fonts } from '../config/fonts';
 import { useTheme } from '../features/theme/useTheme';
+import { glow } from '../utils/glow';
 
 const TAB_ICONS: Record<string, AppIconName> = {
   Today: 'home-outline',
@@ -38,7 +39,8 @@ function AddButton({ onPress, label }: { onPress: () => void; label: string }) {
       onPress={onPress}
       style={({ pressed }) => [
         styles.add,
-        { backgroundColor: pressed ? `${colors.brand}26` : colors.panel, shadowColor: colors.brand },
+        { backgroundColor: pressed ? `${colors.brand}26` : colors.panel },
+        glow(colors.brand, { y: 6, blur: 20, opacity: 0.4, spread: -4 }),
         pressed && styles.addPressed,
       ]}
     >
@@ -158,8 +160,11 @@ export function AppTabBar({ state, descriptors, navigation, onAdd, badge }: AppT
                     style={[
                       styles.dot,
                       focused
-                        ? { backgroundColor: colors.brand, shadowColor: colors.brand }
-                        : { backgroundColor: 'transparent', elevation: 0, shadowOpacity: 0 },
+                        ? [
+                            { backgroundColor: colors.brand },
+                            glow(colors.brand, { y: 0, blur: 6, opacity: 0.9, spread: 0 }),
+                          ]
+                        : { backgroundColor: 'transparent' },
                     ]}
                   />
                 </View>
@@ -192,16 +197,7 @@ const styles = StyleSheet.create({
   itemPressed: { opacity: 0.7, transform: [{ scale: 0.96 }] },
   label: { fontFamily: fonts.medium, fontSize: 11.5, letterSpacing: 0.2 },
   labelActive: { fontFamily: fonts.semibold },
-  dot: {
-    borderRadius: 999,
-    elevation: 4,
-    height: 4,
-    marginTop: 2,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.9,
-    shadowRadius: 4,
-    width: 4,
-  },
+  dot: { borderRadius: 999, height: 4, marginTop: 2, width: 4 },
   badge: {
     alignItems: 'center',
     borderRadius: 999,
@@ -219,13 +215,9 @@ const styles = StyleSheet.create({
   add: {
     alignItems: 'center',
     borderRadius: ADD_SIZE / 2,
-    elevation: 8,
     height: ADD_SIZE,
     justifyContent: 'center',
     marginTop: -18,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.35,
-    shadowRadius: 16,
     width: ADD_SIZE,
   },
   addPressed: { transform: [{ scale: 0.94 }] },

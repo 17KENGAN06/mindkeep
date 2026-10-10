@@ -408,7 +408,7 @@
     "markImportant": "Merkitse erittäin tärkeäksi",
     "unmarkImportant": "Poista tärkeys",
     "important": "Tärkeä",
-    "importantHint": "Näkyy heti ilmoituksissa",
+    "importantHint": "Saat push-ilmoituksen puhelimeen, ja se näkyy kellossa",
     "minShort": "min",
     "import": "Tuo",
     "importTitle": "Tuo tehtäviä",
@@ -490,7 +490,7 @@
   },
   "notifications": {
     "title": "Ilmoitukset",
-    "subtitle": "Tärkeät tehtävät, tämän päivän kertaukset ja myöhässä olevat — kello pitää ne näkyvillä.",
+    "subtitle": "Kertaukset, myöhässä olevat ja tärkeät tehtävät ovat täällä. Puhelimeen tulee push vain tärkeistä tehtävistä.",
     "menuHint": "Lukemattomat kertaukset ja järjestelmäviestit.",
     "unreadCount": "Lukemattomia: {{count}}",
     "markAllRead": "Merkitse kaikki luetuiksi",
@@ -519,22 +519,38 @@
     "dueCount": "{{count}} tänään",
     "overdueCount": "{{count}} myöhässä",
     "push": {
-      "promptTitle": "Muistutukset ajallaan?",
-      "promptBody": "Mindkeep muistuttaa aamulla päivän kertauksista ja tärkeistä tehtävistä. Vain sen, minkä itse suunnittelit.",
+      "promptTitle": "Muistutetaanko tärkeästä?",
+      "promptBody": "Push-ilmoitus tulee vain tehtävistä, joissa on ”tärkeä”-lippu — edellisenä päivänä ja samana päivänä, valitsemaasi aikaan. Kertaukset eivät häiritse: ne odottavat sovelluksen kellossa.",
       "enable": "Ota muistutukset käyttöön",
       "later": "Ei nyt",
       "settingsTitle": "Muistutukset puhelimeen",
-      "settingsHint": "Aamulla valitsemaasi aikaan: päivän kertaukset ja tärkeät tehtävät.",
+      "settingsHint": "Vain ”tärkeä”-lipulla merkityistä tehtävistä.",
       "toggle": "Lähetä muistutuksia",
       "time": "Muistutuksen aika",
       "denied": "Ilmoitukset on poistettu käytöstä puhelimen asetuksissa.",
       "openSettings": "Avaa asetukset",
-      "todayTitle": "Tänään Mindkeepissä",
-      "reviews": "Kerrattavaa: {{count}}",
-      "important": "Tärkeät tehtävät: {{count}}",
-      "overdueTitle": "Sinulla on myöhässä olevia kertauksia",
-      "overdueBody": "Myöhässä: {{count}}. Palaa ennen kuin unohtuu.",
-      "channel": "Muistutukset"
+      "todayTitle": "Tärkeää tänään",
+      "channel": "Muistutukset",
+      "ruleImportantTitle": "Tärkeät tehtävät — puhelimeen",
+      "ruleImportantText": "Push-ilmoitus ”tärkeä”-lipulla merkityistä tehtävistä: edellisenä päivänä ja/tai samana päivänä, valitsemaasi aikaan.",
+      "ruleBellTitle": "Kertaukset — kellossa",
+      "ruleBellText": "Kertaukset ja myöhässä olevat eivät tule puhelimeen. Ne odottavat etusivun kellossa.",
+      "needTasks": "Tehtävät-osio on pois päältä, joten muistutettavaa ei ole. Ota se käyttöön yllä.",
+      "when": "Milloin muistutetaan",
+      "dayBefore": "Edellisenä päivänä",
+      "dayBeforeHint": "Ennakkoon, jotta ehdit valmistautua",
+      "onTheDay": "Tehtävän päivänä",
+      "onTheDayHint": "Samana päivänä, valitsemaasi aikaan",
+      "noneChosen": "Valitse vähintään yksi vaihtoehto, muuten muistutuksia ei tule.",
+      "hours": "Tunnit",
+      "minutes": "Minuutit",
+      "tomorrowTitle": "Tärkeää huomenna",
+      "todayLine": "Tänään: {{count}}",
+      "tomorrowLine": "Huomenna: {{count}}",
+      "pointImportant": "Vain tärkeät tehtävät",
+      "pointWhen": "Edellisenä ja samana päivänä",
+      "timeHint": "Vieritä tunnit ja minuutit",
+      "unavailable": "Muistutukset eivät toimi Expo Gossa Androidilla. Kokeile asennetussa sovelluksessa (APK)."
     }
   },
   "finance": {
@@ -1304,7 +1320,8 @@
       "tasks": "Tehtävät",
       "reviews": "Kertaukset",
       "calories": "Kalorit",
-      "water": "Vesi"
+      "water": "Vesi",
+      "habits": "Tavat"
     },
     "now": {
       "title": "Nyt",
@@ -1318,21 +1335,34 @@
       "doneToday": "Tehty tänään: {{count}}",
       "reviews": "Kertaukset",
       "tasks": "Tehtävät",
-      "all": "Kaikki"
+      "all": "Kaikki",
+      "habits": "Tavat"
     },
     "quick": {
       "water": "Vesi +1",
       "meal": "Ateria",
       "scan": "Ruokaskannaus",
-      "expense": "Meno"
+      "expense": "Meno",
+      "task": "Tehtävä",
+      "note": "Muistiinpano"
     },
     "overview": {
-      "title": "Yleiskatsaus",
+      "title": "Yhteenveto",
       "nutrition": "Ravinto",
       "finance": "Menot tässä kuussa",
       "week": "Viikko",
       "noExpenses": "Ei vielä menoja",
-      "weekValue": "{{done}} / {{total}}"
+      "weekValue": "{{done}} / {{total}}",
+      "notes": "Muistiinpanot",
+      "tasks": "Tehtävät",
+      "reviews": "Kertaukset",
+      "habits": "Tavat",
+      "spend": "Menot",
+      "tasksCaption": "tehty 7 päivässä",
+      "reviewsCaption": "kerrattu 7 päivässä",
+      "streakCaption": "päivää putkeen — paras putki",
+      "kcalCaption": "kcal päivässä, viikon keskiarvo",
+      "spendCaption": "tässä kuussa"
     },
     "start": {
       "title": "Aloita tästä",
@@ -1341,6 +1371,27 @@
       "material": "Tallenna kerrattava materiaali",
       "reminders": "Ota muistutukset käyttöön",
       "hide": "Piilota"
+    },
+    "greeting": {
+      "morning": "Hyvää huomenta, {{name}}",
+      "day": "Hyvää päivää, {{name}}",
+      "evening": "Hyvää iltaa, {{name}}",
+      "night": "Hyvää yötä, {{name}}"
+    },
+    "discover": {
+      "title": "Lisää etusivulle",
+      "hint": "Ota käyttöön vielä yksi osio, niin se näkyy heti täällä. Muu ei muutu.",
+      "enable": "Ota käyttöön",
+      "all": "Kaikki osiot",
+      "failed": "Käyttöönotto epäonnistui. Yritä uudelleen.",
+      "why": {
+        "tasks": "Päivän suunnitelma, jonka kuittaat",
+        "review": "Kertaukset 3., 7. ja 30. päivänä",
+        "notes": "Kirjaa ajatus ja löydä se myöhemmin",
+        "habits": "Kuittaa päivittäin ja pidä putki",
+        "finance": "Kuukauden menot ja tulot",
+        "nutrition": "Kalorit, vesi, askeleet ja paino"
+      }
     }
   }
 }

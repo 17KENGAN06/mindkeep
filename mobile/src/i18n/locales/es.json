@@ -408,7 +408,7 @@
     "markImportant": "Marcar como muy importante",
     "unmarkImportant": "Quitar importancia",
     "important": "Importante",
-    "importantHint": "Aparece al momento en notificaciones",
+    "importantHint": "Te llegará una notificación push al móvil y aparecerá en la campana",
     "minShort": "min",
     "import": "Importar",
     "importTitle": "Importar tareas",
@@ -490,7 +490,7 @@
   },
   "notifications": {
     "title": "Notificaciones",
-    "subtitle": "Tareas importantes, repasos de hoy y atrasos — la campana los mantiene a la vista.",
+    "subtitle": "Repasos, pendientes atrasados y tareas importantes: todo aquí. Al móvil solo llega push de las tareas importantes.",
     "menuHint": "Repasos sin leer y mensajes del sistema.",
     "unreadCount": "Sin leer: {{count}}",
     "markAllRead": "Marcar todas como leídas",
@@ -519,22 +519,38 @@
     "dueCount": "{{count}} hoy",
     "overdueCount": "{{count}} atrasados",
     "push": {
-      "promptTitle": "¿Recibir recordatorios a tiempo?",
-      "promptBody": "Mindkeep te recordará por la mañana los repasos de hoy y las tareas importantes. Solo lo que tú planificaste.",
+      "promptTitle": "¿Te recordamos lo importante?",
+      "promptBody": "Las notificaciones push llegan solo para tareas marcadas como «importante»: el día antes y el mismo día, a la hora que elijas. Los repasos no molestan: esperan en la campana de la app.",
       "enable": "Activar recordatorios",
       "later": "Ahora no",
       "settingsTitle": "Recordatorios en el teléfono",
-      "settingsHint": "Por la mañana a la hora elegida: repasos de hoy y tareas importantes.",
+      "settingsHint": "Solo para tareas marcadas como «importante».",
       "toggle": "Enviar recordatorios",
       "time": "Hora del recordatorio",
       "denied": "Las notificaciones están desactivadas en los ajustes del teléfono.",
       "openSettings": "Abrir ajustes",
-      "todayTitle": "Hoy en Mindkeep",
-      "reviews": "Para repasar: {{count}}",
-      "important": "Tareas importantes: {{count}}",
-      "overdueTitle": "Tienes repasos atrasados",
-      "overdueBody": "Atrasados: {{count}}. Vuelve antes de olvidarlo.",
-      "channel": "Recordatorios"
+      "todayTitle": "Importante hoy",
+      "channel": "Recordatorios",
+      "ruleImportantTitle": "Tareas importantes — al móvil",
+      "ruleImportantText": "Una notificación push para tareas marcadas como «importante»: el día antes y/o el mismo día, a la hora elegida.",
+      "ruleBellTitle": "Repasos — en la campana",
+      "ruleBellText": "Los repasos y lo atrasado nunca llegan al móvil. Esperan en la campana del inicio.",
+      "needTasks": "La sección Tareas está desactivada, así que no hay nada que recordar. Actívala arriba.",
+      "when": "Cuándo avisar",
+      "dayBefore": "El día antes",
+      "dayBeforeHint": "Un aviso previo para prepararte",
+      "onTheDay": "El día de la tarea",
+      "onTheDayHint": "El mismo día, a la hora elegida",
+      "noneChosen": "Elige al menos una opción; si no, no habrá recordatorios.",
+      "hours": "Horas",
+      "minutes": "Minutos",
+      "tomorrowTitle": "Importante mañana",
+      "todayLine": "Hoy: {{count}}",
+      "tomorrowLine": "Mañana: {{count}}",
+      "pointImportant": "Solo tareas importantes",
+      "pointWhen": "El día antes y el día",
+      "timeHint": "Desliza horas y minutos",
+      "unavailable": "Los recordatorios no están disponibles en Expo Go en Android. Pruébalos en la app instalada (APK)."
     }
   },
   "finance": {
@@ -1304,7 +1320,8 @@
       "tasks": "Tareas",
       "reviews": "Repasos",
       "calories": "Calorías",
-      "water": "Agua"
+      "water": "Agua",
+      "habits": "Hábitos"
     },
     "now": {
       "title": "Ahora",
@@ -1318,13 +1335,16 @@
       "doneToday": "Hecho hoy: {{count}}",
       "reviews": "Repasos",
       "tasks": "Tareas",
-      "all": "Todo"
+      "all": "Todo",
+      "habits": "Hábitos"
     },
     "quick": {
       "water": "Agua +1",
       "meal": "Comida",
       "scan": "Escaneo de comida",
-      "expense": "Gasto"
+      "expense": "Gasto",
+      "task": "Tarea",
+      "note": "Nota"
     },
     "overview": {
       "title": "Resumen",
@@ -1332,7 +1352,17 @@
       "finance": "Gastos del mes",
       "week": "Semana",
       "noExpenses": "Aún no hay gastos",
-      "weekValue": "{{done}} de {{total}}"
+      "weekValue": "{{done}} de {{total}}",
+      "notes": "Notas",
+      "tasks": "Tareas",
+      "reviews": "Repasos",
+      "habits": "Hábitos",
+      "spend": "Gastos",
+      "tasksCaption": "hechas en 7 días",
+      "reviewsCaption": "repasados en 7 días",
+      "streakCaption": "días seguidos — mejor racha",
+      "kcalCaption": "kcal al día, media semanal",
+      "spendCaption": "este mes"
     },
     "start": {
       "title": "Para empezar",
@@ -1341,6 +1371,27 @@
       "material": "Guardar un material para repasar",
       "reminders": "Activar recordatorios",
       "hide": "Ocultar"
+    },
+    "greeting": {
+      "morning": "Buenos días, {{name}}",
+      "day": "Buenas tardes, {{name}}",
+      "evening": "Buenas tardes, {{name}}",
+      "night": "Buenas noches, {{name}}"
+    },
+    "discover": {
+      "title": "Añadir al inicio",
+      "hint": "Activa una sección más y aparecerá aquí al instante. Nada más cambia.",
+      "enable": "Activar",
+      "all": "Todas las secciones",
+      "failed": "No se pudo activar. Inténtalo de nuevo.",
+      "why": {
+        "tasks": "Un plan del día para ir marcando",
+        "review": "Repasos el día 3, 7 y 30",
+        "notes": "Apunta una idea y encuéntrala luego",
+        "habits": "Marca cada día y mantén la racha",
+        "finance": "Gastos e ingresos del mes",
+        "nutrition": "Calorías, agua, pasos y peso"
+      }
     }
   }
 }

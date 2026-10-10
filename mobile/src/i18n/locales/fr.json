@@ -408,7 +408,7 @@
     "markImportant": "Marquer comme très importante",
     "unmarkImportant": "Retirer l’importance",
     "important": "Important",
-    "importantHint": "Apparaît tout de suite dans les notifications",
+    "importantHint": "Vous recevrez une notification push sur le téléphone, et elle apparaîtra dans la cloche",
     "minShort": "min",
     "import": "Importer",
     "importTitle": "Importer des tâches",
@@ -490,7 +490,7 @@
   },
   "notifications": {
     "title": "Notifications",
-    "subtitle": "Tâches importantes, révisions du jour et retards — la cloche les garde en vue.",
+    "subtitle": "Révisions, retards et tâches importantes : tout est ici. Sur le téléphone, seules les tâches importantes envoient une notification push.",
     "menuHint": "Révisions non lues et messages système.",
     "unreadCount": "Non lues : {{count}}",
     "markAllRead": "Tout marquer comme lu",
@@ -519,22 +519,38 @@
     "dueCount": "{{count}} aujourd’hui",
     "overdueCount": "{{count}} en retard",
     "push": {
-      "promptTitle": "Recevoir des rappels à temps ?",
-      "promptBody": "Mindkeep vous rappelle le matin les révisions du jour et les tâches importantes. Seulement ce que vous avez prévu.",
+      "promptTitle": "Vous rappeler l’essentiel ?",
+      "promptBody": "Les notifications push ne concernent que les tâches marquées « importante » : la veille et le jour même, à l’heure de votre choix. Les révisions restent discrètes : elles attendent dans la cloche de l’app.",
       "enable": "Activer les rappels",
       "later": "Pas maintenant",
       "settingsTitle": "Rappels sur le téléphone",
-      "settingsHint": "Le matin à l'heure choisie : révisions du jour et tâches importantes.",
+      "settingsHint": "Uniquement pour les tâches marquées « importante ».",
       "toggle": "Envoyer des rappels",
       "time": "Heure du rappel",
       "denied": "Les notifications sont désactivées dans les réglages du téléphone.",
       "openSettings": "Ouvrir les réglages",
-      "todayTitle": "Aujourd'hui dans Mindkeep",
-      "reviews": "À réviser : {{count}}",
-      "important": "Tâches importantes : {{count}}",
-      "overdueTitle": "Révisions en retard",
-      "overdueBody": "En retard : {{count}}. Revenez avant d'oublier.",
-      "channel": "Rappels"
+      "todayTitle": "Important aujourd’hui",
+      "channel": "Rappels",
+      "ruleImportantTitle": "Tâches importantes — sur le téléphone",
+      "ruleImportantText": "Une notification push pour les tâches marquées « importante » : la veille et/ou le jour même, à l’heure choisie.",
+      "ruleBellTitle": "Révisions — dans la cloche",
+      "ruleBellText": "Les révisions et les retards n’arrivent jamais sur le téléphone. Ils attendent dans la cloche de l’accueil.",
+      "needTasks": "La section Tâches est désactivée : rien à rappeler. Activez-la ci-dessus.",
+      "when": "Quand rappeler",
+      "dayBefore": "La veille",
+      "dayBeforeHint": "Un rappel à l’avance pour se préparer",
+      "onTheDay": "Le jour de la tâche",
+      "onTheDayHint": "Le jour même, à l’heure choisie",
+      "noneChosen": "Choisissez au moins une option, sinon aucun rappel ne sera envoyé.",
+      "hours": "Heures",
+      "minutes": "Minutes",
+      "tomorrowTitle": "Important demain",
+      "todayLine": "Aujourd’hui : {{count}}",
+      "tomorrowLine": "Demain : {{count}}",
+      "pointImportant": "Tâches importantes seulement",
+      "pointWhen": "La veille et le jour J",
+      "timeHint": "Faites défiler heures et minutes",
+      "unavailable": "Les rappels ne sont pas disponibles dans Expo Go sur Android. Testez-les dans l’app installée (APK)."
     }
   },
   "finance": {
@@ -1304,7 +1320,8 @@
       "tasks": "Tâches",
       "reviews": "Révisions",
       "calories": "Calories",
-      "water": "Eau"
+      "water": "Eau",
+      "habits": "Habitudes"
     },
     "now": {
       "title": "Maintenant",
@@ -1318,21 +1335,34 @@
       "doneToday": "Fait aujourd’hui : {{count}}",
       "reviews": "Révisions",
       "tasks": "Tâches",
-      "all": "Tout"
+      "all": "Tout",
+      "habits": "Habitudes"
     },
     "quick": {
       "water": "Eau +1",
       "meal": "Repas",
       "scan": "Scan repas",
-      "expense": "Dépense"
+      "expense": "Dépense",
+      "task": "Tâche",
+      "note": "Note"
     },
     "overview": {
-      "title": "Aperçu",
+      "title": "Bilan",
       "nutrition": "Nutrition",
       "finance": "Dépenses du mois",
       "week": "Semaine",
       "noExpenses": "Pas encore de dépenses",
-      "weekValue": "{{done}} sur {{total}}"
+      "weekValue": "{{done}} sur {{total}}",
+      "notes": "Notes",
+      "tasks": "Tâches",
+      "reviews": "Révisions",
+      "habits": "Habitudes",
+      "spend": "Dépenses",
+      "tasksCaption": "faites sur 7 jours",
+      "reviewsCaption": "révisées sur 7 jours",
+      "streakCaption": "jours d’affilée — meilleure série",
+      "kcalCaption": "kcal par jour, moyenne de la semaine",
+      "spendCaption": "ce mois-ci"
     },
     "start": {
       "title": "Pour commencer",
@@ -1341,6 +1371,27 @@
       "material": "Enregistrer un contenu à réviser",
       "reminders": "Activer les rappels",
       "hide": "Masquer"
+    },
+    "greeting": {
+      "morning": "Bonjour, {{name}}",
+      "day": "Bon après-midi, {{name}}",
+      "evening": "Bonsoir, {{name}}",
+      "night": "Bonne nuit, {{name}}"
+    },
+    "discover": {
+      "title": "Ajouter à l’accueil",
+      "hint": "Activez une section de plus : elle apparaît ici tout de suite. Rien d’autre ne change.",
+      "enable": "Activer",
+      "all": "Toutes les sections",
+      "failed": "Activation impossible. Réessayez.",
+      "why": {
+        "tasks": "Un plan du jour à cocher",
+        "review": "Révisions aux jours 3, 7 et 30",
+        "notes": "Noter une idée et la retrouver",
+        "habits": "Cocher chaque jour, garder la série",
+        "finance": "Dépenses et revenus du mois",
+        "nutrition": "Calories, eau, pas et poids"
+      }
     }
   }
 }

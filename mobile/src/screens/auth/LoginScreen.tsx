@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AuthScreenFrame } from '../../components/AuthScreenFrame';
+import { AppButton } from '../../components/ui';
 import { fonts } from '../../config/fonts';
 import { AppleSignInButton } from '../../components/AppleSignInButton';
 import { GoogleSignInButton } from '../../components/GoogleSignInButton';
@@ -104,131 +99,126 @@ export function LoginScreen({ onGoRegister, onGoForgot }: LoginScreenProps) {
 
   return (
     <AuthScreenFrame>
-        {pendingEmail ? (
-          <>
-            <Text style={[styles.title, { color: colors.ink }]}>{t('auth.loginCodeTitle')}</Text>
-            <Text style={[styles.subtitle, { color: colors.muted }]}>
-              {t('auth.loginCodeSubtitle', { email: pendingEmail })}
-            </Text>
+      {pendingEmail ? (
+        <>
+          <Text style={[styles.title, { color: colors.ink }]}>{t('auth.loginCodeTitle')}</Text>
+          <Text style={[styles.subtitle, { color: colors.muted }]}>
+            {t('auth.loginCodeSubtitle', { email: pendingEmail })}
+          </Text>
 
-            <Text style={[styles.label, { color: colors.muted }]}>{t('auth.loginCodeLabel')}</Text>
-            <TextInput
-              autoComplete="one-time-code"
-              keyboardType="number-pad"
-              maxLength={6}
-              style={[
-                styles.input,
-                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
-              ]}
-              value={code}
-              returnKeyType="done"
-              onSubmitEditing={() => void onConfirm()}
-              onChangeText={(value) => {
-                const next = value.replace(/\D/g, '').slice(0, 6);
-                setCode(next);
-                // Sign in as soon as the sixth digit is in: the button can sit under the keyboard.
-                if (next.length === 6) void onConfirm(next);
-              }}
-            />
+          <Text style={[styles.label, { color: colors.muted }]}>{t('auth.loginCodeLabel')}</Text>
+          <TextInput
+            autoComplete="one-time-code"
+            keyboardType="number-pad"
+            maxLength={6}
+            style={[
+              styles.input,
+              { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+            ]}
+            value={code}
+            returnKeyType="done"
+            onSubmitEditing={() => void onConfirm()}
+            onChangeText={(value) => {
+              const next = value.replace(/\D/g, '').slice(0, 6);
+              setCode(next);
+              // Sign in as soon as the sixth digit is in: the button can sit under the keyboard.
+              if (next.length === 6) void onConfirm(next);
+            }}
+          />
 
-            {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
+          {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
 
-            <Pressable
-              accessibilityRole="button"
+          <AppButton
+            size="large"
+            label={t('auth.submitLoginCode')}
+            loading={busy}
+            onPress={() => void onConfirm()}
+          />
+
+          <View style={styles.links}>
+            <AppButton
+              variant="link"
+              label={t('auth.resendLoginCode')}
               disabled={busy}
-              onPress={() => void onConfirm()}
-              style={[styles.button, { backgroundColor: colors.brand }, busy && styles.buttonDisabled]}
-            >
-              {busy ? (
-                <ActivityIndicator color={colors.onBrand} />
-              ) : (
-                <Text style={[styles.buttonText, { color: colors.onBrand }]}>
-                  {t('auth.submitLoginCode')}
-                </Text>
-              )}
-            </Pressable>
-
-            <Pressable disabled={busy} onPress={() => void onResend()} style={styles.linkWrap}>
-              <Text style={[styles.link, { color: colors.brand }]}>{t('auth.resendLoginCode')}</Text>
-            </Pressable>
-            <Pressable
+              onPress={() => void onResend()}
+            />
+            <AppButton
+              variant="link"
+              icon="chevron-back"
+              label={t('auth.backToLogin')}
               onPress={() => {
                 setPendingEmail(null);
                 setCode('');
                 setError(null);
               }}
-              style={styles.linkWrap}
-            >
-              <Text style={[styles.link, { color: colors.brand }]}>{t('auth.backToLogin')}</Text>
-            </Pressable>
-          </>
-        ) : (
-          <>
-            <Text style={[styles.title, { color: colors.ink }]}>{t('auth.loginTitle')}</Text>
-            <Text style={[styles.subtitle, { color: colors.muted }]}>{t('auth.loginSubtitle')}</Text>
-
-            <Text style={[styles.label, { color: colors.muted }]}>{t('auth.email')}</Text>
-            <TextInput
-              autoCapitalize="none"
-              autoComplete="email"
-              keyboardType="email-address"
-              style={[
-                styles.input,
-                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
-              ]}
-              value={email}
-              onChangeText={setEmail}
             />
+          </View>
+        </>
+      ) : (
+        <>
+          <Text style={[styles.title, { color: colors.ink }]}>{t('auth.loginTitle')}</Text>
+          <Text style={[styles.subtitle, { color: colors.muted }]}>{t('auth.loginSubtitle')}</Text>
 
-            <Text style={[styles.label, { color: colors.muted }]}>{t('auth.password')}</Text>
-            <TextInput
-              autoComplete="password"
-              secureTextEntry
-              style={[
-                styles.input,
-                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
-              ]}
-              value={password}
-              onChangeText={setPassword}
+          <Text style={[styles.label, { color: colors.muted }]}>{t('auth.email')}</Text>
+          <TextInput
+            autoCapitalize="none"
+            autoComplete="email"
+            keyboardType="email-address"
+            style={[
+              styles.input,
+              { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+            ]}
+            value={email}
+            onChangeText={setEmail}
+          />
+
+          <Text style={[styles.label, { color: colors.muted }]}>{t('auth.password')}</Text>
+          <TextInput
+            autoComplete="password"
+            secureTextEntry
+            style={[
+              styles.input,
+              { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+            ]}
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
+
+          <AppButton
+            size="large"
+            label={t('auth.submitLogin')}
+            loading={busy}
+            onPress={() => void onSubmit()}
+          />
+
+          <GoogleSignInButton disabled={busy} onError={setError} />
+          <AppleSignInButton disabled={busy} onError={setError} />
+
+          <View style={styles.links}>
+            <AppButton variant="link" label={t('auth.forgotPassword')} onPress={onGoForgot} />
+            <AppButton
+              variant="secondary"
+              label={`${t('auth.noAccount')} ${t('auth.submitRegister')}`}
+              onPress={onGoRegister}
             />
-
-            {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
-
-            <Pressable
-              accessibilityRole="button"
-              disabled={busy}
-              onPress={() => void onSubmit()}
-              style={[styles.button, { backgroundColor: colors.brand }, busy && styles.buttonDisabled]}
-            >
-              {busy ? (
-                <ActivityIndicator color={colors.onBrand} />
-              ) : (
-                <Text style={[styles.buttonText, { color: colors.onBrand }]}>{t('auth.submitLogin')}</Text>
-              )}
-            </Pressable>
-
-
-            <GoogleSignInButton disabled={busy} onError={setError} />
-            <AppleSignInButton disabled={busy} onError={setError} />
-
-            <Pressable onPress={onGoForgot} style={styles.linkWrap}>
-              <Text style={[styles.link, { color: colors.brand }]}>{t('auth.forgotPassword')}</Text>
-            </Pressable>
-
-            <Pressable onPress={onGoRegister} style={styles.linkWrap}>
-              <Text style={[styles.link, { color: colors.brand }]}>
-                {t('auth.noAccount')} {t('auth.submitRegister')}
-              </Text>
-            </Pressable>
-          </>
-        )}
+          </View>
+        </>
+      )}
     </AuthScreenFrame>
   );
 }
 
 const styles = StyleSheet.create({
   title: { fontFamily: fonts.bold, fontSize: 24, letterSpacing: -0.3 },
-  subtitle: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, marginTop: 6, marginBottom: 24 },
+  subtitle: {
+    fontFamily: fonts.regular,
+    fontSize: 14,
+    lineHeight: 20,
+    marginTop: 6,
+    marginBottom: 24,
+  },
   label: { fontFamily: fonts.semibold, fontSize: 14, marginBottom: 8 },
   input: {
     borderRadius: 14,
@@ -240,9 +230,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   error: { fontFamily: fonts.medium, marginBottom: 16 },
-  button: { alignItems: 'center', borderRadius: 14, justifyContent: 'center', minHeight: 52 },
-  buttonDisabled: { opacity: 0.7 },
-  buttonText: { fontFamily: fonts.semibold, fontSize: 16 },
-  linkWrap: { marginTop: 18, alignItems: 'center' },
-  link: { fontFamily: fonts.medium, fontSize: 14 },
+  links: { gap: 6, marginTop: 16 },
 });

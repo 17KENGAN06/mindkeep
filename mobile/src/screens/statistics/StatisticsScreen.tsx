@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import {
   ActivityIndicator,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { InlineQueryError } from '../../components/QueryState';
 import { useActivityStatistics, useDashboardStatistics } from '../../features/statistics/useStatistics';
@@ -39,12 +39,12 @@ export function StatisticsScreen() {
   }
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
+        <PullRefreshControl
+          busy={refreshing}
           onRefresh={() => {
             void dashboardQuery.refetch();
             void activityQuery.refetch();
@@ -100,7 +100,7 @@ export function StatisticsScreen() {
           })}
         </View>
       </View>
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

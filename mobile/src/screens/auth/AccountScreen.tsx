@@ -5,12 +5,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../api/auth';
 import { InlineQueryError } from '../../components/QueryState';
@@ -147,7 +147,7 @@ export function AccountScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView
+      <SectionScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
@@ -281,7 +281,7 @@ export function AccountScreen() {
           loading={deleteBusy}
           onPress={onDelete}
         />
-      </ScrollView>
+      </SectionScrollView>
     </KeyboardAvoidingView>
   );
 }

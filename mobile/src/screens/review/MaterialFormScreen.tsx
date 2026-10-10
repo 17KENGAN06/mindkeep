@@ -4,12 +4,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -177,7 +177,7 @@ export function MaterialFormScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <SectionScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <Text style={[styles.subtitle, { color: colors.muted }]}>
           {isEdit ? t('materials.editSubtitle') : t('materials.createSubtitle')}
         </Text>
@@ -233,7 +233,7 @@ export function MaterialFormScreen() {
           loading={createMaterial.isPending || updateMaterial.isPending}
           onPress={() => void onSubmit()}
         />
-      </ScrollView>
+      </SectionScrollView>
     </KeyboardAvoidingView>
   );
 }

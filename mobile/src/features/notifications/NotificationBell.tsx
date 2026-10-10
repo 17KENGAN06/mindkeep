@@ -4,6 +4,7 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import { useTranslation } from 'react-i18next';
 import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon } from '../../components/AppIcon';
+import { AppButton } from '../../components/ui';
 import { fonts } from '../../config/fonts';
 import { useOverdueReminders, useTodayReminders } from '../reminders/useReminders';
 import { useTheme } from '../theme/useTheme';
@@ -16,13 +17,18 @@ export type BellTarget =
 
 type NotificationBellProps = {
   onOpen: (target: BellTarget) => void;
+  /**
+   * card: the Home button (46 px glass square). header: section headers on Android (40 px, like
+   * the back button). bare: iOS headers, which wrap header buttons in their own glass capsule.
+   */
+  appearance?: 'card' | 'header' | 'bare';
 };
 
 /**
  * The site's header bell: a badge with everything waiting (important tasks, reviews due today,
  * overdue reviews) and a panel listing them.
  */
-export function NotificationBell({ onOpen }: NotificationBellProps) {
+export function NotificationBell({ onOpen, appearance = 'card' }: NotificationBellProps) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
@@ -39,7 +45,13 @@ export function NotificationBell({ onOpen }: NotificationBellProps) {
         onPress={() => setOpen(true)}
         style={({ pressed }) => [
           styles.button,
-          { backgroundColor: `${colors.panel}e6`, borderColor: badge > 0 ? `${colors.brand}66` : colors.line },
+          appearance === 'header' && styles.buttonHeader,
+          appearance === 'bare'
+            ? styles.buttonBare
+            : {
+                backgroundColor: `${colors.panel}e6`,
+                borderColor: badge > 0 ? `${colors.brand}66` : colors.line,
+              },
           pressed && { transform: [{ scale: 0.95 }] },
         ]}
       >
@@ -171,25 +183,16 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
         </ScrollView>
 
         <View style={styles.actions}>
-          <Pressable
-            accessibilityRole="button"
+          <AppButton
+            label={t('notifications.seeAll')}
+            trailingIcon="arrow-forward"
             onPress={() => onOpen({ screen: 'Notifications' })}
-            style={({ pressed }) => [styles.primary, { backgroundColor: colors.brand }, pressed && styles.pressed]}
-          >
-            <Text style={[styles.primaryText, { color: colors.onBrand }]}>{t('notifications.seeAll')}</Text>
-            <AppIcon name="arrow-forward" color={colors.onBrand} size={16} />
-          </Pressable>
-          <Pressable
-            accessibilityRole="button"
+          />
+          <AppButton
+            variant="secondary"
+            label={t('notifications.openReviews')}
             onPress={() => onOpen({ screen: 'ReviewInbox' })}
-            style={({ pressed }) => [
-              styles.secondary,
-              { borderColor: colors.line, backgroundColor: `${colors.panel}e6` },
-              pressed && styles.pressed,
-            ]}
-          >
-            <Text style={[styles.secondaryText, { color: colors.ink }]}>{t('notifications.openReviews')}</Text>
-          </Pressable>
+          />
         </View>
       </Animated.View>
     </View>
@@ -236,6 +239,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 46,
   },
+  buttonHeader: { borderRadius: 14, height: 40, width: 40 },
+  buttonBare: { borderWidth: 0, height: 36, width: 36 },
   badge: {
     alignItems: 'center',
     borderRadius: 999,
@@ -276,9 +281,4 @@ const styles = StyleSheet.create({
   itemIcon: { alignItems: 'center', borderRadius: 10, height: 28, justifyContent: 'center', width: 28 },
   itemText: { flex: 1, fontFamily: fonts.medium, fontSize: 14.5 },
   actions: { gap: 10 },
-  primary: { alignItems: 'center', borderRadius: 16, flexDirection: 'row', gap: 8, justifyContent: 'center', minHeight: 52 },
-  primaryText: { fontFamily: fonts.semibold, fontSize: 15.5 },
-  secondary: { alignItems: 'center', borderRadius: 16, borderWidth: 1, justifyContent: 'center', minHeight: 50 },
-  secondaryText: { fontFamily: fonts.bold, fontSize: 15 },
-  pressed: { opacity: 0.88 },
 });

@@ -4,12 +4,12 @@ import { useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { ForestCard } from '../../components/forest/ForestCard';
 import { InlineQueryError } from '../../components/QueryState';
@@ -48,12 +48,12 @@ export function ForestScreen() {
   }
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl
-          refreshing={forestQuery.isRefetching && !forestQuery.isLoading}
+        <PullRefreshControl
+          busy={forestQuery.isRefetching && !forestQuery.isLoading}
           onRefresh={() => void forestQuery.refetch()}
           tintColor={colors.brand}
         />
@@ -90,7 +90,7 @@ export function ForestScreen() {
         <Text style={[styles.rule, { color: colors.muted }]}>{t('forest.ruleMonth')}</Text>
         <Text style={[styles.rule, { color: colors.muted }]}>{t('forest.monthScope')}</Text>
       </View>
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

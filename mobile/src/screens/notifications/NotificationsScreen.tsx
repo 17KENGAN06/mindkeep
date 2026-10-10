@@ -1,11 +1,11 @@
 import {
   ActivityIndicator,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
@@ -64,12 +64,12 @@ export function NotificationsScreen() {
   }
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl
-          refreshing={listQuery.isRefetching && !listQuery.isLoading}
+        <PullRefreshControl
+          busy={listQuery.isRefetching && !listQuery.isLoading}
           onRefresh={() => void listQuery.refetch()}
           tintColor={colors.brand}
         />
@@ -165,7 +165,7 @@ export function NotificationsScreen() {
           </View>
         ))
       )}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

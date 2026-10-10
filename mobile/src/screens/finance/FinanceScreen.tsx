@@ -5,13 +5,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../../api/client';
 import { AppButton, Badge, ChoiceChip } from '../../components/ui';
@@ -400,13 +400,13 @@ export function FinanceScreen() {
       style={[styles.flex, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView
+      <SectionScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
         refreshControl={
-          <RefreshControl
-            refreshing={summaryQuery.isRefetching && !summaryQuery.isLoading}
+          <PullRefreshControl
+            busy={summaryQuery.isRefetching && !summaryQuery.isLoading}
             onRefresh={() => {
               void summaryQuery.refetch();
               void categoriesQuery.refetch();
@@ -825,7 +825,7 @@ export function FinanceScreen() {
             })
           )}
         </View>
-      </ScrollView>
+      </SectionScrollView>
     </KeyboardAvoidingView>
   );
 }

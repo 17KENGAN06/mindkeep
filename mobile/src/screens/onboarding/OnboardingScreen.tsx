@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { BrandMark } from '../../components/BrandMark';
+import { AppButton } from '../../components/ui';
 import { APP_MODULES, type AppModule } from '../../config/appModules';
 import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
@@ -84,14 +85,12 @@ export function OnboardingScreen() {
           <Text style={[styles.eyebrow, { color: colors.brand }]}>{t('onboarding.eyebrow')}</Text>
           <Text style={[styles.title, { color: colors.ink }]}>{t('onboarding.introTitle')}</Text>
           <Text style={[styles.text, { color: colors.muted }]}>{t('onboarding.introBody')}</Text>
-          <Pressable
+          <AppButton
+            size="large"
+            label={t('onboarding.introStart')}
+            trailingIcon="arrow-forward"
             onPress={() => setStep(0)}
-            style={[styles.button, { backgroundColor: colors.brand }]}
-          >
-            <Text style={[styles.buttonText, { color: colors.onBrand }]}>
-              {t('onboarding.introStart')}
-            </Text>
-          </Pressable>
+          />
         </View>
       ) : asking && module ? (
         <View>
@@ -128,23 +127,21 @@ export function OnboardingScreen() {
               </View>
             </Pressable>
           ) : null}
-          <Pressable
-            onPress={() => choose(true)}
-            style={[styles.button, { backgroundColor: colors.brand }]}
-          >
-            <Text style={[styles.buttonText, { color: colors.onBrand }]}>
-              {t('onboarding.wantThis')}
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => choose(false)}
-            style={[styles.button, styles.secondary, { borderColor: colors.line }]}
-          >
-            <Text style={[styles.buttonText, { color: colors.ink }]}>{t('onboarding.skipThis')}</Text>
-          </Pressable>
-          <Pressable onPress={() => setStep((value) => value - 1)}>
-            <Text style={[styles.back, { color: colors.brand }]}>{t('common.back')}</Text>
-          </Pressable>
+          <View style={styles.actions}>
+            <AppButton size="large" label={t('onboarding.wantThis')} onPress={() => choose(true)} />
+            <AppButton
+              size="large"
+              variant="secondary"
+              label={t('onboarding.skipThis')}
+              onPress={() => choose(false)}
+            />
+            <AppButton
+              variant="link"
+              icon="chevron-back"
+              label={t('common.back')}
+              onPress={() => setStep((value) => value - 1)}
+            />
+          </View>
         </View>
       ) : (
         <View>
@@ -160,20 +157,21 @@ export function OnboardingScreen() {
             ))
           )}
           {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
-          <Pressable
-            disabled={busy || picked.length === 0}
-            onPress={() => void onFinish()}
-            style={[styles.button, { backgroundColor: colors.brand, opacity: busy ? 0.7 : 1 }]}
-          >
-            {busy ? (
-              <ActivityIndicator color={colors.onBrand} />
-            ) : (
-              <Text style={[styles.buttonText, { color: colors.onBrand }]}>{t('onboarding.finish')}</Text>
-            )}
-          </Pressable>
-          <Pressable onPress={() => setStep(total - 1)}>
-            <Text style={[styles.back, { color: colors.brand }]}>{t('common.back')}</Text>
-          </Pressable>
+          <View style={styles.actions}>
+            <AppButton
+              size="large"
+              label={t('onboarding.finish')}
+              loading={busy}
+              disabled={picked.length === 0}
+              onPress={() => void onFinish()}
+            />
+            <AppButton
+              variant="link"
+              icon="chevron-back"
+              label={t('common.back')}
+              onPress={() => setStep(total - 1)}
+            />
+          </View>
         </View>
       )}
       </ScrollView>
@@ -192,10 +190,7 @@ const styles = StyleSheet.create({
   eyebrow: { fontSize: 12, fontFamily: fonts.bold, letterSpacing: 1.4, textTransform: 'uppercase' },
   title: { fontSize: 28, fontFamily: fonts.display, marginTop: 16 },
   text: { fontFamily: fonts.regular, fontSize: 16, lineHeight: 24, marginTop: 12, marginBottom: 28 },
-  button: { alignItems: 'center', borderRadius: 16, paddingVertical: 16, marginBottom: 12 },
-  secondary: { borderWidth: 1, backgroundColor: 'transparent' },
-  buttonText: { fontSize: 16, fontFamily: fonts.bold },
-  back: { textAlign: 'center', marginTop: 8, fontSize: 15, fontFamily: fonts.semibold },
+  actions: { gap: 12 },
   error: { marginBottom: 16, fontFamily: fonts.regular, fontSize: 14 },
   pick: { borderRadius: 14, marginBottom: 8, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15, fontFamily: fonts.semibold },
   sub: {

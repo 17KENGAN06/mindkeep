@@ -1,9 +1,10 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { AppIcon, type AppIconName } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
 import { fonts } from '../config/fonts';
+import { glow } from '../utils/glow';
 
 type Tone = 'brand' | 'danger' | 'warn' | 'neutral' | 'expense';
 
@@ -36,33 +37,105 @@ type ButtonProps = {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  /** link: brand-coloured text action ("Forgot password?", "Back to sign in"). */
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'link';
   /** Optional icon before the label. */
   icon?: AppIconName;
+  /** Optional icon after the label (e.g. an arrow on "Get started"). */
+  trailingIcon?: AppIconName;
+  /** Large: the main call to action of a screen (welcome, sign-in, onboarding). */
+  /** small: an action inside a row ("Disconnect" next to Google). */
+  size?: 'small' | 'regular' | 'large';
 };
 
 const BUTTON_RADIUS = 16;
 
-/** Brand gradient + soft top sheen behind the primary button (same language as the home cards). */
-function PrimaryFill() {
+type Size = { width: number; height: number };
+
+/**
+ * Painted surface of a button, drawn at the measured size with its own rounded corners —
+ * percentage-sized SVGs kept their first layout width on iOS and left a bare strip on the right.
+ * Primary: brand gradient, glass sheen on the top half, bright top edge and a darker lower lip.
+ * Secondary: frosted glass with a hairline that is bright on top and fades out below.
+ */
+function ButtonSurface({ size, variant }: { size: Size; variant: 'primary' | 'secondary' }) {
   const { colors, theme } = useTheme();
   const id = useId().replace(/:/g, '');
-  // Deeper end of the gradient: the site's brand-400 (dark) / brand-700 (light).
-  const deep = theme === 'dark' ? '#5fc98e' : '#274e3e';
+  const dark = theme === 'dark';
+  const { width, height } = size;
+  const r = Math.min(BUTTON_RADIUS, height / 2);
+
+  if (variant === 'secondary') {
+    // Same language as the bar's "+": dark glass with a brand tint inside and a glowing ring
+    // that is brightest at the top-left corner.
+    return (
+      <Svg pointerEvents="none" style={StyleSheet.absoluteFill} width={width} height={height}>
+        <Defs>
+          <LinearGradient id={`tint${id}`} x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor={colors.brand} stopOpacity={dark ? 0.16 : 0.12} />
+            <Stop offset="1" stopColor={colors.brand} stopOpacity={dark ? 0.03 : 0.02} />
+          </LinearGradient>
+          <LinearGradient id={`sheen${id}`} x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.08 : 0.45} />
+            <Stop offset="0.5" stopColor="#ffffff" stopOpacity={0} />
+          </LinearGradient>
+          <LinearGradient id={`ring${id}`} x1="0" y1="0" x2="1" y2="1">
+            <Stop offset="0" stopColor={colors.brand} stopOpacity={0.9} />
+            <Stop offset="0.5" stopColor={colors.brand} stopOpacity={0.3} />
+            <Stop offset="1" stopColor={colors.brand} stopOpacity={0.6} />
+          </LinearGradient>
+        </Defs>
+        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#tint${id})`} />
+        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#sheen${id})`} />
+        <Rect
+          x={1.25}
+          y={1.25}
+          width={width - 2.5}
+          height={height - 2.5}
+          rx={r - 1.25}
+          fill="none"
+          stroke={`url(#ring${id})`}
+          strokeWidth={1.5}
+        />
+      </Svg>
+    );
+  }
+
+  // Ends of the gradient: a lit top-left and the site's brand-400 (dark) / brand-700 (light).
+  const lit = dark ? '#b4f7cf' : '#4a8a70';
+  const deep = dark ? '#4fbf83' : '#244a3a';
   return (
-    <Svg pointerEvents="none" style={StyleSheet.absoluteFill} width="100%" height="100%">
+    <Svg pointerEvents="none" style={StyleSheet.absoluteFill} width={width} height={height}>
       <Defs>
         <LinearGradient id={`fill${id}`} x1="0" y1="0" x2="1" y2="1">
-          <Stop offset="0" stopColor={colors.brand} />
+          <Stop offset="0" stopColor={lit} />
+          <Stop offset="0.45" stopColor={colors.brand} />
           <Stop offset="1" stopColor={deep} />
         </LinearGradient>
         <LinearGradient id={`shine${id}`} x1="0" y1="0" x2="0" y2="1">
-          <Stop offset="0" stopColor="#ffffff" stopOpacity={0.28} />
-          <Stop offset="0.55" stopColor="#ffffff" stopOpacity={0} />
+          <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.34 : 0.22} />
+          <Stop offset="0.5" stopColor="#ffffff" stopOpacity={0.04} />
+          <Stop offset="0.51" stopColor="#ffffff" stopOpacity={0} />
+        </LinearGradient>
+        <LinearGradient id={`rim${id}`} x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0" stopColor="#ffffff" stopOpacity={0.7} />
+          <Stop offset="0.35" stopColor="#ffffff" stopOpacity={0.08} />
+          <Stop offset="0.75" stopColor="#000000" stopOpacity={0} />
+          <Stop offset="1" stopColor="#000000" stopOpacity={dark ? 0.22 : 0.3} />
         </LinearGradient>
       </Defs>
-      <Rect x="0" y="0" width="100%" height="100%" fill={`url(#fill${id})`} />
-      <Rect x="0" y="0" width="100%" height="100%" fill={`url(#shine${id})`} />
+      <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#fill${id})`} />
+      <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#shine${id})`} />
+      <Rect
+        x={1.25}
+        y={1.25}
+        width={width - 2.5}
+        height={height - 2.5}
+        rx={r - 1.25}
+        fill="none"
+        stroke={`url(#rim${id})`}
+        strokeWidth={1.5}
+      />
     </Svg>
   );
 }
@@ -78,11 +151,21 @@ export function AppButton({
   loading = false,
   variant = 'primary',
   icon,
+  trailingIcon,
+  size: buttonSize = 'regular',
 }: ButtonProps) {
   const { colors } = useTheme();
+  const [size, setSize] = useState<Size | null>(null);
   const busy = disabled || loading;
   const textColor =
-    variant === 'primary' ? colors.onBrand : variant === 'danger' ? colors.danger : colors.ink;
+    variant === 'primary'
+      ? colors.onBrand
+      : variant === 'danger'
+        ? colors.danger
+        : variant === 'link'
+          ? colors.brand
+          : colors.ink;
+  const painted = variant === 'primary' || variant === 'secondary';
 
   const button = (
     <Pressable
@@ -90,15 +173,31 @@ export function AppButton({
       accessibilityState={{ disabled: busy, busy: loading }}
       disabled={busy}
       onPress={onPress}
+      onLayout={
+        painted
+          ? (event) => {
+              // Whole pixels: a fractional size let the ring's bottom edge fall outside the clip.
+              const width = Math.floor(event.nativeEvent.layout.width);
+              const height = Math.floor(event.nativeEvent.layout.height);
+              setSize((prev) =>
+                prev && prev.width === width && prev.height === height ? prev : { width, height },
+              );
+            }
+          : undefined
+      }
       style={({ pressed }) => [
         styles.button,
+        buttonSize === 'large' && styles.buttonLarge,
+        buttonSize === 'small' && styles.buttonSmall,
         variant === 'primary' && { backgroundColor: colors.brand },
         variant === 'secondary' && {
-          backgroundColor: pressed ? `${colors.brand}14` : `${colors.panel}e6`,
-          borderColor: pressed ? `${colors.brand}66` : colors.line,
-          borderWidth: 1,
+          backgroundColor: pressed ? `${colors.brand}26` : colors.panel,
         },
         variant === 'ghost' && { backgroundColor: pressed ? `${colors.brand}12` : 'transparent' },
+        variant === 'link' && [
+          styles.link,
+          { backgroundColor: pressed ? `${colors.brand}14` : 'transparent' },
+        ],
         variant === 'danger' && {
           backgroundColor: pressed ? `${colors.danger}33` : `${colors.danger}1f`,
           borderColor: `${colors.danger}55`,
@@ -108,15 +207,32 @@ export function AppButton({
         busy && styles.disabled,
       ]}
     >
-      {variant === 'primary' ? <PrimaryFill /> : null}
+      {painted && size ? <ButtonSurface size={size} variant={variant} /> : null}
       {loading ? (
         <ActivityIndicator color={textColor} />
       ) : (
         <View style={styles.content}>
-          {icon ? <AppIcon name={icon} color={textColor} size={18} /> : null}
-          <Text style={[styles.buttonText, { color: textColor }]} numberOfLines={1}>
+          {icon ? (
+            <AppIcon
+              name={icon}
+              color={
+                variant === 'secondary' && !icon.startsWith('logo-') ? colors.brand : textColor
+              }
+              size={18}
+            />
+          ) : null}
+          <Text
+            style={[
+              styles.buttonText,
+              buttonSize === 'large' && styles.buttonTextLarge,
+              buttonSize === 'small' && styles.buttonTextSmall,
+              { color: textColor },
+            ]}
+            numberOfLines={1}
+          >
             {label}
           </Text>
+          {trailingIcon ? <AppIcon name={trailingIcon} color={textColor} size={18} /> : null}
         </View>
       )}
     </Pressable>
@@ -129,8 +245,12 @@ export function AppButton({
     <View
       style={[
         styles.glow,
-        { backgroundColor: colors.brand, shadowColor: colors.brand },
-        busy && styles.glowOff,
+        busy
+          ? styles.glowOff
+          : [
+              { backgroundColor: colors.brand },
+              glow(colors.brand, { y: 8, blur: 22, opacity: 0.38, spread: -6 }),
+            ],
       ]}
     >
       {button}
@@ -195,11 +315,15 @@ export function ChoiceChip({
 
 const styles = StyleSheet.create({
   badge: {
+    alignItems: 'center',
     borderRadius: 999,
-    paddingHorizontal: 10,
+    justifyContent: 'center',
+    minHeight: 28,
+    paddingHorizontal: 12,
     paddingVertical: 4,
   },
-  badgeText: { fontSize: 12, fontFamily: fonts.bold },
+  // No extra Android font padding: the label sits in the middle of the pill on both platforms.
+  badgeText: { fontSize: 13, fontFamily: fonts.bold, includeFontPadding: false, lineHeight: 17 },
   button: {
     alignItems: 'center',
     borderRadius: BUTTON_RADIUS,
@@ -209,18 +333,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 12,
   },
-  glow: {
-    borderRadius: BUTTON_RADIUS,
-    elevation: 6,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-  },
+  glow: { borderRadius: BUTTON_RADIUS },
   // Disabled: no glow and no solid wrapper showing through the dimmed button.
-  glowOff: { backgroundColor: 'transparent', elevation: 0, shadowOpacity: 0 },
+  glowOff: { backgroundColor: 'transparent' },
   content: { alignItems: 'center', flexDirection: 'row', gap: 8, justifyContent: 'center' },
   pressed: { transform: [{ scale: 0.98 }] },
   disabled: { opacity: 0.55 },
+  buttonLarge: { minHeight: 56 },
+  buttonSmall: { minHeight: 38, paddingHorizontal: 14, paddingVertical: 6 },
+  buttonTextSmall: { fontSize: 13.5 },
+  link: { minHeight: 44, paddingVertical: 8 },
+  buttonTextLarge: { fontSize: 16.5 },
   buttonText: { fontSize: 15.5, fontFamily: fonts.semibold, letterSpacing: 0.1 },
   chip: {
     alignItems: 'center',

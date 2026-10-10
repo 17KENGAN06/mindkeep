@@ -18,18 +18,25 @@ type GlassBackgroundProps = {
 export function GlassBackground({ target }: GlassBackgroundProps) {
   const { colors, theme } = useTheme();
   const dark = theme === 'dark';
+  const ios = Platform.OS === 'ios';
+  // Android: a plain tint instead of the near-opaque "systemChrome" one, and a denser veil (~85%),
+  // because real blur is missing in Expo Go and before Android 12 — with a thin veil the text
+  // underneath read as if it overlapped the header. Content is only hinted at, never legible.
+  const veil = ios ? (dark ? '8c' : '99') : dark ? 'd9' : 'e0';
   return (
     <View pointerEvents="none" style={StyleSheet.absoluteFill}>
       <BlurView
         style={StyleSheet.absoluteFill}
-        intensity={Platform.OS === 'ios' ? 50 : 60}
-        tint={dark ? 'systemChromeMaterialDark' : 'systemChromeMaterialLight'}
+        intensity={ios ? 50 : 35}
+        tint={
+          ios ? (dark ? 'systemChromeMaterialDark' : 'systemChromeMaterialLight') : dark ? 'dark' : 'light'
+        }
         blurTarget={target}
         // Real blur on Android 12+; older versions get the tinted layer below only.
         blurMethod="dimezisBlurViewSdk31Plus"
       />
       {/* Brand-tinted veil: keeps text readable and the glass in the app's colours. */}
-      <View style={[StyleSheet.absoluteFill, { backgroundColor: `${colors.bg}${dark ? '8c' : '99'}` }]} />
+      <View style={[StyleSheet.absoluteFill, { backgroundColor: `${colors.bg}${veil}` }]} />
       <View style={[styles.hairline, { backgroundColor: colors.line }]} />
     </View>
   );

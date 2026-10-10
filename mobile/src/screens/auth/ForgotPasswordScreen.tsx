@@ -1,14 +1,9 @@
 import { useState } from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../api/auth';
 import { AuthScreenFrame } from '../../components/AuthScreenFrame';
+import { AppButton } from '../../components/ui';
 import { fonts } from '../../config/fonts';
 import { issueBotToken } from '../../features/auth/botChallenge';
 import { mapAuthError } from '../../features/auth/mapAuthError';
@@ -53,48 +48,54 @@ export function ForgotPasswordScreen({ onGoLogin }: ForgotPasswordScreenProps) {
 
   return (
     <AuthScreenFrame>
-          <Text style={[styles.title, { color: colors.ink }]}>{t('auth.forgotTitle')}</Text>
-          <Text style={[styles.subtitle, { color: colors.muted }]}>
-            {sent ? t('auth.forgotSent') : t('auth.forgotSubtitle')}
-          </Text>
-          {sent ? null : (
-            <>
-              <Text style={[styles.label, { color: colors.muted }]}>{t('auth.email')}</Text>
-              <TextInput
-                autoCapitalize="none"
-                autoComplete="email"
-                keyboardType="email-address"
-                style={[
-                  styles.input,
-                  { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
-                ]}
-                value={email}
-                onChangeText={setEmail}
-              />
-              {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
-              <Pressable
-                disabled={busy}
-                onPress={() => void onSubmit()}
-                style={[styles.button, { backgroundColor: colors.brand }, busy && styles.buttonDisabled]}
-              >
-                {busy ? (
-                  <ActivityIndicator color={colors.onBrand} />
-                ) : (
-                  <Text style={[styles.buttonText, { color: colors.onBrand }]}>{t('auth.forgotSubmit')}</Text>
-                )}
-              </Pressable>
-            </>
-          )}
-          <Pressable onPress={onGoLogin} style={styles.linkWrap}>
-            <Text style={[styles.link, { color: colors.brand }]}>{t('auth.submitLogin')}</Text>
-          </Pressable>
+      <Text style={[styles.title, { color: colors.ink }]}>{t('auth.forgotTitle')}</Text>
+      <Text style={[styles.subtitle, { color: colors.muted }]}>
+        {sent ? t('auth.forgotSent') : t('auth.forgotSubtitle')}
+      </Text>
+      {sent ? null : (
+        <>
+          <Text style={[styles.label, { color: colors.muted }]}>{t('auth.email')}</Text>
+          <TextInput
+            autoCapitalize="none"
+            autoComplete="email"
+            keyboardType="email-address"
+            style={[
+              styles.input,
+              { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+            ]}
+            value={email}
+            onChangeText={setEmail}
+          />
+          {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
+          <AppButton
+            size="large"
+            label={t('auth.forgotSubmit')}
+            loading={busy}
+            onPress={() => void onSubmit()}
+          />
+        </>
+      )}
+      <View style={styles.links}>
+        <AppButton
+          variant="link"
+          icon="chevron-back"
+          label={t('auth.submitLogin')}
+          onPress={onGoLogin}
+        />
+      </View>
     </AuthScreenFrame>
   );
 }
 
 const styles = StyleSheet.create({
   title: { fontFamily: fonts.bold, fontSize: 24, letterSpacing: -0.3 },
-  subtitle: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, marginTop: 6, marginBottom: 24 },
+  subtitle: {
+    fontFamily: fonts.regular,
+    fontSize: 14,
+    lineHeight: 20,
+    marginTop: 6,
+    marginBottom: 24,
+  },
   label: { fontFamily: fonts.semibold, fontSize: 14, marginBottom: 8 },
   input: {
     borderRadius: 14,
@@ -106,9 +107,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   error: { fontFamily: fonts.medium, marginBottom: 16 },
-  button: { alignItems: 'center', borderRadius: 14, justifyContent: 'center', minHeight: 52 },
-  buttonDisabled: { opacity: 0.7 },
-  buttonText: { fontFamily: fonts.semibold, fontSize: 16 },
-  linkWrap: { marginTop: 18, alignItems: 'center' },
-  link: { fontFamily: fonts.medium, fontSize: 14 },
+  links: { gap: 6, marginTop: 16 },
 });

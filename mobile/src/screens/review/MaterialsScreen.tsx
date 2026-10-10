@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
-  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -49,13 +50,13 @@ export function MaterialsScreen() {
   const materials = materialsQuery.data ?? [];
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
       refreshControl={
-        <RefreshControl
-          refreshing={materialsQuery.isRefetching && !materialsQuery.isLoading}
+        <PullRefreshControl
+          busy={materialsQuery.isRefetching && !materialsQuery.isLoading}
           onRefresh={() => void materialsQuery.refetch()}
           tintColor={colors.brand}
         />
@@ -148,7 +149,7 @@ export function MaterialsScreen() {
           </Text>
         </Pressable>
       ))}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

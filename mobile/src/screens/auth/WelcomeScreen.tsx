@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Animated, Easing, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon, type AppIconName } from '../../components/AppIcon';
 import { AUTH_HEADER_HEIGHT, AuthHeader } from '../../components/AuthHeader';
+import { AppButton } from '../../components/ui';
 import { BlurTargetView } from 'expo-blur';
 import { fonts } from '../../config/fonts';
 import { useTheme } from '../../features/theme/useTheme';
@@ -89,33 +90,13 @@ export function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) {
 
           <Reveal delay={340}>
             <View style={styles.actions}>
-              <Pressable
-                accessibilityRole="button"
+              <AppButton
+                size="large"
+                label={t('welcome.start')}
+                trailingIcon="arrow-forward"
                 onPress={onStart}
-                style={({ pressed }) => [
-                  styles.primary,
-                  { backgroundColor: colors.brand },
-                  pressed && styles.pressed,
-                ]}
-              >
-                <Text style={[styles.primaryText, { color: colors.onBrand }]}>
-                  {t('welcome.start')}
-                </Text>
-                <AppIcon name="arrow-forward" color={colors.onBrand} size={18} />
-              </Pressable>
-              <Pressable
-                accessibilityRole="button"
-                onPress={onLogin}
-                style={({ pressed }) => [
-                  styles.secondary,
-                  { borderColor: colors.line, backgroundColor: `${colors.bg}99` },
-                  pressed && styles.pressed,
-                ]}
-              >
-                <Text style={[styles.secondaryText, { color: colors.ink }]}>
-                  {t('welcome.login')}
-                </Text>
-              </Pressable>
+              />
+              <AppButton size="large" variant="secondary" label={t('welcome.login')} onPress={onLogin} />
             </View>
           </Reveal>
 
@@ -195,24 +176,6 @@ const styles = StyleSheet.create({
   },
   subtitle: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 23, marginTop: 18 },
   actions: { gap: 12, marginTop: 28 },
-  primary: {
-    alignItems: 'center',
-    borderRadius: 16,
-    flexDirection: 'row',
-    gap: 8,
-    justifyContent: 'center',
-    minHeight: 56,
-  },
-  primaryText: { fontFamily: fonts.semibold, fontSize: 16 },
-  secondary: {
-    alignItems: 'center',
-    borderRadius: 16,
-    borderWidth: 1,
-    justifyContent: 'center',
-    minHeight: 54,
-  },
-  secondaryText: { fontFamily: fonts.bold, fontSize: 16 },
-  pressed: { opacity: 0.85, transform: [{ scale: 0.99 }] },
   cards: { gap: 12, marginTop: 32 },
   card: { borderRadius: 20, borderWidth: 1, padding: 18 },
   cardHead: { alignItems: 'center', flexDirection: 'row', gap: 8 },

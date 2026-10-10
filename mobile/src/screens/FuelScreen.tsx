@@ -5,13 +5,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../components/PullRefreshControl';
+import { SectionScrollView } from '../components/SectionScrollView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
@@ -448,13 +448,13 @@ export function FuelScreen() {
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
       <AmbientGlow />
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView
+        <SectionScrollView
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
           refreshControl={
-            <RefreshControl
-              refreshing={periodQuery.isRefetching && !periodQuery.isLoading}
+            <PullRefreshControl
+              busy={periodQuery.isRefetching && !periodQuery.isLoading}
               onRefresh={() => void periodQuery.refetch()}
               tintColor={colors.brand}
             />
@@ -739,7 +739,7 @@ export function FuelScreen() {
             <WaterGlasses
               glasses={glasses}
               goal={waterGoal}
-              disabled={setWater.isPending}
+              // Not blocked while saving: taps show at once and are queued (useSetWater).
               onChange={(next) => void onWaterChange(next)}
             />
 
@@ -869,7 +869,7 @@ export function FuelScreen() {
           </View>
 
           {formError ? <Text style={[styles.error, { color: colors.danger }]}>{formError}</Text> : null}
-        </ScrollView>
+        </SectionScrollView>
       </KeyboardAvoidingView>
 
       <CalorieHelperModal

@@ -408,7 +408,7 @@
     "markImportant": "Mark as very important",
     "unmarkImportant": "Remove importance",
     "important": "Important",
-    "importantHint": "Shows in notifications right away",
+    "importantHint": "You’ll get a push notification on your phone, and it shows in the bell",
     "minShort": "min",
     "import": "Import",
     "importTitle": "Import tasks",
@@ -490,7 +490,7 @@
   },
   "notifications": {
     "title": "Notifications",
-    "subtitle": "Important tasks, today’s reviews, and anything you missed — the bell keeps them in view.",
+    "subtitle": "Reviews, overdue items and important tasks all live here. Only important tasks reach your phone as push notifications.",
     "menuHint": "Unread reviews and system messages.",
     "unreadCount": "Unread: {{count}}",
     "markAllRead": "Mark all as read",
@@ -519,22 +519,38 @@
     "dueCount": "{{count}} today",
     "overdueCount": "{{count}} overdue",
     "push": {
-      "promptTitle": "Get reminders on time?",
-      "promptBody": "Mindkeep will remind you in the morning about today's reviews and important tasks. Only what you planned yourself.",
+      "promptTitle": "Remind you about what matters?",
+      "promptBody": "Push notifications come only for tasks flagged “important” — the day before and on the day, at a time you pick. Reviews stay quiet: they wait in the bell inside the app.",
       "enable": "Turn on reminders",
       "later": "Not now",
       "settingsTitle": "Phone reminders",
-      "settingsHint": "In the morning at your chosen time: today's reviews and important tasks.",
+      "settingsHint": "Only for tasks flagged “important”.",
       "toggle": "Send reminders",
       "time": "Reminder time",
       "denied": "Notifications are turned off in your phone settings.",
       "openSettings": "Open settings",
-      "todayTitle": "Today in Mindkeep",
-      "reviews": "To review: {{count}}",
-      "important": "Important tasks: {{count}}",
-      "overdueTitle": "You have overdue reviews",
-      "overdueBody": "Overdue: {{count}}. Come back before it fades.",
-      "channel": "Reminders"
+      "todayTitle": "Important today",
+      "channel": "Reminders",
+      "ruleImportantTitle": "Important tasks — on your phone",
+      "ruleImportantText": "A push notification for tasks flagged “important”: the day before and/or on the day, at your chosen time.",
+      "ruleBellTitle": "Reviews — in the bell",
+      "ruleBellText": "Reviews and overdue items never reach your phone. They wait in the bell on Home.",
+      "needTasks": "The Tasks section is off, so there is nothing to remind you about. Turn it on in the services above.",
+      "when": "When to remind",
+      "dayBefore": "The day before",
+      "dayBeforeHint": "A heads-up so you can get ready",
+      "onTheDay": "On the day",
+      "onTheDayHint": "On the task’s day, at your chosen time",
+      "noneChosen": "Pick at least one option, otherwise no reminders will come.",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "tomorrowTitle": "Important tomorrow",
+      "todayLine": "Today: {{count}}",
+      "tomorrowLine": "Tomorrow: {{count}}",
+      "pointImportant": "Important tasks only",
+      "pointWhen": "Day before & on the day",
+      "timeHint": "Scroll the hours and minutes",
+      "unavailable": "Reminders aren’t available in Expo Go on Android. Try them in the installed app (APK)."
     }
   },
   "finance": {
@@ -1304,7 +1320,8 @@
       "tasks": "Tasks",
       "reviews": "Reviews",
       "calories": "Calories",
-      "water": "Water"
+      "water": "Water",
+      "habits": "Habits"
     },
     "now": {
       "title": "Now",
@@ -1318,21 +1335,34 @@
       "doneToday": "Done today: {{count}}",
       "reviews": "Reviews",
       "tasks": "Tasks",
-      "all": "All"
+      "all": "All",
+      "habits": "Habits"
     },
     "quick": {
       "water": "Water +1",
       "meal": "Meal",
       "scan": "Food scan",
-      "expense": "Expense"
+      "expense": "Expense",
+      "task": "Task",
+      "note": "Note"
     },
     "overview": {
-      "title": "Overview",
+      "title": "Summary",
       "nutrition": "Nutrition",
       "finance": "Spent this month",
       "week": "Week",
       "noExpenses": "No expenses yet",
-      "weekValue": "{{done}} of {{total}}"
+      "weekValue": "{{done}} of {{total}}",
+      "notes": "Notes",
+      "tasks": "Tasks",
+      "reviews": "Reviews",
+      "habits": "Habits",
+      "spend": "Spending",
+      "tasksCaption": "done in the last 7 days",
+      "reviewsCaption": "reviewed in the last 7 days",
+      "streakCaption": "days in a row — best streak",
+      "kcalCaption": "kcal a day, weekly average",
+      "spendCaption": "this month"
     },
     "start": {
       "title": "Get started",
@@ -1341,6 +1371,27 @@
       "material": "Save a material to review",
       "reminders": "Turn on reminders",
       "hide": "Hide"
+    },
+    "greeting": {
+      "morning": "Good morning, {{name}}",
+      "day": "Good afternoon, {{name}}",
+      "evening": "Good evening, {{name}}",
+      "night": "Good night, {{name}}"
+    },
+    "discover": {
+      "title": "Add to Home",
+      "hint": "Turn on one more section and it shows up here right away. Nothing else changes.",
+      "enable": "Turn on",
+      "all": "All sections",
+      "failed": "Couldn’t turn it on. Please try again.",
+      "why": {
+        "tasks": "A plan for the day you tick off",
+        "review": "Reviews on day 3, 7 and 30",
+        "notes": "Jot a thought down and find it later",
+        "habits": "Tick daily and keep a streak",
+        "finance": "Spending and income for the month",
+        "nutrition": "Calories, water, steps and weight"
+      }
     }
   }
 }

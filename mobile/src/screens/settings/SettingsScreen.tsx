@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../../components/LanguageSwitcher';
 import { AppIcon } from '../../components/AppIcon';
-import { ChoiceChip } from '../../components/ui';
+import { AppButton, ChoiceChip } from '../../components/ui';
 import { TimezoneSuggestion } from '../../components/TimezoneSuggestion';
 import { APP_MODULES, selectedModules, type AppModule } from '../../config/appModules';
 import { mapAuthError } from '../../features/auth/mapAuthError';
@@ -67,7 +73,7 @@ export function SettingsScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['bottom']}>
       <AmbientGlow />
-      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
+      <SectionScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
         <Text style={[styles.lead, { color: colors.muted }]}>{t('settings.subtitle')}</Text>
         <Text style={[styles.section, { color: colors.ink }]}>{t('settings.modulesTitle')}</Text>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('settings.modulesHint')}</Text>
@@ -137,13 +143,7 @@ export function SettingsScreen() {
           </Pressable>
         ) : null}
 
-        <Pressable
-          disabled={busy}
-          onPress={() => void onSave()}
-          style={[styles.save, { backgroundColor: colors.brand, opacity: busy ? 0.7 : 1 }]}
-        >
-          <Text style={[styles.saveText, { color: colors.onBrand }]}>{t('common.save')}</Text>
-        </Pressable>
+        <AppButton label={t('common.save')} loading={busy} onPress={() => void onSave()} />
         {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
         {saved ? <Text style={[styles.ok, { color: colors.brand }]}>{t('settings.saved')}</Text> : null}
 
@@ -174,7 +174,7 @@ export function SettingsScreen() {
         <Text style={[styles.section, { color: colors.ink }]}>{t('common.timezone')}</Text>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('common.timezoneHint')}</Text>
         <TimezoneSuggestion variant="settings" />
-      </ScrollView>
+      </SectionScrollView>
     </SafeAreaView>
   );
 }
@@ -190,8 +190,6 @@ const styles = StyleSheet.create({
   copy: { flex: 1 },
   cardTitle: { fontSize: 16, fontFamily: fonts.bold },
   cardHint: { fontFamily: fonts.regular, fontSize: 13, marginTop: 4 },
-  save: { alignItems: 'center', borderRadius: 14, marginTop: 8, paddingVertical: 14 },
-  saveText: { fontSize: 16, fontFamily: fonts.bold },
   error: { marginTop: 10 },
   ok: { marginTop: 10, fontFamily: fonts.semibold },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 16 },

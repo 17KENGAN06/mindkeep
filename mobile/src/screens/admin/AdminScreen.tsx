@@ -3,12 +3,12 @@ import {
   ActivityIndicator,
   Pressable,
   TextInput,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -90,12 +90,12 @@ export function AdminScreen() {
   const users = usersQuery.data ?? [];
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl
-          refreshing={(overviewQuery.isRefetching || usersQuery.isRefetching) && !loading}
+        <PullRefreshControl
+          busy={(overviewQuery.isRefetching || usersQuery.isRefetching) && !loading}
           onRefresh={() => {
             void overviewQuery.refetch();
             void usersQuery.refetch();
@@ -267,7 +267,7 @@ export function AdminScreen() {
           );
         })
       )}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

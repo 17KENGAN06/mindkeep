@@ -4,12 +4,12 @@ import {
   Linking,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { contactApi } from '../../api/contact';
 import { AppButton, ChoiceChip } from '../../components/ui';
@@ -82,7 +82,7 @@ export function ContactScreen() {
       style={[styles.root, { backgroundColor: colors.bg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <SectionScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <Text style={[styles.intro, { color: colors.muted }]}>{t('contact.intro')}</Text>
 
         <Pressable
@@ -166,7 +166,7 @@ export function ContactScreen() {
             <AppButton label={t('contact.send')} loading={busy} onPress={() => void onSubmit()} />
           </View>
         )}
-      </ScrollView>
+      </SectionScrollView>
     </KeyboardAvoidingView>
   );
 }

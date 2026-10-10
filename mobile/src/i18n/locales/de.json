@@ -408,7 +408,7 @@
     "markImportant": "Als sehr wichtig markieren",
     "unmarkImportant": "Wichtigkeit entfernen",
     "important": "Wichtig",
-    "importantHint": "Sofort in den Benachrichtigungen",
+    "importantHint": "Du bekommst eine Push-Meldung aufs Handy, und sie erscheint in der Glocke",
     "minShort": "Min.",
     "import": "Import",
     "importTitle": "Aufgaben importieren",
@@ -490,7 +490,7 @@
   },
   "notifications": {
     "title": "Benachrichtigungen",
-    "subtitle": "Wichtige Aufgaben, heutige Wiederholungen und Überfälliges — die Glocke hält sie im Blick.",
+    "subtitle": "Wiederholungen, Überfälliges und wichtige Aufgaben – alles hier. Aufs Handy kommt nur eine Push-Meldung zu wichtigen Aufgaben.",
     "menuHint": "Ungelesene Wiederholungen und Systemnachrichten.",
     "unreadCount": "Ungelesen: {{count}}",
     "markAllRead": "Alle als gelesen markieren",
@@ -519,22 +519,38 @@
     "dueCount": "{{count}} heute",
     "overdueCount": "{{count}} überfällig",
     "push": {
-      "promptTitle": "Rechtzeitig erinnern?",
-      "promptBody": "Mindkeep erinnert dich morgens an die heutigen Wiederholungen und wichtigen Aufgaben. Nur was du selbst geplant hast.",
+      "promptTitle": "An Wichtiges erinnern?",
+      "promptBody": "Push-Meldungen gibt es nur für Aufgaben mit der Markierung „wichtig“ – am Vortag und am Tag selbst, zu deiner Wunschzeit. Wiederholungen bleiben leise: Sie warten in der Glocke in der App.",
       "enable": "Erinnerungen einschalten",
       "later": "Nicht jetzt",
       "settingsTitle": "Erinnerungen auf dem Handy",
-      "settingsHint": "Morgens zur gewählten Zeit: heutige Wiederholungen und wichtige Aufgaben.",
+      "settingsHint": "Nur für Aufgaben mit der Markierung „wichtig“.",
       "toggle": "Erinnerungen senden",
       "time": "Uhrzeit der Erinnerung",
       "denied": "Benachrichtigungen sind in den Handy-Einstellungen ausgeschaltet.",
       "openSettings": "Einstellungen öffnen",
-      "todayTitle": "Heute in Mindkeep",
-      "reviews": "Wiederholen: {{count}}",
-      "important": "Wichtige Aufgaben: {{count}}",
-      "overdueTitle": "Überfällige Wiederholungen",
-      "overdueBody": "Überfällig: {{count}}. Komm zurück, bevor es verblasst.",
-      "channel": "Erinnerungen"
+      "todayTitle": "Heute wichtig",
+      "channel": "Erinnerungen",
+      "ruleImportantTitle": "Wichtige Aufgaben – aufs Handy",
+      "ruleImportantText": "Eine Push-Meldung für Aufgaben mit „wichtig“: am Vortag und/oder am Tag selbst, zur gewählten Zeit.",
+      "ruleBellTitle": "Wiederholungen – in der Glocke",
+      "ruleBellText": "Wiederholungen und Überfälliges kommen nie aufs Handy. Sie warten in der Glocke auf der Startseite.",
+      "needTasks": "Der Bereich „Aufgaben“ ist aus – es gibt nichts zu erinnern. Schalte ihn oben ein.",
+      "when": "Wann erinnern",
+      "dayBefore": "Am Vortag",
+      "dayBeforeHint": "Vorab, damit du dich vorbereiten kannst",
+      "onTheDay": "Am Tag der Aufgabe",
+      "onTheDayHint": "Am Tag selbst, zur gewählten Zeit",
+      "noneChosen": "Wähle mindestens eine Option, sonst kommen keine Erinnerungen.",
+      "hours": "Stunden",
+      "minutes": "Minuten",
+      "tomorrowTitle": "Morgen wichtig",
+      "todayLine": "Heute: {{count}}",
+      "tomorrowLine": "Morgen: {{count}}",
+      "pointImportant": "Nur wichtige Aufgaben",
+      "pointWhen": "Vortag & am Tag",
+      "timeHint": "Stunden und Minuten scrollen",
+      "unavailable": "In Expo Go auf Android gibt es keine Erinnerungen. Teste sie in der installierten App (APK)."
     }
   },
   "finance": {
@@ -1304,7 +1320,8 @@
       "tasks": "Aufgaben",
       "reviews": "Wiederholungen",
       "calories": "Kalorien",
-      "water": "Wasser"
+      "water": "Wasser",
+      "habits": "Gewohnheiten"
     },
     "now": {
       "title": "Jetzt",
@@ -1318,21 +1335,34 @@
       "doneToday": "Heute erledigt: {{count}}",
       "reviews": "Wiederholungen",
       "tasks": "Aufgaben",
-      "all": "Alle"
+      "all": "Alle",
+      "habits": "Gewohnheiten"
     },
     "quick": {
       "water": "Wasser +1",
       "meal": "Mahlzeit",
       "scan": "Essens-Scan",
-      "expense": "Ausgabe"
+      "expense": "Ausgabe",
+      "task": "Aufgabe",
+      "note": "Notiz"
     },
     "overview": {
-      "title": "Überblick",
+      "title": "Bilanz",
       "nutrition": "Ernährung",
       "finance": "Ausgaben im Monat",
       "week": "Woche",
       "noExpenses": "Noch keine Ausgaben",
-      "weekValue": "{{done}} von {{total}}"
+      "weekValue": "{{done}} von {{total}}",
+      "notes": "Notizen",
+      "tasks": "Aufgaben",
+      "reviews": "Wiederholungen",
+      "habits": "Gewohnheiten",
+      "spend": "Ausgaben",
+      "tasksCaption": "erledigt in 7 Tagen",
+      "reviewsCaption": "wiederholt in 7 Tagen",
+      "streakCaption": "Tage am Stück — beste Serie",
+      "kcalCaption": "kcal pro Tag, Wochenschnitt",
+      "spendCaption": "in diesem Monat"
     },
     "start": {
       "title": "Erste Schritte",
@@ -1341,6 +1371,27 @@
       "material": "Lernstoff zum Wiederholen speichern",
       "reminders": "Erinnerungen einschalten",
       "hide": "Ausblenden"
+    },
+    "greeting": {
+      "morning": "Guten Morgen, {{name}}",
+      "day": "Guten Tag, {{name}}",
+      "evening": "Guten Abend, {{name}}",
+      "night": "Gute Nacht, {{name}}"
+    },
+    "discover": {
+      "title": "Zur Startseite hinzufügen",
+      "hint": "Schalte einen weiteren Bereich ein – er erscheint sofort hier. Sonst ändert sich nichts.",
+      "enable": "Einschalten",
+      "all": "Alle Bereiche",
+      "failed": "Einschalten fehlgeschlagen. Bitte erneut versuchen.",
+      "why": {
+        "tasks": "Ein Tagesplan zum Abhaken",
+        "review": "Wiederholungen an Tag 3, 7 und 30",
+        "notes": "Gedanken notieren und später finden",
+        "habits": "Täglich abhaken, Serie halten",
+        "finance": "Ausgaben und Einnahmen im Monat",
+        "nutrition": "Kalorien, Wasser, Schritte und Gewicht"
+      }
     }
   }
 }

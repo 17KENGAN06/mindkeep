@@ -2,12 +2,12 @@ import { useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -158,11 +158,11 @@ export function ReviewInboxScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
       <AmbientGlow />
-      <ScrollView
+      <SectionScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
         refreshControl={
-          <RefreshControl refreshing={refreshing && !loading} onRefresh={onRefresh} tintColor={colors.brand} />
+          <PullRefreshControl busy={refreshing && !loading} onRefresh={onRefresh} tintColor={colors.brand} />
         }
       >
         <Text style={[styles.title, { color: colors.ink }]}>{t('review.title')}</Text>
@@ -241,7 +241,7 @@ export function ReviewInboxScreen() {
           onSkip={(id) => void resolve(id, 'skip')}
           onOpenMaterial={openMaterial}
         />
-      </ScrollView>
+      </SectionScrollView>
     </SafeAreaView>
   );
 }

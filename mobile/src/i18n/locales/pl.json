@@ -408,7 +408,7 @@
     "markImportant": "Oznacz jako bardzo ważne",
     "unmarkImportant": "Usuń ważność",
     "important": "Ważne",
-    "importantHint": "Od razu w powiadomieniach",
+    "importantHint": "Dostaniesz powiadomienie push na telefon, pojawi się też w dzwonku",
     "minShort": "min",
     "import": "Import",
     "importTitle": "Import zadań",
@@ -490,7 +490,7 @@
   },
   "notifications": {
     "title": "Powiadomienia",
-    "subtitle": "Ważne zadania, powtórki na dziś i zaległości — dzwonek trzyma je w polu widzenia.",
+    "subtitle": "Powtórki, zaległości i ważne zadania — wszystko tutaj. Na telefon push przychodzi tylko o ważnych zadaniach.",
     "menuHint": "Nieprzeczytane powtórki i komunikaty systemowe.",
     "unreadCount": "Nieprzeczytane: {{count}}",
     "markAllRead": "Oznacz wszystkie jako przeczytane",
@@ -519,22 +519,38 @@
     "dueCount": "{{count}} dziś",
     "overdueCount": "{{count}} zaległych",
     "push": {
-      "promptTitle": "Przypominać na czas?",
-      "promptBody": "Mindkeep przypomni rano o dzisiejszych powtórkach i ważnych zadaniach. Tylko to, co sam zaplanujesz.",
+      "promptTitle": "Przypominać o ważnym?",
+      "promptBody": "Powiadomienia push przychodzą tylko o zadaniach oznaczonych jako „ważne” — dzień wcześniej i w sam dzień, o wybranej godzinie. Powtórki nie przeszkadzają: czekają w dzwonku w aplikacji.",
       "enable": "Włącz przypomnienia",
       "later": "Nie teraz",
       "settingsTitle": "Przypomnienia w telefonie",
-      "settingsHint": "Rano o wybranej godzinie: dzisiejsze powtórki i ważne zadania.",
+      "settingsHint": "Tylko o zadaniach oznaczonych jako „ważne”.",
       "toggle": "Wysyłaj przypomnienia",
       "time": "Godzina przypomnienia",
       "denied": "Powiadomienia są wyłączone w ustawieniach telefonu.",
       "openSettings": "Otwórz ustawienia",
-      "todayTitle": "Dziś w Mindkeep",
-      "reviews": "Do powtórki: {{count}}",
-      "important": "Ważne zadania: {{count}}",
-      "overdueTitle": "Masz zaległe powtórki",
-      "overdueBody": "Zaległe: {{count}}. Wróć, zanim zapomnisz.",
-      "channel": "Przypomnienia"
+      "todayTitle": "Dziś ważne",
+      "channel": "Przypomnienia",
+      "ruleImportantTitle": "Ważne zadania — na telefon",
+      "ruleImportantText": "Powiadomienie push o zadaniach oznaczonych jako „ważne”: dzień wcześniej i/lub w sam dzień, o wybranej godzinie.",
+      "ruleBellTitle": "Powtórki — w dzwonku",
+      "ruleBellText": "Powtórki i zaległości nigdy nie trafiają na telefon. Czekają w dzwonku na ekranie głównym.",
+      "needTasks": "Sekcja Zadania jest wyłączona — nie ma o czym przypominać. Włącz ją powyżej.",
+      "when": "Kiedy przypominać",
+      "dayBefore": "Dzień wcześniej",
+      "dayBeforeHint": "Z wyprzedzeniem, żeby zdążyć się przygotować",
+      "onTheDay": "W dniu zadania",
+      "onTheDayHint": "W sam dzień, o wybranej godzinie",
+      "noneChosen": "Wybierz co najmniej jedną opcję, inaczej nie będzie przypomnień.",
+      "hours": "Godziny",
+      "minutes": "Minuty",
+      "tomorrowTitle": "Jutro ważne",
+      "todayLine": "Dziś: {{count}}",
+      "tomorrowLine": "Jutro: {{count}}",
+      "pointImportant": "Tylko ważne zadania",
+      "pointWhen": "Dzień wcześniej i w dniu",
+      "timeHint": "Przewiń godziny i minuty",
+      "unavailable": "Przypomnienia nie działają w Expo Go na Androidzie. Sprawdź je w zainstalowanej aplikacji (APK)."
     }
   },
   "finance": {
@@ -1304,7 +1320,8 @@
       "tasks": "Zadania",
       "reviews": "Powtórki",
       "calories": "Kalorie",
-      "water": "Woda"
+      "water": "Woda",
+      "habits": "Nawyki"
     },
     "now": {
       "title": "Teraz",
@@ -1318,21 +1335,34 @@
       "doneToday": "Zrobione dziś: {{count}}",
       "reviews": "Powtórki",
       "tasks": "Zadania",
-      "all": "Wszystkie"
+      "all": "Wszystkie",
+      "habits": "Nawyki"
     },
     "quick": {
       "water": "Woda +1",
       "meal": "Posiłek",
       "scan": "Skan jedzenia",
-      "expense": "Wydatek"
+      "expense": "Wydatek",
+      "task": "Zadanie",
+      "note": "Notatka"
     },
     "overview": {
-      "title": "Przegląd",
+      "title": "Podsumowanie",
       "nutrition": "Odżywianie",
       "finance": "Wydatki w miesiącu",
       "week": "Tydzień",
       "noExpenses": "Brak wydatków",
-      "weekValue": "{{done}} z {{total}}"
+      "weekValue": "{{done}} z {{total}}",
+      "notes": "Notatki",
+      "tasks": "Zadania",
+      "reviews": "Powtórki",
+      "habits": "Nawyki",
+      "spend": "Wydatki",
+      "tasksCaption": "zrobione w 7 dni",
+      "reviewsCaption": "powtórzone w 7 dni",
+      "streakCaption": "dni z rzędu — najlepsza seria",
+      "kcalCaption": "kcal dziennie, średnia z tygodnia",
+      "spendCaption": "w tym miesiącu"
     },
     "start": {
       "title": "Na start",
@@ -1341,6 +1371,27 @@
       "material": "Zapisz materiał do powtórki",
       "reminders": "Włącz przypomnienia",
       "hide": "Ukryj"
+    },
+    "greeting": {
+      "morning": "Dzień dobry, {{name}}",
+      "day": "Dzień dobry, {{name}}",
+      "evening": "Dobry wieczór, {{name}}",
+      "night": "Dobranoc, {{name}}"
+    },
+    "discover": {
+      "title": "Dodaj na start",
+      "hint": "Włącz jeszcze jedną sekcję — od razu pojawi się tutaj. Nic innego się nie zmienia.",
+      "enable": "Włącz",
+      "all": "Wszystkie sekcje",
+      "failed": "Nie udało się włączyć. Spróbuj ponownie.",
+      "why": {
+        "tasks": "Plan dnia do odhaczania",
+        "review": "Powtórki w 3., 7. i 30. dniu",
+        "notes": "Zapisz myśl i znajdź ją później",
+        "habits": "Odhaczaj codziennie i trzymaj serię",
+        "finance": "Wydatki i przychody w miesiącu",
+        "nutrition": "Kalorie, woda, kroki i waga"
+      }
     }
   }
 }

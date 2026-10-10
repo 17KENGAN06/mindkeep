@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -67,7 +75,7 @@ export function MaterialDetailScreen() {
   }
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
@@ -75,10 +83,13 @@ export function MaterialDetailScreen() {
       {isError ? <InlineQueryError error={materialQuery.error} /> : null}
       <View style={styles.head}>
         <Text style={[styles.title, { color: colors.ink }]}>{material.title}</Text>
-        <Badge
-          tone={material.status === 'ARCHIVED' ? 'neutral' : 'brand'}
-          label={t(`materials.status.${material.status}`)}
-        />
+        {/* Wrapped: the row must not stretch the pill to the height of a long title. */}
+        <View style={styles.status}>
+          <Badge
+            tone={material.status === 'ARCHIVED' ? 'neutral' : 'brand'}
+            label={t(`materials.status.${material.status}`)}
+          />
+        </View>
       </View>
       <Text style={[styles.meta, { color: colors.muted }]}>
         {t('materials.learnedAt')}: {formatDate(material.learnedAt, language)}
@@ -150,27 +161,36 @@ export function MaterialDetailScreen() {
         ) : null}
         <AppButton variant="danger" label={t('common.delete')} onPress={confirmDelete} />
       </View>
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
-  head: { flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
-  title: { flex: 1, fontSize: 24, fontFamily: fonts.display },
+  head: { alignItems: 'flex-start', flexDirection: 'row', gap: 12, justifyContent: 'space-between' },
+  title: { flex: 1, fontSize: 24, fontFamily: fonts.display, lineHeight: 30 },
+  // Centres the pill on the title's first line.
+  status: { justifyContent: 'center', minHeight: 30 },
   meta: { fontFamily: fonts.regular, fontSize: 13 },
   labelChip: {
+    alignItems: 'center',
     alignSelf: 'flex-start',
-    borderRadius: 16,
+    borderRadius: 999,
     borderWidth: 1,
     flexDirection: 'row',
     gap: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    minHeight: 36,
+    paddingHorizontal: 14,
   },
-  labelKey: { fontSize: 12, fontFamily: fonts.bold, letterSpacing: 0.4, textTransform: 'uppercase' },
-  labelValue: { fontSize: 14, fontFamily: fonts.bold },
+  labelKey: {
+    fontFamily: fonts.bold,
+    fontSize: 11,
+    includeFontPadding: false,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
+  labelValue: { fontFamily: fonts.semibold, fontSize: 14, includeFontPadding: false },
   sectionHead: {
     borderRadius: 14,
     borderWidth: 1,

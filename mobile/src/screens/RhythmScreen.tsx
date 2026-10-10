@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { SectionScrollView } from '../components/SectionScrollView';
 import { useTranslation } from 'react-i18next';
 import { AppIcon } from '../components/AppIcon';
 import { InlineQueryError } from '../components/QueryState';
@@ -162,7 +170,7 @@ export function RhythmScreen() {
   };
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       style={[styles.root, { backgroundColor: colors.bg }]}
       contentContainerStyle={styles.content}
@@ -229,7 +237,7 @@ export function RhythmScreen() {
           ))}
         </View>
       )}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

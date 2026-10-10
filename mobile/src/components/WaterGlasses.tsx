@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppIcon } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
+import { glow } from '../utils/glow';
 
 type WaterGlassesProps = {
   glasses: number;
@@ -33,19 +34,31 @@ export function WaterGlasses({ glasses, goal, disabled = false, onChange }: Wate
         accessibilityState={{ checked: filled }}
         disabled={disabled}
         onPress={() => onChange(filled ? index : next)}
-        style={[
+        style={({ pressed }) => [
           styles.slot,
+          // Filled glasses match the marked days of the steps calendar: solid brand with a glow.
           filled
-            ? { backgroundColor: `${colors.brand}2E`, borderColor: `${colors.brand}73` }
+            ? [
+                {
+                  backgroundColor: colors.brand,
+                  borderColor: colors.brand,
+                  ...glow(colors.brand, { y: 3, blur: 10, opacity: 0.4, spread: -2 }),
+                },
+              ]
             : isGoal
-              ? { backgroundColor: colors.panel, borderColor: `${colors.brand}66` }
-              : { backgroundColor: colors.panel, borderColor: colors.line },
+              ? {
+                  backgroundColor: `${colors.panel}e6`,
+                  borderColor: `${colors.brand}8c`,
+                  borderStyle: 'dashed',
+                }
+              : { backgroundColor: `${colors.panel}e6`, borderColor: colors.line },
+          pressed && styles.slotPressed,
           disabled && styles.slotDisabled,
         ]}
       >
         <AppIcon
           name={filled ? 'water' : 'water-outline'}
-          color={filled ? colors.brand : colors.muted}
+          color={filled ? colors.onBrand : colors.muted}
           size={20}
         />
       </Pressable>
@@ -84,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     maxHeight: 48,
   },
+  slotPressed: { transform: [{ scale: 0.94 }] },
   pad: { flex: 1 },
   slotDisabled: { opacity: 0.5 },
 });

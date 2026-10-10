@@ -1,5 +1,12 @@
 import { useLayoutEffect } from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { PullRefreshControl } from '../../components/PullRefreshControl';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
@@ -102,12 +109,12 @@ export function AdminUserScreen() {
   const max = Math.max(...timeline.map((point) => point.count), 1);
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl
-          refreshing={activityQuery.isRefetching && !activityQuery.isLoading}
+        <PullRefreshControl
+          busy={activityQuery.isRefetching && !activityQuery.isLoading}
           onRefresh={() => {
             void activityQuery.refetch();
           }}
@@ -216,7 +223,7 @@ export function AdminUserScreen() {
           </View>
         ))
       )}
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

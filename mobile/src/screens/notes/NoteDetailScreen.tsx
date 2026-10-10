@@ -1,4 +1,12 @@
-import { ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { SectionScrollView } from '../../components/SectionScrollView';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -62,7 +70,7 @@ export function NoteDetailScreen() {
   const note = noteQuery.data;
 
   return (
-    <ScrollView
+    <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={pull.refreshing} onRefresh={pull.onRefresh} tintColor={colors.brand} />}
@@ -90,7 +98,7 @@ export function NoteDetailScreen() {
           onPress={confirmDelete}
         />
       </View>
-    </ScrollView>
+    </SectionScrollView>
   );
 }
 

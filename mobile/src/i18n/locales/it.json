@@ -408,7 +408,7 @@
     "markImportant": "Segna come molto importante",
     "unmarkImportant": "Rimuovi importanza",
     "important": "Importante",
-    "importantHint": "Compare subito nelle notifiche",
+    "importantHint": "Riceverai una notifica push sul telefono e comparirà nella campanella",
     "minShort": "min",
     "import": "Importa",
     "importTitle": "Importa attività",
@@ -490,7 +490,7 @@
   },
   "notifications": {
     "title": "Notifiche",
-    "subtitle": "Attività importanti, ripassi di oggi e ritardi — la campanella li tiene in vista.",
+    "subtitle": "Ripassi, arretrati e attività importanti: tutto qui. Sul telefono arriva una notifica push solo per le attività importanti.",
     "menuHint": "Ripassi non letti e messaggi di sistema.",
     "unreadCount": "Non lette: {{count}}",
     "markAllRead": "Segna tutte come lette",
@@ -519,22 +519,38 @@
     "dueCount": "{{count}} oggi",
     "overdueCount": "{{count}} in ritardo",
     "push": {
-      "promptTitle": "Ricevere promemoria in tempo?",
-      "promptBody": "Mindkeep ti ricorda al mattino i ripassi di oggi e le attività importanti. Solo ciò che hai pianificato.",
+      "promptTitle": "Ti ricordiamo le cose importanti?",
+      "promptBody": "Le notifiche push arrivano solo per le attività contrassegnate come «importante»: il giorno prima e il giorno stesso, all’ora che scegli. I ripassi non disturbano: aspettano nella campanella dell’app.",
       "enable": "Attiva i promemoria",
       "later": "Non ora",
       "settingsTitle": "Promemoria sul telefono",
-      "settingsHint": "Al mattino all'ora scelta: ripassi di oggi e attività importanti.",
+      "settingsHint": "Solo per le attività contrassegnate come «importante».",
       "toggle": "Invia promemoria",
       "time": "Ora del promemoria",
       "denied": "Le notifiche sono disattivate nelle impostazioni del telefono.",
       "openSettings": "Apri impostazioni",
-      "todayTitle": "Oggi in Mindkeep",
-      "reviews": "Da ripassare: {{count}}",
-      "important": "Attività importanti: {{count}}",
-      "overdueTitle": "Hai ripassi in ritardo",
-      "overdueBody": "In ritardo: {{count}}. Torna prima di dimenticare.",
-      "channel": "Promemoria"
+      "todayTitle": "Importante oggi",
+      "channel": "Promemoria",
+      "ruleImportantTitle": "Attività importanti — sul telefono",
+      "ruleImportantText": "Una notifica push per le attività «importante»: il giorno prima e/o il giorno stesso, all’ora scelta.",
+      "ruleBellTitle": "Ripassi — nella campanella",
+      "ruleBellText": "Ripassi e arretrati non arrivano mai sul telefono. Aspettano nella campanella della home.",
+      "needTasks": "La sezione Attività è disattivata: non c’è nulla da ricordare. Attivala qui sopra.",
+      "when": "Quando avvisare",
+      "dayBefore": "Il giorno prima",
+      "dayBeforeHint": "Un avviso in anticipo per prepararti",
+      "onTheDay": "Il giorno dell’attività",
+      "onTheDayHint": "Il giorno stesso, all’ora scelta",
+      "noneChosen": "Scegli almeno un’opzione, altrimenti non arriveranno promemoria.",
+      "hours": "Ore",
+      "minutes": "Minuti",
+      "tomorrowTitle": "Importante domani",
+      "todayLine": "Oggi: {{count}}",
+      "tomorrowLine": "Domani: {{count}}",
+      "pointImportant": "Solo attività importanti",
+      "pointWhen": "Il giorno prima e il giorno",
+      "timeHint": "Scorri ore e minuti",
+      "unavailable": "I promemoria non sono disponibili in Expo Go su Android. Provali nell’app installata (APK)."
     }
   },
   "finance": {
@@ -1304,7 +1320,8 @@
       "tasks": "Attività",
       "reviews": "Ripassi",
       "calories": "Calorie",
-      "water": "Acqua"
+      "water": "Acqua",
+      "habits": "Abitudini"
     },
     "now": {
       "title": "Adesso",
@@ -1318,21 +1335,34 @@
       "doneToday": "Fatto oggi: {{count}}",
       "reviews": "Ripassi",
       "tasks": "Attività",
-      "all": "Tutti"
+      "all": "Tutti",
+      "habits": "Abitudini"
     },
     "quick": {
       "water": "Acqua +1",
       "meal": "Pasto",
       "scan": "Scan cibo",
-      "expense": "Spesa"
+      "expense": "Spesa",
+      "task": "Attività",
+      "note": "Nota"
     },
     "overview": {
-      "title": "Panoramica",
+      "title": "Riepilogo",
       "nutrition": "Nutrizione",
       "finance": "Spese del mese",
       "week": "Settimana",
       "noExpenses": "Ancora nessuna spesa",
-      "weekValue": "{{done}} su {{total}}"
+      "weekValue": "{{done}} su {{total}}",
+      "notes": "Note",
+      "tasks": "Attività",
+      "reviews": "Ripassi",
+      "habits": "Abitudini",
+      "spend": "Spese",
+      "tasksCaption": "fatte negli ultimi 7 giorni",
+      "reviewsCaption": "ripassati negli ultimi 7 giorni",
+      "streakCaption": "giorni di fila — serie migliore",
+      "kcalCaption": "kcal al giorno, media settimanale",
+      "spendCaption": "questo mese"
     },
     "start": {
       "title": "Per iniziare",
@@ -1341,6 +1371,27 @@
       "material": "Salva un materiale da ripassare",
       "reminders": "Attiva i promemoria",
       "hide": "Nascondi"
+    },
+    "greeting": {
+      "morning": "Buongiorno, {{name}}",
+      "day": "Buon pomeriggio, {{name}}",
+      "evening": "Buonasera, {{name}}",
+      "night": "Buonanotte, {{name}}"
+    },
+    "discover": {
+      "title": "Aggiungi alla home",
+      "hint": "Attiva un’altra sezione e comparirà subito qui. Nient’altro cambia.",
+      "enable": "Attiva",
+      "all": "Tutte le sezioni",
+      "failed": "Attivazione non riuscita. Riprova.",
+      "why": {
+        "tasks": "Un piano del giorno da spuntare",
+        "review": "Ripassi al giorno 3, 7 e 30",
+        "notes": "Annota un’idea e ritrovala dopo",
+        "habits": "Spunta ogni giorno e tieni la serie",
+        "finance": "Spese ed entrate del mese",
+        "nutrition": "Calorie, acqua, passi e peso"
+      }
     }
   }
 }

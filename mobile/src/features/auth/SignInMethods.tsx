@@ -16,12 +16,15 @@ function MethodRow({
   title,
   status,
   on,
+  action,
   children,
 }: {
   icon: ReactNode;
   title: string;
   status: string;
   on: boolean;
+  /** Compact button at the right end of the row. */
+  action?: ReactNode;
   children?: ReactNode;
 }) {
   const { colors } = useTheme();
@@ -35,6 +38,7 @@ function MethodRow({
             {status}
           </Text>
         </View>
+        {action}
       </View>
       {children}
     </View>
@@ -105,22 +109,26 @@ export function SignInMethods() {
         title={t('auth.methods.google')}
         status={hasGoogle ? t('auth.methods.googleOn') : t('auth.methods.googleOff')}
         on={hasGoogle}
+        action={
+          hasGoogle ? (
+            <AppButton
+              size="small"
+              variant="secondary"
+              label={t('auth.methods.disconnect')}
+              loading={busy}
+              disabled={!hasPassword}
+              onPress={() => void onDisconnect()}
+            />
+          ) : (
+            <AppButton
+              size="small"
+              label={busy ? t('auth.methods.connecting') : t('auth.methods.connect')}
+              loading={busy}
+              onPress={() => void onConnect()}
+            />
+          )
+        }
       >
-        {hasGoogle ? (
-          <AppButton
-            variant="secondary"
-            label={t('auth.methods.disconnect')}
-            loading={busy}
-            disabled={!hasPassword}
-            onPress={() => void onDisconnect()}
-          />
-        ) : (
-          <AppButton
-            label={busy ? t('auth.methods.connecting') : t('auth.methods.connect')}
-            loading={busy}
-            onPress={() => void onConnect()}
-          />
-        )}
         {hasGoogle && !hasPassword ? (
           <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.methods.disconnectNeedsPassword')}</Text>
         ) : null}
