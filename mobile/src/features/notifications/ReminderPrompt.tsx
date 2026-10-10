@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, Modal, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon } from '../../components/AppIcon';
+import { AppButton } from '../../components/ui';
 import { GradientIcon } from '../../components/GradientIcon';
 import { fonts } from '../../config/fonts';
 import { useTheme } from '../theme/useTheme';
 import { requestPermission } from './localReminders';
+import { phoneRemindersAvailable } from './notificationsModule';
 import { updateReminderSettings, useReminderSettings } from './useLocalReminders';
 
 /**
@@ -17,7 +19,7 @@ import { updateReminderSettings, useReminderSettings } from './useLocalReminders
 export function ReminderPrompt() {
   const settings = useReminderSettings();
   const [dismissed, setDismissed] = useState(false);
-  const visible = settings !== null && !settings.asked && !dismissed;
+  const visible = phoneRemindersAvailable && settings !== null && !settings.asked && !dismissed;
 
   return (
     <Modal visible={visible} transparent animationType="fade" statusBarTranslucent navigationBarTranslucent>
@@ -79,9 +81,8 @@ function PromptBody({ onDone }: { onDone: () => void }) {
         <View style={styles.points}>
           {(
             [
-              { icon: 'school-outline', text: t('notifications.bellToday') },
-              { icon: 'flag', text: t('notifications.bellImportant') },
-              { icon: 'calendar-outline', text: '09:00' },
+              { icon: 'flag', text: t('notifications.push.pointImportant') },
+              { icon: 'calendar-outline', text: t('notifications.push.pointWhen') },
             ] as const
           ).map((point) => (
             <View key={point.text} style={[styles.point, { backgroundColor: `${colors.panel}e6`, borderColor: colors.line }]}>
@@ -93,22 +94,20 @@ function PromptBody({ onDone }: { onDone: () => void }) {
           ))}
         </View>
 
-        <Pressable
-          accessibilityRole="button"
-          disabled={busy}
+        <AppButton
+          size="large"
+          label={t('notifications.push.enable')}
+          loading={busy}
           onPress={() => void finish(true)}
-          style={({ pressed }) => [styles.primary, { backgroundColor: colors.brand }, (pressed || busy) && styles.pressed]}
-        >
-          <Text style={[styles.primaryText, { color: colors.onBrand }]}>{t('notifications.push.enable')}</Text>
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          disabled={busy}
-          onPress={() => void finish(false)}
-          style={({ pressed }) => [styles.secondary, pressed && styles.pressed]}
-        >
-          <Text style={[styles.secondaryText, { color: colors.muted }]}>{t('notifications.push.later')}</Text>
-        </Pressable>
+        />
+        <View style={styles.later}>
+          <AppButton
+            variant="ghost"
+            label={t('notifications.push.later')}
+            disabled={busy}
+            onPress={() => void finish(false)}
+          />
+        </View>
       </Animated.View>
     </View>
   );
@@ -140,9 +139,5 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
   },
   pointText: { flexShrink: 1, fontFamily: fonts.semibold, fontSize: 12.5 },
-  primary: { alignItems: 'center', borderRadius: 18, justifyContent: 'center', minHeight: 56 },
-  primaryText: { fontFamily: fonts.semibold, fontSize: 16 },
-  secondary: { alignItems: 'center', justifyContent: 'center', marginTop: 6, minHeight: 48 },
-  secondaryText: { fontFamily: fonts.semibold, fontSize: 15 },
-  pressed: { opacity: 0.85 },
+  later: { marginTop: 6 },
 });

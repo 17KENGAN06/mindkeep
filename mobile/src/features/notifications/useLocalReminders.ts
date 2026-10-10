@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import * as Notifications from 'expo-notifications';
+import type { NotificationResponse } from 'expo-notifications';
 import { useTranslation } from 'react-i18next';
-import { useOverdueReminders, useTodayReminders, useUpcomingReminders } from '../reminders/useReminders';
+import { userHasModule } from '../../config/appModules';
+import { useAuth } from '../auth/useAuth';
+import { useTasksPeriod } from '../tasks/useDailyTasks';
 import { useAccountToday } from '../time/useAccountToday';
-import { useNotifications } from './useNotifications';
 import {
   DEFAULT_REMINDER_SETTINGS,
   loadReminderSettings,
@@ -11,6 +12,11 @@ import {
   scheduleReminders,
   type ReminderSettings,
 } from './localReminders';
+import { getNotifications } from './notificationsModule';
+
+// Fixed for the app's lifetime, so picking the hook once keeps the hook order stable.
+const useLastResponse: () => NotificationResponse | null | undefined =
+  getNotifications()?.useLastNotificationResponse ?? (() => null);
 
 // One shared copy of the settings, so Settings and the scheduler see the same values.
 let current: ReminderSettings | null = null;
@@ -52,19 +58,23 @@ export function useReminderSettings(): ReminderSettings | null {
 export type ReminderTarget = 'ReviewInbox' | 'TasksHome';
 
 /**
- * Keeps the on-device schedule in step with the account's reviews and important tasks, and
- * opens the right section when a reminder is tapped. Mount once inside the signed-in app.
+ * Keeps the on-device schedule in step with the account's important tasks (this month and the
+ * next, enough for the 30-day horizon) and opens the right section when a reminder is tapped.
+ * Reviews are not scheduled: they stay in the in-app bell. Mount once inside the signed-in app.
  */
 export function useLocalReminderSync(onOpen: (target: ReminderTarget) => void) {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const settings = useReminderSettings();
-  const { timeZone } = useAccountToday();
-  const today = useTodayReminders();
-  const upcoming = useUpcomingReminders();
-  const overdue = useOverdueReminders();
-  const inbox = useNotifications();
+  const { timeZone, year, month } = useAccountToday();
+  const withTasks = userHasModule(user, 'tasks');
+  const wanted = withTasks && Boolean(settings?.enabled);
+  const nextYear = month === 12 ? year + 1 : year;
+  const nextMonth = month === 12 ? 1 : month + 1;
+  const thisMonthTasks = useTasksPeriod(year, month, wanted);
+  const nextMonthTasks = useTasksPeriod(nextYear, nextMonth, wanted);
 
-  const ready = settings !== null && today.data && upcoming.data && overdue.data && inbox.data;
+  const ready = settings !== null && (!wanted || (thisMonthTasks.data && nextMonthTasks.data));
   useEffect(() => {
     if (!ready || !settings) return;
     // Small delay: several queries often settle at once after a refresh.
@@ -72,18 +82,17 @@ export function useLocalReminderSync(onOpen: (target: ReminderTarget) => void) {
       void scheduleReminders({
         settings,
         timeZone,
-        today: today.data ?? [],
-        upcoming: upcoming.data ?? [],
-        overdue: overdue.data ?? [],
-        notifications: inbox.data?.notifications ?? [],
+        tasks: wanted
+          ? [...(thisMonthTasks.data?.tasks ?? []), ...(nextMonthTasks.data?.tasks ?? [])]
+          : [],
         t,
       }).catch(() => undefined);
     }, 400);
     return () => clearTimeout(timer);
-  }, [ready, settings, timeZone, today.data, upcoming.data, overdue.data, inbox.data, t, i18n.language]);
+  }, [ready, settings, timeZone, wanted, thisMonthTasks.data, nextMonthTasks.data, t, i18n.language]);
 
   // Tapped reminder (also the one that launched the app).
-  const lastResponse = Notifications.useLastNotificationResponse();
+  const lastResponse = useLastResponse();
   const handled = useRef<string | null>(null);
   const openRef = useRef(onOpen);
   openRef.current = onOpen;
