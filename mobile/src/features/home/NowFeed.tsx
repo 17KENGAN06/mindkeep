@@ -20,18 +20,25 @@ const VISIBLE = 3;
 
 export type NowItem =
   | { kind: 'overdue' | 'review'; id: string; title: string; materialId: string }
-  | { kind: 'task'; id: string; title: string; minutes: number; important: boolean };
+  | { kind: 'task'; id: string; title: string; minutes: number; important: boolean }
+  | { kind: 'habit'; id: string; title: string; streak: number };
 
 type ReviewItem = Extract<NowItem, { kind: 'overdue' | 'review' }>;
 type TaskItem = Extract<NowItem, { kind: 'task' }>;
+type HabitItem = Extract<NowItem, { kind: 'habit' }>;
 
 type NowFeedProps = {
-  /** Already in urgency order: overdue reviews, today's reviews; important tasks, the rest. */
+  /** Already in urgency order: overdue reviews, today's reviews; important tasks, the rest; habits not ticked today. */
   items: NowItem[];
   /** Tasks already ticked today (shown as a quiet line under the list). */
   doneToday: number;
+  /** Shown under "All done" instead of the generic hint: what the day added up to. */
+  doneSummary?: string | null;
   busyTaskId: string | null;
   onToggleTask: (id: string) => void;
+  busyHabitId?: string | null;
+  onCheckHabit?: (id: string) => void;
+  onOpenHabits?: () => void;
   onOpenReview: (materialId: string) => void;
   onOpenReviews: () => void;
   onOpenTasks: () => void;
@@ -112,15 +119,22 @@ function Group<T extends { id: string; kind: string }>({
 export function NowFeed({
   items,
   doneToday,
+  doneSummary,
   busyTaskId,
   onToggleTask,
+  busyHabitId = null,
+  onCheckHabit,
+  onOpenHabits,
   onOpenReview,
   onOpenReviews,
   onOpenTasks,
 }: NowFeedProps) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const reviews = items.filter((item): item is ReviewItem => item.kind !== 'task');
+  const reviews = items.filter(
+    (item): item is ReviewItem => item.kind === 'overdue' || item.kind === 'review',
+  );
+  const habits = items.filter((item): item is HabitItem => item.kind === 'habit');
   const tasks = items.filter((item): item is TaskItem => item.kind === 'task');
 
   const reviewRow = (item: ReviewItem) => {
@@ -172,6 +186,29 @@ export function NowFeed({
     </Pressable>
   );
 
+  const habitRow = (item: HabitItem) => (
+    <Pressable
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: false, busy: busyHabitId === item.id }}
+      disabled={busyHabitId === item.id}
+      onPress={() => onCheckHabit?.(item.id)}
+      style={({ pressed }) => [styles.row, pressed && { backgroundColor: `${colors.brand}0f` }]}
+    >
+      <View style={[styles.check, styles.round, { borderColor: `${colors.brand}8c` }]}>
+        {busyHabitId === item.id ? <ActivityIndicator size="small" color={colors.brand} /> : null}
+      </View>
+      <Text style={[styles.title, { color: colors.ink }]} numberOfLines={1}>
+        {item.title}
+      </Text>
+      {item.streak > 0 ? (
+        <View style={[styles.tag, { backgroundColor: `${colors.warn}1f` }]}>
+          <AppIcon name="flame-outline" color={colors.warn} size={12} />
+          <Text style={[styles.tagText, { color: colors.warn }]}>{item.streak}</Text>
+        </View>
+      ) : null}
+    </Pressable>
+  );
+
   return (
     <View style={[styles.card, { backgroundColor: colors.panel }]}>
       <CardSheen glow={0.16} radius={CARD_RADIUS} />
@@ -185,7 +222,7 @@ export function NowFeed({
               {t('todayHub.now.allDone')}
             </Text>
             <Text style={[styles.doneHint, { color: colors.muted }]}>
-              {t('todayHub.now.allDoneHint')}
+              {doneSummary || t('todayHub.now.allDoneHint')}
             </Text>
           </View>
         </View>
@@ -210,10 +247,19 @@ export function NowFeed({
               renderRow={taskRow}
             />
           ) : null}
+          {habits.length > 0 ? (
+            <Group
+              icon="repeat-outline"
+              title={t('todayHub.now.habits')}
+              items={habits}
+              onOpenAll={() => onOpenHabits?.()}
+              renderRow={habitRow}
+            />
+          ) : null}
         </View>
       )}
 
-      {doneToday > 0 ? (
+      {doneToday > 0 && items.length > 0 ? (
         <Text style={[styles.doneToday, { color: colors.muted }]}>
           {t('todayHub.now.doneToday', { count: doneToday })}
         </Text>
@@ -276,6 +322,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 24,
   },
+  round: { borderRadius: 999 },
   title: { flex: 1, fontFamily: fonts.medium, fontSize: 15 },
   meta: { fontFamily: fonts.medium, fontSize: 12 },
   tag: {

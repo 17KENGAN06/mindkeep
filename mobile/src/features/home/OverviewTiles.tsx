@@ -15,12 +15,19 @@ export type OverviewTile = {
   icon: AppIconName;
   label: string;
   value: string;
-  /** Value is a placeholder ("no expenses yet"): shown quieter. */
+  /** Small line under the number that says what it counts and over which period. */
+  caption?: string;
+  /** 0–1: thin bar under the number (share of the week's tasks done). */
+  progress?: number;
+  /** Nothing to count yet: the number is shown quieter. */
   muted?: boolean;
   onPress: () => void;
 };
 
-/** "Overview": one small tile per section with its headline number; collapsible and remembered. */
+/**
+ * "Summary": one tile per enabled section, two per row — section name, one big number and a
+ * caption with its period. Collapsible; the choice is remembered.
+ */
 export function OverviewTiles({ tiles }: { tiles: OverviewTile[] }) {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -80,22 +87,39 @@ export function OverviewTiles({ tiles }: { tiles: OverviewTile[] }) {
                 <>
                   <CardSheen glow={pressed ? 0.3 : 0.12} radius={TILE_RADIUS} />
                   <View style={styles.tileHead}>
-                    <AppIcon name={tile.icon} color={colors.brand} size={15} />
-                    <Text style={[styles.label, { color: colors.muted }]} numberOfLines={1}>
+                    <View style={[styles.iconChip, { backgroundColor: `${colors.brand}1f` }]}>
+                      <AppIcon name={tile.icon} color={colors.brand} size={15} />
+                    </View>
+                    <Text style={[styles.label, { color: colors.ink }]} numberOfLines={1}>
                       {tile.label}
                     </Text>
                   </View>
                   <Text
-                    style={[
-                      styles.value,
-                      { color: tile.muted ? colors.muted : colors.ink },
-                      tile.muted && styles.valueMuted,
-                    ]}
+                    style={[styles.value, { color: tile.muted ? colors.muted : colors.ink }]}
                     numberOfLines={1}
                     adjustsFontSizeToFit
+                    minimumFontScale={0.7}
                   >
                     {tile.value}
                   </Text>
+                  {tile.progress !== undefined ? (
+                    <View style={[styles.track, { backgroundColor: colors.line }]}>
+                      <View
+                        style={[
+                          styles.bar,
+                          {
+                            backgroundColor: colors.brand,
+                            width: `${Math.round(Math.max(0, Math.min(1, tile.progress)) * 100)}%`,
+                          },
+                        ]}
+                      />
+                    </View>
+                  ) : null}
+                  {tile.caption ? (
+                    <Text style={[styles.caption, { color: colors.muted }]} numberOfLines={2}>
+                      {tile.caption}
+                    </Text>
+                  ) : null}
                 </>
               )}
             </Pressable>
@@ -120,15 +144,24 @@ const styles = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   tile: {
     borderRadius: TILE_RADIUS,
-    flexBasis: '30%',
+    flexBasis: '45%',
     flexGrow: 1,
-    gap: 8,
-    minHeight: 82,
+    gap: 6,
+    minHeight: 112,
     overflow: 'hidden',
-    padding: 12,
+    padding: 14,
   },
-  tileHead: { alignItems: 'center', flexDirection: 'row', gap: 6 },
-  label: { flexShrink: 1, fontFamily: fonts.medium, fontSize: 12 },
-  value: { fontFamily: fonts.display, fontSize: 16, letterSpacing: -0.3 },
-  valueMuted: { fontFamily: fonts.medium, fontSize: 13 },
+  tileHead: { alignItems: 'center', flexDirection: 'row', gap: 8, marginBottom: 2 },
+  iconChip: {
+    alignItems: 'center',
+    borderRadius: 9,
+    height: 26,
+    justifyContent: 'center',
+    width: 26,
+  },
+  label: { flexShrink: 1, fontFamily: fonts.semibold, fontSize: 13.5 },
+  value: { fontFamily: fonts.display, fontSize: 24, letterSpacing: -0.5 },
+  track: { borderRadius: 999, height: 4, overflow: 'hidden' },
+  bar: { borderRadius: 999, height: 4 },
+  caption: { fontFamily: fonts.regular, fontSize: 12, lineHeight: 16 },
 });

@@ -2,7 +2,7 @@ import { createBottomTabNavigator, type BottomTabNavigationProp } from '@react-n
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DarkTheme, DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { needsOnboarding } from '../config/appModules';
 import { mapAuthError } from '../features/auth/mapAuthError';
@@ -18,6 +18,7 @@ import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
 import { OnboardingScreen } from '../screens/onboarding/OnboardingScreen';
 import { TodayScreen } from '../screens/TodayScreen';
 import { QuickAddSheet } from '../features/quickAdd/QuickAddSheet';
+import { QuickAddContext, type OpenQuickAdd } from '../features/quickAdd/quickAddContext';
 import { ReminderPrompt } from '../features/notifications/ReminderPrompt';
 import { useLocalReminderSync } from '../features/notifications/useLocalReminders';
 import { AmbientGlow } from '../components/AmbientGlow';
@@ -70,13 +71,19 @@ function AppTabs() {
   const unreadQuery = useUnreadNotificationsCount();
   const unread = unreadQuery.data ?? 0;
   const badge = unread > 0 ? (unread > 99 ? '99+' : unread) : undefined;
-  const [quickAddOpen, setQuickAddOpen] = useState(false);
+  // null = closed; task = opened from a shortcut that goes straight to the task form.
+  const [quickAdd, setQuickAdd] = useState<{ task: boolean } | null>(null);
+  const openQuickAdd = useCallback<OpenQuickAdd>(
+    (options) => setQuickAdd({ task: Boolean(options?.task) }),
+    [],
+  );
 
   return (
     <View style={[styles.tabsRoot, { backgroundColor: colors.bg }]}>
       <AmbientGlow />
+      <QuickAddContext.Provider value={openQuickAdd}>
       <Tabs.Navigator
-        tabBar={(props) => <AppTabBar {...props} badge={badge} onAdd={() => setQuickAddOpen(true)} />}
+        tabBar={(props) => <AppTabBar {...props} badge={badge} onAdd={() => openQuickAdd()} />}
         screenOptions={{ headerShown: false }}
       >
         <Tabs.Screen name="Today" component={TodayScreen} options={{ tabBarLabel: t('tabs.home') }} />
@@ -84,7 +91,12 @@ function AppTabs() {
         <Tabs.Screen name="Add" component={EmptyScreen} options={{ tabBarLabel: t('tabs.add') }} />
         <Tabs.Screen name="More" component={MoreNavigator} options={{ tabBarLabel: t('tabs.sections') }} />
       </Tabs.Navigator>
-      <QuickAddRoot open={quickAddOpen} onClose={() => setQuickAddOpen(false)} />
+      </QuickAddContext.Provider>
+      <QuickAddRoot
+        open={quickAdd !== null}
+        startWithTask={quickAdd?.task ?? false}
+        onClose={() => setQuickAdd(null)}
+      />
       <RemindersRoot />
     </View>
   );
@@ -99,11 +111,20 @@ function RemindersRoot() {
 }
 
 /** Lives inside the tabs so it can navigate into the Sections stack. */
-function QuickAddRoot({ open, onClose }: { open: boolean; onClose: () => void }) {
+function QuickAddRoot({
+  open,
+  startWithTask,
+  onClose,
+}: {
+  open: boolean;
+  startWithTask: boolean;
+  onClose: () => void;
+}) {
   const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
   return (
     <QuickAddSheet
       visible={open}
+      startWithTask={startWithTask}
       onClose={onClose}
       onOpen={(target) => {
         const params = 'params' in target ? target.params : undefined;

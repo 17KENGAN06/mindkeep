@@ -80,6 +80,11 @@ export function dateKeyInZone(at: Date, timeZone: string): string {
   return `${parts.year}-${pad2(parts.month)}-${pad2(parts.day)}`;
 }
 
+/** Hour of day (0–23) in an IANA zone; the device hour if the zone is unusable. */
+export function hourInZone(at: Date, timeZone: string): number {
+  return zonedParts(at, timeZone)?.hour ?? at.getHours();
+}
+
 /** Shift a YYYY-MM-DD key by whole days (pure calendar math, no time zone involved). */
 export function shiftDateKey(key: string, days: number): string {
   const [year, month, day] = key.split('-').map(Number);
@@ -163,6 +168,22 @@ export function formatDateLong(value: string | Date, language: AppLanguage = 'en
     month: 'long',
     year: 'numeric',
   }).format(date);
+}
+
+/** "Thursday, 9 October" for a YYYY-MM-DD key (calendar date, no zone shift). */
+export function formatWeekdayDate(dateKey: string, language: AppLanguage = 'en'): string {
+  const date = new Date(
+    Number(dateKey.slice(0, 4)),
+    Number(dateKey.slice(5, 7)) - 1,
+    Number(dateKey.slice(8, 10)),
+  );
+  if (Number.isNaN(date.getTime())) return '';
+  const text = new Intl.DateTimeFormat(intlLocales[language], {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  }).format(date);
+  return text.charAt(0).toLocaleUpperCase(intlLocales[language]) + text.slice(1);
 }
 
 export function formatDate(value: string | Date, language: AppLanguage = 'en'): string {

@@ -7,16 +7,16 @@ import {
   ActivityIndicator,
   Animated,
   Pressable,
-  RefreshControl,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { PullRefreshControl } from '../components/PullRefreshControl';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { BrandMark } from '../components/BrandMark';
 import { TimezoneSuggestion } from '../components/TimezoneSuggestion';
-import { userHasModule } from '../config/appModules';
+import { selectedModules, userHasModule, type AppModule } from '../config/appModules';
 import { useAuth } from '../features/auth/useAuth';
 import { hasAutomation, isProAccount } from '../features/billing/planLimit';
 import {
@@ -25,13 +25,17 @@ import {
   summarizeByCurrency,
 } from '../features/finance/financeUtils';
 import { useFinanceSummary } from '../features/finance/useFinance';
-import { DayRings, type DayRing } from '../features/home/DayRings';
+import { DayRings, type DayRing, type PulseStat } from '../features/home/DayRings';
+import { DiscoverCard } from '../features/home/DiscoverCard';
 import { NowFeed, type NowItem } from '../features/home/NowFeed';
 import { OverviewTiles, type OverviewTile } from '../features/home/OverviewTiles';
 import { QuickActions, type QuickAction } from '../features/home/QuickActions';
 import { StarterCard, type StarterStep } from '../features/home/StarterCard';
 import { useReminderSettings } from '../features/notifications/useLocalReminders';
+import { useNotes } from '../features/notes/useNotes';
 import { useNutritionPeriod, useSetWater } from '../features/nutrition/useNutrition';
+import { useOpenQuickAdd } from '../features/quickAdd/quickAddContext';
+import { useRhythmPeriod, useSetHabitCheck } from '../features/rhythm/useRhythm';
 import { useOverdueReminders, useTodayReminders } from '../features/reminders/useReminders';
 import {
   useActivityStatistics,
@@ -44,29 +48,54 @@ import type { AppLanguage } from '../i18n';
 import { openSectionFromHome } from '../navigation/openSection';
 import type { AppTabParamList, MoreStackParamList } from '../navigation/types';
 import { useAccountToday } from '../features/time/useAccountToday';
-import { dateKeyInZone, lastNKeysFrom } from '../utils/date';
+import { dateKeyInZone, formatWeekdayDate, hourInZone, lastNKeysFrom } from '../utils/date';
 import { firstName } from '../utils/name';
 import { fonts } from '../config/fonts';
 import { AmbientGlow } from '../components/AmbientGlow';
 import { NotificationBell, type BellTarget } from '../features/notifications/NotificationBell';
 import { GlassBackground } from '../components/GlassBackground';
 
+/** Sections suggested on a sparse Home, most useful day to day first. */
+const DISCOVER_ORDER: AppModule[] = ['tasks', 'habits', 'nutrition', 'review', 'notes', 'finance'];
+/** Rings that fit one row; with more, water leaves (its counter stays in quick actions). */
+const MAX_RINGS = 4;
+
+function greetingKey(hour: number): string {
+  if (hour >= 5 && hour < 12) return 'todayHub.greeting.morning';
+  if (hour >= 12 && hour < 18) return 'todayHub.greeting.day';
+  if (hour >= 18 && hour < 23) return 'todayHub.greeting.evening';
+  return 'todayHub.greeting.night';
+}
+
 /**
  * Home, built around the question "what do I do now?":
- * rings (progress at a glance) → "Now" (one prioritised to-do list) → quick logging →
- * a collapsible overview. Details live in the sections; nothing here repeats another block.
+ * day pulse (rings, or headline numbers when no section has a daily goal) → "Now" (one
+ * prioritised to-do list: reviews, tasks, habits) → quick logging → a collapsible overview →
+ * on a sparse Home, an offer to add a section. Every enabled section has a place, nothing
+ * repeats another block, and every block is capped so a full Home never overflows.
  */
 export function TodayScreen() {
   const { t, i18n } = useTranslation();
-  useRefreshOnFocus('statistics', 'tasks', 'nutrition', 'finance', 'notifications');
+  useRefreshOnFocus(
+    'statistics',
+    'tasks',
+    'nutrition',
+    'finance',
+    'notifications',
+    'rhythm',
+    'notes',
+  );
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
-  const { user } = useAuth();
+  const { user, updateWorkspace } = useAuth();
+  const openQuickAdd = useOpenQuickAdd();
   const queryClient = useQueryClient();
   const showTasks = userHasModule(user, 'tasks');
   const showReview = userHasModule(user, 'review');
   const showNutrition = userHasModule(user, 'nutrition');
   const showFinance = userHasModule(user, 'finance');
+  const showHabits = userHasModule(user, 'habits');
+  const showNotes = userHasModule(user, 'notes');
   const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
   const insets = useSafeAreaInsets();
   // The status-bar strip turns into frosted glass as soon as the page scrolls under it.
@@ -88,6 +117,8 @@ export function TodayScreen() {
   const prevTasksQuery = useTasksPeriod(prevYear, prevMonth, showTasks);
   const nutritionQuery = useNutritionPeriod(period.year, period.month, showNutrition);
   const financeQuery = useFinanceSummary(period, showFinance);
+  const rhythmQuery = useRhythmPeriod(period.year, period.month, showHabits);
+  const notesQuery = useNotes({}, showNotes);
   const dashboardQuery = useDashboardStatistics();
   const activityQuery = useActivityStatistics();
   const todayRemindersQuery = useTodayReminders();
@@ -95,7 +126,9 @@ export function TodayScreen() {
   const reminderSettings = useReminderSettings();
   const toggleTask = useToggleTask(today);
   const setWater = useSetWater(period.year, period.month);
+  const setHabitCheck = useSetHabitCheck();
   const [busyTaskId, setBusyTaskId] = useState<string | null>(null);
+  const [busyHabitId, setBusyHabitId] = useState<string | null>(null);
   const [actionError, setActionError] = useState(false);
 
   // Sections opened from Home return here with their back arrow (not to the Sections hub).
@@ -116,6 +149,9 @@ export function TodayScreen() {
   const reviewsDoneToday =
     activityQuery.data?.activity.find((point) => point.date === today)?.count ?? 0;
   const reviewsPlanned = reviewsDoneToday + reviewsLeft;
+  const habits = showHabits ? (rhythmQuery.data?.habits ?? []) : [];
+  const habitsDone = habits.filter((habit) => habit.checks.includes(today)).length;
+  const notes = showNotes ? (notesQuery.data ?? []) : [];
 
   const rings = (
     [
@@ -135,6 +171,15 @@ export function TodayScreen() {
             value: `${reviewsDoneToday}/${reviewsPlanned}`,
             progress: reviewsPlanned > 0 ? reviewsDoneToday / reviewsPlanned : 0,
             onPress: () => open('ReviewInbox'),
+          }
+        : null,
+      showHabits
+        ? {
+            key: 'habits',
+            label: t('todayHub.rings.habits'),
+            value: `${habitsDone}/${habits.length}`,
+            progress: habits.length > 0 ? habitsDone / habits.length : 0,
+            onPress: () => open('Rhythm'),
           }
         : null,
       showNutrition
@@ -157,7 +202,9 @@ export function TodayScreen() {
           }
         : null,
     ] as (DayRing | null)[]
-  ).filter((ring): ring is DayRing => ring !== null);
+  )
+    .filter((ring): ring is DayRing => ring !== null)
+    .filter((ring, _index, all) => all.length <= MAX_RINGS || ring.key !== 'water');
 
   // --- "Now": most urgent first ----------------------------------------------------------------
   const nowItems: NowItem[] = [];
@@ -205,6 +252,21 @@ export function TodayScreen() {
     });
   }
 
+  for (const habit of habits) {
+    if (habit.checks.includes(today)) continue;
+    nowItems.push({ kind: 'habit', id: habit.id, title: habit.title, streak: habit.streak });
+  }
+  // "All done": what the day added up to, instead of an empty card.
+  const doneSummary = [
+    showTasks && todayDone > 0 ? `${t('todayHub.rings.tasks')} ${todayDone}` : null,
+    showReview && reviewsDoneToday > 0
+      ? `${t('todayHub.rings.reviews')} ${reviewsDoneToday}`
+      : null,
+    showHabits && habitsDone > 0 ? `${t('todayHub.rings.habits')} ${habitsDone}` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
   // --- Quick logging ---------------------------------------------------------------------------
   const onAddWater = () => {
     setActionError(false);
@@ -220,7 +282,7 @@ export function TodayScreen() {
             icon: 'water-outline' as const,
             label: t('todayHub.quick.water'),
             value: `${glasses}/${waterGoal}`,
-            busy: setWater.isPending,
+            // Never blocked: each tap shows at once and is queued (useSetWater).
             onPress: onAddWater,
           }
         : null,
@@ -240,12 +302,28 @@ export function TodayScreen() {
             onPress: () => open('Fuel'),
           }
         : null,
+      showTasks
+        ? {
+            key: 'task',
+            icon: 'checkbox-outline' as const,
+            label: t('todayHub.quick.task'),
+            onPress: () => openQuickAdd({ task: true }),
+          }
+        : null,
       showFinance
         ? {
             key: 'expense',
             icon: 'wallet-outline' as const,
             label: t('todayHub.quick.expense'),
             onPress: () => open('Finance'),
+          }
+        : null,
+      showNotes
+        ? {
+            key: 'note',
+            icon: 'document-text-outline' as const,
+            label: t('todayHub.quick.note'),
+            onPress: () => open('NoteCreate'),
           }
         : null,
     ] as (QuickAction | null)[]
@@ -265,45 +343,121 @@ export function TodayScreen() {
   const mainExpense = summarizeByCurrency(financeQuery.data?.operations ?? []).find(
     (bucket) => bucket.expense > 0,
   );
+  const spendValue = mainExpense
+    ? formatMoney(mainExpense.expense, language, mainExpense.currency)
+    : null;
+  // Without rings (only budget / notes on) the pulse card shows these headline numbers instead,
+  // and the summary leaves them out so nothing appears twice.
+  const pulseStats: PulseStat[] =
+    rings.length === 0
+      ? ([
+          showFinance
+            ? {
+                key: 'spend',
+                icon: 'wallet-outline',
+                label: t('todayHub.overview.spend'),
+                value: spendValue ?? t('todayHub.overview.noExpenses'),
+                muted: !spendValue,
+                onPress: () => open('Finance'),
+              }
+            : null,
+          showNotes
+            ? {
+                key: 'notes',
+                icon: 'document-text-outline',
+                label: t('todayHub.overview.notes'),
+                value: String(notes.length),
+                onPress: () => open('Notes'),
+              }
+            : null,
+        ].filter((stat) => stat !== null) as PulseStat[])
+      : [];
+  const inPulse = new Set(pulseStats.map((stat) => stat.key));
+  const bestStreak = habits.reduce((best, habit) => Math.max(best, habit.streak), 0);
+  const weekDone = weekTasks.filter((task) => task.completed).length;
+  // Average calories over the days of the last week that have meals logged.
+  const weekKcalByDay = new Map<string, number>();
+  for (const meal of nutritionQuery.data?.meals ?? []) {
+    if (!weekDays.includes(meal.date)) continue;
+    weekKcalByDay.set(meal.date, (weekKcalByDay.get(meal.date) ?? 0) + meal.calories);
+  }
+  const weekKcal = [...weekKcalByDay.values()];
+  const avgKcal =
+    weekKcal.length > 0
+      ? Math.round(weekKcal.reduce((sum, value) => sum + value, 0) / weekKcal.length)
+      : 0;
+  // "Summary": one tile per section, each with its own clear period in the caption.
   const overviewTiles = (
     [
+      showTasks
+        ? {
+            key: 'tasks',
+            icon: 'checkbox-outline' as const,
+            label: t('todayHub.overview.tasks'),
+            value: `${weekDone}/${weekTasks.length}`,
+            caption: t('todayHub.overview.tasksCaption'),
+            progress: weekTasks.length > 0 ? weekDone / weekTasks.length : 0,
+            onPress: () => open('Statistics'),
+          }
+        : null,
+      showReview
+        ? {
+            key: 'reviews',
+            icon: 'school-outline' as const,
+            label: t('todayHub.overview.reviews'),
+            value: String(weekReviews),
+            caption: t('todayHub.overview.reviewsCaption'),
+            muted: weekReviews === 0,
+            onPress: () => open('Statistics'),
+          }
+        : null,
+      showHabits && habits.length > 0
+        ? {
+            key: 'streak',
+            icon: 'flame-outline' as const,
+            label: t('todayHub.overview.habits'),
+            value: String(bestStreak),
+            caption: t('todayHub.overview.streakCaption'),
+            muted: bestStreak === 0,
+            onPress: () => open('Rhythm'),
+          }
+        : null,
       showNutrition
         ? {
-            key: 'nutrition',
+            key: 'kcal',
             icon: 'restaurant-outline' as const,
             label: t('todayHub.overview.nutrition'),
-            value: `${eaten} ${t('today.kcal')}`,
+            value: avgKcal > 0 ? String(avgKcal) : '—',
+            caption: t('todayHub.overview.kcalCaption'),
+            muted: avgKcal === 0,
             onPress: () => open('Fuel'),
           }
         : null,
-      showFinance
+      showFinance && !inPulse.has('spend')
         ? {
-            key: 'finance',
+            key: 'spend',
             icon: 'wallet-outline' as const,
-            label: t('todayHub.overview.finance'),
-            value: mainExpense
-              ? formatMoney(mainExpense.expense, language, mainExpense.currency)
+            label: t('todayHub.overview.spend'),
+            value: spendValue ?? '0',
+            caption: spendValue
+              ? t('todayHub.overview.spendCaption')
               : t('todayHub.overview.noExpenses'),
-            muted: !mainExpense,
+            muted: !spendValue,
             onPress: () => open('Finance'),
-          }
-        : null,
-      showTasks || showReview
-        ? {
-            key: 'week',
-            icon: 'stats-chart-outline' as const,
-            label: t('todayHub.overview.week'),
-            value: showTasks
-              ? t('todayHub.overview.weekValue', {
-                  done: weekTasks.filter((task) => task.completed).length,
-                  total: weekTasks.length,
-                })
-              : String(weekReviews),
-            onPress: () => open('Statistics'),
           }
         : null,
     ] as (OverviewTile | null)[]
   ).filter((tile): tile is OverviewTile => tile !== null);
+
+  // --- Sparse Home: offer one more section ------------------------------------------------------
+  const enabledModules = selectedModules(user);
+  const discoverModules =
+    enabledModules.length <= 2
+      ? DISCOVER_ORDER.filter((module) => !enabledModules.includes(module))
+      : [];
+  const enableModule = async (module: AppModule) => {
+    await updateWorkspace({ enabledModules: [...enabledModules, module] });
+  };
 
   // --- First days ------------------------------------------------------------------------------
   const hasAnyTask = tasks.length > 0 || weekTaskPool.length > 0;
@@ -356,7 +510,9 @@ export function TodayScreen() {
     financeQuery.isRefetching ||
     activityQuery.isRefetching ||
     todayRemindersQuery.isRefetching ||
-    overdueRemindersQuery.isRefetching;
+    overdueRemindersQuery.isRefetching ||
+    rhythmQuery.isRefetching ||
+    notesQuery.isRefetching;
   const error =
     actionError ||
     dashboardQuery.isError ||
@@ -377,6 +533,8 @@ export function TodayScreen() {
     void prevTasksQuery.refetch();
     void todayRemindersQuery.refetch();
     void overdueRemindersQuery.refetch();
+    if (showHabits) void rhythmQuery.refetch();
+    if (showNotes) void notesQuery.refetch();
   };
 
   const onToggle = async (id: string) => {
@@ -388,6 +546,18 @@ export function TodayScreen() {
       setActionError(true);
     } finally {
       setBusyTaskId(null);
+    }
+  };
+
+  const onCheckHabit = async (habitId: string) => {
+    setBusyHabitId(habitId);
+    setActionError(false);
+    try {
+      await setHabitCheck.mutateAsync({ habitId, date: today, done: true });
+    } catch {
+      setActionError(true);
+    } finally {
+      setBusyHabitId(null);
     }
   };
 
@@ -406,7 +576,13 @@ export function TodayScreen() {
     );
   }
 
-  const showFeed = showTasks || showReview;
+  const showFeed = showTasks || showReview || showHabits;
+  // Two lines so a long name never gets cut mid-phrase: a small "Good afternoon" over the name
+  // in large type (which shrinks to fit). The phrase is the greeting with the name left out.
+  const greetingName = firstName(user?.name);
+  const greetingPhrase = t(greetingKey(hourInZone(new Date(), timeZone)), { name: '' })
+    .replace(/[\s,،]+$/u, '')
+    .trim();
   // New account with nothing planned yet: the checklist takes the empty "Now" card's place.
   const starterInsteadOfFeed =
     isNewAccount && nowItems.length === 0 && starterSteps.some((step) => !step.done);
@@ -418,14 +594,14 @@ export function TodayScreen() {
         <AmbientGlow />
         <Animated.ScrollView
           style={styles.scroll}
-          contentContainerStyle={[styles.content, { paddingTop: insets.top + 12 }]}
+          contentContainerStyle={[styles.content, { paddingTop: insets.top + 24 }]}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
             useNativeDriver: true,
           })}
           scrollEventThrottle={16}
           refreshControl={
-            <RefreshControl
-              refreshing={refreshing && !loading}
+            <PullRefreshControl
+              busy={refreshing && !loading}
               onRefresh={onRefresh}
               tintColor={colors.brand}
               progressViewOffset={insets.top}
@@ -437,28 +613,46 @@ export function TodayScreen() {
           <View style={styles.helloRow}>
             <BrandMark size={46} />
             <View style={styles.helloCopy}>
-              <Text style={[styles.hello, { color: colors.ink }]} numberOfLines={1}>
-                {t('today.hello', { name: firstName(user?.name) })}
+              <Text style={[styles.helloPhrase, { color: colors.muted }]} numberOfLines={1}>
+                {greetingName ? `${greetingPhrase},` : greetingPhrase}
               </Text>
-              <Pressable
-                onPress={() => open('Account')}
-                style={[
-                  styles.planChip,
-                  entitled
-                    ? { backgroundColor: colors.brand }
-                    : {
-                        backgroundColor: `${colors.panel}e6`,
-                        borderColor: colors.line,
-                        borderWidth: 1,
-                      },
-                ]}
-              >
+              {greetingName ? (
                 <Text
-                  style={[styles.planChipText, { color: entitled ? colors.onBrand : colors.muted }]}
+                  style={[styles.hello, { color: colors.ink }]}
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.7}
                 >
-                  {entitled ? t('dashboard.planPro') : t('dashboard.planFree')}
+                  {greetingName}
                 </Text>
-              </Pressable>
+              ) : null}
+              <View style={styles.subRow}>
+                <Pressable
+                  onPress={() => open('Account')}
+                  style={[
+                    styles.planChip,
+                    entitled
+                      ? { backgroundColor: colors.brand }
+                      : {
+                          backgroundColor: `${colors.panel}e6`,
+                          borderColor: colors.line,
+                          borderWidth: 1,
+                        },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.planChipText,
+                      { color: entitled ? colors.onBrand : colors.muted },
+                    ]}
+                  >
+                    {entitled ? t('dashboard.planPro') : t('dashboard.planFree')}
+                  </Text>
+                </Pressable>
+                <Text style={[styles.date, { color: colors.muted }]} numberOfLines={1}>
+                  {formatWeekdayDate(today, language)}
+                </Text>
+              </View>
             </View>
             <NotificationBell onOpen={openBellTarget} />
           </View>
@@ -466,15 +660,19 @@ export function TodayScreen() {
             <Text style={[styles.error, { color: colors.danger }]}>{t('today.error')}</Text>
           ) : null}
 
-          <DayRings rings={rings} />
+          <DayRings rings={rings} stats={pulseStats} />
 
           {starterInsteadOfFeed ? <StarterCard steps={starterSteps} /> : null}
           {showFeed && !starterInsteadOfFeed ? (
             <NowFeed
               items={nowItems}
               doneToday={todayDone}
+              doneSummary={doneSummary || null}
               busyTaskId={busyTaskId}
               onToggleTask={(id) => void onToggle(id)}
+              busyHabitId={busyHabitId}
+              onCheckHabit={(id) => void onCheckHabit(id)}
+              onOpenHabits={() => open('Rhythm')}
               onOpenReview={(materialId) => open('MaterialDetail', { id: materialId })}
               onOpenReviews={() => open('ReviewInbox')}
               onOpenTasks={() => open('TasksHome')}
@@ -487,6 +685,12 @@ export function TodayScreen() {
           {isNewAccount && !starterInsteadOfFeed ? <StarterCard steps={starterSteps} /> : null}
 
           <OverviewTiles tiles={overviewTiles} />
+
+          <DiscoverCard
+            modules={discoverModules}
+            onEnable={enableModule}
+            onOpenSettings={() => open('Settings')}
+          />
         </Animated.ScrollView>
       </BlurTargetView>
       {/* Status-bar strip: once the page scrolls up under the clock and battery, it turns into
@@ -514,8 +718,17 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     maxWidth: '100%',
   },
-  helloCopy: { alignItems: 'flex-start', flex: 1, gap: 6, minWidth: 0 },
-  hello: { fontSize: 21, fontFamily: fonts.display, letterSpacing: -0.4, maxWidth: '100%' },
+  helloCopy: { alignItems: 'flex-start', flex: 1, minWidth: 0 },
+  helloPhrase: { fontFamily: fonts.medium, fontSize: 13.5, maxWidth: '100%' },
+  hello: {
+    fontFamily: fonts.display,
+    fontSize: 24,
+    letterSpacing: -0.5,
+    lineHeight: 30,
+    maxWidth: '100%',
+  },
+  subRow: { alignItems: 'center', flexDirection: 'row', gap: 8, marginTop: 6, maxWidth: '100%' },
+  date: { flexShrink: 1, fontFamily: fonts.medium, fontSize: 12.5 },
   planChip: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 },
   planChipText: {
     fontSize: 10,

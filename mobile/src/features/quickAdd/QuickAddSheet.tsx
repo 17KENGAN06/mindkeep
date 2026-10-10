@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
+  Dimensions,
   Easing,
   Keyboard,
   LayoutAnimation,
@@ -43,6 +44,8 @@ export type QuickAddTarget =
 
 type QuickAddSheetProps = {
   visible: boolean;
+  /** Open with the task form already unfolded (Home's "Task" shortcut). */
+  startWithTask?: boolean;
   onClose: () => void;
   onOpen: (target: QuickAddTarget) => void;
 };
@@ -77,7 +80,7 @@ export function QuickAddSheet(props: QuickAddSheetProps) {
   );
 }
 
-function QuickAddBody({ visible, onClose, onOpen }: QuickAddSheetProps) {
+function QuickAddBody({ visible, startWithTask = false, onClose, onOpen }: QuickAddSheetProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const { user } = useAuth();
@@ -88,7 +91,7 @@ function QuickAddBody({ visible, onClose, onOpen }: QuickAddSheetProps) {
   const createTask = useCreateTask();
   const setWater = useSetWater();
   const nutrition = useNutritionPeriod(year, month, visible && showNutrition);
-  const [taskOpen, setTaskOpen] = useState(false);
+  const [taskOpen, setTaskOpen] = useState(startWithTask);
   const [title, setTitle] = useState('');
   const [minutes, setMinutes] = useState('30');
   const [message, setMessage] = useState<string | null>(null);
@@ -109,7 +112,7 @@ function QuickAddBody({ visible, onClose, onOpen }: QuickAddSheetProps) {
   if (visible !== wasVisible) {
     setWasVisible(visible);
     if (visible) {
-      setTaskOpen(false);
+      setTaskOpen(startWithTask);
       setTitle('');
       setMinutes('30');
       setMessage(null);
@@ -129,7 +132,14 @@ function QuickAddBody({ visible, onClose, onOpen }: QuickAddSheetProps) {
     const hideEvent = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
     const show = Keyboard.addListener(showEvent, (event) => {
       LayoutAnimation.configureNext(LayoutAnimation.create(220, 'easeInEaseOut', 'opacity'));
-      setKeyboard(event.endCoordinates.height);
+      // Edge-to-edge Android reports the keyboard without the system navigation bar under it, so
+      // the sheet ended a bar's height too low; measure from the keyboard's real top edge instead.
+      const fromTop = Dimensions.get('screen').height - event.endCoordinates.screenY;
+      setKeyboard(
+        Platform.OS === 'android'
+          ? Math.max(event.endCoordinates.height, fromTop)
+          : event.endCoordinates.height,
+      );
     });
     const hide = Keyboard.addListener(hideEvent, () => {
       LayoutAnimation.configureNext(LayoutAnimation.create(220, 'easeInEaseOut', 'opacity'));
@@ -222,7 +232,7 @@ function QuickAddBody({ visible, onClose, onOpen }: QuickAddSheetProps) {
     <View
       style={[
         styles.backdrop,
-        { paddingTop: top + 12, paddingBottom: (keyboard > 0 ? keyboard : bottom) + 12 },
+        { paddingTop: top + 12, paddingBottom: keyboard > 0 ? keyboard + 16 : bottom + 12 },
       ]}
     >
       <Pressable accessibilityLabel={t('common.close')} style={StyleSheet.absoluteFill} onPress={onClose} />

@@ -5,9 +5,10 @@ import type { NotePayload, NotesQuery } from '../../types/note';
 
 const notesKey = ['notes'] as const;
 
-export function useNotes(params: NotesQuery = {}) {
+export function useNotes(params: NotesQuery = {}, enabled = true) {
   return useQuery({
     queryKey: [...notesKey, 'list', params],
+    enabled,
     queryFn: async () => {
       const response = await notesApi.list(params);
       return response.notes;

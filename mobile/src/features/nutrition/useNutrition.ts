@@ -4,6 +4,7 @@ import { touchPlanUsage } from '../billing/planLimit';
 import type {
   CalorieEstimatePayload,
   CreateMealPayload,
+  NutritionPeriodResponse,
   NutritionSettings,
   UpdateMealPayload,
 } from '../../types/nutrition';
@@ -78,13 +79,43 @@ export function useDeleteMeal() {
   });
 }
 
+/**
+ * Water is tapped quickly, several times in a row: the count updates on screen at once
+ * (optimistic), taps are sent one after another in order, and a failed one rolls back.
+ */
 export function useSetWater(_year?: number, _month?: number) {
   const queryClient = useQueryClient();
   return useMutation({
+    scope: { id: 'nutrition-water' },
     mutationFn: ({ date, glasses }: { date: string; glasses: number }) =>
       nutritionApi.setWater(date, glasses),
-    onSuccess: () => {
-      void invalidateNutrition(queryClient);
+    onMutate: async ({ date, glasses }) => {
+      const year = Number(date.slice(0, 4));
+      const month = Number(date.slice(5, 7));
+      const periodKey = [...nutritionKey, year, month];
+      await queryClient.cancelQueries({ queryKey: periodKey, exact: true });
+      const previous = queryClient.getQueryData<NutritionPeriodResponse>(periodKey);
+      if (previous) {
+        const exists = previous.water.some((row) => row.date === date);
+        queryClient.setQueryData<NutritionPeriodResponse>(periodKey, {
+          ...previous,
+          water: exists
+            ? previous.water.map((row) => (row.date === date ? { ...row, glasses } : row))
+            : [...previous.water, { date, glasses }],
+        });
+      }
+      return { periodKey, previous };
+    },
+    onError: (_error, _variables, context) => {
+      if (context?.previous) queryClient.setQueryData(context.periodKey, context.previous);
+    },
+    onSettled: () => {
+      // Only after the last queued tap, so a refetch never overwrites newer taps on screen.
+      if (
+        queryClient.isMutating({ predicate: (m) => m.options.scope?.id === 'nutrition-water' }) <= 1
+      ) {
+        void invalidateNutrition(queryClient);
+      }
     },
   });
 }
@@ -92,7 +123,8 @@ export function useSetWater(_year?: number, _month?: number) {
 export function useSetSteps() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ date, done }: { date: string; done: boolean }) => nutritionApi.setSteps(date, done),
+    mutationFn: ({ date, done }: { date: string; done: boolean }) =>
+      nutritionApi.setSteps(date, done),
     onSuccess: () => {
       void invalidateNutrition(queryClient);
     },

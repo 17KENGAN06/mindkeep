@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
+import { AppIcon, type AppIconName } from '../../components/AppIcon';
 import { CardSheen } from '../../components/CardSheen';
 import { fonts } from '../../config/fonts';
 import { useTheme } from '../theme/useTheme';
@@ -89,16 +90,61 @@ function Ring({ ring }: { ring: DayRing }) {
   );
 }
 
-/** One compact row of progress rings for the enabled sections; a tap opens the section. */
-export function DayRings({ rings }: { rings: DayRing[] }) {
+/** Headline number of a section without a daily goal (budget, notes). */
+export type PulseStat = {
+  key: string;
+  icon: AppIconName;
+  label: string;
+  value: string;
+  /** Placeholder value ("no expenses yet"): shown quieter. */
+  muted?: boolean;
+  onPress: () => void;
+};
+
+function Stat({ stat }: { stat: PulseStat }) {
   const { colors } = useTheme();
-  if (rings.length === 0) return null;
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`${stat.label}: ${stat.value}`}
+      onPress={stat.onPress}
+      style={({ pressed }) => [styles.stat, pressed && styles.pressed]}
+    >
+      <View style={[styles.statIcon, { backgroundColor: `${colors.brand}1f` }]}>
+        <AppIcon name={stat.icon} color={colors.brand} size={18} />
+      </View>
+      <Text style={[styles.label, { color: colors.muted }]} numberOfLines={1}>
+        {stat.label}
+      </Text>
+      <Text
+        style={[
+          styles.statValue,
+          { color: stat.muted ? colors.muted : colors.ink },
+          stat.muted && styles.statValueMuted,
+        ]}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+      >
+        {stat.value}
+      </Text>
+    </Pressable>
+  );
+}
+
+/**
+ * "Day pulse": one compact row of progress rings for the enabled sections with a daily goal;
+ * a tap opens the section. Without any of those (only budget or notes switched on) the card
+ * stays and shows those sections' headline numbers instead, so Home never starts empty.
+ */
+export function DayRings({ rings, stats = [] }: { rings: DayRing[]; stats?: PulseStat[] }) {
+  const { colors } = useTheme();
+  if (rings.length === 0 && stats.length === 0) return null;
   return (
     <View style={[styles.card, { backgroundColor: colors.panel }]}>
       <CardSheen glow={0.14} radius={CARD_RADIUS} />
-      {rings.map((ring) => (
-        <Ring key={ring.key} ring={ring} />
-      ))}
+      {rings.length > 0
+        ? rings.map((ring) => <Ring key={ring.key} ring={ring} />)
+        : stats.map((stat) => <Stat key={stat.key} stat={stat} />)}
     </View>
   );
 }
@@ -119,4 +165,14 @@ const styles = StyleSheet.create({
   svg: { position: 'absolute', transform: [{ rotate: '-90deg' }] },
   value: { fontFamily: fonts.bold, fontSize: 13 },
   label: { fontFamily: fonts.medium, fontSize: 11.5 },
+  stat: { alignItems: 'center', flex: 1, gap: 6, paddingHorizontal: 6 },
+  statIcon: {
+    alignItems: 'center',
+    borderRadius: 14,
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
+  },
+  statValue: { fontFamily: fonts.display, fontSize: 18, letterSpacing: -0.3, maxWidth: '100%' },
+  statValueMuted: { fontFamily: fonts.medium, fontSize: 13 },
 });

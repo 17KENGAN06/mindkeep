@@ -5,9 +5,10 @@ import { touchPlanUsage } from '../billing/planLimit';
 
 const rhythmKey = ['rhythm'] as const;
 
-export function useRhythmPeriod(year: number, month: number) {
+export function useRhythmPeriod(year: number, month: number, enabled = true) {
   return useQuery({
     queryKey: [...rhythmKey, year, month],
+    enabled,
     queryFn: () => rhythmApi.getPeriod(year, month),
     placeholderData: keepPreviousData,
     staleTime: 30_000,

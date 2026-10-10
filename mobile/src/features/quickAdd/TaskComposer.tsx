@@ -6,6 +6,7 @@ import { CardSheen } from '../../components/CardSheen';
 import { GradientIcon } from '../../components/GradientIcon';
 import { fonts } from '../../config/fonts';
 import { useTheme } from '../theme/useTheme';
+import { glow } from '../../utils/glow';
 
 const DURATIONS = [15, 30, 45, 60, 90];
 const RADIUS = 20;
@@ -111,8 +112,8 @@ export function TaskComposer(props: TaskComposerProps) {
         onPress={props.onSubmit}
         style={({ pressed }) => [
           styles.submit,
-          { backgroundColor: colors.brand, shadowColor: colors.brand },
-          !canSubmit && styles.submitIdle,
+          { backgroundColor: colors.brand },
+          canSubmit ? glow(colors.brand, { y: 6, blur: 18, opacity: 0.4, spread: -4 }) : styles.submitIdle,
           pressed && styles.submitPressed,
         ]}
       >
@@ -202,16 +203,12 @@ const styles = StyleSheet.create({
   submit: {
     alignItems: 'center',
     borderRadius: 14,
-    elevation: 6,
     flexDirection: 'row',
     gap: 8,
     justifyContent: 'center',
     minHeight: 52,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
   },
-  submitIdle: { elevation: 0, opacity: 0.45, shadowOpacity: 0 },
+  submitIdle: { opacity: 0.45 },
   submitPressed: { opacity: 0.9, transform: [{ scale: 0.98 }] },
   submitText: { fontFamily: fonts.semibold, fontSize: 16 },
   tools: { borderTopWidth: StyleSheet.hairlineWidth, flexDirection: 'row', marginHorizontal: -16 },

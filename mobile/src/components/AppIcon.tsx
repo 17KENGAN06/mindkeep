@@ -19,6 +19,7 @@ import Droplet from 'lucide-react-native/icons/droplet';
 import ExternalLink from 'lucide-react-native/icons/external-link';
 import FileText from 'lucide-react-native/icons/file-text';
 import Flag from 'lucide-react-native/icons/flag';
+import Flame from 'lucide-react-native/icons/flame';
 import Footprints from 'lucide-react-native/icons/footprints';
 import GitBranch from 'lucide-react-native/icons/git-branch';
 import Globe from 'lucide-react-native/icons/globe';
@@ -77,6 +78,7 @@ const LUCIDE: Partial<Record<AppIconName, LucideIcon>> = {
   'copy-outline': Copy,
   'document-text-outline': FileText,
   flag: Flag,
+  'flame-outline': Flame,
   'flag-outline': Flag,
   'footsteps-outline': Footprints,
   'git-branch-outline': GitBranch,
