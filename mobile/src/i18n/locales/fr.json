@@ -242,7 +242,15 @@
       "ack": "Je comprends que ce n’est qu’une estimation et que je décide moi-même.",
       "errors": {
         "invalid": "Remplis chaque champ avec des valeurs réalistes : âge 10–120, taille 80–250 cm, poids 20–400 kg."
-      }
+      },
+      "activityHints": {
+        "sedentary": "Surtout assis",
+        "light": "Légère, 1–3 séances par semaine",
+        "moderate": "Modérée, 3–5 séances par semaine",
+        "high": "Élevée, 6–7 séances par semaine",
+        "athlete": "Très élevée, travail physique ou deux séances par jour"
+      },
+      "activityPlaceholder": "Choisis à quel point ta semaine est active"
     },
     "macros": {
       "title": "Protéines, lipides, glucides",
@@ -1265,24 +1273,19 @@
   "quickAdd": {
     "title": "Ajout rapide",
     "task": "Tâche pour aujourd’hui",
-    "meal": "Repas",
-    "scan": "Scanner un repas",
-    "water": "+1 verre d’eau",
     "note": "Note",
     "material": "Matériel",
     "expense": "Dépense",
     "add": "Ajouter la tâche",
     "taskDone": "Tâche ajoutée pour aujourd’hui",
-    "waterDone": "Eau : {{count}} / {{goal}}",
     "hints": {
       "task": "Plan du jour",
-      "meal": "Calories à la main",
-      "scan": "Photo → calories",
       "note": "Idée ou notes",
       "material": "Révision 3 · 7 · 30",
       "expense": "Direct au budget",
-      "water": "Un verre par tap"
-    }
+      "nutrition": "Repas, calories, photo"
+    },
+    "nutrition": "Nutrition"
   },
   "hub": {
     "tasksToday": "Aujourd’hui : {{count}}",

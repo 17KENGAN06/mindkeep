@@ -242,7 +242,15 @@
       "ack": "Ymmärrän, että tämä on vain arvio ja päätän itse.",
       "errors": {
         "invalid": "Täytä kaikki kentät realistisilla luvuilla: ikä 10–120, pituus 80–250 cm, paino 20–400 kg."
-      }
+      },
+      "activityHints": {
+        "sedentary": "Pääosin istuvaa",
+        "light": "Kevyt, 1–3 harjoitusta viikossa",
+        "moderate": "Kohtalainen, 3–5 harjoitusta viikossa",
+        "high": "Korkea, 6–7 harjoitusta viikossa",
+        "athlete": "Erittäin korkea, fyysinen työ tai kaksi harjoitusta päivässä"
+      },
+      "activityPlaceholder": "Valitse, kuinka aktiivinen viikkosi on"
     },
     "macros": {
       "title": "Proteiini, rasva, hiilihydraatit",
@@ -1265,24 +1273,19 @@
   "quickAdd": {
     "title": "Pikalisäys",
     "task": "Tehtävä tälle päivälle",
-    "meal": "Ateria",
-    "scan": "Skannaa ruoka",
-    "water": "+1 lasi vettä",
     "note": "Muistiinpano",
     "material": "Materiaali",
     "expense": "Meno",
     "add": "Lisää tehtävä",
     "taskDone": "Tehtävä lisätty tälle päivälle",
-    "waterDone": "Vesi: {{count}} / {{goal}}",
     "hints": {
       "task": "Päivän suunnitelma",
-      "meal": "Kalorit käsin",
-      "scan": "Kuva → kalorit",
       "note": "Ajatus tai muistiinpano",
       "material": "Kertaus 3 · 7 · 30",
       "expense": "Suoraan budjettiin",
-      "water": "Lasi napautuksella"
-    }
+      "nutrition": "Ateriat, kalorit, kuva"
+    },
+    "nutrition": "Ravinto"
   },
   "hub": {
     "tasksToday": "Tänään: {{count}}",

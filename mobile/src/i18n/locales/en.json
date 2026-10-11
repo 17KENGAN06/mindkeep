@@ -242,7 +242,15 @@
       "ack": "I understand this is only an estimate and I decide for myself.",
       "errors": {
         "invalid": "Fill every field with realistic numbers: age 10–120, height 80–250 cm, weight 20–400 kg."
-      }
+      },
+      "activityHints": {
+        "sedentary": "Mostly sitting",
+        "light": "Light, 1–3 workouts a week",
+        "moderate": "Moderate, 3–5 workouts a week",
+        "high": "High, 6–7 workouts a week",
+        "athlete": "Very high, physical job or two sessions a day"
+      },
+      "activityPlaceholder": "Choose how active your week is"
     },
     "macros": {
       "title": "Protein, fat, carbs",
@@ -1265,24 +1273,19 @@
   "quickAdd": {
     "title": "Quick add",
     "task": "Task for today",
-    "meal": "Meal",
-    "scan": "Scan food",
-    "water": "+1 glass of water",
     "note": "Note",
     "material": "Material",
     "expense": "Expense",
     "add": "Add task",
     "taskDone": "Task added for today",
-    "waterDone": "Water: {{count}} / {{goal}}",
     "hints": {
       "task": "Plan for today",
-      "meal": "Calories by hand",
-      "scan": "Photo → calories",
       "note": "A thought or notes",
       "material": "Review 3 · 7 · 30",
       "expense": "Straight to budget",
-      "water": "One glass per tap"
-    }
+      "nutrition": "Meals, calories, photo"
+    },
+    "nutrition": "Nutrition"
   },
   "hub": {
     "tasksToday": "Today: {{count}}",

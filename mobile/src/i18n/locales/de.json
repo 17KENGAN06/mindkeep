@@ -242,7 +242,15 @@
       "ack": "Ich verstehe, dass das nur eine Schätzung ist, und entscheide selbst.",
       "errors": {
         "invalid": "Füll jedes Feld mit realistischen Zahlen: Alter 10–120, Größe 80–250 cm, Gewicht 20–400 kg."
-      }
+      },
+      "activityHints": {
+        "sedentary": "Meist sitzend",
+        "light": "Leicht, 1–3 Einheiten pro Woche",
+        "moderate": "Mittel, 3–5 Einheiten pro Woche",
+        "high": "Hoch, 6–7 Einheiten pro Woche",
+        "athlete": "Sehr hoch, körperliche Arbeit oder zwei Einheiten am Tag"
+      },
+      "activityPlaceholder": "Wähle, wie aktiv deine Woche ist"
     },
     "macros": {
       "title": "Eiweiß, Fett, Kohlenhydrate",
@@ -1265,24 +1273,19 @@
   "quickAdd": {
     "title": "Schnell hinzufügen",
     "task": "Aufgabe für heute",
-    "meal": "Mahlzeit",
-    "scan": "Essen scannen",
-    "water": "+1 Glas Wasser",
     "note": "Notiz",
     "material": "Material",
     "expense": "Ausgabe",
     "add": "Aufgabe hinzufügen",
     "taskDone": "Aufgabe für heute hinzugefügt",
-    "waterDone": "Wasser: {{count}} / {{goal}}",
     "hints": {
       "task": "Plan für heute",
-      "meal": "Kalorien von Hand",
-      "scan": "Foto → Kalorien",
       "note": "Gedanke oder Notiz",
       "material": "Wiederholung 3 · 7 · 30",
       "expense": "Direkt ins Budget",
-      "water": "Ein Glas pro Tipp"
-    }
+      "nutrition": "Mahlzeiten, Kalorien, Foto"
+    },
+    "nutrition": "Ernährung"
   },
   "hub": {
     "tasksToday": "Heute: {{count}}",

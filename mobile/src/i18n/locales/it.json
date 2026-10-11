@@ -242,7 +242,15 @@
       "ack": "Capisco che è solo una stima e che decido io.",
       "errors": {
         "invalid": "Compila ogni campo con numeri realistici: età 10–120, altezza 80–250 cm, peso 20–400 kg."
-      }
+      },
+      "activityHints": {
+        "sedentary": "Soprattutto seduto",
+        "light": "Leggera, 1–3 allenamenti a settimana",
+        "moderate": "Media, 3–5 allenamenti a settimana",
+        "high": "Alta, 6–7 allenamenti a settimana",
+        "athlete": "Molto alta, lavoro fisico o due sessioni al giorno"
+      },
+      "activityPlaceholder": "Scegli quanto è attiva la tua settimana"
     },
     "macros": {
       "title": "Proteine, grassi, carboidrati",
@@ -1265,24 +1273,19 @@
   "quickAdd": {
     "title": "Aggiunta rapida",
     "task": "Attività per oggi",
-    "meal": "Pasto",
-    "scan": "Scansiona cibo",
-    "water": "+1 bicchiere d’acqua",
     "note": "Nota",
     "material": "Materiale",
     "expense": "Spesa",
     "add": "Aggiungi attività",
     "taskDone": "Attività aggiunta per oggi",
-    "waterDone": "Acqua: {{count}} / {{goal}}",
     "hints": {
       "task": "Piano di oggi",
-      "meal": "Calorie a mano",
-      "scan": "Foto → calorie",
       "note": "Idea o appunti",
       "material": "Ripasso 3 · 7 · 30",
       "expense": "Subito nel budget",
-      "water": "Un bicchiere a tocco"
-    }
+      "nutrition": "Pasti, calorie, foto"
+    },
+    "nutrition": "Alimentazione"
   },
   "hub": {
     "tasksToday": "Oggi: {{count}}",

@@ -242,7 +242,15 @@
       "ack": "Rozumiem, że to tylko oszacowanie, i decyduję sam.",
       "errors": {
         "invalid": "Wypełnij wszystkie pola realnymi liczbami: wiek 10–120, wzrost 80–250 cm, waga 20–400 kg."
-      }
+      },
+      "activityHints": {
+        "sedentary": "Głównie siedząca",
+        "light": "Niewielka, 1–3 treningi w tygodniu",
+        "moderate": "Średnia, 3–5 treningów w tygodniu",
+        "high": "Wysoka, 6–7 treningów w tygodniu",
+        "athlete": "Bardzo wysoka, praca fizyczna albo dwa treningi dziennie"
+      },
+      "activityPlaceholder": "Wybierz, jak aktywny jest twój tydzień"
     },
     "macros": {
       "title": "Białko, tłuszcz, węglowodany",
@@ -1265,24 +1273,19 @@
   "quickAdd": {
     "title": "Szybkie dodawanie",
     "task": "Zadanie na dziś",
-    "meal": "Posiłek",
-    "scan": "Skanuj jedzenie",
-    "water": "+1 szklanka wody",
     "note": "Notatka",
     "material": "Materiał",
     "expense": "Wydatek",
     "add": "Dodaj zadanie",
     "taskDone": "Zadanie dodane na dziś",
-    "waterDone": "Woda: {{count}} / {{goal}}",
     "hints": {
       "task": "Plan na dziś",
-      "meal": "Kalorie ręcznie",
-      "scan": "Zdjęcie → kalorie",
       "note": "Myśl lub notatka",
       "material": "Powtórki 3 · 7 · 30",
       "expense": "Prosto do budżetu",
-      "water": "Szklanka na dotyk"
-    }
+      "nutrition": "Posiłki, kalorie, zdjęcie"
+    },
+    "nutrition": "Odżywianie"
   },
   "hub": {
     "tasksToday": "Dziś: {{count}}",

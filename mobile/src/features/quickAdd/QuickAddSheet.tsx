@@ -28,8 +28,6 @@ const SHEET_RADIUS = 30;
 import { userHasModule } from '../../config/appModules';
 import { useAuth } from '../auth/useAuth';
 import { mapAuthError } from '../auth/mapAuthError';
-import { hasAutomation } from '../billing/planLimit';
-import { useNutritionPeriod, useSetWater } from '../nutrition/useNutrition';
 import { useCreateTask } from '../tasks/useDailyTasks';
 import { useTheme } from '../theme/useTheme';
 import { useAccountToday } from '../time/useAccountToday';
@@ -85,12 +83,10 @@ function QuickAddBody({ visible, startWithTask = false, onClose, onOpen }: Quick
   const { colors } = useTheme();
   const { user } = useAuth();
   const insets = useSafeAreaInsets();
-  const { today, year, month } = useAccountToday();
+  const { today } = useAccountToday();
   const showTasks = userHasModule(user, 'tasks');
   const showNutrition = userHasModule(user, 'nutrition');
   const createTask = useCreateTask();
-  const setWater = useSetWater();
-  const nutrition = useNutritionPeriod(year, month, visible && showNutrition);
   const [taskOpen, setTaskOpen] = useState(startWithTask);
   const [title, setTitle] = useState('');
   const [minutes, setMinutes] = useState('30');
@@ -120,8 +116,6 @@ function QuickAddBody({ visible, startWithTask = false, onClose, onOpen }: Quick
     }
   }
 
-  const glasses = nutrition.data?.water?.find((row) => row.date === today)?.glasses ?? 0;
-  const waterGoal = nutrition.data?.settings.waterGoal ?? 8;
   const bottom = Math.max(insets.bottom, 12);
   const top = Math.max(insets.top, Platform.OS === 'android' ? (StatusBar.currentHeight ?? 24) : 0);
 
@@ -154,17 +148,6 @@ function QuickAddBody({ visible, startWithTask = false, onClose, onOpen }: Quick
   const go = (target: QuickAddTarget) => {
     onClose();
     onOpen(target);
-  };
-
-  const onAddWater = async () => {
-    setError(null);
-    try {
-      await setWater.mutateAsync({ date: today, glasses: glasses + 1 });
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setMessage(t('quickAdd.waterDone', { count: glasses + 1, goal: waterGoal }));
-    } catch (caught) {
-      setError(mapAuthError(caught, t));
-    }
   };
 
   const onAddTask = async () => {
@@ -204,18 +187,8 @@ function QuickAddBody({ visible, startWithTask = false, onClose, onOpen }: Quick
     });
   }
   if (showNutrition) {
-    actions.push(
-      hasAutomation(user)
-        ? { key: 'scan', icon: 'camera-outline', title: t('quickAdd.scan'), onPress: () => go({ screen: 'Fuel', params: { openScan: Date.now() } }) }
-        : { key: 'meal', icon: 'restaurant-outline', title: t('quickAdd.meal'), onPress: () => go({ screen: 'Fuel' }) },
-      {
-        key: 'water',
-        icon: 'water-outline',
-        title: t('quickAdd.water'),
-        hint: `${glasses} / ${waterGoal}`,
-        onPress: () => void onAddWater(),
-      },
-    );
+    // One way into the section; meals, water, the photo scan, weight and steps are all inside it.
+    actions.push({ key: 'nutrition', icon: 'restaurant-outline', title: t('quickAdd.nutrition'), onPress: () => go({ screen: 'Fuel' }) });
   }
   if (userHasModule(user, 'notes')) {
     actions.push({ key: 'note', icon: 'document-text-outline', title: t('quickAdd.note'), onPress: () => go({ screen: 'NoteCreate' }) });

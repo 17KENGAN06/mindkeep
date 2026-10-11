@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -75,8 +75,13 @@ export function CalorieHelperModal({
   const [acknowledged, setAcknowledged] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Start from the saved profile each time the dialog opens — only then: a background refetch of
+  // the nutrition data used to reset the picks (activity, sex…) while the user was choosing.
+  const wasVisible = useRef(false);
   useEffect(() => {
-    if (!visible) return;
+    const opened = visible && !wasVisible.current;
+    wasVisible.current = visible;
+    if (!opened) return;
     setDraft(emptyDraft(settings, currentWeightKg));
     setEstimate(null);
     setAcknowledged(false);
@@ -211,6 +216,12 @@ export function CalorieHelperModal({
                 ),
               )}
             </View>
+            {/* What the short label means ("Light" = 1–3 workouts a week), same wording as the site. */}
+            <Text style={[styles.activityHint, { color: colors.muted }]}>
+              {draft.activity
+                ? t(`fuel.helper.activityHints.${draft.activity}`)
+                : t('fuel.helper.activityPlaceholder')}
+            </Text>
 
             {estimate ? (
               <View style={[styles.result, { backgroundColor: colors.bg, borderColor: colors.line }]}>
@@ -281,6 +292,7 @@ export function CalorieHelperModal({
 const styles = StyleSheet.create({
   lead: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
   label: { fontSize: 13, fontFamily: fonts.semibold },
+  activityHint: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18, marginTop: -4 },
   field: { gap: 6 },
   input: {
     borderRadius: 12,
