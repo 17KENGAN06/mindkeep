@@ -49,55 +49,45 @@ type ButtonProps = {
 };
 
 const BUTTON_RADIUS = 16;
+/** Native border of primary / secondary buttons; the painted fill sits inside it. */
+const BUTTON_BORDER = 1.5;
 
 type Size = { width: number; height: number };
 
 /**
- * Painted surface of a button, drawn at the measured size with its own rounded corners —
- * percentage-sized SVGs kept their first layout width on iOS and left a bare strip on the right.
- * Primary: brand gradient, glass sheen on the top half, bright top edge and a darker lower lip.
- * Secondary: frosted glass with a hairline that is bright on top and fades out below.
+ * Painted fill of a button, drawn at the measured size inside the native border (so the fill
+ * meets the edge exactly) — percentage-sized SVGs kept their first layout width on iOS.
+ * Primary: brand gradient with a glass sheen on the top half. Secondary: dark glass, brand tint.
  */
 function ButtonSurface({ size, variant }: { size: Size; variant: 'primary' | 'secondary' }) {
   const { colors, theme } = useTheme();
   const id = useId().replace(/:/g, '');
   const dark = theme === 'dark';
-  const { width, height } = size;
-  const r = Math.min(BUTTON_RADIUS, height / 2);
+  // The SVG fills the padding box: the measured size minus the border on both sides.
+  const width = Math.max(size.width - BUTTON_BORDER * 2, 0);
+  const height = Math.max(size.height - BUTTON_BORDER * 2, 0);
+  const r = Math.max(Math.min(BUTTON_RADIUS, size.height / 2) - BUTTON_BORDER, 0);
 
   if (variant === 'secondary') {
     // Same language as the bar's "+": dark glass with a brand tint inside and a glowing ring
     // that is brightest at the top-left corner.
     return (
-      <Svg pointerEvents="none" style={StyleSheet.absoluteFill} width={width} height={height}>
-        <Defs>
-          <LinearGradient id={`tint${id}`} x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor={colors.brand} stopOpacity={dark ? 0.16 : 0.12} />
-            <Stop offset="1" stopColor={colors.brand} stopOpacity={dark ? 0.03 : 0.02} />
-          </LinearGradient>
-          <LinearGradient id={`sheen${id}`} x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.08 : 0.45} />
-            <Stop offset="0.5" stopColor="#ffffff" stopOpacity={0} />
-          </LinearGradient>
-          <LinearGradient id={`ring${id}`} x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor={colors.brand} stopOpacity={0.9} />
-            <Stop offset="0.5" stopColor={colors.brand} stopOpacity={0.3} />
-            <Stop offset="1" stopColor={colors.brand} stopOpacity={0.6} />
-          </LinearGradient>
-        </Defs>
-        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#tint${id})`} />
-        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#sheen${id})`} />
-        <Rect
-          x={1.25}
-          y={1.25}
-          width={width - 2.5}
-          height={height - 2.5}
-          rx={r - 1.25}
-          fill="none"
-          stroke={`url(#ring${id})`}
-          strokeWidth={1.5}
-        />
-      </Svg>
+      <View pointerEvents="none" style={[styles.surface, { borderRadius: r }]}>
+        <Svg width={width} height={height}>
+          <Defs>
+            <LinearGradient id={`tint${id}`} x1="0" y1="0" x2="0" y2="1">
+              <Stop offset="0" stopColor={colors.brand} stopOpacity={dark ? 0.16 : 0.12} />
+              <Stop offset="1" stopColor={colors.brand} stopOpacity={dark ? 0.03 : 0.02} />
+            </LinearGradient>
+            <LinearGradient id={`sheen${id}`} x1="0" y1="0" x2="0" y2="1">
+              <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.08 : 0.45} />
+              <Stop offset="0.5" stopColor="#ffffff" stopOpacity={0} />
+            </LinearGradient>
+          </Defs>
+          <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#tint${id})`} />
+          <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#sheen${id})`} />
+        </Svg>
+      </View>
     );
   }
 
@@ -105,38 +95,23 @@ function ButtonSurface({ size, variant }: { size: Size; variant: 'primary' | 'se
   const lit = dark ? '#b4f7cf' : '#4a8a70';
   const deep = dark ? '#4fbf83' : '#244a3a';
   return (
-    <Svg pointerEvents="none" style={StyleSheet.absoluteFill} width={width} height={height}>
-      <Defs>
-        <LinearGradient id={`fill${id}`} x1="0" y1="0" x2="1" y2="1">
-          <Stop offset="0" stopColor={lit} />
-          <Stop offset="0.45" stopColor={colors.brand} />
-          <Stop offset="1" stopColor={deep} />
-        </LinearGradient>
-        <LinearGradient id={`shine${id}`} x1="0" y1="0" x2="0" y2="1">
-          <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.34 : 0.22} />
-          <Stop offset="0.5" stopColor="#ffffff" stopOpacity={0.04} />
-          <Stop offset="0.51" stopColor="#ffffff" stopOpacity={0} />
-        </LinearGradient>
-        <LinearGradient id={`rim${id}`} x1="0" y1="0" x2="0" y2="1">
-          <Stop offset="0" stopColor="#ffffff" stopOpacity={0.7} />
-          <Stop offset="0.35" stopColor="#ffffff" stopOpacity={0.08} />
-          <Stop offset="0.75" stopColor="#000000" stopOpacity={0} />
-          <Stop offset="1" stopColor="#000000" stopOpacity={dark ? 0.22 : 0.3} />
-        </LinearGradient>
-      </Defs>
-      <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#fill${id})`} />
-      <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#shine${id})`} />
-      <Rect
-        x={1.25}
-        y={1.25}
-        width={width - 2.5}
-        height={height - 2.5}
-        rx={r - 1.25}
-        fill="none"
-        stroke={`url(#rim${id})`}
-        strokeWidth={1.5}
-      />
-    </Svg>
+    <View pointerEvents="none" style={[styles.surface, { borderRadius: r }]}>
+      <Svg width={width} height={height}>
+        <Defs>
+          <LinearGradient id={`fill${id}`} x1="0" y1="0" x2="1" y2="1">
+            <Stop offset="0" stopColor={lit} />
+            <Stop offset="0.45" stopColor={colors.brand} />
+            <Stop offset="1" stopColor={deep} />
+          </LinearGradient>
+          <LinearGradient id={`shine${id}`} x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.34 : 0.22} />
+            <Stop offset="0.6" stopColor="#ffffff" stopOpacity={0} />
+          </LinearGradient>
+        </Defs>
+        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#fill${id})`} />
+        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#shine${id})`} />
+      </Svg>
+    </View>
   );
 }
 
@@ -154,7 +129,7 @@ export function AppButton({
   trailingIcon,
   size: buttonSize = 'regular',
 }: ButtonProps) {
-  const { colors } = useTheme();
+  const { colors, theme } = useTheme();
   const [size, setSize] = useState<Size | null>(null);
   const busy = disabled || loading;
   const textColor =
@@ -176,9 +151,7 @@ export function AppButton({
       onLayout={
         painted
           ? (event) => {
-              // Whole pixels: a fractional size let the ring's bottom edge fall outside the clip.
-              const width = Math.floor(event.nativeEvent.layout.width);
-              const height = Math.floor(event.nativeEvent.layout.height);
+              const { width, height } = event.nativeEvent.layout;
               setSize((prev) =>
                 prev && prev.width === width && prev.height === height ? prev : { width, height },
               );
@@ -189,9 +162,16 @@ export function AppButton({
         styles.button,
         buttonSize === 'large' && styles.buttonLarge,
         buttonSize === 'small' && styles.buttonSmall,
-        variant === 'primary' && { backgroundColor: colors.brand },
+        variant === 'primary' && {
+          backgroundColor: colors.brand,
+          borderWidth: BUTTON_BORDER,
+          // One colour all round: per-side colours meet at an angle on rounded corners.
+          borderColor: 'rgba(255,255,255,0.3)',
+        },
         variant === 'secondary' && {
           backgroundColor: pressed ? `${colors.brand}26` : colors.panel,
+          borderWidth: BUTTON_BORDER,
+          borderColor: `${colors.brand}99`,
         },
         variant === 'ghost' && { backgroundColor: pressed ? `${colors.brand}12` : 'transparent' },
         variant === 'link' && [
@@ -248,8 +228,15 @@ export function AppButton({
         busy
           ? styles.glowOff
           : [
-              { backgroundColor: colors.brand },
-              glow(colors.brand, { y: 8, blur: 22, opacity: 0.38, spread: -6 }),
+              // No background on this wrapper: with a box-shadow Android painted it as a square
+              // behind the rounded button. The glow comes from the button itself (iOS: its layer).
+              // Light theme: the brand green is dark, so a deep offset glow read as a shifted copy.
+              glow(
+                colors.brand,
+                theme === 'dark'
+                  ? { y: 8, blur: 22, opacity: 0.38, spread: -6 }
+                  : { y: 3, blur: 12, opacity: 0.18, spread: -4 },
+              ),
             ],
       ]}
     >
@@ -333,6 +320,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 12,
   },
+  // The painted fill clips itself to the rounded shape (not relying on the bordered button's clip).
+  surface: { bottom: 0, left: 0, overflow: 'hidden', position: 'absolute', right: 0, top: 0 },
   glow: { borderRadius: BUTTON_RADIUS },
   // Disabled: no glow and no solid wrapper showing through the dimmed button.
   glowOff: { backgroundColor: 'transparent' },

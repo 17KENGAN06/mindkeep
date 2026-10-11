@@ -18,6 +18,8 @@ import {
 type SectionScroll = {
   /** Height of the transparent header the content scrolls under (Android); 0 = nothing to do. */
   topInset: number;
+  /** iOS 26+: report scrolling too, for the frosted strip under the header. */
+  iosGlass: boolean;
   /** Scroll position, so the section layout can fade its frosted header strip in. */
   reportScroll: (y: number) => void;
   /** A SectionScrollView is mounted: the layout stops pushing the whole screen down. */
@@ -26,6 +28,7 @@ type SectionScroll = {
 
 export const SectionScrollContext = createContext<SectionScroll>({
   topInset: 0,
+  iosGlass: false,
   reportScroll: () => undefined,
   register: () => () => undefined,
 });
@@ -40,7 +43,7 @@ export const SectionScrollView = forwardRef<ScrollView, ScrollViewProps>(functio
   { children, refreshControl, onScroll, scrollEventThrottle, ...rest },
   ref,
 ) {
-  const { topInset, reportScroll, register } = useContext(SectionScrollContext);
+  const { topInset, iosGlass, reportScroll, register } = useContext(SectionScrollContext);
   const android = Platform.OS === 'android' && topInset > 0;
 
   useEffect(() => (android ? register() : undefined), [android, register]);
@@ -50,8 +53,15 @@ export const SectionScrollView = forwardRef<ScrollView, ScrollViewProps>(functio
       <ScrollView
         ref={ref}
         refreshControl={refreshControl}
-        onScroll={onScroll}
-        scrollEventThrottle={scrollEventThrottle}
+        onScroll={
+          iosGlass
+            ? (event) => {
+                reportScroll(event.nativeEvent.contentOffset.y);
+                onScroll?.(event);
+              }
+            : onScroll
+        }
+        scrollEventThrottle={iosGlass ? (scrollEventThrottle ?? 16) : scrollEventThrottle}
         {...rest}
       >
         {children}

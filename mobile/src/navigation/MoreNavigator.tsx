@@ -3,7 +3,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
-import { Animated, BackHandler, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, BackHandler, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { BlurTargetView } from 'expo-blur';
 import { AmbientGlow } from '../components/AmbientGlow';
 import { AppIcon } from '../components/AppIcon';
@@ -11,6 +11,7 @@ import { GlassBackground } from '../components/GlassBackground';
 import { SectionScrollContext } from '../components/SectionScrollView';
 import { returnHome } from './openSection';
 import { HeaderBackButton } from '../components/HeaderBackButton';
+import { ANDROID_HEADER_DROP } from '../components/headerMetrics';
 import { NotificationBell } from '../features/notifications/NotificationBell';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../features/theme/useTheme';
@@ -77,6 +78,9 @@ function SectionLayout({
   const { colors } = useTheme();
   const headerHeight = useHeaderHeight();
   const android = headerShown && Platform.OS === 'android';
+  // iOS 26 only softens the edge under its glass header buttons, so text stayed readable under
+  // the bar; the same frosted strip as on Android is drawn there too (iOS blurs natively).
+  const iosGlass = headerShown && IOS_SCROLL_EDGE;
   // Android: once the screen's SectionScrollView mounts, content runs under the header and a
   // frosted strip fades in behind it as the page scrolls (like iOS). Until then (or for a
   // screen without one) the screen simply starts below the header, as before.
@@ -86,14 +90,15 @@ function SectionLayout({
   const sectionScroll = useMemo(
     () => ({
       // A little less than the full header: the section's own big title sits closer to the bar.
-      topInset: android ? Math.max(headerHeight - 14, 0) : 0,
+      topInset: android ? Math.max(headerHeight + ANDROID_HEADER_DROP - 14, 0) : 0,
+      iosGlass,
       reportScroll: (y: number) => scrollY.setValue(y),
       register: () => {
         setScrollUnder(true);
         return () => setScrollUnder(false);
       },
     }),
-    [android, headerHeight, scrollY],
+    [android, iosGlass, headerHeight, scrollY],
   );
   const offset = android && !scrollUnder ? headerHeight : 0;
 
@@ -115,15 +120,16 @@ function SectionLayout({
           <AmbientGlow />
           <View style={[styles.fill, { paddingTop: offset }]}>{children}</View>
         </BlurTargetView>
-        {android && scrollUnder ? (
+        {(android && scrollUnder) || iosGlass ? (
           <Animated.View
             pointerEvents="none"
             style={[
               styles.headerGlass,
               {
-                height: headerHeight,
+                height: android ? headerHeight + ANDROID_HEADER_DROP : headerHeight,
+                // iOS reports offsets from -headerHeight (content is inset under the bar).
                 opacity: scrollY.interpolate({
-                  inputRange: [0, 16],
+                  inputRange: iosGlass ? [-headerHeight, -headerHeight + 16] : [0, 16],
                   outputRange: [0, 1],
                   extrapolate: 'clamp',
                 }),
@@ -173,6 +179,16 @@ export function MoreNavigator() {
             : {}),
           headerTintColor: colors.ink,
           headerTitleStyle: { fontFamily: fonts.semibold, fontSize: 17 },
+          // Android: the title drops with the buttons so the row stays aligned.
+          ...(Platform.OS === 'android'
+            ? {
+                headerTitle: ({ children }: { children: string }) => (
+                  <Text numberOfLines={1} style={[styles.androidTitle, { color: colors.ink }]}>
+                    {children}
+                  </Text>
+                ),
+              }
+            : {}),
           headerShadowVisible: false,
           contentStyle: { backgroundColor: colors.bg },
           // iOS wraps custom header buttons in its own glass capsule (a button inside a button),
@@ -216,7 +232,10 @@ export function MoreNavigator() {
                     appearance={Platform.OS === 'ios' ? 'bare' : 'header'}
                     onOpen={(target) =>
                       'params' in target
-                        ? navigation.navigate(target.screen, target.params)
+                        ? navigation.navigate({
+                            name: target.screen,
+                            params: target.params,
+                          } as never)
                         : navigation.navigate(target.screen)
                     }
                   />
@@ -331,5 +350,6 @@ export function MoreNavigator() {
 const styles = StyleSheet.create({
   fill: { flex: 1 },
   headerGlass: { left: 0, position: 'absolute', right: 0, top: 0 },
+  androidTitle: { fontFamily: fonts.semibold, fontSize: 17, marginTop: ANDROID_HEADER_DROP },
   iosBack: { alignItems: 'center', height: 36, justifyContent: 'center', width: 36 },
 });

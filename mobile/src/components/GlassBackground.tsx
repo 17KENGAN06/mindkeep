@@ -27,7 +27,7 @@ export function GlassBackground({ target }: GlassBackgroundProps) {
     <View pointerEvents="none" style={StyleSheet.absoluteFill}>
       <BlurView
         style={StyleSheet.absoluteFill}
-        intensity={ios ? 50 : 35}
+        intensity={ios ? 70 : 35}
         tint={
           ios ? (dark ? 'systemChromeMaterialDark' : 'systemChromeMaterialLight') : dark ? 'dark' : 'light'
         }
