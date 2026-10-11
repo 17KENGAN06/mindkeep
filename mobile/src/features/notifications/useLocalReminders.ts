@@ -62,7 +62,7 @@ export type ReminderTarget = 'ReviewInbox' | 'TasksHome';
  * next, enough for the 30-day horizon) and opens the right section when a reminder is tapped.
  * Reviews are not scheduled: they stay in the in-app bell. Mount once inside the signed-in app.
  */
-export function useLocalReminderSync(onOpen: (target: ReminderTarget) => void) {
+export function useLocalReminderSync(onOpen: (target: ReminderTarget, date?: string) => void) {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const settings = useReminderSettings();
@@ -101,8 +101,9 @@ export function useLocalReminderSync(onOpen: (target: ReminderTarget) => void) {
     const id = lastResponse.notification.request.identifier;
     if (handled.current === id) return;
     handled.current = id;
-    const target = lastResponse.notification.request.content.data?.target;
-    openRef.current(target === 'TasksHome' ? 'TasksHome' : 'ReviewInbox');
+    const data = lastResponse.notification.request.content.data;
+    const date = typeof data?.date === 'string' ? data.date : undefined;
+    openRef.current(data?.target === 'TasksHome' ? 'TasksHome' : 'ReviewInbox', date);
   }, [lastResponse]);
 }
 

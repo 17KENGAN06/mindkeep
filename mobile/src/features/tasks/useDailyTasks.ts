@@ -1,12 +1,40 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { dailyTasksApi } from '../../api/dailyTasks';
 import { touchPlanUsage } from '../billing/planLimit';
-import type { CreateDailyTaskPayload, UpdateDailyTaskPayload } from '../../types/dailyTask';
+import type {
+  CreateDailyTaskPayload,
+  DailyTask,
+  UpdateDailyTaskPayload,
+} from '../../types/dailyTask';
 
 const tasksKey = ['tasks'] as const;
 
 function invalidateTasks(queryClient: ReturnType<typeof useQueryClient>) {
   return queryClient.invalidateQueries({ queryKey: tasksKey });
+}
+
+type QueryClient = ReturnType<typeof useQueryClient>;
+type TaskCacheSnapshot = [readonly unknown[], { tasks?: DailyTask[] } | undefined][];
+
+/**
+ * Optimistic edit of every cached task list (day, month): the screen answers the tap at once
+ * instead of after the round trip. Returns a snapshot to roll back to if the server refuses.
+ */
+async function patchCachedTasks(
+  queryClient: QueryClient,
+  update: (tasks: DailyTask[]) => DailyTask[],
+): Promise<TaskCacheSnapshot> {
+  await queryClient.cancelQueries({ queryKey: tasksKey });
+  const snapshot = queryClient.getQueriesData<{ tasks?: DailyTask[] }>({ queryKey: tasksKey });
+  for (const [key, data] of snapshot) {
+    if (!data || !Array.isArray(data.tasks)) continue;
+    queryClient.setQueryData(key, { ...data, tasks: update(data.tasks) });
+  }
+  return snapshot;
+}
+
+function restoreCachedTasks(queryClient: QueryClient, snapshot: TaskCacheSnapshot | undefined) {
+  for (const [key, data] of snapshot ?? []) queryClient.setQueryData(key, data);
 }
 
 export function useTasksPeriod(year: number, month: number, enabled = true) {
@@ -45,6 +73,12 @@ export function useToggleTask(date?: string) {
   return useMutation({
     mutationFn: ({ id, completed }: { id: string; completed: boolean }) =>
       dailyTasksApi.update(id, { completed }),
+    onMutate: async ({ id, completed }) => ({
+      snapshot: await patchCachedTasks(queryClient, (tasks) =>
+        tasks.map((task) => (task.id === id ? { ...task, completed } : task)),
+      ),
+    }),
+    onError: (_error, _variables, context) => restoreCachedTasks(queryClient, context?.snapshot),
     onSuccess: () => {
       void invalidateTasks(queryClient);
       void queryClient.invalidateQueries({ queryKey: ['notifications'] });
@@ -108,6 +142,12 @@ export function useDeleteTask() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => dailyTasksApi.remove(id),
+    onMutate: async (id) => ({
+      snapshot: await patchCachedTasks(queryClient, (tasks) =>
+        tasks.filter((task) => task.id !== id),
+      ),
+    }),
+    onError: (_error, _variables, context) => restoreCachedTasks(queryClient, context?.snapshot),
     onSuccess: () => {
       void invalidateTasks(queryClient);
       void queryClient.invalidateQueries({ queryKey: ['notifications'] });

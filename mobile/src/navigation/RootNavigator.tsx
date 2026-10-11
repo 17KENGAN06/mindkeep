@@ -106,7 +106,11 @@ function AppTabs() {
 function RemindersRoot() {
   const navigation = useNavigation<BottomTabNavigationProp<AppTabParamList>>();
   // A tapped reminder opens its section on its own, so back leads Home.
-  useLocalReminderSync((target) => openSectionFromHome(navigation, target));
+  useLocalReminderSync((target, date) =>
+    target === 'TasksHome' && date
+      ? openSectionFromHome(navigation, 'TasksHome', { date, at: Date.now() })
+      : openSectionFromHome(navigation, target),
+  );
   return <ReminderPrompt />;
 }
 

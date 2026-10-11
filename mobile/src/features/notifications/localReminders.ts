@@ -173,7 +173,8 @@ export async function scheduleReminders(input: ScheduleInput): Promise<number> {
           ? t('notifications.push.todayTitle')
           : t('notifications.push.tomorrowTitle'),
         body: lines.join('\n'),
-        data: { target: 'TasksHome' },
+        // Tapping opens Tasks on the day the reminder is about (today's tasks first).
+        data: { target: 'TasksHome', date: day.today.length ? key : shiftDateKey(key, 1) },
       },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: when, channelId: CHANNEL_ID },
     });

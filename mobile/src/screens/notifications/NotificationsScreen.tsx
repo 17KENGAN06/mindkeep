@@ -141,7 +141,17 @@ export function NotificationsScreen() {
                     if (!notification.isRead) {
                       void markRead.mutateAsync(notification.id);
                     }
-                    tabNavigation.navigate('More', { screen: 'TasksHome', initial: false });
+                    tabNavigation.navigate('More', {
+                      screen: 'TasksHome',
+                      params: notification.dailyTask
+                        ? {
+                            date: notification.dailyTask.date.slice(0, 10),
+                            taskId: notification.dailyTask.id,
+                            at: Date.now(),
+                          }
+                        : undefined,
+                      initial: false,
+                    });
                   }}
                 />
               ) : (

@@ -15,7 +15,8 @@ export type MoreStackParamList = {
   MoreHome: undefined;
   // Tasks
   /** open + at: quick add asks to open Import / Copy day once per timestamp. */
-  TasksHome: { open?: 'import' | 'copy'; at?: number } | undefined;
+  /** date + taskId: open on that day and highlight the task (bell, notifications, reminders). */
+  TasksHome: { open?: 'import' | 'copy'; date?: string; taskId?: string; at?: number } | undefined;
   MonthPlan: undefined;
   Forest: { year?: number; month?: number };
   // Review

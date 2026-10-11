@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  type ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -19,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { MonthGrid } from '../components/MonthGrid';
 import { AppIcon } from '../components/AppIcon';
 import { AppButton } from '../components/ui';
+import { TaskCardShell, TaskCheck } from '../components/TaskMotion';
 import { ApiError } from '../api/client';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import { TaskCopyModal } from '../features/tasks/TaskCopyModal';
@@ -85,9 +87,31 @@ export function TasksScreen() {
   // Quick add's Import / Copy day: open the dialog once per request timestamp.
   const route = useRoute<RouteProp<TasksStackParamList, 'TasksHome'>>();
   const handledRequest = useRef<number | undefined>(undefined);
+  const scrollRef = useRef<ScrollView>(null);
+  const dayListY = useRef(0);
+  const [highlightId, setHighlightId] = useState<string | null>(null);
   useEffect(() => {
     const request = route.params;
-    if (!request?.open || request.at === undefined || handledRequest.current === request.at) return;
+    if (request?.at === undefined || handledRequest.current === request.at) return;
+    // Opened from the bell / notifications / a reminder: show that day and the task on it.
+    if (request.date && /^\d{4}-\d{2}-\d{2}$/.test(request.date)) {
+      handledRequest.current = request.at;
+      const date = request.date;
+      setSelectedDate(date);
+      setYear(Number(date.slice(0, 4)));
+      setMonth(Number(date.slice(5, 7)));
+      setHighlightId(request.taskId ?? null);
+      const scroll = setTimeout(
+        () => scrollRef.current?.scrollTo({ y: Math.max(dayListY.current - 12, 0), animated: true }),
+        350,
+      );
+      const fade = setTimeout(() => setHighlightId(null), 3200);
+      return () => {
+        clearTimeout(scroll);
+        clearTimeout(fade);
+      };
+    }
+    if (!request.open) return;
     handledRequest.current = request.at;
     if (request.open === 'import') {
       setImportError(null);
@@ -137,11 +161,28 @@ export function TasksScreen() {
 
   const dayTasks = [...(periodQuery.data?.tasks ?? [])]
     .filter((task) => task.date === selectedDate)
+    // Ticking a task no longer sends it to the bottom: the list stays put under the finger.
     .sort((left, right) => {
-      if (left.completed !== right.completed) return left.completed ? 1 : -1;
       if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
       return 0;
     });
+
+  // Cards that are new since the last render of the same day fade in; switching days does not.
+  const seenIds = useRef<Set<string> | null>(null);
+  const seenDate = useRef(selectedDate);
+  const isNewCard = (id: string) =>
+    seenIds.current !== null && seenDate.current === selectedDate && !seenIds.current.has(id);
+  const dayTaskIds = dayTasks.map((task) => task.id).join(',');
+  useEffect(() => {
+    const ids = dayTaskIds ? dayTaskIds.split(',') : [];
+    if (seenIds.current === null || seenDate.current !== selectedDate) {
+      seenDate.current = selectedDate;
+      seenIds.current = new Set(ids);
+      return;
+    }
+    for (const id of ids) seenIds.current.add(id);
+  }, [dayTaskIds, selectedDate]);
+  const [leavingId, setLeavingId] = useState<string | null>(null);
 
   const onImport = async (tasks: { title: string; minutes: number }[]) => {
     setImportError(null);
@@ -282,16 +323,24 @@ export function TasksScreen() {
         onPress: () => {
           setBusyId(task.id);
           setFormError(null);
-          void deleteTask
-            .mutateAsync(task.id)
-            .then(() => {
-              if (editingId === task.id) resetForm();
-            })
-            .catch((caught) => setFormError(mapAuthError(caught, t)))
-            .finally(() => setBusyId(null));
+          // The card animates out (TaskCardShell) and the request starts when it is gone.
+          setLeavingId(task.id);
         },
       },
     ]);
+  };
+
+  const removeTask = (task: DailyTask) => {
+    void deleteTask
+      .mutateAsync(task.id)
+      .then(() => {
+        if (editingId === task.id) resetForm();
+      })
+      .catch((caught) => setFormError(mapAuthError(caught, t)))
+      .finally(() => {
+        setLeavingId(null);
+        setBusyId(null);
+      });
   };
 
   if (periodQuery.isLoading && !periodQuery.data) {
@@ -313,6 +362,7 @@ export function TasksScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <SectionScrollView
+          ref={scrollRef}
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
@@ -356,7 +406,12 @@ export function TasksScreen() {
             onSelectDate={setSelectedDate}
           />
 
-          <Text style={[styles.dayTitle, { color: colors.ink }]}>
+          <Text
+            style={[styles.dayTitle, { color: colors.ink }]}
+            onLayout={(event) => {
+              dayListY.current = event.nativeEvent.layout.y;
+            }}
+          >
             {t('tasks.dayTitle', { date: formatDate(selectedDate, language) })}
           </Text>
 
@@ -367,14 +422,21 @@ export function TasksScreen() {
               const splitCount = Math.max(1, task.splitCount ?? 1);
               const splitDone = Math.min(splitCount, Math.max(0, task.splitDone ?? 0));
               return (
-                <View
+                <TaskCardShell
                   key={task.id}
+                  appear={isNewCard(task.id)}
+                  leaving={leavingId === task.id}
+                  onLeft={() => removeTask(task)}
                   style={[
                     styles.taskCard,
                     { backgroundColor: colors.panel, borderColor: colors.line },
                     task.completed && { borderColor: `${colors.brand}59` },
                     task.important && !task.completed && { borderColor: '#e0a020' },
                     editingId === task.id && { borderColor: colors.brand },
+                    highlightId === task.id && {
+                      backgroundColor: `${colors.brand}1a`,
+                      borderColor: colors.brand,
+                    },
                   ]}
                 >
                   <View style={styles.taskRow}>
@@ -383,15 +445,7 @@ export function TasksScreen() {
                       onPress={() => void onToggle(task)}
                       style={styles.taskMain}
                     >
-                      <View
-                        style={[
-                          styles.check,
-                          { borderColor: colors.line },
-                          task.completed && { backgroundColor: colors.brand, borderColor: colors.brand },
-                        ]}
-                      >
-                        {task.completed ? <AppIcon name="checkmark" color={colors.onBrand} size={18} /> : null}
-                      </View>
+                      <TaskCheck checked={task.completed} borderColor={colors.line} />
                       <View style={styles.taskCopy}>
                         <Text
                           style={[
@@ -503,7 +557,7 @@ export function TasksScreen() {
                       <Text style={[styles.splitBtnText, { color: colors.brand }]}>{t('tasks.split')}</Text>
                     </Pressable>
                   )}
-                </View>
+                </TaskCardShell>
               );
             })
           )}

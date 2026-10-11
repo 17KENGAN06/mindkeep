@@ -1,9 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Animated,
+  Easing,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon } from '../../components/AppIcon';
+import { ANDROID_HEADER_DROP } from '../../components/headerMetrics';
 import { AppButton } from '../../components/ui';
 import { fonts } from '../../config/fonts';
 import { useOverdueReminders, useTodayReminders } from '../reminders/useReminders';
@@ -13,6 +23,7 @@ import { useNotifications, useNotificationSummary } from './useNotifications';
 /** Where a bell item leads inside the Sections stack. */
 export type BellTarget =
   | { screen: 'TasksHome' | 'ReviewInbox' | 'Notifications' }
+  | { screen: 'TasksHome'; params: { date: string; taskId: string; at: number } }
   | { screen: 'MaterialDetail'; params: { id: string } };
 
 type NotificationBellProps = {
@@ -55,10 +66,24 @@ export function NotificationBell({ onOpen, appearance = 'card' }: NotificationBe
           pressed && { transform: [{ scale: 0.95 }] },
         ]}
       >
-        <AppIcon name="notifications-outline" color={badge > 0 ? colors.brand : colors.ink} size={20} />
+        <AppIcon
+          name="notifications-outline"
+          color={badge > 0 ? colors.brand : colors.ink}
+          size={20}
+        />
         {badge > 0 ? (
-          <View style={[styles.badge, { backgroundColor: colors.danger, borderColor: colors.bg }]}>
-            <Text style={styles.badgeText}>{badge > 99 ? '99+' : badge}</Text>
+          <View
+            style={[
+              styles.badge,
+              // Header buttons clip their content (iOS: round glass capsule, Android: the header
+              // item box): keep the badge inside the button.
+              appearance !== 'card' && styles.badgeInset,
+              { backgroundColor: colors.danger, borderColor: colors.bg },
+            ]}
+          >
+            <Text style={[styles.badgeText, appearance !== 'card' && styles.badgeTextInset]}>
+              {badge > 99 ? '99+' : badge}
+            </Text>
           </View>
         ) : null}
       </Pressable>
@@ -84,7 +109,13 @@ export function NotificationBell({ onOpen, appearance = 'card' }: NotificationBe
   );
 }
 
-function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: BellTarget) => void }) {
+function BellPanel({
+  onClose,
+  onOpen,
+}: {
+  onClose: () => void;
+  onOpen: (target: BellTarget) => void;
+}) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -106,7 +137,9 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const important = (inbox.data?.notifications ?? []).filter((item) => item.type === 'TASK_IMPORTANT');
+  const important = (inbox.data?.notifications ?? []).filter(
+    (item) => item.type === 'TASK_IMPORTANT',
+  );
   const dueToday = today.data ?? [];
   const late = overdue.data ?? [];
   const counts = [
@@ -117,12 +150,24 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
 
   return (
     <View style={styles.backdrop}>
-      <Pressable accessibilityLabel={t('common.close')} style={StyleSheet.absoluteFill} onPress={onClose} />
+      <Pressable
+        accessibilityLabel={t('common.close')}
+        style={StyleSheet.absoluteFill}
+        onPress={onClose}
+      />
       <Animated.View
         style={[
           styles.sheet,
-          { backgroundColor: colors.bg, borderColor: colors.line, paddingBottom: Math.max(insets.bottom, 12) + 6 },
-          { transform: [{ translateY: rise.interpolate({ inputRange: [0, 1], outputRange: [480, 0] }) }] },
+          {
+            backgroundColor: colors.bg,
+            borderColor: colors.line,
+            paddingBottom: Math.max(insets.bottom, 12) + 6,
+          },
+          {
+            transform: [
+              { translateY: rise.interpolate({ inputRange: [0, 1], outputRange: [480, 0] }) },
+            ],
+          },
         ]}
       >
         <AmbientGlow />
@@ -140,13 +185,20 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
             accessibilityLabel={t('common.close')}
             hitSlop={8}
             onPress={onClose}
-            style={[styles.close, { backgroundColor: `${colors.panel}e6`, borderColor: colors.line }]}
+            style={[
+              styles.close,
+              { backgroundColor: `${colors.panel}e6`, borderColor: colors.line },
+            ]}
           >
             <AppIcon name="close" color={colors.ink} size={20} />
           </Pressable>
         </View>
 
-        <ScrollView style={styles.list} contentContainerStyle={styles.listContent} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+        >
           <Section
             title={`${t('notifications.bellImportant')} · ${important.length}`}
             tone={colors.warn}
@@ -155,7 +207,18 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
               key: item.id,
               icon: 'flag' as const,
               label: item.dailyTask?.title ?? item.message,
-              onPress: () => onOpen({ screen: 'TasksHome' }),
+              onPress: () =>
+                item.dailyTask
+                  ? onOpen({
+                      screen: 'TasksHome',
+                      params: {
+                        // Stored at UTC noon: the date part is the task's calendar day.
+                        date: item.dailyTask.date.slice(0, 10),
+                        taskId: item.dailyTask.id,
+                        at: Date.now(),
+                      },
+                    })
+                  : onOpen({ screen: 'TasksHome' }),
             }))}
           />
           <Section
@@ -166,7 +229,8 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
               key: reminder.id,
               icon: 'school-outline' as const,
               label: reminder.material.title,
-              onPress: () => onOpen({ screen: 'MaterialDetail', params: { id: reminder.material.id } }),
+              onPress: () =>
+                onOpen({ screen: 'MaterialDetail', params: { id: reminder.material.id } }),
             }))}
           />
           <Section
@@ -177,7 +241,8 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
               key: reminder.id,
               icon: 'school-outline' as const,
               label: reminder.material.title,
-              onPress: () => onOpen({ screen: 'MaterialDetail', params: { id: reminder.material.id } }),
+              onPress: () =>
+                onOpen({ screen: 'MaterialDetail', params: { id: reminder.material.id } }),
             }))}
           />
         </ScrollView>
@@ -199,13 +264,38 @@ function BellPanel({ onClose, onOpen }: { onClose: () => void; onOpen: (target: 
   );
 }
 
-type SectionItem = { key: string; icon: 'flag' | 'school-outline'; label: string; onPress: () => void };
+type SectionItem = {
+  key: string;
+  icon: 'flag' | 'school-outline';
+  label: string;
+  onPress: () => void;
+};
 
-function Section({ title, tone, empty, items }: { title: string; tone: string; empty: string; items: SectionItem[] }) {
+function Section({
+  title,
+  tone,
+  empty,
+  items,
+}: {
+  title: string;
+  tone: string;
+  empty: string;
+  items: SectionItem[];
+}) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.section, { backgroundColor: `${colors.panel}e6`, borderColor: items.length ? `${tone}55` : colors.line }]}>
-      <Text style={[styles.sectionTitle, { color: items.length ? tone : colors.muted }]}>{title}</Text>
+    <View
+      style={[
+        styles.section,
+        {
+          backgroundColor: `${colors.panel}e6`,
+          borderColor: items.length ? `${tone}55` : colors.line,
+        },
+      ]}
+    >
+      <Text style={[styles.sectionTitle, { color: items.length ? tone : colors.muted }]}>
+        {title}
+      </Text>
       {items.length === 0 ? (
         <Text style={[styles.empty, { color: colors.muted }]}>{empty}</Text>
       ) : (
@@ -239,7 +329,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 46,
   },
-  buttonHeader: { borderRadius: 14, height: 40, width: 40 },
+  buttonHeader: { borderRadius: 15, height: 44, marginTop: ANDROID_HEADER_DROP, width: 44 },
   buttonBare: { borderWidth: 0, height: 36, width: 36 },
   badge: {
     alignItems: 'center',
@@ -254,6 +344,15 @@ const styles = StyleSheet.create({
     top: -6,
   },
   badgeText: { color: '#fff', fontFamily: fonts.bold, fontSize: 10.5 },
+  badgeInset: {
+    borderWidth: 1.5,
+    height: 16,
+    minWidth: 16,
+    paddingHorizontal: 3,
+    right: 1,
+    top: 1,
+  },
+  badgeTextInset: { fontSize: 9, includeFontPadding: false },
   backdrop: { backgroundColor: 'rgba(3,8,6,0.68)', flex: 1, justifyContent: 'flex-end' },
   sheet: {
     borderTopLeftRadius: 32,
@@ -268,17 +367,49 @@ const styles = StyleSheet.create({
   grabber: { alignSelf: 'center', borderRadius: 999, height: 4, width: 44 },
   head: { alignItems: 'flex-start', flexDirection: 'row', gap: 12 },
   headCopy: { flex: 1 },
-  eyebrow: { fontFamily: fonts.display, fontSize: 11, letterSpacing: 2.4, textTransform: 'uppercase' },
+  eyebrow: {
+    fontFamily: fonts.display,
+    fontSize: 11,
+    letterSpacing: 2.4,
+    textTransform: 'uppercase',
+  },
   title: { fontFamily: fonts.display, fontSize: 22, letterSpacing: -0.3, marginTop: 4 },
   subtitle: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18, marginTop: 6 },
-  close: { alignItems: 'center', borderRadius: 14, borderWidth: 1, height: 42, justifyContent: 'center', width: 42 },
+  close: {
+    alignItems: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    height: 42,
+    justifyContent: 'center',
+    width: 42,
+  },
   list: { flexGrow: 0 },
   listContent: { gap: 10 },
   section: { borderRadius: 22, borderWidth: 1, gap: 2, padding: 12 },
-  sectionTitle: { fontFamily: fonts.display, fontSize: 11, letterSpacing: 1.6, marginBottom: 6, paddingHorizontal: 4, textTransform: 'uppercase' },
+  sectionTitle: {
+    fontFamily: fonts.display,
+    fontSize: 11,
+    letterSpacing: 1.6,
+    marginBottom: 6,
+    paddingHorizontal: 4,
+    textTransform: 'uppercase',
+  },
   empty: { fontFamily: fonts.regular, fontSize: 13, paddingHorizontal: 4, paddingVertical: 4 },
-  item: { alignItems: 'center', borderRadius: 14, flexDirection: 'row', gap: 10, minHeight: 44, paddingHorizontal: 6 },
-  itemIcon: { alignItems: 'center', borderRadius: 10, height: 28, justifyContent: 'center', width: 28 },
+  item: {
+    alignItems: 'center',
+    borderRadius: 14,
+    flexDirection: 'row',
+    gap: 10,
+    minHeight: 44,
+    paddingHorizontal: 6,
+  },
+  itemIcon: {
+    alignItems: 'center',
+    borderRadius: 10,
+    height: 28,
+    justifyContent: 'center',
+    width: 28,
+  },
   itemText: { flex: 1, fontFamily: fonts.medium, fontSize: 14.5 },
   actions: { gap: 10 },
 });
