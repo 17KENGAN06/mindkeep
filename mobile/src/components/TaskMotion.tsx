@@ -13,6 +13,8 @@ type TaskCardShellProps = {
   onLeft?: () => void;
   /** The card's own bottom padding, collapsed with it (default 10). */
   collapsePadding?: number;
+  /** The card's top inside its parent, reported on every layout (to scroll to a task). */
+  onMeasured?: (y: number) => void;
 };
 
 /**
@@ -27,6 +29,7 @@ export function TaskCardShell({
   leaving = false,
   onLeft,
   collapsePadding = 10,
+  onMeasured,
 }: TaskCardShellProps) {
   const enter = useRef(new Animated.Value(appear ? 0 : 1)).current;
   const exit = useRef(new Animated.Value(1)).current;
@@ -83,7 +86,10 @@ export function TaskCardShell({
 
   return (
     <Animated.View
-      onLayout={(event) => setHeight(event.nativeEvent.layout.height)}
+      onLayout={(event) => {
+        setHeight(event.nativeEvent.layout.height);
+        onMeasured?.(event.nativeEvent.layout.y);
+      }}
       style={[
         style,
         {

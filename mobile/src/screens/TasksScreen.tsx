@@ -90,10 +90,27 @@ export function TasksScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const dayListY = useRef(0);
   const [highlightId, setHighlightId] = useState<string | null>(null);
+  // A task (or just a day) to bring into view once its month has loaded and its card is laid out.
+  const focusRequest = useRef<{ date: string; taskId: string | null } | null>(null);
+  const focusTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const cardY = useRef(new Map<string, number>());
+  useEffect(() => () => focusTimers.current.forEach(clearTimeout), []);
+  const scrollToFocus = (readY: () => number) => {
+    focusRequest.current = null;
+    focusTimers.current.forEach(clearTimeout);
+    focusTimers.current = [
+      // Leave room for the header above, so the card lands in the upper part of the screen.
+      setTimeout(
+        () => scrollRef.current?.scrollTo({ y: Math.max(readY() - 140, 0), animated: true }),
+        120,
+      ),
+      setTimeout(() => setHighlightId(null), 4500),
+    ];
+  };
   useEffect(() => {
     const request = route.params;
     if (request?.at === undefined || handledRequest.current === request.at) return;
-    // Opened from the bell / notifications / a reminder: show that day and the task on it.
+    // Opened from the bell / notifications / a reminder: show that day and scroll to the task.
     if (request.date && /^\d{4}-\d{2}-\d{2}$/.test(request.date)) {
       handledRequest.current = request.at;
       const date = request.date;
@@ -101,15 +118,8 @@ export function TasksScreen() {
       setYear(Number(date.slice(0, 4)));
       setMonth(Number(date.slice(5, 7)));
       setHighlightId(request.taskId ?? null);
-      const scroll = setTimeout(
-        () => scrollRef.current?.scrollTo({ y: Math.max(dayListY.current - 12, 0), animated: true }),
-        350,
-      );
-      const fade = setTimeout(() => setHighlightId(null), 3200);
-      return () => {
-        clearTimeout(scroll);
-        clearTimeout(fade);
-      };
+      focusRequest.current = { date, taskId: request.taskId ?? null };
+      return;
     }
     if (!request.open) return;
     handledRequest.current = request.at;
@@ -183,6 +193,22 @@ export function TasksScreen() {
     for (const id of ids) seenIds.current.add(id);
   }, [dayTaskIds, selectedDate]);
   const [leavingId, setLeavingId] = useState<string | null>(null);
+
+  // Bring the requested task into view: at once if its card is already laid out, otherwise its
+  // card's onMeasured does it. A task that is gone (deleted, moved) falls back to the day's list.
+  useEffect(() => {
+    const request = focusRequest.current;
+    if (!request || request.date !== selectedDate || !periodQuery.data) return;
+    if (request.taskId && dayTaskIds.split(',').includes(request.taskId)) {
+      const y = cardY.current.get(request.taskId);
+      if (y !== undefined) scrollToFocus(() => y);
+      return;
+    }
+    // Not in the cached month: wait for the fresh one before giving up on the task.
+    if (periodQuery.isFetching) return;
+    setHighlightId(null);
+    scrollToFocus(() => dayListY.current);
+  }, [route.params, selectedDate, dayTaskIds, periodQuery.data, periodQuery.isFetching]);
 
   const onImport = async (tasks: { title: string; minutes: number }[]) => {
     setImportError(null);
@@ -427,6 +453,13 @@ export function TasksScreen() {
                   appear={isNewCard(task.id)}
                   leaving={leavingId === task.id}
                   onLeft={() => removeTask(task)}
+                  onMeasured={(y) => {
+                    cardY.current.set(task.id, y);
+                    const request = focusRequest.current;
+                    if (request?.taskId === task.id && request.date === selectedDate) {
+                      scrollToFocus(() => y);
+                    }
+                  }}
                   style={[
                     styles.taskCard,
                     { backgroundColor: colors.panel, borderColor: colors.line },
