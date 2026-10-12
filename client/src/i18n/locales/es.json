@@ -1798,7 +1798,7 @@
     "undoSwitch": "Quedarme en el plan actual",
     "billingNote": "El pago con tarjeta se abre en el navegador. El mismo plan funciona luego en la web y en la app.",
     "refundNote": "Puedes detener el próximo cargo en la cuenta. Acceso hasta la fecha ya pagada. No devolvemos los días no usados y no hay una ventana de 14 días para recuperar el dinero.",
-    "immediateAck": "Abrir el acceso en cuanto pague. Los días pagados siguen hasta el final del periodo — no se devuelven.",
+    "immediateAck": "Quiero acceso nada más pagar y entiendo que el periodo pagado no se reembolsa.",
     "immediateAckNeed": "Marca esto para continuar."
   },
   "terms": {

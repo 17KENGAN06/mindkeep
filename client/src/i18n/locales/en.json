@@ -1934,7 +1934,7 @@
     "undoSwitch": "Keep my current plan",
     "billingNote": "Card checkout opens in the browser. The same plan then works on the website and in the app.",
     "refundNote": "You can stop the next charge in Account. Access stays until the paid date. We do not pay unused days back, and we do not run a 14-day money-back window.",
-    "immediateAck": "Start paid access as soon as I pay. I keep the days I paid for until they end — they are not refunded.",
+    "immediateAck": "I want access right after paying and understand the paid period is not refunded.",
     "immediateAckNeed": "Tick this to continue.",
     "free": {
       "name": "Free",

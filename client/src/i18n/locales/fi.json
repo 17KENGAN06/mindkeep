@@ -1798,7 +1798,7 @@
     "undoSwitch": "Pidä nykyinen paketti",
     "billingNote": "Korttimaksu avautuu selaimessa. Sama paketti toimii sen jälkeen sivustolla ja sovelluksessa.",
     "refundNote": "Seuraavan veloituksen voi pysäyttää tilillä. Käyttöoikeus maksettuun päivään. Käyttämättömiä päiviä ei palauteta, eikä 14 päivän rahat takaisin -ikkunaa ole.",
-    "immediateAck": "Avaa käyttöoikeus heti maksun jälkeen. Maksetut päivät jäävät kauden loppuun — niitä ei palauteta.",
+    "immediateAck": "Haluan käyttöoikeuden heti maksun jälkeen ja ymmärrän, ettei maksettua kautta palauteta.",
     "immediateAckNeed": "Rastita jatkaaksesi."
   },
   "terms": {

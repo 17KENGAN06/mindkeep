@@ -11,7 +11,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    'min-h-11 bg-brand-500 text-[#07110d] hover:bg-brand-400 focus-visible:ring-brand-400 disabled:opacity-50 active:scale-[0.98]',
+    'min-h-11 bg-brand-500 text-[#07110d] hover:bg-brand-400 focus-visible:ring-brand-400 disabled:opacity-50 aria-busy:opacity-100 active:scale-[0.98]',
   secondary:
     'min-h-11 bg-panel text-ink ring-1 ring-line hover:border-brand-400 hover:ring-brand-400 focus-visible:ring-brand-400 active:scale-[0.98]',
   ghost:
@@ -37,7 +37,8 @@ export function Button({
       {isLoading ? (
         <>
           <LoaderCircle className="mr-2 h-4 w-4 shrink-0 animate-spin" aria-hidden />
-          <span>{loadingText ?? children}</span>
+          {/* One row: the label and any icon stay next to the spinner instead of wrapping. */}
+          <span className="inline-flex min-w-0 items-center gap-2">{loadingText ?? children}</span>
         </>
       ) : (
         children

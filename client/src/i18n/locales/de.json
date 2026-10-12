@@ -1798,7 +1798,7 @@
     "undoSwitch": "Aktuellen Plan behalten",
     "billingNote": "Kartenzahlung öffnet im Browser. Derselbe Plan gilt danach auf der Website und in der App.",
     "refundNote": "Die nächste Abbuchung kannst du im Konto stoppen. Zugang bis zum bezahlten Datum. Ungenutzte Tage zahlen wir nicht zurück, und es gibt kein 14-Tage-Geld-zurück-Fenster.",
-    "immediateAck": "Zugang direkt nach der Zahlung öffnen. Bezahlte Tage bleiben bis Periodenende — sie werden nicht erstattet.",
+    "immediateAck": "Ich möchte sofort nach der Zahlung Zugang und verstehe, dass der bezahlte Zeitraum nicht erstattet wird.",
     "immediateAckNeed": "Bitte ankreuzen, um fortzufahren."
   },
   "terms": {
