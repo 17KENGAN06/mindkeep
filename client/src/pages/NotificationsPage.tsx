@@ -22,12 +22,12 @@ function typeTone(type: AppNotification['type']) {
 
 function cardClass(notification: AppNotification) {
   if (notification.type === 'REVIEW_OVERDUE') {
-    return notification.isRead ? 'bg-panel ring-red-400/25' : 'bg-red-50/55 ring-red-400/40';
+    return notification.isRead ? 'bg-panel ring-red-400/25' : 'bg-red-500/10 ring-red-400/40';
   }
   if (notification.type === 'TASK_IMPORTANT') {
     return notification.isRead
       ? 'bg-panel ring-amber-400/30'
-      : 'bg-amber-50/70 ring-amber-400/45';
+      : 'bg-amber-500/[0.09] ring-amber-400/45';
   }
   return notification.isRead ? 'bg-panel ring-line' : 'bg-brand-50/70 ring-brand-500/30';
 }
@@ -112,7 +112,17 @@ export function NotificationsPage() {
                   </Link>
                 ) : null}
                 {notification.type === 'TASK_IMPORTANT' || notification.dailyTaskId ? (
-                  <Link to="/tasks">
+                  <Link
+                    to="/tasks"
+                    state={
+                      notification.dailyTask
+                        ? {
+                            date: notification.dailyTask.date.slice(0, 10),
+                            taskId: notification.dailyTask.id,
+                          }
+                        : undefined
+                    }
+                  >
                     <Button
                       type="button"
                       variant="secondary"

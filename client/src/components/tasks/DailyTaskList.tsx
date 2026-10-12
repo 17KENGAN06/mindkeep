@@ -13,6 +13,8 @@ type TaskListProps = {
   onSplit: (task: DailyTask, splitCount: number) => void;
   onSetPart: (task: DailyTask, splitDone: number) => void;
   busyId?: string | null;
+  /** A task opened from the bell / notifications: outlined for a few seconds. */
+  highlightId?: string | null;
 };
 
 function formatMinutes(minutes: number, t: (key: string, opts?: Record<string, unknown>) => string) {
@@ -68,6 +70,7 @@ export function DailyTaskList({
   onSplit,
   onSetPart,
   busyId,
+  highlightId,
 }: TaskListProps) {
   const { t } = useTranslation();
   const [pickingId, setPickingId] = useState<string | null>(null);
@@ -93,13 +96,16 @@ export function DailyTaskList({
         return (
           <li
             key={task.id}
-            className={`flex flex-col gap-3 rounded-2xl p-3 ring-1 transition sm:p-4 ${
-              task.completed
+            id={`task-${task.id}`}
+            className={`flex scroll-mt-24 flex-col gap-3 rounded-2xl p-3 transition duration-500 sm:p-4 ${
+              highlightId === task.id
+                ? 'bg-brand-50 ring-2 ring-brand-400 shadow-[0_0_28px_color-mix(in_srgb,var(--color-brand-400)_35%,transparent)]'
+                : task.completed
                 ? 'bg-emerald-500/10 ring-emerald-500/30'
                 : important
                   ? 'bg-amber-500/[0.09] ring-amber-400/50 shadow-[0_0_24px_rgba(245,186,64,0.16)]'
                   : 'bg-panel ring-line'
-            }`}
+            } ${highlightId === task.id ? '' : 'ring-1'}`}
           >
             <div className="flex items-start gap-2 sm:items-center sm:gap-3">
               <button

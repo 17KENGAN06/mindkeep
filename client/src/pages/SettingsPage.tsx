@@ -78,7 +78,7 @@ export function SettingsPage() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-6">
+    <section className="mx-auto w-full max-w-5xl space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-ink">{t('settings.title')}</h1>
         <p className="mt-2 text-sm text-muted">{t('settings.subtitle')}</p>

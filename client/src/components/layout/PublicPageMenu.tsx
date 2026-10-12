@@ -26,7 +26,7 @@ export function PublicDesktopNav() {
         <Link
           key={link.to}
           to={link.to}
-          className="inline-flex min-h-11 items-center rounded-xl px-2.5 text-xs font-semibold text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
+          className="inline-flex min-h-11 shrink-0 items-center rounded-xl px-3 py-2.5 text-sm font-medium whitespace-nowrap text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
         >
           {t(link.labelKey)}
         </Link>

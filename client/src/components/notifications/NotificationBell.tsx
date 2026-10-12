@@ -222,8 +222,14 @@ export function NotificationBell() {
                     <li key={item.id}>
                       <Link
                         to="/tasks"
+                        state={
+                          item.dailyTask
+                            ? // Stored at UTC noon: the date part is the task's calendar day.
+                              { date: item.dailyTask.date.slice(0, 10), taskId: item.dailyTask.id }
+                            : undefined
+                        }
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-2 truncate rounded-xl px-2.5 py-2 text-sm font-medium text-ink transition hover:bg-amber-50"
+                        className="flex items-center gap-2 truncate rounded-xl px-2.5 py-2 text-sm font-medium text-ink transition hover:bg-amber-500/15"
                       >
                         <Flag className="h-3.5 w-3.5 shrink-0 fill-current text-amber-500" aria-hidden />
                         <span className="truncate">{item.dailyTask?.title ?? item.message}</span>

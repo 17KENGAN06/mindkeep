@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
@@ -26,7 +26,12 @@ import {
 import type { DailyTask, DailyTaskView } from '@/types/dailyTask';
 import { useAccountToday, useTodayRollover } from '@/features/time/useAccountToday';
 
-type LocationState = { year?: number; month?: number } | null;
+// date + taskId: opened from the bell / notifications — show that day and the task on it.
+type LocationState = { year?: number; month?: number; date?: string; taskId?: string } | null;
+
+function isDay(value: unknown): value is string {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
 
 export function TasksPage() {
   const { t } = useTranslation();
@@ -35,9 +40,14 @@ export function TasksPage() {
   const { today, year: todayYear, month: todayMonth } = useAccountToday();
 
   const [view, setView] = useState<DailyTaskView>('month');
-  const [year, setYear] = useState(navState?.year ?? todayYear);
-  const [month, setMonth] = useState(navState?.month ?? todayMonth);
+  const [year, setYear] = useState(
+    isDay(navState?.date) ? Number(navState.date.slice(0, 4)) : (navState?.year ?? todayYear),
+  );
+  const [month, setMonth] = useState(
+    isDay(navState?.date) ? Number(navState.date.slice(5, 7)) : (navState?.month ?? todayMonth),
+  );
   const [selectedDate, setSelectedDate] = useState<string | null>(() => {
+    if (isDay(navState?.date)) return navState.date;
     if (navState?.year && navState?.month) {
       return `${navState.year}-${String(navState.month).padStart(2, '0')}-01`;
     }
@@ -70,6 +80,37 @@ export function TasksPage() {
   const copyTasks = useCopyDailyTasks();
   const updateTask = useUpdateDailyTask();
   const deleteTask = useDeleteDailyTask();
+
+  // Opened from the bell / notifications (also while already on this page): show the task's day,
+  // then scroll to the task once the month is loaded and outline it for a few seconds.
+  const [highlightId, setHighlightId] = useState<string | null>(null);
+  const [focusedKey, setFocusedKey] = useState<string | null>(null);
+  if (isDay(navState?.date) && focusedKey !== location.key) {
+    setFocusedKey(location.key);
+    setView('month');
+    setYear(Number(navState.date.slice(0, 4)));
+    setMonth(Number(navState.date.slice(5, 7)));
+    setSelectedDate(navState.date);
+    setHighlightId(navState.taskId ?? null);
+  }
+
+  const focusReady = Boolean(
+    highlightId &&
+      periodQuery.data?.tasks.some((task) => task.id === highlightId && task.date === selectedDate),
+  );
+  useEffect(() => {
+    if (!focusReady || !highlightId) return;
+    const scroll = window.setTimeout(() => {
+      document
+        .getElementById(`task-${highlightId}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
+    const fade = window.setTimeout(() => setHighlightId(null), 4500);
+    return () => {
+      window.clearTimeout(scroll);
+      window.clearTimeout(fade);
+    };
+  }, [focusReady, highlightId, focusedKey]);
 
   // Keep the selected day inside the shown month (adjusted during render, before paint).
   if (view === 'month' && selectedDate) {
@@ -418,6 +459,7 @@ export function TasksPage() {
               onSplit={(task, count) => void onSplit(task, count)}
               onSetPart={(task, done) => void onSetPart(task, done)}
               busyId={busyId}
+              highlightId={highlightId}
             />
           </section>
 
