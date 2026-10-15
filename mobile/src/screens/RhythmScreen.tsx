@@ -97,24 +97,25 @@ function HabitMonthCard({
           const done = checkSet.has(cell.date);
           const future = cell.date > today;
           const isToday = cell.date === today;
+          // The slot keeps a small gap around each day, so neighbouring tiles never touch.
           return (
-            <Pressable
-              key={cell.date}
-              disabled={future || busy}
-              onPress={() => onToggle(cell.date, done)}
-              style={[
-                styles.cell,
-                styles.cellHit,
-                {
-                  backgroundColor: done ? colors.brand : future ? colors.line : `${colors.brand}22`,
-                  borderColor: isToday ? colors.brand : 'transparent',
-                },
-              ]}
-            >
-              <Text style={[styles.cellDay, { color: done ? colors.onBrand : isToday ? colors.brand : colors.ink }]}>
-                {cell.day}
-              </Text>
-            </Pressable>
+            <View key={cell.date} style={styles.cell}>
+              <Pressable
+                disabled={future || busy}
+                onPress={() => onToggle(cell.date, done)}
+                style={[
+                  styles.cellHit,
+                  {
+                    backgroundColor: done ? colors.brand : future ? colors.line : `${colors.brand}22`,
+                    borderColor: isToday ? colors.brand : 'transparent',
+                  },
+                ]}
+              >
+                <Text style={[styles.cellDay, { color: done ? colors.onBrand : isToday ? colors.brand : colors.ink }]}>
+                  {cell.day}
+                </Text>
+              </Pressable>
+            </View>
           );
         })}
       </View>
@@ -262,14 +263,16 @@ const styles = StyleSheet.create({
   weekLabel: { flex: 1, fontSize: 11, fontFamily: fonts.semibold, textAlign: 'center', textTransform: 'uppercase' },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
   cell: {
-    alignItems: 'center',
-    height: 40,
-    justifyContent: 'center',
+    height: 42,
+    padding: 3,
     width: '14.285%',
   },
   cellHit: {
+    alignItems: 'center',
     borderRadius: 10,
     borderWidth: 2,
+    flex: 1,
+    justifyContent: 'center',
   },
   cellDay: { fontSize: 12, fontFamily: fonts.semibold },
 });
