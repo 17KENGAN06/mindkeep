@@ -723,7 +723,9 @@
       "googleAlreadyLinked": "Ein anderes Google-Konto ist bereits verbunden. Trenne es zuerst.",
       "passwordRequired": "Lege zuerst ein Passwort fest, damit du den Zugang nicht verlierst.",
       "appleUnavailable": "Anmeldung mit Apple fehlgeschlagen. Bitte versuche es erneut.",
-      "appleEmailMissing": "Apple hat keine E-Mail übermittelt. Versuche es erneut oder nutze eine andere Anmeldung."
+      "appleEmailMissing": "Apple hat keine E-Mail übermittelt. Versuche es erneut oder nutze eine andere Anmeldung.",
+      "appleAccountInUse": "Diese Apple-ID ist mit einem anderen MindKeep-Konto verbunden.",
+      "appleAlreadyLinked": "Eine andere Apple-ID ist bereits verbunden. Trenne sie zuerst."
     },
     "checkEmailTitle": "Prüfe deine E-Mail",
     "checkEmailBody": "Wir haben einen Link an {{email}} gesendet. Das Konto entsteht erst nach der Bestätigung.",
@@ -770,7 +772,13 @@
       "disconnect": "Trennen",
       "disconnectNeedsPassword": "Lege ein Passwort fest, bevor du Google trennst.",
       "connected": "Google verbunden. Du kannst dich jetzt mit Google anmelden.",
-      "disconnected": "Google getrennt. Melde dich mit E-Mail und Passwort an."
+      "disconnected": "Google getrennt. Melde dich mit E-Mail und Passwort an.",
+      "apple": "Apple",
+      "appleConnect": "Apple verbinden",
+      "appleConnected": "Apple ist verbunden. Du kannst dich jetzt mit Apple anmelden.",
+      "appleDisconnected": "Apple ist getrennt. Melde dich auf andere Weise an.",
+      "appleOnlyIphone": "Verbinde es in der MindKeep-App auf dem iPhone.",
+      "disconnectNeedsOther": "Lege zum Trennen zuerst ein Passwort fest oder verbinde eine andere Anmeldemethode."
     }
   },
   "dashboard": {

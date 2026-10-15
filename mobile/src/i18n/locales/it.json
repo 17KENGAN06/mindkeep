@@ -723,7 +723,9 @@
       "googleAlreadyLinked": "È già collegato un altro account Google. Scollegalo prima.",
       "passwordRequired": "Imposta prima una password per non perdere l’accesso all’account.",
       "appleUnavailable": "Accesso con Apple non riuscito. Riprova.",
-      "appleEmailMissing": "Apple non ha condiviso un’email. Riprova o usa un altro metodo di accesso."
+      "appleEmailMissing": "Apple non ha condiviso un’email. Riprova o usa un altro metodo di accesso.",
+      "appleAccountInUse": "Questo ID Apple è collegato a un altro account MindKeep.",
+      "appleAlreadyLinked": "È già collegato un altro ID Apple. Scollegalo prima."
     },
     "checkEmailTitle": "Controlla l’email",
     "checkEmailBody": "Abbiamo inviato un link a {{email}}. L’account nasce solo dopo la conferma.",
@@ -770,7 +772,13 @@
       "disconnect": "Scollega",
       "disconnectNeedsPassword": "Imposta una password prima di scollegare Google.",
       "connected": "Google collegato. Ora puoi accedere con Google.",
-      "disconnected": "Google scollegato. Accedi con email e password."
+      "disconnected": "Google scollegato. Accedi con email e password.",
+      "apple": "Apple",
+      "appleConnect": "Collega Apple",
+      "appleConnected": "Apple è collegato. Ora puoi accedere con Apple.",
+      "appleDisconnected": "Apple è scollegato. Accedi in un altro modo.",
+      "appleOnlyIphone": "Collegalo nell’app MindKeep su iPhone.",
+      "disconnectNeedsOther": "Per scollegarlo, imposta prima una password o collega un altro metodo di accesso."
     }
   },
   "dashboard": {

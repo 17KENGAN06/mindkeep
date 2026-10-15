@@ -723,7 +723,9 @@
       "googleAlreadyLinked": "Toinen Google-tili on jo yhdistetty. Poista se ensin.",
       "passwordRequired": "Aseta ensin salasana, ettet menetä pääsyä tiliisi.",
       "appleUnavailable": "Kirjautuminen Applella epäonnistui. Yritä uudelleen.",
-      "appleEmailMissing": "Apple ei jakanut sähköpostia. Yritä uudelleen tai käytä toista kirjautumistapaa."
+      "appleEmailMissing": "Apple ei jakanut sähköpostia. Yritä uudelleen tai käytä toista kirjautumistapaa.",
+      "appleAccountInUse": "Tämä Apple ID on yhdistetty toiseen MindKeep-tiliin.",
+      "appleAlreadyLinked": "Toinen Apple ID on jo yhdistetty. Irrota se ensin."
     },
     "checkEmailTitle": "Tarkista sähköposti",
     "checkEmailBody": "Lähetimme linkin osoitteeseen {{email}}. Tili syntyy vasta vahvistuksen jälkeen.",
@@ -770,7 +772,13 @@
       "disconnect": "Poista yhteys",
       "disconnectNeedsPassword": "Aseta salasana ennen kuin poistat Google-yhteyden.",
       "connected": "Google yhdistetty. Voit nyt kirjautua Googlella.",
-      "disconnected": "Google-yhteys poistettu. Kirjaudu sähköpostilla ja salasanalla."
+      "disconnected": "Google-yhteys poistettu. Kirjaudu sähköpostilla ja salasanalla.",
+      "apple": "Apple",
+      "appleConnect": "Yhdistä Apple",
+      "appleConnected": "Apple on yhdistetty. Voit nyt kirjautua Applella.",
+      "appleDisconnected": "Apple on irrotettu. Kirjaudu muulla tavalla.",
+      "appleOnlyIphone": "Yhdistä se MindKeep-sovelluksessa iPhonella.",
+      "disconnectNeedsOther": "Aseta ensin salasana tai yhdistä toinen kirjautumistapa, jotta voit irrottaa tämän."
     }
   },
   "dashboard": {

@@ -21,6 +21,7 @@ import {
   verifyAppleIdentityToken,
 } from '@/services/appleAuth.service.js';
 import type {
+  AppleLinkInput,
   AppleLoginInput,
   GoogleLinkInput,
   ChangePasswordInput,
@@ -608,13 +609,13 @@ export class AuthService {
     return toPublicUser(await ensureAdminRole(updated));
   }
 
-  /** Disconnects Google; only when a password is set, so the account stays reachable. */
+  /** Disconnects Google; only while a password or Apple still signs in, so the account stays reachable. */
   async unlinkGoogle(userId: string): Promise<PublicUser> {
     const user = await prisma.user.findUnique({ where: { id: userId }, select: userRecordSelect });
     if (!user) {
       throw new AppError('User not found', { statusCode: 401, code: 'UNAUTHORIZED' });
     }
-    if (!user.passwordHash) {
+    if (!user.passwordHash && !user.appleId) {
       throw new AppError('Set a password before disconnecting Google.', {
         statusCode: 400,
         code: 'PASSWORD_REQUIRED',
@@ -628,6 +629,75 @@ export class AuthService {
       data: { googleId: null },
       select: userRecordSelect,
     });
+    return toPublicUser(await ensureAdminRole(updated));
+  }
+
+  /**
+   * Connects Sign in with Apple to the signed-in account (the user proves the Apple ID on the
+   * phone). An Apple ID can belong to only one MindKeep account.
+   */
+  async linkApple(userId: string, input: AppleLinkInput): Promise<PublicUser> {
+    const identity = await verifyAppleIdentityToken(input.identityToken);
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { ...userRecordSelect, appleRefreshToken: true },
+    });
+    if (!user) {
+      throw new AppError('User not found', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    if (user.appleId && user.appleId !== identity.sub) {
+      throw new AppError('Another Apple ID is already connected. Disconnect it first.', {
+        statusCode: 409,
+        code: 'APPLE_ALREADY_LINKED',
+      });
+    }
+    if (user.appleId !== identity.sub) {
+      const owner = await prisma.user.findUnique({ where: { appleId: identity.sub }, select: { id: true } });
+      if (owner && owner.id !== user.id) {
+        throw new AppError('This Apple ID is connected to another MindKeep account.', {
+          statusCode: 409,
+          code: 'APPLE_ACCOUNT_IN_USE',
+        });
+      }
+    }
+    // Kept only to revoke access when Apple is disconnected or the account is deleted.
+    const refresh =
+      !user.appleRefreshToken && input.authorizationCode
+        ? await exchangeAppleAuthorizationCode(input.authorizationCode)
+        : null;
+    const updated = await prisma.user.update({
+      where: { id: user.id },
+      data: { appleId: identity.sub, ...(refresh ? { appleRefreshToken: refresh } : {}) },
+      select: userRecordSelect,
+    });
+    return toPublicUser(await ensureAdminRole(updated));
+  }
+
+  /** Disconnects Apple (and revokes it at Apple); only while a password or Google still signs in. */
+  async unlinkApple(userId: string): Promise<PublicUser> {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { ...userRecordSelect, appleRefreshToken: true },
+    });
+    if (!user) {
+      throw new AppError('User not found', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    const { appleRefreshToken, ...record } = user;
+    if (!record.appleId) {
+      return toPublicUser(await ensureAdminRole(record));
+    }
+    if (!record.passwordHash && !record.googleId) {
+      throw new AppError('Set a password before disconnecting Apple.', {
+        statusCode: 400,
+        code: 'PASSWORD_REQUIRED',
+      });
+    }
+    const updated = await prisma.user.update({
+      where: { id: record.id },
+      data: { appleId: null, appleRefreshToken: null },
+      select: userRecordSelect,
+    });
+    if (appleRefreshToken) await revokeAppleRefreshToken(appleRefreshToken);
     return toPublicUser(await ensureAdminRole(updated));
   }
 

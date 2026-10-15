@@ -19,6 +19,7 @@ import {
   forgotPasswordSchema,
   googleFinishSchema,
   googleLoginSchema,
+  appleLinkSchema,
   appleLoginSchema,
   googleLinkSchema,
   googleMobileStartSchema,
@@ -171,6 +172,20 @@ authRouter.post(
   '/google/unlink',
   requireAuth,
   asyncHandler((req, res) => authController.unlinkGoogle(req, res)),
+);
+
+authRouter.post(
+  '/apple/link',
+  requireAuth,
+  googleAuthRateLimit,
+  validate(appleLinkSchema),
+  asyncHandler((req, res) => authController.linkApple(req, res)),
+);
+
+authRouter.post(
+  '/apple/unlink',
+  requireAuth,
+  asyncHandler((req, res) => authController.unlinkApple(req, res)),
 );
 
 authRouter.post(

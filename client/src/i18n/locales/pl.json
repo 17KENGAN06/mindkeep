@@ -840,7 +840,9 @@
       "invalidLoginCode": "Ten kod jest niepoprawny lub wygasł.",
       "googleAccountInUse": "To konto Google jest już połączone z innym kontem MindKeep.",
       "googleAlreadyLinked": "Połączone jest już inne konto Google. Najpierw je odłącz.",
-      "passwordRequired": "Najpierw ustaw hasło, aby nie stracić dostępu do konta."
+      "passwordRequired": "Najpierw ustaw hasło, aby nie stracić dostępu do konta.",
+      "appleAccountInUse": "Ten Apple ID jest połączony z innym kontem MindKeep.",
+      "appleAlreadyLinked": "Inny Apple ID jest już połączony. Najpierw go odłącz."
     },
     "checkEmailTitle": "Sprawdź e-mail",
     "checkEmailBody": "Wysłaliśmy link na {{email}}. Konto powstanie dopiero po potwierdzeniu.",
@@ -887,7 +889,13 @@
       "disconnect": "Odłącz",
       "disconnectNeedsPassword": "Ustaw hasło, zanim odłączysz Google.",
       "connected": "Google połączone. Możesz teraz logować się przez Google.",
-      "disconnected": "Google odłączone. Loguj się e-mailem i hasłem."
+      "disconnected": "Google odłączone. Loguj się e-mailem i hasłem.",
+      "apple": "Apple",
+      "appleConnect": "Połącz Apple",
+      "appleConnected": "Apple jest połączone. Możesz teraz logować się przez Apple.",
+      "appleDisconnected": "Apple jest odłączone. Zaloguj się w inny sposób.",
+      "appleOnlyIphone": "Połącz je w aplikacji MindKeep na iPhonie.",
+      "disconnectNeedsOther": "Aby odłączyć, najpierw ustaw hasło lub połącz inną metodę logowania."
     }
   },
   "maintenance": {

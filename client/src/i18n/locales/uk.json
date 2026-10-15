@@ -840,7 +840,9 @@
       "invalidLoginCode": "Код неправильний або вже не діє.",
       "googleAccountInUse": "Цей акаунт Google уже прив’язано до іншого акаунта MindKeep.",
       "googleAlreadyLinked": "Уже підключено інший акаунт Google. Спочатку відключіть його.",
-      "passwordRequired": "Спочатку задайте пароль, щоб не втратити доступ до акаунта."
+      "passwordRequired": "Спочатку задайте пароль, щоб не втратити доступ до акаунта.",
+      "appleAccountInUse": "Цей Apple ID уже прив’язаний до іншого акаунта MindKeep.",
+      "appleAlreadyLinked": "Уже підключено інший Apple ID. Спочатку відключіть його."
     },
     "checkEmailTitle": "Перевірте пошту",
     "checkEmailBody": "Ми надіслали посилання на {{email}}. Акаунт зʼявиться лише після підтвердження.",
@@ -887,7 +889,13 @@
       "disconnect": "Відключити",
       "disconnectNeedsPassword": "Щоб відключити Google, спочатку задайте пароль.",
       "connected": "Google підключено. Тепер можна входити через Google.",
-      "disconnected": "Google відключено. Входьте через пошту і пароль."
+      "disconnected": "Google відключено. Входьте через пошту і пароль.",
+      "apple": "Apple",
+      "appleConnect": "Підключити Apple",
+      "appleConnected": "Apple підключено. Тепер можна входити через Apple.",
+      "appleDisconnected": "Apple відключено. Входьте іншим способом.",
+      "appleOnlyIphone": "Підключається в застосунку MindKeep на iPhone.",
+      "disconnectNeedsOther": "Щоб відключити, спочатку задайте пароль або підключіть інший спосіб входу."
     }
   },
   "maintenance": {

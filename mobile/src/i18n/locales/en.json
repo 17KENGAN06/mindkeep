@@ -723,7 +723,9 @@
       "googleAlreadyLinked": "Another Google account is already connected. Disconnect it first.",
       "passwordRequired": "Set a password first so you do not lose access to your account.",
       "appleUnavailable": "Could not sign in with Apple. Please try again.",
-      "appleEmailMissing": "Apple did not share an email. Try again or use another sign-in method."
+      "appleEmailMissing": "Apple did not share an email. Try again or use another sign-in method.",
+      "appleAccountInUse": "This Apple ID is connected to another MindKeep account.",
+      "appleAlreadyLinked": "Another Apple ID is already connected. Disconnect it first."
     },
     "checkEmailTitle": "Check your email",
     "checkEmailBody": "We sent a confirmation link to {{email}}. The account is created only after you open it.",
@@ -770,7 +772,13 @@
       "disconnect": "Disconnect",
       "disconnectNeedsPassword": "Set a password before disconnecting Google.",
       "connected": "Google connected. You can now sign in with Google.",
-      "disconnected": "Google disconnected. Sign in with email and password."
+      "disconnected": "Google disconnected. Sign in with email and password.",
+      "apple": "Apple",
+      "appleConnect": "Connect Apple",
+      "appleConnected": "Apple is connected. You can now sign in with Apple.",
+      "appleDisconnected": "Apple is disconnected. Sign in another way.",
+      "appleOnlyIphone": "Connect it in the MindKeep app on iPhone.",
+      "disconnectNeedsOther": "To disconnect, first set a password or connect another sign-in method."
     }
   },
   "dashboard": {

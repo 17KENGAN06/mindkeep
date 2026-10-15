@@ -188,6 +188,13 @@ export type LoginCodeInput = z.infer<typeof loginCodeSchema>;
 export type GoogleLoginInput = z.infer<typeof googleLoginSchema>;
 export type GoogleLinkInput = z.infer<typeof googleLinkSchema>;
 export type AppleLoginInput = z.infer<typeof appleLoginSchema>;
+
+/** Connect Sign in with Apple to the signed-in account (iOS app). */
+export const appleLinkSchema = z.object({
+  identityToken: z.string().min(100).max(10_000),
+  authorizationCode: z.string().trim().min(10).max(1000).optional(),
+});
+export type AppleLinkInput = z.infer<typeof appleLinkSchema>;
 export type GoogleFinishInput = z.infer<typeof googleFinishSchema>;
 export type GoogleMobileStartInput = z.infer<typeof googleMobileStartSchema>;
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;

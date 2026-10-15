@@ -58,6 +58,9 @@ export const authApi = {
   linkGoogle: (payload: { code: string; flowSecret: string }) =>
     apiClient.post<{ user: User }>('/api/auth/google/link', payload),
   unlinkGoogle: () => apiClient.post<{ user: User }>('/api/auth/google/unlink'),
+  linkApple: (payload: { identityToken: string; authorizationCode?: string }) =>
+    apiClient.post<{ user: User }>('/api/auth/apple/link', payload),
+  unlinkApple: () => apiClient.post<{ user: User }>('/api/auth/apple/unlink'),
   changePassword: (payload: {
     currentPassword?: string;
     password: string;

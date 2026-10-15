@@ -840,7 +840,9 @@
       "invalidLoginCode": "Ese código es incorrecto o ha caducado.",
       "googleAccountInUse": "Esta cuenta de Google ya está conectada a otra cuenta de MindKeep.",
       "googleAlreadyLinked": "Ya hay otra cuenta de Google conectada. Desconéctala primero.",
-      "passwordRequired": "Crea primero una contraseña para no perder el acceso a tu cuenta."
+      "passwordRequired": "Crea primero una contraseña para no perder el acceso a tu cuenta.",
+      "appleAccountInUse": "Este Apple ID está conectado a otra cuenta de MindKeep.",
+      "appleAlreadyLinked": "Ya hay otro Apple ID conectado. Desconéctalo primero."
     },
     "checkEmailTitle": "Revisa tu correo",
     "checkEmailBody": "Enviamos un enlace a {{email}}. La cuenta se crea solo al confirmarlo.",
@@ -887,7 +889,13 @@
       "disconnect": "Desconectar",
       "disconnectNeedsPassword": "Crea una contraseña antes de desconectar Google.",
       "connected": "Google conectado. Ya puedes entrar con Google.",
-      "disconnected": "Google desconectado. Entra con tu correo y contraseña."
+      "disconnected": "Google desconectado. Entra con tu correo y contraseña.",
+      "apple": "Apple",
+      "appleConnect": "Conectar Apple",
+      "appleConnected": "Apple está conectado. Ya puedes iniciar sesión con Apple.",
+      "appleDisconnected": "Apple está desconectado. Inicia sesión de otra forma.",
+      "appleOnlyIphone": "Conéctalo en la app MindKeep del iPhone.",
+      "disconnectNeedsOther": "Para desconectarlo, primero crea una contraseña o conecta otro método de inicio de sesión."
     }
   },
   "maintenance": {

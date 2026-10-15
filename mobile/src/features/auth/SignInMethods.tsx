@@ -1,5 +1,6 @@
-import { useState, type ReactNode } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import { useEffect, useState, type ReactNode } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../api/auth';
@@ -59,6 +60,63 @@ export function SignInMethods() {
   const [error, setError] = useState<string | null>(null);
   const hasPassword = user?.hasPassword !== false;
   const hasGoogle = Boolean(user?.hasGoogle);
+  const hasApple = Boolean(user?.hasApple);
+  const [appleBusy, setAppleBusy] = useState(false);
+  // Connecting Apple uses the iPhone's own sheet; elsewhere only the status and Disconnect show.
+  const [appleAvailable, setAppleAvailable] = useState(false);
+
+  useEffect(() => {
+    if (Platform.OS !== 'ios') return;
+    let alive = true;
+    void AppleAuthentication.isAvailableAsync().then((value) => {
+      if (alive) setAppleAvailable(value);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const onConnectApple = async () => {
+    setError(null);
+    setNotice(null);
+    setAppleBusy(true);
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [AppleAuthentication.AppleAuthenticationScope.EMAIL],
+      });
+      if (!credential.identityToken) {
+        setError(t('auth.errors.appleUnavailable'));
+        return;
+      }
+      const result = await authApi.linkApple({
+        identityToken: credential.identityToken,
+        ...(credential.authorizationCode ? { authorizationCode: credential.authorizationCode } : {}),
+      });
+      queryClient.setQueryData(['auth', 'me'], result.user);
+      setNotice(t('auth.methods.appleConnected'));
+    } catch (caught) {
+      const code = (caught as { code?: string } | null)?.code;
+      if (code === 'ERR_REQUEST_CANCELED') return;
+      setError(mapAuthError(caught, t));
+    } finally {
+      setAppleBusy(false);
+    }
+  };
+
+  const onDisconnectApple = async () => {
+    setError(null);
+    setNotice(null);
+    setAppleBusy(true);
+    try {
+      const result = await authApi.unlinkApple();
+      queryClient.setQueryData(['auth', 'me'], result.user);
+      setNotice(t('auth.methods.appleDisconnected'));
+    } catch (caught) {
+      setError(mapAuthError(caught, t));
+    } finally {
+      setAppleBusy(false);
+    }
+  };
 
   const onConnect = async () => {
     setError(null);
@@ -116,7 +174,7 @@ export function SignInMethods() {
               variant="secondary"
               label={t('auth.methods.disconnect')}
               loading={busy}
-              disabled={!hasPassword}
+              disabled={!hasPassword && !hasApple}
               onPress={() => void onDisconnect()}
             />
           ) : (
@@ -129,8 +187,40 @@ export function SignInMethods() {
           )
         }
       >
-        {hasGoogle && !hasPassword ? (
+        {hasGoogle && !hasPassword && !hasApple ? (
           <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.methods.disconnectNeedsPassword')}</Text>
+        ) : null}
+      </MethodRow>
+
+      <MethodRow
+        icon={<AppIcon name="logo-apple" color={colors.brand} size={20} />}
+        title={t('auth.methods.apple')}
+        status={hasApple ? t('auth.methods.googleOn') : t('auth.methods.googleOff')}
+        on={hasApple}
+        action={
+          hasApple ? (
+            <AppButton
+              size="small"
+              variant="secondary"
+              label={t('auth.methods.disconnect')}
+              loading={appleBusy}
+              disabled={!hasPassword && !hasGoogle}
+              onPress={() => void onDisconnectApple()}
+            />
+          ) : appleAvailable ? (
+            <AppButton
+              size="small"
+              label={appleBusy ? t('auth.methods.connecting') : t('auth.methods.appleConnect')}
+              loading={appleBusy}
+              onPress={() => void onConnectApple()}
+            />
+          ) : null
+        }
+      >
+        {hasApple && !hasPassword && !hasGoogle ? (
+          <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.methods.disconnectNeedsOther')}</Text>
+        ) : !hasApple && !appleAvailable ? (
+          <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.methods.appleOnlyIphone')}</Text>
         ) : null}
       </MethodRow>
 

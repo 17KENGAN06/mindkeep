@@ -62,6 +62,10 @@ export function mapAuthError(error: unknown, t: Translate): string {
       return t('auth.errors.googleAccountInUse');
     case 'GOOGLE_ALREADY_LINKED':
       return t('auth.errors.googleAlreadyLinked');
+    case 'APPLE_ACCOUNT_IN_USE':
+      return t('auth.errors.appleAccountInUse');
+    case 'APPLE_ALREADY_LINKED':
+      return t('auth.errors.appleAlreadyLinked');
     case 'PASSWORD_REQUIRED':
       return t('auth.errors.passwordRequired');
     case 'GOOGLE_EMAIL_IN_USE':

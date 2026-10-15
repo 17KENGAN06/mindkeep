@@ -29,6 +29,7 @@ import type {
   DeleteAccountInput,
   ForgotPasswordInput,
   GoogleFinishInput,
+  AppleLinkInput,
   AppleLoginInput,
   GoogleLinkInput,
   GoogleLoginInput,
@@ -234,6 +235,24 @@ export class AuthController {
       throw new AppError('Authentication required', { statusCode: 401, code: 'UNAUTHORIZED' });
     }
     const user = await authService.unlinkGoogle(req.user.id);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json({ user });
+  }
+
+  async linkApple(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    const user = await authService.linkApple(req.user.id, req.body as AppleLinkInput);
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json({ user });
+  }
+
+  async unlinkApple(req: Request, res: Response): Promise<void> {
+    if (!req.user) {
+      throw new AppError('Authentication required', { statusCode: 401, code: 'UNAUTHORIZED' });
+    }
+    const user = await authService.unlinkApple(req.user.id);
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ user });
   }
