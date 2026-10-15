@@ -1470,70 +1470,95 @@
   "privacy": {
     "eyebrow": "Mentions légales",
     "title": "Politique de confidentialité",
-    "updated": "Mis à jour : 5 octobre 2026",
-    "intro": "Cette politique explique quelles données Mindkeep collecte, pourquoi nous en avons besoin et comment nous les protégeons. En utilisant le service, vous acceptez les pratiques décrites ci-dessous.",
+    "updated": "Mis à jour : 15 octobre 2026",
+    "intro": "Cette politique explique quelles données Mindkeep collecte sur mindkeep.cloud et dans les apps Mindkeep pour iPhone et Android, pourquoi nous en avons besoin, qui nous aide à les traiter et ce que vous pouvez en faire. Mindkeep n’affiche aucune publicité, ne vend pas vos données et ne les utilise pas pour du suivi.",
     "contactLabel": "Questions relatives aux données :",
     "sections": [
       {
-        "title": "1. Qui est responsable",
+        "title": "1. Responsable du traitement",
         "body": [
-          "Mindkeep est exploité par le studio WEISEZAHOY.",
-          "Pour toute demande relative aux données personnelles, contactez l'e-mail indiqué sur cette page."
+          "Mindkeep (le site web et les apps iPhone et Android) est exploité par le studio WEISEZAHOY, responsable du traitement de vos données personnelles.",
+          "Pour toute question ou demande liée à vos données, écrivez à l’adresse indiquée en bas de cette page."
         ]
       },
       {
-        "title": "2. Ce que nous collectons",
+        "title": "2. Données collectées",
         "body": [
-          "Données de compte : nom, e-mail et mot de passe haché lors de l'inscription.",
-          "Contenu d'apprentissage : fiches, catégories, dates d'apprentissage et statuts de révision.",
-          "Données techniques : fuseau horaire, langue de l'interface et journaux serveur de base nécessaires à la sécurité et à la fiabilité.",
-          "Si tu utilises le scan alimentaire sur le site mobile, la photo est traitée uniquement pour estimer le nom et les calories et n’est pas enregistrée sur nos serveurs."
+          "Compte : nom, e-mail, empreinte du mot de passe (si vous en définissez un), fuseau horaire et langue. Si vous vous connectez avec Google ou Apple, nous conservons l’identifiant de compte fourni et l’e-mail partagé (avec Apple, il peut s’agir d’une adresse relais privée).",
+          "Ce que vous ajoutez : tâches, notes, fiches d’étude, catégories et dates de révision, habitudes et leurs coches, catégories de budget, opérations et devises.",
+          "Nutrition et corps : objectif calorique, repas avec calories et macros, eau, pas et poids ; si vous utilisez le calcul de l’objectif, aussi le sexe, l’âge, la taille et le niveau d’activité. Ce sont des données de santé que vous saisissez vous-même et que vous seul voyez.",
+          "Photos : une photo de repas ou de ticket que vous ajoutez est envoyée pour une estimation et n’est pas conservée (voir section 5).",
+          "Abonnement : formule, période de facturation et identifiants client Stripe si vous achetez une formule sur le site. Les données de carte sont traitées par Stripe et ne nous parviennent jamais.",
+          "Données techniques : sessions de connexion (visibles et révocables dans Compte) et journaux serveur de base nécessaires à la sécurité et à la fiabilité.",
+          "Nous ne collectons ni localisation, ni contacts, ni identifiants publicitaires, ni statistiques d’usage, et les apps ne contiennent aucun SDK publicitaire ou de suivi."
         ]
       },
       {
-        "title": "3. Pourquoi nous utilisons les données",
+        "title": "3. Utilisation des données",
         "body": [
-          "Pour créer votre compte, stocker vos fiches et programmer des rappels après 3, 7 et 30 jours.",
-          "Pour afficher le calendrier, les statistiques et les notifications dans l'application.",
-          "Pour sécuriser le service, prévenir les abus et améliorer la fiabilité."
+          "Pour fournir le service : tenir votre compte, afficher vos journées, planifier les révisions à 3, 7 et 30 jours et afficher les notifications dans le service. Les rappels sur le téléphone pour les tâches importantes sont programmés sur votre appareil.",
+          "Pour vous connecter, protéger votre compte et empêcher les abus.",
+          "Pour traiter une formule achetée sur le site et répondre à vos messages.",
+          "Bases légales dans l’UE/EEE : l’exécution de notre contrat avec vous ; notre intérêt légitime pour la sécurité ; et votre consentement explicite pour les données de nutrition et de corps, que vous donnez en les saisissant et pouvez retirer à tout moment en les supprimant."
         ]
       },
       {
         "title": "4. Stockage et sécurité",
         "body": [
-          "Les données sont stockées sur des serveurs sécurisés et transférées en HTTPS lorsque c'est possible.",
-          "Les mots de passe ne sont jamais stockés en clair — nous utilisons un hachage cryptographique.",
-          "L'accès administrateur est limité aux opérateurs autorisés."
+          "Les données transitent en HTTPS et sont stockées sur les serveurs sécurisés de notre hébergeur.",
+          "Les mots de passe sont stockés uniquement sous forme d’empreinte cryptographique. Dans les apps, les jetons de connexion sont gardés dans le stockage sécurisé du téléphone (Keychain sur iPhone, Keystore sur Android).",
+          "L’accès aux outils d’administration est réservé aux opérateurs autorisés et il est journalisé."
         ]
       },
       {
-        "title": "5. Partage avec des tiers",
+        "title": "5. Prestataires",
         "body": [
-          "Nous ne vendons pas de données personnelles.",
-          "Les prestataires d'hébergement et de bases de données peuvent traiter les données uniquement pour faire fonctionner Mindkeep, dans le cadre d'un accord avec l'opérateur.",
-          "Si tu t’abonnes, Stripe traite le paiement et reçoit l’e-mail et les données de facturation nécessaires au débit de la carte.",
-          "Si tu scannes un repas sur le site mobile, la photo est envoyée à Google Gemini uniquement pour estimer les calories, puis elle est jetée. Nous ne stockons pas la photo.",
-          "Si tu photographies un ticket ou un relevé dans Budget, la photo est envoyée à Google Gemini uniquement pour lire les opérations, puis elle est jetée. Nous ne stockons pas la photo."
+          "Nous ne vendons pas de données personnelles et ne les partageons pas à des fins publicitaires. Nous utilisons ces prestataires uniquement pour faire fonctionner Mindkeep, selon leurs conditions de traitement des données :",
+          "Railway : serveurs et base de données de l’API.",
+          "Hostinger : hébergement du site web.",
+          "Resend : envoi des codes de connexion et des e-mails du service.",
+          "Google Gemini : les photos de repas et de tickets sont envoyées uniquement pour estimer les calories ou lire les opérations, puis supprimées. Nous ne conservons pas les photos.",
+          "Stripe : paiements des formules achetées sur le site ; Stripe reçoit votre e-mail et vos données de facturation.",
+          "Google et Apple : seulement si vous choisissez de vous connecter avec eux.",
+          "Certains prestataires sont situés hors de l’UE/EEE (par exemple aux États-Unis) ; ces transferts reposent sur des garanties comme les clauses contractuelles types de leurs conditions."
         ]
       },
       {
-        "title": "6. Vos droits",
+        "title": "6. Durée de conservation",
         "body": [
-          "Tu peux supprimer le compte dans Compte sur le site ou dans l’appli. Notes, tâches, révisions, finances et le reste des données personnelles quittent alors nos serveurs.",
-          "Vous pouvez modifier la langue, le thème et le contenu d'apprentissage à tout moment dans l'application."
+          "Vos données sont conservées tant que votre compte existe.",
+          "Lorsque vous supprimez votre compte, votre profil et tout le contenu sont effacés immédiatement de notre base, et l’accès « Se connecter avec Apple » est révoqué. Les sauvegardes peuvent en garder une copie pendant une durée limitée, jusqu’à leur écrasement.",
+          "Les codes de connexion et les sessions expirent automatiquement. Stripe conserve les données de paiement aussi longtemps que la loi l’exige."
         ]
       },
       {
-        "title": "7. Cookies et données locales",
+        "title": "7. Vos droits",
         "body": [
-          "Mindkeep peut stocker un jeton de session, la langue et la préférence de thème localement dans votre navigateur.",
-          "Ils servent à la connexion et au confort de l'interface, pas au suivi publicitaire."
+          "Supprimer votre compte et toutes ses données à tout moment : Compte → Supprimer le compte, sur le site ou dans l’app.",
+          "Modifier ou supprimer vous-même toute tâche, note, habitude, repas ou autre entrée quand vous le souhaitez.",
+          "Vous pouvez nous demander une copie de vos données, leur rectification ou la limitation du traitement, ou vous opposer au traitement, en écrivant à l’adresse ci-dessous. Nous répondons sous 30 jours.",
+          "Si vous êtes dans l’UE/EEE, vous pouvez aussi déposer une plainte auprès de votre autorité de protection des données (en Finlande : le Médiateur de la protection des données)."
         ]
       },
       {
-        "title": "8. Mises à jour de la politique",
+        "title": "8. Enfants",
         "body": [
-          "Nous pouvons mettre à jour cette politique. La version en vigueur est toujours disponible sur cette page, avec la date de mise à jour."
+          "Mindkeep ne s’adresse pas aux enfants de moins de 13 ans. Si vous pensez qu’un enfant nous a transmis des données personnelles, écrivez-nous et nous les supprimerons."
+        ]
+      },
+      {
+        "title": "9. Cookies et données locales",
+        "body": [
+          "Le site conserve un cookie de connexion ainsi que votre langue et votre thème dans le navigateur.",
+          "Les apps conservent les jetons de connexion dans un stockage sécurisé, et la langue, le thème et les réglages des rappels sur l’appareil.",
+          "Rien de tout cela n’est utilisé pour la publicité ou le suivi."
+        ]
+      },
+      {
+        "title": "10. Modifications de cette politique",
+        "body": [
+          "Nous pouvons mettre à jour cette politique. La version en vigueur et sa date figurent toujours sur cette page ; pour les changements importants, nous vous préviendrons aussi dans le service.",
+          "Documents liés : Conditions d’utilisation, Politique relative aux cookies et Politique d’abonnement et de remboursement."
         ]
       }
     ]

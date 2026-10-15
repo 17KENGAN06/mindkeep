@@ -230,5 +230,5 @@ Contact: contact@mindkeep.cloud
 1. Demo account created on production (Free plan, not admin, filled with sample data), and on Railway: `REVIEW_LOGIN_EMAIL` = its email, `REVIEW_LOGIN_CODE` = 6 digits. Sign in once on a phone with that code to check.
 2. `contact@mindkeep.cloud` receives mail (a Hostinger mailbox or forward).
 3. Screenshots: 6.9" (1320×2868) uploaded; Play needs a ≤ 2:1 version.
-4. **Privacy policy must match the forms above (open):** https://mindkeep.cloud/privacy (`privacy.sections` in the site's 9 locale files, updated 5 Oct 2026) lists only account data and learning content. It still needs tasks, notes, habits, budget, nutrition / weight / body data and steps, Google / Apple sign-in IDs, the iPhone / Android app (photo estimates are described for the "mobile website" only), and Resend for emails.
+4. Privacy policy matches the forms above: https://mindkeep.cloud/privacy was rewritten on 15 Oct 2026 (`privacy` in the site's 9 locale files) — all data types, Google / Apple sign-in, the apps, providers (Railway, Hostinger, Resend, Gemini, Stripe), legal bases, retention, rights and children. It goes live with the next site upload; re-check it after any data change.
 5. EU: without the DSA trader status, untick EU countries in Pricing and Availability for now.

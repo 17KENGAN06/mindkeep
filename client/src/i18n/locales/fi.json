@@ -1470,70 +1470,95 @@
   "privacy": {
     "eyebrow": "Oikeudellinen",
     "title": "Tietosuojaseloste",
-    "updated": "Päivitetty: 5. lokakuuta 2026",
-    "intro": "Tämä seloste kertoo, mitä tietoja Mindkeep kerää, miksi niitä tarvitaan ja miten suojaamme niitä. Käyttämällä palvelua hyväksyt alla kuvatut käytännöt.",
+    "updated": "Päivitetty: 15. lokakuuta 2026",
+    "intro": "Tämä seloste kertoo, mitä tietoja Mindkeep kerää osoitteessa mindkeep.cloud ja Mindkeep-sovelluksissa iPhonelle ja Androidille, miksi tarvitsemme niitä, kuka auttaa niiden käsittelyssä ja mitä voit tehdä niille. Mindkeepissä ei ole mainoksia, emmekä myy tietojasi tai käytä niitä seurantaan.",
     "contactLabel": "Tietopyynnöt:",
     "sections": [
       {
         "title": "1. Rekisterinpitäjä",
         "body": [
-          "Mindkeep-palvelua operoi WEISEZAHOY-studio.",
-          "Henkilötietopyynnöt voi lähettää tällä sivulla ilmoitettuun sähköpostiin."
+          "Mindkeep-palvelua (verkkosivusto sekä iPhone- ja Android-sovellukset) operoi WEISEZAHOY-studio, joka on henkilötietojesi rekisterinpitäjä.",
+          "Tietosuojaan liittyvät kysymykset ja pyynnöt voit lähettää tämän sivun alalaidassa olevaan sähköpostiosoitteeseen."
         ]
       },
       {
         "title": "2. Mitä keräämme",
         "body": [
-          "Tilin tiedot: nimi, sähköposti ja salasanan tiiviste rekisteröityessä.",
-          "Oppimissisältö: materiaalit, kategoriat, oppimispäivämäärät ja kertauksen tilat.",
-          "Tekniset tiedot: aikavyöhyke, käyttöliittymän kieli sekä palvelimen peruslokit turvallisuutta ja vakautta varten.",
-          "Jos käytät ruokaskannausta sivuston mobiiliversiossa, kuva käsitellään vain nimen ja kalorien arvioimiseksi eikä sitä tallenneta palvelimillemme."
+          "Tili: nimi, sähköposti, salasanan tiiviste (jos asetat salasanan), aikavyöhyke ja käyttökieli. Jos kirjaudut Googlella tai Applella, tallennamme niiden antaman tilitunnisteen ja jakaman sähköpostin (Applella se voi olla yksityinen välitysosoite).",
+          "Lisäämäsi sisältö: tehtävät, muistiinpanot, opiskelumateriaalit, kategoriat ja kertauspäivät, tavat ja niiden merkinnät, budjetin kategoriat, tapahtumat ja valuutat.",
+          "Ravinto ja keho: kaloritavoite, ateriat kaloreineen ja makroineen, vesi, askeleet ja paino; jos käytät kaloritavoitteen laskuria, myös sukupuoli, ikä, pituus ja aktiivisuustaso. Nämä ovat terveystietoja, jotka syötät itse ja jotka vain sinä näet.",
+          "Kuvat: lisäämäsi ateria- tai kuittikuva lähetetään arviota varten eikä sitä tallenneta (katso kohta 5).",
+          "Tilaus: tilaus, laskutusjakso ja Stripen asiakastunnisteet, jos ostat tilauksen verkkosivustolta. Korttitiedot käsittelee Stripe, eivätkä ne koskaan tule meille.",
+          "Tekniset tiedot: kirjautumisistunnot (näet ja voit päättää ne Tili-osiossa) sekä turvallisuuden ja luotettavuuden vaatimat perustason palvelinlokit.",
+          "Emme kerää sijaintia, yhteystietoja, mainostunnisteita tai analytiikkaa, eikä sovelluksissa ole mainos- tai seuranta-SDK:ita."
         ]
       },
       {
-        "title": "3. Mihin tietoja käytetään",
+        "title": "3. Mihin käytämme tietoja",
         "body": [
-          "Tilin luomiseen, materiaalien tallennukseen sekä 3, 7 ja 30 päivän muistutuksiin.",
-          "Kalenterin, tilastojen ja sovelluksen ilmoitusten näyttämiseen.",
-          "Turvallisuuden ylläpitoon, väärinkäytösten estämiseen ja palvelun luotettavuuteen."
+          "Palvelun tarjoamiseen: tilisi ylläpitoon, päiviesi näyttämiseen, kertausten ajoittamiseen 3, 7 ja 30 päivän päähän ja palvelun sisäisiin ilmoituksiin. Puhelimen muistutukset tärkeistä tehtävistä ajoitetaan laitteellasi.",
+          "Kirjautumiseen, tilisi suojaamiseen ja väärinkäytösten estämiseen.",
+          "Verkkosivustolta ostetun tilauksen käsittelyyn ja viesteihisi vastaamiseen.",
+          "Oikeusperusteet EU:ssa/ETA:ssa: sopimuksen täyttäminen kanssasi; oikeutettu etumme turvallisuuteen; sekä nimenomainen suostumuksesi ravinto- ja kehotietoihin, jonka annat syöttämällä ne ja jonka voit perua milloin tahansa poistamalla ne."
         ]
       },
       {
-        "title": "4. Säilytys ja suojaus",
+        "title": "4. Säilytys ja tietoturva",
         "body": [
-          "Tiedot säilytetään suojatuilla palvelimilla ja siirretään HTTPS-yhteydellä, kun se on saatavilla.",
-          "Salasanoja ei säilytetä selväkielisinä — käytämme kryptografista tiivistystä.",
-          "Ylläpitäjän käyttöoikeudet on rajoitettu valtuutetuille henkilöille."
+          "Tiedot siirretään HTTPS-yhteydellä ja säilytetään palveluntarjoajamme suojatuilla palvelimilla.",
+          "Salasanat tallennetaan vain kryptografisina tiivisteinä. Sovelluksissa kirjautumistunnukset säilytetään puhelimen suojatussa tallennustilassa (Keychain iPhonessa, Keystore Androidissa).",
+          "Ylläpitotyökaluihin on pääsy vain valtuutetuilla operaattoreilla, ja pääsy kirjataan."
         ]
       },
       {
-        "title": "5. Luovutus kolmansille",
+        "title": "5. Palveluntarjoajat",
         "body": [
-          "Emme myy henkilötietoja.",
-          "Hosting- ja tietokantapalvelut voivat käsitellä tietoja vain Mindkeepin ylläpitoa varten operaattorin sopimuksen mukaisesti.",
-          "Jos tilaat, Stripe käsittelee maksun ja saa sähköpostin sekä laskutustiedot, joita korttiveloitus vaatii.",
-          "Jos skannaat aterian sivuston mobiiliversiossa, kuva lähetetään Google Geminille vain kaloriarviota varten ja hävitetään sen jälkeen. Emme tallenna kuvaa.",
-          "Jos kuvaat kuitin tai tiliotteen Budjetissa, kuva lähetetään Google Geminille vain tapahtumien lukemista varten ja hävitetään sen jälkeen. Emme tallenna kuvaa."
+          "Emme myy henkilötietoja emmekä luovuta niitä mainontaan. Käytämme näitä palveluntarjoajia vain Mindkeepin toimintaan niiden tietojenkäsittelyehtojen mukaisesti:",
+          "Railway: API:n palvelimet ja tietokanta.",
+          "Hostinger: verkkosivuston ylläpito.",
+          "Resend: kirjautumiskoodien ja palvelusähköpostien toimitus.",
+          "Google Gemini: ateria- ja kuittikuvat lähetetään vain kalorien arviointiin tai tapahtumien lukemiseen, ja ne hävitetään sen jälkeen. Emme tallenna kuvia.",
+          "Stripe: verkkosivustolta ostettujen tilausten maksut; Stripe saa sähköpostisi ja laskutustietosi.",
+          "Google ja Apple: vain jos valitset kirjautumisen niiden kautta.",
+          "Osa palveluntarjoajista sijaitsee EU:n/ETA:n ulkopuolella (esimerkiksi Yhdysvalloissa); siirrot perustuvat suojatoimiin, kuten niiden ehtojen vakiosopimuslausekkeisiin."
         ]
       },
       {
-        "title": "6. Oikeutesi",
+        "title": "6. Kuinka kauan säilytämme tietoja",
         "body": [
-          "Tilin voit poistaa Tilistä sivustolla tai sovelluksessa. Muistiinpanot, tehtävät, kertaukset, talous ja muut henkilötiedot poistuvat palvelimiltamme.",
-          "Voit vaihtaa kielen, teeman ja materiaalien sisällön milloin tahansa sovelluksessa."
+          "Tietojasi säilytetään niin kauan kuin tilisi on olemassa.",
+          "Kun poistat tilisi, profiilisi ja kaikki sisältö poistetaan tietokannastamme heti ja Kirjaudu Applella -käyttöoikeus perutaan. Varmuuskopioissa voi olla kopio rajoitetun ajan, kunnes ne korvautuvat.",
+          "Kirjautumiskoodit ja istunnot vanhenevat automaattisesti. Stripe säilyttää maksutiedot lain vaatiman ajan."
         ]
       },
       {
-        "title": "7. Evästeet ja paikalliset tiedot",
+        "title": "7. Oikeutesi",
         "body": [
-          "Mindkeep voi tallentaa selaimen paikalliseen tallennukseen istuntotunnuksen, kielen ja teeman.",
-          "Näitä käytetään kirjautumiseen ja käyttöliittymän mukavuuteen, ei mainosseurantaan."
+          "Voit poistaa tilisi ja kaikki sen tiedot milloin tahansa: Tili → Poista tili, verkkosivustolla tai sovelluksessa.",
+          "Voit muokata tai poistaa minkä tahansa tehtävän, muistiinpanon, tavan, aterian tai muun merkinnän itse milloin tahansa.",
+          "Voit pyytää kopion tiedoistasi, niiden oikaisua tai käsittelyn rajoittamista tai vastustaa käsittelyä kirjoittamalla alla olevaan osoitteeseen. Vastaamme 30 päivän kuluessa.",
+          "Jos olet EU:ssa/ETA:ssa, voit myös tehdä valituksen tietosuojaviranomaiselle (Suomessa: tietosuojavaltuutettu)."
         ]
       },
       {
-        "title": "8. Selosteen muutokset",
+        "title": "8. Lapset",
         "body": [
-          "Voimme päivittää tätä selostetta. Ajantasainen versio on aina tällä sivulla päivityspäivämäärän kera."
+          "Mindkeepiä ei ole tarkoitettu alle 13-vuotiaille. Jos uskot, että lapsi on antanut meille henkilötietoja, kirjoita meille, niin poistamme ne."
+        ]
+      },
+      {
+        "title": "9. Evästeet ja paikalliset tiedot",
+        "body": [
+          "Verkkosivusto tallentaa kirjautumisevästeen sekä kielen ja teeman selaimeesi.",
+          "Sovellukset säilyttävät kirjautumistunnukset suojatussa tallennustilassa ja kielen, teeman ja muistutusasetukset laitteella.",
+          "Mitään näistä ei käytetä mainontaan tai seurantaan."
+        ]
+      },
+      {
+        "title": "10. Muutokset selosteeseen",
+        "body": [
+          "Voimme päivittää tätä selostetta. Voimassa oleva versio ja sen päivämäärä ovat aina tällä sivulla; tärkeistä muutoksista kerromme myös palvelussa.",
+          "Liittyvät asiakirjat: Käyttöehdot, Evästekäytäntö sekä Tilaus- ja palautuskäytäntö."
         ]
       }
     ]

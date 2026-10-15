@@ -1470,70 +1470,94 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "updated": "Updated: 5 October 2026",
-    "intro": "This policy explains what data Mindkeep collects, why we need it, and how we protect it. By using the service, you agree to the practices described below.",
+    "updated": "Updated: 15 October 2026",
+    "intro": "This policy explains what data Mindkeep collects on mindkeep.cloud and in the Mindkeep apps for iPhone and Android, why we need it, who helps us process it, and what you can do with it. Mindkeep has no ads and does not sell your data or use it for tracking.",
     "contactLabel": "Data questions:",
     "sections": [
       {
         "title": "1. Who is responsible",
         "body": [
-          "Mindkeep is operated by WEISEZAHOY studio.",
-          "For personal data requests, contact the email listed on this page."
+          "Mindkeep (the website and the iPhone and Android apps) is operated by WEISEZAHOY studio, the controller of your personal data.",
+          "For any privacy question or request, write to the email at the bottom of this page."
         ]
       },
       {
         "title": "2. What we collect",
         "body": [
-          "Account data: name, email, and a hashed password when you register.",
-          "Learning content: materials, categories, learned dates, and review statuses.",
-          "Technical data: timezone, interface language, and basic server logs needed for security and reliability.",
-          "If you use food scan on the mobile website, the photo is processed to estimate a meal name and calories and is not saved on our servers."
+          "Account: name, email, a hashed password if you set one, time zone and interface language. If you sign in with Google or Apple, we store the account ID they give us and the email they share (with Apple this can be a private relay address).",
+          "Content you add: tasks, notes, study materials, categories and review dates, habits and their check-ins, budget categories, operations and currencies.",
+          "Nutrition and body: calorie goal, meals with calories and macros, water, steps and weight; if you use the calorie goal calculator, also sex, age, height and activity level. This is health-related data that you enter yourself, and only you see it.",
+          "Photos: a meal or receipt photo you add is sent for an estimate and is not stored (see section 5).",
+          "Subscription: plan, billing period and Stripe customer IDs if you buy a plan on the website. Card details are handled by Stripe and never reach us.",
+          "Technical: sign-in sessions (you can see and end them in Account) and basic server logs needed for security and reliability.",
+          "We do not collect location, contacts, advertising IDs or analytics, and the apps contain no ad or tracking SDKs."
         ]
       },
       {
         "title": "3. Why we use data",
         "body": [
-          "To create your account, store materials, and schedule reminders after 3, 7, and 30 days.",
-          "To show calendar, statistics, and in-app notifications.",
-          "To keep the service secure, prevent abuse, and improve reliability."
+          "To provide the service: keep your account, show your days, schedule reviews after 3, 7 and 30 days and show in-app notifications. Phone reminders for important tasks are scheduled on your device.",
+          "To sign you in, keep your account secure and prevent abuse.",
+          "To process a plan bought on the website and to answer your messages.",
+          "Legal bases in the EU/EEA: performing our contract with you; our legitimate interest in security; and your explicit consent for nutrition and body data, which you give by entering it and can withdraw at any time by deleting it."
         ]
       },
       {
         "title": "4. Storage and security",
         "body": [
-          "Data is stored on secured servers and transferred over HTTPS where available.",
-          "Passwords are never stored in plain text — we use cryptographic hashing.",
-          "Admin access is limited to authorized operators."
+          "Data travels over HTTPS and is stored on secured servers of our hosting provider.",
+          "Passwords are stored only as cryptographic hashes. In the apps, sign-in tokens are kept in the phone’s secure storage (Keychain on iPhone, Keystore on Android).",
+          "Access to admin tools is limited to authorized operators and is logged."
         ]
       },
       {
-        "title": "5. Sharing with third parties",
+        "title": "5. Service providers",
         "body": [
-          "We do not sell personal data.",
-          "Hosting and database providers may process data only to run Mindkeep under agreement with the operator.",
-          "If you subscribe, Stripe processes the payment and receives email and billing details needed to charge the card.",
-          "If you scan a meal on the mobile website, the photo is sent to Google Gemini only to estimate calories and is discarded afterwards. We do not store the photo.",
-          "If you photograph a receipt or bank statement in Budget, the photo is sent to Google Gemini only to read operations and is discarded afterwards. We do not store the photo."
+          "We do not sell personal data and do not share it for advertising. We use these providers only to run Mindkeep, under their data processing terms:",
+          "Railway: servers and database for the API.",
+          "Hostinger: hosting of the website.",
+          "Resend: delivery of sign-in codes and service emails.",
+          "Google Gemini: meal and receipt photos are sent only to estimate calories or read operations and are discarded afterwards. We do not store the photos.",
+          "Stripe: payments for plans bought on the website; Stripe receives your email and billing details.",
+          "Google and Apple: only if you choose to sign in with them.",
+          "Some providers are located outside the EU/EEA (for example in the United States); such transfers rely on safeguards like the standard contractual clauses in their terms."
         ]
       },
       {
-        "title": "6. Your rights",
+        "title": "6. How long we keep data",
         "body": [
-          "You can delete your account in Account on the website or in the app. That removes your notes, tasks, reviews, finance, and other personal data from our servers.",
-          "You can change language, theme, and learning content at any time inside the app."
+          "Your data is kept while your account exists.",
+          "When you delete your account, your profile and all content are deleted from our database right away and Sign in with Apple access is revoked. Backups may keep a copy for a limited time until they are overwritten.",
+          "Sign-in codes and sessions expire automatically. Payment records are kept by Stripe as the law requires."
         ]
       },
       {
-        "title": "7. Cookies and local data",
+        "title": "7. Your rights",
         "body": [
-          "Mindkeep may store a session token, language, and theme preference locally in your browser.",
-          "These are used for sign-in and interface comfort, not for advertising tracking."
+          "Delete your account and all of its data at any time: Account → Delete account, on the website or in the app.",
+          "Edit or delete any task, note, habit, meal or other entry yourself whenever you like.",
+          "You can ask us for a copy of your data, a correction or a restriction of processing, or object to processing, by writing to the email below. We answer within 30 days.",
+          "If you are in the EU/EEA, you can also complain to your data protection authority (in Finland: the Data Protection Ombudsman)."
         ]
       },
       {
-        "title": "8. Policy updates",
+        "title": "8. Children",
         "body": [
-          "We may update this policy. The current version is always available on this page with the update date.",
+          "Mindkeep is not intended for children under 13. If you believe a child has given us personal data, write to us and we will delete it."
+        ]
+      },
+      {
+        "title": "9. Cookies and local data",
+        "body": [
+          "The website keeps a sign-in cookie and stores your language and theme in the browser.",
+          "The apps keep sign-in tokens in secure storage and your language, theme and reminder settings on the device.",
+          "None of this is used for advertising or tracking."
+        ]
+      },
+      {
+        "title": "10. Changes to this policy",
+        "body": [
+          "We may update this policy. The current version and its date are always on this page; about important changes we will also tell you in the service.",
           "Related documents: Terms of Service, Cookie Policy, and Subscription & Refund Policy."
         ]
       }

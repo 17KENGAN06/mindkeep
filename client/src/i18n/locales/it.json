@@ -1470,70 +1470,95 @@
   "privacy": {
     "eyebrow": "Note legali",
     "title": "Informativa sulla privacy",
-    "updated": "Aggiornato: 5 ottobre 2026",
-    "intro": "Questa informativa spiega quali dati Mindkeep raccoglie, perché ci servono e come li proteggiamo. Usando il servizio, accetti le pratiche descritte di seguito.",
+    "updated": "Aggiornato: 15 ottobre 2026",
+    "intro": "Questa informativa spiega quali dati Mindkeep raccoglie su mindkeep.cloud e nelle app Mindkeep per iPhone e Android, perché ci servono, chi ci aiuta a trattarli e cosa puoi farne. Mindkeep non ha pubblicità, non vende i tuoi dati e non li usa per il tracciamento.",
     "contactLabel": "Domande sui dati:",
     "sections": [
       {
-        "title": "1. Chi è responsabile",
+        "title": "1. Titolare del trattamento",
         "body": [
-          "Mindkeep è gestito dallo studio WEISEZAHOY.",
-          "Per richieste sui dati personali, contatta l'e-mail indicata in questa pagina."
+          "Mindkeep (il sito web e le app per iPhone e Android) è gestito dallo studio WEISEZAHOY, titolare del trattamento dei tuoi dati personali.",
+          "Per qualsiasi domanda o richiesta sulla privacy scrivi all’indirizzo email in fondo a questa pagina."
         ]
       },
       {
-        "title": "2. Cosa raccogliamo",
+        "title": "2. Quali dati raccogliamo",
         "body": [
-          "Dati dell'account: nome, e-mail e una password con hash al momento della registrazione.",
-          "Contenuti di apprendimento: materiali, categorie, date di apprendimento e stati dei ripassi.",
-          "Dati tecnici: fuso orario, lingua dell'interfaccia e log server di base necessari per sicurezza e affidabilità.",
-          "Se usi la scansione cibo sul sito mobile, la foto viene elaborata solo per stimare nome e calorie e non viene salvata sui nostri server."
+          "Account: nome, email, hash della password (se la imposti), fuso orario e lingua. Se accedi con Google o Apple, salviamo l’ID account che ci forniscono e l’email che condividono (con Apple può essere un indirizzo di inoltro privato).",
+          "Ciò che aggiungi: attività, note, materiali di studio, categorie e date di ripasso, abitudini e relative spunte, categorie di budget, operazioni e valute.",
+          "Alimentazione e corpo: obiettivo calorico, pasti con calorie e macro, acqua, passi e peso; se usi il calcolo dell’obiettivo, anche sesso, età, altezza e livello di attività. Sono dati sulla salute che inserisci tu e che vedi solo tu.",
+          "Foto: la foto di un pasto o di uno scontrino che aggiungi viene inviata per una stima e non viene conservata (vedi sezione 5).",
+          "Abbonamento: piano, periodo di fatturazione e ID cliente Stripe se acquisti un piano sul sito. I dati della carta sono gestiti da Stripe e non ci arrivano mai.",
+          "Dati tecnici: sessioni di accesso (visibili e chiudibili in Account) e log di base del server necessari per sicurezza e affidabilità.",
+          "Non raccogliamo posizione, contatti, ID pubblicitari né dati di analisi, e le app non contengono SDK pubblicitari o di tracciamento."
         ]
       },
       {
         "title": "3. Perché usiamo i dati",
         "body": [
-          "Per creare il tuo account, conservare i materiali e programmare promemoria dopo 3, 7 e 30 giorni.",
-          "Per mostrare calendario, statistiche e notifiche in-app.",
-          "Per mantenere il servizio sicuro, prevenire abusi e migliorare l'affidabilità."
+          "Per fornire il servizio: gestire il tuo account, mostrare le tue giornate, programmare i ripassi a 3, 7 e 30 giorni e mostrare le notifiche nel servizio. I promemoria sul telefono per le attività importanti sono programmati sul tuo dispositivo.",
+          "Per farti accedere, proteggere il tuo account e prevenire abusi.",
+          "Per gestire un piano acquistato sul sito e rispondere ai tuoi messaggi.",
+          "Basi giuridiche nell’UE/SEE: esecuzione del nostro contratto con te; il nostro legittimo interesse alla sicurezza; e il tuo consenso esplicito per i dati su alimentazione e corpo, che dai inserendoli e puoi revocare in qualsiasi momento eliminandoli."
         ]
       },
       {
         "title": "4. Conservazione e sicurezza",
         "body": [
-          "I dati sono conservati su server protetti e trasferiti via HTTPS dove disponibile.",
-          "Le password non vengono mai conservate in chiaro — usiamo hashing crittografico.",
-          "L'accesso admin è limitato agli operatori autorizzati."
+          "I dati viaggiano su HTTPS e sono conservati su server protetti del nostro fornitore di hosting.",
+          "Le password sono conservate solo come hash crittografico. Nelle app i token di accesso sono custoditi nella memoria sicura del telefono (Keychain su iPhone, Keystore su Android).",
+          "L’accesso agli strumenti di amministrazione è riservato agli operatori autorizzati ed è registrato."
         ]
       },
       {
-        "title": "5. Condivisione con terze parti",
+        "title": "5. Fornitori di servizi",
         "body": [
-          "Non vendiamo dati personali.",
-          "I fornitori di hosting e database possono trattare i dati solo per far funzionare Mindkeep, in base a un accordo con l'operatore.",
-          "Se ti abboni, Stripe elabora il pagamento e riceve email e dati di fatturazione necessari per addebitare la carta.",
-          "Se scansionate un pasto sul sito mobile, la foto viene inviata a Google Gemini solo per stimare le calorie e poi scartata. Non memorizziamo la foto.",
-          "Se fotografate uno scontrino o un estratto nel Budget, la foto viene inviata a Google Gemini solo per leggere le operazioni e poi scartata. Non memorizziamo la foto."
+          "Non vendiamo dati personali e non li condividiamo per pubblicità. Usiamo questi fornitori solo per far funzionare Mindkeep, secondo i loro termini sul trattamento dei dati:",
+          "Railway: server e database dell’API.",
+          "Hostinger: hosting del sito web.",
+          "Resend: invio dei codici di accesso e delle email di servizio.",
+          "Google Gemini: le foto di pasti e scontrini sono inviate solo per stimare le calorie o leggere le operazioni e poi eliminate. Non conserviamo le foto.",
+          "Stripe: pagamenti dei piani acquistati sul sito; Stripe riceve la tua email e i dati di fatturazione.",
+          "Google e Apple: solo se scegli di accedere con loro.",
+          "Alcuni fornitori si trovano fuori dall’UE/SEE (ad esempio negli Stati Uniti); tali trasferimenti si basano su garanzie come le clausole contrattuali tipo dei loro termini."
         ]
       },
       {
-        "title": "6. I tuoi diritti",
+        "title": "6. Per quanto tempo conserviamo i dati",
         "body": [
-          "Puoi eliminare l’account in Account sul sito o nell’app. Note, compiti, ripassi, finanze e gli altri dati personali escono dai nostri server.",
-          "Puoi cambiare lingua, tema e contenuti di apprendimento in qualsiasi momento nell'app."
+          "I tuoi dati sono conservati finché esiste il tuo account.",
+          "Quando elimini l’account, il profilo e tutti i contenuti vengono cancellati subito dal nostro database e l’accesso con «Accedi con Apple» viene revocato. I backup possono conservarne una copia per un periodo limitato, finché non vengono sovrascritti.",
+          "I codici di accesso e le sessioni scadono automaticamente. Stripe conserva i dati di pagamento per il tempo richiesto dalla legge."
         ]
       },
       {
-        "title": "7. Cookie e dati locali",
+        "title": "7. I tuoi diritti",
         "body": [
-          "Mindkeep può conservare un token di sessione, la lingua e la preferenza del tema in locale nel browser.",
-          "Servono per l'accesso e il comfort dell'interfaccia, non per il tracciamento pubblicitario."
+          "Eliminare l’account e tutti i suoi dati in qualsiasi momento: Account → Elimina account, sul sito o nell’app.",
+          "Modificare o eliminare tu stesso qualsiasi attività, nota, abitudine, pasto o altra voce quando vuoi.",
+          "Puoi chiederci una copia dei tuoi dati, la rettifica o la limitazione del trattamento, oppure opporti al trattamento, scrivendo all’indirizzo qui sotto. Rispondiamo entro 30 giorni.",
+          "Se ti trovi nell’UE/SEE, puoi anche presentare reclamo alla tua autorità per la protezione dei dati (in Finlandia: il Garante per la protezione dei dati)."
         ]
       },
       {
-        "title": "8. Aggiornamenti dell'informativa",
+        "title": "8. Minori",
         "body": [
-          "Possiamo aggiornare questa informativa. La versione corrente è sempre disponibile in questa pagina, con la data di aggiornamento."
+          "Mindkeep non è destinato a minori di 13 anni. Se ritieni che un minore ci abbia fornito dati personali, scrivici e li cancelleremo."
+        ]
+      },
+      {
+        "title": "9. Cookie e dati locali",
+        "body": [
+          "Il sito conserva un cookie di accesso e salva lingua e tema nel tuo browser.",
+          "Le app conservano i token di accesso in una memoria sicura, e lingua, tema e impostazioni dei promemoria sul dispositivo.",
+          "Niente di tutto questo è usato per pubblicità o tracciamento."
+        ]
+      },
+      {
+        "title": "10. Modifiche all’informativa",
+        "body": [
+          "Possiamo aggiornare questa informativa. La versione in vigore e la sua data sono sempre su questa pagina; delle modifiche importanti ti avviseremo anche nel servizio.",
+          "Documenti correlati: Termini di servizio, Cookie policy e Politica di abbonamento e rimborso."
         ]
       }
     ]
