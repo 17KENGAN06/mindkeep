@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Flag, Split, Trash2 } from 'lucide-react';
+import { Check, Flag, Pencil, Split, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { DailyTask } from '@/types/dailyTask';
 
@@ -10,6 +10,8 @@ type TaskListProps = {
   onToggle: (task: DailyTask) => void;
   onImportant: (task: DailyTask) => void;
   onDelete: (id: string) => void;
+  /** Opens the edit dialog for the task's title and minutes. */
+  onEdit?: (task: DailyTask) => void;
   onSplit: (task: DailyTask, splitCount: number) => void;
   onSetPart: (task: DailyTask, splitDone: number) => void;
   busyId?: string | null;
@@ -67,6 +69,7 @@ export function DailyTaskList({
   onToggle,
   onImportant,
   onDelete,
+  onEdit,
   onSplit,
   onSetPart,
   busyId,
@@ -148,6 +151,18 @@ export function DailyTaskList({
                   >
                     <Flag className={`h-4 w-4 ${important ? 'fill-current' : ''}`} aria-hidden />
                   </button>
+                  {onEdit ? (
+                    <button
+                      type="button"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+                      aria-label={t('tasks.edit')}
+                      title={t('tasks.edit')}
+                      disabled={busy}
+                      onClick={() => onEdit(task)}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </button>
+                  ) : null}
                   <button
                     type="button"
                     className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
@@ -187,6 +202,18 @@ export function DailyTaskList({
                     {t('tasks.important')}
                   </span>
                 </button>
+                {onEdit ? (
+                  <button
+                    type="button"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+                    aria-label={t('tasks.edit')}
+                    title={t('tasks.edit')}
+                    disabled={busy}
+                    onClick={() => onEdit(task)}
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                ) : null}
                 <button
                   type="button"
                   className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-muted transition hover:bg-brand-50 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"

@@ -13,6 +13,7 @@ import { Loader } from '@/components/ui/Loader';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
 import { TaskCopyDialog } from '@/features/tasks/TaskCopyDialog';
+import { TaskEditDialog } from '@/features/tasks/TaskEditDialog';
 import { TaskImportDialog } from '@/features/tasks/TaskImportDialog';
 import {
   useBulkCreateDailyTasks,
@@ -68,6 +69,8 @@ export function TasksPage() {
   const [copyOpen, setCopyOpen] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
   const [copyError, setCopyError] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editError, setEditError] = useState<string | null>(null);
 
   const periodQuery = useDailyTasksPeriod({
     view,
@@ -456,6 +459,10 @@ export function TasksPage() {
               onToggle={(task) => void onToggle(task)}
               onImportant={(task) => void onImportant(task)}
               onDelete={(id) => void onDelete(id)}
+              onEdit={(task) => {
+                setEditError(null);
+                setEditingId(task.id);
+              }}
               onSplit={(task, count) => void onSplit(task, count)}
               onSetPart={(task, done) => void onSetPart(task, done)}
               busyId={busyId}
@@ -463,6 +470,20 @@ export function TasksPage() {
             />
           </section>
 
+          <TaskEditDialog
+            task={dayTasks.find((task) => task.id === editingId) ?? null}
+            isLoading={updateTask.isPending}
+            error={editError}
+            onClose={() => setEditingId(null)}
+            onSave={(values) => {
+              if (!editingId) return;
+              setEditError(null);
+              updateTask
+                .mutateAsync({ id: editingId, payload: values })
+                .then(() => setEditingId(null))
+                .catch((error: unknown) => setEditError(mutationErrorMessage(error, t)));
+            }}
+          />
           <TaskImportDialog
             open={importOpen}
             date={selectedDate ?? ''}

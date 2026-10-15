@@ -271,6 +271,7 @@
     "addTask": "Ajouter une tâche",
     "taskTitle": "Titre",
     "taskTitlePlaceholder": "ex. pratique d'anglais",
+    "edit": "Modifier la tâche",
     "minutes": "Minutes par jour",
     "saveTask": "Ajouter",
     "emptyDay": "Aucune tâche pour ce jour",

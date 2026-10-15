@@ -20,6 +20,10 @@ import {
   useDeleteMaterial,
   useMaterial,
 } from '../../features/materials/useMaterials';
+import { ApiError } from '../../api/client';
+import { useCompleteReminder, useSkipReminder } from '../../features/reminders/useReminders';
+import { useAccountToday } from '../../features/time/useAccountToday';
+import { dateKeyInZone } from '../../utils/date';
 import { usePullToRefresh } from '../../features/sync/usePullToRefresh';
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
@@ -41,6 +45,36 @@ export function MaterialDetailScreen() {
   const archiveMaterial = useArchiveMaterial();
   const deleteMaterial = useDeleteMaterial();
   const [busy, setBusy] = useState(false);
+  const { today, timeZone } = useAccountToday();
+  const completeReminder = useCompleteReminder();
+  const skipReminder = useSkipReminder();
+  const [reviewAction, setReviewAction] = useState<'complete' | 'skip' | null>(null);
+  const [reviewMessage, setReviewMessage] = useState<string | null>(null);
+  const [reviewError, setReviewError] = useState<string | null>(null);
+
+  // Same actions as on the review page, for the review that is due today or overdue (if any).
+  const resolveReview = async (id: string, kind: 'complete' | 'skip') => {
+    setReviewAction(kind);
+    setReviewError(null);
+    setReviewMessage(null);
+    try {
+      if (kind === 'complete') {
+        await completeReminder.mutateAsync(id);
+        setReviewMessage(t('review.successCompleted'));
+      } else {
+        await skipReminder.mutateAsync(id);
+        setReviewMessage(t('review.successSkipped'));
+      }
+    } catch (caught) {
+      setReviewError(
+        caught instanceof ApiError && caught.code === 'REMINDER_NOT_DUE'
+          ? t('review.notDue')
+          : t('auth.errors.generic'),
+      );
+    } finally {
+      setReviewAction(null);
+    }
+  };
 
   const confirmDelete = () => {
     if (!material) return;
@@ -74,6 +108,15 @@ export function MaterialDetailScreen() {
     );
   }
 
+  // Due = scheduled on or before today in the account zone, still open (the server's rule).
+  const dueReminder = material.reminders
+    .filter(
+      (reminder) =>
+        (reminder.status === 'PENDING' || reminder.status === 'OVERDUE') &&
+        dateKeyInZone(new Date(reminder.scheduledAt), timeZone) <= today,
+    )
+    .sort((left, right) => left.scheduledAt.localeCompare(right.scheduledAt))[0];
+
   return (
     <SectionScrollView
       contentInsetAdjustmentBehavior="automatic"
@@ -94,6 +137,33 @@ export function MaterialDetailScreen() {
       <Text style={[styles.meta, { color: colors.muted }]}>
         {t('materials.learnedAt')}: {formatDate(material.learnedAt, language)}
       </Text>
+      {dueReminder ? (
+        <View style={[styles.block, { backgroundColor: `${colors.brand}14`, borderColor: `${colors.brand}55` }]}>
+          <Text style={[styles.blockTitle, { color: colors.ink }]}>{t('review.title')}</Text>
+          <Text style={[styles.meta, { color: dueReminder.status === 'OVERDUE' ? colors.danger : colors.muted }]}>
+            #{dueReminder.sequenceNumber} · {t(`materials.intervals.${dueReminder.intervalType}`)} ·{' '}
+            {formatDate(dueReminder.scheduledAt, language)}
+          </Text>
+          <View style={styles.reviewActions}>
+            <AppButton
+              label={t('review.completed')}
+              loading={reviewAction === 'complete'}
+              disabled={reviewAction !== null}
+              onPress={() => void resolveReview(dueReminder.id, 'complete')}
+            />
+            <AppButton
+              variant="ghost"
+              label={t('review.skip')}
+              loading={reviewAction === 'skip'}
+              disabled={reviewAction !== null}
+              onPress={() => void resolveReview(dueReminder.id, 'skip')}
+            />
+          </View>
+          {reviewError ? <Text style={[styles.meta, { color: colors.danger }]}>{reviewError}</Text> : null}
+        </View>
+      ) : reviewMessage ? (
+        <Text style={[styles.meta, { color: colors.brand }]}>{reviewMessage}</Text>
+      ) : null}
       {material.category ? (
         <View style={[styles.labelChip, { backgroundColor: colors.bg, borderColor: colors.line }]}>
           <Text style={[styles.labelKey, { color: colors.muted }]}>{t('materials.fields.category')}</Text>
@@ -207,4 +277,5 @@ const styles = StyleSheet.create({
   reminderRow: { gap: 6, marginTop: 8 },
   reminderText: { fontSize: 14, fontFamily: fonts.semibold },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
+  reviewActions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
 });

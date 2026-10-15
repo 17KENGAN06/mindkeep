@@ -24,6 +24,7 @@ import { TaskCardShell, TaskCheck } from '../components/TaskMotion';
 import { ApiError } from '../api/client';
 import { mapAuthError } from '../features/auth/mapAuthError';
 import { TaskCopyModal } from '../features/tasks/TaskCopyModal';
+import { TaskEditModal } from '../features/tasks/TaskEditModal';
 import { TaskImportModal } from '../features/tasks/TaskImportModal';
 import { ForestCard } from '../components/forest/ForestCard';
 import {
@@ -78,6 +79,7 @@ export function TasksScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [editError, setEditError] = useState<string | null>(null);
   const [pickingId, setPickingId] = useState<string | null>(null);
   const [importOpen, setImportOpen] = useState(false);
   const [copyOpen, setCopyOpen] = useState(false);
@@ -252,10 +254,19 @@ export function TasksScreen() {
   };
 
   const onStartEdit = (task: DailyTask) => {
+    setEditError(null);
     setEditingId(task.id);
-    setTitle(task.title);
-    setMinutes(String(task.minutes));
-    setFormError(null);
+  };
+
+  const onSaveEdit = async (values: { title: string; minutes: number }) => {
+    if (!editingId) return;
+    setEditError(null);
+    try {
+      await updateTask.mutateAsync({ id: editingId, payload: values });
+      setEditingId(null);
+    } catch (caught) {
+      setEditError(mapAuthError(caught, t));
+    }
   };
 
   const onSave = async () => {
@@ -270,18 +281,11 @@ export function TasksScreen() {
       return;
     }
     try {
-      if (editingId) {
-        await updateTask.mutateAsync({
-          id: editingId,
-          payload: { title: title.trim(), minutes: Math.round(mins) },
-        });
-      } else {
-        await createTask.mutateAsync({
-          title: title.trim(),
-          minutes: Math.round(mins),
-          date: selectedDate,
-        });
-      }
+      await createTask.mutateAsync({
+        title: title.trim(),
+        minutes: Math.round(mins),
+        date: selectedDate,
+      });
       resetForm();
     } catch (caught) {
       setFormError(mapAuthError(caught, t));
@@ -596,34 +600,30 @@ export function TasksScreen() {
           )}
 
           <View style={[styles.form, { backgroundColor: colors.panel, borderColor: colors.line }]}>
-            <Text style={[styles.formTitle, { color: colors.ink }]}>
-              {editingId ? t('tasks.edit') : t('tasks.add')}
-            </Text>
-            {editingId ? null : (
-              <View style={styles.formActions}>
-                <View style={styles.formAction}>
-                  <AppButton
-                    variant="secondary"
-                    label={t('tasks.import')}
-                    onPress={() => {
-                      setImportError(null);
-                      setImportOpen(true);
-                    }}
-                  />
-                </View>
-                <View style={styles.formAction}>
-                  <AppButton
-                    variant="secondary"
-                    label={t('tasks.copy')}
-                    disabled={dayTasks.length === 0}
-                    onPress={() => {
-                      setCopyError(null);
-                      setCopyOpen(true);
-                    }}
-                  />
-                </View>
+            <Text style={[styles.formTitle, { color: colors.ink }]}>{t('tasks.add')}</Text>
+            <View style={styles.formActions}>
+              <View style={styles.formAction}>
+                <AppButton
+                  variant="secondary"
+                  label={t('tasks.import')}
+                  onPress={() => {
+                    setImportError(null);
+                    setImportOpen(true);
+                  }}
+                />
               </View>
-            )}
+              <View style={styles.formAction}>
+                <AppButton
+                  variant="secondary"
+                  label={t('tasks.copy')}
+                  disabled={dayTasks.length === 0}
+                  onPress={() => {
+                    setCopyError(null);
+                    setCopyOpen(true);
+                  }}
+                />
+              </View>
+            </View>
             <Text style={[styles.label, { color: colors.muted }]}>{t('tasks.fields.title')}</Text>
             <TextInput
               style={[
@@ -647,17 +647,21 @@ export function TasksScreen() {
             />
             {formError ? <Text style={[styles.error, { color: colors.danger }]}>{formError}</Text> : null}
             <AppButton
-              label={editingId ? t('common.save') : t('tasks.save')}
-              loading={createTask.isPending || updateTask.isPending}
+              label={t('tasks.save')}
+              loading={createTask.isPending}
               onPress={() => void onSave()}
             />
-            {editingId ? (
-              <AppButton variant="ghost" label={t('common.cancel')} onPress={resetForm} />
-            ) : null}
           </View>
         </SectionScrollView>
       </KeyboardAvoidingView>
 
+      <TaskEditModal
+        task={dayTasks.find((task) => task.id === editingId) ?? null}
+        loading={updateTask.isPending}
+        error={editError}
+        onClose={() => setEditingId(null)}
+        onSave={(values) => void onSaveEdit(values)}
+      />
       <TaskImportModal
         visible={importOpen}
         date={selectedDate}

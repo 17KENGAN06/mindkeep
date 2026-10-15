@@ -271,6 +271,7 @@
     "addTask": "Lisää tehtävä",
     "taskTitle": "Nimi",
     "taskTitlePlaceholder": "Esim. Englanti",
+    "edit": "Muokkaa tehtävää",
     "minutes": "Minuuttia päivässä",
     "saveTask": "Lisää",
     "emptyDay": "Ei tehtäviä tälle päivälle",

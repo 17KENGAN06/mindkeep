@@ -271,6 +271,7 @@
     "addTask": "Add task",
     "taskTitle": "Title",
     "taskTitlePlaceholder": "e.g. English practice",
+    "edit": "Edit task",
     "minutes": "Minutes per day",
     "saveTask": "Add",
     "emptyDay": "No tasks for this day",

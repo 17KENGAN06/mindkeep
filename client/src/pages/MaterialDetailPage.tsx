@@ -13,8 +13,11 @@ import {
   useDeleteMaterial,
   useMaterial,
 } from '@/features/materials/useMaterials';
+import { ApiError } from '@/api/client';
+import { useCompleteReminder, useSkipReminder } from '@/features/reminders/useReminders';
+import { useAccountToday } from '@/features/time/useAccountToday';
 import type { AppLanguage } from '@/i18n';
-import { formatDate } from '@/utils/date';
+import { dateKeyInZone, formatDate } from '@/utils/date';
 
 export function MaterialDetailPage() {
   const { t, i18n } = useTranslation();
@@ -25,9 +28,48 @@ export function MaterialDetailPage() {
   const archiveMaterial = useArchiveMaterial();
   const deleteMaterial = useDeleteMaterial();
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const { today, timeZone } = useAccountToday();
+  const completeReminder = useCompleteReminder();
+  const skipReminder = useSkipReminder();
+  const [reviewAction, setReviewAction] = useState<'complete' | 'skip' | null>(null);
+  const [reviewMessage, setReviewMessage] = useState<string | null>(null);
+  const [reviewError, setReviewError] = useState<string | null>(null);
+
+  // Same actions as on the review page, for the review that is due today or overdue (if any).
+  const resolveReview = async (reminderId: string, kind: 'complete' | 'skip') => {
+    setReviewAction(kind);
+    setReviewError(null);
+    setReviewMessage(null);
+    try {
+      if (kind === 'complete') {
+        await completeReminder.mutateAsync(reminderId);
+        setReviewMessage(t('review.successCompleted'));
+      } else {
+        await skipReminder.mutateAsync(reminderId);
+        setReviewMessage(t('review.successSkipped'));
+      }
+    } catch (caught) {
+      setReviewError(
+        caught instanceof ApiError && caught.code === 'REMINDER_NOT_DUE'
+          ? t('review.notDue')
+          : t('auth.errors.generic'),
+      );
+    } finally {
+      setReviewAction(null);
+    }
+  };
 
   if (isLoading) return <Loader />;
   if (isError || !material) return <ErrorMessage message={t('auth.errors.generic')} />;
+
+  // Due = scheduled on or before today in the account zone, still open (the server's rule).
+  const dueReminder = material.reminders
+    .filter(
+      (reminder) =>
+        (reminder.status === 'PENDING' || reminder.status === 'OVERDUE') &&
+        dateKeyInZone(new Date(reminder.scheduledAt), timeZone) <= today,
+    )
+    .sort((left, right) => left.scheduledAt.localeCompare(right.scheduledAt))[0];
 
   return (
     <div className="space-y-6">
@@ -62,6 +104,38 @@ export function MaterialDetailPage() {
           </Button>
         </div>
       </section>
+
+      {dueReminder ? (
+        <section className="rounded-3xl bg-brand-500/10 p-5 ring-1 ring-brand-500/35">
+          <h2 className="text-base font-semibold text-ink">{t('review.title')}</h2>
+          <p className={`mt-1 text-sm ${dueReminder.status === 'OVERDUE' ? 'text-red-500' : 'text-muted'}`}>
+            #{dueReminder.sequenceNumber} · {t(`materials.intervals.${dueReminder.intervalType}`)} ·{' '}
+            {formatDate(dueReminder.scheduledAt, language)}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button
+              type="button"
+              isLoading={reviewAction === 'complete'}
+              disabled={reviewAction !== null}
+              onClick={() => void resolveReview(dueReminder.id, 'complete')}
+            >
+              {t('review.completed')}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              isLoading={reviewAction === 'skip'}
+              disabled={reviewAction !== null}
+              onClick={() => void resolveReview(dueReminder.id, 'skip')}
+            >
+              {t('review.skip')}
+            </Button>
+          </div>
+          <ErrorMessage message={reviewError ?? undefined} />
+        </section>
+      ) : reviewMessage ? (
+        <p className="rounded-2xl bg-brand-50 px-4 py-3 text-sm text-ink">{reviewMessage}</p>
+      ) : null}
 
       <section className="space-y-4 rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
         {material.category ? (

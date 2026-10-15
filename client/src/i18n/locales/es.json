@@ -271,6 +271,7 @@
     "addTask": "Añadir tarea",
     "taskTitle": "Título",
     "taskTitlePlaceholder": "p. ej. práctica de inglés",
+    "edit": "Editar tarea",
     "minutes": "Minutos al día",
     "saveTask": "Añadir",
     "emptyDay": "No hay tareas para este día",
