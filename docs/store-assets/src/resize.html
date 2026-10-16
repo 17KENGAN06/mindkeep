@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Store card resize</title>
+<style>
+  /* Scales a store card to the window size (e.g. 1320×2868 → 1206×2622 for App Store Connect's
+     6.3" iPhone slot). The ratios differ by under 0.1%, so cover-fit trims at most a pixel or two.
+     Pass the card with ?src=<file URL>. */
+  html, body { margin: 0; width: 100vw; height: 100vh; overflow: hidden; background: #07110d; }
+  img { display: block; width: 100vw; height: 100vh; object-fit: cover; }
+</style>
+</head>
+<body>
+  <img id="card" alt="">
+  <script>
+    document.getElementById('card').src = new URLSearchParams(location.search).get('src');
+  </script>
+</body>
+</html>
