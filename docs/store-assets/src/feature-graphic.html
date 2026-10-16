@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>MindKeep feature graphic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Unbounded:wght@600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1024px; height: 500px; overflow: hidden; }
+  body {
+    position: relative;
+    background:
+      radial-gradient(520px 380px at 82% 30%, rgba(95, 201, 142, 0.30), transparent 70%),
+      radial-gradient(420px 320px at 10% 110%, rgba(142, 239, 180, 0.16), transparent 70%),
+      #07110d;
+    color: #f2faf5;
+    font-family: Manrope, sans-serif;
+  }
+  .rings { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: 520px; height: 520px; }
+  .copy { position: absolute; left: 64px; top: 50%; transform: translateY(-50%); width: 560px; }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand img { width: 64px; height: 64px; }
+  .brand span { font-family: Unbounded, sans-serif; font-weight: 700; font-size: 40px; letter-spacing: -0.5px; }
+  h1 { margin: 28px 0 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 34px; line-height: 1.2; letter-spacing: -0.4px; }
+  h1 em { font-style: normal; color: #8eefb4; }
+  .chips { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .chips span { padding: 8px 14px; border-radius: 999px; background: rgba(142, 239, 180, 0.10); border: 1px solid #2a4f3c; color: #a8c4b4; font-weight: 600; font-size: 16px; }
+</style>
+</head>
+<body>
+  <svg class="rings" viewBox="0 0 520 520" fill="none" aria-hidden="true">
+    <circle cx="260" cy="260" r="230" stroke="#1a3327" stroke-width="2"/>
+    <circle cx="260" cy="260" r="180" stroke="#2a3f35" stroke-width="10"/>
+    <circle cx="260" cy="260" r="124" stroke="#2a4f3c" stroke-width="8" stroke-dasharray="18 28"/>
+    <path d="M260 130c0 0-86 58-86 158 0 58 37 100 86 100s86-42 86-100C346 188 260 130 260 130Z" fill="#8eefb4" opacity="0.92"/>
+    <path d="M260 160v200" stroke="#07110d" stroke-width="14" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="387" cy="133" r="15" fill="#5fc98e"/>
+    <circle cx="440" cy="260" r="15" fill="#8eefb4"/>
+    <circle cx="387" cy="387" r="15" fill="#6fd99a"/>
+  </svg>
+  <div class="copy">
+    <div class="brand"><img src="../../../client/public/logo.svg" alt=""><span>MindKeep</span></div>
+    <h1 id="headline">Твой день — <em>в одном месте</em></h1>
+    <div class="chips" id="chips"><span>Задачи</span><span>Привычки</span><span>Заметки</span><span>Питание</span><span>Бюджет</span></div>
+  </div>
+  <script>
+    // ?lang=en renders the English cover; Russian is the default.
+    if (new URLSearchParams(location.search).get('lang') === 'en') {
+      document.documentElement.lang = 'en';
+      document.getElementById('headline').innerHTML = 'Your day, <em>in one place</em>';
+      document.getElementById('chips').innerHTML = ['Tasks', 'Habits', 'Notes', 'Nutrition', 'Budget']
+        .map((label) => '<span>' + label + '</span>')
+        .join('');
+    }
+  </script>
+</body>
+</html>

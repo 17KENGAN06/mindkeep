@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Play screenshot crop</title>
+<style>
+  /* 1320×2868 App Store card → 1320×2640 (exactly 2:1) for Google Play: trims 50 px from the top and 178 px
+     from the bottom (headlines sit close to the top). Pass the card with ?src=<file URL>. */
+  html, body { margin: 0; width: 1320px; height: 2640px; overflow: hidden; background: #07110d; }
+  img { display: block; width: 1320px; height: 2868px; margin-top: -50px; }
+</style>
+</head>
+<body>
+  <img id="card" alt="">
+  <script>
+    document.getElementById('card').src = new URLSearchParams(location.search).get('src');
+  </script>
+</body>
+</html>
