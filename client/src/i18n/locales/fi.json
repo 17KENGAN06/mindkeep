@@ -1353,7 +1353,7 @@
       "dashboard": "Yhteenveto · Mindkeep",
       "review": "Kertaus · Mindkeep",
       "calendar": "Kertauskalenteri · Mindkeep",
-      "materials": "Lisää materiaali · Mindkeep",
+      "materials": "Materiaalit · Mindkeep",
       "categories": "Kategoriat · Mindkeep",
       "notifications": "Ilmoitukset · Mindkeep",
       "statistics": "Analytiikka · Mindkeep",
@@ -1384,7 +1384,8 @@
       "terms": "Käyttöehdot · Mindkeep",
       "cookies": "Evästekäytäntö · Mindkeep",
       "refund": "Tilaus ja palautukset · Mindkeep",
-      "plans": "Paketit · Mindkeep"
+      "plans": "Paketit · Mindkeep",
+      "deleteAccount": "Tilin poistaminen · Mindkeep"
     }
   },
   "footer": {
@@ -1559,6 +1560,52 @@
         "body": [
           "Voimme päivittää tätä selostetta. Voimassa oleva versio ja sen päivämäärä ovat aina tällä sivulla; tärkeistä muutoksista kerromme myös palvelussa.",
           "Liittyvät asiakirjat: Käyttöehdot, Evästekäytäntö sekä Tilaus- ja palautuskäytäntö."
+        ]
+      }
+    ]
+  },
+  "deletion": {
+    "eyebrow": "Oikeudellinen",
+    "title": "Mindkeep-tilin poistaminen",
+    "updated": "Päivitetty: 18. lokakuuta 2026",
+    "intro": "Voit milloin tahansa itse poistaa Mindkeep-tilisi ja kaikki sen tiedot – Mindkeep-sovelluksessa iPhonella tai Androidilla tai osoitteessa mindkeep.cloud. Poisto on lopullinen eikä sitä voi perua.",
+    "contactLabel": "Kysymykset ja poistopyynnöt:",
+    "sections": [
+      {
+        "title": "1. Sovelluksessa (iPhone tai Android)",
+        "body": [
+          "1. Avaa Mindkeep ja kirjaudu sisään.",
+          "2. Siirry kohtaan ”Osiot” → ”Tili”.",
+          "3. Vieritä alas kohtaan ”Poista tili”, anna salasanasi (jos tililläsi on sellainen), kirjoita DELETE ja vahvista."
+        ]
+      },
+      {
+        "title": "2. Verkkosivustolla",
+        "body": [
+          "1. Kirjaudu osoitteessa mindkeep.cloud.",
+          "2. Avaa ”Tili” ja vieritä alas kohtaan ”Poista tili”.",
+          "3. Anna salasanasi (jos tililläsi on sellainen), kirjoita DELETE ja vahvista."
+        ]
+      },
+      {
+        "title": "3. Jos et pääse kirjautumaan",
+        "body": [
+          "Lähetä meille sähköpostia tilisi osoitteesta aiheella ”Poista Mindkeep-tilini”. Varmistamme, että pyyntö tulee tilin omistajalta, ja poistamme tilin 30 päivän kuluessa."
+        ]
+      },
+      {
+        "title": "4. Mitä poistetaan",
+        "body": [
+          "Heti ja pysyvästi: profiili (nimi, sähköposti, salasanan tiiviste, aikavyöhyke), tehtävät, muistiinpanot, opiskelumateriaalit ja kertaukset, tavat, ateriat, vesi, askeleet, paino ja kehotiedot, budjetti, ilmoitukset ja kirjautumisistunnot.",
+          "Verkkosivustolta ostettu tilaus perutaan, ja jos käytit Kirjaudu Applella -toimintoa, Mindkeepin pääsy Apple ID:hesi perutaan."
+        ]
+      },
+      {
+        "title": "5. Mitä säilytetään ja kuinka kauan",
+        "body": [
+          "Verkkosivustolta ostetun tilauksen maksutiedot säilyvät Stripessä niin kauan kuin vero- ja kirjanpitolaki edellyttää.",
+          "Tietokannan varmuuskopioissa voi olla kopio rajoitetun ajan, kunnes ne korvautuvat; niitä ei käytetä poistettujen tilien palauttamiseen.",
+          "Muuta ei säilytetä. Ateria- ja kuittikuvia ei tallenneta lainkaan."
         ]
       }
     ]

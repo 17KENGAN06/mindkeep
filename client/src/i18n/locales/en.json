@@ -1353,7 +1353,7 @@
       "dashboard": "Overview · Mindkeep",
       "review": "Review today · Mindkeep",
       "calendar": "Review calendar · Mindkeep",
-      "materials": "Add material · Mindkeep",
+      "materials": "Materials · Mindkeep",
       "categories": "Categories · Mindkeep",
       "notifications": "Notifications · Mindkeep",
       "statistics": "Analytics · Mindkeep",
@@ -1384,7 +1384,8 @@
       "account": "Account · Mindkeep",
       "onboarding": "Quick setup · Mindkeep",
       "settings": "Settings · Mindkeep",
-      "billingReturn": "Back to MindKeep · Mindkeep"
+      "billingReturn": "Back to MindKeep · Mindkeep",
+      "deleteAccount": "Delete account · Mindkeep"
     }
   },
   "footer": {
@@ -1559,6 +1560,52 @@
         "body": [
           "We may update this policy. The current version and its date are always on this page; about important changes we will also tell you in the service.",
           "Related documents: Terms of Service, Cookie Policy, and Subscription & Refund Policy."
+        ]
+      }
+    ]
+  },
+  "deletion": {
+    "eyebrow": "Legal",
+    "title": "Delete your Mindkeep account",
+    "updated": "Updated: 18 October 2026",
+    "intro": "You can delete your Mindkeep account and all of its data at any time, yourself, in the Mindkeep app for iPhone or Android or on mindkeep.cloud. Deletion is permanent and cannot be undone.",
+    "contactLabel": "Questions or deletion requests:",
+    "sections": [
+      {
+        "title": "1. In the app (iPhone or Android)",
+        "body": [
+          "1. Open Mindkeep and sign in.",
+          "2. Go to Sections → Account.",
+          "3. Scroll down to “Delete account”, enter your password if your account has one, type DELETE and confirm."
+        ]
+      },
+      {
+        "title": "2. On the website",
+        "body": [
+          "1. Sign in at mindkeep.cloud.",
+          "2. Open Account and scroll down to “Delete account”.",
+          "3. Enter your password if your account has one, type DELETE and confirm."
+        ]
+      },
+      {
+        "title": "3. If you cannot sign in",
+        "body": [
+          "Email us from the address of your account with the subject “Delete my Mindkeep account”. We confirm that the request comes from the account owner and delete the account within 30 days."
+        ]
+      },
+      {
+        "title": "4. What is deleted",
+        "body": [
+          "Right away and permanently: your profile (name, email, password hash, time zone), tasks, notes, study materials and reviews, habits, meals, water, steps, weight and body data, budget, notifications and sign-in sessions.",
+          "A plan bought on the website is cancelled, and if you used Sign in with Apple, Mindkeep’s access to your Apple ID is revoked."
+        ]
+      },
+      {
+        "title": "5. What is kept and for how long",
+        "body": [
+          "Payment records of a plan bought on the website stay with Stripe for as long as tax and accounting law requires.",
+          "Database backups may keep a copy for a limited time until they are overwritten; they are not used to restore deleted accounts.",
+          "Nothing else is kept. Food and receipt photos are never stored in the first place."
         ]
       }
     ]

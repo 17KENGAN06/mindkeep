@@ -88,6 +88,7 @@ const NotFoundPage = lazyNamed(() => import('@/pages/NotFoundPage'), 'NotFoundPa
 const NotificationsPage = lazyNamed(() => import('@/pages/NotificationsPage'), 'NotificationsPage');
 const PrivacyPolicyPage = lazyNamed(() => import('@/pages/PrivacyPolicyPage'), 'PrivacyPolicyPage');
 const TermsPage = lazyNamed(() => import('@/pages/TermsPage'), 'TermsPage');
+const AccountDeletionPage = lazyNamed(() => import('@/pages/AccountDeletionPage'), 'AccountDeletionPage');
 const CookiePolicyPage = lazyNamed(() => import('@/pages/CookiePolicyPage'), 'CookiePolicyPage');
 const RefundPolicyPage = lazyNamed(() => import('@/pages/RefundPolicyPage'), 'RefundPolicyPage');
 const RegisterPage = lazyNamed(() => import('@/pages/RegisterPage'), 'RegisterPage');
@@ -167,6 +168,14 @@ export function AppRoutes() {
           element={
             <MaintenanceHome>
               <PrivacyPolicyPage />
+            </MaintenanceHome>
+          }
+        />
+        <Route
+          path="/delete-account"
+          element={
+            <MaintenanceHome>
+              <AccountDeletionPage />
             </MaintenanceHome>
           }
         />

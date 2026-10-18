@@ -1353,7 +1353,7 @@
       "dashboard": "Übersicht · Mindkeep",
       "review": "Heute wiederholen · Mindkeep",
       "calendar": "Wiederholungskalender · Mindkeep",
-      "materials": "Material hinzufügen · Mindkeep",
+      "materials": "Materialien · Mindkeep",
       "categories": "Kategorien · Mindkeep",
       "notifications": "Benachrichtigungen · Mindkeep",
       "statistics": "Analysen · Mindkeep",
@@ -1384,7 +1384,8 @@
       "terms": "Nutzungsbedingungen · Mindkeep",
       "cookies": "Cookie-Richtlinie · Mindkeep",
       "refund": "Abo und Erstattung · Mindkeep",
-      "plans": "Pläne · Mindkeep"
+      "plans": "Pläne · Mindkeep",
+      "deleteAccount": "Konto löschen · Mindkeep"
     }
   },
   "footer": {
@@ -1559,6 +1560,52 @@
         "body": [
           "Wir können diese Richtlinie aktualisieren. Die aktuelle Fassung und ihr Datum stehen immer auf dieser Seite; über wichtige Änderungen informieren wir dich auch im Dienst.",
           "Weitere Dokumente: Nutzungsbedingungen, Cookie-Richtlinie sowie Abo- und Erstattungsrichtlinie."
+        ]
+      }
+    ]
+  },
+  "deletion": {
+    "eyebrow": "Rechtliches",
+    "title": "Mindkeep-Konto löschen",
+    "updated": "Aktualisiert: 18. Oktober 2026",
+    "intro": "Du kannst dein Mindkeep-Konto mit allen Daten jederzeit selbst löschen – in der Mindkeep-App für iPhone oder Android oder auf mindkeep.cloud. Das Löschen ist endgültig und kann nicht rückgängig gemacht werden.",
+    "contactLabel": "Fragen und Löschanfragen:",
+    "sections": [
+      {
+        "title": "1. In der App (iPhone oder Android)",
+        "body": [
+          "1. Öffne Mindkeep und melde dich an.",
+          "2. Gehe zu „Bereiche“ → „Konto“.",
+          "3. Scrolle nach unten zu „Konto löschen“, gib dein Passwort ein (falls festgelegt), tippe DELETE und bestätige."
+        ]
+      },
+      {
+        "title": "2. Auf der Website",
+        "body": [
+          "1. Melde dich auf mindkeep.cloud an.",
+          "2. Öffne „Konto“ und scrolle nach unten zu „Konto löschen“.",
+          "3. Gib dein Passwort ein (falls festgelegt), tippe DELETE und bestätige."
+        ]
+      },
+      {
+        "title": "3. Wenn du dich nicht anmelden kannst",
+        "body": [
+          "Schreib uns von der E-Mail-Adresse deines Kontos mit dem Betreff „Mein Mindkeep-Konto löschen“. Wir prüfen, dass die Anfrage vom Kontoinhaber kommt, und löschen das Konto innerhalb von 30 Tagen."
+        ]
+      },
+      {
+        "title": "4. Was gelöscht wird",
+        "body": [
+          "Sofort und endgültig: Profil (Name, E-Mail, Passwort-Hash, Zeitzone), Aufgaben, Notizen, Lernmaterialien und Wiederholungen, Gewohnheiten, Mahlzeiten, Wasser, Schritte, Gewicht und Körperdaten, Budget, Benachrichtigungen und Anmeldesitzungen.",
+          "Ein auf der Website gekaufter Plan wird gekündigt, und falls du „Mit Apple anmelden“ genutzt hast, wird der Zugriff von Mindkeep auf deine Apple-ID widerrufen."
+        ]
+      },
+      {
+        "title": "5. Was aufbewahrt wird und wie lange",
+        "body": [
+          "Zahlungsdaten eines auf der Website gekauften Plans bleiben bei Stripe, so lange Steuer- und Buchhaltungsrecht es verlangen.",
+          "Datenbank-Backups können für begrenzte Zeit eine Kopie enthalten, bis sie überschrieben werden; sie werden nicht zum Wiederherstellen gelöschter Konten verwendet.",
+          "Sonst wird nichts aufbewahrt. Mahlzeit- und Belegfotos werden ohnehin nie gespeichert."
         ]
       }
     ]

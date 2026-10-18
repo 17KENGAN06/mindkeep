@@ -1353,7 +1353,7 @@
       "dashboard": "Panoramica · Mindkeep",
       "review": "Ripassa oggi · Mindkeep",
       "calendar": "Calendario dei ripassi · Mindkeep",
-      "materials": "Aggiungi materiale · Mindkeep",
+      "materials": "Materiali · Mindkeep",
       "categories": "Categorie · Mindkeep",
       "notifications": "Notifiche · Mindkeep",
       "statistics": "Analisi · Mindkeep",
@@ -1384,7 +1384,8 @@
       "terms": "Termini di servizio · Mindkeep",
       "cookies": "Informativa cookie · Mindkeep",
       "refund": "Abbonamento e rimborsi · Mindkeep",
-      "plans": "Piani · Mindkeep"
+      "plans": "Piani · Mindkeep",
+      "deleteAccount": "Eliminare l’account · Mindkeep"
     }
   },
   "footer": {
@@ -1559,6 +1560,52 @@
         "body": [
           "Possiamo aggiornare questa informativa. La versione in vigore e la sua data sono sempre su questa pagina; delle modifiche importanti ti avviseremo anche nel servizio.",
           "Documenti correlati: Termini di servizio, Cookie policy e Politica di abbonamento e rimborso."
+        ]
+      }
+    ]
+  },
+  "deletion": {
+    "eyebrow": "Note legali",
+    "title": "Eliminare il tuo account Mindkeep",
+    "updated": "Aggiornato: 18 ottobre 2026",
+    "intro": "Puoi eliminare da solo il tuo account Mindkeep e tutti i suoi dati in qualsiasi momento, nell’app Mindkeep per iPhone o Android oppure su mindkeep.cloud. L’eliminazione è definitiva e non può essere annullata.",
+    "contactLabel": "Domande e richieste di eliminazione:",
+    "sections": [
+      {
+        "title": "1. Nell’app (iPhone o Android)",
+        "body": [
+          "1. Apri Mindkeep e accedi.",
+          "2. Vai in «Sezioni» → «Account».",
+          "3. Scorri fino a «Elimina account», inserisci la password (se impostata), digita DELETE e conferma."
+        ]
+      },
+      {
+        "title": "2. Sul sito web",
+        "body": [
+          "1. Accedi su mindkeep.cloud.",
+          "2. Apri «Account» e scorri fino a «Elimina account».",
+          "3. Inserisci la password (se impostata), digita DELETE e conferma."
+        ]
+      },
+      {
+        "title": "3. Se non riesci ad accedere",
+        "body": [
+          "Scrivici dall’indirizzo email del tuo account con oggetto «Elimina il mio account Mindkeep». Verifichiamo che la richiesta provenga dal titolare ed eliminiamo l’account entro 30 giorni."
+        ]
+      },
+      {
+        "title": "4. Cosa viene eliminato",
+        "body": [
+          "Subito e per sempre: profilo (nome, email, hash della password, fuso orario), attività, note, materiali di studio e ripassi, abitudini, pasti, acqua, passi, peso e dati corporei, budget, notifiche e sessioni di accesso.",
+          "Un piano acquistato sul sito viene annullato e, se hai usato «Accedi con Apple», l’accesso di Mindkeep al tuo ID Apple viene revocato."
+        ]
+      },
+      {
+        "title": "5. Cosa viene conservato e per quanto",
+        "body": [
+          "I dati di pagamento di un piano acquistato sul sito restano presso Stripe per il tempo richiesto dalle leggi fiscali e contabili.",
+          "I backup del database possono conservarne una copia per un periodo limitato, finché non vengono sovrascritti; non sono usati per ripristinare account eliminati.",
+          "Non viene conservato nient’altro. Le foto di pasti e scontrini non vengono mai salvate."
         ]
       }
     ]

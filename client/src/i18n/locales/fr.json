@@ -1353,7 +1353,7 @@
       "dashboard": "Vue d'ensemble · Mindkeep",
       "review": "Réviser aujourd'hui · Mindkeep",
       "calendar": "Calendrier des révisions · Mindkeep",
-      "materials": "Ajouter une fiche · Mindkeep",
+      "materials": "Fiches · Mindkeep",
       "categories": "Catégories · Mindkeep",
       "notifications": "Notifications · Mindkeep",
       "statistics": "Analytique · Mindkeep",
@@ -1384,7 +1384,8 @@
       "terms": "Conditions d’utilisation · Mindkeep",
       "cookies": "Politique cookies · Mindkeep",
       "refund": "Abonnement et remboursement · Mindkeep",
-      "plans": "Offres · Mindkeep"
+      "plans": "Offres · Mindkeep",
+      "deleteAccount": "Supprimer le compte · Mindkeep"
     }
   },
   "footer": {
@@ -1559,6 +1560,52 @@
         "body": [
           "Nous pouvons mettre à jour cette politique. La version en vigueur et sa date figurent toujours sur cette page ; pour les changements importants, nous vous préviendrons aussi dans le service.",
           "Documents liés : Conditions d’utilisation, Politique relative aux cookies et Politique d’abonnement et de remboursement."
+        ]
+      }
+    ]
+  },
+  "deletion": {
+    "eyebrow": "Mentions légales",
+    "title": "Supprimer votre compte Mindkeep",
+    "updated": "Mis à jour : 18 octobre 2026",
+    "intro": "Vous pouvez supprimer vous-même votre compte Mindkeep et toutes ses données à tout moment, dans l’app Mindkeep pour iPhone ou Android ou sur mindkeep.cloud. La suppression est définitive et irréversible.",
+    "contactLabel": "Questions et demandes de suppression :",
+    "sections": [
+      {
+        "title": "1. Dans l’app (iPhone ou Android)",
+        "body": [
+          "1. Ouvrez Mindkeep et connectez-vous.",
+          "2. Allez dans « Rubriques » → « Compte ».",
+          "3. Faites défiler jusqu’à « Supprimer le compte », saisissez votre mot de passe (s’il y en a un), tapez DELETE et confirmez."
+        ]
+      },
+      {
+        "title": "2. Sur le site web",
+        "body": [
+          "1. Connectez-vous sur mindkeep.cloud.",
+          "2. Ouvrez « Compte » et faites défiler jusqu’à « Supprimer le compte ».",
+          "3. Saisissez votre mot de passe (s’il y en a un), tapez DELETE et confirmez."
+        ]
+      },
+      {
+        "title": "3. Si vous ne pouvez pas vous connecter",
+        "body": [
+          "Écrivez-nous depuis l’adresse de votre compte avec l’objet « Supprimer mon compte Mindkeep ». Nous vérifions que la demande vient du titulaire et supprimons le compte sous 30 jours."
+        ]
+      },
+      {
+        "title": "4. Ce qui est supprimé",
+        "body": [
+          "Immédiatement et définitivement : le profil (nom, e-mail, empreinte du mot de passe, fuseau horaire), tâches, notes, fiches d’étude et révisions, habitudes, repas, eau, pas, poids et données corporelles, budget, notifications et sessions de connexion.",
+          "Une formule achetée sur le site est résiliée et, si vous utilisiez « Se connecter avec Apple », l’accès de Mindkeep à votre identifiant Apple est révoqué."
+        ]
+      },
+      {
+        "title": "5. Ce qui est conservé et combien de temps",
+        "body": [
+          "Les données de paiement d’une formule achetée sur le site restent chez Stripe aussi longtemps que l’exigent les lois fiscales et comptables.",
+          "Les sauvegardes de la base peuvent en garder une copie pendant une durée limitée, jusqu’à leur écrasement ; elles ne servent pas à restaurer des comptes supprimés.",
+          "Rien d’autre n’est conservé. Les photos de repas et de tickets ne sont jamais enregistrées."
         ]
       }
     ]

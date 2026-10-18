@@ -1353,7 +1353,7 @@
       "dashboard": "Przegląd · Mindkeep",
       "review": "Powtórki na dziś · Mindkeep",
       "calendar": "Kalendarz powtórek · Mindkeep",
-      "materials": "Dodaj materiał · Mindkeep",
+      "materials": "Materiały · Mindkeep",
       "categories": "Kategorie · Mindkeep",
       "notifications": "Powiadomienia · Mindkeep",
       "statistics": "Analityka · Mindkeep",
@@ -1384,7 +1384,8 @@
       "terms": "Regulamin · Mindkeep",
       "cookies": "Polityka cookies · Mindkeep",
       "refund": "Subskrypcja i zwroty · Mindkeep",
-      "plans": "Plany · Mindkeep"
+      "plans": "Plany · Mindkeep",
+      "deleteAccount": "Usuwanie konta · Mindkeep"
     }
   },
   "footer": {
@@ -1559,6 +1560,52 @@
         "body": [
           "Możemy aktualizować tę politykę. Aktualna wersja i jej data są zawsze na tej stronie; o ważnych zmianach poinformujemy też w usłudze.",
           "Powiązane dokumenty: Regulamin, Polityka cookies oraz Polityka subskrypcji i zwrotów."
+        ]
+      }
+    ]
+  },
+  "deletion": {
+    "eyebrow": "Informacje prawne",
+    "title": "Usuwanie konta Mindkeep",
+    "updated": "Zaktualizowano: 18 października 2026",
+    "intro": "Możesz w każdej chwili samodzielnie usunąć konto Mindkeep i wszystkie jego dane — w aplikacji Mindkeep na iPhone’a lub Androida albo na mindkeep.cloud. Usunięcie jest ostateczne i nie można go cofnąć.",
+    "contactLabel": "Pytania i prośby o usunięcie:",
+    "sections": [
+      {
+        "title": "1. W aplikacji (iPhone lub Android)",
+        "body": [
+          "1. Otwórz Mindkeep i zaloguj się.",
+          "2. Przejdź do „Sekcje” → „Konto”.",
+          "3. Przewiń do „Usuń konto”, wpisz hasło (jeśli jest ustawione), wpisz DELETE i potwierdź."
+        ]
+      },
+      {
+        "title": "2. Na stronie",
+        "body": [
+          "1. Zaloguj się na mindkeep.cloud.",
+          "2. Otwórz „Konto” i przewiń do „Usuń konto”.",
+          "3. Wpisz hasło (jeśli jest ustawione), wpisz DELETE i potwierdź."
+        ]
+      },
+      {
+        "title": "3. Jeśli nie możesz się zalogować",
+        "body": [
+          "Napisz do nas z adresu e-mail konta, w temacie „Usuń moje konto Mindkeep”. Sprawdzimy, że prośba pochodzi od właściciela, i usuniemy konto w ciągu 30 dni."
+        ]
+      },
+      {
+        "title": "4. Co jest usuwane",
+        "body": [
+          "Od razu i na zawsze: profil (imię, e-mail, skrót hasła, strefa czasowa), zadania, notatki, materiały do nauki i powtórki, nawyki, posiłki, woda, kroki, waga i dane o ciele, budżet, powiadomienia i sesje logowania.",
+          "Plan kupiony na stronie jest anulowany, a jeśli używałeś „Zaloguj się przez Apple”, dostęp Mindkeep do Twojego Apple ID jest cofany."
+        ]
+      },
+      {
+        "title": "5. Co jest przechowywane i jak długo",
+        "body": [
+          "Dane płatności za plan kupiony na stronie pozostają w Stripe tak długo, jak wymagają tego przepisy podatkowe i księgowe.",
+          "Kopie zapasowe bazy mogą zawierać kopię przez ograniczony czas, aż zostaną nadpisane; nie służą do przywracania usuniętych kont.",
+          "Nic więcej nie jest przechowywane. Zdjęcia posiłków i paragonów w ogóle nie są zapisywane."
         ]
       }
     ]

@@ -6,12 +6,13 @@ import { Reveal } from '@/components/motion/Reveal';
 import { MINDKEEP_ADMIN, MINDKEEP_CONTACT } from '@/config/contact';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 
-export type LegalDoc = 'privacy' | 'terms' | 'cookies' | 'refund';
+export type LegalDoc = 'privacy' | 'terms' | 'cookies' | 'refund' | 'deletion';
 
 const CONTACT: Record<LegalDoc, string> = {
   privacy: MINDKEEP_CONTACT,
   terms: MINDKEEP_CONTACT,
   cookies: MINDKEEP_CONTACT,
+  deletion: MINDKEEP_CONTACT,
   refund: MINDKEEP_ADMIN,
 };
 

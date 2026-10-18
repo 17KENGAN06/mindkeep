@@ -166,7 +166,7 @@ Not collected: location, contacts, browsing / search history, usage data, diagno
 
 - **Does your app collect or share user data?** Yes, collects. **Shares:** No (Gemini, Resend, Railway and Google / Apple sign-in act as service providers for us, which Play does not count as sharing).
 - **Is all data encrypted in transit?** Yes (HTTPS only).
-- **Can users request deletion?** Yes — in the app (Account → Delete account) and on the website; link: https://mindkeep.cloud/privacy
+- **Can users request deletion?** Yes — in the app (Account → Delete account) and on the website. **Deletion URL:** https://mindkeep.cloud/delete-account (public page: steps in the app and on the web, email route if you cannot sign in, what is deleted and what is kept).
 - **Account creation:** username and password, plus Google sign-in (and Apple on iPhone).
 
 | Play category | Type | Collected | Optional? | Ephemeral? | Purpose |
