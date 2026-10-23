@@ -138,7 +138,7 @@ Use the same description texts as above (Play allows 4000 characters). Play-only
 | Short description (80) | Tasks, habits, 3·7·30 reviews, calories, notes and budget in one daily planner. | Задачи, привычки, повторения 3·7·30, калории, заметки и бюджет в одном месте. |
 | Release notes (500) | First release: tasks, habits, 3·7·30 reviews, nutrition, notes and budget in one place. | Первый выпуск: задачи, привычки, повторения 3·7·30, питание, заметки и бюджет. |
 
-Graphics: icon 512×512 (from `mobile/assets/icon.png`), feature graphic 1024×500 (`docs/store-assets/out/google-feature-graphic-ru.png`, an English one can be rendered from `docs/store-assets/src/feature-graphic.html`), 2–8 phone screenshots (9:16 or up to 2:1; the 1320×2868 cards are 2.17:1 — too tall for Play, they need a 1080×1920 or 1290×2580 version).
+Graphics: icon 512×512 (from `mobile/assets/icon.png`), feature graphic 1024×500 (`docs/store-assets/out/google-feature-graphic-ru.png`, an English one can be rendered from `docs/store-assets/src/feature-graphic.html`), 2–8 phone screenshots, exactly 9:16 — `docs/store-assets/out/google-play/` (1080×1920, rendered by `docs/store-assets/src/play-916.html`).
 
 ## Apple App Privacy (App Store Connect → App Privacy)
 

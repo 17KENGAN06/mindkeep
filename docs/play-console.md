@@ -10,7 +10,7 @@
 | Сборка AAB 1.0.3 (versionCode 5), режим стора — без цен и ссылок на оплату | EAS → Builds (ссылка на скачивание — в сообщении о сборке) |
 | Иконка 512×512, 32-bit PNG | `docs/store-assets/out/google-play-icon-512.png` |
 | Обложка 1024×500 | `docs/store-assets/out/google-feature-graphic-en.png` и `-ru.png` |
-| Скриншоты телефона 1320×2640 (2:1) | `docs/store-assets/out/google-play/ENG` и `RU` (собираются из `Desktop\screenshoots` шаблоном `src/play-crop.html`) |
+| Скриншоты телефона 1080×1920 (ровно 9:16, как требует Play) | `docs/store-assets/out/google-play/ENG` и `RU` (собираются из `Desktop\screenshoots` шаблоном `src/play-916.html`: карточка целиком по центру на размытом фоне) |
 | Демо-вход для проверки | `demo@mindkeep.cloud` + пароль + фиксированный код `REVIEW_LOGIN_CODE` (Railway) |
 
 ## 0. Перед началом

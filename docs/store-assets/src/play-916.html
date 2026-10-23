@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Play 9:16 screenshot</title>
+<style>
+  /* Google Play wants exactly 9:16. The 1320×2868 card is narrower, so it is shown whole in the
+     centre (height 1920) on a blurred, darkened copy of itself. Pass the card with ?src=<file URL>. */
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #07110d; }
+  .bg { position: absolute; inset: -60px; background-size: cover; background-position: center; filter: blur(40px) brightness(0.55); }
+  .card { position: absolute; top: 0; left: 50%; height: 1920px; transform: translateX(-50%); }
+</style>
+</head>
+<body>
+  <div class="bg" id="bg"></div>
+  <img class="card" id="card" alt="">
+  <script>
+    const src = new URLSearchParams(location.search).get('src');
+    document.getElementById('card').src = src;
+    document.getElementById('bg').style.backgroundImage = 'url("' + src + '")';
+  </script>
+</body>
+</html>
