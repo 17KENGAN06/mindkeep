@@ -1297,7 +1297,16 @@
     "openTask": "До завдань",
     "bellImportant": "Важливо",
     "bellEmptyImportant": "Немає важливих завдань",
-    "importantCount": "{{count}} важливих"
+    "importantCount": "{{count}} важливих",
+    "filterUnread": "Непрочитані",
+    "filterAll": "Усі",
+    "filterImportant": "Важливі",
+    "filterReviews": "Повторення",
+    "today": "Сьогодні",
+    "yesterday": "Учора",
+    "showMore": "Показати ще ({{count}})",
+    "emptyFilter": "Тут поки порожньо.",
+    "allRead": "Усе прочитано — нових сповіщень немає."
   },
   "statistics": {
     "title": "Статистика",

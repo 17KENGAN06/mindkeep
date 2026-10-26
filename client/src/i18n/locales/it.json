@@ -1297,7 +1297,16 @@
     "openTask": "Apri attività",
     "bellImportant": "Importante",
     "bellEmptyImportant": "Nessuna attività importante",
-    "importantCount": "{{count}} importanti"
+    "importantCount": "{{count}} importanti",
+    "filterUnread": "Da leggere",
+    "filterAll": "Tutte",
+    "filterImportant": "Importanti",
+    "filterReviews": "Ripassi",
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "showMore": "Mostra altro ({{count}})",
+    "emptyFilter": "Ancora niente qui.",
+    "allRead": "Tutto letto: nessuna nuova notifica."
   },
   "statistics": {
     "title": "Statistiche",

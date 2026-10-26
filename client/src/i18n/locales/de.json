@@ -1297,7 +1297,16 @@
     "openTask": "Zu den Aufgaben",
     "bellImportant": "Wichtig",
     "bellEmptyImportant": "Keine wichtigen Aufgaben",
-    "importantCount": "{{count}} wichtig"
+    "importantCount": "{{count}} wichtig",
+    "filterUnread": "Ungelesen",
+    "filterAll": "Alle",
+    "filterImportant": "Wichtig",
+    "filterReviews": "Wiederholungen",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "showMore": "Mehr anzeigen ({{count}})",
+    "emptyFilter": "Hier ist noch nichts.",
+    "allRead": "Alles gelesen – keine neuen Benachrichtigungen."
   },
   "statistics": {
     "title": "Statistik",

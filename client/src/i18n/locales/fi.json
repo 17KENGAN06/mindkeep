@@ -1297,7 +1297,16 @@
     "openTask": "Avaa tehtävät",
     "bellImportant": "Tärkeä",
     "bellEmptyImportant": "Ei tärkeitä tehtäviä",
-    "importantCount": "{{count}} tärkeää"
+    "importantCount": "{{count}} tärkeää",
+    "filterUnread": "Lukemattomat",
+    "filterAll": "Kaikki",
+    "filterImportant": "Tärkeät",
+    "filterReviews": "Kertaukset",
+    "today": "Tänään",
+    "yesterday": "Eilen",
+    "showMore": "Näytä lisää ({{count}})",
+    "emptyFilter": "Täällä ei ole vielä mitään.",
+    "allRead": "Kaikki luettu – ei uusia ilmoituksia."
   },
   "statistics": {
     "title": "Tilastot",

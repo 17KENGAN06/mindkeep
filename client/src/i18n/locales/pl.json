@@ -1297,7 +1297,16 @@
     "openTask": "Do zadań",
     "bellImportant": "Ważne",
     "bellEmptyImportant": "Brak ważnych zadań",
-    "importantCount": "{{count}} ważnych"
+    "importantCount": "{{count}} ważnych",
+    "filterUnread": "Nieprzeczytane",
+    "filterAll": "Wszystkie",
+    "filterImportant": "Ważne",
+    "filterReviews": "Powtórki",
+    "today": "Dziś",
+    "yesterday": "Wczoraj",
+    "showMore": "Pokaż więcej ({{count}})",
+    "emptyFilter": "Na razie nic tu nie ma.",
+    "allRead": "Wszystko przeczytane — brak nowych powiadomień."
   },
   "statistics": {
     "title": "Statystyki",

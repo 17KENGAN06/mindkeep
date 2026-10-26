@@ -1297,7 +1297,16 @@
     "openTask": "Open tasks",
     "bellImportant": "Important",
     "bellEmptyImportant": "No important tasks",
-    "importantCount": "{{count}} important"
+    "importantCount": "{{count}} important",
+    "filterUnread": "Unread",
+    "filterAll": "All",
+    "filterImportant": "Important",
+    "filterReviews": "Reviews",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "showMore": "Show more ({{count}})",
+    "emptyFilter": "Nothing here yet.",
+    "allRead": "All caught up — no new notifications."
   },
   "statistics": {
     "title": "Statistics",

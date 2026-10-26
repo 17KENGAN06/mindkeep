@@ -84,9 +84,10 @@ export function NotificationBell() {
   const todayQuery = useTodayReminders();
   const overdueQuery = useOverdueReminders();
 
-  const importantItems = (inbox?.notifications ?? []).filter(
-    (item): item is AppNotification => item.type === 'TASK_IMPORTANT',
-  );
+  // Unread first, then newest, so the four shown are the ones that still need a look.
+  const importantItems = (inbox?.notifications ?? [])
+    .filter((item): item is AppNotification => item.type === 'TASK_IMPORTANT')
+    .sort((left, right) => Number(left.isRead) - Number(right.isRead) || right.createdAt.localeCompare(left.createdAt));
   const dueToday = todayQuery.data?.length ?? summary?.dueToday ?? 0;
   const overdue = overdueQuery.data?.length ?? summary?.overdue ?? 0;
   const important = importantItems.length || summary?.important || 0;
@@ -229,10 +230,18 @@ export function NotificationBell() {
                             : undefined
                         }
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-2 truncate rounded-xl px-2.5 py-2 text-sm font-medium text-ink transition hover:bg-amber-500/15"
+                        className={`flex items-center gap-2 truncate rounded-xl px-2.5 py-2 text-sm transition hover:bg-amber-500/15 ${
+                          item.isRead ? 'font-medium text-muted' : 'font-semibold text-ink'
+                        }`}
                       >
                         <Flag className="h-3.5 w-3.5 shrink-0 fill-current text-amber-500" aria-hidden />
                         <span className="truncate">{item.dailyTask?.title ?? item.message}</span>
+                        {item.isRead ? null : (
+                          <span
+                            className="ml-auto h-2 w-2 shrink-0 rounded-full bg-brand-500"
+                            aria-label={t('notifications.unread')}
+                          />
+                        )}
                       </Link>
                     </li>
                   ))}

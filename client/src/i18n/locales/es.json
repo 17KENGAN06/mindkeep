@@ -1297,7 +1297,16 @@
     "openTask": "Abrir tareas",
     "bellImportant": "Importante",
     "bellEmptyImportant": "No hay tareas importantes",
-    "importantCount": "{{count}} importantes"
+    "importantCount": "{{count}} importantes",
+    "filterUnread": "No leídas",
+    "filterAll": "Todas",
+    "filterImportant": "Importantes",
+    "filterReviews": "Repasos",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "showMore": "Mostrar más ({{count}})",
+    "emptyFilter": "Aquí no hay nada todavía.",
+    "allRead": "Todo leído: no hay avisos nuevos."
   },
   "statistics": {
     "title": "Estadísticas",

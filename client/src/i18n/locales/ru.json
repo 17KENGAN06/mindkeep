@@ -1297,7 +1297,16 @@
     "openTask": "К задачам",
     "bellImportant": "Важно",
     "bellEmptyImportant": "Нет важных задач",
-    "importantCount": "{{count}} важных"
+    "importantCount": "{{count}} важных",
+    "filterUnread": "Непрочитанные",
+    "filterAll": "Все",
+    "filterImportant": "Важные",
+    "filterReviews": "Повторения",
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "showMore": "Показать ещё ({{count}})",
+    "emptyFilter": "Здесь пока пусто.",
+    "allRead": "Всё прочитано — новых уведомлений нет."
   },
   "statistics": {
     "title": "Статистика",
