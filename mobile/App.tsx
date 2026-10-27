@@ -16,6 +16,7 @@ import { AuthProvider } from './src/features/auth/AuthProvider';
 import { clearStoredToken } from './src/features/auth/session';
 import { ThemeProvider, hydrateTheme } from './src/features/theme/ThemeProvider';
 import { hydrateLanguage } from './src/i18n';
+import { AppUpdateGate } from './src/features/appUpdate/AppUpdateGate';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { palettes, type ThemeMode } from './src/theme';
 
@@ -88,7 +89,9 @@ export default function App() {
       <SafeAreaProvider>
         <AuthProvider>
           <ThemeProvider initialTheme={theme}>
-            <RootNavigator />
+            <AppUpdateGate>
+              <RootNavigator />
+            </AppUpdateGate>
           </ThemeProvider>
         </AuthProvider>
       </SafeAreaProvider>

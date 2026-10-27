@@ -1404,5 +1404,13 @@
         "nutrition": "Calorías, agua, pasos y peso"
       }
     }
+  },
+  "appUpdate": {
+    "availableTitle": "Actualización disponible",
+    "availableBody": "Hay una nueva versión de MindKeep con correcciones y mejoras.",
+    "requiredTitle": "Actualización necesaria",
+    "requiredBody": "Esta versión de MindKeep está desactualizada. Actualiza la app para continuar.",
+    "update": "Actualizar",
+    "later": "Más tarde"
   }
 }

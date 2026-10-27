@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { adminRouter } from '@/routes/admin.routes.js';
+import { appRouter } from '@/routes/app.routes.js';
 import { authRouter } from '@/routes/auth.routes.js';
 import { billingRouter } from '@/routes/billing.routes.js';
 import { categoryRouter } from '@/routes/category.routes.js';
@@ -19,6 +20,7 @@ import { statisticsRouter } from '@/routes/statistics.routes.js';
 export const apiRouter = Router();
 
 apiRouter.use('/health', healthRouter);
+apiRouter.use('/app', appRouter);
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/billing', billingRouter);
 apiRouter.use('/contact', contactRouter);

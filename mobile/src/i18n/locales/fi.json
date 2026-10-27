@@ -1404,5 +1404,13 @@
         "nutrition": "Kalorit, vesi, askeleet ja paino"
       }
     }
+  },
+  "appUpdate": {
+    "availableTitle": "Päivitys saatavilla",
+    "availableBody": "MindKeepistä on uusi versio korjauksineen ja parannuksineen.",
+    "requiredTitle": "Päivitys vaaditaan",
+    "requiredBody": "Tämä MindKeep-versio on vanhentunut. Päivitä sovellus jatkaaksesi.",
+    "update": "Päivitä",
+    "later": "Myöhemmin"
   }
 }

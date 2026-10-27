@@ -3,6 +3,15 @@ import { z } from 'zod';
 
 loadDotenv();
 
+/** A positive whole build number, or undefined when empty or mistyped (never blocks the boot). */
+const optionalBuildNumber = z
+  .string()
+  .optional()
+  .transform((value) => {
+    const trimmed = value?.trim();
+    return trimmed && /^\d+$/.test(trimmed) && Number(trimmed) > 0 ? Number(trimmed) : undefined;
+  });
+
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(4000),
@@ -54,6 +63,11 @@ const envSchema = z.object({
     .string()
     .optional()
     .transform((value) => value?.trim() || undefined),
+  /** Native app update prompt (config/appVersion.ts): store build numbers, unset = off. */
+  MIN_ANDROID_VERSION_CODE: optionalBuildNumber,
+  LATEST_ANDROID_VERSION_CODE: optionalBuildNumber,
+  MIN_IOS_BUILD: optionalBuildNumber,
+  LATEST_IOS_BUILD: optionalBuildNumber,
   /** When true, only ADMIN users may sign in / use the API. */
   MAINTENANCE_MODE: z
     .enum(['true', 'false'])
