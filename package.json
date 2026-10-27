@@ -29,6 +29,6 @@
     "@types/node": "24.13.4"
   },
   "devDependencies": {
-    "concurrently": "^10.0.3"
+    "concurrently": "^10.0.6"
   }
 }
