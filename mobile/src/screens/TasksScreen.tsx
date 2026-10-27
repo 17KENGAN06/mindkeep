@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -97,6 +98,45 @@ export function TasksScreen() {
   const focusTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const cardY = useRef(new Map<string, number>());
   useEffect(() => () => focusTimers.current.forEach(clearTimeout), []);
+
+  // The add form sits at the bottom of the page. Some Android setups resize the screen for the
+  // keyboard and some (edge-to-edge) do not, so pad the content only by what the keyboard really
+  // covers of the list, then bring the form above it while one of its fields is focused.
+  const formFocused = useRef(false);
+  const [keyboardPad, setKeyboardPad] = useState(0);
+  useEffect(() => {
+    const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    const hideEvent = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+    const show = Keyboard.addListener(showEvent, (event) => {
+      const reveal = () => {
+        if (formFocused.current) scrollRef.current?.scrollToEnd({ animated: true });
+      };
+      const list = scrollRef.current?.getNativeScrollRef();
+      if (Platform.OS !== 'android' || !list) {
+        setTimeout(reveal, 80);
+        return;
+      }
+      const keyboardTop = event.endCoordinates.screenY;
+      // Measured a moment later, once a resizing window has laid the list out at its new height.
+      setTimeout(() => {
+        list.measureInWindow((_x, y, _width, height) => {
+          setKeyboardPad(Math.max(0, Math.round(y + height - keyboardTop)));
+          setTimeout(reveal, 80);
+        });
+      }, 150);
+    });
+    const hide = Keyboard.addListener(hideEvent, () => setKeyboardPad(0));
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
+  const onFormFocus = () => {
+    formFocused.current = true;
+  };
+  const onFormBlur = () => {
+    formFocused.current = false;
+  };
   const scrollToFocus = (readY: () => number) => {
     focusRequest.current = null;
     focusTimers.current.forEach(clearTimeout);
@@ -394,7 +434,10 @@ export function TasksScreen() {
         <SectionScrollView
           ref={scrollRef}
           contentInsetAdjustmentBehavior="automatic"
-          contentContainerStyle={styles.content}
+          contentContainerStyle={[
+            styles.content,
+            keyboardPad > 0 && { paddingBottom: 40 + keyboardPad },
+          ]}
           keyboardShouldPersistTaps="handled"
           refreshControl={
             <PullRefreshControl
@@ -632,6 +675,8 @@ export function TasksScreen() {
               ]}
               value={title}
               onChangeText={setTitle}
+              onFocus={onFormFocus}
+              onBlur={onFormBlur}
               placeholder={t('tasks.fields.titlePlaceholder')}
               placeholderTextColor={colors.muted}
             />
@@ -644,6 +689,8 @@ export function TasksScreen() {
               ]}
               value={minutes}
               onChangeText={setMinutes}
+              onFocus={onFormFocus}
+              onBlur={onFormBlur}
             />
             {formError ? <Text style={[styles.error, { color: colors.danger }]}>{formError}</Text> : null}
             <AppButton

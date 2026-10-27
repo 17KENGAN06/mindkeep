@@ -83,7 +83,8 @@ export function AppTabBar({ state, descriptors, navigation, onAdd, badge }: AppT
 
   return (
     // Transparent: the page light (AmbientGlow under the tabs) shows around the floating pill.
-    <View style={[styles.wrap, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+    // Floats above the system gesture bar / home indicator instead of resting on it.
+    <View style={[styles.wrap, { paddingBottom: insets.bottom + 12 }]}>
       <View
         style={[
           styles.bar,
