@@ -28,7 +28,7 @@
       "supportsTablet": false,
       "bundleIdentifier": "cloud.mindkeep.app",
       "usesAppleSignIn": true,
-      "buildNumber": "7",
+      "buildNumber": "8",
       "infoPlist": {
         "CFBundleDisplayName": "MindKeep",
         "ITSAppUsesNonExemptEncryption": false,
@@ -50,7 +50,7 @@
     },
     "android": {
       "package": "cloud.mindkeep.app",
-      "versionCode": 6,
+      "versionCode": 7,
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "backgroundColor": "#07110d",
