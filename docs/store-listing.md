@@ -63,7 +63,7 @@ NOTES AND BUDGET
 • A budget in your currencies with categories and monthly totals
 
 YOUR DATA
-• One account on iPhone, Android and the web at mindkeep.cloud
+• One account in the app and on the web at mindkeep.cloud
 • Sign in with email, Google or Apple
 • No ads, no tracking, no social feed
 • Delete your account and all of its data at any time in the app
@@ -118,7 +118,7 @@ MindKeep — спокойный ежедневник для того, что в�
 • Бюджет в ваших валютах с категориями и итогами за месяц
 
 ВАШИ ДАННЫЕ
-• Один аккаунт на iPhone, Android и сайте mindkeep.cloud
+• Один аккаунт в приложении и на сайте mindkeep.cloud
 • Вход по почте, через Google или Apple
 • Без рекламы, без трекинга, без ленты
 • Аккаунт и все данные можно удалить в приложении в любой момент
