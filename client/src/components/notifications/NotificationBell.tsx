@@ -182,7 +182,7 @@ export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' 
                 ? 'bg-red-500/80 text-white'
                 : hasImportant
                   ? 'bg-amber-500 text-[#3a2a08]'
-                  : 'bg-brand-500 text-[#07110d]'
+                  : 'bg-brand-500 text-on-brand'
             }`}
           >
             {badge > 99 ? '99+' : badge}

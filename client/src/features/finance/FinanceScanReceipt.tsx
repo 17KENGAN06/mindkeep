@@ -393,7 +393,7 @@ export function FinanceScanReceipt({
                         type="button"
                         className={`flex min-h-11 items-center justify-center gap-2 rounded-2xl px-3 text-sm font-medium transition touch-manipulation ${
                           selected
-                            ? 'bg-brand-500 text-[#07110d]'
+                            ? 'bg-brand-500 text-on-brand'
                             : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'
                         }`}
                         onClick={() => {

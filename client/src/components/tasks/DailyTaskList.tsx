@@ -115,7 +115,7 @@ export function DailyTaskList({
                 type="button"
                 className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                   task.completed
-                    ? 'border-emerald-400 bg-emerald-500 text-[#07110d]'
+                    ? 'border-emerald-400 bg-emerald-500 text-on-brand'
                     : 'border-line bg-panel text-muted hover:border-brand-400 hover:text-brand-500'
                 }`}
                 aria-pressed={task.completed}
@@ -241,7 +241,7 @@ export function DailyTaskList({
                         onClick={() => onSetPart(task, parts.done === step ? step - 1 : step)}
                         className={`inline-flex h-9 min-w-9 items-center justify-center rounded-xl px-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                           filled
-                            ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                            ? 'bg-brand-500 text-on-brand shadow-sm'
                             : 'bg-line/50 text-muted hover:bg-brand-100 hover:text-ink'
                         }`}
                       >
@@ -274,7 +274,7 @@ export function DailyTaskList({
                       setPickingId(null);
                       onSplit(task, count);
                     }}
-                    className="inline-flex h-9 min-w-9 items-center justify-center rounded-xl bg-brand-50 text-sm font-semibold text-ink ring-1 ring-line transition hover:bg-brand-500 hover:text-[#07110d]"
+                    className="inline-flex h-9 min-w-9 items-center justify-center rounded-xl bg-brand-50 text-sm font-semibold text-ink ring-1 ring-line transition hover:bg-brand-500 hover:text-on-brand"
                   >
                     {count}
                   </button>

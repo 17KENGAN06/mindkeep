@@ -13,7 +13,7 @@ export function PlansCta({ className = '' }: PlansCtaProps) {
   return (
     <Link
       to="/plans"
-      className={`inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-brand-500 px-3 text-sm font-semibold text-[#07110d] no-underline shadow-[0_10px_22px_-14px_rgba(53,111,88,0.95)] transition hover:bg-brand-400 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none xl:px-3.5 ${className}`}
+      className={`inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-brand-500 px-3 text-sm font-semibold text-on-brand no-underline shadow-[0_10px_22px_-14px_rgba(53,111,88,0.95)] transition hover:bg-brand-400 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none xl:px-3.5 ${className}`}
     >
       <span className="xl:hidden">{t('nav.plansShort')}</span>
       <span className="hidden xl:inline">{t('nav.plans')}</span>

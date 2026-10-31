@@ -51,7 +51,7 @@ export function StepsMonthGrid({
           const className = [
             'inline-flex aspect-square max-h-8 min-w-0 w-full items-center justify-center rounded-lg text-[11px] font-semibold tabular-nums transition touch-manipulation',
             done
-              ? 'bg-brand-500 text-[#07110d]'
+              ? 'bg-brand-500 text-on-brand'
               : todayCell && trackable
                 ? 'bg-brand-50 text-ink ring-1 ring-brand-400'
                 : trackable

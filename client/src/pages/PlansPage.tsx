@@ -199,7 +199,7 @@ export function PlansPage() {
             <button
               type="button"
               className={`min-h-10 rounded-full px-3.5 text-sm font-semibold ${
-                interval === 'year' ? 'bg-brand-500 text-[#07110d]' : 'text-ink'
+                interval === 'year' ? 'bg-brand-500 text-on-brand' : 'text-ink'
               }`}
               onClick={() => setInterval('year')}
             >
@@ -208,7 +208,7 @@ export function PlansPage() {
             <button
               type="button"
               className={`min-h-10 rounded-full px-3.5 text-sm font-semibold ${
-                interval === 'month' ? 'bg-brand-500 text-[#07110d]' : 'text-ink'
+                interval === 'month' ? 'bg-brand-500 text-on-brand' : 'text-ink'
               }`}
               onClick={() => setInterval('month')}
             >

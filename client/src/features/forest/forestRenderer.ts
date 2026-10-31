@@ -87,7 +87,7 @@ export type ForestScene = {
 };
 
 const FALLBACK_PALETTE: ForestPalette = {
-  surface: '#07110d',
+  surface: '#090c0e',
   panel: '#101c17',
   line: '#2a3f35',
   ink: '#f2faf5',

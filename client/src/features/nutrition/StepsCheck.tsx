@@ -24,7 +24,7 @@ export function StepsCheck({ done, goal, disabled = false, label, hint, onChange
     >
       <span
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ring-1 ${
-          done ? 'bg-brand-500 text-[#07110d] ring-brand-500' : 'bg-panel text-muted ring-line'
+          done ? 'bg-brand-500 text-on-brand ring-brand-500' : 'bg-panel text-muted ring-line'
         }`}
       >
         {done ? <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden /> : <Footprints className="h-4 w-4" aria-hidden />}

@@ -279,7 +279,7 @@ function BillingSection() {
           {status ? (
             <span
               className={`rounded-full px-4 py-1.5 text-sm font-bold ${
-                isPro ? 'bg-brand-500 text-[#07110d]' : 'bg-panel/90 text-ink ring-1 ring-line'
+                isPro ? 'bg-brand-500 text-on-brand' : 'bg-panel/90 text-ink ring-1 ring-line'
               }`}
             >
               {planName}

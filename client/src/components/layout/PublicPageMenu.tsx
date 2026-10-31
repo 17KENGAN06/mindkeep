@@ -47,7 +47,7 @@ export function PublicPageLinks({ onNavigate }: PublicPageLinksProps) {
   const row =
     'flex min-h-12 w-full items-center rounded-2xl px-4 text-left text-sm font-semibold no-underline transition';
   const quiet = `${row} bg-brand-50/40 text-ink ring-1 ring-line/70 active:bg-brand-50`;
-  const accent = `${row} justify-center bg-brand-500 text-[#07110d]`;
+  const accent = `${row} justify-center bg-brand-500 text-on-brand`;
 
   const pages = PAGE_LINKS.filter((link) => !link.match(pathname) && link.to !== '/plans');
   const plans = PAGE_LINKS.find((link) => link.to === '/plans' && !link.match(pathname));

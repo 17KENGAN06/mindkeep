@@ -104,7 +104,7 @@ export function SettingsPage() {
                 >
                   <span
                     className={`mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${
-                      on ? 'border-brand-500 bg-brand-500 text-[#07110d]' : 'border-line'
+                      on ? 'border-brand-500 bg-brand-500 text-on-brand' : 'border-line'
                     }`}
                   >
                     {on ? <Check className="h-3.5 w-3.5" aria-hidden /> : null}
@@ -133,7 +133,7 @@ export function SettingsPage() {
                 aria-checked={macrosOn}
                 className={`inline-flex min-h-8 shrink-0 items-center rounded-full px-3 text-xs font-semibold transition ${
                   macrosOn
-                    ? 'bg-brand-500 text-[#07110d]'
+                    ? 'bg-brand-500 text-on-brand'
                     : 'text-muted ring-1 ring-line/70 hover:text-ink'
                 }`}
                 onClick={() => {

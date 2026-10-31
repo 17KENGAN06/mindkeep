@@ -86,7 +86,7 @@ export function Select({
               disabled={disabled}
               className={`min-h-10 rounded-xl px-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                 stringValue === ''
-                  ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                  ? 'bg-brand-500 text-on-brand shadow-sm'
                   : 'text-muted hover:bg-panel hover:text-ink'
               }`}
               onClick={() => pick('')}
@@ -105,7 +105,7 @@ export function Select({
                 disabled={disabled}
                 className={`min-h-10 rounded-xl px-3 text-center text-sm font-semibold leading-none whitespace-nowrap transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-50 ${
                   active
-                    ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                    ? 'bg-brand-500 text-on-brand shadow-sm'
                     : 'text-muted hover:bg-panel hover:text-ink'
                 }`}
                 onClick={() => pick(option.value)}
@@ -156,7 +156,7 @@ export function Select({
                     aria-selected={stringValue === ''}
                     className={`flex min-h-10 w-full min-w-0 items-center justify-between gap-2 rounded-xl px-3 text-left text-sm font-semibold transition ${
                       stringValue === ''
-                        ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                        ? 'bg-brand-500 text-on-brand shadow-sm'
                         : 'text-ink hover:bg-brand-50'
                     }`}
                     onClick={() => pick('')}
@@ -175,7 +175,7 @@ export function Select({
                       aria-selected={active}
                       className={`flex min-h-10 w-full min-w-0 items-center justify-between gap-2 rounded-xl px-3 text-left text-sm font-semibold transition ${
                         active
-                          ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                          ? 'bg-brand-500 text-on-brand shadow-sm'
                           : 'text-ink hover:bg-brand-50'
                       }`}
                       onClick={() => pick(option.value)}

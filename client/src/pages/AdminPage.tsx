@@ -205,7 +205,7 @@ export function AdminPage() {
                           type="button"
                           className={`flex w-full min-w-0 flex-col rounded-xl px-3 py-2 text-left transition ${
                             active
-                              ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                              ? 'bg-brand-500 text-on-brand shadow-sm'
                               : 'text-ink hover:bg-panel'
                           }`}
                           onClick={() => {
@@ -214,7 +214,7 @@ export function AdminPage() {
                           }}
                         >
                           <span className="truncate text-sm font-semibold">{item.name}</span>
-                          <span className={`truncate text-xs ${active ? 'text-[#07110d]/80' : 'text-muted'}`}>
+                          <span className={`truncate text-xs ${active ? 'text-on-brand/80' : 'text-muted'}`}>
                             {item.email}
                           </span>
                         </button>

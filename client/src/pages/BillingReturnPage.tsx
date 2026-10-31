@@ -45,7 +45,7 @@ export function BillingReturnPage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href={APP_DEEP_LINK}
-              className="inline-flex min-h-11 items-center justify-center rounded-2xl bg-brand-500 px-5 text-sm font-semibold text-[#07110d] no-underline"
+              className="inline-flex min-h-11 items-center justify-center rounded-2xl bg-brand-500 px-5 text-sm font-semibold text-on-brand no-underline"
             >
               {t('billing.openApp')}
             </a>

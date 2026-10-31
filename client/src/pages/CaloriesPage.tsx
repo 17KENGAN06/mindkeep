@@ -440,7 +440,7 @@ export function CaloriesPage() {
                   disabled={updateSettings.isPending}
                   className={`inline-flex min-h-8 shrink-0 items-center gap-2 rounded-full px-2.5 text-xs font-semibold transition touch-manipulation disabled:opacity-50 ${
                     macrosEnabled
-                      ? 'bg-brand-500 text-[#07110d]'
+                      ? 'bg-brand-500 text-on-brand'
                       : 'text-muted ring-1 ring-line/70 hover:text-ink'
                   }`}
                   onClick={() => void onToggleMacros()}

@@ -30,7 +30,7 @@ export function LanguageSwitcher({ variant = 'compact' }: LanguageSwitcherProps)
               aria-selected={active}
               className={`min-h-10 rounded-xl px-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                 active
-                  ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                  ? 'bg-brand-500 text-on-brand shadow-sm'
                   : 'text-muted hover:bg-panel hover:text-ink'
               }`}
               onClick={() => void i18n.changeLanguage(language.code)}
@@ -117,7 +117,7 @@ function CompactLanguageMenu({
                   aria-selected={active}
                   className={`flex min-h-10 w-full items-center justify-between rounded-xl px-3 text-left text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                     active
-                      ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                      ? 'bg-brand-500 text-on-brand shadow-sm'
                       : 'text-ink hover:bg-brand-50'
                   }`}
                   onClick={() => {

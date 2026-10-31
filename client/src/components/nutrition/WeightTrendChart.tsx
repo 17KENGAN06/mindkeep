@@ -159,7 +159,7 @@ export function WeightTrendChart({
                 aria-selected={selectedRange}
                 onClick={() => setRange(value)}
                 className={`min-h-9 rounded-xl px-2 text-sm font-semibold transition ${
-                  selectedRange ? 'bg-brand-500 text-[#07110d] shadow-sm' : 'text-muted hover:bg-panel hover:text-ink'
+                  selectedRange ? 'bg-brand-500 text-on-brand shadow-sm' : 'text-muted hover:bg-panel hover:text-ink'
                 }`}
               >
                 {t(`calories.weightRange${value}`)}

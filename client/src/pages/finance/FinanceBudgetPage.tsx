@@ -72,7 +72,7 @@ function FilterChips<T extends string>({
             key={item.id}
             type="button"
             className={`min-h-8 shrink-0 whitespace-nowrap rounded-full px-2.5 text-xs font-semibold transition ${
-              active ? 'bg-brand-500 text-[#07110d] shadow-sm' : 'text-muted hover:bg-panel hover:text-ink'
+              active ? 'bg-brand-500 text-on-brand shadow-sm' : 'text-muted hover:bg-panel hover:text-ink'
             }`}
             onClick={() => onChange(item.id)}
           >

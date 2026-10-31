@@ -438,7 +438,7 @@ export function DashboardPage() {
                     <span
                       className={`inline-flex h-[22px] w-[22px] items-center justify-center rounded-md border transition ${
                         task.completed
-                          ? 'border-brand-500 bg-brand-500 text-[#07110d]'
+                          ? 'border-brand-500 bg-brand-500 text-on-brand'
                           : 'border-line text-transparent group-hover/check:border-brand-400'
                       }`}
                     >
@@ -512,7 +512,7 @@ export function DashboardPage() {
                   type="button"
                   className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
                     weekTabId === id
-                      ? 'bg-brand-500 text-[#07110d] shadow-sm'
+                      ? 'bg-brand-500 text-on-brand shadow-sm'
                       : 'text-muted hover:text-ink'
                   }`}
                   onClick={() => setWeekTab(id)}

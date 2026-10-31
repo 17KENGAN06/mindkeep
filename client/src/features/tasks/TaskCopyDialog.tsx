@@ -142,7 +142,7 @@ export function TaskCopyDialog({
                   aria-pressed={selected}
                   className={`inline-flex aspect-square max-h-9 min-w-0 items-center justify-center rounded-lg text-[12px] font-semibold tabular-nums transition touch-manipulation disabled:opacity-40 ${
                     selected
-                      ? 'bg-brand-500 text-[#07110d]'
+                      ? 'bg-brand-500 text-on-brand'
                       : source
                         ? 'bg-brand-50 text-ink ring-1 ring-brand-400'
                         : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'

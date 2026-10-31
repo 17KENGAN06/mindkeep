@@ -123,7 +123,7 @@ export function PlanCards({
             </p>
             <div className="flex flex-wrap justify-end gap-1">
               {card.accent ? (
-                <span className="rounded-full bg-brand-500 px-2 py-0.5 text-[10px] font-bold tracking-[0.1em] text-[#07110d] uppercase">
+                <span className="rounded-full bg-brand-500 px-2 py-0.5 text-[10px] font-bold tracking-[0.1em] text-on-brand uppercase">
                   {t('home.pricing.recommended')}
                 </span>
               ) : null}

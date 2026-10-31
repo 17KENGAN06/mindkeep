@@ -128,7 +128,7 @@ export function NotificationsPage() {
                   aria-selected={active}
                   onClick={() => chooseFilter(item)}
                   className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3.5 text-sm font-medium transition touch-manipulation ${
-                    active ? 'bg-brand-500 text-[#07110d]' : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'
+                    active ? 'bg-brand-500 text-on-brand' : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'
                   }`}
                 >
                   {item === 'unread' && counts.unread > 0 && !active ? (
@@ -137,7 +137,7 @@ export function NotificationsPage() {
                   {filterLabel[item]}
                   <span
                     className={`rounded-full px-1.5 text-xs tabular-nums ${
-                      active ? 'bg-[#07110d]/15' : 'bg-brand-500/10 text-muted'
+                      active ? 'bg-on-brand/15' : 'bg-brand-500/10 text-muted'
                     }`}
                   >
                     {counts[item]}

@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { BrandLockup } from '@/components/brand/BrandLockup';
-import { DashboardBackdrop } from '@/components/layout/dashboard/DashboardBackdrop';
 import { DashboardSidebar } from '@/components/layout/dashboard/DashboardSidebar';
 import { MobileNav } from '@/components/layout/dashboard/MobileNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -18,8 +17,6 @@ export function DashboardLayout() {
 
   return (
     <div className="dash-shell flex min-h-dvh flex-col overflow-x-clip">
-      <DashboardBackdrop />
-
       <div className={`dash-main ${PAGE_SHELL_Y} flex w-full flex-1 flex-col gap-6 px-4 sm:px-6 lg:px-8 2xl:px-10`}>
         <header className="relative z-40 min-[1200px]:hidden">
           <div className="flex items-center justify-between gap-3">

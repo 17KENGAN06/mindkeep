@@ -35,7 +35,7 @@ export function StoreComingSoon({ animated = false }: StoreComingSoonProps) {
             className="h-12 w-auto select-none sm:h-14"
             draggable={false}
           />
-          <span className="pointer-events-none shrink-0 rounded-full border border-brand-500/30 bg-brand-500 px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-[#07110d] uppercase shadow-sm">
+          <span className="pointer-events-none shrink-0 rounded-full border border-brand-500/30 bg-brand-500 px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-on-brand uppercase shadow-sm">
             {t('home.apps.badge')}
           </span>
         </div>
@@ -48,7 +48,7 @@ export function StoreComingSoon({ animated = false }: StoreComingSoonProps) {
             className="h-16 w-auto select-none sm:h-[4.5rem]"
             draggable={false}
           />
-          <span className="pointer-events-none shrink-0 rounded-full border border-brand-500/30 bg-brand-500 px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-[#07110d] uppercase shadow-sm">
+          <span className="pointer-events-none shrink-0 rounded-full border border-brand-500/30 bg-brand-500 px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-on-brand uppercase shadow-sm">
             {t('home.apps.badge')}
           </span>
         </div>

@@ -33,7 +33,7 @@ function SepChip({
     <button
       type="button"
       className={`min-h-10 whitespace-nowrap rounded-full px-3 text-sm font-medium transition touch-manipulation ${
-        selected ? 'bg-brand-500 text-[#07110d]' : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'
+        selected ? 'bg-brand-500 text-on-brand' : 'bg-panel text-ink ring-1 ring-line hover:ring-brand-400'
       }`}
       onClick={onClick}
     >

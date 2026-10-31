@@ -128,7 +128,7 @@ export function HabitMonthCard({
               onClick={() => onToggle(cell.date, done)}
               className={`flex aspect-square min-w-0 items-center justify-center rounded-xl text-xs font-medium transition ${
                 done
-                  ? 'bg-brand-500 text-[#07110d]'
+                  ? 'bg-brand-500 text-on-brand'
                   : future
                     ? 'bg-line/30 text-muted'
                     : isToday

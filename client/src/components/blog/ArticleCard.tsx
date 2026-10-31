@@ -66,7 +66,7 @@ export function BlogPreview({ animated = false }: BlogPreviewProps) {
         </div>
         <Link
           to="/blog"
-          className={`${reveal('snap-reveal-d2 snap-reveal-right snap-pop')} inline-flex min-h-11 items-center justify-center rounded-xl bg-brand-500 px-5 text-sm font-semibold text-[#07110d] no-underline`}
+          className={`${reveal('snap-reveal-d2 snap-reveal-right snap-pop')} inline-flex min-h-11 items-center justify-center rounded-xl bg-brand-500 px-5 text-sm font-semibold text-on-brand no-underline`}
         >
           {t('blog.viewAll')}
         </Link>
