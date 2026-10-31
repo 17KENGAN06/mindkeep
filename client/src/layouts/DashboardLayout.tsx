@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { BrandLockup } from '@/components/brand/BrandLockup';
+import { DashboardBackdrop } from '@/components/layout/dashboard/DashboardBackdrop';
 import { DashboardSidebar } from '@/components/layout/dashboard/DashboardSidebar';
 import { MobileNav } from '@/components/layout/dashboard/MobileNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -9,15 +10,17 @@ import { PlansCta } from '@/components/layout/PlansCta';
 import { PAGE_SHELL_Y } from '@/config/layout';
 import { dashboardNav } from '@/config/dashboardNav';
 import { useAuth } from '@/features/auth/useAuth';
+import { useSmoothWheel } from '@/hooks/useSmoothWheel';
 
 export function DashboardLayout() {
   const { logout, user } = useAuth();
   const location = useLocation();
   const isAdmin = user?.role === 'ADMIN';
+  useSmoothWheel(location.pathname);
 
   return (
     <div className="dash-shell flex min-h-dvh flex-col overflow-x-clip">
-      <div aria-hidden className="dash-forest" />
+      <DashboardBackdrop />
 
       <div className={`dash-main ${PAGE_SHELL_Y} flex w-full flex-1 flex-col gap-6 px-4 sm:px-6 lg:px-8 2xl:px-10`}>
         <header className="relative z-40 min-[1200px]:hidden">

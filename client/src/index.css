@@ -1178,20 +1178,28 @@ html[data-theme='light'] .ambient-aurora-b {
    by rendering inside .dash-shell; add .dash-card to a card that holds no fixed-position child. */
 :root {
   --dash-sidebar: 15.5rem;
-  --dash-veil-top: rgb(5 12 8 / 0.06);
-  --dash-veil-mid: rgb(5 12 8 / 0.46);
-  --dash-veil-end: rgb(5 12 8 / 0.84);
-  --dash-card-alpha: 66%;
-  --dash-sidebar-bg: rgb(7 16 11 / 0.66);
+  --dash-base: linear-gradient(160deg, #04100b, #071a13 46%, #030c09);
+  --dash-current-strength: 30%;
+  --dash-lines-rest: 0.09;
+  --dash-lines-glow: 0.75;
+  --dash-ribbon: #63dcc4;
+  --dash-ribbon-strength: 0.42;
+  --dash-vignette: rgb(1 6 4 / 0.62);
+  --dash-card-alpha: 90%;
+  --dash-sidebar-bg: rgb(6 15 11 / 0.84);
   --dash-card-shadow: 0 24px 48px -32px rgb(0 0 0 / 0.75);
 }
 
 html[data-theme='light'] {
-  --dash-veil-top: rgb(223 230 226 / 0.72);
-  --dash-veil-mid: rgb(223 230 226 / 0.9);
-  --dash-veil-end: rgb(223 230 226 / 0.96);
-  --dash-card-alpha: 84%;
-  --dash-sidebar-bg: rgb(232 238 234 / 0.74);
+  --dash-base: linear-gradient(160deg, #e3eae6, #d7e2dc 46%, #e6ece8);
+  --dash-current-strength: 22%;
+  --dash-lines-rest: 0.1;
+  --dash-lines-glow: 0.6;
+  --dash-ribbon: #4f9d85;
+  --dash-ribbon-strength: 0.24;
+  --dash-vignette: rgb(120 145 130 / 0.2);
+  --dash-card-alpha: 92%;
+  --dash-sidebar-bg: rgb(232 238 234 / 0.88);
   --dash-card-shadow: 0 24px 48px -36px rgb(36 48 41 / 0.4);
 }
 
@@ -1199,17 +1207,181 @@ body:has(.dash-shell) .ambient-backdrop {
   display: none;
 }
 
-.dash-forest {
+.dash-backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
+  overflow: hidden;
   pointer-events: none;
-  /* Wider than the screen and lifted, so the peaks land in the open band above the cards. */
-  --dash-photo: max(118vw, 160dvh);
-  background:
-    linear-gradient(180deg, var(--dash-veil-top), var(--dash-veil-mid) 30%, var(--dash-veil-end) 66%),
-    url('./assets/mountain-lake.webp') 50% calc(var(--dash-photo) * -0.07) / var(--dash-photo) auto no-repeat,
-    var(--app-surface);
+  background: var(--dash-base);
+}
+
+/* The corners fall away, so the light seems to come from inside the screen. */
+.dash-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(120% 95% at 50% 38%, transparent 42%, var(--dash-vignette));
+}
+
+/* Fine grain: keeps the long dark gradients from banding. */
+.dash-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dash-current {
+  position: absolute;
+  width: 120vmax;
+  height: 74vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--app-accent) var(--dash-current-strength), transparent),
+    transparent
+  );
+  will-change: transform;
+}
+
+.dash-current-a {
+  top: -44vmax;
+  left: -30vmax;
+  animation: dash-drift-a 46s ease-in-out infinite alternate;
+}
+
+.dash-current-b {
+  top: 8vmax;
+  right: -46vmax;
+  opacity: 0.8;
+  animation: dash-drift-b 58s ease-in-out infinite alternate;
+}
+
+.dash-current-c {
+  bottom: -52vmax;
+  left: 6vmax;
+  opacity: 0.62;
+  animation: dash-drift-c 70s ease-in-out infinite alternate;
+}
+
+/* Aurora ribbon: a long soft band that breathes across the top of the screen. */
+.dash-ribbon {
+  position: absolute;
+  top: -12vmax;
+  left: -30vmax;
+  width: 150vmax;
+  height: 44vmax;
+  border-radius: 50%;
+  opacity: var(--dash-ribbon-strength);
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--dash-ribbon) 70%, transparent),
+    color-mix(in oklab, var(--dash-ribbon) 22%, transparent) 55%,
+    transparent
+  );
+  transform: rotate(-9deg);
+  will-change: transform;
+  animation: dash-ribbon 64s ease-in-out infinite alternate;
+}
+
+.dash-lines {
+  position: absolute;
+  inset: 0 0 -9vh;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--app-accent) calc(var(--dash-lines-rest) * 100%), transparent);
+  mask: url('./assets/backdrop-contours.svg') center / cover no-repeat;
+}
+
+/* Light that only shows through the lines of the mask above. */
+.dash-lines-glow {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  opacity: var(--dash-lines-glow);
+  background: radial-gradient(closest-side, var(--app-accent), transparent);
+  will-change: transform;
+}
+
+.dash-lines-glow-a {
+  top: -24vmax;
+  left: -30vmax;
+  animation: dash-sweep-a 38s ease-in-out infinite alternate;
+}
+
+.dash-lines-glow-b {
+  right: -34vmax;
+  bottom: -30vmax;
+  animation: dash-sweep-b 52s ease-in-out infinite alternate;
+}
+
+.dash-lines-cursor {
+  position: absolute;
+  top: -19vmax;
+  left: -19vmax;
+  width: 38vmax;
+  height: 38vmax;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(closest-side, var(--app-accent), transparent);
+  transition: opacity 600ms ease;
+  will-change: transform;
+}
+
+@keyframes dash-ribbon {
+  to {
+    transform: translate3d(16vmax, 9vmax, 0) rotate(5deg) scale(1.14, 0.82);
+  }
+}
+
+@keyframes dash-drift-a {
+  to {
+    transform: translate3d(26vmax, 12vmax, 0) scale(1.18) rotate(8deg);
+  }
+}
+
+@keyframes dash-drift-b {
+  to {
+    transform: translate3d(-34vmax, 16vmax, 0) scale(0.86) rotate(-10deg);
+  }
+}
+
+@keyframes dash-drift-c {
+  to {
+    transform: translate3d(22vmax, -20vmax, 0) scale(1.22) rotate(6deg);
+  }
+}
+
+@keyframes dash-sweep-a {
+  to {
+    transform: translate3d(74vmax, 34vmax, 0);
+  }
+}
+
+@keyframes dash-sweep-b {
+  to {
+    transform: translate3d(-70vmax, -38vmax, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-current,
+  .dash-ribbon,
+  .dash-lines-glow {
+    animation: none;
+  }
+}
+
+/* Phones: the currents alone, to go easy on the battery. */
+@media (max-width: 767px) {
+  .dash-lines-glow,
+  .dash-lines-cursor {
+    display: none;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -1221,7 +1393,6 @@ body:has(.dash-shell) .ambient-backdrop {
 .dash-sidebar {
   border-left: 1px solid color-mix(in oklab, var(--app-line) 55%, transparent);
   background: var(--dash-sidebar-bg);
-  backdrop-filter: blur(18px) saturate(1.15);
 }
 
 /* Cards in the content area; dialogs are not sections, so they stay fully opaque. */
@@ -1230,10 +1401,6 @@ body:has(.dash-shell) .ambient-backdrop {
   background-color: color-mix(in oklab, var(--app-panel) var(--dash-card-alpha), transparent);
   --tw-ring-color: color-mix(in oklab, var(--app-line) 70%, transparent);
   --tw-shadow: inset 0 1px 0 color-mix(in oklab, var(--app-ink) 7%, transparent), var(--dash-card-shadow);
-}
-
-.dash-card {
-  backdrop-filter: blur(12px) saturate(1.1);
 }
 
 .dash-title {
@@ -1246,22 +1413,10 @@ body:has(.dash-shell) .ambient-backdrop {
   font-weight: 600;
 }
 
-/* Tall screens: frame the peaks instead of the middle of the wide picture. */
-@media (max-width: 767px) {
-  .dash-forest {
-    background-position: 0 0, 34% calc(var(--dash-photo) * -0.07);
-  }
-}
-
 .dash-main .dash-card:hover {
   --tw-ring-color: color-mix(in oklab, var(--app-accent) 26%, var(--app-line));
 }
 
 html[data-theme='light'] .dash-sidebar a.bg-brand-500 {
   color: #f2faf5;
-}
-
-/* The greeting sits on the picture; light snow must not swallow the date. */
-html[data-theme='dark'] .dash-greeting {
-  text-shadow: 0 1px 14px rgb(0 0 0 / 0.75);
 }

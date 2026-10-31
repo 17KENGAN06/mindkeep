@@ -1,0 +1,76 @@
+import { useEffect } from 'react';
+
+/** How fast the page catches up with the wheel: a smaller value feels heavier. */
+const CATCH_UP_MS = 110;
+/** Trackpads send small deltas and already glide; only mouse wheel notches are smoothed. */
+const MIN_WHEEL_DELTA = 40;
+
+function scrollsOnItsOwn(target: EventTarget | null): boolean {
+  let node = target instanceof Element ? target : null;
+  while (node && node !== document.body && node !== document.documentElement) {
+    if (node.scrollHeight > node.clientHeight + 1) {
+      const { overflowY } = getComputedStyle(node);
+      if (overflowY === 'auto' || overflowY === 'scroll') return true;
+    }
+    node = node.parentElement;
+  }
+  return false;
+}
+
+/** Page scroll with a soft inertia on the mouse wheel. Everything else stays native. */
+export function useSmoothWheel(resetKey: string) {
+  useEffect(() => {
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let frame = 0;
+    let target = window.scrollY;
+    let current = target;
+    let last = 0;
+
+    const stop = () => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+    };
+
+    const step = (now: number) => {
+      const elapsed = Math.min(now - last, 50);
+      last = now;
+      current += (target - current) * (1 - Math.exp(-elapsed / CATCH_UP_MS));
+      if (Math.abs(target - current) < 0.5) current = target;
+      window.scrollTo({ top: current, behavior: 'instant' });
+      frame = current === target ? 0 : requestAnimationFrame(step);
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.defaultPrevented) return;
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (event.deltaMode === 0 && Math.abs(event.deltaY) < MIN_WHEEL_DELTA) return;
+      // A locked page (open menu or dialog) and inner lists keep their own scrolling.
+      if (document.body.style.overflow === 'hidden' || scrollsOnItsOwn(event.target)) return;
+
+      const pixels = event.deltaMode === 1 ? event.deltaY * 40 : event.deltaY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (!frame) {
+        current = window.scrollY;
+        target = current;
+      }
+      event.preventDefault();
+      target = Math.min(max, Math.max(0, target + pixels));
+      if (!frame) {
+        last = performance.now();
+        frame = requestAnimationFrame(step);
+      }
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('keydown', stop);
+    window.addEventListener('pointerdown', stop);
+    return () => {
+      stop();
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('keydown', stop);
+      window.removeEventListener('pointerdown', stop);
+    };
+  }, [resetKey]);
+}
