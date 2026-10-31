@@ -1173,3 +1173,70 @@ html[data-theme='light'] .ambient-aurora-b {
     mask-image: radial-gradient(closest-side, #000 72%, transparent);
   }
 }
+
+/* Dashboard layout: forest backdrop, right sidebar, translucent cards. New pages pick this up
+   by rendering inside .dash-shell; add .dash-card to a card that holds no fixed-position child. */
+:root {
+  --dash-sidebar: 15.5rem;
+  --dash-veil-top: rgb(5 12 8 / 0.22);
+  --dash-veil-mid: rgb(5 12 8 / 0.6);
+  --dash-veil-end: rgb(5 12 8 / 0.86);
+  --dash-card-alpha: 70%;
+  --dash-sidebar-bg: rgb(7 16 11 / 0.66);
+  --dash-card-shadow: 0 24px 48px -32px rgb(0 0 0 / 0.75);
+}
+
+html[data-theme='light'] {
+  --dash-veil-top: rgb(223 230 226 / 0.72);
+  --dash-veil-mid: rgb(223 230 226 / 0.9);
+  --dash-veil-end: rgb(223 230 226 / 0.96);
+  --dash-card-alpha: 84%;
+  --dash-sidebar-bg: rgb(232 238 234 / 0.74);
+  --dash-card-shadow: 0 24px 48px -36px rgb(36 48 41 / 0.4);
+}
+
+body:has(.dash-shell) .ambient-backdrop {
+  display: none;
+}
+
+.dash-forest {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, var(--dash-veil-top), var(--dash-veil-mid) 34%, var(--dash-veil-end) 72%),
+    url('./assets/forest-canopy.webp') 60% 38% / cover no-repeat;
+}
+
+@media (min-width: 1200px) {
+  .dash-main {
+    padding-right: calc(var(--dash-sidebar) + 2rem);
+  }
+}
+
+.dash-sidebar {
+  border-left: 1px solid color-mix(in oklab, var(--app-line) 55%, transparent);
+  background: var(--dash-sidebar-bg);
+  backdrop-filter: blur(18px) saturate(1.15);
+}
+
+/* Cards in the content area; dialogs are not sections, so they stay fully opaque. */
+.dash-main :is(section, article).rounded-3xl.bg-panel {
+  border-radius: 1.25rem;
+  background-color: color-mix(in oklab, var(--app-panel) var(--dash-card-alpha), transparent);
+  --tw-ring-color: color-mix(in oklab, var(--app-line) 70%, transparent);
+  --tw-shadow: inset 0 1px 0 color-mix(in oklab, var(--app-ink) 7%, transparent), var(--dash-card-shadow);
+}
+
+.dash-card {
+  backdrop-filter: blur(10px);
+}
+
+.dash-main .dash-card:hover {
+  --tw-ring-color: color-mix(in oklab, var(--app-accent) 26%, var(--app-line));
+}
+
+html[data-theme='light'] .dash-sidebar a.bg-brand-500 {
+  color: #f2faf5;
+}

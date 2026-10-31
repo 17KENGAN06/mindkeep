@@ -55,8 +55,8 @@ function TodayProgressRow({
 }) {
   const safe = clampPercent(percent);
   return (
-    <div className="flex items-center gap-3 py-3.5 first:pt-0 last:pb-0">
-      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-500">
+    <div className="flex items-center gap-3.5 py-3.5 first:pt-0 last:pb-0">
+      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/[0.12] text-brand-500 ring-1 ring-brand-500/20">
         {icon}
       </div>
       <div className="min-w-0 flex-1">
@@ -64,11 +64,14 @@ function TodayProgressRow({
           <p className="truncate text-sm text-muted">{title}</p>
           <p className="shrink-0 text-sm font-semibold tabular-nums text-ink">{valueText}</p>
         </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/70">
-          <div className="h-full rounded-full bg-brand-500 transition-all" style={{ width: `${safe}%` }} />
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/60">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-brand-700 to-brand-500 transition-all"
+            style={{ width: `${safe}%` }}
+          />
         </div>
       </div>
-      <p className="w-9 shrink-0 text-right text-xs font-medium tabular-nums text-brand-500">{safe}%</p>
+      <p className="w-11 shrink-0 text-right text-sm font-semibold tabular-nums text-brand-500">{safe}%</p>
     </div>
   );
 }
@@ -204,15 +207,23 @@ export function DashboardPage() {
   return (
     <div className="min-w-0 space-y-6">
       <TimezoneSuggestion />
-      <section className="flex flex-wrap items-center gap-x-3 gap-y-2">
-        <h1 className="min-w-0 max-w-full truncate text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-          {t('dashboard.welcome', { name: firstName(user?.name) })}
-        </h1>
-        <PlanChip user={user} />
+      <section className="pt-2 sm:pt-6">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h1 className="min-w-0 max-w-full truncate text-3xl font-semibold tracking-tight text-ink sm:text-[2.6rem]">
+            {t('dashboard.welcome', { name: firstName(user?.name) })}
+          </h1>
+          <PlanChip user={user} />
+        </div>
+        <p className="mt-2 text-sm text-muted">{formatDate(today, language)}</p>
       </section>
 
+      <div className="grid min-w-0 gap-5 2xl:grid-cols-12">
       {(showTasks || showReview || showHabits) && (
-      <section className="rounded-3xl bg-panel px-4 py-4 shadow-sm ring-1 ring-line sm:px-5">
+      <section
+        className={`dash-card rounded-3xl bg-panel px-4 py-4 shadow-sm ring-1 ring-line sm:px-5 ${
+          showNutrition ? '2xl:col-span-5' : '2xl:col-span-12'
+        }`}
+      >
         <div className="divide-y divide-line/80">
           {showTasks ? (
           <TodayProgressRow
@@ -250,7 +261,11 @@ export function DashboardPage() {
       )}
 
       {showNutrition ? (
-      <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+      <section
+        className={`dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line ${
+          showTasks || showReview || showHabits ? '2xl:col-span-7' : '2xl:col-span-12'
+        }`}
+      >
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <h2 className="text-base font-semibold text-ink">{t('dashboard.fuelTitle')}</h2>
@@ -260,14 +275,14 @@ export function DashboardPage() {
             {t('dashboard.allFuel')} →
           </Link>
         </div>
-        <div className="mt-5 grid gap-6 lg:grid-cols-2">
+        <div className="mt-4 grid gap-5 lg:grid-cols-2">
           <div>
             <p className="text-sm text-muted">
               {todayCalories} / {calorieGoal} {t('calories.kcal')}
             </p>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-line/70">
               <div
-                className={`h-full rounded-full ${overeating ? 'bg-red-500' : 'bg-brand-500'}`}
+                className={`h-full rounded-full ${overeating ? 'bg-red-500' : 'bg-gradient-to-r from-brand-700 to-brand-500'}`}
                 style={{
                   width: `${Math.min(100, Math.round((todayCalories / Math.max(calorieGoal, 1)) * 100))}%`,
                 }}
@@ -275,7 +290,7 @@ export function DashboardPage() {
             </div>
             <ul className="mt-4 space-y-2">
               {todayMeals.length === 0 ? (
-                <li className="rounded-2xl border border-dashed border-line px-4 py-6 text-center text-sm text-muted">
+                <li className="rounded-xl border border-dashed border-line/70 px-4 py-3.5 text-center text-sm text-muted">
                   {t('dashboard.noMealsToday')}
                 </li>
               ) : (
@@ -306,18 +321,19 @@ export function DashboardPage() {
         </div>
       </section>
       ) : null}
+      </div>
 
       {(showTasks || showReview) && (
-      <section className="grid min-w-0 gap-4 xl:grid-cols-2">
+      <section className="grid min-w-0 gap-5 xl:grid-cols-2">
         {showTasks ? (
-        <article className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
             <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.upcomingTasks')}</h2>
             <Link to="/tasks" className="shrink-0 text-sm font-medium text-brand-500 no-underline">
               {t('dashboard.allTasks')} →
             </Link>
           </div>
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-4 space-y-1.5">
             {todayTasks.length === 0 ? (
               <li className="rounded-2xl border border-dashed border-line px-4 py-8 text-center text-sm text-muted">
                 {t('dashboard.modules.noTasksToday')}
@@ -326,31 +342,35 @@ export function DashboardPage() {
               todayTasks.slice(0, 6).map((task) => (
                 <li
                   key={task.id}
-                  className={`flex items-center gap-3 rounded-2xl px-3 py-3 ring-1 transition ${
+                  className={`flex items-center gap-2 rounded-xl py-1.5 pr-2 pl-1 ring-1 transition ${
                     task.completed
-                      ? 'bg-emerald-500/10 ring-emerald-500/25'
+                      ? 'bg-brand-500/[0.06] ring-transparent'
                       : task.important
-                        ? 'bg-amber-500/[0.09] ring-amber-400/45'
-                        : 'bg-brand-50/30 ring-line/70'
+                        ? 'bg-brand-500/[0.09] ring-brand-500/25 hover:ring-brand-500/40'
+                        : 'ring-transparent hover:bg-brand-500/[0.06]'
                   }`}
                 >
                   <button
                     type="button"
-                    className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition ${
-                      task.completed
-                        ? 'border-brand-500 bg-brand-500 text-[#07110d]'
-                        : 'border-line bg-transparent text-transparent hover:border-brand-400'
-                    }`}
+                    className="group/check inline-flex h-10 w-10 shrink-0 items-center justify-center"
                     aria-pressed={task.completed}
                     disabled={busyTaskId === task.id}
                     onClick={() => void onToggleTask(task)}
                   >
-                    <Check className="h-4 w-4" aria-hidden />
+                    <span
+                      className={`inline-flex h-[22px] w-[22px] items-center justify-center rounded-md border transition ${
+                        task.completed
+                          ? 'border-brand-500 bg-brand-500 text-[#07110d]'
+                          : 'border-line text-transparent group-hover/check:border-brand-400'
+                      }`}
+                    >
+                      <Check className="h-3.5 w-3.5" aria-hidden />
+                    </span>
                   </button>
                   <div className="min-w-0 flex-1">
                     <p
                       className={`break-words text-sm leading-snug font-medium ${
-                        task.completed ? 'text-emerald-400 line-through' : 'text-ink'
+                        task.completed ? 'text-muted line-through' : 'text-ink'
                       }`}
                     >
                       {task.title}
@@ -366,7 +386,7 @@ export function DashboardPage() {
                   </div>
                   <span
                     className={`min-w-[3.25rem] shrink-0 text-right text-xs font-semibold whitespace-nowrap tabular-nums ${
-                      task.completed ? 'text-emerald-400' : task.important ? 'text-amber-700' : 'text-muted'
+                      task.completed || !task.important ? 'text-muted' : 'text-brand-500'
                     }`}
                   >
                     {task.minutes} {t('tasks.minShort')}
@@ -378,10 +398,10 @@ export function DashboardPage() {
                     title={t('tasks.importantHint')}
                     disabled={busyTaskId === task.id}
                     onClick={() => void onImportantTask(task)}
-                    className={`inline-flex h-9 shrink-0 items-center justify-center gap-1 rounded-lg px-2 transition ${
+                    className={`inline-flex h-8 shrink-0 items-center justify-center gap-1 rounded-lg px-2 transition ${
                       task.important
-                        ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_14px_rgba(245,186,64,0.45)]'
-                        : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-700'
+                        ? 'bg-brand-500/15 text-brand-500 ring-1 ring-brand-500/30'
+                        : 'text-muted ring-1 ring-line/60 hover:bg-brand-500/[0.08] hover:text-ink'
                     }`}
                   >
                     <Flag className={`h-3.5 w-3.5 ${task.important ? 'fill-current' : ''}`} aria-hidden />
@@ -397,11 +417,11 @@ export function DashboardPage() {
         ) : null}
 
         {(showTasks || showReview) && (
-        <article className="min-w-0 overflow-hidden rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
             <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.weekTitle')}</h2>
             {showTasks && showReview ? (
-            <div className="flex flex-wrap gap-1 rounded-2xl bg-brand-50/40 p-1 ring-1 ring-line/60">
+            <div className="flex flex-wrap gap-0.5 rounded-full bg-brand-500/[0.07] p-1 ring-1 ring-line/50">
               {(
                 [
                   ['tasks', t('dashboard.weekTabs.tasks')],
@@ -411,9 +431,9 @@ export function DashboardPage() {
                 <button
                   key={id}
                   type="button"
-                  className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
+                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
                     weekTabId === id
-                      ? 'bg-brand-500 text-[#07110d]'
+                      ? 'bg-brand-500 text-[#07110d] shadow-sm'
                       : 'text-muted hover:text-ink'
                   }`}
                   onClick={() => setWeekTab(id)}
@@ -425,7 +445,7 @@ export function DashboardPage() {
             ) : null}
           </div>
 
-          <div className="mt-5 flex h-44 min-w-0 items-end gap-1 sm:gap-2">
+          <div className="mt-5 flex h-52 min-w-0 items-end gap-1 sm:gap-3">
             {weekSeries.map((day) => {
               const planned = weekTabId === 'tasks' ? day.tasksPlanned : Math.max(day.reviewsDone, 1);
               const done = weekTabId === 'tasks' ? day.tasksDone : day.reviewsDone;
@@ -434,13 +454,13 @@ export function DashboardPage() {
 
               return (
                 <div key={day.date} className="flex min-w-0 flex-1 flex-col items-center gap-2">
-                  <div className="relative flex h-32 w-full min-w-0 items-end justify-center">
+                  <div className="relative flex h-44 w-full min-w-0 items-end justify-center">
                     <div
-                      className="absolute bottom-0 w-[70%] max-w-8 rounded-t-lg bg-brand-200/80"
+                      className="absolute bottom-0 w-[64%] max-w-9 rounded-t-md rounded-b-sm bg-brand-500/[0.14]"
                       style={{ height: plannedHeight }}
                     />
                     <div
-                      className="relative w-[70%] max-w-8 rounded-t-lg bg-brand-500"
+                      className="relative w-[64%] max-w-9 rounded-t-md rounded-b-sm bg-gradient-to-t from-brand-700 to-brand-500"
                       style={{ height: doneHeight }}
                     />
                   </div>
@@ -460,7 +480,7 @@ export function DashboardPage() {
               {t('dashboard.legendDone')}
             </span>
             <span className="inline-flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-brand-200" />
+              <span className="h-2.5 w-2.5 rounded-full bg-brand-500/25" />
               {t('dashboard.legendPlanned')}
             </span>
           </div>
@@ -470,9 +490,9 @@ export function DashboardPage() {
       )}
 
       {(showReview || showFinance) && (
-      <section className="grid gap-4 xl:grid-cols-2">
+      <section className="grid gap-5 xl:grid-cols-2">
         {showReview ? (
-        <article className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base font-semibold text-ink">{t('dashboard.recentTitle')}</h2>
             <Link to="/materials" className="text-sm font-medium text-brand-500 no-underline">
@@ -525,7 +545,7 @@ export function DashboardPage() {
         ) : null}
 
         {showFinance ? (
-        <article className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base font-semibold text-ink">{t('dashboard.financeTitle')}</h2>
             <Link to="/finance" className="text-sm font-medium text-brand-500 no-underline">

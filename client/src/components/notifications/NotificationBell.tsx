@@ -12,6 +12,18 @@ const PANEL_MARGIN = 12;
 const PANEL_DESKTOP_WIDTH = 352;
 const PANEL_MOBILE_MAX = 767;
 
+/** Sidebar bell, at the bottom right of the screen: the panel opens to its left and upwards. */
+function sidePanelBox(button: DOMRect): CSSProperties {
+  const { clientWidth, clientHeight } = document.documentElement;
+  return {
+    position: 'fixed',
+    right: Math.round(clientWidth - button.left + 12),
+    bottom: Math.max(PANEL_MARGIN, Math.round(clientHeight - button.bottom)),
+    width: PANEL_DESKTOP_WIDTH,
+    maxHeight: clientHeight - PANEL_MARGIN * 2,
+  };
+}
+
 function panelBox(button: DOMRect): CSSProperties {
   const top = Math.round(button.bottom + 8);
   const maxHeight = Math.max(160, window.innerHeight - top - PANEL_MARGIN);
@@ -71,7 +83,7 @@ function ReminderRows({
   );
 }
 
-export function NotificationBell() {
+export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' | 'left' }) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
@@ -108,7 +120,8 @@ export function NotificationBell() {
     const place = () => {
       const button = rootRef.current?.querySelector('button');
       if (!button) return;
-      setPanelStyle(panelBox(button.getBoundingClientRect()));
+      const rect = button.getBoundingClientRect();
+      setPanelStyle(panelSide === 'left' ? sidePanelBox(rect) : panelBox(rect));
     };
 
     place();
@@ -118,7 +131,7 @@ export function NotificationBell() {
       window.removeEventListener('resize', place);
       window.removeEventListener('scroll', place, true);
     };
-  }, [open]);
+  }, [open, panelSide]);
 
   useEffect(() => {
     if (!open) return;
