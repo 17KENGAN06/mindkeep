@@ -1178,10 +1178,10 @@ html[data-theme='light'] .ambient-aurora-b {
    by rendering inside .dash-shell; add .dash-card to a card that holds no fixed-position child. */
 :root {
   --dash-sidebar: 15.5rem;
-  --dash-veil-top: rgb(5 12 8 / 0.22);
-  --dash-veil-mid: rgb(5 12 8 / 0.6);
-  --dash-veil-end: rgb(5 12 8 / 0.86);
-  --dash-card-alpha: 70%;
+  --dash-veil-top: rgb(5 12 8 / 0.06);
+  --dash-veil-mid: rgb(5 12 8 / 0.46);
+  --dash-veil-end: rgb(5 12 8 / 0.84);
+  --dash-card-alpha: 66%;
   --dash-sidebar-bg: rgb(7 16 11 / 0.66);
   --dash-card-shadow: 0 24px 48px -32px rgb(0 0 0 / 0.75);
 }
@@ -1204,9 +1204,12 @@ body:has(.dash-shell) .ambient-backdrop {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  /* Wider than the screen and lifted, so the peaks land in the open band above the cards. */
+  --dash-photo: max(118vw, 160dvh);
   background:
-    linear-gradient(180deg, var(--dash-veil-top), var(--dash-veil-mid) 34%, var(--dash-veil-end) 72%),
-    url('./assets/forest-canopy.webp') 60% 38% / cover no-repeat;
+    linear-gradient(180deg, var(--dash-veil-top), var(--dash-veil-mid) 30%, var(--dash-veil-end) 66%),
+    url('./assets/mountain-lake.webp') 50% calc(var(--dash-photo) * -0.07) / var(--dash-photo) auto no-repeat,
+    var(--app-surface);
 }
 
 @media (min-width: 1200px) {
@@ -1230,7 +1233,24 @@ body:has(.dash-shell) .ambient-backdrop {
 }
 
 .dash-card {
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px) saturate(1.1);
+}
+
+.dash-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--app-ink);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Tall screens: frame the peaks instead of the middle of the wide picture. */
+@media (max-width: 767px) {
+  .dash-forest {
+    background-position: 0 0, 34% calc(var(--dash-photo) * -0.07);
+  }
 }
 
 .dash-main .dash-card:hover {
@@ -1239,4 +1259,9 @@ body:has(.dash-shell) .ambient-backdrop {
 
 html[data-theme='light'] .dash-sidebar a.bg-brand-500 {
   color: #f2faf5;
+}
+
+/* The greeting sits on the picture; light snow must not swallow the date. */
+html[data-theme='dark'] .dash-greeting {
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.75);
 }

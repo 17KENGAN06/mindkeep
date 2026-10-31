@@ -1,5 +1,19 @@
-﻿import { BookOpen, Check, CheckCircle2, Flag, GraduationCap, Repeat } from 'lucide-react';
-import { useMemo, useState, type ReactNode } from 'react';
+﻿import {
+  BookOpen,
+  CalendarCheck,
+  CalendarDays,
+  ChartColumn,
+  Check,
+  CheckCircle2,
+  Droplets,
+  Flag,
+  Flame,
+  GraduationCap,
+  Repeat,
+  Utensils,
+  Wallet,
+} from 'lucide-react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PlanChip } from '@/components/billing/PlanChip';
@@ -40,6 +54,67 @@ type WeekTab = 'tasks' | 'reviews';
 function clampPercent(value: number): number {
   if (!Number.isFinite(value) || value <= 0) return 0;
   return Math.min(100, Math.round(value));
+}
+
+const GAUGE_RADIUS = 62;
+const GAUGE_LENGTH = 2 * Math.PI * GAUGE_RADIUS;
+/** The ring is open at the bottom: three quarters of a circle. */
+const GAUGE_ARC = GAUGE_LENGTH * 0.75;
+
+function CalorieGauge({
+  value,
+  goal,
+  unit,
+  over,
+}: {
+  value: number;
+  goal: number;
+  unit: string;
+  over: boolean;
+}) {
+  const gradientId = useId();
+  const share = Math.min(1, value / Math.max(goal, 1));
+  const ring = {
+    cx: 80,
+    cy: 80,
+    r: GAUGE_RADIUS,
+    fill: 'none',
+    strokeWidth: 9,
+    strokeLinecap: 'round',
+    transform: 'rotate(135 80 80)',
+  } as const;
+
+  return (
+    <div className="relative h-40 w-40 shrink-0">
+      <svg viewBox="0 0 160 160" className="h-full w-full" aria-hidden>
+        <defs>
+          <linearGradient id={gradientId} x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stopColor="var(--app-brand-700)" />
+            <stop offset="1" stopColor="var(--app-brand-500)" />
+          </linearGradient>
+        </defs>
+        <circle
+          {...ring}
+          stroke="color-mix(in oklab, var(--app-line) 75%, transparent)"
+          strokeDasharray={`${GAUGE_ARC} ${GAUGE_LENGTH}`}
+        />
+        {value > 0 ? (
+          <circle
+            {...ring}
+            stroke={over ? '#ef4444' : `url(#${gradientId})`}
+            strokeDasharray={`${GAUGE_ARC * share} ${GAUGE_LENGTH}`}
+          />
+        ) : null}
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center pb-1">
+        <Flame className="h-4 w-4 text-brand-500" aria-hidden />
+        <p className="mt-1 text-lg leading-tight font-semibold tabular-nums text-ink">
+          {value} <span className="text-muted">/</span> {goal}
+        </p>
+        <p className="text-xs text-muted">{unit}</p>
+      </div>
+    </div>
+  );
 }
 
 function TodayProgressRow({
@@ -205,23 +280,26 @@ export function DashboardPage() {
   };
 
   return (
-    <div className="min-w-0 space-y-6">
+    <div className="min-w-0 space-y-4 sm:space-y-5">
       <TimezoneSuggestion />
-      <section className="pt-2 sm:pt-6">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <h1 className="min-w-0 max-w-full truncate text-3xl font-semibold tracking-tight text-ink sm:text-[2.6rem]">
+      <section className="dash-greeting pb-[clamp(0.5rem,9vh,5.5rem)]">
+        <p className="inline-flex items-center gap-2 text-xs font-medium text-ink/80">
+          <CalendarDays className="h-3.5 w-3.5" aria-hidden />
+          {formatDate(today, language)}
+        </p>
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <h1 className="min-w-0 max-w-full truncate text-xl font-semibold tracking-tight text-ink sm:text-2xl">
             {t('dashboard.welcome', { name: firstName(user?.name) })}
           </h1>
           <PlanChip user={user} />
         </div>
-        <p className="mt-2 text-sm text-muted">{formatDate(today, language)}</p>
       </section>
 
-      <div className="grid min-w-0 gap-5 2xl:grid-cols-12">
+      <div className="grid min-w-0 gap-4 sm:gap-5 min-[1400px]:grid-cols-12">
       {(showTasks || showReview || showHabits) && (
       <section
         className={`dash-card rounded-3xl bg-panel px-4 py-4 shadow-sm ring-1 ring-line sm:px-5 ${
-          showNutrition ? '2xl:col-span-5' : '2xl:col-span-12'
+          showNutrition ? 'min-[1400px]:col-span-5' : 'min-[1400px]:col-span-12'
         }`}
       >
         <div className="divide-y divide-line/80">
@@ -262,35 +340,47 @@ export function DashboardPage() {
 
       {showNutrition ? (
       <section
-        className={`dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line ${
-          showTasks || showReview || showHabits ? '2xl:col-span-7' : '2xl:col-span-12'
+        className={`dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5 ${
+          showTasks || showReview || showHabits ? 'min-[1400px]:col-span-7' : 'min-[1400px]:col-span-12'
         }`}
       >
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-base font-semibold text-ink">{t('dashboard.fuelTitle')}</h2>
+            <h2 className="dash-title"><Utensils className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
+              {t('dashboard.fuelTitle')}</h2>
             {overeating ? <Badge tone="danger">{t('calories.overeating')}</Badge> : null}
           </div>
           <Link to="/nutrition" className="text-sm font-medium text-brand-500 no-underline">
             {t('dashboard.allFuel')} →
           </Link>
         </div>
-        <div className="mt-4 grid gap-5 lg:grid-cols-2">
-          <div>
-            <p className="text-sm text-muted">
-              {todayCalories} / {calorieGoal} {t('calories.kcal')}
+        <div className="mt-3 grid items-center gap-x-6 gap-y-4 sm:grid-cols-[auto_minmax(0,1fr)]">
+          <div className="justify-self-center">
+            <CalorieGauge
+              value={todayCalories}
+              goal={calorieGoal}
+              unit={t('calories.kcal')}
+              over={overeating}
+            />
+          </div>
+          <div className="min-w-0 space-y-3 sm:border-l sm:border-line/50 sm:pl-6">
+            <p className="flex items-center gap-2 text-sm text-ink">
+              <Droplets className="h-4 w-4 shrink-0 text-brand-500" aria-hidden />
+              {todayWater} / {waterGoal} {t('calories.glasses')}
             </p>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-line/70">
-              <div
-                className={`h-full rounded-full ${overeating ? 'bg-red-500' : 'bg-gradient-to-r from-brand-700 to-brand-500'}`}
-                style={{
-                  width: `${Math.min(100, Math.round((todayCalories / Math.max(calorieGoal, 1)) * 100))}%`,
-                }}
-              />
-            </div>
-            <ul className="mt-4 space-y-2">
+            <WaterGlasses
+              variant="round"
+              glasses={todayWater}
+              goal={waterGoal}
+              disabled={setWater.isPending}
+              onChange={(glasses) => {
+                void setWater.mutateAsync({ date: today, glasses });
+              }}
+            />
+            <ul className="space-y-1.5">
               {todayMeals.length === 0 ? (
-                <li className="rounded-xl border border-dashed border-line/70 px-4 py-3.5 text-center text-sm text-muted">
+                <li className="flex items-center justify-center gap-2 rounded-xl border border-dashed border-line/70 px-3 py-2.5 text-sm text-muted">
+                  <Utensils className="h-4 w-4 shrink-0" aria-hidden />
                   {t('dashboard.noMealsToday')}
                 </li>
               ) : (
@@ -305,30 +395,18 @@ export function DashboardPage() {
               )}
             </ul>
           </div>
-          <div>
-            <p className="mb-3 text-sm text-muted">
-              {todayWater} / {waterGoal} {t('calories.glasses')}
-            </p>
-            <WaterGlasses
-              glasses={todayWater}
-              goal={waterGoal}
-              disabled={setWater.isPending}
-              onChange={(glasses) => {
-                void setWater.mutateAsync({ date: today, glasses });
-              }}
-            />
-          </div>
         </div>
       </section>
       ) : null}
       </div>
 
       {(showTasks || showReview) && (
-      <section className="grid min-w-0 gap-5 xl:grid-cols-2">
+      <section className="grid min-w-0 gap-4 sm:gap-5 lg:grid-cols-2">
         {showTasks ? (
-        <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
-            <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.upcomingTasks')}</h2>
+            <h2 className="min-w-0 dash-title"><CalendarCheck className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
+              {t('dashboard.upcomingTasks')}</h2>
             <Link to="/tasks" className="shrink-0 text-sm font-medium text-brand-500 no-underline">
               {t('dashboard.allTasks')} →
             </Link>
@@ -405,7 +483,7 @@ export function DashboardPage() {
                     }`}
                   >
                     <Flag className={`h-3.5 w-3.5 ${task.important ? 'fill-current' : ''}`} aria-hidden />
-                    <span className="text-[11px] font-bold tracking-wide whitespace-nowrap">
+                    <span className="hidden text-[11px] font-bold tracking-wide whitespace-nowrap sm:inline">
                       {t('tasks.important')}
                     </span>
                   </button>
@@ -417,9 +495,10 @@ export function DashboardPage() {
         ) : null}
 
         {(showTasks || showReview) && (
-        <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
-            <h2 className="min-w-0 text-base font-semibold text-ink">{t('dashboard.weekTitle')}</h2>
+            <h2 className="min-w-0 dash-title"><ChartColumn className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
+              {t('dashboard.weekTitle')}</h2>
             {showTasks && showReview ? (
             <div className="flex flex-wrap gap-0.5 rounded-full bg-brand-500/[0.07] p-1 ring-1 ring-line/50">
               {(
@@ -490,11 +569,12 @@ export function DashboardPage() {
       )}
 
       {(showReview || showFinance) && (
-      <section className="grid gap-5 xl:grid-cols-2">
+      <section className="grid min-w-0 gap-4 sm:gap-5 lg:grid-cols-2">
         {showReview ? (
-        <article className="dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-base font-semibold text-ink">{t('dashboard.recentTitle')}</h2>
+            <h2 className="dash-title"><BookOpen className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
+              {t('dashboard.recentTitle')}</h2>
             <Link to="/materials" className="text-sm font-medium text-brand-500 no-underline">
               {t('dashboard.viewAllMaterials')} →
             </Link>
@@ -545,9 +625,10 @@ export function DashboardPage() {
         ) : null}
 
         {showFinance ? (
-        <article className="dash-card rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
+        <article className="dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-base font-semibold text-ink">{t('dashboard.financeTitle')}</h2>
+            <h2 className="dash-title"><Wallet className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
+              {t('dashboard.financeTitle')}</h2>
             <Link to="/finance" className="text-sm font-medium text-brand-500 no-underline">
               {t('dashboard.allFinance')} →
             </Link>
