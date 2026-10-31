@@ -10,13 +10,11 @@ import { PlansCta } from '@/components/layout/PlansCta';
 import { PAGE_SHELL_Y } from '@/config/layout';
 import { dashboardNav } from '@/config/dashboardNav';
 import { useAuth } from '@/features/auth/useAuth';
-import { useSmoothWheel } from '@/hooks/useSmoothWheel';
 
 export function DashboardLayout() {
   const { logout, user } = useAuth();
   const location = useLocation();
   const isAdmin = user?.role === 'ADMIN';
-  useSmoothWheel(location.pathname);
 
   return (
     <div className="dash-shell flex min-h-dvh flex-col overflow-x-clip">

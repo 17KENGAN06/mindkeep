@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-/** How fast the page catches up with the wheel: a smaller value feels heavier. */
-const CATCH_UP_MS = 110;
-/** Trackpads send small deltas and already glide; only mouse wheel notches are smoothed. */
-const MIN_WHEEL_DELTA = 40;
+/** How fast the page catches up with the wheel: a larger value feels heavier. */
+const CATCH_UP_MS = 170;
+/** Trackpads send tiny deltas and already glide; anything larger is a wheel notch. */
+const MIN_WHEEL_DELTA = 16;
 
 function scrollsOnItsOwn(target: EventTarget | null): boolean {
   let node = target instanceof Element ? target : null;
@@ -17,11 +17,13 @@ function scrollsOnItsOwn(target: EventTarget | null): boolean {
   return false;
 }
 
-/** Page scroll with a soft inertia on the mouse wheel. Everything else stays native. */
+/**
+ * Page scroll with a soft inertia on the mouse wheel. Everything else stays native; the home
+ * page's snap sections scroll inside their own element, so they are left alone too.
+ */
 export function useSmoothWheel(resetKey: string) {
   useEffect(() => {
     if (!window.matchMedia('(pointer: fine)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let frame = 0;
     let target = window.scrollY;

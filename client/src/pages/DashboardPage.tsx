@@ -139,7 +139,7 @@ function TodayProgressRow({
           <p className="truncate text-sm text-muted">{title}</p>
           <p className="shrink-0 text-sm font-semibold tabular-nums text-ink">{valueText}</p>
         </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/60">
+        <div className="mt-2 h-1 overflow-hidden rounded-full bg-line">
           <div
             className="h-full rounded-full bg-gradient-to-r from-brand-700 to-brand-500 transition-all"
             style={{ width: `${safe}%` }}
@@ -587,14 +587,14 @@ export function DashboardPage() {
               />
             </div>
           ) : (
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3 space-y-1">
               {recentMaterials.slice(0, 4).map((material, index) => {
                 const progress = material.status === 'ARCHIVED' ? 100 : 28 + ((index * 17) % 55);
                 return (
                   <li key={material.id}>
                     <Link
                       to={`/materials/${material.id}`}
-                      className="flex items-center gap-3 rounded-2xl bg-brand-50/30 px-3 py-3 no-underline ring-1 ring-line/70 transition hover:ring-brand-400"
+                      className="flex items-center gap-3 rounded-xl px-2 py-2 no-underline transition hover:bg-brand-500/[0.06]"
                     >
                       <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/15 text-brand-500">
                         <BookOpen className="h-4 w-4" aria-hidden />
@@ -605,9 +605,9 @@ export function DashboardPage() {
                           {material.category?.name ?? t('materials.fields.noCategory')} ·{' '}
                           {formatDate(material.learnedAt, language)}
                         </p>
-                        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-line/70">
+                        <div className="mt-2 h-1 overflow-hidden rounded-full bg-line">
                           <div
-                            className="h-full rounded-full bg-brand-500"
+                            className="h-full rounded-full bg-gradient-to-r from-brand-700 to-brand-500"
                             style={{ width: `${progress}%` }}
                           />
                         </div>
@@ -635,7 +635,12 @@ export function DashboardPage() {
           </div>
 
           {currencyBuckets.length === 0 ? (
-            <p className="mt-8 text-center text-sm text-muted">{t('dashboard.modules.noFinance')}</p>
+            <div className="flex flex-col items-center gap-3 py-8 text-center">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-muted ring-1 ring-line">
+                <Wallet className="h-5 w-5" aria-hidden />
+              </span>
+              <p className="text-sm text-muted">{t('dashboard.modules.noFinance')}</p>
+            </div>
           ) : (
             <ul className="mt-4 space-y-3">
               {currencyBuckets.map((bucket) => (

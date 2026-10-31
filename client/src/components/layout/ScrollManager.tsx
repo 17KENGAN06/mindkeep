@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSmoothWheel } from '@/hooks/useSmoothWheel';
 
 function resetWindowScroll() {
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -30,6 +31,7 @@ function scrollToHash(hash: string) {
  */
 export function ScrollManager() {
   const location = useLocation();
+  useSmoothWheel(location.pathname);
 
   useLayoutEffect(() => {
     if ('scrollRestoration' in window.history) {
