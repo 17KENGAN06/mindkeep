@@ -1,7 +1,7 @@
 /** Soft moving light + floating particles across the whole app (desktop-forward). */
 export function AmbientBackdrop() {
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    <div aria-hidden className="ambient-backdrop pointer-events-none fixed inset-0 z-0 overflow-hidden">
       <div className="ambient-orb-a absolute -top-[20%] -left-[10%] h-[55vmax] w-[55vmax] rounded-full bg-[radial-gradient(circle,var(--app-accent-soft),transparent_68%)] blur-2xl" />
       <div className="ambient-orb-b absolute top-[30%] -right-[15%] h-[45vmax] w-[45vmax] rounded-full bg-[radial-gradient(circle,var(--app-orb-mid),transparent_70%)] blur-2xl" />
       <div className="ambient-orb-c absolute -bottom-[25%] left-[20%] h-[50vmax] w-[50vmax] rounded-full bg-[radial-gradient(circle,var(--app-orb-bright),transparent_65%)] blur-3xl" />

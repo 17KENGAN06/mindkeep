@@ -131,7 +131,7 @@ function SectionDots({
               {showSideLabels ? (
                 <span
                   className={`pointer-events-none absolute right-[calc(100%+0.55rem)] font-display text-[10px] tracking-[0.18em] whitespace-nowrap text-muted uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
-                    active ? 'text-brand-500 opacity-100' : ''
+                    active ? 'text-brand-500' : ''
                   }`}
                 >
                   {labels[index]}

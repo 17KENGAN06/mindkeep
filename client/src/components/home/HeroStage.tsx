@@ -59,14 +59,10 @@ export function HeroStage() {
 
       {/* Desktop floating stage */}
       <div className="relative mx-auto hidden h-full min-h-[30rem] w-full max-w-none xl:block">
-        <div
-          aria-hidden
-          className="absolute inset-0 rounded-[2.5rem] bg-[radial-gradient(circle_at_30%_20%,var(--app-accent-soft),transparent_55%),linear-gradient(160deg,var(--app-brand-50),transparent_70%)]"
-        />
-        <div aria-hidden className="absolute -inset-6 rounded-[3rem] bg-brand-500/10 blur-3xl" />
+        <div aria-hidden className="home-halo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
 
         <motion.div
-          className="absolute top-[8%] left-[6%] z-20 w-[72%] rounded-[1.5rem] border border-line/80 bg-panel/90 p-4 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.55)] backdrop-blur-md"
+          className="absolute top-[8%] left-[6%] z-20 home-card home-float-card w-[72%] rounded-[1.5rem] border border-line/80 bg-panel/90 p-4 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.55)] backdrop-blur-md"
           initial={reduceMotion ? false : { opacity: 0, y: 28, rotate: -2 }}
           animate={
             reduceMotion
@@ -100,7 +96,7 @@ export function HeroStage() {
         </motion.div>
 
         <motion.div
-          className="absolute top-[38%] right-[2%] z-30 w-[68%] rounded-[1.5rem] border border-line/80 bg-panel/95 p-4 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.6)] backdrop-blur-md"
+          className="absolute top-[38%] right-[2%] z-30 home-card home-float-card w-[68%] rounded-[1.5rem] border border-line/80 bg-panel/95 p-4 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.6)] backdrop-blur-md"
           initial={reduceMotion ? false : { opacity: 0, y: 32, rotate: 3 }}
           animate={
             reduceMotion
@@ -130,7 +126,7 @@ export function HeroStage() {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-[6%] left-[14%] z-10 w-[62%] rounded-[1.5rem] border border-line/80 bg-panel/90 p-4 shadow-[0_18px_50px_-26px_rgba(0,0,0,0.5)] backdrop-blur-md"
+          className="absolute bottom-[6%] left-[14%] z-10 home-card home-float-card w-[62%] rounded-[1.5rem] border border-line/80 bg-panel/90 p-4 shadow-[0_18px_50px_-26px_rgba(0,0,0,0.5)] backdrop-blur-md"
           initial={reduceMotion ? false : { opacity: 0, y: 24, rotate: -1.5 }}
           animate={
             reduceMotion

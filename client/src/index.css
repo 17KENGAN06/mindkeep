@@ -1072,3 +1072,104 @@ html[data-theme='light'] .ambient-aurora-b {
   color: var(--app-ink);
 }
 
+
+/* Home page, tablet and desktop: its own atmosphere, the app's other pages keep theirs. */
+.home-atmosphere {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  body:has(.home-snap-root) .ambient-backdrop {
+    z-index: -1;
+  }
+
+  body:has(.home-snap-root) .ambient-backdrop > :not(.ambient-noise) {
+    display: none;
+  }
+
+  .home-atmosphere {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+      radial-gradient(52% 58% at 80% 8%, color-mix(in oklab, var(--app-accent) 17%, transparent), transparent 72%),
+      radial-gradient(44% 50% at 4% 100%, color-mix(in oklab, var(--app-accent) 10%, transparent), transparent 74%);
+  }
+
+  /* Topographic lines, fading out towards the copy on the left. */
+  .home-atmosphere::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--app-accent);
+    opacity: 0.13;
+    mask-image:
+      url('./assets/backdrop-contours.svg'),
+      radial-gradient(85% 95% at 88% 30%, #000 18%, transparent 78%);
+    mask-size: cover, 100% 100%;
+    mask-position: center;
+    mask-composite: intersect;
+  }
+
+  .home-snap-root .hero-glow {
+    display: none;
+  }
+
+  .home-snap-root .home-snap-section {
+    border-image: linear-gradient(90deg, transparent, var(--app-line) 30%, var(--app-line) 70%, transparent) 1;
+  }
+
+  .home-snap-root h1,
+  .home-snap-root h2 {
+    background: linear-gradient(180deg, var(--app-ink) 45%, color-mix(in oklab, var(--app-ink) 70%, var(--app-accent)));
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 0.08em;
+  }
+
+  /* One card language for the page: lit from above, soft shadow, hairline edge. */
+  .home-snap-root .home-card,
+  #pricing article:not(.border-2) {
+    border: 1px solid color-mix(in oklab, var(--app-accent) 16%, var(--app-line));
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--app-panel) 94%, var(--app-accent)),
+      var(--app-panel) 62%
+    );
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, var(--app-ink) 10%, transparent),
+      0 28px 56px -32px rgb(0 0 0 / 0.55);
+    transition:
+      border-color 250ms ease,
+      box-shadow 250ms ease,
+      translate 250ms ease;
+  }
+
+  .home-snap-root article.home-card:hover,
+  #pricing article:not(.border-2):hover {
+    border-color: color-mix(in oklab, var(--app-accent) 45%, var(--app-line));
+    translate: 0 -3px;
+  }
+
+  .home-snap-root .home-card-icon {
+    background: linear-gradient(150deg, color-mix(in oklab, var(--app-accent) 30%, transparent), transparent);
+  }
+
+  /* Rings behind the hero cards: the 3 · 7 · 30 return, drawn as orbits. */
+  .home-halo {
+    width: min(38rem, 112%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(closest-side, color-mix(in oklab, var(--app-accent) 15%, transparent), transparent 70%),
+      repeating-radial-gradient(
+        closest-side,
+        transparent 0 calc(33.33% - 1px),
+        color-mix(in oklab, var(--app-accent) 16%, transparent) calc(33.33% - 1px) 33.33%
+      );
+    mask-image: radial-gradient(closest-side, #000 72%, transparent);
+  }
+}

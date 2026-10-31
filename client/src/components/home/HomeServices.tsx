@@ -29,13 +29,13 @@ export function HomeServices() {
         </p>
       </SnapReveal>
 
-      <div className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-3">
+      <div className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-4">
         {SERVICES.map((item, index) => {
           const Icon = item.icon;
           return (
             <SnapReveal key={item.key} direction="scale" delay={0.08 + index * 0.05}>
-              <article className="glass-panel group flex h-full items-start gap-4 rounded-[1.35rem] p-4 sm:p-5">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-500 ring-1 ring-brand-500/20">
+              <article className="glass-panel home-card group flex h-full items-start gap-4 rounded-[1.35rem] p-4 sm:p-5 xl:p-6">
+                <span className="home-card-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-500 ring-1 ring-brand-500/20">
                   <Icon className="h-5 w-5" aria-hidden />
                 </span>
                 <div className="min-w-0">

@@ -34,6 +34,7 @@ export function HomePage() {
 
   return (
     <div className="home-snap-root relative min-h-dvh">
+      <div aria-hidden className="home-atmosphere" />
       <SectionNav
         sectionIds={sectionIds}
         labels={labels}
