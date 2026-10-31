@@ -1268,3 +1268,10 @@ html[data-theme='light'] .dash-sidebar a.bg-brand-500 {
     background-position: 62% 0;
   }
 }
+
+/* Tablets and up: open sky above the overview's cards, the aurora sits in this band. */
+@media (min-width: 768px) {
+  .dash-hero {
+    min-height: clamp(5.5rem, 10.5vw, 13rem);
+  }
+}

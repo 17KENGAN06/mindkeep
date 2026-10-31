@@ -282,7 +282,7 @@ export function DashboardPage() {
   return (
     <div className="min-w-0 space-y-4 sm:space-y-5">
       <TimezoneSuggestion />
-      <section className="pb-1">
+      <section className="dash-hero pb-1">
         <p className="inline-flex items-center gap-2 text-xs font-medium text-ink/80">
           <CalendarDays className="h-3.5 w-3.5" aria-hidden />
           {formatDate(today, language)}
