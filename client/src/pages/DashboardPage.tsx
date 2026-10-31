@@ -107,7 +107,7 @@ function CalorieGauge({
         ) : null}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center pb-1">
-        <Flame className="h-4 w-4 text-brand-500" aria-hidden />
+        <Flame className="h-4 w-4 text-muted" aria-hidden />
         <p className="mt-1 text-lg leading-tight font-semibold tabular-nums text-ink">
           {value} <span className="text-muted">/</span> {goal}
         </p>
@@ -131,7 +131,7 @@ function TodayProgressRow({
   const safe = clampPercent(percent);
   return (
     <div className="flex items-center gap-3.5 py-3.5 first:pt-0 last:pb-0">
-      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/[0.12] text-brand-500 ring-1 ring-brand-500/20">
+      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-muted ring-1 ring-line">
         {icon}
       </div>
       <div className="min-w-0 flex-1">
@@ -141,12 +141,12 @@ function TodayProgressRow({
         </div>
         <div className="mt-2 h-1 overflow-hidden rounded-full bg-line">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-brand-700 to-brand-500 transition-all"
+            className="h-full rounded-full bg-brand-500 transition-all"
             style={{ width: `${safe}%` }}
           />
         </div>
       </div>
-      <p className="w-11 shrink-0 text-right text-sm font-semibold tabular-nums text-brand-500">{safe}%</p>
+      <p className="w-11 shrink-0 text-right text-sm font-semibold tabular-nums text-ink">{safe}%</p>
     </div>
   );
 }
@@ -282,13 +282,13 @@ export function DashboardPage() {
   return (
     <div className="min-w-0 space-y-4 sm:space-y-5">
       <TimezoneSuggestion />
-      <section className="dash-hero pb-1">
-        <p className="inline-flex items-center gap-2 text-xs font-medium text-ink/80">
+      <section className="pb-1">
+        <p className="inline-flex items-center gap-2 text-xs font-medium text-muted">
           <CalendarDays className="h-3.5 w-3.5" aria-hidden />
           {formatDate(today, language)}
         </p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
-          <h1 className="min-w-0 max-w-full truncate text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+          <h1 className="min-w-0 max-w-full truncate text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
             {t('dashboard.welcome', { name: firstName(user?.name) })}
           </h1>
           <PlanChip user={user} />
@@ -365,7 +365,7 @@ export function DashboardPage() {
           </div>
           <div className="min-w-0 space-y-3 sm:border-l sm:border-line/50 sm:pl-6">
             <p className="flex items-center gap-2 text-sm text-ink">
-              <Droplets className="h-4 w-4 shrink-0 text-brand-500" aria-hidden />
+              <Droplets className="h-4 w-4 shrink-0 text-muted" aria-hidden />
               {todayWater} / {waterGoal} {t('calories.glasses')}
             </p>
             <WaterGlasses
@@ -539,7 +539,7 @@ export function DashboardPage() {
                       style={{ height: plannedHeight }}
                     />
                     <div
-                      className="relative w-[64%] max-w-9 rounded-t-md rounded-b-sm bg-gradient-to-t from-brand-700 to-brand-500"
+                      className="relative w-[64%] max-w-9 rounded-t-md rounded-b-sm bg-brand-500"
                       style={{ height: doneHeight }}
                     />
                   </div>
@@ -596,7 +596,7 @@ export function DashboardPage() {
                       to={`/materials/${material.id}`}
                       className="flex items-center gap-3 rounded-xl px-2 py-2 no-underline transition hover:bg-brand-500/[0.06]"
                     >
-                      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/15 text-brand-500">
+                      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-muted ring-1 ring-line">
                         <BookOpen className="h-4 w-4" aria-hidden />
                       </div>
                       <div className="min-w-0 flex-1">
@@ -607,12 +607,12 @@ export function DashboardPage() {
                         </p>
                         <div className="mt-2 h-1 overflow-hidden rounded-full bg-line">
                           <div
-                            className="h-full rounded-full bg-gradient-to-r from-brand-700 to-brand-500"
+                            className="h-full rounded-full bg-brand-500"
                             style={{ width: `${progress}%` }}
                           />
                         </div>
                       </div>
-                      <span className="shrink-0 text-xs font-semibold text-brand-500">
+                      <span className="shrink-0 text-xs font-semibold tabular-nums text-muted">
                         {progress}%
                       </span>
                     </Link>

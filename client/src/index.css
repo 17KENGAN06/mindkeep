@@ -1174,33 +1174,24 @@ html[data-theme='light'] .ambient-aurora-b {
   }
 }
 
-/* Dashboard design system: a static cinematic backdrop, dark glass cards, a right sidebar.
-   Pages join by rendering inside .dash-shell; add .dash-card to a card with no fixed-position child. */
+/* Dashboard design system: near-neutral dark surfaces, a hairline edge, colour only where it
+   means something. Pages join by rendering inside .dash-shell. */
 :root {
   --dash-sidebar: 15.5rem;
-  --dash-card-alpha: 72%;
-  --dash-sidebar-bg: rgb(8 13 15 / 0.74);
-  --dash-card-shadow: 0 20px 40px -28px rgb(0 0 0 / 0.8);
-}
-
-html[data-theme='light'] {
-  --dash-card-alpha: 90%;
-  --dash-sidebar-bg: rgb(232 238 234 / 0.82);
-  --dash-card-shadow: 0 20px 40px -32px rgb(36 48 41 / 0.4);
 }
 
 html[data-theme='dark']:has(.dash-shell) {
-  --app-surface: #080d0f;
-  --app-panel: #10191b;
+  --app-surface: #090c0e;
+  --app-panel: #11161a;
   --app-ink: #f5f7f6;
-  --app-muted: #95a5a1;
+  --app-muted: #8f9a9c;
   --app-line: rgb(255 255 255 / 0.08);
   --app-accent: #82f0be;
-  --app-accent-soft: rgb(130 240 190 / 0.2);
-  --app-brand-50: #162225;
-  --app-brand-100: #1b2d2c;
-  --app-brand-200: #29473f;
-  --app-brand-300: #3d7a62;
+  --app-accent-soft: rgb(130 240 190 / 0.16);
+  --app-brand-50: #1a2024;
+  --app-brand-100: #1d2a29;
+  --app-brand-200: #2a3b38;
+  --app-brand-300: #3d6f5c;
   --app-brand-400: #5fdba3;
   --app-brand-500: #82f0be;
   --app-brand-600: #6ee0ac;
@@ -1211,17 +1202,19 @@ body:has(.dash-shell) .ambient-backdrop {
   display: none;
 }
 
+/* One quiet light from above; the page itself stays neutral. */
 .dash-backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  /* Photo: NASA, International Space Station, iss073e0246858 (public domain). */
-  background: var(--app-surface) url('./assets/dashboard-aurora.webp') 50% 0 / cover no-repeat;
+  background:
+    radial-gradient(70% 460px at 42% -200px, rgb(255 255 255 / 0.06), transparent),
+    var(--app-surface);
 }
 
 html[data-theme='light'] .dash-backdrop {
-  background: linear-gradient(160deg, #e3eae6, #d7e2dc 46%, #e6ece8);
+  background: var(--app-surface);
 }
 
 @media (min-width: 1200px) {
@@ -1232,46 +1225,46 @@ html[data-theme='light'] .dash-backdrop {
 
 .dash-sidebar {
   border-left: 1px solid var(--app-line);
-  background: var(--dash-sidebar-bg);
-  backdrop-filter: blur(20px);
+  background: var(--app-surface);
 }
 
-/* Cards in the content area; dialogs are not sections, so they stay fully opaque. */
+/* Cards in the content area; a brighter top edge gives the surface its thickness. */
 .dash-main :is(section, article).rounded-3xl.bg-panel {
-  border-radius: 18px;
-  background-color: color-mix(in oklab, var(--app-panel) var(--dash-card-alpha), transparent);
+  border-radius: 16px;
   --tw-ring-color: var(--app-line);
-  --tw-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), var(--dash-card-shadow);
+  --tw-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 12px 32px -20px rgb(0 0 0 / 0.7);
 }
 
-.dash-card {
-  backdrop-filter: blur(14px);
+html[data-theme='light'] .dash-main :is(section, article).rounded-3xl.bg-panel {
+  --tw-shadow: 0 12px 32px -24px rgb(36 48 41 / 0.35);
 }
 
 .dash-title {
   display: flex;
   min-width: 0;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   color: var(--app-ink);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
+.dash-title svg {
+  color: var(--app-muted);
+}
+
+/* Secondary links stay quiet until they are pointed at. */
+.dash-card a.text-brand-500.no-underline {
+  color: var(--app-muted);
+  transition: color 150ms ease;
+}
+
+.dash-card a.text-brand-500.no-underline:hover {
+  color: var(--app-ink);
+  text-decoration: none;
+}
+
 html[data-theme='light'] .dash-sidebar a.bg-brand-500 {
   color: #f2faf5;
-}
-
-@media (max-width: 767px) {
-  html[data-theme='dark'] .dash-backdrop {
-    background-position: 62% 0;
-  }
-}
-
-/* Tablets and up: open sky above the overview's cards, the aurora sits in this band. */
-@media (min-width: 768px) {
-  .dash-hero {
-    min-height: clamp(5.5rem, 10.5vw, 13rem);
-  }
 }
