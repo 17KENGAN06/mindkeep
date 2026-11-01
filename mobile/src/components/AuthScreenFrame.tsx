@@ -2,7 +2,6 @@ import { useRef, useState, type ReactNode } from 'react';
 import { BlurTargetView } from 'expo-blur';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AmbientGlow } from './AmbientGlow';
 import { AUTH_HEADER_HEIGHT, AuthHeader } from './AuthHeader';
 import { useTheme } from '../features/theme/useTheme';
 
@@ -20,7 +19,6 @@ export function AuthScreenFrame({ children }: { children: ReactNode }) {
     // Top and bottom edges handled by hand: the page scrolls under the clock and the home bar.
     <SafeAreaView edges={['left', 'right']} style={[styles.root, { backgroundColor: colors.bg }]}>
       <BlurTargetView ref={blurTarget} style={styles.root}>
-        <AmbientGlow />
         <KeyboardAvoidingView
           style={styles.root}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -54,5 +52,5 @@ export function AuthScreenFrame({ children }: { children: ReactNode }) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: { flexGrow: 1, justifyContent: 'center', paddingHorizontal: 16 },
-  card: { borderRadius: 24, borderWidth: 1, paddingHorizontal: 20, paddingVertical: 24 },
+  card: { borderRadius: 16, borderWidth: 1, paddingHorizontal: 20, paddingVertical: 24 },
 });

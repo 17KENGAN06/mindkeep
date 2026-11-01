@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   backdrop: { alignItems: 'center', flex: 1, justifyContent: 'center', padding: 24 },
   card: {
     alignItems: 'center',
-    borderRadius: 28,
+    borderRadius: 16,
     borderWidth: 1,
     gap: 12,
     maxWidth: 420,

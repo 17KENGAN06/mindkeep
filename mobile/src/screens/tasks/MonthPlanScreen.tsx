@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   statLabel: { fontSize: 12, fontFamily: fonts.bold },
   statValue: { fontSize: 24, fontFamily: fonts.display, marginTop: 8 },
   card: {
-    borderRadius: 22,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 16,
   },

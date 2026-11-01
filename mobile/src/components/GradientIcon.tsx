@@ -17,7 +17,7 @@ export function GradientIcon({ name, size = 48 }: GradientIconProps) {
   const id = useId().replace(/:/g, '');
   const radius = Math.round(size * 0.33);
   // Darker end of the gradient: the site's brand-300 (dark) / brand-700 (light).
-  const deep = theme === 'dark' ? '#3f7a5a' : '#274e3e';
+  const deep = theme === 'dark' ? '#2a3b38' : '#075a3f';
   return (
     <View
       style={[

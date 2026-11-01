@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   mailBody: { fontFamily: fonts.regular, fontSize: 13, marginTop: 6 },
   link: { fontFamily: fonts.regular, fontSize: 13, marginTop: 8 },
   card: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     gap: 8,
     padding: 14,

@@ -65,7 +65,6 @@ const FinanceTransactionsPage = lazyNamed(
   () => import('@/pages/finance/FinanceTransactionsPage'),
   'FinanceTransactionsPage',
 );
-const ForestPage = lazyNamed(() => import('@/pages/ForestPage'), 'ForestPage');
 const GuidePage = lazyNamed(() => import('@/pages/GuidePage'), 'GuidePage');
 const OnboardingPage = lazyNamed(() => import('@/pages/OnboardingPage'), 'OnboardingPage');
 const PlansPage = lazyNamed(() => import('@/pages/PlansPage'), 'PlansPage');
@@ -245,14 +244,6 @@ export function AppRoutes() {
               element={
                 <RequireModule module="tasks">
                   <TasksPage />
-                </RequireModule>
-              }
-            />
-            <Route
-              path="/forest"
-              element={
-                <RequireModule module="tasks">
-                  <ForestPage />
                 </RequireModule>
               }
             />

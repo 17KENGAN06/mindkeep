@@ -49,7 +49,6 @@ import type { Meal } from '../types/nutrition';
 import { useAccountToday, useTodayRollover } from '../features/time/useAccountToday';
 import { formatDate } from '../utils/date';
 import { fonts } from '../config/fonts';
-import { AmbientGlow } from '../components/AmbientGlow';
 
 function firstOfMonth(year: number, month: number): string {
   return `${year}-${String(month).padStart(2, '0')}-01`;
@@ -436,7 +435,6 @@ export function FuelScreen() {
   if (periodQuery.isLoading && !periodQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
-        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -446,7 +444,6 @@ export function FuelScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
-      <AmbientGlow />
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <SectionScrollView
           contentInsetAdjustmentBehavior="automatic"
@@ -461,13 +458,13 @@ export function FuelScreen() {
           }
         >
           <Text style={[styles.title, { color: colors.ink }]}>{t('fuel.title')}</Text>
-          <Text style={[styles.subtitle, { color: colors.muted }]}>{t('fuel.subtitle')}</Text>
 
           {periodQuery.isError ? (
             <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
           ) : null}
 
           <MonthGrid
+            compact
             year={year}
             month={month}
             selectedDate={selectedDate}
@@ -485,28 +482,6 @@ export function FuelScreen() {
 
           <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
             <Text style={[styles.cardTitle, { color: colors.ink }]}>{t('fuel.caloriesTitle')}</Text>
-            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.calorieGoal')}</Text>
-            <TextInput
-              keyboardType="number-pad"
-              style={[
-                styles.input,
-                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
-              ]}
-              value={calorieGoalInput}
-              onChangeText={setCalorieGoalInput}
-            />
-            <AppButton
-              label={t('common.save')}
-              loading={updateSettings.isPending}
-              onPress={() => void onSaveCalorieGoal()}
-            />
-            <AppButton
-              variant="secondary"
-              label={t('fuel.helper.open')}
-              onPress={() => setHelperOpen(true)}
-            />
-            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.helper.openHint')}</Text>
-
             <View style={styles.stats}>
               <Stat label={t('fuel.statEaten')} value={`${eaten} ${t('fuel.kcal')}`} />
               <Stat label={t('fuel.statGoal')} value={`${calorieGoal} ${t('fuel.kcal')}`} />
@@ -705,6 +680,28 @@ export function FuelScreen() {
                 </View>
               ))
             )}
+
+            <Text style={[styles.label, { color: colors.muted }]}>{t('fuel.calorieGoal')}</Text>
+            <TextInput
+              keyboardType="number-pad"
+              style={[
+                styles.input,
+                { backgroundColor: colors.bg, borderColor: colors.line, color: colors.ink },
+              ]}
+              value={calorieGoalInput}
+              onChangeText={setCalorieGoalInput}
+            />
+            <AppButton
+              label={t('common.save')}
+              loading={updateSettings.isPending}
+              onPress={() => void onSaveCalorieGoal()}
+            />
+            <AppButton
+              variant="secondary"
+              label={t('fuel.helper.open')}
+              onPress={() => setHelperOpen(true)}
+            />
+            <Text style={[styles.muted, { color: colors.muted }]}>{t('fuel.helper.openHint')}</Text>
           </View>
 
           <View style={[styles.card, { backgroundColor: colors.panel, borderColor: colors.line }]}>
@@ -904,7 +901,7 @@ const styles = StyleSheet.create({
   dayHead: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   dayTitle: { flex: 1, fontSize: 18, fontFamily: fonts.bold },
   card: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     gap: 10,
     padding: 14,

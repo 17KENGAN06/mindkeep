@@ -231,7 +231,7 @@ export function SignInMethods() {
 }
 
 const styles = StyleSheet.create({
-  card: { borderRadius: 22, borderWidth: 1, gap: 12, marginTop: 20, padding: 16 },
+  card: { borderRadius: 16, borderWidth: 1, gap: 12, marginTop: 20, padding: 16 },
   title: { fontSize: 17, fontFamily: fonts.bold },
   lead: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
   row: { borderRadius: 16, borderWidth: 1, gap: 12, padding: 12 },

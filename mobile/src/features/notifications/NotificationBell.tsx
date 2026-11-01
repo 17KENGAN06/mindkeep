@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon } from '../../components/AppIcon';
 import { ANDROID_HEADER_DROP } from '../../components/headerMetrics';
 import { AppButton } from '../../components/ui';
@@ -170,7 +169,6 @@ function BellPanel({
           },
         ]}
       >
-        <AmbientGlow />
         <View style={[styles.grabber, { backgroundColor: colors.line }]} />
         <View style={styles.head}>
           <View style={styles.headCopy}>
@@ -385,7 +383,7 @@ const styles = StyleSheet.create({
   },
   list: { flexGrow: 0 },
   listContent: { gap: 10 },
-  section: { borderRadius: 22, borderWidth: 1, gap: 2, padding: 12 },
+  section: { borderRadius: 16, borderWidth: 1, gap: 2, padding: 12 },
   sectionTitle: {
     fontFamily: fonts.display,
     fontSize: 11,

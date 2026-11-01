@@ -9,7 +9,6 @@ import { mapAuthError } from '../../features/auth/mapAuthError';
 import { useAuth } from '../../features/auth/useAuth';
 import { useTheme } from '../../features/theme/useTheme';
 import { fonts } from '../../config/fonts';
-import { AmbientGlow } from '../../components/AmbientGlow';
 
 export function OnboardingScreen() {
   const { t } = useTranslation();
@@ -55,7 +54,6 @@ export function OnboardingScreen() {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.bg }]}>
-      <AmbientGlow />
       <View style={styles.top}>
         <BrandMark size={40} />
         <Pressable onPress={() => void logout()}>

@@ -14,7 +14,6 @@ const routeTitleKeys: Record<string, string> = {
   '/account': 'seo.titles.account',
   '/dashboard': 'seo.titles.dashboard',
   '/tasks': 'seo.titles.tasks',
-  '/forest': 'seo.titles.forest',
   '/review': 'seo.titles.review',
   '/calendar': 'seo.titles.calendar',
   '/month-plan': 'seo.titles.monthPlan',

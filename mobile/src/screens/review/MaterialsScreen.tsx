@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   empty: { fontFamily: fonts.regular, fontSize: 14 },
   card: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 14,
   },

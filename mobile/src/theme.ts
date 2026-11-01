@@ -13,27 +13,28 @@ export type ColorTokens = {
   expense: string;
 };
 
+/** The website's tokens (client/src/index.css). Keep both in step. */
 export const palettes: Record<ThemeMode, ColorTokens> = {
   dark: {
-    bg: '#07110d',
-    panel: '#0d1c16',
-    line: '#1e3a2f',
-    ink: '#e8f6ee',
-    muted: '#8aa396',
-    brand: '#8eefb4',
+    bg: '#090c0e',
+    panel: '#11161a',
+    line: '#ffffff14',
+    ink: '#f5f7f6',
+    muted: '#8f9a9c',
+    brand: '#82f0be',
     onBrand: '#07110d',
     danger: '#f87171',
     warn: '#fbbf24',
     expense: '#d9a441',
   },
   light: {
-    bg: '#dfe6e2',
-    panel: '#e8eeea',
-    line: '#c2cdc7',
-    ink: '#243029',
-    muted: '#5a6b63',
-    brand: '#356f58',
-    onBrand: '#f4faf7',
+    bg: '#fafbfb',
+    panel: '#ffffff',
+    line: '#10141617',
+    ink: '#101416',
+    muted: '#646f72',
+    brand: '#0b7a55',
+    onBrand: '#ffffff',
     danger: '#dc2626',
     warn: '#d97706',
     expense: '#8b5a12',

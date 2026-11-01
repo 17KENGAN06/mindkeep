@@ -219,7 +219,7 @@ export function ReminderSettingsCard() {
 }
 
 const styles = StyleSheet.create({
-  card: { borderRadius: 20, borderWidth: 1, gap: 14, marginBottom: 10, padding: 16 },
+  card: { borderRadius: 16, borderWidth: 1, gap: 14, marginBottom: 10, padding: 16 },
   row: { alignItems: 'center', flexDirection: 'row', gap: 12 },
   copy: { flex: 1 },
   title: { fontFamily: fonts.bold, fontSize: 16 },

@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon, type AppIconName } from '../../components/AppIcon';
 import { CardSheen } from '../../components/CardSheen';
 import { GradientIcon } from '../../components/GradientIcon';
@@ -222,7 +221,6 @@ function QuickAddBody({ visible, startWithTask = false, onClose, onOpen }: Quick
           },
         ]}
       >
-        <AmbientGlow />
         <CardSheen glow={0.1} radius={SHEET_RADIUS} />
         <View style={styles.head}>
           {taskOpen ? (

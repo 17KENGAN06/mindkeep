@@ -105,7 +105,7 @@ export function StepsMonthGrid({
               ? { backgroundColor: `${colors.brand}1f`, borderColor: colors.brand }
               : trackable
                 ? { backgroundColor: colors.panel, borderColor: colors.line }
-                : { backgroundColor: 'transparent', borderColor: `${colors.line}59` };
+                : { backgroundColor: 'transparent', borderColor: colors.line };
           const textColor = done ? colors.onBrand : trackable ? colors.ink : colors.muted;
 
           return (

@@ -18,7 +18,7 @@ Practical guide for Claude Code sessions in this repo. MindKeep is a **live prod
 
 ## What this is
 
-npm-workspaces monorepo (historical name "learning-reminder", product name **MindKeep**). Started as a fixed 3 / 7 / 30-day spaced-review app; now a personal "daily desk": reviews (materials + categories), daily tasks + "forest", notes, nutrition (calories, water, steps, weight, macros, Gemini food scan), multi-currency budget, habits ("rhythm"), notifications, statistics, blog/guide, admin panel, paid plans (Free / Plus / Pro).
+npm-workspaces monorepo (historical name "learning-reminder", product name **MindKeep**). Started as a fixed 3 / 7 / 30-day spaced-review app; now a personal "daily desk": reviews (materials + categories), daily tasks, notes, nutrition (calories, water, steps, weight, macros, Gemini food scan), multi-currency budget, habits ("rhythm"), notifications, statistics, blog/guide, admin panel, paid plans (Free / Plus / Pro).
 
 | Workspace | Package name | Purpose |
 |---|---|---|

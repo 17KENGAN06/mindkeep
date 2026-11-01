@@ -143,14 +143,14 @@ const styles = StyleSheet.create({
   sortRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   loader: { marginTop: 16 },
   empty: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 16,
   },
   emptyTitle: { fontSize: 16, fontFamily: fonts.bold },
   emptyBody: { fontFamily: fonts.regular, fontSize: 14, marginTop: 6 },
   card: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 14,
   },

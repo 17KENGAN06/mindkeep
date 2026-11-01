@@ -24,6 +24,7 @@ export const fonts = {
   medium: 'Manrope_500Medium',
   semibold: 'Manrope_600SemiBold',
   bold: 'Manrope_700Bold',
-  display: 'Unbounded_600SemiBold',
+  // Titles use the site dashboard's face; Unbounded stays for the wordmark (displayBold).
+  display: 'Manrope_700Bold',
   displayBold: 'Unbounded_700Bold',
 } as const;

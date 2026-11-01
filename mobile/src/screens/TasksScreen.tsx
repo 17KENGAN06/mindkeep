@@ -27,13 +27,11 @@ import { mapAuthError } from '../features/auth/mapAuthError';
 import { TaskCopyModal } from '../features/tasks/TaskCopyModal';
 import { TaskEditModal } from '../features/tasks/TaskEditModal';
 import { TaskImportModal } from '../features/tasks/TaskImportModal';
-import { ForestCard } from '../components/forest/ForestCard';
 import {
   useBulkCreateTasks,
   useCopyTasks,
   useCreateTask,
   useDeleteTask,
-  useForestSummary,
   useTasksPeriod,
   useToggleTask,
   useUpdateTask,
@@ -47,7 +45,6 @@ import type { DailyTask } from '../types/dailyTask';
 import { useAccountToday, useTodayRollover } from '../features/time/useAccountToday';
 import { formatDate, formatMonthTitle } from '../utils/date';
 import { fonts } from '../config/fonts';
-import { AmbientGlow } from '../components/AmbientGlow';
 
 function firstOfMonth(year: number, month: number): string {
   return `${year}-${String(month).padStart(2, '0')}-01`;
@@ -181,7 +178,6 @@ export function TasksScreen() {
   const deleteTask = useDeleteTask();
   const bulkCreate = useBulkCreateTasks();
   const copyTasks = useCopyTasks();
-  const forestQuery = useForestSummary(year, month);
 
   const resetForm = () => {
     setEditingId(null);
@@ -213,10 +209,10 @@ export function TasksScreen() {
 
   const dayTasks = [...(periodQuery.data?.tasks ?? [])]
     .filter((task) => task.date === selectedDate)
-    // Ticking a task no longer sends it to the bottom: the list stays put under the finger.
+    // The API lists completed tasks last; ticking one must not move it from under the finger.
     .sort((left, right) => {
       if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
-      return 0;
+      return (left.createdAt ?? '').localeCompare(right.createdAt ?? '');
     });
 
   // Cards that are new since the last render of the same day fade in; switching days does not.
@@ -416,7 +412,6 @@ export function TasksScreen() {
   if (periodQuery.isLoading && !periodQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
-        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -426,7 +421,6 @@ export function TasksScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
-      <AmbientGlow />
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -448,29 +442,13 @@ export function TasksScreen() {
           }
         >
           <Text style={[styles.title, { color: colors.ink }]}>{t('tasks.title')}</Text>
-          <Text style={[styles.subtitle, { color: colors.muted }]}>{t('tasks.subtitle')}</Text>
-          <Pressable
-            onPress={() => navigation.navigate('MonthPlan')}
-            style={[styles.planLink, { backgroundColor: colors.panel, borderColor: colors.line }]}
-          >
-            <AppIcon name="calendar-outline" color={colors.brand} size={18} />
-            <Text style={[styles.planLinkText, { color: colors.brand }]}>{t('tasks.planTitle')}</Text>
-          </Pressable>
-
-          {forestQuery.data ? (
-            <ForestCard
-              totalCompleted={forestQuery.data.totalCompleted}
-              completedToday={forestQuery.data.completedToday}
-              monthLabel={formatMonthTitle(year, month, language)}
-              onExplore={() => navigation.navigate('Forest', { year, month })}
-            />
-          ) : null}
 
           {periodQuery.isError ? (
             <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
           ) : null}
 
           <MonthGrid
+            compact
             year={year}
             month={month}
             selectedDate={selectedDate}
@@ -511,7 +489,7 @@ export function TasksScreen() {
                     styles.taskCard,
                     { backgroundColor: colors.panel, borderColor: colors.line },
                     task.completed && { borderColor: `${colors.brand}59` },
-                    task.important && !task.completed && { borderColor: '#e0a020' },
+                    task.important && !task.completed && { borderColor: `${colors.brand}80` },
                     editingId === task.id && { borderColor: colors.brand },
                     highlightId === task.id && {
                       backgroundColor: `${colors.brand}1a`,
@@ -553,19 +531,19 @@ export function TasksScreen() {
                         style={[
                           styles.importantBtn,
                           task.important
-                            ? { backgroundColor: '#f0b429', borderColor: '#e0a020' }
+                            ? { backgroundColor: `${colors.brand}26`, borderColor: `${colors.brand}80` }
                             : { borderColor: colors.line, backgroundColor: colors.bg },
                         ]}
                       >
                         <AppIcon
                           name={task.important ? 'flag' : 'flag-outline'}
-                          color={task.important ? '#3a2a08' : colors.muted}
+                          color={task.important ? colors.brand : colors.muted}
                           size={16}
                         />
                         <Text
                           style={[
                             styles.importantLabel,
-                            { color: task.important ? '#3a2a08' : colors.muted },
+                            { color: task.important ? colors.brand : colors.muted },
                           ]}
                         >
                           {t('tasks.important')}
@@ -699,6 +677,14 @@ export function TasksScreen() {
               onPress={() => void onSave()}
             />
           </View>
+
+          <Pressable
+            onPress={() => navigation.navigate('MonthPlan')}
+            style={[styles.planLink, { backgroundColor: colors.panel, borderColor: colors.line }]}
+          >
+            <AppIcon name="calendar-outline" color={colors.brand} size={18} />
+            <Text style={[styles.planLinkText, { color: colors.brand }]}>{t('tasks.planTitle')}</Text>
+          </Pressable>
         </SectionScrollView>
       </KeyboardAvoidingView>
 
@@ -844,7 +830,7 @@ const styles = StyleSheet.create({
   taskTitle: { fontSize: 15, fontFamily: fonts.semibold },
   minutes: { fontFamily: fonts.regular, fontSize: 13 },
   form: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     gap: 8,
     marginTop: 8,

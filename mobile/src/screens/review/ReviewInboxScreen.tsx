@@ -28,7 +28,6 @@ import { useTheme } from '../../features/theme/useTheme';
 import type { ReviewStackParamList } from '../../navigation/types';
 import type { Reminder } from '../../types/reminder';
 import { fonts } from '../../config/fonts';
-import { AmbientGlow } from '../../components/AmbientGlow';
 
 function ReminderSection({
   title,
@@ -147,7 +146,6 @@ export function ReviewInboxScreen() {
   if (loading && !overdueQuery.data && !todayQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
-        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -157,7 +155,6 @@ export function ReviewInboxScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
-      <AmbientGlow />
       <SectionScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}
@@ -260,7 +257,7 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 18, fontFamily: fonts.bold },
   count: { fontSize: 14, fontFamily: fonts.medium },
   empty: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 16,
   },

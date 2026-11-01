@@ -321,47 +321,6 @@
     "copyPrevMonth": "Edellinen kuukausi",
     "copyNextMonth": "Seuraava kuukausi"
   },
-  "forest": {
-    "title": "Metsäsi",
-    "trees": "{{count}} puuta",
-    "addedToday": "+{{count}} tänään",
-    "groveProgress": "Lehto {{grove}} · {{current}} / {{total}}",
-    "remaining": "{{count}} seuraavaan lehtoon",
-    "remainingDone": "Lehto valmis",
-    "remainingZone": "{{count}} metsäalueeseen",
-    "zoneOpen": "Metsäalue avattu",
-    "explore": "Tutki metsää",
-    "plusOne": "+1 puu",
-    "groveCompleted": "Lehto valmis",
-    "groveComplete1": "Ensimmäinen lehto",
-    "groveComplete2": "Toinen lehto",
-    "groveComplete3": "Kolmas lehto",
-    "groveHint1": "25 puuta — ensimmäinen lehto on valmis.",
-    "groveHint2": "Kaksi lehtoa. Yksi lisää avaa metsäalueen.",
-    "groveHint3": "Kolme lehtoa. Seuraavat 25 puuta avaavat alueen.",
-    "zoneComplete": "Metsäalue",
-    "zoneHint": "100 puuta — metsäalue on sinun.",
-    "newGrove": "Uusi lehto",
-    "newGroveHint": "Tästä alkaa uusi lehto.",
-    "newZone": "Uusi metsäalue",
-    "newZoneHint": "Uusi metsäaukeama avautuu.",
-    "grovePip": "Lehto {{n}}",
-    "zonePip": "Alue",
-    "zonesCount": "×{{count}}",
-    "pathLabel": "Lehto {{grove}} / 4, alueita {{zone}}",
-    "pageTitle": "Metsäsi",
-    "pageSubtitle": "Jokainen tämän kuukauden valmis tehtävä istuttaa puun. Lehdot ja metsäalueet kasvavat vain tehdystä työstä — ei tulevista tehtävistä.",
-    "backToTasks": "Takaisin tehtäviin",
-    "rulesTitle": "Miten metsä kasvaa",
-    "ruleTrees": "1 valmis tehtävä = 1 puu.",
-    "ruleGrove": "25 puuta täyttää lehdon.",
-    "ruleZone": "100 puuta avaa metsäalueen.",
-    "rulePath": "Lehto 1, sitten 2, sitten 3 — ja 100 puuta avaa metsäalueen.",
-    "ruleMonth": "Jokaisella kuukaudella on oma metsänsä.",
-    "yearTitle": "Metsä lasketaan kuukausittain",
-    "yearHint": "Puut istutetaan vain valitun kuukauden valmiista tehtävistä. Palaa kuukausinäkymään nähdäksesi sen kuukauden metsän.",
-    "monthScope": "Tässä kasvavat vain tämän kuukauden valmiit tehtävät."
-  },
   "notes": {
     "title": "Muistiinpanot",
     "subtitle": "Muistiinpano otsikolla ja sisällöllä — tai lyhyt ajatus ilman kuvausta.",
@@ -1330,7 +1289,9 @@
       "completed": "Valmis",
       "important": "Tärkeä"
     },
-    "cellAriaImportant": "{{day}}, {{count}} kohdetta, {{important}} tärkeää"
+    "cellAriaImportant": "{{day}}, {{count}} kohdetta, {{important}} tärkeää",
+    "showMonth": "Näytä kuukausi",
+    "showWeek": "Näytä viikko"
   },
   "rhythm": {
     "title": "Tavat",
@@ -1367,7 +1328,6 @@
       "notifications": "Ilmoitukset · Mindkeep",
       "statistics": "Analytiikka · Mindkeep",
       "tasks": "Päivittäiset tehtävät · Mindkeep",
-      "forest": "Metsäsi · Mindkeep",
       "notes": "Muistiinpanot · Mindkeep",
       "calories": "Ravinto · Mindkeep",
       "rhythm": "Tavat · Mindkeep",
@@ -1772,7 +1732,7 @@
     "modules": {
       "tasks": {
         "title": "Päivän tehtävät",
-        "text": "Kirjoitat, mitä tänään pitää tehdä — ja montako minuuttia se vie, jos sillä on väliä. Merkitset valmista ja näet päivän, viikon ja kuukauden samassa paikassa. On erillinen kuukausisuunnitelma: montako tehtävää oli ja montako suljit. Tehdyistä tehtävistä kasvaa metsä — näet, miten työ eteni päivä päivältä."
+        "text": "Kirjoitat, mitä tänään pitää tehdä — ja montako minuuttia se vie, jos sillä on väliä. Merkitset valmista ja näet päivän, viikon ja kuukauden samassa paikassa. On erillinen kuukausisuunnitelma: montako tehtävää oli ja montako suljit."
       },
       "review": {
         "title": "Oppiminen ja paluu",

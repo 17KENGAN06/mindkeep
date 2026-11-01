@@ -43,7 +43,6 @@ TASKS
 • Mark a task as important to keep it at the top and get a reminder
 • Split long tasks into parts and tick them off one by one
 • Copy a day or import a list in one go
-• Watch your forest grow as you finish tasks
 
 SPACED REVIEWS 3 · 7 · 30
 • Save what you learned today and MindKeep schedules reviews after 3, 7 and 30 days
@@ -98,7 +97,6 @@ MindKeep — спокойный ежедневник для того, что в�
 • Отметьте задачу важной — она будет наверху и пришлёт напоминание
 • Делите длинные задачи на части и отмечайте их по одной
 • Копируйте день или импортируйте список сразу
-• Растите свой лес, выполняя задачи
 
 ПОВТОРЕНИЯ 3 · 7 · 30
 • Сохраните то, что изучили сегодня, — MindKeep назначит повторения через 3, 7 и 30 дней

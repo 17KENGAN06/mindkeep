@@ -35,9 +35,9 @@ function splitOf(task: DailyTask) {
 
 export function sortDailyTasks(tasks: DailyTask[]) {
   return [...tasks].sort((left, right) => {
-    if (left.completed !== right.completed) return left.completed ? 1 : -1;
+    // The API lists completed tasks last; ticking one must not move it from under the cursor.
     if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
-    return 0;
+    return left.createdAt.localeCompare(right.createdAt);
   });
 }
 

@@ -7,7 +7,6 @@ import type {
   CopyDailyTasksInput,
   CreateDailyTaskInput,
   DailyTaskPeriodQuery,
-  ForestQuery,
   UpdateDailyTaskInput,
 } from '@/validations/dailyTask.schemas.js';
 
@@ -33,14 +32,6 @@ export class DailyTaskController {
   async listDay(req: Request, res: Response): Promise<void> {
     const date = String(req.query.date ?? '');
     const result = await dailyTaskService.listByDay(requireUserId(req), date);
-    res.status(200).json(result);
-  }
-
-  async forest(req: Request, res: Response): Promise<void> {
-    const result = await dailyTaskService.getForestSummary(
-      requireUserId(req),
-      req.query as unknown as ForestQuery,
-    );
     res.status(200).json(result);
   }
 

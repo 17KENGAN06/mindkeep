@@ -321,47 +321,6 @@
     "copyPrevMonth": "Vorheriger Monat",
     "copyNextMonth": "Nächster Monat"
   },
-  "forest": {
-    "title": "Dein Wald",
-    "trees": "{{count}} Bäume",
-    "addedToday": "+{{count}} heute",
-    "groveProgress": "Hain {{grove}} · {{current}} / {{total}}",
-    "remaining": "{{count}} bis zum nächsten Hain",
-    "remainingDone": "Hain abgeschlossen",
-    "remainingZone": "{{count}} bis zu einer Waldzone",
-    "zoneOpen": "Waldzone freigeschaltet",
-    "explore": "Wald erkunden",
-    "plusOne": "+1 Baum",
-    "groveCompleted": "Hain abgeschlossen",
-    "groveComplete1": "Erster Hain",
-    "groveComplete2": "Zweiter Hain",
-    "groveComplete3": "Dritter Hain",
-    "groveHint1": "25 Bäume — der erste Hain ist vollständig.",
-    "groveHint2": "Zwei Haine in diesem Monat. Noch einer bis zur Waldzone.",
-    "groveHint3": "Drei Haine. Die nächsten 25 Bäume öffnen eine Waldzone.",
-    "zoneComplete": "Waldzone",
-    "zoneHint": "100 Bäume — die Waldzone gehört dir.",
-    "newGrove": "Neuer Hain",
-    "newGroveHint": "Hier beginnt ein frischer Hain.",
-    "newZone": "Neue Waldzone",
-    "newZoneHint": "Ein neues Stück Wald öffnet sich.",
-    "grovePip": "Hain {{n}}",
-    "zonePip": "Zone",
-    "zonesCount": "×{{count}}",
-    "pathLabel": "Hain {{grove}} von 4, {{zone}} Zonen",
-    "pageTitle": "Dein Wald",
-    "pageSubtitle": "Jede erledigte Aufgabe in diesem Monat pflanzt einen Baum. Haine und Waldzonen wachsen aus diesem Stand — nie aus Aufgaben, die noch vor dir liegen.",
-    "backToTasks": "Zurück zu den Aufgaben",
-    "rulesTitle": "So wächst der Wald",
-    "ruleTrees": "1 erledigte Aufgabe = 1 Baum.",
-    "ruleGrove": "25 Bäume schließen einen Hain ab.",
-    "ruleZone": "100 Bäume schalten eine Waldzone frei.",
-    "rulePath": "Hain 1, dann 2, dann 3 — und 100 Bäume öffnen eine Waldzone.",
-    "ruleMonth": "Jeder Monat hat seinen eigenen Wald.",
-    "yearTitle": "Der Wald ist eine Monatsansicht",
-    "yearHint": "Bäume werden aus erledigten Aufgaben eines Monats gepflanzt. Wechsle zurück zur Monatsansicht, um den Wald dieses Monats zu sehen.",
-    "monthScope": "Nur erledigte Aufgaben aus diesem Monat pflanzen hier Bäume."
-  },
   "notes": {
     "title": "Notizen",
     "subtitle": "Ausführliche Notizen mit Titel — oder ein kurzer Gedanke ohne Beschreibung.",
@@ -1330,7 +1289,9 @@
       "completed": "Erledigt",
       "important": "Wichtig"
     },
-    "cellAriaImportant": "{{day}}, {{count}} Einträge, {{important}} wichtig"
+    "cellAriaImportant": "{{day}}, {{count}} Einträge, {{important}} wichtig",
+    "showMonth": "Monat anzeigen",
+    "showWeek": "Woche anzeigen"
   },
   "rhythm": {
     "title": "Gewohnheiten",
@@ -1367,7 +1328,6 @@
       "notifications": "Benachrichtigungen · Mindkeep",
       "statistics": "Analysen · Mindkeep",
       "tasks": "Tagesaufgaben · Mindkeep",
-      "forest": "Dein Wald · Mindkeep",
       "notes": "Notizen · Mindkeep",
       "calories": "Ernährung · Mindkeep",
       "rhythm": "Gewohnheiten · Mindkeep",
@@ -1772,7 +1732,7 @@
     "modules": {
       "tasks": {
         "title": "Tagesaufgaben",
-        "text": "Du schreibst, was heute zu tun ist — und wie viele Minuten es dauert, wenn das zählt. Erledigtes hakst du ab und siehst Tag, Woche und Monat an einem Ort. Es gibt einen eigenen Monatsplan: wie viele Aufgaben da waren und wie viele du geschlossen hast. Aus erledigten Aufgaben wächst ein Wald — Tag für Tag sichtbar."
+        "text": "Du schreibst, was heute zu tun ist — und wie viele Minuten es dauert, wenn das zählt. Erledigtes hakst du ab und siehst Tag, Woche und Monat an einem Ort. Es gibt einen eigenen Monatsplan: wie viele Aufgaben da waren und wie viele du geschlossen hast."
       },
       "review": {
         "title": "Lernen & Rückkehr",

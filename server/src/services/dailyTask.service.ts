@@ -4,12 +4,11 @@ import type {
   CopyDailyTasksInput,
   CreateDailyTaskInput,
   DailyTaskPeriodQuery,
-  ForestQuery,
   UpdateDailyTaskInput,
 } from '@/validations/dailyTask.schemas.js';
 import { AppError } from '@/utils/AppError.js';
 import { requireDeleted, requireOwned } from '@/utils/owned.js';
-import { getDayBoundsInTimeZone, todayKeyInTimeZone } from '@/utils/timezone.js';
+import { todayKeyInTimeZone } from '@/utils/timezone.js';
 import { FREE_LIMITS } from '@/config/entitlements.js';
 import type { AppLocale } from '@/services/emailCopy.js';
 import {
@@ -211,49 +210,6 @@ export class DailyTaskService {
           .filter((task) => task.completed)
           .reduce((sum, task) => sum + task.minutes, 0),
       },
-    };
-  }
-
-  async getForestSummary(userId: string, query: ForestQuery) {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { timezone: true },
-    });
-
-    if (!user) {
-      throw new AppError('User not found', {
-        statusCode: 401,
-        code: 'UNAUTHORIZED',
-      });
-    }
-
-    const timezone = user.timezone || 'Europe/Helsinki';
-    const { startUtc, endUtc } = getDayBoundsInTimeZone(timezone);
-    const { from, to } = periodRange({
-      view: 'month',
-      year: query.year,
-      month: query.month,
-    });
-
-    const visibleIds = await freeVisibleIds(userId, 'tasks', {
-      dateKey: `${query.year}-${String(query.month).padStart(2, '0')}-01`,
-    });
-    const monthFilter = { userId, completed: true, date: { gte: from, lt: to }, ...idIn(visibleIds) };
-    const [totalCompleted, completedToday] = await Promise.all([
-      prisma.dailyTask.count({ where: monthFilter }),
-      prisma.dailyTask.count({
-        where: {
-          ...monthFilter,
-          completedAt: { gte: startUtc, lte: endUtc },
-        },
-      }),
-    ]);
-
-    return {
-      year: query.year,
-      month: query.month,
-      totalCompleted,
-      completedToday,
     };
   }
 

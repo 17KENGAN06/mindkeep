@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon, type AppIconName } from '../../components/AppIcon';
 import { AUTH_HEADER_HEIGHT, AuthHeader } from '../../components/AuthHeader';
 import { AppButton } from '../../components/ui';
@@ -54,7 +53,7 @@ export function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) {
 
   const cardStyle = [
     styles.card,
-    { backgroundColor: `${colors.panel}cc`, borderColor: `${colors.line}cc` },
+    { backgroundColor: `${colors.panel}cc`, borderColor: colors.line },
   ];
   const cardHead = (icon: AppIconName, title: string) => (
     <View style={styles.cardHead}>
@@ -68,7 +67,6 @@ export function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) {
     <SafeAreaView edges={['left', 'right']} style={[styles.root, { backgroundColor: colors.bg }]}>
       {/* The floating header blurs this content as it scrolls underneath. */}
       <BlurTargetView ref={blurTarget} style={styles.root}>
-        <AmbientGlow />
         <ScrollView
           contentContainerStyle={[
             styles.content,
@@ -177,7 +175,7 @@ const styles = StyleSheet.create({
   subtitle: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 23, marginTop: 18 },
   actions: { gap: 12, marginTop: 28 },
   cards: { gap: 12, marginTop: 32 },
-  card: { borderRadius: 20, borderWidth: 1, padding: 18 },
+  card: { borderRadius: 16, borderWidth: 1, padding: 18 },
   cardHead: { alignItems: 'center', flexDirection: 'row', gap: 8 },
   cardTitle: {
     fontFamily: fonts.bold,

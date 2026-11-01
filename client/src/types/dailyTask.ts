@@ -76,9 +76,3 @@ export type DailyTaskPeriodParams = {
   month?: number;
 };
 
-export type ForestSummaryResponse = {
-  year: number;
-  month: number;
-  totalCompleted: number;
-  completedToday: number;
-};

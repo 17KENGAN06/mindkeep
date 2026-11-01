@@ -1,4 +1,5 @@
 export type DailyTask = {
+  createdAt?: string;
   id: string;
   title: string;
   minutes: number;
@@ -63,13 +64,6 @@ export type DailyTaskPeriodResponse = {
   days: DailyTaskDaySummary[];
   byMonth?: DailyTaskMonthSummary[];
   tasks: DailyTask[];
-};
-
-export type ForestSummaryResponse = {
-  year: number;
-  month: number;
-  totalCompleted: number;
-  completedToday: number;
 };
 
 export type CreateDailyTaskPayload = {

@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   statLabel: { fontSize: 11, fontFamily: fonts.semibold, textTransform: 'uppercase' },
   statValue: { fontSize: 26, fontFamily: fonts.display, marginTop: 8 },
-  chart: { borderRadius: 20, borderWidth: 1, gap: 8, padding: 14 },
+  chart: { borderRadius: 16, borderWidth: 1, gap: 8, padding: 14 },
   chartTitle: { fontSize: 16, fontFamily: fonts.bold },
   bars: { alignItems: 'flex-end', flexDirection: 'row', gap: 6, minHeight: 140 },
   barCol: { alignItems: 'center', flex: 1, gap: 4 },

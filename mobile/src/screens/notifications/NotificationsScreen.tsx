@@ -185,14 +185,14 @@ const styles = StyleSheet.create({
   subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   unread: { fontSize: 14, fontFamily: fonts.bold },
   empty: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 16,
   },
   emptyTitle: { fontSize: 16, fontFamily: fonts.bold },
   emptyBody: { fontFamily: fonts.regular, fontSize: 14, marginTop: 6 },
   card: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     gap: 8,
     padding: 14,

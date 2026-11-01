@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   counts: { fontFamily: fonts.regular, fontSize: 13 },
   empty: { fontFamily: fonts.regular, fontSize: 14, marginTop: 8 },
   card: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 14,
   },

@@ -21,7 +21,6 @@ import { QuickAddSheet } from '../features/quickAdd/QuickAddSheet';
 import { QuickAddContext, type OpenQuickAdd } from '../features/quickAdd/quickAddContext';
 import { ReminderPrompt } from '../features/notifications/ReminderPrompt';
 import { useLocalReminderSync } from '../features/notifications/useLocalReminders';
-import { AmbientGlow } from '../components/AmbientGlow';
 import { AppTabBar } from './AppTabBar';
 import { isOnHome, openSectionFromHome } from './openSection';
 import { MoreNavigator } from './MoreNavigator';
@@ -80,7 +79,6 @@ function AppTabs() {
 
   return (
     <View style={[styles.tabsRoot, { backgroundColor: colors.bg }]}>
-      <AmbientGlow />
       <QuickAddContext.Provider value={openQuickAdd}>
       <Tabs.Navigator
         tabBar={(props) => <AppTabBar {...props} badge={badge} onAdd={() => openQuickAdd()} />}

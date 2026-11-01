@@ -4,7 +4,6 @@ import type {
   DailyTask,
   DailyTaskDayResponse,
   DailyTaskPeriodResponse,
-  ForestSummaryResponse,
   UpdateDailyTaskPayload,
 } from '../types/dailyTask';
 
@@ -15,8 +14,6 @@ export const dailyTasksApi = {
     apiClient.get<DailyTaskPeriodResponse>(`/api/tasks?view=year&year=${year}`),
   getDay: (date: string) =>
     apiClient.get<DailyTaskDayResponse>(`/api/tasks/day?date=${encodeURIComponent(date)}`),
-  getForest: (year: number, month: number) =>
-    apiClient.get<ForestSummaryResponse>(`/api/tasks/forest?year=${year}&month=${month}`),
   create: (payload: CreateDailyTaskPayload) =>
     apiClient.post<{ task: DailyTask }>('/api/tasks', payload),
   update: (id: string, payload: UpdateDailyTaskPayload) =>

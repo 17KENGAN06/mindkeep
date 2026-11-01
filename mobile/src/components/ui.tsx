@@ -92,8 +92,8 @@ function ButtonSurface({ size, variant }: { size: Size; variant: 'primary' | 'se
   }
 
   // Ends of the gradient: a lit top-left and the site's brand-400 (dark) / brand-700 (light).
-  const lit = dark ? '#b4f7cf' : '#4a8a70';
-  const deep = dark ? '#4fbf83' : '#244a3a';
+  const lit = colors.brand;
+  const deep = colors.brand;
   return (
     <View pointerEvents="none" style={[styles.surface, { borderRadius: r }]}>
       <Svg width={width} height={height}>
@@ -104,7 +104,7 @@ function ButtonSurface({ size, variant }: { size: Size; variant: 'primary' | 'se
             <Stop offset="1" stopColor={deep} />
           </LinearGradient>
           <LinearGradient id={`shine${id}`} x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.34 : 0.22} />
+            <Stop offset="0" stopColor="#ffffff" stopOpacity={0} />
             <Stop offset="0.6" stopColor="#ffffff" stopOpacity={0} />
           </LinearGradient>
         </Defs>
@@ -166,12 +166,12 @@ export function AppButton({
           backgroundColor: colors.brand,
           borderWidth: BUTTON_BORDER,
           // One colour all round: per-side colours meet at an angle on rounded corners.
-          borderColor: 'rgba(255,255,255,0.3)',
+          borderColor: colors.brand,
         },
         variant === 'secondary' && {
-          backgroundColor: pressed ? `${colors.brand}26` : colors.panel,
+          backgroundColor: pressed ? `${colors.brand}14` : colors.panel,
           borderWidth: BUTTON_BORDER,
-          borderColor: `${colors.brand}99`,
+          borderColor: colors.line,
         },
         variant === 'ghost' && { backgroundColor: pressed ? `${colors.brand}12` : 'transparent' },
         variant === 'link' && [

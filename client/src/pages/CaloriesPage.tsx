@@ -124,7 +124,6 @@ export function CaloriesPage() {
       <div className="space-y-6">
         <section>
           <h1 className="text-2xl font-semibold text-ink">{t('calories.title')}</h1>
-          <p className="mt-1 text-sm text-muted">{t('calories.subtitle')}</p>
           <PlanRemain feature="meals" />
         </section>
         <ErrorMessage
@@ -340,11 +339,11 @@ export function CaloriesPage() {
     <div className="space-y-6">
       <section>
         <h1 className="text-2xl font-semibold text-ink">{t('calories.title')}</h1>
-        <p className="mt-1 text-sm text-muted">{t('calories.subtitle')}</p>
         <PlanRemain feature="meals" />
       </section>
 
       <Calendar
+        compact
         year={year}
         month={month}
         selectedDate={selectedDate}

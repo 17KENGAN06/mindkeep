@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
-import { ForestProgressCard } from '@/components/forest/ForestProgressCard';
 import { DailyTaskList } from '@/components/tasks/DailyTaskList';
 import { TaskPeriodControls } from '@/components/tasks/TaskPeriodControls';
 import { Button } from '@/components/ui/Button';
@@ -21,7 +20,6 @@ import {
   useCreateDailyTask,
   useDailyTasksPeriod,
   useDeleteDailyTask,
-  useForestSummary,
   useUpdateDailyTask,
 } from '@/features/tasks/useDailyTasks';
 import type { DailyTask, DailyTaskView } from '@/types/dailyTask';
@@ -77,7 +75,6 @@ export function TasksPage() {
     year,
     ...(view === 'month' ? { month } : {}),
   });
-  const forestQuery = useForestSummary(year, month, view === 'month');
   const createTask = useCreateDailyTask();
   const bulkCreate = useBulkCreateDailyTasks();
   const copyTasks = useCopyDailyTasks();
@@ -280,23 +277,7 @@ export function TasksPage() {
     }
   };
 
-  return (
-    <div className="space-y-6">
-      <section>
-        <h1 className="text-2xl font-semibold text-ink">{t('tasks.title')}</h1>
-        <p className="mt-1 text-sm text-muted">{t('tasks.subtitle')}</p>
-        <PlanRemain feature="tasks" />
-      </section>
-
-      <TaskPeriodControls
-        view={view}
-        year={year}
-        month={month}
-        onViewChange={setView}
-        onYearChange={setYear}
-        onMonthChange={setMonth}
-      />
-
+  const statsBlock = (
       <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           { label: t('tasks.statTotal'), value: data.totals.total },
@@ -313,23 +294,25 @@ export function TasksPage() {
           </div>
         ))}
       </section>
+  );
 
-      {view === 'year' ? (
-        <section className="rounded-2xl bg-panel p-4 shadow-sm ring-1 ring-line md:p-5">
-          <p className="text-sm font-semibold text-ink">{t('forest.yearTitle')}</p>
-          <p className="mt-1 text-sm text-muted">{t('forest.yearHint')}</p>
-        </section>
-      ) : forestQuery.data ? (
-        <ForestProgressCard
-          key={`${year}-${month}`}
-          totalCompleted={forestQuery.data.totalCompleted}
-          completedToday={forestQuery.data.completedToday}
-          exploreHref={`/forest?year=${year}&month=${month}`}
-          monthLabel={`${t(`finance.months.${month}`)} ${year}`}
-        />
-      ) : (
-        <div className="h-[280px] rounded-2xl bg-panel/80 shadow-sm ring-1 ring-line md:h-[216px]" />
-      )}
+  return (
+    <div className="space-y-6">
+      <section>
+        <h1 className="text-2xl font-semibold text-ink">{t('tasks.title')}</h1>
+        <PlanRemain feature="tasks" />
+      </section>
+
+      <TaskPeriodControls
+        view={view}
+        year={year}
+        month={month}
+        onViewChange={setView}
+        onYearChange={setYear}
+        onMonthChange={setMonth}
+      />
+
+      {view === 'year' ? statsBlock : null}
 
       {view === 'year' ? (
         <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
@@ -367,6 +350,7 @@ export function TasksPage() {
       ) : (
         <>
           <Calendar
+            compact
             year={year}
             month={month}
             selectedDate={selectedDate}
@@ -395,6 +379,21 @@ export function TasksPage() {
                 </p>
               ) : null}
             </div>
+
+            <DailyTaskList
+              tasks={dayTasks}
+              onToggle={(task) => void onToggle(task)}
+              onImportant={(task) => void onImportant(task)}
+              onDelete={(id) => void onDelete(id)}
+              onEdit={(task) => {
+                setEditError(null);
+                setEditingId(task.id);
+              }}
+              onSplit={(task, count) => void onSplit(task, count)}
+              onSetPart={(task, done) => void onSetPart(task, done)}
+              busyId={busyId}
+              highlightId={highlightId}
+            />
 
             <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -453,22 +452,9 @@ export function TasksPage() {
               </form>
               <ErrorMessage message={formError ?? undefined} />
             </section>
-
-            <DailyTaskList
-              tasks={dayTasks}
-              onToggle={(task) => void onToggle(task)}
-              onImportant={(task) => void onImportant(task)}
-              onDelete={(id) => void onDelete(id)}
-              onEdit={(task) => {
-                setEditError(null);
-                setEditingId(task.id);
-              }}
-              onSplit={(task, count) => void onSplit(task, count)}
-              onSetPart={(task, done) => void onSetPart(task, done)}
-              busyId={busyId}
-              highlightId={highlightId}
-            />
           </section>
+
+          {statsBlock}
 
           <TaskEditDialog
             task={dayTasks.find((task) => task.id === editingId) ?? null}

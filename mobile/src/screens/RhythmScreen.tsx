@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   retry: { gap: 8 },
   cards: { gap: 12 },
   cardsPending: { opacity: 0.6 },
-  card: { borderRadius: 20, borderWidth: 1, gap: 10, padding: 14 },
+  card: { borderRadius: 16, borderWidth: 1, gap: 10, padding: 14 },
   habitHead: { alignItems: 'center', flexDirection: 'row', gap: 8 },
   habitCopy: { flex: 1, minWidth: 0 },
   habitTitle: { fontSize: 16, fontFamily: fonts.bold },

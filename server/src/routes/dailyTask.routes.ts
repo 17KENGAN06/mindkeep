@@ -10,7 +10,6 @@ import {
   dailyTaskDayQuerySchema,
   dailyTaskIdParamsSchema,
   dailyTaskPeriodQuerySchema,
-  forestQuerySchema,
   updateDailyTaskSchema,
 } from '@/validations/dailyTask.schemas.js';
 
@@ -28,12 +27,6 @@ dailyTaskRouter.get(
   '/day',
   validate(dailyTaskDayQuerySchema, 'query'),
   asyncHandler((req, res) => dailyTaskController.listDay(req, res)),
-);
-
-dailyTaskRouter.get(
-  '/forest',
-  validate(forestQuerySchema, 'query'),
-  asyncHandler((req, res) => dailyTaskController.forest(req, res)),
 );
 
 dailyTaskRouter.post(

@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { AppIcon } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
 import type { AppLanguage } from '../i18n';
 import type { CalendarDaySummary } from '../types/calendar';
@@ -14,6 +16,8 @@ type MonthGridProps = {
   days: CalendarDaySummary[];
   onMonthChange: (year: number, month: number) => void;
   onSelectDate: (date: string) => void;
+  /** Starts as one week; the month opens from the title, so the screen's content stays on top. */
+  compact?: boolean;
 };
 
 type DayStatus = 'overdue' | 'pending' | 'completed' | 'none';
@@ -33,13 +37,36 @@ export function MonthGrid({
   days,
   onMonthChange,
   onSelectDate,
+  compact = false,
 }: MonthGridProps) {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const language = (i18n.resolvedLanguage ?? 'en').slice(0, 2) as AppLanguage;
   const { today } = useAccountToday();
   const labels = weekdayLabels(language);
-  const grid = monthGrid(year, month);
+  const [expanded, setExpanded] = useState(false);
+  const weekOnly = compact && !expanded;
+  // The week on show: follows the picked day, and the arrows move it on their own.
+  const [anchor, setAnchor] = useState(selectedDate ?? today);
+  const [anchorFor, setAnchorFor] = useState(selectedDate);
+  if (selectedDate !== anchorFor) {
+    setAnchorFor(selectedDate);
+    if (selectedDate) setAnchor(selectedDate);
+  }
+  const anchorYear = Number(anchor.slice(0, 4));
+  const anchorMonth = Number(anchor.slice(5, 7));
+  const anchorGrid = monthGrid(anchorYear, anchorMonth);
+  const anchorRow = Math.floor(anchorGrid.findIndex((date) => dateKey(date) === anchor) / 7);
+  const grid = weekOnly
+    ? anchorGrid.slice(anchorRow * 7, anchorRow * 7 + 7)
+    : monthGrid(year, month);
+  const moveWeek = (weeks: number) => {
+    const next = new Date(anchorYear, anchorMonth - 1, Number(anchor.slice(8, 10)) + weeks * 7);
+    setAnchor(dateKey(next));
+    if (next.getFullYear() !== year || next.getMonth() + 1 !== month) {
+      onMonthChange(next.getFullYear(), next.getMonth() + 1);
+    }
+  };
   const summaryByDate = new Map(days.map((day) => [day.date, day]));
   const showImportantLegend = days.some((day) => (day.important ?? 0) > 0);
   const statusColor: Record<Exclude<DayStatus, 'none'>, string> = {
@@ -49,10 +76,18 @@ export function MonthGrid({
   };
 
   const prev = () => {
+    if (weekOnly) {
+      moveWeek(-1);
+      return;
+    }
     const date = new Date(year, month - 2, 1);
     onMonthChange(date.getFullYear(), date.getMonth() + 1);
   };
   const next = () => {
+    if (weekOnly) {
+      moveWeek(1);
+      return;
+    }
     const date = new Date(year, month, 1);
     onMonthChange(date.getFullYear(), date.getMonth() + 1);
   };
@@ -63,7 +98,22 @@ export function MonthGrid({
         <Pressable onPress={prev} style={styles.navBtn} accessibilityLabel={t('calendar.prevMonth')}>
           <Text style={[styles.navText, { color: colors.brand }]}>‹</Text>
         </Pressable>
-        <Text style={[styles.title, { color: colors.ink }]}>{formatMonthTitle(year, month, language)}</Text>
+        {compact ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ expanded }}
+            accessibilityLabel={expanded ? t('calendar.showWeek') : t('calendar.showMonth')}
+            onPress={() => setExpanded((value) => !value)}
+            style={styles.titleButton}
+          >
+            <Text style={[styles.title, { color: colors.ink }]}>
+              {formatMonthTitle(weekOnly ? anchorYear : year, weekOnly ? anchorMonth : month, language)}
+            </Text>
+            <AppIcon name={expanded ? 'chevron-up' : 'chevron-down'} color={colors.muted} size={16} />
+          </Pressable>
+        ) : (
+          <Text style={[styles.title, { color: colors.ink }]}>{formatMonthTitle(year, month, language)}</Text>
+        )}
         <Pressable onPress={next} style={styles.navBtn} accessibilityLabel={t('calendar.nextMonth')}>
           <Text style={[styles.navText, { color: colors.brand }]}>›</Text>
         </Pressable>
@@ -80,7 +130,7 @@ export function MonthGrid({
       <View style={styles.grid}>
         {grid.map((date) => {
           const key = dateKey(date);
-          const inMonth = date.getMonth() === month - 1;
+          const inMonth = weekOnly || date.getMonth() === month - 1;
           const summary = summaryByDate.get(key);
           const status = dayStatus(summary);
           const selected = key === selectedDate;
@@ -112,7 +162,7 @@ export function MonthGrid({
                     <View style={[styles.dot, { backgroundColor: statusColor[status] }]} />
                   ) : null}
                   {(summary?.important ?? 0) > 0 ? (
-                    <View style={[styles.dot, { backgroundColor: '#f0b429' }]} />
+                    <View style={[styles.dot, { backgroundColor: colors.warn }]} />
                   ) : null}
                 </View>
               ) : (
@@ -123,14 +173,16 @@ export function MonthGrid({
         })}
       </View>
 
+      {weekOnly ? null : (
       <View style={styles.legend}>
         <LegendDot color={colors.danger} label={t('calendar.legend.overdue')} />
         <LegendDot color={colors.warn} label={t('calendar.legend.pending')} />
         <LegendDot color={colors.brand} label={t('calendar.legend.completed')} />
         {showImportantLegend ? (
-          <LegendDot color="#f0b429" label={t('calendar.legend.important')} />
+          <LegendDot color={colors.warn} label={t('calendar.legend.important')} />
         ) : null}
       </View>
+      )}
     </View>
   );
 }
@@ -147,7 +199,7 @@ function LegendDot({ color, label }: { color: string; label: string }) {
 
 const styles = StyleSheet.create({
   wrap: {
-    borderRadius: 24,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 12,
   },
@@ -155,6 +207,7 @@ const styles = StyleSheet.create({
   navBtn: { height: 40, justifyContent: 'center', width: 40 },
   navText: { fontFamily: fonts.regular, fontSize: 28, textAlign: 'center' },
   title: { fontSize: 16, fontFamily: fonts.bold, textTransform: 'capitalize' },
+  titleButton: { alignItems: 'center', flexDirection: 'row', gap: 6, minHeight: 40 },
   weekRow: { flexDirection: 'row' },
   weekday: { flex: 1, fontSize: 11, fontFamily: fonts.semibold, textAlign: 'center' },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },

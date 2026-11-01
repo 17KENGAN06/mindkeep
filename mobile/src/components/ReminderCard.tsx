@@ -119,7 +119,7 @@ export function ReminderCard({
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 24,
+    borderRadius: 16,
     borderWidth: 1,
     padding: 16,
   },

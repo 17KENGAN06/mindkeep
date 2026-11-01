@@ -321,47 +321,6 @@
     "copyPrevMonth": "Mois précédent",
     "copyNextMonth": "Mois suivant"
   },
-  "forest": {
-    "title": "Ta forêt",
-    "trees": "{{count}} arbres",
-    "addedToday": "+{{count}} aujourd'hui",
-    "groveProgress": "Bosquet {{grove}} · {{current}} / {{total}}",
-    "remaining": "{{count}} avant le prochain bosquet",
-    "remainingDone": "Bosquet terminé",
-    "remainingZone": "{{count}} avant une zone forestière",
-    "zoneOpen": "Zone forestière débloquée",
-    "explore": "Explorer la forêt",
-    "plusOne": "+1 arbre",
-    "groveCompleted": "Bosquet terminé",
-    "groveComplete1": "Premier bosquet",
-    "groveComplete2": "Deuxième bosquet",
-    "groveComplete3": "Troisième bosquet",
-    "groveHint1": "25 arbres — le premier bosquet est terminé.",
-    "groveHint2": "Deux bosquets ce mois-ci. Encore un avant une zone forestière.",
-    "groveHint3": "Trois bosquets. Les 25 arbres suivants ouvrent une zone forestière.",
-    "zoneComplete": "Zone forestière",
-    "zoneHint": "100 arbres — une zone forestière t'appartient.",
-    "newGrove": "Nouveau bosquet",
-    "newGroveHint": "Un nouveau bosquet commence ici.",
-    "newZone": "Nouvelle zone forestière",
-    "newZoneHint": "Un nouveau pan de forêt s'ouvre.",
-    "grovePip": "Bosquet {{n}}",
-    "zonePip": "Zone",
-    "zonesCount": "×{{count}}",
-    "pathLabel": "Bosquet {{grove}} sur 4, {{zone}} zones",
-    "pageTitle": "Ta forêt",
-    "pageSubtitle": "Chaque tâche terminée ce mois-ci plante un arbre. Les bosquets et les zones naissent de ce bilan — jamais des tâches encore à venir.",
-    "backToTasks": "Retour aux tâches",
-    "rulesTitle": "Comment la forêt grandit",
-    "ruleTrees": "1 tâche terminée = 1 arbre.",
-    "ruleGrove": "25 arbres terminent un bosquet.",
-    "ruleZone": "100 arbres débloquent une zone forestière.",
-    "rulePath": "Bosquet 1, puis 2, puis 3 — et 100 arbres ouvrent une zone forestière.",
-    "ruleMonth": "Chaque mois a sa propre forêt.",
-    "yearTitle": "La forêt se lit au mois",
-    "yearHint": "Les arbres viennent des tâches terminées d'un mois. Reviens à la vue mensuelle pour voir la forêt de ce mois.",
-    "monthScope": "Seules les tâches terminées de ce mois plantent des arbres ici."
-  },
   "notes": {
     "title": "Notes",
     "subtitle": "Des notes avec titre et contenu — ou une pensée sans description.",
@@ -1330,7 +1289,9 @@
       "completed": "Terminé",
       "important": "Important"
     },
-    "cellAriaImportant": "{{day}}, {{count}} éléments, {{important}} importantes"
+    "cellAriaImportant": "{{day}}, {{count}} éléments, {{important}} importantes",
+    "showMonth": "Afficher le mois",
+    "showWeek": "Afficher la semaine"
   },
   "rhythm": {
     "title": "Habitudes",
@@ -1367,7 +1328,6 @@
       "notifications": "Notifications · Mindkeep",
       "statistics": "Analytique · Mindkeep",
       "tasks": "Tâches du jour · Mindkeep",
-      "forest": "Ta forêt · Mindkeep",
       "notes": "Notes · Mindkeep",
       "calories": "Nutrition · Mindkeep",
       "rhythm": "Habitudes · Mindkeep",
@@ -1772,7 +1732,7 @@
     "modules": {
       "tasks": {
         "title": "Tâches du jour",
-        "text": "Tu écris ce qu’il faut faire aujourd’hui — et combien de minutes ça prend, si c’est important. Tu coches le fait et tu vois le jour, la semaine et le mois au même endroit. Il y a un plan du mois à part : combien de tâches il y avait et combien tu as fermées. Les tâches faites font pousser une forêt — on voit comment le travail a avancé, jour après jour."
+        "text": "Tu écris ce qu’il faut faire aujourd’hui — et combien de minutes ça prend, si c’est important. Tu coches le fait et tu vois le jour, la semaine et le mois au même endroit. Il y a un plan du mois à part : combien de tâches il y avait et combien tu as fermées."
       },
       "review": {
         "title": "Études et retour",

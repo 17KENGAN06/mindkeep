@@ -60,14 +60,6 @@ export function useTodayTasks(date: string, enabled = true) {
   });
 }
 
-export function useForestSummary(year: number, month: number, enabled = true) {
-  return useQuery({
-    queryKey: [...tasksKey, 'forest', year, month],
-    queryFn: () => dailyTasksApi.getForest(year, month),
-    enabled,
-  });
-}
-
 export function useToggleTask(date?: string) {
   const queryClient = useQueryClient();
   return useMutation({

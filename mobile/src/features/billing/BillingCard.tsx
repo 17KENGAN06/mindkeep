@@ -285,7 +285,7 @@ function UsageGrid({ usage }: { usage: BillingStatus['usage'] }) {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 22,
+    borderRadius: 16,
     borderWidth: 1,
     marginBottom: 28,
     padding: 16,

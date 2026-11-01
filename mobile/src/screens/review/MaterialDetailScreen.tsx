@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   block: {
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     gap: 8,
     padding: 14,

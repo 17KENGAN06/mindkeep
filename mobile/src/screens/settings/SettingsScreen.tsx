@@ -23,7 +23,6 @@ import { ReminderSettingsCard } from '../../features/notifications/ReminderSetti
 import { useRefreshOnFocus } from '../../features/sync/useRefreshOnFocus';
 import { useTheme } from '../../features/theme/useTheme';
 import { fonts } from '../../config/fonts';
-import { AmbientGlow } from '../../components/AmbientGlow';
 
 export function SettingsScreen() {
   const { t } = useTranslation();
@@ -72,7 +71,6 @@ export function SettingsScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['bottom']}>
-      <AmbientGlow />
       <SectionScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
         <Text style={[styles.lead, { color: colors.muted }]}>{t('settings.subtitle')}</Text>
         <Text style={[styles.section, { color: colors.ink }]}>{t('settings.modulesTitle')}</Text>

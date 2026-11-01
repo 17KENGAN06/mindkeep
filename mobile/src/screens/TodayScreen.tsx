@@ -51,7 +51,6 @@ import { useAccountToday } from '../features/time/useAccountToday';
 import { dateKeyInZone, formatWeekdayDate, hourInZone, lastNKeysFrom } from '../utils/date';
 import { firstName } from '../utils/name';
 import { fonts } from '../config/fonts';
-import { AmbientGlow } from '../components/AmbientGlow';
 import { NotificationBell, type BellTarget } from '../features/notifications/NotificationBell';
 import { GlassBackground } from '../components/GlassBackground';
 
@@ -568,7 +567,6 @@ export function TodayScreen() {
   if (loading && !tasksQuery.data && !nutritionQuery.data) {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-        <AmbientGlow />
         <View style={styles.centered}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
@@ -591,7 +589,6 @@ export function TodayScreen() {
     // Top edge handled by hand, so the glass strip can reach under the status bar.
     <SafeAreaView edges={['left', 'right']} style={[styles.safe, { backgroundColor: colors.bg }]}>
       <BlurTargetView ref={blurTarget} style={styles.safe}>
-        <AmbientGlow />
         <Animated.ScrollView
           style={styles.scroll}
           contentContainerStyle={[styles.content, { paddingTop: insets.top + 24 }]}

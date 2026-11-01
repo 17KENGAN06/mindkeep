@@ -187,7 +187,9 @@
       "completed": "Completato",
       "important": "Importante"
     },
-    "cellAriaImportant": "{{day}}, {{count}} voci, {{important}} importanti"
+    "cellAriaImportant": "{{day}}, {{count}} voci, {{important}} importanti",
+    "showMonth": "Mostra mese",
+    "showWeek": "Mostra settimana"
   },
   "fuel": {
     "title": "Nutrizione",
@@ -377,7 +379,7 @@
   },
   "tasks": {
     "title": "Attività",
-    "subtitle": "Scegli un giorno, spunta il lavoro o aggiungi un'attività cronometrata. Le attività completate piantano alberi.",
+    "subtitle": "Scegli un giorno, spunta il lavoro o aggiungi un'attività cronometrata.",
     "planTitle": "Piano del mese",
     "planSubtitle": "Cronologia e sintesi delle attività per mese e anno.",
     "viewMonth": "Mese",
@@ -936,47 +938,6 @@
     "ctaGuest": "Crea un account",
     "ctaUser": "Apri la panoramica"
   },
-  "forest": {
-    "title": "La tua foresta",
-    "trees": "{{count}} alberi",
-    "addedToday": "+{{count}} oggi",
-    "groveProgress": "Boschetto {{grove}} · {{current}} / {{total}}",
-    "remaining": "{{count}} al prossimo boschetto",
-    "remainingDone": "Boschetto completato",
-    "remainingZone": "{{count}} a una zona forestale",
-    "zoneOpen": "Zona forestale sbloccata",
-    "explore": "Esplora la foresta",
-    "plusOne": "+1 albero",
-    "groveCompleted": "Boschetto completato",
-    "groveComplete1": "Primo boschetto",
-    "groveComplete2": "Secondo boschetto",
-    "groveComplete3": "Terzo boschetto",
-    "groveHint1": "25 alberi — il primo boschetto è completo.",
-    "groveHint2": "Due boschetti questo mese. Ancora uno per una zona forestale.",
-    "groveHint3": "Tre boschetti. I prossimi 25 alberi aprono una zona forestale.",
-    "zoneComplete": "Zona forestale",
-    "zoneHint": "100 alberi — una zona forestale è tua.",
-    "newGrove": "Nuovo boschetto",
-    "newGroveHint": "Un nuovo boschetto inizia qui.",
-    "newZone": "Nuova zona forestale",
-    "newZoneHint": "Si apre un nuovo tratto di foresta.",
-    "grovePip": "Boschetto {{n}}",
-    "zonePip": "Zona",
-    "zonesCount": "×{{count}}",
-    "pathLabel": "Boschetto {{grove}} di 4, {{zone}} zone",
-    "pageTitle": "La tua foresta",
-    "pageSubtitle": "Ogni attività completata in questo mese pianta un albero. Boschetti e zone crescono da quel registro — mai dalle attività ancora da fare.",
-    "backToTasks": "Torna alle attività",
-    "rulesTitle": "Come cresce la foresta",
-    "ruleTrees": "1 attività completata = 1 albero.",
-    "ruleGrove": "25 alberi completano un boschetto.",
-    "ruleZone": "100 alberi sbloccano una zona forestale.",
-    "rulePath": "Boschetto 1, poi 2, poi 3 — e 100 alberi aprono una zona forestale.",
-    "ruleMonth": "Ogni mese ha la sua foresta.",
-    "yearTitle": "La foresta è una vista mensile",
-    "yearHint": "Gli alberi nascono dalle attività completate in un mese. Torna alla vista mensile per vedere la foresta di quel mese.",
-    "monthScope": "Solo le attività completate di questo mese piantano alberi qui."
-  },
   "admin": {
     "title": "Admin",
     "subtitle": "Utenti e panoramica della piattaforma.",
@@ -1101,7 +1062,7 @@
     "modules": {
       "tasks": {
         "title": "Compiti del giorno",
-        "text": "Scrivi cosa va fatto oggi — e quanti minuti richiede, se conta. Spunti il fatto e vedi il giorno, la settimana e il mese in un unico posto. C’è un piano del mese a parte: quanti compiti c’erano e quanti hai chiuso. Dai compiti fatti cresce una foresta: si vede come è andato il lavoro, giorno per giorno."
+        "text": "Scrivi cosa va fatto oggi — e quanti minuti richiede, se conta. Spunti il fatto e vedi il giorno, la settimana e il mese in un unico posto. C’è un piano del mese a parte: quanti compiti c’erano e quanti hai chiuso."
       },
       "review": {
         "title": "Studio e ritorno",

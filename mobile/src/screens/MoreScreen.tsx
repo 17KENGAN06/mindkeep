@@ -18,7 +18,6 @@ import { useAccountToday } from '../features/time/useAccountToday';
 import { useTheme } from '../features/theme/useTheme';
 import type { MoreStackParamList } from '../navigation/types';
 import { fonts } from '../config/fonts';
-import { AmbientGlow } from '../components/AmbientGlow';
 
 const SITE_URLS = {
   privacy: 'https://mindkeep.cloud/privacy',
@@ -233,7 +232,6 @@ export function MoreScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['top']}>
-      <AmbientGlow />
       <ScrollView style={styles.root} contentContainerStyle={styles.content}>
         <View>
           <Text style={[styles.eyebrow, { color: colors.brand }]}>Mindkeep</Text>
@@ -295,7 +293,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 30, fontFamily: fonts.display, letterSpacing: -0.6, marginTop: 6 },
   profile: {
     alignItems: 'center',
-    borderRadius: 24,
+    borderRadius: 16,
     borderWidth: 1,
     flexDirection: 'row',
     gap: 14,
@@ -342,7 +340,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     textTransform: 'uppercase',
   },
-  card: { borderRadius: 22, borderWidth: 1, overflow: 'hidden' },
+  card: { borderRadius: 16, borderWidth: 1, overflow: 'hidden' },
   divider: { height: StyleSheet.hairlineWidth, marginLeft: 64 },
   row: {
     alignItems: 'center',
@@ -366,7 +364,7 @@ const styles = StyleSheet.create({
   badgeText: { color: '#fff', fontSize: 12, fontFamily: fonts.bold, textAlign: 'center' },
   logout: {
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     flexDirection: 'row',
     gap: 8,

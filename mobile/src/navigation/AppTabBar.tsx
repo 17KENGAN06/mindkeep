@@ -82,7 +82,7 @@ export function AppTabBar({ state, descriptors, navigation, onAdd, badge }: AppT
   const dark = theme === 'dark';
 
   return (
-    // Transparent: the page light (AmbientGlow under the tabs) shows around the floating pill.
+    // Transparent: the page shows around the floating pill.
     // Floats above the system gesture bar / home indicator instead of resting on it.
     <View style={[styles.wrap, { paddingBottom: insets.bottom + 12 }]}>
       <View

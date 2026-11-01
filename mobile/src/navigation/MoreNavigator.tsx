@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Animated, BackHandler, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { BlurTargetView } from 'expo-blur';
-import { AmbientGlow } from '../components/AmbientGlow';
 import { AppIcon } from '../components/AppIcon';
 import { GlassBackground } from '../components/GlassBackground';
 import { SectionScrollContext } from '../components/SectionScrollView';
@@ -32,7 +31,6 @@ import { AdminUserScreen } from '../screens/admin/AdminUserScreen';
 import { FuelScreen } from '../screens/FuelScreen';
 import { TasksScreen } from '../screens/TasksScreen';
 import { MonthPlanScreen } from '../screens/tasks/MonthPlanScreen';
-import { ForestScreen } from '../screens/tasks/ForestScreen';
 import { CategoriesScreen } from '../screens/review/CategoriesScreen';
 import { MaterialFormScreen } from '../screens/review/MaterialFormScreen';
 import { MaterialDetailScreen } from '../screens/review/MaterialDetailScreen';
@@ -117,7 +115,6 @@ function SectionLayout({
     <SectionScrollContext.Provider value={sectionScroll}>
       <View style={[styles.fill, { backgroundColor: colors.bg }]}>
         <BlurTargetView ref={blurTarget} style={styles.fill}>
-          <AmbientGlow />
           <View style={[styles.fill, { paddingTop: offset }]}>{children}</View>
         </BlurTargetView>
         {(android && scrollUnder) || iosGlass ? (
@@ -251,11 +248,6 @@ export function MoreNavigator() {
         name="MonthPlan"
         component={MonthPlanScreen}
         options={{ title: t('tasks.planTitle') }}
-      />
-      <Stack.Screen
-        name="Forest"
-        component={ForestScreen}
-        options={{ title: t('forest.pageTitle') }}
       />
       <Stack.Screen name="ReviewInbox" component={ReviewInboxScreen} options={{ title: '' }} />
       <Stack.Screen

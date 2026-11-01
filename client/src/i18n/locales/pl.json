@@ -321,47 +321,6 @@
     "copyPrevMonth": "Poprzedni miesiąc",
     "copyNextMonth": "Następny miesiąc"
   },
-  "forest": {
-    "title": "Twój las",
-    "trees": "{{count}} drzew",
-    "addedToday": "+{{count}} dziś",
-    "groveProgress": "Gaj {{grove}} · {{current}} / {{total}}",
-    "remaining": "{{count}} do następnego gaju",
-    "remainingDone": "Gaj ukończony",
-    "remainingZone": "{{count}} do strefy lasu",
-    "zoneOpen": "Strefa lasu odblokowana",
-    "explore": "Zwiedzaj las",
-    "plusOne": "+1 drzewo",
-    "groveCompleted": "Gaj ukończony",
-    "groveComplete1": "Pierwszy gaj",
-    "groveComplete2": "Drugi gaj",
-    "groveComplete3": "Trzeci gaj",
-    "groveHint1": "25 drzew — pierwszy gaj jest kompletny.",
-    "groveHint2": "Dwa gaje w tym miesiącu. Jeszcze jeden do strefy lasu.",
-    "groveHint3": "Trzy gaje. Kolejne 25 drzew otwiera strefę lasu.",
-    "zoneComplete": "Strefa lasu",
-    "zoneHint": "100 drzew — strefa lasu jest twoja.",
-    "newGrove": "Nowy gaj",
-    "newGroveHint": "Tutaj zaczyna się nowy gaj.",
-    "newZone": "Nowa strefa lasu",
-    "newZoneHint": "Otwiera się nowy fragment lasu.",
-    "grovePip": "Gaj {{n}}",
-    "zonePip": "Strefa",
-    "zonesCount": "×{{count}}",
-    "pathLabel": "Gaj {{grove}} z 4, {{zone}} stref",
-    "pageTitle": "Twój las",
-    "pageSubtitle": "Każde ukończone zadanie w tym miesiącu sadzi drzewo. Gaje i strefy lasu rosną z tego zapisu — nigdy z zadań, które jeszcze przed tobą.",
-    "backToTasks": "Wróć do zadań",
-    "rulesTitle": "Jak rośnie las",
-    "ruleTrees": "1 ukończone zadanie = 1 drzewo.",
-    "ruleGrove": "25 drzew zamyka gaj.",
-    "ruleZone": "100 drzew odblokowuje strefę lasu.",
-    "rulePath": "Gaj 1, potem 2, potem 3 — a 100 drzew otwiera strefę lasu.",
-    "ruleMonth": "Każdy miesiąc ma swój las.",
-    "yearTitle": "Las to widok miesięczny",
-    "yearHint": "Drzewa sadzi się z ukończonych zadań w jednym miesiącu. Wróć do widoku miesiąca, żeby zobaczyć las z tego miesiąca.",
-    "monthScope": "Tylko ukończone zadania z tego miesiąca sadzą tu drzewa."
-  },
   "notes": {
     "title": "Notatki",
     "subtitle": "Pełne notatki z tytułem — albo krótka myśl bez opisu.",
@@ -1330,7 +1289,9 @@
       "completed": "Ukończone",
       "important": "Ważne"
     },
-    "cellAriaImportant": "{{day}}, {{count}} pozycji, ważnych: {{important}}"
+    "cellAriaImportant": "{{day}}, {{count}} pozycji, ważnych: {{important}}",
+    "showMonth": "Pokaż miesiąc",
+    "showWeek": "Pokaż tydzień"
   },
   "rhythm": {
     "title": "Nawyki",
@@ -1367,7 +1328,6 @@
       "notifications": "Powiadomienia · Mindkeep",
       "statistics": "Analityka · Mindkeep",
       "tasks": "Zadania dnia · Mindkeep",
-      "forest": "Twój las · Mindkeep",
       "notes": "Notatki · Mindkeep",
       "calories": "Odżywianie · Mindkeep",
       "rhythm": "Nawyki · Mindkeep",
@@ -1772,7 +1732,7 @@
     "modules": {
       "tasks": {
         "title": "Zadania dnia",
-        "text": "Zapisujesz, co trzeba zrobić dzisiaj — i ile minut to zajmie, jeśli to ważne. Odhaczasz zrobione i widzisz dzień, tydzień i miesiąc w jednym miejscu. Jest osobny plan miesiąca: ile zadań było i ile zamknięto. Za wykonane zadania rośnie las — widać, jak szła praca z dnia na dzień."
+        "text": "Zapisujesz, co trzeba zrobić dzisiaj — i ile minut to zajmie, jeśli to ważne. Odhaczasz zrobione i widzisz dzień, tydzień i miesiąc w jednym miejscu. Jest osobny plan miesiąca: ile zadań było i ile zamknięto."
       },
       "review": {
         "title": "Nauka i powrót",

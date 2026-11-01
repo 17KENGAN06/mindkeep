@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Modal, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { AmbientGlow } from '../../components/AmbientGlow';
 import { AppIcon } from '../../components/AppIcon';
 import { AppButton } from '../../components/ui';
 import { GradientIcon } from '../../components/GradientIcon';
@@ -70,7 +69,6 @@ function PromptBody({ onDone }: { onDone: () => void }) {
           },
         ]}
       >
-        <AmbientGlow />
         <View style={styles.hero}>
           <GradientIcon name="notifications-outline" size={64} />
         </View>

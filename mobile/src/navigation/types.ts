@@ -18,7 +18,6 @@ export type MoreStackParamList = {
   /** date + taskId: open on that day and highlight the task (bell, notifications, reminders). */
   TasksHome: { open?: 'import' | 'copy'; date?: string; taskId?: string; at?: number } | undefined;
   MonthPlan: undefined;
-  Forest: { year?: number; month?: number };
   // Review
   ReviewInbox: undefined;
   ReviewCalendar: undefined;
