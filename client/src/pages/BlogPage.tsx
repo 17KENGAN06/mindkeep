@@ -37,7 +37,7 @@ export function BlogPage() {
           <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
             {t('blog.eyebrow')}
           </p>
-          <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             {t('blog.title')}
           </h1>
           <p className="mt-4 max-w-2xl text-muted sm:text-lg">{t('blog.subtitle')}</p>
@@ -101,7 +101,7 @@ export function BlogArticlePage() {
               <p className="text-[11px] tracking-[0.2em] text-brand-500 uppercase">
                 {t(`blog.topics.${article.topic}.label`)}
               </p>
-              <h1 className="font-display mt-3 max-w-4xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+              <h1 className="mt-3 max-w-4xl text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                 {t(`blog.articles.${article.slug}.title`)}
               </h1>
 
@@ -129,7 +129,7 @@ export function BlogArticlePage() {
                 <p className="text-[11px] tracking-[0.18em] text-brand-500 uppercase">
                   {t('blog.originLabel')}
                 </p>
-                <p className="mt-2 font-display text-lg font-semibold text-ink">{article.originator}</p>
+                <p className="mt-2 text-lg font-semibold tracking-tight text-ink">{article.originator}</p>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {t(`blog.articles.${article.slug}.originNote`)}
                 </p>
@@ -138,7 +138,7 @@ export function BlogArticlePage() {
 
             <Reveal delayMs={120}>
               <div>
-                <h2 className="font-display text-xl font-semibold text-ink">{t('blog.moreTitle')}</h2>
+                <h2 className="text-lg font-semibold tracking-tight text-ink">{t('blog.moreTitle')}</h2>
                 <div className="mt-4 grid gap-4">
                   {blogArticles
                     .filter((item) => item.slug !== article.slug)

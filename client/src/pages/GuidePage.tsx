@@ -33,14 +33,14 @@ export function GuidePage() {
           <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
             {t('guide.eyebrow')}
           </p>
-          <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             {t('guide.title')}
           </h1>
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">{t('guide.intro')}</p>
         </Reveal>
 
         <section className="mt-12 sm:mt-16">
-          <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 className="text-xl font-semibold tracking-tight text-ink">
             {t('guide.stepsTitle')}
           </h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -63,7 +63,7 @@ export function GuidePage() {
         </section>
 
         <Reveal className="mt-12 glass-panel rounded-3xl p-6 sm:mt-16 sm:p-8">
-          <h2 className="font-display text-2xl font-semibold text-ink">{t('guide.rulesTitle')}</h2>
+          <h2 className="text-xl font-semibold tracking-tight text-ink">{t('guide.rulesTitle')}</h2>
           <ul className="mt-5 space-y-3">
             {Array.isArray(rules)
               ? rules.map((rule) => (
@@ -77,7 +77,7 @@ export function GuidePage() {
         </Reveal>
 
         <section className="mt-12 sm:mt-16">
-          <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 className="text-xl font-semibold tracking-tight text-ink">
             {t('guide.faqTitle')}
           </h2>
           <div className="mt-6 space-y-3">
@@ -97,7 +97,7 @@ export function GuidePage() {
         </section>
 
         <Reveal className="my-12 rounded-3xl bg-brand-100 p-6 sm:my-16 sm:p-8" delayMs={120}>
-          <h2 className="font-display text-2xl font-semibold text-ink">{t('guide.ctaTitle')}</h2>
+          <h2 className="text-xl font-semibold tracking-tight text-ink">{t('guide.ctaTitle')}</h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             {t('guide.ctaSubtitle')}
           </p>

@@ -59,7 +59,7 @@ export function BlogPreview({ animated = false }: BlogPreviewProps) {
           <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
             {t('blog.eyebrow')}
           </p>
-          <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             {t('blog.title')}
           </h2>
           <p className="mt-3 max-w-2xl text-muted sm:text-lg">{t('blog.subtitle')}</p>

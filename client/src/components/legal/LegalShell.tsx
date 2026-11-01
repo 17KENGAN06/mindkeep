@@ -33,23 +33,23 @@ export function LegalShell({ doc }: { doc: LegalDoc }) {
 
         <Reveal className="mt-10 max-w-4xl">
           <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">{t(`${doc}.eyebrow`)}</p>
-          <h1 className="font-display mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             {t(`${doc}.title`)}
           </h1>
           <p className="mt-4 text-sm text-muted sm:text-base">{t(`${doc}.updated`)}</p>
-          <p className="mt-5 text-base leading-relaxed text-ink/90 sm:text-lg">{t(`${doc}.intro`)}</p>
+          <p className="mt-4 text-base leading-relaxed text-muted">{t(`${doc}.intro`)}</p>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="mt-10 grid max-w-4xl gap-4">
           {Array.isArray(sections)
             ? sections.map((section, index) => (
                 <Reveal
                   key={section.title}
                   delayMs={60 + index * 40}
-                  className="glass-panel h-full rounded-2xl p-5 sm:p-6 lg:p-7"
+                  className="glass-panel rounded-2xl p-5 sm:p-6"
                 >
-                  <h2 className="font-display text-xl font-semibold text-ink sm:text-2xl">{section.title}</h2>
-                  <div className="mt-4 space-y-3 text-sm leading-relaxed text-muted sm:text-base">
+                  <h2 className="text-lg font-semibold tracking-tight text-ink">{section.title}</h2>
+                  <div className="mt-3 space-y-3 text-sm leading-relaxed text-muted sm:text-[0.95rem]">
                     {section.body.map((paragraph) => (
                       <p key={paragraph.slice(0, 48)}>{paragraph}</p>
                     ))}

@@ -92,7 +92,7 @@ export function ContactPage() {
           <p className="font-display text-xs tracking-[0.24em] text-brand-500 uppercase">
             {t('contact.eyebrow')}
           </p>
-          <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             {t('contact.title')}
           </h1>
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">{t('contact.intro')}</p>
