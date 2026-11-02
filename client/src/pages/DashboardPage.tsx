@@ -5,13 +5,18 @@
   ChartColumn,
   Check,
   CheckCircle2,
+  Coffee,
+  Cookie,
   Droplets,
   Flag,
   Flame,
   GraduationCap,
   Repeat,
+  Soup,
   Utensils,
+  UtensilsCrossed,
   Wallet,
+  type LucideIcon,
 } from 'lucide-react';
 import { useId, useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -44,12 +49,21 @@ import {
 import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
 import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
+import type { Meal } from '@/types/nutrition';
 import { TimezoneSuggestion } from '@/components/TimezoneSuggestion';
 import { useAccountToday } from '@/features/time/useAccountToday';
 import { formatDate, lastNKeysFrom } from '@/utils/date';
 import { firstName } from '@/utils/name';
 
 type WeekTab = 'tasks' | 'reviews';
+
+const MEAL_ICONS: Record<NonNullable<Meal['kind']>, LucideIcon> = {
+  breakfast: Coffee,
+  lunch: Soup,
+  dinner: UtensilsCrossed,
+  snack: Cookie,
+  extra: Utensils,
+};
 
 function clampPercent(value: number): number {
   if (!Number.isFinite(value) || value <= 0) return 0;
@@ -377,23 +391,47 @@ export function DashboardPage() {
                 void setWater.mutateAsync({ date: today, glasses });
               }}
             />
-            <ul className="space-y-1.5">
-              {todayMeals.length === 0 ? (
-                <li className="flex items-center justify-center gap-2 rounded-xl border border-dashed border-line/70 px-3 py-2.5 text-sm text-muted">
-                  <Utensils className="h-4 w-4 shrink-0" aria-hidden />
-                  {t('dashboard.noMealsToday')}
-                </li>
-              ) : (
-                todayMeals.slice(0, 4).map((meal) => (
-                  <li key={meal.id} className="flex items-center justify-between gap-3 text-sm">
-                    <span className="min-w-0 truncate text-ink">{meal.title}</span>
-                    <span className="shrink-0 tabular-nums text-muted">
-                      {meal.calories} {t('calories.kcal')}
-                    </span>
+            {todayMeals.length === 0 ? (
+              <p className="flex items-center justify-center gap-2 rounded-xl border border-dashed border-line/70 px-3 py-2.5 text-sm text-muted">
+                <Utensils className="h-4 w-4 shrink-0" aria-hidden />
+                {t('dashboard.noMealsToday')}
+              </p>
+            ) : (
+              <ul className="grid gap-2 border-t border-line/50 pt-3 md:grid-cols-2">
+                {todayMeals.slice(0, 4).map((meal) => {
+                  const KindIcon = MEAL_ICONS[meal.kind ?? 'extra'];
+                  return (
+                    <li
+                      key={meal.id}
+                      className="flex min-w-0 items-center gap-3 rounded-xl bg-surface/60 px-3 py-2 ring-1 ring-line/60"
+                    >
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-panel text-muted ring-1 ring-line/60">
+                        <KindIcon className="h-4 w-4" aria-hidden />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm text-ink" title={meal.title}>
+                          {meal.title}
+                        </span>
+                        {meal.kind ? (
+                          <span className="block text-xs text-muted">{t(`calories.kinds.${meal.kind}`)}</span>
+                        ) : null}
+                      </span>
+                      <span className="shrink-0 text-right tabular-nums">
+                        <span className="text-sm font-semibold text-ink">{meal.calories}</span>
+                        <span className="ml-1 text-xs text-muted">{t('calories.kcal')}</span>
+                      </span>
+                    </li>
+                  );
+                })}
+                {todayMeals.length > 4 ? (
+                  <li className="md:col-span-2">
+                    <Link to="/nutrition" className="text-xs font-medium text-muted no-underline hover:text-ink">
+                      +{todayMeals.length - 4} →
+                    </Link>
                   </li>
-                ))
-              )}
-            </ul>
+                ) : null}
+              </ul>
+            )}
           </div>
         </div>
       </section>
