@@ -268,6 +268,12 @@ export function DashboardPage() {
       return day.reviewsDone;
     }),
   );
+  const weekDone = weekSeries.reduce(
+    (sum, day) => sum + (weekTabId === 'tasks' ? day.tasksDone : day.reviewsDone),
+    0,
+  );
+  const weekPlanned = weekSeries.reduce((sum, day) => sum + day.tasksPlanned, 0);
+  const weekdayFormat = new Intl.DateTimeFormat(language, { weekday: 'short', timeZone: 'UTC' });
 
   const onToggleTask = async (task: DailyTask) => {
     setBusyTaskId(task.id);
@@ -562,44 +568,92 @@ export function DashboardPage() {
             ) : null}
           </div>
 
-          <div className="mt-5 flex h-52 min-w-0 items-end gap-1 sm:gap-3">
-            {weekSeries.map((day) => {
-              const planned = weekTabId === 'tasks' ? day.tasksPlanned : Math.max(day.reviewsDone, 1);
-              const done = weekTabId === 'tasks' ? day.tasksDone : day.reviewsDone;
-              const plannedHeight = `${Math.max((planned / chartMax) * 100, planned > 0 ? 8 : 4)}%`;
-              const doneHeight = `${Math.max((done / chartMax) * 100, done > 0 ? 8 : 0)}%`;
+          <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="text-3xl font-semibold tabular-nums text-ink">
+              {weekDone}
+              {weekTabId === 'tasks' ? (
+                <span className="text-lg font-medium text-muted"> / {weekPlanned}</span>
+              ) : null}
+            </span>
+            <span className="text-sm text-muted">{t('dashboard.legendDone')}</span>
+            {weekTabId === 'tasks' && weekPlanned > 0 ? (
+              <span className="rounded-full bg-brand-500/10 px-2 py-0.5 text-xs font-semibold tabular-nums text-brand-500">
+                {clampPercent((weekDone / weekPlanned) * 100)}%
+              </span>
+            ) : null}
+          </div>
 
-              return (
-                <div key={day.date} className="flex min-w-0 flex-1 flex-col items-center gap-2">
-                  <div className="relative flex h-44 w-full min-w-0 items-end justify-center">
-                    <div
-                      className="absolute bottom-0 w-[64%] max-w-9 rounded-t-md rounded-b-sm bg-brand-500/[0.14]"
-                      style={{ height: plannedHeight }}
-                    />
-                    <div
-                      className="relative w-[64%] max-w-9 rounded-t-md rounded-b-sm bg-brand-500"
-                      style={{ height: doneHeight }}
-                    />
-                  </div>
-                  <span className="w-full truncate text-center text-[10px] text-muted">
-                    <span className="sm:hidden">{day.date.slice(8)}</span>
-                    <span className="hidden sm:inline">
-                      {formatDate(day.date, language).split(' ').slice(0, 2).join(' ')}
+          <div className="relative mt-4 min-w-0">
+            {/* Faint guide lines at the busiest day, half of it, and the base of the bars. */}
+            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40">
+              {[18, 59, 100].map((line) => (
+                <div
+                  key={line}
+                  className={`absolute inset-x-0 border-t ${line === 100 ? 'border-line' : 'border-dashed border-line/50'}`}
+                  style={{ top: `${line}%` }}
+                />
+              ))}
+            </div>
+            <div className="relative flex min-w-0 gap-1 sm:gap-2">
+              {weekSeries.map((day) => {
+                const isTasks = weekTabId === 'tasks';
+                const done = isTasks ? day.tasksDone : day.reviewsDone;
+                const total = isTasks ? Math.max(day.tasksPlanned, day.tasksDone) : day.reviewsDone;
+                const isToday = day.date === today;
+                const label = isTasks ? (total > 0 ? `${done}/${total}` : '') : done > 0 ? String(done) : '';
+
+                return (
+                  <div
+                    key={day.date}
+                    title={label ? `${formatDate(day.date, language)}: ${label}` : formatDate(day.date, language)}
+                    className={`flex min-w-0 flex-1 flex-col items-center rounded-xl pb-2 ${
+                      isToday ? 'bg-brand-500/[0.06]' : ''
+                    }`}
+                  >
+                    <div className="flex h-40 w-full flex-col items-center justify-end">
+                      {total > 0 ? (
+                        <>
+                          <span className="mb-1 text-[11px] font-semibold tabular-nums text-ink">{label}</span>
+                          <div
+                            className="relative w-[58%] max-w-10 overflow-hidden rounded-lg bg-brand-500/[0.13]"
+                            style={{ height: `${Math.max((total / chartMax) * 82, 6)}%` }}
+                          >
+                            <div
+                              className="absolute inset-x-0 bottom-0 rounded-lg bg-brand-500"
+                              style={{ height: `${(done / total) * 100}%` }}
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <span className="mb-1 h-1.5 w-1.5 rounded-full bg-line" />
+                      )}
+                    </div>
+                    <span
+                      className={`mt-2 w-full truncate text-center text-xs capitalize ${
+                        isToday ? 'font-semibold text-brand-500' : 'text-ink/80'
+                      }`}
+                    >
+                      {weekdayFormat.format(new Date(`${day.date}T12:00:00Z`))}
                     </span>
-                  </span>
-                </div>
-              );
-            })}
+                    <span className="w-full truncate text-center text-[10px] tabular-nums text-muted">
+                      {day.date.slice(8)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted">
             <span className="inline-flex items-center gap-2">
               <span className="h-2.5 w-2.5 rounded-full bg-brand-500" />
               {t('dashboard.legendDone')}
             </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-brand-500/25" />
-              {t('dashboard.legendPlanned')}
-            </span>
+            {weekTabId === 'tasks' ? (
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-brand-500/25" />
+                {t('dashboard.legendPlanned')}
+              </span>
+            ) : null}
           </div>
         </article>
         )}
