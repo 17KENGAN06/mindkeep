@@ -7,8 +7,10 @@ import { Button } from '@/components/ui/Button';
 import { HOME_SNAP_SHELL } from '@/config/layout';
 import { useAuth } from '@/features/auth/useAuth';
 import { accountPlan } from '@/features/billing/planLimit';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 export function HomePricing() {
+  const { localize } = useLocalePath();
   const { t } = useTranslation();
   const { isAuthenticated, user } = useAuth();
   const current = accountPlan(user);
@@ -39,7 +41,7 @@ export function HomePricing() {
               </Link>
             ),
             plus: (
-              <Link to={isAuthenticated ? '/plans' : '/register'} className="block">
+              <Link to={isAuthenticated ? localize('/plans') : '/register'} className="block">
                 <Button className="w-full gap-2 sm:w-full">
                   {t('plans.ctaPlus')}
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -47,7 +49,7 @@ export function HomePricing() {
               </Link>
             ),
             pro: (
-              <Link to={isAuthenticated ? '/plans' : '/register'} className="block">
+              <Link to={isAuthenticated ? localize('/plans') : '/register'} className="block">
                 <Button className="w-full gap-2 sm:w-full">
                   {t('plans.ctaPro')}
                   <ArrowRight className="h-4 w-4" aria-hidden />

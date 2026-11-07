@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocalePath } from '@/seo/useLocalePath';
 import { useTranslation } from 'react-i18next';
 
 type PlansCtaProps = {
@@ -7,12 +8,12 @@ type PlansCtaProps = {
 
 export function PlansCta({ className = '' }: PlansCtaProps) {
   const { t } = useTranslation();
-  const { pathname } = useLocation();
-  if (pathname === '/plans') return null;
+  const { localize, basePath } = useLocalePath();
+  if (basePath === '/plans') return null;
 
   return (
     <Link
-      to="/plans"
+      to={localize('/plans')}
       className={`inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-brand-500 px-3 text-sm font-semibold text-on-brand no-underline shadow-[0_10px_22px_-14px_rgba(53,111,88,0.95)] transition hover:bg-brand-400 focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none xl:px-3.5 ${className}`}
     >
       <span className="xl:hidden">{t('nav.plansShort')}</span>

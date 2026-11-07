@@ -12,6 +12,7 @@ import {
 } from '@/content/blog/articles';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 function formatDate(iso: string, locale: string) {
   try {
@@ -70,6 +71,7 @@ export function BlogPage() {
 }
 
 export function BlogArticlePage() {
+  const { localize } = useLocalePath();
   const { slug = '' } = useParams();
   const { t, i18n } = useTranslation();
   const article = getArticleBySlug(slug);
@@ -90,7 +92,7 @@ export function BlogArticlePage() {
         <PublicHeader />
 
         <Reveal className="mt-8 text-sm">
-          <Link to="/blog" className="font-medium text-brand-500 no-underline">
+          <Link to={localize('/blog')} className="font-medium text-brand-500 no-underline">
             ← {t('blog.back')}
           </Link>
         </Reveal>

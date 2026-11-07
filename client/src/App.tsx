@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AmbientBackdrop } from '@/components/layout/AmbientBackdrop';
 import { Preloader } from '@/components/layout/Preloader';
 import { ScrollManager } from '@/components/layout/ScrollManager';
-import { DocumentTitle } from '@/components/seo/DocumentTitle';
+import { SeoHead } from '@/components/seo/SeoHead';
 import { queryClient } from '@/config/queryClient';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { ThemeProvider } from '@/features/theme/ThemeProvider';
@@ -18,7 +18,7 @@ export default function App() {
           <Preloader />
           <AuthProvider>
             <ScrollManager />
-            <DocumentTitle />
+            <SeoHead />
             <AppRoutes />
           </AuthProvider>
         </BrowserRouter>

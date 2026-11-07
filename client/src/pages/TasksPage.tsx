@@ -5,6 +5,7 @@ import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
 import { DailyTaskList } from '@/components/tasks/DailyTaskList';
 import { TaskPeriodControls } from '@/components/tasks/TaskPeriodControls';
+import { TaskWeekBoard } from '@/components/tasks/TaskWeekBoard';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { Input } from '@/components/ui/Input';
@@ -24,9 +25,21 @@ import {
 } from '@/features/tasks/useDailyTasks';
 import type { DailyTask, DailyTaskView } from '@/types/dailyTask';
 import { useAccountToday, useTodayRollover } from '@/features/time/useAccountToday';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 // date + taskId: opened from the bell / notifications — show that day and the task on it.
 type LocationState = { year?: number; month?: number; date?: string; taskId?: string } | null;
+
+type Layout = 'day' | 'week';
+const LAYOUT_KEY = 'lr_tasks_layout';
+
+function savedLayout(): Layout {
+  try {
+    return localStorage.getItem(LAYOUT_KEY) === 'day' ? 'day' : 'week';
+  } catch {
+    return 'week';
+  }
+}
 
 function isDay(value: unknown): value is string {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value);
@@ -69,6 +82,18 @@ export function TasksPage() {
   const [copyError, setCopyError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
+  const [boardEditing, setBoardEditing] = useState<DailyTask | null>(null);
+  // Week board: tablets and desktops; phones keep the day view.
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const [layout, setLayoutState] = useState<Layout>(savedLayout);
+  const setLayout = (next: Layout) => {
+    setLayoutState(next);
+    try {
+      localStorage.setItem(LAYOUT_KEY, next);
+    } catch {
+      // Private mode: the choice lasts for this visit only.
+    }
+  };
 
   const periodQuery = useDailyTasksPeriod({
     view,
@@ -88,6 +113,8 @@ export function TasksPage() {
   if (isDay(navState?.date) && focusedKey !== location.key) {
     setFocusedKey(location.key);
     setView('month');
+    // A task opened from a notification is shown in its day.
+    setLayoutState('day');
     setYear(Number(navState.date.slice(0, 4)));
     setMonth(Number(navState.date.slice(5, 7)));
     setSelectedDate(navState.date);
@@ -126,6 +153,7 @@ export function TasksPage() {
   }
 
   const data = periodQuery.data;
+  const showBoard = isDesktop && layout === 'week' && view === 'month';
   const dayTasks =
     view === 'month' && selectedDate
       ? data.tasks.filter((task) => task.date === selectedDate)
@@ -298,11 +326,69 @@ export function TasksPage() {
 
   return (
     <div className="space-y-6">
-      <section>
-        <h1 className="text-2xl font-semibold text-ink">{t('tasks.title')}</h1>
-        <PlanRemain feature="tasks" />
+      <section className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">{t('tasks.title')}</h1>
+          <PlanRemain feature="tasks" />
+        </div>
+        {isDesktop && view === 'month' ? (
+          <div className="inline-flex rounded-full bg-brand-500/[0.07] p-1 ring-1 ring-line/50" role="group">
+            {(['week', 'day'] as const).map((option) => (
+              <button
+                key={option}
+                type="button"
+                aria-pressed={layout === option}
+                className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
+                  layout === option ? 'bg-brand-500 text-on-brand shadow-sm' : 'text-muted hover:text-ink'
+                }`}
+                onClick={() => setLayout(option)}
+              >
+                {t(option === 'week' ? 'tasks.layoutWeek' : 'tasks.layoutDay')}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </section>
 
+      {showBoard ? (
+        <>
+          <TaskWeekBoard
+            anchorDate={selectedDate ?? today}
+            today={today}
+            onAnchorChange={(date) => {
+              setSelectedDate(date);
+              setYear(Number(date.slice(0, 4)));
+              setMonth(Number(date.slice(5, 7)));
+            }}
+            onOpenDay={(date) => {
+              setSelectedDate(date);
+              setYear(Number(date.slice(0, 4)));
+              setMonth(Number(date.slice(5, 7)));
+              setLayout('day');
+            }}
+            onEdit={(task) => {
+              setEditError(null);
+              setBoardEditing(task);
+            }}
+          />
+          <TaskEditDialog
+            task={boardEditing}
+            isLoading={updateTask.isPending}
+            error={editError}
+            onClose={() => setBoardEditing(null)}
+            onSave={(values) => {
+              if (!boardEditing) return;
+              setEditError(null);
+              updateTask
+                .mutateAsync({ id: boardEditing.id, payload: values })
+                .then(() => setBoardEditing(null))
+                .catch((error: unknown) => setEditError(mutationErrorMessage(error, t)));
+            }}
+          />
+        </>
+      ) : null}
+
+      {showBoard ? null : (
       <TaskPeriodControls
         view={view}
         year={year}
@@ -311,10 +397,11 @@ export function TasksPage() {
         onYearChange={setYear}
         onMonthChange={setMonth}
       />
+      )}
 
       {view === 'year' ? statsBlock : null}
 
-      {view === 'year' ? (
+      {showBoard ? null : view === 'year' ? (
         <section className="rounded-3xl bg-panel p-5 shadow-sm ring-1 ring-line">
           <h2 className="text-base font-semibold text-ink">{t('tasks.yearBreakdown')}</h2>
           <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">

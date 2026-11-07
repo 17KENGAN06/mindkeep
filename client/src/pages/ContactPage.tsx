@@ -17,8 +17,10 @@ import { CONTACT_INBOX, CONTACT_TOPICS, inboxForTopic, type ContactTopic } from 
 import { mapContactError } from '@/features/contact/mapContactError';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { createContactFormSchema, type ContactFormValues } from '@/schemas/contact';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 export function ContactPage() {
+  const { localize } = useLocalePath();
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const schema = createContactFormSchema(t);
@@ -117,7 +119,7 @@ export function ContactPage() {
               <p className="mt-3 break-all text-sm font-medium text-brand-500">{CONTACT_INBOX.support}</p>
             </a>
             <Link
-              to="/refund"
+              to={localize('/refund')}
               className="glass-panel rounded-2xl p-5 no-underline transition hover:ring-1 hover:ring-brand-300 sm:col-span-2 xl:col-span-1"
             >
               <p className="text-sm font-semibold text-ink">{t('contact.billingTitle')}</p>
@@ -134,7 +136,7 @@ export function ContactPage() {
                   {t('contact.successBody')}
                 </p>
                 <Link
-                  to="/"
+                  to={localize('/')}
                   className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline"
                 >
                   ← {t('nav.home')}
@@ -182,7 +184,7 @@ export function ContactPage() {
                 {topic === 'billing' ? (
                   <div className="space-y-3 rounded-2xl bg-brand-50/70 p-4 text-sm leading-relaxed text-ink ring-1 ring-brand-500/20">
                     <p>{t('contact.billingWarning')}</p>
-                    <Link to="/refund" className="font-semibold text-brand-500 no-underline">
+                    <Link to={localize('/refund')} className="font-semibold text-brand-500 no-underline">
                       {t('footer.refund')}
                     </Link>
                   </div>
@@ -248,7 +250,7 @@ export function ContactPage() {
           </Reveal>
         </div>
 
-        <Link to="/" className="mt-8 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline">
+        <Link to={localize('/')} className="mt-8 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline">
           ← {t('nav.home')}
         </Link>
         <SiteFooter embedded />

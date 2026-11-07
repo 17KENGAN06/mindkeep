@@ -21,15 +21,26 @@ Options -MultiViews -Indexes
   RewriteEngine On
   RewriteBase /
 
-  # Do not rewrite the SPA shell itself (avoids LiteSpeed rewrite loops)
-  RewriteRule ^index\.html$ - [L]
+  # Do not rewrite the shells themselves (avoids LiteSpeed rewrite loops)
+  RewriteRule ^(index|app)\.html$ - [L]
+
+  # English has no prefix: /en/blog -> /blog
+  RewriteRule ^en(?:/(.*))?$ /$1 [R=301,L]
+
+  # One URL per page: drop a trailing slash (/blog/ -> /blog)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+  # Prerendered public pages (scripts/prerender.ts): /ru/blog -> /_p/ru/blog.html
+  RewriteCond %{DOCUMENT_ROOT}/_p/$1.html -f
+  RewriteRule ^(.+)$ /_p/$1.html [L]
 
   # Keep real files and folders
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
 
-  # Send everything else to index.html
-  RewriteRule . /index.html [L]
+  # Everything else (the app, unknown URLs) gets the app shell
+  RewriteRule . /app.html [L]
 </IfModule>
 
 <IfModule mod_expires.c>

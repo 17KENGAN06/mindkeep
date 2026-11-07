@@ -319,7 +319,20 @@
     "copySubmit": "Copy to {{count}} days",
     "copyNone": "Add tasks for this day first",
     "copyPrevMonth": "Previous month",
-    "copyNextMonth": "Next month"
+    "copyNextMonth": "Next month",
+    "layoutDay": "Day",
+    "layoutWeek": "Week",
+    "board": {
+      "prevWeek": "Previous week",
+      "nextWeek": "Next week",
+      "thisWeek": "This week",
+      "weekDone": "done this week",
+      "openDay": "Open this day",
+      "add": "New task",
+      "done": "Done",
+      "left": "Left",
+      "hint": "Press on a box and drag across the others to tick several at once. Click a day to open it with all actions."
+    }
   },
   "notes": {
     "title": "Notes",
@@ -1317,7 +1330,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — tasks, 3·7·30 review, and budget",
+      "home": "Mindkeep — daily planner, spaced repetition & calorie tracker",
       "login": "Sign in · Mindkeep",
       "register": "Start free · Mindkeep",
       "dashboard": "Overview · Mindkeep",
@@ -1355,6 +1368,18 @@
       "settings": "Settings · Mindkeep",
       "billingReturn": "Back to MindKeep · Mindkeep",
       "deleteAccount": "Delete account · Mindkeep"
+    },
+    "descriptions": {
+      "home": "Plan your day in one place: daily tasks, spaced repetition on days 3, 7 and 30, notes, habits, a calorie and water tracker and a multi-currency budget. Free to start.",
+      "plans": "Compare Mindkeep plans: Free, Plus and Pro. See the limits of each plan, monthly and yearly prices, and what the AI food scan in Pro includes.",
+      "guide": "How to use Mindkeep: choose your modules, plan daily tasks, review material on days 3, 7 and 30, and track calories, habits and your budget.",
+      "blog": "Articles on memory, focus and learning: spaced repetition, the Pomodoro technique, the 80/20 rule and how to put them into practice.",
+      "contact": "Contact the Mindkeep team about your account, subscription or payments, report a bug or share an idea. We reply by email.",
+      "privacy": "How Mindkeep collects, uses and protects your data: account details, the content you add, payments through Stripe and photos for the food scan.",
+      "terms": "The terms of using Mindkeep: accounts, free and paid plans, acceptable use, ownership of your content and liability.",
+      "cookies": "Which cookies and local storage Mindkeep uses for sign-in, language and theme, what they are for and how to control them.",
+      "refund": "How Mindkeep subscriptions renew, how to cancel in the Stripe customer portal and when a refund is possible.",
+      "deleteAccount": "How to delete your Mindkeep account and all its data on the website or in the mobile app, and what happens after deletion."
     }
   },
   "footer": {

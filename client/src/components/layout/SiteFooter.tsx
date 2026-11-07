@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocalePath } from '@/seo/useLocalePath';
 import { Trans, useTranslation } from 'react-i18next';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { PaymentMarks } from '@/components/layout/PaymentMarks';
@@ -75,7 +76,7 @@ type SiteFooterProps = {
 
 export function SiteFooter({ compact = false, embedded = false, screen = false }: SiteFooterProps) {
   const { t } = useTranslation();
-  const location = useLocation();
+  const { localize, basePath } = useLocalePath();
   const { isAuthenticated } = useAuth();
   const year = new Date().getFullYear();
   const tight = compact || screen;
@@ -87,14 +88,18 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
     { to: '/blog', label: t('nav.blog'), match: (path: string) => path === '/blog' || path.startsWith('/blog/') },
     { to: '/login', label: t('nav.login'), match: (path: string) => path === '/login' || isAuthenticated },
     { to: '/contact', label: t('nav.contact'), match: (path: string) => path === '/contact' },
-  ].filter((link) => !link.match(location.pathname));
+  ]
+    .filter((link) => !link.match(basePath))
+    .map((link) => ({ ...link, to: localize(link.to) }));
 
   const legalLinks = [
     { to: '/privacy', label: t('footer.privacy') },
     { to: '/terms', label: t('footer.terms') },
     { to: '/cookies', label: t('footer.cookies') },
     { to: '/refund', label: t('footer.refund') },
-  ].filter((link) => link.to !== location.pathname);
+  ]
+    .filter((link) => link.to !== basePath)
+    .map((link) => ({ ...link, to: localize(link.to) }));
 
   const studioLink = (
     <a

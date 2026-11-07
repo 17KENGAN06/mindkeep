@@ -1,11 +1,13 @@
-import { lazy, Suspense, type ComponentType, type ReactNode } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Navigate, Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { RequireModule } from '@/components/RequireModule';
 import { RouteErrorBoundary } from '@/components/layout/RouteErrorBoundary';
 import { env } from '@/config/env';
 import { useAuth } from '@/features/auth/useAuth';
 import { HomePage } from '@/pages/HomePage';
+import { DEFAULT_LANGUAGE, isSeoLanguage, localizePath, PREFIXED_LANGUAGES, stripLocale } from '@/seo/locale';
 
 function lazyNamed(importer: () => Promise<Record<string, ComponentType>>, exportName: string) {
   const load = () =>
@@ -132,85 +134,81 @@ function MaintenanceHome({ children }: { children: ReactNode }) {
   return children;
 }
 
+/** The language prefix whose language was last applied (the path detector applies the first one). */
+let appliedPrefix: string | undefined = stripLocale(window.location.pathname).lang ?? undefined;
+
+/** Unprefixed public pages are English; a visitor in another language moves to their prefix. */
+function DefaultLocaleGate() {
+  const { i18n } = useTranslation();
+  const { pathname, search, hash } = useLocation();
+  const lang = i18n.resolvedLanguage ?? i18n.language;
+
+  useEffect(() => {
+    appliedPrefix = undefined;
+  }, []);
+
+  if (isSeoLanguage(lang) && lang !== DEFAULT_LANGUAGE) {
+    return <Navigate to={`${localizePath(pathname, lang)}${search}${hash}`} replace />;
+  }
+  return <Outlet />;
+}
+
+/** `/:lang/...` — a known prefix switches the language; `/en/...` drops the prefix. */
+function LocaleGate() {
+  const { lang } = useParams();
+  const { i18n } = useTranslation();
+  const { pathname, search, hash } = useLocation();
+  const valid = (PREFIXED_LANGUAGES as readonly string[]).includes(lang ?? '');
+
+  useEffect(() => {
+    // Apply the prefix only when arriving at it. The tree remounts when the language
+    // changes, and re-applying then would undo the language switcher.
+    if (!valid || !lang || lang === appliedPrefix) return;
+    appliedPrefix = lang;
+    if (i18n.resolvedLanguage !== lang) void i18n.changeLanguage(lang);
+  }, [i18n, lang, valid]);
+
+  if (lang === DEFAULT_LANGUAGE) {
+    return <Navigate to={`${pathname.slice(3) || '/'}${search}${hash}`} replace />;
+  }
+  if (!valid) return <NotFoundPage />;
+  return <Outlet />;
+}
+
+/** The public routes, as absolute paths (`base = '/'`) or relative to `/:lang` (`base = ''`). */
+function publicPageRoutes(base: '/' | '') {
+  const page = (path: string, element: ReactNode, maintenance = true) => (
+    <Route
+      key={path || 'home'}
+      {...(path ? { path: `${base}${path}` } : base ? { path: '/' } : { index: true })}
+      element={maintenance ? <MaintenanceHome>{element}</MaintenanceHome> : element}
+    />
+  );
+  return [
+    page('', <HomePage />, false),
+    page('blog', <BlogPage />),
+    page('blog/:slug', <BlogArticlePage />),
+    page('guide', <GuidePage />),
+    page('privacy', <PrivacyPolicyPage />),
+    page('delete-account', <AccountDeletionPage />),
+    page('terms', <TermsPage />),
+    page('cookies', <CookiePolicyPage />),
+    page('refund', <RefundPolicyPage />),
+    page('contact', <ContactPage />, false),
+    page('plans', <PlansPage />),
+  ];
+}
+
 export function AppRoutes() {
   return (
     <RouteErrorBoundary>
       <Suspense fallback={<RouteFallback />}>
         <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/blog"
-          element={
-            <MaintenanceHome>
-              <BlogPage />
-            </MaintenanceHome>
-          }
-        />
-        <Route
-          path="/blog/:slug"
-          element={
-            <MaintenanceHome>
-              <BlogArticlePage />
-            </MaintenanceHome>
-          }
-        />
-        <Route
-          path="/guide"
-          element={
-            <MaintenanceHome>
-              <GuidePage />
-            </MaintenanceHome>
-          }
-        />
-        <Route
-          path="/privacy"
-          element={
-            <MaintenanceHome>
-              <PrivacyPolicyPage />
-            </MaintenanceHome>
-          }
-        />
-        <Route
-          path="/delete-account"
-          element={
-            <MaintenanceHome>
-              <AccountDeletionPage />
-            </MaintenanceHome>
-          }
-        />
-        <Route
-          path="/terms"
-          element={
-            <MaintenanceHome>
-              <TermsPage />
-            </MaintenanceHome>
-          }
-        />
-        <Route
-          path="/cookies"
-          element={
-            <MaintenanceHome>
-              <CookiePolicyPage />
-            </MaintenanceHome>
-          }
-        />
-        <Route
-          path="/refund"
-          element={
-            <MaintenanceHome>
-              <RefundPolicyPage />
-            </MaintenanceHome>
-          }
-        />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route
-          path="/plans"
-          element={
-            <MaintenanceHome>
-              <PlansPage />
-            </MaintenanceHome>
-          }
-        />
+        {/* Public pages: English without a prefix, other languages under /:lang. */}
+        <Route element={<DefaultLocaleGate />}>{publicPageRoutes('/')}</Route>
+        <Route path="/:lang" element={<LocaleGate />}>
+          {publicPageRoutes('')}
+        </Route>
         <Route path="/billing/return" element={<BillingReturnPage />} />
 
         <Route

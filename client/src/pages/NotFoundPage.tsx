@@ -5,8 +5,10 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/ui/Button';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 export function NotFoundPage() {
+  const { localize } = useLocalePath();
   const { t } = useTranslation();
 
   return (
@@ -31,10 +33,10 @@ export function NotFoundPage() {
           </Reveal>
 
           <Reveal className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" delayMs={100}>
-            <Link to="/" className="w-full sm:w-auto">
+            <Link to={localize('/')} className="w-full sm:w-auto">
               <Button className="min-w-40">{t('notFound.home')}</Button>
             </Link>
-            <Link to="/blog" className="w-full sm:w-auto">
+            <Link to={localize('/blog')} className="w-full sm:w-auto">
               <Button variant="secondary" className="min-w-40">
                 {t('nav.blog')}
               </Button>

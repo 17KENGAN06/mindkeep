@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
 import { MINDKEEP_ADMIN, MINDKEEP_CONTACT } from '@/config/contact';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 export type LegalDoc = 'privacy' | 'terms' | 'cookies' | 'refund' | 'deletion';
 
@@ -19,6 +20,7 @@ const CONTACT: Record<LegalDoc, string> = {
 const DOCS: LegalDoc[] = ['privacy', 'terms', 'cookies', 'refund'];
 
 export function LegalShell({ doc }: { doc: LegalDoc }) {
+  const { localize } = useLocalePath();
   const { t } = useTranslation();
   const sections = t(`${doc}.sections`, { returnObjects: true }) as Array<{
     title: string;
@@ -68,7 +70,7 @@ export function LegalShell({ doc }: { doc: LegalDoc }) {
           </p>
           {doc === 'refund' ? (
             <Link
-              to="/contact?topic=billing"
+              to={localize('/contact?topic=billing')}
               className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline"
             >
               {t('refund.requestCta')}
@@ -81,7 +83,7 @@ export function LegalShell({ doc }: { doc: LegalDoc }) {
               </Link>
             ))}
           </nav>
-          <Link to="/" className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline">
+          <Link to={localize('/')} className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline">
             ← {t('nav.home')}
           </Link>
         </Reveal>

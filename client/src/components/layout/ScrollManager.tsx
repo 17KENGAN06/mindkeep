@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { stripLocale } from '@/seo/locale';
 import { useSmoothWheel } from '@/hooks/useSmoothWheel';
 
 function resetWindowScroll() {
@@ -102,7 +103,7 @@ export function ScrollManager() {
 
       // Home landing: also jump to the first section if snap scroller exists.
       const hero = document.getElementById('hero');
-      if (hero && url.pathname === '/') {
+      if (hero && stripLocale(url.pathname).path === '/') {
         hero.scrollIntoView({ behavior: 'auto', block: 'start' });
       }
     };

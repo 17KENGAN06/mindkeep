@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 type StoreComingSoonProps = {
   animated?: boolean;
 };
 
 export function StoreComingSoon({ animated = false }: StoreComingSoonProps) {
+  const { localize } = useLocalePath();
   const { t } = useTranslation();
   const reveal = (extra = '') => (animated ? `snap-reveal ${extra}` : '');
 
@@ -56,7 +58,7 @@ export function StoreComingSoon({ animated = false }: StoreComingSoonProps) {
 
       <p className={`${reveal('snap-reveal-d5')} mt-5 text-xs text-muted sm:text-sm`}>{t('home.apps.note')}</p>
       <Link
-        to="/blog"
+        to={localize('/blog')}
         className={`${reveal('snap-reveal-d6 snap-reveal-left')} mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-brand-500 no-underline`}
       >
         {t('home.apps.readBlog')} →

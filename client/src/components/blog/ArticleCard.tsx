@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { blogArticles, type BlogArticleMeta } from '@/content/blog/articles';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 function formatDate(iso: string, locale: string) {
   try {
@@ -20,6 +21,7 @@ type ArticleCardProps = {
 };
 
 export function ArticleCard({ article, className = '' }: ArticleCardProps) {
+  const { localize } = useLocalePath();
   const { t, i18n } = useTranslation();
 
   return (
@@ -28,7 +30,7 @@ export function ArticleCard({ article, className = '' }: ArticleCardProps) {
         {t(`blog.topics.${article.topic}.label`)}
       </p>
       <h3 className="mt-3 text-lg font-semibold leading-snug text-ink sm:text-xl">
-        <Link to={`/blog/${article.slug}`} className="text-ink no-underline hover:text-brand-500">
+        <Link to={localize(`/blog/${article.slug}`)} className="text-ink no-underline hover:text-brand-500">
           {t(`blog.articles.${article.slug}.title`)}
         </Link>
       </h3>
@@ -49,6 +51,7 @@ type BlogPreviewProps = {
 };
 
 export function BlogPreview({ animated = false }: BlogPreviewProps) {
+  const { localize } = useLocalePath();
   const { t } = useTranslation();
   const reveal = (extra = '') => (animated ? `snap-reveal ${extra}` : '');
 
@@ -65,7 +68,7 @@ export function BlogPreview({ animated = false }: BlogPreviewProps) {
           <p className="mt-3 max-w-2xl text-muted sm:text-lg">{t('blog.subtitle')}</p>
         </div>
         <Link
-          to="/blog"
+          to={localize('/blog')}
           className={`${reveal('snap-reveal-d2 snap-reveal-right snap-pop')} inline-flex min-h-11 items-center justify-center rounded-xl bg-brand-500 px-5 text-sm font-semibold text-on-brand no-underline`}
         >
           {t('blog.viewAll')}

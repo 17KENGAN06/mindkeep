@@ -1,4 +1,30 @@
 User-agent: *
 Allow: /
 
+# The app behind sign-in and one-time links: nothing to index there.
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /account
+Disallow: /onboarding
+Disallow: /tasks
+Disallow: /review
+Disallow: /calendar
+Disallow: /month-plan
+Disallow: /notes
+Disallow: /nutrition
+Disallow: /calories
+Disallow: /habits
+Disallow: /rhythm
+Disallow: /materials
+Disallow: /categories
+Disallow: /finance
+Disallow: /notifications
+Disallow: /statistics
+Disallow: /admin
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /billing/
+Disallow: /_p/
+Disallow: /app.html
+
 Sitemap: https://mindkeep.cloud/sitemap.xml

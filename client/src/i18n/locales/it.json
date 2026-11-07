@@ -319,7 +319,20 @@
     "copySubmit": "Copia su {{count}} giorni",
     "copyNone": "Aggiungi prima le attività di questo giorno",
     "copyPrevMonth": "Mese precedente",
-    "copyNextMonth": "Mese successivo"
+    "copyNextMonth": "Mese successivo",
+    "layoutDay": "Giorno",
+    "layoutWeek": "Settimana",
+    "board": {
+      "prevWeek": "Settimana precedente",
+      "nextWeek": "Settimana successiva",
+      "thisWeek": "Questa settimana",
+      "weekDone": "fatto questa settimana",
+      "openDay": "Apri questo giorno",
+      "add": "Nuova attività",
+      "done": "Fatte",
+      "left": "Restano",
+      "hint": "Premi su una casella e trascina sulle altre per spuntarne diverse insieme. Fai clic su un giorno per aprirlo con tutte le azioni."
+    }
   },
   "notes": {
     "title": "Note",
@@ -1317,7 +1330,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — compiti, ripassi 3·7·30 e budget",
+      "home": "Mindkeep — planner giornaliero, ripetizione dilazionata e calorie",
       "login": "Accedi · Mindkeep",
       "register": "Inizia gratis · Mindkeep",
       "dashboard": "Panoramica · Mindkeep",
@@ -1355,6 +1368,18 @@
       "refund": "Abbonamento e rimborsi · Mindkeep",
       "plans": "Piani · Mindkeep",
       "deleteAccount": "Eliminare l’account · Mindkeep"
+    },
+    "descriptions": {
+      "home": "Tutta la giornata in un solo posto: attività, ripassi al giorno 3, 7 e 30, note, abitudini, contacalorie e acqua e un budget in più valute. Inizia gratis.",
+      "plans": "Confronta i piani Mindkeep Free, Plus e Pro: limiti di ogni piano, prezzi mensili e annuali e cosa include la scansione del cibo con IA in Pro.",
+      "guide": "Come usare Mindkeep: scegli i moduli, pianifica le attività, ripassa al giorno 3, 7 e 30 e tieni traccia di calorie, abitudini e budget.",
+      "blog": "Articoli su memoria, concentrazione e studio: ripetizione dilazionata, tecnica del pomodoro, regola dell’80/20 e come applicarle.",
+      "contact": "Scrivi al team Mindkeep per account, abbonamento o pagamenti, segnala un bug o condividi un’idea. Rispondiamo via email.",
+      "privacy": "Come Mindkeep raccoglie, usa e protegge i tuoi dati: account, contenuti aggiunti, pagamenti tramite Stripe e foto per la scansione del cibo.",
+      "terms": "I termini d’uso di Mindkeep: account, piano gratuito e piani a pagamento, uso consentito, proprietà dei tuoi contenuti e responsabilità.",
+      "cookies": "Quali cookie e quale archiviazione locale usa Mindkeep per accesso, lingua e tema, a cosa servono e come gestirli.",
+      "refund": "Come si rinnova l’abbonamento Mindkeep, come annullarlo nel portale Stripe e quando è possibile un rimborso.",
+      "deleteAccount": "Come eliminare l’account Mindkeep e tutti i dati dal sito o dall’app mobile e cosa succede dopo l’eliminazione."
     }
   },
   "footer": {

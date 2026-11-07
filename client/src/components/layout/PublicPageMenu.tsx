@@ -1,7 +1,8 @@
 import { Menu, X } from 'lucide-react';
 import { useId, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocalePath } from '@/seo/useLocalePath';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth/useAuth';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
@@ -18,14 +19,14 @@ const DESKTOP_LINKS = PAGE_LINKS.filter((link) => link.to !== '/');
 
 export function PublicDesktopNav() {
   const { t } = useTranslation();
-  const { pathname } = useLocation();
+  const { localize, basePath: pathname } = useLocalePath();
 
   return (
     <nav className="hidden items-center gap-1 xl:flex" aria-label={t('footer.linksLabel')}>
       {DESKTOP_LINKS.filter((link) => !link.match(pathname)).map((link) => (
         <Link
           key={link.to}
-          to={link.to}
+          to={localize(link.to)}
           className="inline-flex min-h-11 shrink-0 items-center rounded-xl px-3 py-2.5 text-sm font-medium whitespace-nowrap text-muted no-underline transition hover:bg-brand-50 hover:text-ink"
         >
           {t(link.labelKey)}
@@ -41,7 +42,7 @@ type PublicPageLinksProps = {
 
 export function PublicPageLinks({ onNavigate }: PublicPageLinksProps) {
   const { t } = useTranslation();
-  const { pathname } = useLocation();
+  const { localize, basePath: pathname } = useLocalePath();
   const { isAuthenticated } = useAuth();
 
   const row =
@@ -55,12 +56,12 @@ export function PublicPageLinks({ onNavigate }: PublicPageLinksProps) {
   return (
     <nav className="flex flex-col gap-2" aria-label={t('footer.linksLabel')}>
       {pages.map((link) => (
-        <Link key={link.to} to={link.to} className={quiet} onClick={onNavigate}>
+        <Link key={link.to} to={localize(link.to)} className={quiet} onClick={onNavigate}>
           {t(link.labelKey)}
         </Link>
       ))}
       {plans ? (
-        <Link to={plans.to} className={`${accent} mt-1`} onClick={onNavigate}>
+        <Link to={localize(plans.to)} className={`${accent} mt-1`} onClick={onNavigate}>
           {t(plans.labelKey)}
         </Link>
       ) : null}

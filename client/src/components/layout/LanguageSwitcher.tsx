@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { Check, ChevronDown, Languages } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { supportedLanguages, type AppLanguage } from '@/i18n';
+import { useSwitchLanguage } from '@/seo/useLocalePath';
 
 type LanguageSwitcherProps = {
   variant?: 'compact' | 'panel';
@@ -9,6 +10,7 @@ type LanguageSwitcherProps = {
 
 export function LanguageSwitcher({ variant = 'compact' }: LanguageSwitcherProps) {
   const { i18n, t } = useTranslation();
+  const switchLanguage = useSwitchLanguage();
   const current = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const currentLabel =
     supportedLanguages.find((language) => language.code === current)?.label ?? current;
@@ -33,7 +35,7 @@ export function LanguageSwitcher({ variant = 'compact' }: LanguageSwitcherProps)
                   ? 'bg-brand-500 text-on-brand shadow-sm'
                   : 'text-muted hover:bg-panel hover:text-ink'
               }`}
-              onClick={() => void i18n.changeLanguage(language.code)}
+              onClick={() => switchLanguage(language.code)}
             >
               {language.label}
             </button>
@@ -53,7 +55,8 @@ function CompactLanguageMenu({
   current: AppLanguage;
   currentLabel: string;
 }) {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
+  const switchLanguage = useSwitchLanguage();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const listId = useId();
@@ -121,7 +124,7 @@ function CompactLanguageMenu({
                       : 'text-ink hover:bg-brand-50'
                   }`}
                   onClick={() => {
-                    void i18n.changeLanguage(language.code);
+                    switchLanguage(language.code);
                     setOpen(false);
                   }}
                 >

@@ -15,10 +15,12 @@ import { mapAuthError } from '@/features/auth/mapAuthError';
 import { useAuth } from '@/features/auth/useAuth';
 import { accountPlan } from '@/features/billing/planLimit';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 type PaidPlan = 'plus' | 'pro';
 
 export function PlansPage() {
+  const { localize } = useLocalePath();
   const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
   const { isAuthenticated, user } = useAuth();
@@ -266,7 +268,7 @@ export function PlansPage() {
         <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">{t('plans.billingNote')}</p>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
           {t('plans.refundNote')}{' '}
-          <Link to="/refund" className="font-semibold text-brand-500 no-underline">
+          <Link to={localize('/refund')} className="font-semibold text-brand-500 no-underline">
             {t('footer.refund')}
           </Link>
         </p>

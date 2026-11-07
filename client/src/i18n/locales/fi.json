@@ -319,7 +319,20 @@
     "copySubmit": "Kopioi {{count}} päivälle",
     "copyNone": "Lisää ensin tehtäviä tälle päivälle",
     "copyPrevMonth": "Edellinen kuukausi",
-    "copyNextMonth": "Seuraava kuukausi"
+    "copyNextMonth": "Seuraava kuukausi",
+    "layoutDay": "Päivä",
+    "layoutWeek": "Viikko",
+    "board": {
+      "prevWeek": "Edellinen viikko",
+      "nextWeek": "Seuraava viikko",
+      "thisWeek": "Tämä viikko",
+      "weekDone": "tehty tällä viikolla",
+      "openDay": "Avaa tämä päivä",
+      "add": "Uusi tehtävä",
+      "done": "Tehty",
+      "left": "Jäljellä",
+      "hint": "Paina ruutua ja vedä muiden yli merkitäksesi useita kerralla. Avaa päivä kaikkine toimintoineen klikkaamalla sitä."
+    }
   },
   "notes": {
     "title": "Muistiinpanot",
@@ -1317,7 +1330,7 @@
   },
   "seo": {
     "titles": {
-      "home": "Mindkeep — tehtävät, 3·7·30-kertaus ja budjetti",
+      "home": "Mindkeep — päiväsuunnittelija, kertaus ja kalorilaskuri",
       "login": "Kirjaudu · Mindkeep",
       "register": "Aloita · Mindkeep",
       "dashboard": "Yhteenveto · Mindkeep",
@@ -1355,6 +1368,18 @@
       "refund": "Tilaus ja palautukset · Mindkeep",
       "plans": "Paketit · Mindkeep",
       "deleteAccount": "Tilin poistaminen · Mindkeep"
+    },
+    "descriptions": {
+      "home": "Koko päivä yhdessä paikassa: tehtävät, kertaus päivinä 3, 7 ja 30, muistiinpanot, tavat, kalori- ja vesilaskuri sekä budjetti useassa valuutassa. Aloita ilmaiseksi.",
+      "plans": "Vertaa Mindkeepin Free-, Plus- ja Pro-tilauksia: kunkin rajat, kuukausi- ja vuosihinnat sekä mitä Pron tekoälyruokaskannaus sisältää.",
+      "guide": "Näin käytät Mindkeepiä: valitse osiot, suunnittele tehtävät, kertaa päivinä 3, 7 ja 30 ja seuraa kaloreita, tapoja ja budjettia.",
+      "blog": "Artikkeleita muistista, keskittymisestä ja oppimisesta: hajautettu kertaus, Pomodoro-tekniikka, 80/20-sääntö ja niiden käyttö.",
+      "contact": "Ota yhteyttä Mindkeepin tiimiin tiliin, tilaukseen tai maksuihin liittyen, ilmoita virheestä tai kerro idea. Vastaamme sähköpostilla.",
+      "privacy": "Miten Mindkeep kerää, käyttää ja suojaa tietojasi: tili, lisäämäsi sisältö, maksut Stripen kautta ja kuvat ruokaskannausta varten.",
+      "terms": "Mindkeepin käyttöehdot: tili, ilmainen ja maksulliset tilaukset, sallittu käyttö, sisältösi omistus ja vastuu.",
+      "cookies": "Mitä evästeitä ja paikallista tallennustilaa Mindkeep käyttää kirjautumiseen, kieleen ja teemaan, mihin niitä tarvitaan ja miten niitä hallitaan.",
+      "refund": "Miten Mindkeep-tilaus uusiutuu, miten sen voi perua Stripen asiakasportaalissa ja milloin palautus on mahdollinen.",
+      "deleteAccount": "Miten poistat Mindkeep-tilisi ja kaikki tiedot verkkosivulla tai mobiilisovelluksessa ja mitä poiston jälkeen tapahtuu."
     }
   },
   "footer": {

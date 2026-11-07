@@ -41,6 +41,16 @@ export function weekdayShort(year: number, month: number, day: number, language:
   return format(new Date(year, month - 1, day), 'EEEEEE', { locale: locales[language] ?? enUS });
 }
 
+/** Full weekday name for a YYYY-MM-DD key ("Monday"). */
+export function weekdayLong(dateKey: string, language: AppLanguage = 'en'): string {
+  return format(parseISO(dateKey), 'EEEE', { locale: locales[language] ?? enUS });
+}
+
+/** "3 Nov" for a YYYY-MM-DD key. */
+export function formatDayMonth(dateKey: string, language: AppLanguage = 'en'): string {
+  return format(parseISO(dateKey), 'd MMM', { locale: locales[language] ?? enUS });
+}
+
 export function weekdayLabels(language: AppLanguage = 'en'): string[] {
   return Array.from({ length: 7 }, (_, index) =>
     format(new Date(2024, 0, 1 + index), 'EEEEEE', { locale: locales[language] ?? enUS }),

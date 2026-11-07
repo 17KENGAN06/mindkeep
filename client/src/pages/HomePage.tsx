@@ -15,10 +15,12 @@ import { PublicHeader } from '@/components/layout/PublicHeader';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/useAuth';
 import { PAGE_SHELL, PAGE_SHELL_Y, HOME_SIDE_NAV_PAD } from '@/config/layout';
+import { useLocalePath } from '@/seo/useLocalePath';
 
 const SECTION_IDS = ['hero', 'services', 'pricing', 'footer'] as const;
 
 export function HomePage() {
+  const { localize } = useLocalePath();
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const [scroller, setScroller] = useState<HTMLDivElement | null>(null);
@@ -121,7 +123,7 @@ export function HomePage() {
                       </>
                     )}
                     <Link
-                      to="/guide"
+                      to={localize('/guide')}
                       className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-line px-4 text-sm font-semibold text-ink no-underline sm:w-auto"
                     >
                       {t('nav.guide')}

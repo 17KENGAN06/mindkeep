@@ -46,7 +46,9 @@ void i18n
       escapeValue: false,
     },
     detection: {
-      order: ['localStorage', 'navigator'],
+      // Public pages carry the language in the URL (`/ru/blog`); it wins and is saved.
+      order: ['path', 'localStorage', 'navigator'],
+      lookupFromPathIndex: 0,
       caches: ['localStorage'],
       lookupLocalStorage: 'lr_language',
     },
