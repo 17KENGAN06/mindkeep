@@ -22,8 +22,8 @@ type Filter = 'unread' | 'all' | 'important' | 'reviews';
 const PAGE_SIZE = 20;
 
 const TYPE_STYLE: Record<AppNotification['type'], { icon: LucideIcon; tile: string }> = {
-  TASK_IMPORTANT: { icon: Flag, tile: 'bg-amber-500/15 text-amber-500' },
-  REVIEW_OVERDUE: { icon: TriangleAlert, tile: 'bg-red-500/15 text-red-500' },
+  TASK_IMPORTANT: { icon: Flag, tile: 'bg-brand-500/15 text-brand-500' },
+  REVIEW_OVERDUE: { icon: TriangleAlert, tile: 'bg-ink/10 text-ink' },
   REVIEW_DUE: { icon: GraduationCap, tile: 'bg-brand-500/15 text-brand-500' },
   SYSTEM: { icon: Bell, tile: 'bg-panel text-muted ring-1 ring-line' },
 };

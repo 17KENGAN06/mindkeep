@@ -55,11 +55,9 @@ function panelBox(button: DOMRect): CSSProperties {
 function ReminderRows({
   items,
   empty,
-  tone,
 }: {
   items: Reminder[];
   empty: string;
-  tone: 'due' | 'overdue';
 }) {
   if (items.length === 0) {
     return <p className="px-1 py-2 text-xs text-muted">{empty}</p>;
@@ -71,9 +69,7 @@ function ReminderRows({
         <li key={item.id}>
           <Link
             to={`/materials/${item.materialId}`}
-            className={`block truncate rounded-xl px-2.5 py-2 text-sm font-medium transition hover:bg-panel ${
-              tone === 'overdue' ? 'text-red-700/80' : 'text-ink'
-            }`}
+            className="block truncate rounded-xl px-2.5 py-2 text-sm font-medium text-ink transition hover:bg-panel"
           >
             {item.material.title}
           </Link>
@@ -163,9 +159,9 @@ export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' 
         onClick={() => setOpen((value) => !value)}
         className={`relative inline-flex h-10 w-10 items-center justify-center rounded-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
           hasOverdue
-            ? 'bg-red-500/10 text-red-600 ring-1 ring-red-400/35 hover:bg-red-500/15'
+            ? 'bg-ink/[0.06] text-ink ring-1 ring-ink/20 hover:bg-ink/10'
             : hasImportant
-              ? 'bg-amber-500/15 text-amber-700 ring-1 ring-amber-400/45 hover:bg-amber-500/25'
+              ? 'bg-brand-500/12 text-brand-500 ring-1 ring-brand-500/35 hover:bg-brand-500/20'
               : hasDue || pathname === '/notifications'
                 ? 'bg-brand-500/15 text-brand-500 ring-1 ring-brand-500/40 hover:bg-brand-500/25'
                 : 'text-muted hover:bg-brand-50 hover:text-brand-500'
@@ -179,9 +175,9 @@ export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' 
           <span
             className={`notif-badge-ping absolute -top-0.5 -right-0.5 inline-flex min-h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-[10px] font-bold leading-none ${
               hasOverdue
-                ? 'bg-red-500/80 text-white'
+                ? 'bg-ink text-surface'
                 : hasImportant
-                  ? 'bg-amber-500 text-[#3a2a08]'
+                  ? 'bg-brand-500 text-on-brand'
                   : 'bg-brand-500 text-on-brand'
             }`}
           >
@@ -220,10 +216,10 @@ export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' 
           </Link>
 
           <div className="max-h-80 space-y-3 overflow-y-auto p-3">
-            <section className={hasImportant ? 'rounded-2xl bg-amber-500/[0.08] p-1 ring-1 ring-amber-400/25' : ''}>
+            <section className={hasImportant ? 'rounded-2xl bg-brand-500/[0.06] p-1 ring-1 ring-brand-500/20' : ''}>
               <p
                 className={`px-2.5 pb-1 text-[11px] font-semibold tracking-[0.14em] uppercase ${
-                  hasImportant ? 'text-amber-700' : 'text-muted'
+                  hasImportant ? 'text-brand-500' : 'text-muted'
                 }`}
               >
                 {t('notifications.bellImportant')} · {important}
@@ -243,11 +239,11 @@ export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' 
                             : undefined
                         }
                         onClick={() => setOpen(false)}
-                        className={`flex items-center gap-2 truncate rounded-xl px-2.5 py-2 text-sm transition hover:bg-amber-500/15 ${
+                        className={`flex items-center gap-2 truncate rounded-xl px-2.5 py-2 text-sm transition hover:bg-brand-500/10 ${
                           item.isRead ? 'font-medium text-muted' : 'font-semibold text-ink'
                         }`}
                       >
-                        <Flag className="h-3.5 w-3.5 shrink-0 fill-current text-amber-500" aria-hidden />
+                        <Flag className="h-3.5 w-3.5 shrink-0 fill-current text-brand-500" aria-hidden />
                         <span className="truncate">{item.dailyTask?.title ?? item.message}</span>
                         {item.isRead ? null : (
                           <span
@@ -268,17 +264,16 @@ export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' 
               <ReminderRows
                 items={todayQuery.data ?? []}
                 empty={t('review.emptyTodayTitle')}
-                tone="due"
               />
             </section>
             <section
               className={
-                overdue > 0 ? 'rounded-2xl bg-red-500/[0.06] p-1 ring-1 ring-red-400/20' : ''
+                overdue > 0 ? 'rounded-2xl bg-ink/[0.04] p-1 ring-1 ring-line' : ''
               }
             >
               <p
                 className={`px-2.5 pb-1 text-[11px] font-semibold tracking-[0.14em] uppercase ${
-                  overdue > 0 ? 'text-red-600/80' : 'text-muted'
+                  overdue > 0 ? 'text-ink' : 'text-muted'
                 }`}
               >
                 {t('notifications.bellOverdue')} · {overdue}
@@ -286,7 +281,6 @@ export function NotificationBell({ panelSide = 'below' }: { panelSide?: 'below' 
               <ReminderRows
                 items={overdueQuery.data ?? []}
                 empty={t('notifications.bellEmptyOverdue')}
-                tone="overdue"
               />
             </section>
           </div>

@@ -37,17 +37,17 @@ type CalendarProps = {
 type DayStatus = 'overdue' | 'pending' | 'completed' | 'skipped' | 'none';
 
 const wash: Record<DayStatus, string> = {
-  overdue: 'bg-red-500/[0.09] hover:bg-red-500/[0.14]',
-  pending: 'bg-amber-500/[0.09] hover:bg-amber-500/[0.14]',
-  completed: 'bg-emerald-500/[0.09] hover:bg-emerald-500/[0.14]',
+  overdue: 'bg-ink/[0.05] hover:bg-ink/[0.08]',
+  pending: 'bg-brand-500/[0.05] hover:bg-brand-500/[0.09]',
+  completed: 'bg-brand-500/[0.12] hover:bg-brand-500/[0.17]',
   skipped: 'bg-brand-50/60 hover:bg-brand-50',
   none: 'bg-transparent hover:bg-brand-50/50',
 };
 
 const pill: Record<Exclude<DayStatus, 'none'>, string> = {
-  overdue: 'bg-red-500/18 text-red-500 ring-red-500/35',
-  pending: 'bg-amber-500/18 text-amber-500 ring-amber-500/35',
-  completed: 'bg-emerald-500/18 text-emerald-400 ring-emerald-500/35',
+  overdue: 'bg-transparent text-ink ring-ink/45',
+  pending: 'bg-brand-500/15 text-brand-500 ring-brand-500/30',
+  completed: 'bg-brand-500 text-on-brand ring-brand-500',
   skipped: 'bg-line/70 text-muted ring-line',
 };
 
@@ -62,9 +62,9 @@ function dayStatus(summary?: CalendarDaySummary): DayStatus {
 
 function StatusMix({ summary }: { summary: CalendarDaySummary }) {
   const parts = [
-    { key: 'overdue', n: summary.overdue, className: 'bg-red-400' },
-    { key: 'pending', n: summary.pending, className: 'bg-amber-400' },
-    { key: 'completed', n: summary.completed, className: 'bg-emerald-400' },
+    { key: 'overdue', n: summary.overdue, className: 'bg-ink/45' },
+    { key: 'pending', n: summary.pending, className: 'bg-brand-500/45' },
+    { key: 'completed', n: summary.completed, className: 'bg-brand-500' },
   ].filter((part) => part.n > 0);
 
   if (parts.length < 2) return null;
@@ -248,7 +248,7 @@ export function Calendar({
                 isSelected
                   ? '!ring-2 !ring-brand-500'
                   : important > 0
-                    ? 'ring-amber-400/55'
+                    ? 'ring-brand-500/35'
                     : isToday
                       ? 'ring-brand-500/35'
                       : ''
@@ -256,7 +256,7 @@ export function Calendar({
             >
               {important > 0 ? (
                 <Flag
-                  className="absolute top-1.5 right-1 h-3 w-3 fill-amber-400 text-amber-600"
+                  className="absolute top-1.5 right-1 h-3 w-3 fill-brand-500 text-brand-500"
                   aria-hidden
                 />
               ) : null}
@@ -284,20 +284,20 @@ export function Calendar({
       {weekOnly ? null : (
       <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted">
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-5 min-w-5 rounded-full bg-red-500/18 ring-1 ring-red-500/35" />
+          <span className="h-5 min-w-5 rounded-full ring-1 ring-ink/45" />
           {t('calendar.legend.overdue')}
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-5 min-w-5 rounded-full bg-amber-500/18 ring-1 ring-amber-500/35" />
+          <span className="h-5 min-w-5 rounded-full bg-brand-500/15 ring-1 ring-brand-500/30" />
           {t('calendar.legend.pending')}
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-5 min-w-5 rounded-full bg-emerald-500/18 ring-1 ring-emerald-500/35" />
+          <span className="h-5 min-w-5 rounded-full bg-brand-500 ring-1 ring-brand-500" />
           {t('calendar.legend.completed')}
         </span>
         {showImportantLegend ? (
           <span className="inline-flex items-center gap-1.5">
-            <Flag className="h-3.5 w-3.5 fill-amber-400 text-amber-600" aria-hidden />
+            <Flag className="h-3.5 w-3.5 fill-brand-500 text-brand-500" aria-hidden />
             {t('calendar.legend.important')}
           </span>
         ) : null}

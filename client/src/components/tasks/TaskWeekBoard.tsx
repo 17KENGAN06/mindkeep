@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState, type FormEvent, type PointerEvent } from 'react';
-import { ChevronLeft, ChevronRight, Flag, Plus, Trophy } from 'lucide-react';
+import { useEffect, useMemo, useState, type FormEvent, type KeyboardEvent, type PointerEvent } from 'react';
+import { ChevronLeft, ChevronRight, Flag, Plus, Timer, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
@@ -190,36 +190,38 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
     }
   };
 
-  const box = (checked: boolean, label: string, onDown: () => void, taskId: string, part?: number) => (
-    <button
-      type="button"
-      role="checkbox"
-      aria-checked={checked}
-      aria-label={label}
-      onPointerDown={(event) => {
+  const paintProps = (checked: boolean, label: string, onDown: () => void, taskId: string, part?: number) => ({
+    type: 'button' as const,
+    role: 'checkbox',
+    'aria-checked': checked,
+    'aria-label': label,
+    'data-paint-task': taskId,
+    'data-paint-part': part,
+    onPointerDown: (event: PointerEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      // Let the pointer keep painting across other boxes.
+      event.currentTarget.releasePointerCapture?.(event.pointerId);
+      onDown();
+    },
+    onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => {
+      if (event.key === ' ' || event.key === 'Enter') {
         event.preventDefault();
-        // Let the pointer keep painting across other boxes.
-        (event.currentTarget as HTMLElement).releasePointerCapture?.(event.pointerId);
         onDown();
-      }}
-      data-paint-task={taskId}
-      data-paint-part={part}
-      onKeyDown={(event) => {
-        if (event.key === ' ' || event.key === 'Enter') {
-          event.preventDefault();
-          onDown();
-          paint.current = null;
-        }
-      }}
-      className={`inline-flex shrink-0 touch-none items-center justify-center rounded-md border transition duration-150 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
-        part !== undefined ? 'h-4 w-4' : 'h-5 w-5'
-      } ${
+        paint.current = null;
+      }
+    },
+  });
+
+  const box = (checked: boolean, label: string, onDown: () => void, taskId: string) => (
+    <button
+      {...paintProps(checked, label, onDown, taskId)}
+      className={`inline-flex h-5 w-5 shrink-0 touch-none items-center justify-center rounded-md border transition duration-150 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
         checked
           ? 'scale-100 border-brand-500 bg-brand-500 text-on-brand'
           : 'border-muted/45 bg-panel hover:border-brand-400 active:scale-90'
       }`}
     >
-      <svg viewBox="0 0 12 12" className={`${part !== undefined ? 'h-2.5 w-2.5' : 'h-3 w-3'} transition ${checked ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`} aria-hidden>
+      <svg viewBox="0 0 12 12" className={`h-3 w-3 transition ${checked ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`} aria-hidden>
         <path d="M2.5 6.2 5 8.6l4.5-5" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </button>
@@ -363,19 +365,45 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         {task.important ? <Flag className="mt-0.5 h-3 w-3 shrink-0 fill-current text-brand-500" aria-hidden /> : null}
                       </div>
                       {count > 1 ? (
-                        <div className="mt-1.5 ml-7 flex flex-wrap gap-1">
-                          {Array.from({ length: count }, (_, index) =>
-                            box(
-                              index < partsDone,
-                              `${task.title} ${index + 1}/${count}`,
-                              () => {
-                                paint.current = !(index < partsDone);
-                                setPart(task, index, paint.current);
-                              },
-                              task.id,
-                              index,
-                            ),
-                          )}
+                        <div className="mt-2 ml-7">
+                          {/* One joined bar: done parts filled, the next one outlined. */}
+                          <div className="flex h-3.5 gap-[3px]">
+                            {Array.from({ length: count }, (_, index) => {
+                              const done = index < partsDone;
+                              const next = index === partsDone;
+                              return (
+                                <button
+                                  key={index}
+                                  {...paintProps(
+                                    done,
+                                    `${task.title} ${index + 1}/${count}`,
+                                    () => {
+                                      paint.current = !done;
+                                      setPart(task, index, paint.current);
+                                    },
+                                    task.id,
+                                    index,
+                                  )}
+                                  className={`relative min-w-0 flex-1 touch-none transition-colors duration-200 select-none first:rounded-l-full last:rounded-r-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
+                                    done
+                                      ? 'bg-brand-500'
+                                      : next && !task.completed
+                                        ? 'bg-brand-500/20 ring-1 ring-brand-500/60 ring-inset hover:bg-brand-500/35'
+                                        : 'bg-brand-500/[0.12] hover:bg-brand-500/25'
+                                  }`}
+                                />
+                              );
+                            })}
+                          </div>
+                          <div className="mt-1 flex items-center justify-between gap-2 text-[11px] text-muted tabular-nums">
+                            <span className={partsDone === count ? 'font-semibold text-brand-500' : 'font-semibold text-ink'}>
+                              {partsDone}/{count}
+                            </span>
+                            <span className="inline-flex items-center gap-1">
+                              <Timer className="h-3 w-3" aria-hidden />
+                              {Math.max(1, Math.round(task.minutes / count))} {t('tasks.minShort')}
+                            </span>
+                          </div>
                         </div>
                       ) : null}
                     </li>

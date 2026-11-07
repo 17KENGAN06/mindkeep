@@ -106,7 +106,7 @@ export function DailyTaskList({
                 : task.completed
                 ? 'bg-emerald-500/10 ring-emerald-500/30'
                 : important
-                  ? 'bg-amber-500/[0.09] ring-amber-400/50 shadow-[0_0_24px_rgba(245,186,64,0.16)]'
+                  ? 'bg-brand-500/[0.06] ring-brand-500/35'
                   : 'bg-panel ring-line'
             } ${highlightId === task.id ? '' : 'ring-1'}`}
           >
@@ -131,7 +131,7 @@ export function DailyTaskList({
                 <div className="mt-2 flex items-center gap-1 sm:hidden">
                   <p
                     className={`mr-auto text-sm font-semibold tabular-nums ${
-                      task.completed ? 'text-emerald-400' : important ? 'text-amber-700' : 'text-brand-500'
+                      task.completed ? 'text-emerald-400' : 'text-brand-500'
                     }`}
                   >
                     {formatMinutes(task.minutes, t)}
@@ -143,10 +143,10 @@ export function DailyTaskList({
                     title={t('tasks.importantHint')}
                     disabled={busy}
                     onClick={() => onImportant(task)}
-                    className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                    className={`inline-flex h-10 w-10 items-center justify-center rounded-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                       important
-                        ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_16px_rgba(245,186,64,0.45)] ring-1 ring-amber-200/90'
-                        : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-700 hover:ring-amber-300/70'
+                        ? 'bg-brand-500 text-on-brand ring-1 ring-brand-500'
+                        : 'text-muted ring-1 ring-line hover:bg-brand-500/10 hover:text-brand-500 hover:ring-brand-500/40'
                     }`}
                   >
                     <Flag className={`h-4 w-4 ${important ? 'fill-current' : ''}`} aria-hidden />
@@ -177,7 +177,7 @@ export function DailyTaskList({
 
               <p
                 className={`hidden min-w-[6.5rem] shrink-0 text-right text-sm font-semibold leading-none whitespace-nowrap tabular-nums sm:block sm:w-[7.25rem] ${
-                  task.completed ? 'text-emerald-400' : important ? 'text-amber-700' : 'text-brand-500'
+                  task.completed ? 'text-emerald-400' : 'text-brand-500'
                 }`}
               >
                 {formatMinutes(task.minutes, t)}
@@ -191,10 +191,10 @@ export function DailyTaskList({
                   title={t('tasks.importantHint')}
                   disabled={busy}
                   onClick={() => onImportant(task)}
-                  className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-xl px-2.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+                  className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-xl px-2.5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                     important
-                      ? 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-[#3a2a08] shadow-[0_0_16px_rgba(245,186,64,0.45)] ring-1 ring-amber-200/90'
-                      : 'text-muted ring-1 ring-line hover:bg-amber-50 hover:text-amber-700 hover:ring-amber-300/70'
+                      ? 'bg-brand-500 text-on-brand ring-1 ring-brand-500'
+                      : 'text-muted ring-1 ring-line hover:bg-brand-500/10 hover:text-brand-500 hover:ring-brand-500/40'
                   }`}
                 >
                   <Flag className={`h-4 w-4 shrink-0 ${important ? 'fill-current' : ''}`} aria-hidden />

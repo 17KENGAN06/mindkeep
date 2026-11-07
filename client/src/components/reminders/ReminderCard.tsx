@@ -70,7 +70,7 @@ export function ReminderCard({
         {reminder.daysOverdue > 0 ? (
           <div>
             <dt className="inline font-medium text-ink">{t('review.daysOverdue')}: </dt>
-            <dd className="inline text-red-700">{reminder.daysOverdue}</dd>
+            <dd className="inline font-semibold text-ink">{reminder.daysOverdue}</dd>
           </div>
         ) : null}
       </dl>
