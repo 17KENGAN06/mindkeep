@@ -5,12 +5,22 @@ const CATCH_UP_MS = 170;
 /** Trackpads send tiny deltas and already glide; anything larger is a wheel notch. */
 const MIN_WHEEL_DELTA = 16;
 
-function scrollsOnItsOwn(target: EventTarget | null): boolean {
+/**
+ * An inner list under the pointer that can still move in this direction keeps the wheel.
+ * One already at its end hands the wheel back to the page, so the page never gets stuck.
+ */
+function scrollsOnItsOwn(target: EventTarget | null, deltaY: number): boolean {
   let node = target instanceof Element ? target : null;
   while (node && node !== document.body && node !== document.documentElement) {
     if (node.scrollHeight > node.clientHeight + 1) {
       const { overflowY } = getComputedStyle(node);
-      if (overflowY === 'auto' || overflowY === 'scroll') return true;
+      if (overflowY === 'auto' || overflowY === 'scroll') {
+        const canMove =
+          deltaY > 0
+            ? node.scrollTop + node.clientHeight < node.scrollHeight - 1
+            : node.scrollTop > 0;
+        if (canMove) return true;
+      }
     }
     node = node.parentElement;
   }
@@ -28,6 +38,8 @@ export function useSmoothWheel(resetKey: string) {
     let frame = 0;
     let target = window.scrollY;
     let current = target;
+    /** Where the page really was after our last step. */
+    let landed = target;
     let last = 0;
 
     const stop = () => {
@@ -36,11 +48,21 @@ export function useSmoothWheel(resetKey: string) {
     };
 
     const step = (now: number) => {
+      // Something else moved the page (scrollbar drag, content above changed): follow it.
+      // Compared with where the page actually was after our last step, so rounding to
+      // device pixels does not count as a move.
+      if (Math.abs(window.scrollY - landed) > 2) {
+        current = window.scrollY;
+        target = current;
+        frame = 0;
+        return;
+      }
       const elapsed = Math.min(now - last, 50);
       last = now;
       current += (target - current) * (1 - Math.exp(-elapsed / CATCH_UP_MS));
       if (Math.abs(target - current) < 0.5) current = target;
       window.scrollTo({ top: current, behavior: 'instant' });
+      landed = window.scrollY;
       frame = current === target ? 0 : requestAnimationFrame(step);
     };
 
@@ -49,12 +71,14 @@ export function useSmoothWheel(resetKey: string) {
       if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
       if (event.deltaMode === 0 && Math.abs(event.deltaY) < MIN_WHEEL_DELTA) return;
       // A locked page (open menu or dialog) and inner lists keep their own scrolling.
-      if (document.body.style.overflow === 'hidden' || scrollsOnItsOwn(event.target)) return;
+      if (document.body.style.overflow === 'hidden' || scrollsOnItsOwn(event.target, event.deltaY)) return;
 
       const pixels = event.deltaMode === 1 ? event.deltaY * 40 : event.deltaY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (!frame) {
+      if (!frame || Math.abs(window.scrollY - landed) > 2) {
+        stop();
         current = window.scrollY;
+        landed = current;
         target = current;
       }
       event.preventDefault();

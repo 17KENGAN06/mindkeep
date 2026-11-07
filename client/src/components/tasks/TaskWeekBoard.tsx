@@ -174,7 +174,6 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
   const weekDone = byDay.reduce((sum, day) => sum + day.done, 0);
   const weekTotal = byDay.reduce((sum, day) => sum + day.total, 0);
   const weekPercent = weekTotal ? Math.round((weekDone / weekTotal) * 100) : 0;
-  const busiest = Math.max(1, ...byDay.map((day) => day.total));
 
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const onAdd = async (event: FormEvent, date: string) => {
@@ -263,21 +262,34 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
           ) : null}
         </div>
 
-        {/* Week overview: one bar per day, filled by what is done. */}
-        <div className="flex h-14 min-w-[16rem] flex-1 items-end gap-2" aria-hidden>
-          {byDay.map((day) => (
-            <div key={day.date} className="flex h-full flex-1 flex-col justify-end">
-              <div
-                className="relative overflow-hidden rounded-md bg-brand-500/[0.12]"
-                style={{ height: `${Math.max((day.total / busiest) * 100, 8)}%` }}
-              >
+        {/* Week overview: the same slim rail for every day, so busy days do not shout. */}
+        <div className="grid min-w-[18rem] flex-1 grid-cols-7 gap-2.5" aria-hidden>
+          {byDay.map((day) => {
+            const isToday = day.date === today;
+            const complete = day.total > 0 && day.done === day.total;
+            return (
+              <div key={day.date} className="min-w-0">
+                <div className="flex items-baseline justify-between gap-1 text-[11px] leading-none">
+                  <span className={`truncate capitalize ${isToday ? 'font-semibold text-brand-500' : 'text-muted'}`}>
+                    {weekdayShortKey(day.date, language)}
+                  </span>
+                  <span className={`tabular-nums ${complete ? 'text-brand-500' : 'text-muted'}`}>
+                    {day.total ? `${day.done}/${day.total}` : '–'}
+                  </span>
+                </div>
                 <div
-                  className="absolute inset-x-0 bottom-0 rounded-md bg-brand-500 transition-[height] duration-500 ease-out"
-                  style={{ height: `${day.percent}%` }}
-                />
+                  className={`mt-2 h-1.5 overflow-hidden rounded-full ${
+                    isToday ? 'bg-brand-500/20 ring-1 ring-brand-500/30' : 'bg-ink/[0.07]'
+                  }`}
+                >
+                  <div
+                    className="h-full rounded-full bg-brand-500 transition-[width] duration-500 ease-out"
+                    style={{ width: `${day.percent}%` }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-3">
