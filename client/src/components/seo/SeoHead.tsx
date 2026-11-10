@@ -70,7 +70,7 @@ export function SeoHead() {
   useEffect(() => {
     const { path } = stripLocale(pathname);
     const lang = i18n.resolvedLanguage ?? i18n.language;
-    const seo = isPublicPath(path) && isSeoLanguage(lang) ? pageSeo(path, lang, t) : null;
+    const seo = isPublicPath(path) && isSeoLanguage(lang) ? pageSeo(path, lang, t, (key) => t(key, { returnObjects: true })) : null;
 
     remove('link[rel="alternate"][hreflang]');
     remove('script[data-seo]');

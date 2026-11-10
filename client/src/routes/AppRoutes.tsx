@@ -68,6 +68,7 @@ const FinanceTransactionsPage = lazyNamed(
   'FinanceTransactionsPage',
 );
 const GuidePage = lazyNamed(() => import('@/pages/GuidePage'), 'GuidePage');
+const FeaturePage = lazyNamed(() => import('@/pages/FeaturePage'), 'FeaturePage');
 const OnboardingPage = lazyNamed(() => import('@/pages/OnboardingPage'), 'OnboardingPage');
 const PlansPage = lazyNamed(() => import('@/pages/PlansPage'), 'PlansPage');
 const SettingsPage = lazyNamed(() => import('@/pages/SettingsPage'), 'SettingsPage');
@@ -189,6 +190,7 @@ function publicPageRoutes(base: '/' | '') {
     page('blog', <BlogPage />),
     page('blog/:slug', <BlogArticlePage />),
     page('guide', <GuidePage />),
+    page('features/:slug', <FeaturePage />),
     page('privacy', <PrivacyPolicyPage />),
     page('delete-account', <AccountDeletionPage />),
     page('terms', <TermsPage />),

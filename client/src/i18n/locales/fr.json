@@ -1373,7 +1373,7 @@
       "home": "Toute votre journée au même endroit : tâches, révisions aux jours 3, 7 et 30, notes, habitudes, suivi des calories et de l’eau et budget multidevise. Gratuit pour commencer.",
       "plans": "Comparez les offres Mindkeep Free, Plus et Pro : limites de chaque offre, prix mensuels et annuels et ce que comprend le scan de repas IA de Pro.",
       "guide": "Comment utiliser Mindkeep : choisissez vos modules, planifiez vos tâches, révisez aux jours 3, 7 et 30 et suivez calories, habitudes et budget.",
-      "blog": "Articles sur la mémoire, la concentration et l’apprentissage : répétition espacée, technique Pomodoro, règle des 80/20 et leur mise en pratique.",
+      "blog": "Des articles pratiques sur la mémoire, la concentration, la nutrition et l’argent : répétition espacée, vocabulaire, Pomodoro, règle des 80/20, calories et dépenses.",
       "contact": "Écrivez à l’équipe Mindkeep pour votre compte, votre abonnement ou un paiement, signalez un bug ou partagez une idée. Réponse par e-mail.",
       "privacy": "Comment Mindkeep collecte, utilise et protège vos données : compte, contenus ajoutés, paiements via Stripe et photos pour le scan de repas.",
       "terms": "Les conditions d’utilisation de Mindkeep : compte, offres gratuite et payantes, usage autorisé, propriété de vos contenus et responsabilité.",
@@ -1607,7 +1607,7 @@
   "blog": {
     "eyebrow": "Journal",
     "title": "Révisions, focus et ce qu’il faut garder",
-    "subtitle": "Trois notes courtes : pourquoi 3·7·30, comment Pomodoro aide à capturer, et la règle 80/20.",
+    "subtitle": "Des notes pratiques sur la mémoire, la concentration, l’alimentation et l’argent : répétition espacée, Pomodoro, règle des 80/20, calories et budget.",
     "viewAll": "Ouvrir le blog",
     "back": "Tous les articles",
     "byAuthor": "Par {{author}}",
@@ -1625,43 +1625,202 @@
       "pareto": {
         "label": "Résultats 80/20",
         "description": "Trouve le petit nombre d'entrées qui font avancer l'essentiel de tes progrès."
+      },
+      "nutrition": {
+        "label": "Nutrition",
+        "description": "Manger avec attention, sans régime strict."
+      },
+      "budget": {
+        "label": "Budget",
+        "description": "Savoir où part l’argent, dans toutes les devises."
       }
     },
     "articles": {
       "spaced-repetition-memory": {
         "title": "Pourquoi revenir aux jours 3, 7 et 30 fonctionne",
-        "excerpt": "Un guide calme de la répétition espacée — et pourquoi Mindkeep garde des intervalles fixes.",
+        "excerpt": "Pourquoi on oublie, comment la répétition espacée y remédie et pourquoi réviser aux jours 3, 7 et 30 est un rythme qu’on tient vraiment. Avec un plan pour commencer.",
         "originNote": "Hermann Ebbinghaus a cartographié la courbe de l'oubli dans les années 1880. Son travail a inspiré des retours espacés qui renforcent la mémoire avant qu'elle ne s'efface.",
         "body": [
-          "Apprendre n'est pas un instant unique — c'est une série de retours. Quand tu rencontres une idée une fois, la trace est fragile. Quand tu la retrouves à la bonne distance, l'esprit reconstruit le chemin avec moins d'effort et plus de clarté.",
-          "La répétition espacée est née de cette intuition : programmer les révisions avant que l'oubli ne gagne. Les systèmes classiques adaptent l'écart après chaque réponse. Mindkeep choisit un contrat plus doux — des retours fixes aux jours 3, 7 et 30 depuis le jour où tu as appris quelque chose.",
-          "Des intervalles fixes enlèvent le bruit de te noter toi-même. Tu reviens quand même volontairement. Tu protèges toujours la mémoire à long terme. Tu fais simplement confiance à un rythme clair plutôt qu'à un algorithme qui ne cesse de bouger.",
-          "Utilise ce canevas dès que tu écris sur la mémoire : commence par le sentiment d'oublier, nomme la méthode, crédite l'origine, puis relie-la à la façon dont Mindkeep se comporte en pratique."
+          "Vous lisez quelque chose, vous le comprenez, et une semaine plus tard tout a disparu. Ce n’est pas un manque de talent. Dans les années 1880, Hermann Ebbinghaus l’a mesuré sur lui-même : sans révision, l’essentiel d’une nouvelle matière s’efface en quelques jours, et surtout dans les premières heures.",
+          "## Ce que montre la courbe de l’oubli",
+          "On oublie vite au début, puis de plus en plus lentement. Chaque fois que vous rappelez une information juste avant qu’elle ne s’efface, la courbe s’aplatit et l’intervalle suivant peut être plus long. C’est toute l’idée de la répétition espacée : réviser moins souvent, mais au bon moment.",
+          "## Pourquoi les jours 3, 7 et 30",
+          "Beaucoup d’applications recalculent l’intervalle après chaque réponse. Cela fonctionne, mais transforme l’apprentissage en auto-évaluation permanente. Mindkeep suit un rythme fixe : une première révision trois jours après l’apprentissage, une deuxième au septième jour et une troisième au trentième. Il est facile à retenir et à planifier, et il tombe aux moments où l’oubli est le plus fort.",
+          "## Réviser pour que ça reste",
+          "Ne vous contentez pas de relire. Fermez vos notes, essayez d’abord de retrouver les points clés, puis vérifiez. Se rappeler est plus difficile que reconnaître, et c’est précisément cet effort qui renforce la mémoire. Une révision dure en général cinq à quinze minutes.",
+          "## Un plan simple pour commencer",
+          "Notez ce que vous avez appris aujourd’hui sous forme de court support : un sujet, quelques points clés et un lien si vous en avez un. Mindkeep planifie les trois révisions et les affiche le jour venu. Quand une révision arrive : rappelez-vous d’abord, vérifiez ensuite, puis marquez-la comme faite."
+        ],
+        "faq": [
+          {
+            "q": "Qu’est-ce que la répétition espacée ?",
+            "a": "Une façon d’apprendre où l’on révise à des intervalles de plus en plus longs, juste avant d’oublier. L’information passe ainsi en mémoire à long terme avec moins d’effort au total."
+          },
+          {
+            "q": "Un rythme fixe 3, 7, 30 vaut-il un rythme adaptatif ?",
+            "a": "Pour la plupart des apprentissages du quotidien, oui. Un rythme adaptatif peut être plus précis, mais un rythme fixe est plus facile à tenir, et la régularité compte plus que des intervalles parfaits."
+          },
+          {
+            "q": "Combien de temps dure une révision ?",
+            "a": "En général cinq à quinze minutes. Retrouvez d’abord les points clés sans regarder, puis comblez les trous."
+          }
         ]
       },
       "pomodoro-focus": {
         "title": "Pomodoro : apprendre dans de courtes fenêtres lumineuses",
-        "excerpt": "Comment des blocs de 25 minutes t'aident à étudier sans t'épuiser.",
+        "excerpt": "Comment fonctionne la technique Pomodoro, combien de temps durent les pauses, les erreurs qui la cassent et comment associer des blocs de 25 minutes à votre plan d’étude.",
         "originNote": "Francesco Cirillo a créé la technique Pomodoro à la fin des années 1980, en la nommant d'après un minuteur de cuisine en forme de tomate.",
         "body": [
-          "L'apprentissage profond a besoin d'attention — et l'attention aime les bords. Un bloc court et protégé dit à ton esprit : cette fenêtre n'est là que pour une chose.",
-          "Le schéma Pomodoro est simple : concentre-toi environ 25 minutes, puis repose-toi brièvement. Après quelques cycles, prends une pause plus longue. Le but n'est pas la perfection. Le but est une cadence répétable qui garde de l'énergie pour le prochain retour.",
-          "Associe Pomodoro à Mindkeep : utilise un bloc de focus pour capturer ce que tu as appris, puis laisse le calendrier 3 · 7 · 30 te ramener plus tard. Capture maintenant. Reviens plus tard. Protège à la fois l'intensité et la mémoire.",
-          "Quand tu rédigeras de futurs articles sur l'attention, garde cette forme : problème de distraction → méthode de Cirillo → association concrète avec Mindkeep → une invitation douce à essayer aujourd'hui."
+          "L’attention n’est pas un robinet qu’on laisse couler pendant des heures. Elle tient le mieux sur des plages courtes et nettes, avec une pause entre elles. La technique Pomodoro en fait une routine simple.",
+          "## Comment fonctionne la technique",
+          "Choisissez une tâche, réglez un minuteur sur 25 minutes et ne travaillez que sur elle. Quand il sonne, faites une pause de cinq minutes. Après quatre séances, reposez-vous plus longtemps, 15 à 30 minutes. Francesco Cirillo l’a inventée étudiant, à la fin des années 1980, avec un minuteur de cuisine en forme de tomate.",
+          "## Pourquoi ça aide",
+          "Une fin fixe facilite le démarrage : vingt-cinq minutes semblent faisables, même pour une tâche que vous repoussez. Les pauses gardent une énergie stable, et la dernière heure de la journée n’est pas perdue. Compter les séances montre aussi combien de vrai temps concentré une tâche demande.",
+          "## Les erreurs fréquentes",
+          "Consulter ses messages pendant une séance, sauter les pauses parce que « ça avance », et choisir des tâches trop grosses pour un seul bloc. Si une tâche demande plus de quatre séances, découpez-la en étapes plus petites.",
+          "## Pomodoro avec Mindkeep",
+          "Planifiez la journée en tâches avec des minutes et découpez une longue tâche en parties, par exemple quatre parties de 25 minutes. Cochez une partie après chaque séance et regardez la progression du jour grandir. Quand vous avez appris quelque chose de nouveau, enregistrez-le comme support pour qu’il revienne en révision aux jours 3, 7 et 30."
+        ],
+        "faq": [
+          {
+            "q": "Une séance doit-elle durer 25 minutes ?",
+            "a": "Non. 25 minutes est un bon départ ; certains préfèrent 50 minutes de travail et 10 minutes de pause. L’essentiel est de garder l’équilibre entre travail et repos, avec régularité."
+          },
+          {
+            "q": "Que faire pendant la pause ?",
+            "a": "Éloignez-vous de l’écran : levez-vous, étirez-vous, buvez de l’eau, regardez par la fenêtre. Ne commencez rien dont il est difficile de décrocher."
+          },
+          {
+            "q": "Et si on m’interrompt ?",
+            "a": "Notez l’interruption et revenez à la tâche. Si la séance a été coupée longtemps, recommencez-en une au lieu de la compter."
+          }
         ]
       },
       "pareto-learning-results": {
         "title": "La règle 80/20 dans l'apprentissage",
-        "excerpt": "Comment l'intuition de Vilfredo Pareto t'aide à choisir ce qui vaut d'être retenu.",
+        "excerpt": "Comment la règle des 80/20 s’applique à l’apprentissage : repérez la petite part de la matière qui donne l’essentiel, révisez-la en priorité et laissez le reste sans culpabiliser.",
         "originNote": "L'économiste Vilfredo Pareto a observé qu'une minorité de causes produit souvent une majorité de résultats — idée popularisée plus tard sous le nom de principe 80/20.",
         "body": [
-          "Tous les faits ne méritent pas la même place dans ton esprit. Certaines idées en déverrouillent beaucoup d'autres. D'autres ne font que décorer la surface.",
-          "Le principe de Pareto suggère un biais utile : cherche le petit nombre vital. En langues, ce peut être les mots les plus fréquents. En code, les motifs que tu réutilises chaque semaine. Au travail, les principes derrière tes meilleures décisions.",
-          "Mindkeep t'aide à garder ce que tu as choisi — pas tout ce que tu as touché. Capture la fiche qui se compose. Révise-le sur un rythme fixe. Laisse le reste hors calendrier pour que l'attention reste nette.",
-          "Canevas pour de futures notes 80/20 : nomme l'effort trop chargé → présente Pareto → donne un exemple d'apprentissage concret → montre comment Mindkeep protège l'essentiel avec des retours 3 · 7 · 30."
+          "Tout ce que vous étudiez n’est pas également utile. En général, une petite partie de la matière fait l’essentiel du travail : elle explique le reste, revient sans cesse et ouvre l’étape suivante.",
+          "## D’où vient la règle des 80/20",
+          "L’économiste Vilfredo Pareto a remarqué qu’environ 80 % des terres en Italie appartenaient à environ 20 % de la population. Le même déséquilibre a ensuite été observé dans de nombreux domaines, et l’idée est devenue le principe des 80/20. Les chiffres ne sont pas exacts ; c’est le déséquilibre qui compte.",
+          "## À quoi ça ressemble dans l’apprentissage",
+          "Dans une langue, quelques centaines de mots parmi les plus fréquents couvrent la plupart des textes du quotidien. En programmation, une poignée de schémas revient dans presque tous les projets. À un examen, quelques thèmes clés rapportent souvent la majorité des points. Trouvez d’abord ce noyau et maîtrisez-le.",
+          "## Comment repérer l’essentiel",
+          "Posez trois questions à chaque élément : revient-il souvent, explique-t-il autre chose, et vais-je m’en servir dans le mois qui vient ? Si oui, gardez-le. Sinon, il peut attendre ou disparaître.",
+          "## La règle des 80/20 avec Mindkeep",
+          "N’enregistrez que les supports qui ont passé ce filtre et laissez Mindkeep les ramener aux jours 3, 7 et 30. Des supports courts et ciblés se révisent plus facilement que de longues notes : une idée par support. Le reste reste hors du planning, et votre attention sur ce qui compte."
+        ],
+        "faq": [
+          {
+            "q": "La règle des 80/20, c’est toujours exactement 80 et 20 ?",
+            "a": "Non. Les proportions varient ; l’idée utile est que les résultats sont souvent inégaux, si bien qu’une petite part de l’effort produit une grande part du résultat."
+          },
+          {
+            "q": "Sauter de la matière ne laisse-t-il pas des trous ?",
+            "a": "Au début, peut-être. Commencez par le noyau et ajoutez les détails quand vous en avez besoin ; ils s’apprennent plus facilement sur des bases solides."
+          },
+          {
+            "q": "Comment l’utiliser pour préparer un examen ?",
+            "a": "Regardez les anciens sujets ou le programme, repérez les thèmes qui rapportent le plus de points et révisez-les en premier et le plus souvent."
+          }
+        ]
+      },
+      "how-to-memorize-vocabulary": {
+        "title": "Comment mémoriser du vocabulaire et le garder",
+        "excerpt": "Une méthode pratique pour apprendre des mots : commencez par les plus fréquents, apprenez-les en contexte, rappelez-les au lieu de relire et révisez aux jours 3, 7 et 30.",
+        "originNote": "Le linguiste Paul Nation étudie depuis des décennies combien de mots il faut aux apprenants et comment les apprendre efficacement.",
+        "body": [
+          "La plupart des gens n’oublient pas les mots à cause d’une mauvaise mémoire. Ils les oublient parce qu’ils rencontrent un nouveau mot une fois, peut-être deux, puis plus jamais. La solution n’est pas plus d’heures, mais un meilleur ordre.",
+          "## Commencez par les mots que vous croiserez",
+          "Un petit ensemble de mots fréquents couvre l’essentiel de ce que vous lisez et entendez. Apprenez-les d’abord : verbes du quotidien, noms courants, mots de votre travail ou de vos loisirs. Un mot rare que vous ne verrez pas avant des mois n’a pas encore sa place dans vos révisions.",
+          "## Apprenez les mots en contexte",
+          "Notez chaque mot avec une courte phrase que vous comprenez, pas seulement sa traduction. Le contexte donne au mot une accroche : vous savez où il vit et comment on l’emploie, et vous le retrouvez plus vite ensuite.",
+          "## Rappelez-vous au lieu de relire",
+          "Cachez la traduction et essayez de la retrouver, ou dites la phrase avant de regarder. Se tromper fait partie du processus ; c’est l’effort de rappel qui fixe le mot.",
+          "## De petites séries à rythme fixe",
+          "Apprenez dix à vingt mots à la fois et enregistrez chaque série comme un support dans Mindkeep. Elle revient aux jours 3, 7 et 30, ce qui suffit en général pour qu’un mot passe en mémoire à long terme. Ajoutez une nouvelle série tous les quelques jours, les révisions s’occupent du reste."
+        ],
+        "faq": [
+          {
+            "q": "Combien de nouveaux mots par jour est réaliste ?",
+            "a": "Dix à vingt est un bon rythme pour la plupart des gens. Mieux vaut apprendre moins de mots et les réviser que d’en ajouter beaucoup et les oublier."
+          },
+          {
+            "q": "Faut-il apprendre des mots isolés ou des expressions ?",
+            "a": "Les expressions et les phrases courtes fonctionnent mieux : elles montrent comment le mot s’emploie et se rappellent plus facilement."
+          },
+          {
+            "q": "Et si j’oublie toujours le même mot ?",
+            "a": "Écrivez une nouvelle phrase d’exemple avec lui, idéalement sur votre propre vie, et mettez-la dans votre prochaine série."
+          }
+        ]
+      },
+      "how-to-count-calories": {
+        "title": "Compter les calories sans en faire une obsession",
+        "excerpt": "Ce qu’est une calorie, comment fixer un objectif quotidien, noter ses repas rapidement et pourquoi la tendance de la semaine compte plus qu’une journée. Une approche sereine.",
+        "originNote": "Le chimiste Wilbur Atwater a mesuré l’énergie des aliments à la fin du XIXe siècle. Ses valeurs d’environ 4, 4 et 9 kcal par gramme figurent encore sur les étiquettes.",
+        "body": [
+          "Compter les calories a mauvaise réputation : peser chaque miette, des applis pleines de pubs, la culpabilité après le dîner. Ce n’est pas obligatoire. Un journal approximatif mais honnête tenu quelques semaines vous en apprend plus sur votre alimentation qu’un régime.",
+          "## Ce qu’est une calorie",
+          "Une calorie est une unité d’énergie. À la fin du XIXe siècle, le chimiste Wilbur Atwater a mesuré l’énergie que le corps tire des aliments : environ 4 kcal par gramme de protéines ou de glucides et environ 9 kcal par gramme de lipides. Les étiquettes reprennent toujours ces chiffres.",
+          "## Fixez un objectif quotidien",
+          "Votre objectif dépend de votre corps, de votre activité et de votre but. Beaucoup de calculateurs l’estiment à partir de l’âge, de la taille, du poids et de l’activité. Prenez le résultat comme point de départ et ajustez-le après deux ou trois semaines selon l’évolution de votre poids.",
+          "## Notez vite, pas parfaitement",
+          "Notez ce que vous avez mangé et une estimation des calories dès que possible. Utilisez l’étiquette quand il y en a une, sinon une portion typique. Un repas noté approximativement est bien plus utile qu’un repas oublié.",
+          "## Suivez la tendance",
+          "Le poids varie d’un jour à l’autre à cause de l’eau et du sel : regardez plutôt la semaine. Dans Mindkeep, les calories du jour, l’eau, les pas et la tendance du poids sont côte à côte, si bien qu’une soirée copieuse ne ressemble pas à un échec."
+        ],
+        "faq": [
+          {
+            "q": "Dois-je peser mes aliments ?",
+            "a": "Pas au début. Les étiquettes et les portions typiques suffisent pour repérer les tendances. La balance aide plus tard si vous voulez plus de précision."
+          },
+          {
+            "q": "Combien de calories dois-je manger ?",
+            "a": "Cela dépend de votre corps et de vos objectifs. Prenez une première estimation avec un calculateur et ajustez-la après quelques semaines. En cas de problème de santé, demandez à un médecin ou à un diététicien."
+          },
+          {
+            "q": "Est-ce grave de dépasser parfois mon objectif ?",
+            "a": "Non. Ce qui compte, c’est la moyenne sur une ou deux semaines, pas une seule journée."
+          }
+        ]
+      },
+      "how-to-track-expenses": {
+        "title": "Suivre ses dépenses et faire un budget qui tient",
+        "excerpt": "Une méthode simple pour suivre ses dépenses : tout noter pendant un mois, classer en quelques catégories, tester la règle 50/30/20 et garder chaque devise à part.",
+        "originNote": "Elizabeth Warren et Amelia Warren Tyagi ont popularisé le budget 50/30/20 dans leur livre « All Your Worth » paru en 2005.",
+        "body": [
+          "La plupart des budgets échouent dès la première semaine parce qu’ils partent d’un plan plutôt que des faits. Avant de décider combien dépenser, découvrez combien vous dépensez vraiment.",
+          "## Notez chaque dépense pendant un mois",
+          "Café, courses, abonnements, transports : notez tout, si possible tout de suite. Au bout d’un mois, vous avez une vraie image, et elle réserve souvent quelques surprises.",
+          "## Utilisez quelques catégories claires",
+          "Cinq à huit catégories suffisent : logement, alimentation, transport, abonnements, loisirs, épargne. Trop de catégories ralentissent la saisie, trop peu cachent où part l’argent.",
+          "## Essayez la règle 50/30/20",
+          "Elizabeth Warren et Amelia Warren Tyagi ont popularisé une répartition simple : environ 50 % des revenus pour les besoins, 30 % pour les envies et 20 % pour l’épargne ou le remboursement des dettes. C’est un point de départ, pas une loi : adaptez les chiffres à votre vie.",
+          "## Gardez chaque devise à part",
+          "Si vous êtes payé dans une devise et dépensez dans une autre, tout additionner en une seule somme brouille l’image. Mindkeep tient un solde et des totaux par devise, pour que les chiffres correspondent toujours à chaque compte."
+        ],
+        "faq": [
+          {
+            "q": "Au bout de combien de temps voit-on des résultats ?",
+            "a": "Un mois de suivi honnête montre déjà où part l’argent. Deux ou trois mois montrent ce qui est normal pour vous."
+          },
+          {
+            "q": "Faut-il suivre l’argent liquide ?",
+            "a": "Oui. Le liquide est le plus facile à oublier : ajoutez-le dès que vous le dépensez."
+          },
+          {
+            "q": "Et si j’oublie quelques dépenses ?",
+            "a": "Ajoutez-les quand vous y repensez, ou notez une estimation. Un suivi presque complet reste très utile."
+          }
         ]
       }
-    }
+    },
+    "faqTitle": "Questions fréquentes",
+    "ctaTitle": "Essayez avec votre propre matière",
+    "ctaText": "Mindkeep planifie vos révisions aux jours 3, 7 et 30, réunit les tâches du jour au même endroit et montre votre progression. Gratuit pour commencer.",
+    "ctaButton": "Commencer gratuitement"
   },
   "billing": {
     "title": "MindKeep Pro",
@@ -2057,5 +2216,199 @@
         ]
       }
     ]
+  },
+  "landing": {
+    "navLabel": "Fonctionnalités",
+    "start": "Commencer gratuitement",
+    "plans": "Comparer les offres",
+    "pointsTitle": "Ce que vous obtenez",
+    "stepsTitle": "Comment ça marche",
+    "moreTitle": "Aussi dans Mindkeep",
+    "pages": {
+      "spaced-repetition": {
+        "nav": "Répétition espacée",
+        "seoTitle": "Appli de répétition espacée avec révisions aux jours 3, 7 et 30 · Mindkeep",
+        "description": "Enregistrez ce que vous apprenez : Mindkeep planifie les révisions aux jours 3, 7 et 30, montre ce qui est à faire aujourd’hui et tient un calendrier de toutes les révisions. Gratuit.",
+        "eyebrow": "Répétition espacée",
+        "title": "Retenez ce que vous apprenez avec des révisions aux jours 3, 7 et 30",
+        "lead": "Enregistrez un sujet une fois, et Mindkeep le fait revenir au moment où vous l’auriez oublié. Pas de cartes à noter ni de planning à calculer.",
+        "points": [
+          {
+            "title": "Des révisions planifiées pour vous",
+            "text": "Chaque support a trois révisions : trois, sept et trente jours après le jour d’apprentissage. Les dates sont fixées une fois pour toutes."
+          },
+          {
+            "title": "Aujourd’hui et en retard dans une seule liste",
+            "text": "La page des révisions montre ce qui est prévu aujourd’hui et ce que vous avez manqué : vous savez toujours par où commencer."
+          },
+          {
+            "title": "Un calendrier de toutes les révisions",
+            "text": "Tout le mois d’un coup d’œil : jours chargés, jours terminés et ce qui arrive."
+          },
+          {
+            "title": "Catégories et notes",
+            "text": "Classez vos supports par matière, ajoutez points clés et liens, et gardez tout ce qui concerne un sujet au même endroit."
+          }
+        ],
+        "steps": [
+          "Enregistrez ce que vous avez appris aujourd’hui : un sujet, quelques points clés, un lien.",
+          "Ouvrez Mindkeep quand une révision arrive et essayez de vous rappeler avant de regarder.",
+          "Marquez la révision comme faite. La suivante est déjà planifiée."
+        ],
+        "plan": "Free comprend jusqu’à 20 supports et 3 catégories. Plus et Pro suppriment les limites.",
+        "faq": [
+          {
+            "q": "Pourquoi des intervalles fixes plutôt qu’un algorithme ?",
+            "a": "Un rythme fixe est facile à planifier et ne demande pas de noter chaque réponse. Au quotidien, la régularité compte plus que des intervalles parfaitement réglés."
+          },
+          {
+            "q": "Que se passe-t-il si je manque une révision ?",
+            "a": "Elle reste dans la liste des retards jusqu’à ce que vous la fassiez. Les révisions suivantes gardent leurs dates."
+          },
+          {
+            "q": "Que puis-je enregistrer comme support ?",
+            "a": "Tout ce que vous voulez retenir : une leçon, un chapitre, une liste de mots, une procédure de travail. Un titre, des notes et des liens suffisent."
+          }
+        ]
+      },
+      "calorie-tracker": {
+        "nav": "Compteur de calories",
+        "seoTitle": "Compteur de calories et d’eau avec scan de repas par photo · Mindkeep",
+        "description": "Calories, repas, eau, pas et poids au même endroit. Fixez un objectif quotidien, ajoutez les macros si vous voulez et, en Pro, remplissez un repas à partir d’une photo.",
+        "eyebrow": "Nutrition",
+        "title": "Un compteur de calories serein pour tous les jours",
+        "lead": "Notez ce que vous mangez en quelques secondes, voyez ce qu’il reste pour aujourd’hui et gardez l’eau, les pas et le poids à côté. Sans pub ni base d’aliments à faire défiler.",
+        "points": [
+          {
+            "title": "Un objectif quotidien et ce qu’il reste",
+            "text": "Fixez votre objectif calorique et voyez d’un coup d’œil ce que vous avez mangé et ce qu’il reste. Un dépassement est indiqué clairement, sans dramatiser."
+          },
+          {
+            "title": "Des repas à votre façon",
+            "text": "Saisissez un repas et ses calories, ajoutez protéines, lipides et glucides si vous les suivez, et gardez l’historique de ce que vous avez mangé."
+          },
+          {
+            "title": "Eau, pas et poids",
+            "text": "Touchez les verres d’eau, notez vos pas et votre poids. Le poids s’affiche en tendance, les jours isolés comptent moins."
+          },
+          {
+            "title": "Photo de l’assiette en Pro",
+            "text": "Prenez jusqu’à trois photos et Mindkeep estime les calories et les macros du repas. Vous pouvez toujours corriger les chiffres."
+          }
+        ],
+        "steps": [
+          "Fixez vos objectifs quotidiens de calories et d’eau.",
+          "Ajoutez vos repas au fil de la journée, à la main ou, en Pro, en photo.",
+          "Consultez l’anneau du jour et l’historique pour voir comment s’est passée la semaine."
+        ],
+        "plan": "Free conserve 7 jours d’historique des repas. Plus garde tout l’historique. Pro ajoute le scan photo.",
+        "faq": [
+          {
+            "q": "Comment fonctionne le scan photo ?",
+            "a": "En Pro, vous prenez jusqu’à trois photos d’un repas. Elles sont envoyées à notre serveur et un modèle d’IA estime les calories et les macros. Vous vérifiez le résultat avant d’enregistrer."
+          },
+          {
+            "q": "Dois-je suivre les macros ?",
+            "a": "Non. Les macros sont facultatives : vous pouvez ne noter que les calories et activer les macros quand vous en avez besoin."
+          },
+          {
+            "q": "Puis-je suivre l’eau et les pas sans les repas ?",
+            "a": "Oui. Chaque partie fonctionne seule : vous pouvez n’utiliser que l’eau, les pas ou le poids."
+          }
+        ]
+      },
+      "budget-tracker": {
+        "nav": "Suivi du budget",
+        "seoTitle": "Budget et suivi des dépenses en plusieurs devises · Mindkeep",
+        "description": "Suivez revenus et dépenses en plusieurs devises avec des totaux séparés, classez-les par catégorie et, en Pro, ajoutez une dépense à partir d’une photo du ticket.",
+        "eyebrow": "Finances",
+        "title": "Un budget simple, même avec plusieurs devises",
+        "lead": "Notez ce qui entre et ce qui sort, et voyez chaque devise séparément. Rien n’est converti dans votre dos, les totaux correspondent toujours à vos comptes.",
+        "points": [
+          {
+            "title": "Chaque devise à part",
+            "text": "Euros, hryvnias, zlotys ou dollars : chaque devise a son solde et ses totaux, pour ne jamais mélanger l’argent de comptes différents."
+          },
+          {
+            "title": "Des catégories à votre image",
+            "text": "Créez vos propres catégories de dépenses et de revenus et voyez où est passé le mois."
+          },
+          {
+            "title": "Un mois lisible",
+            "text": "Revenus, dépenses et solde du mois d’un coup d’œil, avec la liste des opérations juste en dessous."
+          },
+          {
+            "title": "Photo du ticket en Pro",
+            "text": "Photographiez un ticket et Mindkeep remplit le montant et la catégorie. Vous vérifiez avant d’enregistrer."
+          }
+        ],
+        "steps": [
+          "Choisissez les devises que vous utilisez.",
+          "Ajoutez revenus et dépenses au fil de l’eau, ou photographiez un ticket en Pro.",
+          "Regardez le mois par devise et par catégorie pour voir ce qu’il faut changer."
+        ],
+        "plan": "Free comprend 25 opérations par mois et 5 catégories. Plus et Pro suppriment les limites ; Pro ajoute le scan des tickets.",
+        "faq": [
+          {
+            "q": "Mindkeep convertit-il les devises ?",
+            "a": "Chaque devise garde ses propres totaux, vous voyez donc toujours les vrais montants. Rien n’est fondu en une seule somme à votre insu."
+          },
+          {
+            "q": "Puis-je connecter ma banque ?",
+            "a": "Non. Vous ajoutez les opérations vous-même ou depuis une photo de ticket. Mindkeep ne demande jamais d’accès bancaire."
+          },
+          {
+            "q": "Comment fonctionne le scan des tickets ?",
+            "a": "En Pro, vous photographiez un ticket. La photo est envoyée à notre serveur et un modèle d’IA lit le montant et propose une catégorie. Vous confirmez avant d’enregistrer."
+          }
+        ]
+      },
+      "daily-planner": {
+        "nav": "Planificateur du jour",
+        "seoTitle": "Planificateur quotidien avec tâches, habitudes et vue semaine · Mindkeep",
+        "description": "Planifiez chaque jour avec des tâches et des minutes, découpez les grosses tâches, cochez-en plusieurs à la fois sur la vue semaine et gardez habitudes et notes à côté.",
+        "eyebrow": "Planification",
+        "title": "Un planificateur quotidien qui montre toute la semaine",
+        "lead": "Chaque jour a sa propre liste : vous voyez le temps qu’il demande et cochez les tâches au fur et à mesure. Habitudes et notes sont juste à côté, la journée reste au même endroit.",
+        "points": [
+          {
+            "title": "Des tâches avec des minutes",
+            "text": "Chaque tâche a une estimation de durée, pour voir à quel point une journée est chargée avant qu’elle commence. Marquez les tâches importantes pour les garder en haut."
+          },
+          {
+            "title": "Les grosses tâches en parties",
+            "text": "Découpez une tâche en parties, par exemple quatre blocs de 25 minutes, et cochez-les une à une."
+          },
+          {
+            "title": "Une vue semaine",
+            "text": "Sur ordinateur ou tablette, la semaine s’affiche en sept colonnes avec la progression de chaque jour, et vous cochez plusieurs tâches d’un seul geste."
+          },
+          {
+            "title": "Habitudes et notes",
+            "text": "Suivez vos habitudes quotidiennes sur une grille mensuelle et gardez des notes pour ce qui n’est pas une tâche."
+          }
+        ],
+        "steps": [
+          "Ajoutez les tâches du jour et leur durée.",
+          "Copiez une journée sur d’autres jours ou collez une liste quand la semaine se répète.",
+          "Cochez les tâches et regardez chaque journée atteindre 100 %."
+        ],
+        "plan": "Free comprend 45 tâches par mois, 3 habitudes et 20 notes. Plus et Pro suppriment les limites.",
+        "faq": [
+          {
+            "q": "Puis-je planifier plusieurs jours à l’avance ?",
+            "a": "Oui. Choisissez n’importe quel jour dans le calendrier ou la vue semaine et ajoutez-y des tâches. Vous pouvez aussi copier un jour sur plusieurs autres."
+          },
+          {
+            "q": "Que deviennent les tâches non terminées ?",
+            "a": "Elles restent sur leur jour et s’affichent en retard : rien ne disparaît en silence."
+          },
+          {
+            "q": "Y a-t-il des rappels ?",
+            "a": "Oui. Les tâches importantes et les révisions du jour apparaissent dans les notifications du site."
+          }
+        ]
+      }
+    }
   }
 }

@@ -1,4 +1,6 @@
-export type BlogTopicId = 'spaced-repetition' | 'pomodoro' | 'pareto';
+import type { FeatureSlug } from '../features';
+
+export type BlogTopicId = 'spaced-repetition' | 'pomodoro' | 'pareto' | 'nutrition' | 'budget';
 
 export type BlogArticleMeta = {
   slug: string;
@@ -14,9 +16,40 @@ export type BlogArticleMeta = {
  * Article catalog — add a new item here, then fill
  * `blog.articles.<slug>` in each locale JSON.
  */
-export const blogTopics: BlogTopicId[] = ['spaced-repetition', 'pomodoro', 'pareto'];
+export const blogTopics: BlogTopicId[] = ['spaced-repetition', 'pomodoro', 'pareto', 'nutrition', 'budget'];
 
+/** The feature page each topic points readers to. */
+export const topicFeature: Record<BlogTopicId, FeatureSlug> = {
+  'spaced-repetition': 'spaced-repetition',
+  pomodoro: 'daily-planner',
+  pareto: 'spaced-repetition',
+  nutrition: 'calorie-tracker',
+  budget: 'budget-tracker',
+};
+
+/** Newest first. */
 export const blogArticles: BlogArticleMeta[] = [
+  {
+    slug: 'how-to-track-expenses',
+    topic: 'budget',
+    publishedAt: '2026-11-06',
+    author: 'Mindkeep Editorial',
+    originator: 'Elizabeth Warren',
+  },
+  {
+    slug: 'how-to-count-calories',
+    topic: 'nutrition',
+    publishedAt: '2026-11-04',
+    author: 'Mindkeep Editorial',
+    originator: 'Wilbur Atwater',
+  },
+  {
+    slug: 'how-to-memorize-vocabulary',
+    topic: 'spaced-repetition',
+    publishedAt: '2026-11-02',
+    author: 'Mindkeep Editorial',
+    originator: 'Paul Nation',
+  },
   {
     slug: 'spaced-repetition-memory',
     topic: 'spaced-repetition',

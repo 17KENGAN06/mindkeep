@@ -8,10 +8,12 @@ import {
   blogArticles,
   blogTopics,
   getArticleBySlug,
+  topicFeature,
   type BlogTopicId,
 } from '@/content/blog/articles';
 import { PAGE_SHELL, PAGE_SHELL_Y } from '@/config/layout';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { articleFaq } from '@/seo/meta';
 import { useLocalePath } from '@/seo/useLocalePath';
 
 function formatDate(iso: string, locale: string) {
@@ -85,6 +87,7 @@ export function BlogArticlePage() {
   }) as string[] | string;
 
   const paragraphs = Array.isArray(body) ? body : [String(body)];
+  const faq = articleFaq(article.slug, (key) => t(key, { returnObjects: true }));
 
   return (
     <div className="min-h-dvh overflow-x-hidden">
@@ -117,10 +120,57 @@ export function BlogArticlePage() {
 
               <div className="prose-mindkeep mt-10 max-w-none space-y-5 text-base leading-relaxed text-ink/90 sm:text-lg">
                 {paragraphs.map((paragraph, index) => (
-                  <Reveal key={paragraph.slice(0, 24)} delayMs={100 + index * 50}>
-                    <p>{paragraph}</p>
+                  <Reveal key={`${index}-${paragraph.slice(0, 24)}`} delayMs={100 + Math.min(index, 6) * 50}>
+                    {/* "## " starts a subheading inside the article text. */}
+                    {paragraph.startsWith('## ') ? (
+                      <h2 className="pt-4 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+                        {paragraph.slice(3)}
+                      </h2>
+                    ) : (
+                      <p>{paragraph}</p>
+                    )}
                   </Reveal>
                 ))}
+              </div>
+
+              {faq.length > 0 ? (
+                <section className="mt-12" aria-labelledby="article-faq">
+                  <h2 id="article-faq" className="text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+                    {t('blog.faqTitle')}
+                  </h2>
+                  <div className="mt-5 divide-y divide-line rounded-2xl bg-panel ring-1 ring-line">
+                    {faq.map((item) => (
+                      <details key={item.q} className="group px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-ink">
+                          {item.q}
+                          <span className="text-xl leading-none text-brand-500 transition group-open:rotate-45" aria-hidden>
+                            +
+                          </span>
+                        </summary>
+                        <p className="mt-3 text-[15px] leading-relaxed text-muted">{item.a}</p>
+                      </details>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              <div className="mt-12 rounded-2xl bg-brand-500/[0.07] p-6 ring-1 ring-brand-500/25 sm:p-7">
+                <p className="text-lg font-semibold tracking-tight text-ink">{t('blog.ctaTitle')}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-muted">{t('blog.ctaText')}</p>
+                <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <Link
+                    to="/register"
+                    className="inline-flex min-h-11 items-center rounded-xl bg-brand-500 px-5 text-sm font-semibold text-on-brand no-underline transition hover:bg-brand-400"
+                  >
+                    {t('blog.ctaButton')}
+                  </Link>
+                  <Link
+                    to={localize(`/features/${topicFeature[article.topic]}`)}
+                    className="text-sm font-semibold text-brand-500 no-underline hover:text-brand-400"
+                  >
+                    {t(`landing.pages.${topicFeature[article.topic]}.nav`)} →
+                  </Link>
+                </div>
               </div>
             </article>
           </Reveal>

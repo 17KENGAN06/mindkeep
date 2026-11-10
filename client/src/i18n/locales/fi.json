@@ -1373,7 +1373,7 @@
       "home": "Koko päivä yhdessä paikassa: tehtävät, kertaus päivinä 3, 7 ja 30, muistiinpanot, tavat, kalori- ja vesilaskuri sekä budjetti useassa valuutassa. Aloita ilmaiseksi.",
       "plans": "Vertaa Mindkeepin Free-, Plus- ja Pro-tilauksia: kunkin rajat, kuukausi- ja vuosihinnat sekä mitä Pron tekoälyruokaskannaus sisältää.",
       "guide": "Näin käytät Mindkeepiä: valitse osiot, suunnittele tehtävät, kertaa päivinä 3, 7 ja 30 ja seuraa kaloreita, tapoja ja budjettia.",
-      "blog": "Artikkeleita muistista, keskittymisestä ja oppimisesta: hajautettu kertaus, Pomodoro-tekniikka, 80/20-sääntö ja niiden käyttö.",
+      "blog": "Käytännön artikkeleita muistista, keskittymisestä, ravinnosta ja rahasta: hajautettu kertaus, sanaston oppiminen, Pomodoro, 80/20-sääntö, kalorit ja menojen seuranta.",
       "contact": "Ota yhteyttä Mindkeepin tiimiin tiliin, tilaukseen tai maksuihin liittyen, ilmoita virheestä tai kerro idea. Vastaamme sähköpostilla.",
       "privacy": "Miten Mindkeep kerää, käyttää ja suojaa tietojasi: tili, lisäämäsi sisältö, maksut Stripen kautta ja kuvat ruokaskannausta varten.",
       "terms": "Mindkeepin käyttöehdot: tili, ilmainen ja maksulliset tilaukset, sallittu käyttö, sisältösi omistus ja vastuu.",
@@ -1607,7 +1607,7 @@
   "blog": {
     "eyebrow": "Päiväkirja",
     "title": "Kertaus, fokus ja mitä pitää",
-    "subtitle": "Kolme lyhyttä merkintää: miksi 3·7·30, miten Pomodoro auttaa tallentamaan, ja 80/20-sääntö.",
+    "subtitle": "Käytännön muistiinpanoja muistista, keskittymisestä, ruoasta ja rahasta: kertaus, Pomodoro, 80/20-sääntö, kalorit ja budjetti.",
     "viewAll": "Avaa blogi",
     "back": "Kaikki artikkelit",
     "byAuthor": "Kirjoittaja: {{author}}",
@@ -1625,43 +1625,202 @@
       "pareto": {
         "label": "80/20-tulokset",
         "description": "Löydä harvat panokset, jotka tuottavat eniten edistystä."
+      },
+      "nutrition": {
+        "label": "Ravinto",
+        "description": "Tietoista syömistä ilman tiukkoja dieettejä."
+      },
+      "budget": {
+        "label": "Budjetti",
+        "description": "Tiedä, mihin rahat menevät, missä tahansa valuutassa."
       }
     },
     "articles": {
       "spaced-repetition-memory": {
         "title": "Miksi paluu päivinä 3, 7 ja 30 toimii",
-        "excerpt": "A calm guide to spaced repetition — and why Mindkeep keeps intervals fixed.",
-        "originNote": "Hermann Ebbinghaus mapped the forgetting curve in the 1880s. His work inspired spaced revisits that strengthen memory before it fades.",
+        "excerpt": "Miksi unohdamme, miten hajautettu kertaus auttaa ja miksi kertaus päivinä 3, 7 ja 30 on aikataulu, jossa oikeasti pysyy. Mukana suunnitelma tälle päivälle.",
+        "originNote": "Hermann Ebbinghaus kuvasi unohtamiskäyrän 1880-luvulla. Hänen työnsä innoitti kertaamaan juuri ennen kuin muisti haalistuu.",
         "body": [
-          "Learning is not a single moment — it is a series of returns. When you meet an idea once, the trace is fragile. When you meet it again at the right distance, the mind rebuilds the path with less effort and more clarity.",
-          "Spaced repetition grew from that insight: schedule reviews before forgetting wins. Classic systems adapt the gap after every answer. Mindkeep chooses a gentler contract — fixed revisits on day 3, day 7 and day 30 from the day you learned something.",
-          "Fixed intervals remove the noise of scoring yourself. You still revisit on purpose. You still protect long-term memory. You simply trust a clear rhythm instead of an ever-shifting algorithm.",
-          "Use this template whenever you write about memory: start with the feeling of forgetting, name the method, credit the originator, then connect it to how Mindkeep behaves in practice."
+          "Luet jotain, ymmärrät sen, ja viikon päästä se on poissa. Kyse ei ole lahjakkuudesta. Hermann Ebbinghaus mittasi tämän 1880-luvulla itsellään: ilman kertausta suurin osa uudesta unohtuu muutamassa päivässä, ja nopeimmin ensimmäisten tuntien aikana.",
+          "## Mitä unohtamiskäyrä kertoo",
+          "Aluksi unohdamme nopeasti, sitten yhä hitaammin. Aina kun palautat asian mieleen juuri ennen kuin se katoaa, käyrä loivenee ja seuraava väli voi olla pidempi. Siinä on hajautetun kertauksen koko idea: kertaa harvemmin, mutta oikealla hetkellä.",
+          "## Miksi päivät 3, 7 ja 30",
+          "Monet sovellukset laskevat välin uudelleen jokaisen vastauksen jälkeen. Se toimii, mutta tekee oppimisesta jatkuvaa itsensä arvioimista. Mindkeep käyttää kiinteää rytmiä: ensimmäinen kertaus kolme päivää oppimisen jälkeen, toinen seitsemäntenä ja kolmas kolmantenakymmenentenä päivänä. Sen muistaa ja suunnittelee helposti, ja se osuu hetkiin, jolloin unohtaminen on voimakkainta.",
+          "## Näin kertaat niin, että asia jää mieleen",
+          "Älä vain lue uudelleen. Sulje muistiinpanot, yritä ensin palauttaa tärkeimmät asiat mieleen ja tarkista vasta sitten. Muistaminen on vaikeampaa kuin tunnistaminen, ja juuri se vaiva vahvistaa muistia. Yksi kertaus kestää yleensä viidestä viiteentoista minuuttiin.",
+          "## Helppo suunnitelma alkuun",
+          "Kirjaa tänään oppimasi lyhyeksi materiaaliksi: aihe, muutama avainkohta ja linkki, jos sellainen on. Mindkeep ajoittaa kolme kertausta ja näyttää ne oikeana päivänä. Kun kertaus on vuorossa: muista ensin, tarkista sitten ja merkitse tehdyksi."
+        ],
+        "faq": [
+          {
+            "q": "Mitä hajautettu kertaus on?",
+            "a": "Oppimistapa, jossa materiaalia kerrataan yhä pidemmin välein juuri ennen kuin se unohtuisi. Näin se siirtyy pitkäkestoiseen muistiin pienemmällä kokonaisvaivalla."
+          },
+          {
+            "q": "Onko kiinteä 3, 7 ja 30 päivän rytmi yhtä hyvä kuin mukautuva?",
+            "a": "Useimpaan arjen oppimiseen kyllä. Mukautuva rytmi voi olla tarkempi, mutta kiinteässä pysyy helpommin, ja säännöllisyys on tärkeämpää kuin täydelliset välit."
+          },
+          {
+            "q": "Kauanko yksi kertaus kestää?",
+            "a": "Yleensä viidestä viiteentoista minuuttiin. Palauta avainkohdat ensin mieleen katsomatta ja täydennä sitten aukot."
+          }
         ]
       },
       "pomodoro-focus": {
         "title": "Pomodoro: opi kirkkaissa, lyhyissä ikkunoissa",
-        "excerpt": "How 25-minute focus blocks help you study without burning out.",
-        "originNote": "Francesco Cirillo created the Pomodoro Technique in the late 1980s, naming it after a tomato-shaped kitchen timer.",
+        "excerpt": "Miten Pomodoro-tekniikka toimii, kuinka pitkiä tauot ovat, mitkä virheet rikkovat sen ja miten 25 minuutin keskittymisjaksot sovitetaan opiskelusuunnitelmaan.",
+        "originNote": "Francesco Cirillo kehitti Pomodoro-tekniikan 1980-luvun lopulla ja nimesi sen tomaatin muotoisen munakellon mukaan.",
         "body": [
-          "Deep learning needs attention — and attention loves edges. A short, protected block tells your mind: this window is for one thing only.",
-          "The Pomodoro pattern is simple: focus for about 25 minutes, then rest briefly. After a few cycles, take a longer pause. The point is not perfection. The point is a repeatable cadence that keeps energy available for the next return.",
-          "Pair Pomodoro with Mindkeep: use a focus block to capture what you learned, then let the 3 · 7 · 30 schedule bring you back later. Capture now. Revisit later. Protect both intensity and memory.",
-          "When you draft future articles on focus, keep this shape: problem of distraction → Cirillo’s method → practical pairing with Mindkeep → one gentle invitation to try today."
+          "Huomio ei ole hana, jonka voi jättää auki tunneiksi. Se pysyy parhaiten lyhyissä, selkeissä jaksoissa, joiden välissä on tauko. Pomodoro-tekniikka tekee tästä yksinkertaisen rutiinin.",
+          "## Miten tekniikka toimii",
+          "Valitse yksi tehtävä, aseta ajastin 25 minuuttiin ja tee vain sitä. Kun ajastin soi, pidä viiden minuutin tauko. Neljän kierroksen jälkeen lepää pidempään, 15–30 minuuttia. Francesco Cirillo keksi menetelmän opiskelijana 1980-luvun lopulla tomaatin muotoisen munakellon avulla.",
+          "## Miksi se auttaa",
+          "Selvä loppu helpottaa aloittamista: kaksikymmentäviisi minuuttia tuntuu mahdolliselta jopa tehtävässä, jota olet lykännyt. Tauot pitävät energian tasaisena, joten päivän viimeinen tunti ei mene hukkaan. Kierrosten laskeminen näyttää myös, kuinka paljon todellista keskittymisaikaa tehtävä vaatii.",
+          "## Yleiset virheet",
+          "Viestien tarkistaminen kesken kierroksen, taukojen väliin jättäminen, koska homma sujuu, ja liian suurten tehtävien valitseminen yhteen jaksoon. Jos tehtävä vaatii yli neljä kierrosta, jaa se pienempiin osiin.",
+          "## Pomodoro ja Mindkeep",
+          "Suunnittele päivä tehtävinä minuutteineen ja jaa pitkä tehtävä osiin, esimerkiksi neljään 25 minuutin osaan. Merkitse osa tehdyksi jokaisen kierroksen jälkeen ja katso, miten päivän edistyminen kasvaa. Kun opit jotain uutta, tallenna se materiaaliksi, niin se palaa kerrattavaksi päivinä 3, 7 ja 30."
+        ],
+        "faq": [
+          {
+            "q": "Pitääkö kierroksen kestää 25 minuuttia?",
+            "a": "Ei. 25 minuuttia on hyvä alku; jotkut pitävät enemmän 50 minuutin työstä ja 10 minuutin tauosta. Tärkeintä on työn ja levon tasapaino ja säännöllisyys."
+          },
+          {
+            "q": "Mitä tauolla kannattaa tehdä?",
+            "a": "Siirry pois näytön ääreltä: nouse ylös, venyttele, juo vettä, katso ulos ikkunasta. Älä aloita mitään, mistä on vaikea irrottautua."
+          },
+          {
+            "q": "Entä jos minut keskeytetään?",
+            "a": "Kirjaa keskeytys ylös ja palaa tehtävään. Jos kierros katkesi pitkäksi aikaa, aloita uusi sen laskemisen sijaan."
+          }
         ]
       },
       "pareto-learning-results": {
         "title": "80/20-sääntö oppimisessa",
-        "excerpt": "How Vilfredo Pareto’s insight helps you choose what is worth remembering.",
-        "originNote": "Economist Vilfredo Pareto observed that a minority of causes often drive a majority of outcomes — later popularized as the 80/20 principle.",
+        "excerpt": "Miten 80/20-sääntö toimii opiskelussa: löydä materiaalin pieni osa, joka tuottaa suurimman osan tuloksesta, kertaa sitä ensin ja jätä loput ilman huonoa omaatuntoa.",
+        "originNote": "Taloustieteilijä Vilfredo Pareto huomasi, että pieni osa syistä tuottaa usein suurimman osan seurauksista. Myöhemmin ajatus tunnettiin 80/20-periaatteena.",
         "body": [
-          "Not every fact deserves the same space in your mind. Some ideas unlock many others. Some only decorate the surface.",
-          "The Pareto principle suggests a useful bias: look for the vital few. In language learning that may be high-frequency words. In coding it may be the patterns you reuse weekly. In work it may be the principles behind your best decisions.",
-          "Mindkeep helps you keep what you chose — not everything you touched. Capture the material that compounds. Review it on a fixed rhythm. Leave the rest outside the schedule so attention stays sharp.",
-          "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
+          "Kaikki, mitä opiskelet, ei ole yhtä hyödyllistä. Yleensä pieni osa materiaalista tekee suurimman osan työstä: se selittää loput, toistuu yhä uudelleen ja avaa seuraavan askeleen.",
+          "## Mistä 80/20-sääntö tulee",
+          "Taloustieteilijä Vilfredo Pareto huomasi, että noin 80 % Italian maasta kuului noin 20 %:lle ihmisistä. Sama epätasainen jakauma löydettiin myöhemmin monelta alalta, ja ajatus tuli tunnetuksi 80/20-periaatteena. Luvut eivät ole tarkkoja; olennaista on epätasapaino.",
+          "## Miltä se näyttää opiskelussa",
+          "Kielessä muutama sata yleisintä sanaa kattaa suurimman osan arkisista teksteistä. Ohjelmoinnissa kourallinen malleja toistuu lähes jokaisessa projektissa. Kokeessa muutama keskeinen aihe tuo yleensä suurimman osan pisteistä. Etsi tämä ydin ensin ja opettele se kunnolla.",
+          "## Miten löydät olennaisen",
+          "Kysy jokaisesta materiaalin osasta kolme kysymystä: toistuuko se usein, selittääkö se muita asioita ja tarvitsenko sitä seuraavan kuukauden aikana? Jos vastaus on kyllä, pidä se. Jos ei, se voi odottaa tai jäädä pois.",
+          "## 80/20-sääntö ja Mindkeep",
+          "Tallenna vain suodattimen läpäissyt materiaali ja anna Mindkeepin tuoda se takaisin päivinä 3, 7 ja 30. Lyhyitä, tarkkoja materiaaleja on helpompi kerrata kuin pitkiä muistiinpanoja, joten yksi ajatus yhteen materiaaliin. Loput jäävät aikataulun ulkopuolelle, ja huomiosi pysyy tärkeässä."
+        ],
+        "faq": [
+          {
+            "q": "Onko 80/20-sääntö aina tasan 80 ja 20?",
+            "a": "Ei. Suhteet vaihtelevat; hyödyllinen ajatus on, että tulokset jakautuvat yleensä epätasaisesti, joten pieni osa vaivasta tuottaa suuren osan tuloksesta."
+          },
+          {
+            "q": "Eikö materiaalin ohittaminen jätä aukkoja?",
+            "a": "Alussa voi jättää. Aloita ytimestä ja lisää yksityiskohtia tarpeen mukaan; vahvalla pohjalla ne oppii helpommin."
+          },
+          {
+            "q": "Miten käytän sitä kokeeseen valmistautuessa?",
+            "a": "Katso vanhoja kokeita tai opetussuunnitelmaa, etsi aiheet, joista saa eniten pisteitä, ja kertaa ne ensin ja useimmin."
+          }
+        ]
+      },
+      "how-to-memorize-vocabulary": {
+        "title": "Miten opit sanastoa niin, että se pysyy muistissa",
+        "excerpt": "Käytännöllinen tapa oppia uusia sanoja: aloita yleisimmistä, opi ne asiayhteydessä, muistele lukemisen sijaan ja kertaa päivinä 3, 7 ja 30.",
+        "originNote": "Kielitieteilijä Paul Nation on tutkinut vuosikymmeniä, kuinka monta sanaa oppija tarvitsee ja miten ne opitaan tehokkaasti.",
+        "body": [
+          "Useimmat eivät unohda sanoja huonon muistin takia. He unohtavat, koska kohtaavat uuden sanan kerran, ehkä kaksi, eivätkä sitten enää koskaan. Ratkaisu ei ole lisää tunteja vaan parempi järjestys.",
+          "## Aloita sanoista, joita tulet kohtaamaan",
+          "Pieni joukko yleisiä sanoja kattaa suurimman osan siitä, mitä luet ja kuulet. Opettele ne ensin: arkiset verbit, yleiset substantiivit, sanat työstäsi tai harrastuksestasi. Harvinainen sana, jota et näe kuukausiin, ei vielä tarvitse paikkaa kertauksissa.",
+          "## Opi sanat asiayhteydessä",
+          "Kirjoita jokainen sana lyhyen, ymmärtämäsi lauseen kanssa, älä pelkän käännöksen. Asiayhteys antaa sanalle tarttumapinnan: muistat, missä se esiintyy ja miten sitä käytetään, ja palautat sen myöhemmin nopeammin mieleen.",
+          "## Muistele, älä lue uudelleen",
+          "Peitä käännös ja yritä muistaa se, tai sano lause ennen kuin katsot. Virheet kuuluvat asiaan; juuri muistelemisen vaiva saa sanan jäämään mieleen.",
+          "## Pienet erät tasaisessa rytmissä",
+          "Opettele kymmenestä kahteenkymmeneen sanaa kerrallaan ja tallenna jokainen erä yhdeksi materiaaliksi Mindkeepiin. Se palaa päivinä 3, 7 ja 30, mikä yleensä riittää siirtämään sanan pitkäkestoiseen muistiin. Lisää uusi erä muutaman päivän välein, niin kertaukset hoitavat loput."
+        ],
+        "faq": [
+          {
+            "q": "Montako uutta sanaa päivässä on realistista?",
+            "a": "Kymmenestä kahteenkymmeneen on hyvä tahti useimmille. Parempi oppia vähemmän sanoja ja kerrata ne kuin lisätä paljon ja unohtaa."
+          },
+          {
+            "q": "Opettelenko yksittäisiä sanoja vai fraaseja?",
+            "a": "Fraasit ja lyhyet lauseet toimivat paremmin: ne näyttävät, miten sanaa käytetään, ja ne on helpompi palauttaa mieleen."
+          },
+          {
+            "q": "Entä jos unohdan saman sanan yhä uudelleen?",
+            "a": "Kirjoita sillä uusi esimerkkilause, mieluiten omasta elämästäsi, ja lisää se seuraavaan erään."
+          }
+        ]
+      },
+      "how-to-count-calories": {
+        "title": "Miten lasket kaloreita ilman pakkomiellettä",
+        "excerpt": "Mikä kalori on, miten asetat päivätavoitteen, kirjaat ateriat nopeasti ja miksi viikon trendi on tärkeämpi kuin yksi päivä. Rauhallinen ja käytännöllinen tapa.",
+        "originNote": "Kemisti Wilbur Atwater mittasi ruoan energian 1800-luvun lopulla. Hänen arvonsa, noin 4, 4 ja 9 kcal grammaa kohden, ovat yhä pakkausmerkinnöissä.",
+        "body": [
+          "Kalorien laskemisella on huono maine: jokaisen murun punnitseminen, mainoksia täynnä olevat sovellukset, syyllisyys illallisen jälkeen. Niin ei tarvitse olla. Karkea mutta rehellinen ruokapäiväkirja muutaman viikon ajan opettaa syömisestäsi enemmän kuin mikään dieetti.",
+          "## Mikä kalori on",
+          "Kalori on energian yksikkö. 1800-luvun lopulla kemisti Wilbur Atwater mittasi, kuinka paljon energiaa elimistö saa ruoasta: noin 4 kcal grammasta proteiinia tai hiilihydraattia ja noin 9 kcal grammasta rasvaa. Pakkausmerkinnät käyttävät näitä lukuja yhä.",
+          "## Aseta päivätavoite",
+          "Tavoitteesi riippuu kehostasi, aktiivisuudestasi ja päämäärästäsi. Monet laskurit arvioivat sen iän, pituuden, painon ja aktiivisuuden perusteella. Pidä tulosta lähtökohtana ja korjaa sitä kahden tai kolmen viikon päästä sen mukaan, miten painosi muuttuu.",
+          "## Kirjaa nopeasti, ei täydellisesti",
+          "Kirjaa syömäsi ja arvio kaloreista mahdollisimman pian. Käytä pakkausmerkintää, jos sellainen on, ja muuten tyypillistä annosta. Karkeasti kirjattu ateria on paljon hyödyllisempi kuin unohtunut.",
+          "## Seuraa trendiä",
+          "Paino heittelee päivästä toiseen veden ja suolan takia, joten katso mieluummin viikkoa. Mindkeepissä päivän kalorit, vesi, askeleet ja painon trendi ovat rinnakkain, joten yksi runsas ilta ei näytä epäonnistumiselta."
+        ],
+        "faq": [
+          {
+            "q": "Pitääkö ruoka punnita?",
+            "a": "Ei aluksi. Pakkausmerkinnät ja tyypilliset annokset riittävät kuvioiden näkemiseen. Vaaka auttaa myöhemmin, jos haluat tarkkuutta."
+          },
+          {
+            "q": "Montako kaloria minun pitäisi syödä?",
+            "a": "Se riippuu kehostasi ja tavoitteistasi. Ota ensimmäinen arvio laskurista ja korjaa sitä muutaman viikon päästä. Jos sinulla on sairaus, kysy lääkäriltä tai ravitsemusterapeutilta."
+          },
+          {
+            "q": "Onko pahasta ylittää tavoite joskus?",
+            "a": "Ei. Ratkaisevaa on keskiarvo viikon tai kahden ajalta, ei yksittäinen päivä."
+          }
+        ]
+      },
+      "how-to-track-expenses": {
+        "title": "Miten seuraat menoja ja teet toimivan budjetin",
+        "excerpt": "Helppo tapa seurata kulutusta: kirjaa jokainen meno kuukauden ajan, jaa ne muutamaan kategoriaan, kokeile 50/30/20-sääntöä ja pidä valuutat erillään.",
+        "originNote": "Elizabeth Warren ja Amelia Warren Tyagi tekivät 50/30/20-budjetin tunnetuksi vuonna 2005 ilmestyneessä kirjassaan ”All Your Worth”.",
+        "body": [
+          "Useimmat budjetit kaatuvat jo ensimmäisellä viikolla, koska ne alkavat suunnitelmasta eivätkä tosiasioista. Ennen kuin päätät, paljonko kuluttaa, selvitä, paljonko oikeasti kulutat.",
+          "## Kirjaa jokainen meno kuukauden ajan",
+          "Kahvi, ruokaostokset, tilaukset, liikkuminen: kirjaa kaikki, mieluiten heti. Kuukauden päästä sinulla on todellinen kuva, ja siinä on yleensä muutama yllätys.",
+          "## Käytä muutamaa selkeää kategoriaa",
+          "Viidestä kahdeksaan kategoriaa riittää: asuminen, ruoka, liikkuminen, tilaukset, vapaa-aika, säästöt. Liian monta kategoriaa hidastaa kirjaamista, liian vähän piilottaa, mihin rahat menevät.",
+          "## Kokeile 50/30/20-sääntöä",
+          "Elizabeth Warren ja Amelia Warren Tyagi tekivät tunnetuksi yksinkertaisen jaon: noin 50 % tuloista välttämättömiin, 30 % haluihin ja 20 % säästämiseen tai velkojen maksuun. Se on lähtökohta eikä laki, joten sovita luvut omaan elämääsi.",
+          "## Pidä jokainen valuutta erillään",
+          "Jos saat palkan yhdessä valuutassa ja kulutat toisessa, kaiken laskeminen yhteen sumentaa kuvan. Mindkeep pitää saldon ja summat valuutoittain, joten luvut vastaavat aina sitä, mitä kullakin tilillä on."
+        ],
+        "faq": [
+          {
+            "q": "Kuinka pian tulokset näkyvät?",
+            "a": "Jo kuukauden rehellinen kirjaaminen näyttää, mihin rahat menevät. Kaksi tai kolme kuukautta näyttää, mikä on sinulle normaalia."
+          },
+          {
+            "q": "Pitääkö käteinen kirjata?",
+            "a": "Kyllä. Käteinen unohtuu helpoimmin, joten lisää se heti kun käytät sen."
+          },
+          {
+            "q": "Entä jos muutama meno jää kirjaamatta?",
+            "a": "Lisää ne, kun muistat, tai kirjaa arvio. Lähes täydellinen kirjanpito on silti hyvin hyödyllinen."
+          }
         ]
       }
-    }
+    },
+    "faqTitle": "Usein kysytyt kysymykset",
+    "ctaTitle": "Kokeile omalla materiaalillasi",
+    "ctaText": "Mindkeep ajoittaa kertauksesi päiville 3, 7 ja 30, pitää päivän tehtävät yhdessä paikassa ja näyttää edistymisesi. Aloita ilmaiseksi.",
+    "ctaButton": "Aloita ilmaiseksi"
   },
   "billing": {
     "title": "MindKeep Pro",
@@ -2057,5 +2216,199 @@
         ]
       }
     ]
+  },
+  "landing": {
+    "navLabel": "Ominaisuudet",
+    "start": "Aloita ilmaiseksi",
+    "plans": "Vertaa tilauksia",
+    "pointsTitle": "Mitä saat",
+    "stepsTitle": "Näin se toimii",
+    "moreTitle": "Lisää Mindkeepissä",
+    "pages": {
+      "spaced-repetition": {
+        "nav": "Hajautettu kertaus",
+        "seoTitle": "Hajautetun kertauksen sovellus: kertaus päivinä 3, 7 ja 30 · Mindkeep",
+        "description": "Tallenna oppimasi, niin Mindkeep ajoittaa kertaukset päiville 3, 7 ja 30, näyttää tämän päivän kertaukset ja kokoaa kaikki kertaukset kalenteriin. Ilmainen.",
+        "eyebrow": "Hajautettu kertaus",
+        "title": "Muista oppimasi kertauksilla päivinä 3, 7 ja 30",
+        "lead": "Tallenna aihe kerran, niin Mindkeep tuo sen takaisin juuri silloin, kun muuten unohtaisit sen. Ei arvioitavia kortteja eikä laskettavaa aikataulua.",
+        "points": [
+          {
+            "title": "Kertaukset ajoitetaan puolestasi",
+            "text": "Jokaisella materiaalilla on kolme kertausta: kolme, seitsemän ja kolmekymmentä päivää oppimispäivän jälkeen. Päivät asetetaan kerran eivätkä ne siirry."
+          },
+          {
+            "title": "Tänään ja myöhässä samalla listalla",
+            "text": "Kertaussivulla näkyy, mitä on vuorossa tänään ja mitä jäi väliin, joten tiedät aina, mistä aloittaa."
+          },
+          {
+            "title": "Kalenteri kaikista kertauksista",
+            "text": "Koko kuukausi yhdellä silmäyksellä: kiireiset päivät, valmiit päivät ja tulossa olevat."
+          },
+          {
+            "title": "Kategoriat ja muistiinpanot",
+            "text": "Ryhmittele materiaalit aineittain, lisää avainkohdat ja linkit ja pidä kaikki yhdestä aiheesta samassa paikassa."
+          }
+        ],
+        "steps": [
+          "Tallenna tänään oppimasi: aihe, muutama avainkohta, linkki.",
+          "Avaa Mindkeep, kun kertaus on vuorossa, ja yritä muistaa ennen kuin katsot.",
+          "Merkitse kertaus tehdyksi. Seuraava on jo ajoitettu."
+        ],
+        "plan": "Free sisältää enintään 20 materiaalia ja 3 kategoriaa. Plus ja Pro poistavat rajat.",
+        "faq": [
+          {
+            "q": "Miksi kiinteät välit eikä algoritmi?",
+            "a": "Kiinteän rytmin mukaan on helppo suunnitella, eikä jokaista vastausta tarvitse arvioida. Arjen oppimisessa säännöllisyys on tärkeämpää kuin täydellisesti viritetyt välit."
+          },
+          {
+            "q": "Mitä tapahtuu, jos kertaus jää väliin?",
+            "a": "Se pysyy myöhässä olevien listalla, kunnes teet sen. Seuraavat kertaukset pitävät päivänsä."
+          },
+          {
+            "q": "Mitä voin tallentaa materiaaliksi?",
+            "a": "Mitä tahansa, minkä haluat muistaa: oppitunnin, luvun, sanaston, työprosessin. Otsikko, muistiinpanot ja linkit riittävät."
+          }
+        ]
+      },
+      "calorie-tracker": {
+        "nav": "Kalorilaskuri",
+        "seoTitle": "Kalori- ja vesilaskuri, ruoan tunnistus kuvasta · Mindkeep",
+        "description": "Kalorit, ateriat, vesi, askeleet ja paino yhdessä paikassa. Aseta päivätavoite, lisää makrot halutessasi ja täytä Prossa ateria lautasen kuvasta.",
+        "eyebrow": "Ravinto",
+        "title": "Rauhallinen kalorilaskuri jokaiseen päivään",
+        "lead": "Kirjaa syömäsi muutamassa sekunnissa, katso paljonko tälle päivälle on jäljellä ja pidä vesi, askeleet ja paino vieressä. Ei mainoksia eikä loputonta ruokatietokantaa.",
+        "points": [
+          {
+            "title": "Päivätavoite ja mitä on jäljellä",
+            "text": "Aseta kaloritavoite ja näe heti, paljonko olet syönyt ja paljonko on jäljellä. Ylitys näkyy selvästi, ilman draamaa."
+          },
+          {
+            "title": "Ateriat omalla tavallasi",
+            "text": "Kirjoita ateria ja sen kalorit, lisää proteiini, rasva ja hiilihydraatit, jos seuraat niitä, ja säilytä historia syömästäsi."
+          },
+          {
+            "title": "Vesi, askeleet ja paino",
+            "text": "Napauta vesilaseja, kirjaa askeleet ja paino. Paino näkyy trendinä, joten yksittäiset päivät painavat vähemmän."
+          },
+          {
+            "title": "Lautasen kuva Prossa",
+            "text": "Ota enintään kolme kuvaa, niin Mindkeep arvioi aterian kalorit ja makrot. Lukuja voi aina korjata."
+          }
+        ],
+        "steps": [
+          "Aseta päivittäiset kalori- ja vesitavoitteet.",
+          "Lisää ateriat päivän mittaan käsin tai Prossa kuvasta.",
+          "Katso päivän rengasta ja historiaa nähdäksesi, miten viikko meni."
+        ],
+        "plan": "Free säilyttää 7 päivän ateriahistorian. Plus koko historian. Pro lisää kuvatunnistuksen.",
+        "faq": [
+          {
+            "q": "Miten kuvatunnistus toimii?",
+            "a": "Prossa otat ateriasta enintään kolme kuvaa. Kuvat lähetetään palvelimellemme, ja tekoälymalli arvioi kalorit ja makrot. Tarkistat tuloksen ennen tallennusta."
+          },
+          {
+            "q": "Pitääkö makroja laskea?",
+            "a": "Ei. Makrot ovat valinnaisia: voit kirjata pelkät kalorit ja ottaa makrot käyttöön tarvittaessa."
+          },
+          {
+            "q": "Voinko seurata vettä ja askeleita ilman aterioita?",
+            "a": "Kyllä. Jokainen osa toimii erikseen, joten voit käyttää vain vettä, askeleita tai painoa."
+          }
+        ]
+      },
+      "budget-tracker": {
+        "nav": "Budjetin seuranta",
+        "seoTitle": "Budjetti ja kulujen seuranta useassa valuutassa · Mindkeep",
+        "description": "Kirjaa tulot ja menot useassa valuutassa niin, että jokaisella on omat summansa, järjestä ne kategorioihin ja lisää Prossa kulu kuitin kuvasta.",
+        "eyebrow": "Talous",
+        "title": "Yksinkertainen budjetti, vaikka valuuttoja olisi monta",
+        "lead": "Kirjaa, mitä tulee ja mitä menee, ja katso jokaista valuuttaa erikseen. Mitään ei muunneta selkäsi takana, joten summat vastaavat aina tilejäsi.",
+        "points": [
+          {
+            "title": "Jokainen valuutta erikseen",
+            "text": "Eurot, hryvnat, zlotyt tai dollarit: jokaisella valuutalla on oma saldonsa ja summansa, joten eri paikkojen rahat eivät sekoitu."
+          },
+          {
+            "title": "Omiin tarpeisiin sopivat kategoriat",
+            "text": "Luo omat meno- ja tulokategoriat ja katso, mihin kuukausi meni."
+          },
+          {
+            "title": "Selkeä kuukausi",
+            "text": "Kuukauden tulot, menot ja saldo yhdellä silmäyksellä ja tapahtumalista heti alla."
+          },
+          {
+            "title": "Kuitin kuva Prossa",
+            "text": "Kuvaa kuitti, niin Mindkeep täyttää summan ja kategorian. Tarkistat ennen tallennusta."
+          }
+        ],
+        "steps": [
+          "Valitse käyttämäsi valuutat.",
+          "Lisää tulot ja menot sitä mukaa kuin niitä tulee tai kuvaa kuitti Prossa.",
+          "Katso kuukautta valuutoittain ja kategorioittain nähdäksesi, mitä muuttaa."
+        ],
+        "plan": "Free sisältää 25 tapahtumaa kuukaudessa ja 5 kategoriaa. Plus ja Pro poistavat rajat, Pro lisää kuittien tunnistuksen.",
+        "faq": [
+          {
+            "q": "Muuntaako Mindkeep valuuttoja?",
+            "a": "Jokaisella valuutalla on omat summansa, joten näet aina todelliset määrät. Mitään ei yhdistetä yhdeksi summaksi tietämättäsi."
+          },
+          {
+            "q": "Voinko yhdistää pankkini?",
+            "a": "Et. Lisäät tapahtumat itse tai kuitin kuvasta. Mindkeep ei koskaan pyydä pääsyä pankkiin."
+          },
+          {
+            "q": "Miten kuitin tunnistus toimii?",
+            "a": "Prossa kuvaat kuitin. Kuva lähetetään palvelimellemme, ja tekoälymalli lukee summan ja ehdottaa kategoriaa. Vahvistat ennen tallennusta."
+          }
+        ]
+      },
+      "daily-planner": {
+        "nav": "Päiväsuunnittelija",
+        "seoTitle": "Päiväsuunnittelija: tehtävät, tavat ja viikkonäkymä · Mindkeep",
+        "description": "Suunnittele jokainen päivä tehtävillä ja minuuteilla, jaa isot tehtävät osiin, merkitse useita kerralla viikkonäkymässä ja pidä tavat ja muistiinpanot vieressä.",
+        "eyebrow": "Suunnittelu",
+        "title": "Päiväsuunnittelija, joka näyttää koko viikon",
+        "lead": "Jokaisella päivällä on oma listansa: näet, paljonko aikaa se vie, ja merkitset tehtävät tehdyiksi sitä mukaa. Tavat ja muistiinpanot ovat vieressä, joten päivä pysyy yhdessä paikassa.",
+        "points": [
+          {
+            "title": "Tehtävät minuutteineen",
+            "text": "Jokaisella tehtävällä on aika-arvio, joten näet, kuinka täysi päivä on jo ennen sen alkua. Merkitse tärkeät, niin ne pysyvät ylhäällä."
+          },
+          {
+            "title": "Isot tehtävät osina",
+            "text": "Jaa tehtävä osiin, esimerkiksi neljään 25 minuutin jaksoon, ja merkitse ne yksi kerrallaan."
+          },
+          {
+            "title": "Viikkonäkymä",
+            "text": "Tietokoneella tai tabletilla viikko näkyy seitsemänä sarakkeena jokaisen päivän edistymisen kanssa, ja useita tehtäviä merkitään yhdellä liikkeellä."
+          },
+          {
+            "title": "Tavat ja muistiinpanot",
+            "text": "Seuraa päivittäisiä tapoja kuukausiruudukossa ja pidä muistiinpanoja asioista, jotka eivät ole tehtäviä."
+          }
+        ],
+        "steps": [
+          "Lisää tämän päivän tehtävät ja niiden kesto.",
+          "Kopioi päivä muille päiville tai liitä lista, kun viikko toistuu.",
+          "Merkitse tehtävät tehdyiksi ja katso, miten jokainen päivä yltää 100 %:iin."
+        ],
+        "plan": "Free sisältää 45 tehtävää kuukaudessa, 3 tapaa ja 20 muistiinpanoa. Plus ja Pro poistavat rajat.",
+        "faq": [
+          {
+            "q": "Voinko suunnitella useita päiviä etukäteen?",
+            "a": "Kyllä. Valitse mikä tahansa päivä kalenterista tai viikkonäkymästä ja lisää siihen tehtäviä. Voit myös kopioida yhden päivän usealle muulle."
+          },
+          {
+            "q": "Mitä keskeneräisille tehtäville tapahtuu?",
+            "a": "Ne jäävät omalle päivälleen ja näkyvät myöhässä olevina, joten mikään ei katoa huomaamatta."
+          },
+          {
+            "q": "Saanko muistutuksia?",
+            "a": "Kyllä. Tärkeät tehtävät ja päivän kertaukset näkyvät verkkosivun ilmoituksissa."
+          }
+        ]
+      }
+    }
   }
 }

@@ -3,9 +3,26 @@
  * and the build-time prerender (scripts/prerender.ts). Pure module, relative imports.
  */
 import { getArticleBySlug } from '../content/blog/articles';
+import { isFeatureSlug } from '../content/features';
 import { absoluteUrl, DEFAULT_LANGUAGE, SEO_LANGUAGES, SITE_URL, type SeoLanguage } from './locale';
 
 export type Translate = (key: string) => string;
+/** Reads a non-string value (an array of questions) from the same locale. */
+export type TranslateList = (key: string) => unknown;
+
+export type ArticleFaq = { q: string; a: string }[];
+
+/** The article's questions, or an empty list when the locale has none. */
+export function articleFaq(slug: string, list: TranslateList): ArticleFaq {
+  return listFaq(list(`blog.articles.${slug}.faq`));
+}
+
+/** Keeps only well-formed { q, a } items. */
+export function listFaq(value: unknown): ArticleFaq {
+  return Array.isArray(value)
+    ? value.filter((item): item is { q: string; a: string } => typeof item?.q === 'string' && typeof item?.a === 'string')
+    : [];
+}
 
 export type PageSeo = {
   title: string;
@@ -75,10 +92,41 @@ function breadcrumbs(items: { name: string; url: string }[]): Record<string, unk
   };
 }
 
+function faqJsonLd(faq: ArticleFaq): Record<string, unknown>[] {
+  if (faq.length === 0) return [];
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+  ];
+}
+
 /** Metadata for a public path, or null when the path is not a known public page. */
-export function pageSeo(path: string, lang: SeoLanguage, t: Translate): PageSeo | null {
+export function pageSeo(path: string, lang: SeoLanguage, t: Translate, list?: TranslateList): PageSeo | null {
   const url = absoluteUrl(path, lang);
   const home = { name: t('nav.home'), url: absoluteUrl('/', lang) };
+
+  const featureSlug = /^\/features\/([^/]+)$/.exec(path)?.[1];
+  if (featureSlug !== undefined) {
+    if (!isFeatureSlug(featureSlug)) return null;
+    const base = `landing.pages.${featureSlug}`;
+    const name = t(`${base}.title`);
+    return {
+      title: t(`${base}.seoTitle`),
+      description: t(`${base}.description`),
+      ogType: 'website',
+      jsonLd: [
+        breadcrumbs([home, { name, url }]),
+        ...faqJsonLd(list ? listFaq(list(`${base}.faq`)) : []),
+      ],
+    };
+  }
 
   const articleSlug = /^\/blog\/([^/]+)$/.exec(path)?.[1];
   if (articleSlug) {
@@ -106,6 +154,7 @@ export function pageSeo(path: string, lang: SeoLanguage, t: Translate): PageSeo 
           publisher: organization,
         },
         breadcrumbs([home, { name: t('nav.blog'), url: absoluteUrl('/blog', lang) }, { name: headline, url }]),
+        ...faqJsonLd(list ? articleFaq(article.slug, list) : []),
       ],
     };
   }

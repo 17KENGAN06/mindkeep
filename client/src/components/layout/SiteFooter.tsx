@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { featureSlugs } from '@/content/features';
 import { useLocalePath } from '@/seo/useLocalePath';
 import { Trans, useTranslation } from 'react-i18next';
 import { BrandMark } from '@/components/brand/BrandMark';
@@ -188,6 +189,23 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
               >
                 {t('footer.visitStudio')}
               </a>
+            </nav>
+            <p className="mt-6 text-[11px] tracking-[0.24em] text-muted uppercase">{t('landing.navLabel')}</p>
+            <nav
+              aria-label={t('landing.navLabel')}
+              className="mt-3 flex flex-wrap gap-x-4 gap-y-2.5 text-sm font-medium md:max-w-md md:justify-end md:justify-self-end"
+            >
+              {featureSlugs
+                .filter((slug) => basePath !== `/features/${slug}`)
+                .map((slug) => (
+                  <Link
+                    key={slug}
+                    to={localize(`/features/${slug}`)}
+                    className="inline-flex min-h-11 items-center text-muted no-underline transition hover:text-brand-500 md:min-h-0"
+                  >
+                    {t(`landing.pages.${slug}.nav`)}
+                  </Link>
+                ))}
             </nav>
           </div>
         </div>

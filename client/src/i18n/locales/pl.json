@@ -1373,7 +1373,7 @@
       "home": "Cały dzień w jednym miejscu: zadania, powtórki w 3., 7. i 30. dniu, notatki, nawyki, licznik kalorii i wody oraz budżet w wielu walutach. Start za darmo.",
       "plans": "Porównaj plany Mindkeep: Free, Plus i Pro. Limity każdego planu, ceny miesięczne i roczne oraz co obejmuje skan jedzenia AI w Pro.",
       "guide": "Jak korzystać z Mindkeep: wybierz moduły, planuj zadania, powtarzaj materiał w 3., 7. i 30. dniu, śledź kalorie, nawyki i budżet.",
-      "blog": "Artykuły o pamięci, skupieniu i nauce: powtórki rozłożone w czasie, technika Pomodoro, zasada 80/20 i jak stosować je w praktyce.",
+      "blog": "Praktyczne artykuły o pamięci, skupieniu, odżywianiu i pieniądzach: powtórki rozłożone w czasie, nauka słówek, Pomodoro, zasada 80/20, liczenie kalorii i wydatki.",
       "contact": "Napisz do zespołu Mindkeep: pytania o konto, subskrypcję i płatności, zgłoszenia błędów i pomysły. Odpowiadamy mailowo.",
       "privacy": "Jak Mindkeep zbiera, wykorzystuje i chroni Twoje dane: konto, dodane treści, płatności przez Stripe i zdjęcia do skanu jedzenia.",
       "terms": "Warunki korzystania z Mindkeep: konto, plan darmowy i płatne, dozwolone użycie, prawa do Twoich treści i odpowiedzialność.",
@@ -1607,7 +1607,7 @@
   "blog": {
     "eyebrow": "Dziennik",
     "title": "Powtórki, skupienie i co zostawić",
-    "subtitle": "Trzy krótkie notatki: po co 3·7·30, jak Pomodoro pomaga zapisać i zasada 80/20.",
+    "subtitle": "Praktyczne notatki o pamięci, skupieniu, jedzeniu i pieniądzach: powtórki, Pomodoro, zasada 80/20, liczenie kalorii i budżet.",
     "viewAll": "Otwórz bloga",
     "back": "Wszystkie artykuły",
     "byAuthor": "Autor: {{author}}",
@@ -1625,43 +1625,202 @@
       "pareto": {
         "label": "Wyniki 80/20",
         "description": "Znajdź te nieliczne wejścia, które dają większość postępu."
+      },
+      "nutrition": {
+        "label": "Odżywianie",
+        "description": "Świadome jedzenie bez restrykcyjnych diet."
+      },
+      "budget": {
+        "label": "Budżet",
+        "description": "Wiedzieć, dokąd idą pieniądze, w każdej walucie."
       }
     },
     "articles": {
       "spaced-repetition-memory": {
         "title": "Dlaczego powroty w dniu 3, 7 i 30 działają",
-        "excerpt": "Spokojny przewodnik po powtórkach rozłożonych w czasie — i dlaczego Mindkeep zostawia odstępy stałe.",
+        "excerpt": "Dlaczego zapominamy, jak naprawiają to powtórki rozłożone w czasie i dlaczego powtarzanie w 3., 7. i 30. dniu to plan, którego da się trzymać. Z planem na dziś.",
         "originNote": "Hermann Ebbinghaus opisał krzywą zapominania w latach 80. XIX wieku. Jego praca zainspirowała rozłożone powroty, które wzmacniają pamięć, zanim ślad zblednie.",
         "body": [
-          "Nauka nie jest jednym momentem — to seria powrotów. Gdy spotykasz ideę raz, ślad jest kruchy. Gdy spotykasz ją ponownie w odpowiednim odstępie, umysł odbudowuje ścieżkę mniejszym wysiłkiem i z większą jasnością.",
-          "Powtórki rozłożone w czasie wyrosły z tej obserwacji: planuj powroty, zanim zwycięży zapominanie. Klasyczne systemy dostosowują przerwę po każdej odpowiedzi. Mindkeep wybiera łagodniejszą umowę — stałe powroty w dniu 3, 7 i 30 od dnia, w którym czegoś się nauczyłeś.",
-          "Stałe odstępy usuwają szum oceniania siebie. Nadal wracasz celowo. Nadal chronisz pamięć długoterminową. Po prostu ufasz czytelnemu rytmowi zamiast wciąż zmieniającemu się algorytmowi.",
-          "Korzystaj z tego szablonu, gdy piszesz o pamięci: zacznij od uczucia zapominania, nazwij metodę, oddaj sprawiedliwość twórcy, a potem połącz to z tym, jak Mindkeep działa w praktyce."
+          "Czytasz coś, rozumiesz, a po tygodniu nic nie pamiętasz. To nie brak talentu. W latach 80. XIX wieku Hermann Ebbinghaus sprawdził to na sobie: bez powtórek większość nowego materiału znika w ciągu kilku dni, a najszybciej w pierwszych godzinach.",
+          "## Co mówi krzywa zapominania",
+          "Na początku zapominamy szybko, potem coraz wolniej. Za każdym razem, gdy przypominasz sobie materiał tuż przed tym, jak zniknie, krzywa się spłaszcza, a kolejna przerwa może być dłuższa. Na tym polega cała idea powtórek rozłożonych w czasie: powtarzać rzadziej, ale we właściwych momentach.",
+          "## Dlaczego 3., 7. i 30. dzień",
+          "Wiele aplikacji przelicza odstęp po każdej odpowiedzi. To działa, ale zamienia naukę w ciągłe ocenianie siebie. Mindkeep stosuje stały rytm: pierwsza powtórka trzy dni po nauce, druga siódmego dnia, trzecia trzydziestego. Łatwo go zapamiętać i zaplanować, a trafia w momenty, gdy zapominanie jest najsilniejsze.",
+          "## Jak powtarzać, żeby zostało w głowie",
+          "Nie czytaj po prostu jeszcze raz. Zamknij notatki, najpierw spróbuj przypomnieć sobie najważniejsze punkty, a dopiero potem sprawdź. Przypominanie jest trudniejsze niż rozpoznawanie i właśnie ten wysiłek wzmacnia pamięć. Jedna powtórka to zwykle pięć do piętnastu minut.",
+          "## Prosty plan na start",
+          "Zapisz to, czego nauczyłeś się dziś, jako krótki materiał: temat, kilka kluczowych punktów i link, jeśli go masz. Mindkeep zaplanuje trzy powtórki i pokaże je w odpowiednim dniu. Gdy przyjdzie powtórka: najpierw przypomnij sobie, potem sprawdź i oznacz jako zrobioną."
+        ],
+        "faq": [
+          {
+            "q": "Czym są powtórki rozłożone w czasie?",
+            "a": "To sposób nauki, w którym materiał powtarza się w coraz dłuższych odstępach, tuż przed zapomnieniem. Dzięki temu trafia do pamięci długotrwałej mniejszym wysiłkiem."
+          },
+          {
+            "q": "Czy stały plan 3, 7, 30 jest równie dobry jak adaptacyjny?",
+            "a": "W większości codziennych zastosowań tak. Plan adaptacyjny bywa dokładniejszy, ale stałego rytmu łatwiej się trzymać, a regularność jest ważniejsza niż idealne odstępy."
+          },
+          {
+            "q": "Ile trwa jedna powtórka?",
+            "a": "Zwykle od pięciu do piętnastu minut. Najpierw przypomnij sobie najważniejsze rzeczy bez zaglądania, potem uzupełnij luki."
+          }
         ]
       },
       "pomodoro-focus": {
         "title": "Pomodoro: ucz się w jasnych, krótkich oknach",
-        "excerpt": "Jak 25-minutowe bloki skupienia pomagają się uczyć bez wypalenia.",
+        "excerpt": "Jak działa technika Pomodoro, ile odpoczywać między blokami, jakie błędy ją psują i jak połączyć 25-minutowe bloki skupienia z planem nauki.",
         "originNote": "Francesco Cirillo stworzył technikę Pomodoro pod koniec lat 80. XX wieku i nazwał ją od kuchennego timera w kształcie pomidora.",
         "body": [
-          "Głęboka nauka potrzebuje uwagi — a uwaga lubi krawędzie. Krótki, chroniony blok mówi umysłowi: to okno jest tylko na jedną rzecz.",
-          "Wzorzec Pomodoro jest prosty: skup się mniej więcej na 25 minut, potem krótko odpocznij. Po kilku cyklach zrób dłuższą przerwę. Chodzi nie o perfekcję. Chodzi o powtarzalny rytm, który zostawia energię na kolejny powrót.",
-          "Połącz Pomodoro z Mindkeep: użyj bloku skupienia, żeby zapisać to, czego się nauczyłeś, a potem pozwól harmonogramowi 3 · 7 · 30 wrócić do ciebie później. Zapisuj teraz. Wracaj później. Chroń zarówno intensywność, jak i pamięć.",
-          "Gdy będziesz pisać kolejne teksty o skupieniu, trzymaj ten kształt: problem rozproszenia → metoda Cirillo → praktyczne połączenie z Mindkeep → jedno spokojne zaproszenie, żeby spróbować już dziś."
+          "Uwaga to nie kran, który można zostawić odkręcony na kilka godzin. Najlepiej trzyma się w krótkich, jasnych oknach z przerwami pomiędzy. Technika Pomodoro zamienia to w prostą rutynę.",
+          "## Jak działa technika",
+          "Wybierz jedno zadanie, ustaw minutnik na 25 minut i zajmuj się tylko nim. Gdy zadzwoni, zrób pięć minut przerwy. Po czterech rundach odpocznij dłużej, 15–30 minut. Francesco Cirillo wymyślił tę metodę jako student pod koniec lat 80., używając kuchennego minutnika w kształcie pomidora.",
+          "## Dlaczego to pomaga",
+          "Wyraźny koniec ułatwia start: dwadzieścia pięć minut wydaje się do zrobienia nawet przy zadaniu, które odkładasz. Przerwy utrzymują równą energię, więc ostatnia godzina dnia nie przepada. A liczenie rund pokazuje, ile prawdziwego skupionego czasu potrzebuje zadanie.",
+          "## Częste błędy",
+          "Sprawdzanie wiadomości w trakcie rundy, pomijanie przerw, bo „dobrze idzie”, i branie zadań zbyt dużych na jeden blok. Jeśli zadanie wymaga więcej niż czterech rund, podziel je na mniejsze kroki.",
+          "## Pomodoro z Mindkeep",
+          "Planuj dzień jako zadania z minutami, a długie zadanie podziel na części, na przykład cztery części po 25 minut. Po każdej rundzie zaznacz część i patrz, jak rośnie postęp dnia. Gdy nauczysz się czegoś nowego, zapisz to jako materiał, a wróci do powtórki w 3., 7. i 30. dniu."
+        ],
+        "faq": [
+          {
+            "q": "Czy runda musi trwać 25 minut?",
+            "a": "Nie. 25 minut to dobry początek, niektórzy wolą 50 minut pracy i 10 minut przerwy. Ważne, by zachować równowagę pracy i odpoczynku oraz regularność."
+          },
+          {
+            "q": "Co robić w przerwie?",
+            "a": "Odejdź od ekranu: wstań, rozciągnij się, napij się wody, wyjrzyj przez okno. Nie zaczynaj niczego, od czego trudno się oderwać."
+          },
+          {
+            "q": "Co jeśli ktoś mi przerwie?",
+            "a": "Zapisz, co cię rozproszyło, i wróć do zadania. Jeśli runda była przerwana na długo, zacznij nową zamiast jej liczyć."
+          }
         ]
       },
       "pareto-learning-results": {
         "title": "Zasada 80/20 w nauce",
-        "excerpt": "Jak spostrzeżenie Vilfreda Pareto pomaga wybrać to, co warto zapamiętać.",
+        "excerpt": "Jak zasada 80/20 działa w nauce: znajdź niewielką część materiału, która daje większość efektu, powtarzaj przede wszystkim ją, a resztę odpuść bez wyrzutów sumienia.",
         "originNote": "Ekonomista Vilfredo Pareto zauważył, że mniejszość przyczyn często napędza większość skutków — później spopularyzowano to jako zasadę 80/20.",
         "body": [
-          "Nie każdy fakt zasługuje na to samo miejsce w umyśle. Niektóre idee otwierają wiele innych. Inne tylko zdobią powierzchnię.",
-          "Zasada Pareto podpowiada przydatne nastawienie: szukaj tych nielicznych, które naprawdę mają znaczenie. W nauce języka mogą to być słowa o wysokiej częstotliwości. W programowaniu — wzorce, których używasz co tydzień. W pracy — zasady stojące za najlepszymi decyzjami.",
-          "Mindkeep pomaga zatrzymać to, co wybrałeś — nie wszystko, czego dotknąłeś. Zapisuj materiał, który się kumuluje. Powtarzaj go w stałym rytmie. Resztę zostaw poza harmonogramem, żeby uwaga zostawała ostra.",
-          "Szablon na przyszłe notatki 80/20: nazwij przeładowany wysiłek → wprowadź Pareto → podaj jeden konkretny przykład z nauki → pokaż, jak Mindkeep chroni to, co naprawdę ważne, powrotami 3 · 7 · 30."
+          "Nie wszystko, czego się uczysz, jest równie przydatne. Zwykle większość pracy wykonuje niewielka część materiału: tłumaczy resztę, pojawia się raz za razem i otwiera kolejny krok.",
+          "## Skąd się wzięła zasada 80/20",
+          "Ekonomista Vilfredo Pareto zauważył, że około 80% ziemi we Włoszech należało do mniej więcej 20% ludzi. Później tę samą nierówność znaleziono w wielu dziedzinach, a pomysł zyskał nazwę zasady 80/20. Liczby nie są dokładne — chodzi o samą nierównowagę.",
+          "## Jak to wygląda w nauce",
+          "W języku kilkaset najczęstszych słów pokrywa większość codziennych tekstów. W programowaniu garść wzorców pojawia się niemal w każdym projekcie. Na egzaminie kilka kluczowych tematów daje zwykle większość punktów. Najpierw znajdź ten rdzeń i opanuj go dobrze.",
+          "## Jak znaleźć to, co najważniejsze",
+          "Zadaj każdemu fragmentowi materiału trzy pytania: czy pojawia się często, czy wyjaśnia inne rzeczy i czy przyda mi się w najbliższym miesiącu? Jeśli tak — zostaw go. Jeśli nie — może poczekać albo odpaść.",
+          "## Zasada 80/20 z Mindkeep",
+          "Zapisuj tylko materiały, które przeszły ten filtr, a Mindkeep przypomni je w 3., 7. i 30. dniu. Krótkie, skupione materiały łatwiej powtarzać niż długie notatki, więc trzymaj jedną myśl w jednym materiale. Reszta zostaje poza planem, a uwaga — przy tym, co ważne."
+        ],
+        "faq": [
+          {
+            "q": "Czy zasada 80/20 to zawsze dokładnie 80 i 20?",
+            "a": "Nie. Proporcje bywają różne; przydatna jest sama myśl, że efekty rozkładają się nierówno, więc niewielka część wysiłku daje dużą część rezultatu."
+          },
+          {
+            "q": "Czy pomijanie materiału nie zostawi luk?",
+            "a": "Na początku może. Zacznij od rdzenia, a szczegóły dodawaj w miarę potrzeby — na solidnych podstawach uczy się ich łatwiej."
+          },
+          {
+            "q": "Jak wykorzystać ją przy nauce do egzaminu?",
+            "a": "Przejrzyj dawne arkusze lub program, znajdź tematy, które dają najwięcej punktów, i powtarzaj je najpierw i najczęściej."
+          }
+        ]
+      },
+      "how-to-memorize-vocabulary": {
+        "title": "Jak zapamiętywać słówka i ich nie zapominać",
+        "excerpt": "Praktyczny sposób na naukę słówek: zacznij od częstych, ucz się ich w kontekście, przypominaj zamiast czytać ponownie i powtarzaj w 3., 7. i 30. dniu.",
+        "originNote": "Językoznawca Paul Nation od dziesięcioleci bada, ilu słów potrzebują uczący się i jak uczyć się ich skutecznie.",
+        "body": [
+          "Większość ludzi nie zapomina słówek przez słabą pamięć. Zapominają, bo spotykają nowe słowo raz, może dwa, a potem już nigdy. Rozwiązaniem nie są dodatkowe godziny, tylko lepsza kolejność.",
+          "## Zacznij od słów, które spotkasz",
+          "Niewielki zestaw częstych słów pokrywa większość tego, co czytasz i słyszysz. Ucz się ich najpierw: codziennych czasowników, popularnych rzeczowników, słów z pracy lub hobby. Rzadkie słowo, którego nie zobaczysz przez miesiące, nie potrzebuje jeszcze miejsca w powtórkach.",
+          "## Ucz się słów w kontekście",
+          "Zapisuj każde słowo z krótkim zdaniem, które rozumiesz, a nie tylko z tłumaczeniem. Kontekst daje słowu zaczepienie: pamiętasz, gdzie występuje i jak się go używa, więc później przypominasz je szybciej.",
+          "## Przypominaj, nie czytaj ponownie",
+          "Zasłoń tłumaczenie i spróbuj je sobie przypomnieć albo powiedz zdanie, zanim zajrzysz. Pomyłki są częścią procesu; to wysiłek przypominania utrwala słowo.",
+          "## Małe zestawy w stałym rytmie",
+          "Ucz się po dziesięć–dwadzieścia słów naraz i zapisuj każdy zestaw jako jeden materiał w Mindkeep. Wróci w 3., 7. i 30. dniu, co zwykle wystarcza, by słowo trafiło do pamięci długotrwałej. Dodawaj nowy zestaw co kilka dni, a powtórki zajmą się resztą."
+        ],
+        "faq": [
+          {
+            "q": "Ile nowych słów dziennie to realny cel?",
+            "a": "Dla większości osób dobrym tempem jest dziesięć–dwadzieścia. Lepiej nauczyć się mniej słów i je powtarzać, niż dodać wiele i zapomnieć."
+          },
+          {
+            "q": "Uczyć się pojedynczych słów czy wyrażeń?",
+            "a": "Wyrażenia i krótkie zdania działają lepiej: pokazują, jak używać słowa, i łatwiej je przypomnieć."
+          },
+          {
+            "q": "Co jeśli ciągle zapominam to samo słowo?",
+            "a": "Ułóż z nim nowe zdanie, najlepiej o własnym życiu, i dodaj je do kolejnego zestawu."
+          }
+        ]
+      },
+      "how-to-count-calories": {
+        "title": "Jak liczyć kalorie bez obsesji",
+        "excerpt": "Czym jest kaloria, jak ustalić dzienny cel, jak szybko zapisywać posiłki i dlaczego tygodniowy trend jest ważniejszy niż jeden dzień. Spokojne, praktyczne podejście.",
+        "originNote": "Chemik Wilbur Atwater zmierzył pod koniec XIX wieku energię w jedzeniu. Jego wartości, około 4, 4 i 9 kcal na gram, wciąż widnieją na etykietach.",
+        "body": [
+          "Liczenie kalorii ma złą opinię: ważenie każdego okruszka, aplikacje pełne reklam, poczucie winy po kolacji. Nie musi tak być. Przybliżony, ale uczciwy dziennik prowadzony przez kilka tygodni nauczy cię więcej o twoim jedzeniu niż jakakolwiek dieta.",
+          "## Czym jest kaloria",
+          "Kaloria to jednostka energii. Pod koniec XIX wieku chemik Wilbur Atwater zmierzył, ile energii organizm czerpie z jedzenia: około 4 kcal z grama białka lub węglowodanów i około 9 kcal z grama tłuszczu. Etykiety wciąż korzystają z tych liczb.",
+          "## Ustal dzienny cel",
+          "Cel zależy od twojego ciała, aktywności i zamiaru. Wiele kalkulatorów szacuje go na podstawie wieku, wzrostu, wagi i aktywności. Traktuj wynik jako punkt wyjścia i popraw go po dwóch–trzech tygodniach, patrząc, jak zmienia się waga.",
+          "## Zapisuj szybko, nie idealnie",
+          "Zapisuj, co zjadłeś, i szacunkowe kalorie jak najszybciej. Korzystaj z etykiety, gdy jest, a gdy jej nie ma — z typowej porcji. Posiłek zapisany w przybliżeniu jest dużo cenniejszy niż zapomniany.",
+          "## Obserwuj trend",
+          "Waga skacze z dnia na dzień przez wodę i sól, więc patrz na obraz całego tygodnia. W Mindkeep kalorie z dnia, woda, kroki i trend wagi są obok siebie, więc jeden obfity wieczór nie wygląda jak porażka."
+        ],
+        "faq": [
+          {
+            "q": "Czy muszę ważyć jedzenie?",
+            "a": "Na początku nie. Etykiety i typowe porcje wystarczą, by zobaczyć wzorce. Waga przyda się później, jeśli zechcesz większej dokładności."
+          },
+          {
+            "q": "Ile kalorii powinienem jeść?",
+            "a": "To zależy od ciała i celów. Pierwsze oszacowanie weź z kalkulatora i popraw je po kilku tygodniach. Przy chorobach zapytaj lekarza lub dietetyka."
+          },
+          {
+            "q": "Czy przekraczanie celu od czasu do czasu jest złe?",
+            "a": "Nie. Liczy się średnia z tygodnia lub dwóch, a nie pojedynczy dzień."
+          }
+        ]
+      },
+      "how-to-track-expenses": {
+        "title": "Jak prowadzić budżet i śledzić wydatki, żeby to działało",
+        "excerpt": "Prosty sposób na kontrolę wydatków: zapisuj każdy wydatek przez miesiąc, podziel je na kilka kategorii, wypróbuj zasadę 50/30/20 i trzymaj waluty osobno.",
+        "originNote": "Elizabeth Warren i Amelia Warren Tyagi spopularyzowały budżet 50/30/20 w książce „All Your Worth” z 2005 roku.",
+        "body": [
+          "Większość budżetów rozpada się w pierwszym tygodniu, bo zaczyna się od planu zamiast od faktów. Zanim zdecydujesz, ile wydawać, sprawdź, ile naprawdę wydajesz.",
+          "## Zapisuj każdy wydatek przez miesiąc",
+          "Kawa, zakupy, subskrypcje, transport: notuj wszystko, najlepiej od razu. Po miesiącu masz prawdziwy obraz, a w nim zwykle kilka niespodzianek.",
+          "## Używaj kilku jasnych kategorii",
+          "Pięć do ośmiu kategorii wystarczy: mieszkanie, jedzenie, transport, subskrypcje, rozrywka, oszczędności. Zbyt wiele kategorii spowalnia zapisywanie, a zbyt mało ukrywa, gdzie znikają pieniądze.",
+          "## Wypróbuj zasadę 50/30/20",
+          "Elizabeth Warren i Amelia Warren Tyagi spopularyzowały prosty podział: około 50% dochodu na potrzeby, 30% na zachcianki i 20% na oszczędności lub spłatę długów. To punkt wyjścia, a nie prawo, więc dopasuj liczby do swojego życia.",
+          "## Trzymaj każdą walutę osobno",
+          "Jeśli zarabiasz w jednej walucie, a wydajesz w innej, sumowanie wszystkiego w jedną kwotę zaciera obraz. Mindkeep prowadzi saldo i sumy dla każdej waluty, więc liczby zawsze zgadzają się z tym, co masz na każdym koncie."
+        ],
+        "faq": [
+          {
+            "q": "Po jakim czasie widać efekty?",
+            "a": "Już miesiąc uczciwego zapisywania pokazuje, gdzie idą pieniądze. Dwa–trzy miesiące pokazują, co jest dla ciebie normalne."
+          },
+          {
+            "q": "Czy zapisywać gotówkę?",
+            "a": "Tak. Gotówkę najłatwiej zapomnieć, więc dodawaj ją od razu po wydaniu."
+          },
+          {
+            "q": "Co jeśli pominę kilka wydatków?",
+            "a": "Dodaj je, gdy sobie przypomnisz, albo zapisz szacunkową kwotę. Prawie pełny zapis i tak jest bardzo przydatny."
+          }
         ]
       }
-    }
+    },
+    "faqTitle": "Najczęstsze pytania",
+    "ctaTitle": "Wypróbuj na własnym materiale",
+    "ctaText": "Mindkeep planuje powtórki w 3., 7. i 30. dniu, trzyma zadania dnia w jednym miejscu i pokazuje postęp. Start za darmo.",
+    "ctaButton": "Zacznij za darmo"
   },
   "billing": {
     "title": "MindKeep Pro",
@@ -2057,5 +2216,199 @@
         ]
       }
     ]
+  },
+  "landing": {
+    "navLabel": "Funkcje",
+    "start": "Zacznij za darmo",
+    "plans": "Porównaj plany",
+    "pointsTitle": "Co dostajesz",
+    "stepsTitle": "Jak to działa",
+    "moreTitle": "Więcej w Mindkeep",
+    "pages": {
+      "spaced-repetition": {
+        "nav": "Powtórki rozłożone w czasie",
+        "seoTitle": "Aplikacja do powtórek w 3., 7. i 30. dniu · Mindkeep",
+        "description": "Zapisz to, czego się uczysz, a Mindkeep zaplanuje powtórki w 3., 7. i 30. dniu, pokaże, co powtórzyć dziś, i zbierze wszystkie powtórki w kalendarzu. Za darmo.",
+        "eyebrow": "Powtórki rozłożone w czasie",
+        "title": "Zapamiętuj to, czego się uczysz, z powtórkami w 3., 7. i 30. dniu",
+        "lead": "Zapisz temat raz, a Mindkeep przypomni go w chwilach, gdy inaczej byś go zapomniał. Bez oceniania fiszek i ręcznego liczenia planu.",
+        "points": [
+          {
+            "title": "Powtórki planują się same",
+            "text": "Każdy materiał dostaje trzy powtórki: trzy, siedem i trzydzieści dni po dniu nauki. Daty ustala się raz i się nie przesuwają."
+          },
+          {
+            "title": "Dzisiejsze i zaległe na jednej liście",
+            "text": "Strona powtórek pokazuje, co trzeba zrobić dziś i co zostało pominięte, więc zawsze wiesz, od czego zacząć."
+          },
+          {
+            "title": "Kalendarz wszystkich powtórek",
+            "text": "Cały miesiąc na jednym ekranie: pracowite dni, ukończone dni i to, co przed tobą."
+          },
+          {
+            "title": "Kategorie i notatki",
+            "text": "Grupuj materiały według przedmiotów, dodawaj najważniejsze punkty i linki i trzymaj wszystko z jednego tematu w jednym miejscu."
+          }
+        ],
+        "steps": [
+          "Zapisz to, czego nauczyłeś się dziś: temat, kilka kluczowych punktów, link.",
+          "Gdy przyjdzie powtórka, otwórz Mindkeep i spróbuj przypomnieć sobie, zanim zajrzysz.",
+          "Oznacz powtórkę jako zrobioną. Kolejna jest już zaplanowana."
+        ],
+        "plan": "Free obejmuje do 20 materiałów i 3 kategorie. Plus i Pro znoszą limity.",
+        "faq": [
+          {
+            "q": "Dlaczego stałe odstępy, a nie algorytm?",
+            "a": "Pod stały rytm łatwo się planuje i nie trzeba oceniać każdej odpowiedzi. W codziennej nauce regularność jest ważniejsza niż idealnie dobrane odstępy."
+          },
+          {
+            "q": "Co jeśli pominę powtórkę?",
+            "a": "Zostanie na liście zaległych, dopóki jej nie zrobisz. Kolejne powtórki zachowują swoje daty."
+          },
+          {
+            "q": "Co mogę zapisać jako materiał?",
+            "a": "Wszystko, co chcesz zapamiętać: lekcję, rozdział, zestaw słówek, proces w pracy. Wystarczy tytuł, notatki i linki."
+          }
+        ]
+      },
+      "calorie-tracker": {
+        "nav": "Licznik kalorii",
+        "seoTitle": "Licznik kalorii i wody ze skanem jedzenia ze zdjęcia · Mindkeep",
+        "description": "Kalorie, posiłki, woda, kroki i waga w jednym miejscu. Ustaw dzienny cel, dodaj makroskładniki, jeśli chcesz, a w Pro uzupełnij posiłek ze zdjęcia talerza.",
+        "eyebrow": "Odżywianie",
+        "title": "Spokojny licznik kalorii na każdy dzień",
+        "lead": "Zapisuj, co jesz, w kilka sekund, sprawdzaj, ile zostało na dziś, i trzymaj obok wodę, kroki i wagę. Bez reklam i przewijania bazy produktów.",
+        "points": [
+          {
+            "title": "Dzienny cel i to, co zostało",
+            "text": "Ustaw cel kaloryczny i od razu widzisz, ile zjadłeś i ile zostało. Przekroczenie jest pokazane jasno, bez dramatu."
+          },
+          {
+            "title": "Posiłki po twojemu",
+            "text": "Wpisz posiłek i kalorie, dodaj białko, tłuszcze i węglowodany, jeśli je liczysz, i zachowaj historię tego, co jadłeś."
+          },
+          {
+            "title": "Woda, kroki i waga",
+            "text": "Zaznaczaj szklanki wody, zapisuj kroki i wagę. Waga pokazywana jest jako trend, więc pojedyncze dni mniej się liczą."
+          },
+          {
+            "title": "Zdjęcie talerza w Pro",
+            "text": "Zrób do trzech zdjęć, a Mindkeep oszacuje kalorie i makroskładniki posiłku. Liczby zawsze możesz poprawić."
+          }
+        ],
+        "steps": [
+          "Ustaw dzienny cel kalorii i wody.",
+          "Dodawaj posiłki w ciągu dnia — ręcznie albo, w Pro, ze zdjęcia.",
+          "Sprawdzaj pierścień dnia i historię, aby zobaczyć, jak minął tydzień."
+        ],
+        "plan": "Free przechowuje 7 dni historii posiłków. Plus — całą historię. Pro dodaje skan ze zdjęcia.",
+        "faq": [
+          {
+            "q": "Jak działa skan ze zdjęcia?",
+            "a": "W Pro robisz do trzech zdjęć posiłku. Zdjęcia trafiają na nasz serwer, a model AI szacuje kalorie i makroskładniki. Przed zapisaniem sprawdzasz wynik."
+          },
+          {
+            "q": "Czy muszę liczyć makroskładniki?",
+            "a": "Nie. Makroskładniki są opcjonalne: możesz zapisywać tylko kalorie i włączyć makro, kiedy będzie potrzebne."
+          },
+          {
+            "q": "Czy mogę śledzić wodę i kroki bez posiłków?",
+            "a": "Tak. Każda część działa osobno, więc możesz korzystać tylko z wody, kroków albo wagi."
+          }
+        ]
+      },
+      "budget-tracker": {
+        "nav": "Budżet domowy",
+        "seoTitle": "Budżet i wydatki w wielu walutach · Mindkeep",
+        "description": "Zapisuj przychody i wydatki w kilku walutach z osobnymi sumami dla każdej, przypisuj je do kategorii, a w Pro dodawaj wydatek ze zdjęcia paragonu.",
+        "eyebrow": "Finanse",
+        "title": "Prosty budżet, nawet przy kilku walutach",
+        "lead": "Zapisuj, co wpływa i co wypływa, i oglądaj każdą walutę osobno. Nic nie jest przeliczane za twoimi plecami, więc sumy zawsze zgadzają się z portfelami.",
+        "points": [
+          {
+            "title": "Każda waluta osobno",
+            "text": "Euro, hrywny, złote czy dolary: każda waluta ma własne saldo i sumy, więc pieniądze z różnych miejsc się nie mieszają."
+          },
+          {
+            "title": "Kategorie dopasowane do życia",
+            "text": "Twórz własne kategorie wydatków i przychodów i sprawdzaj, na co poszedł miesiąc."
+          },
+          {
+            "title": "Czytelny miesiąc",
+            "text": "Przychody, wydatki i saldo miesiąca na jednym ekranie, a pod nimi lista operacji."
+          },
+          {
+            "title": "Zdjęcie paragonu w Pro",
+            "text": "Sfotografuj paragon, a Mindkeep uzupełni kwotę i kategorię. Przed zapisaniem wszystko sprawdzasz."
+          }
+        ],
+        "steps": [
+          "Wybierz waluty, których używasz.",
+          "Dodawaj przychody i wydatki na bieżąco albo zrób zdjęcie paragonu w Pro.",
+          "Przeglądaj miesiąc według walut i kategorii, aby zobaczyć, co zmienić."
+        ],
+        "plan": "Free obejmuje 25 operacji miesięcznie i 5 kategorii. Plus i Pro znoszą limity, Pro dodaje skan paragonów.",
+        "faq": [
+          {
+            "q": "Czy Mindkeep przelicza waluty?",
+            "a": "Każda waluta ma własne sumy, więc zawsze widzisz prawdziwe kwoty. Nic nie jest łączone w jedną sumę bez twojej wiedzy."
+          },
+          {
+            "q": "Czy mogę podłączyć bank?",
+            "a": "Nie. Operacje dodajesz sam albo ze zdjęcia paragonu. Mindkeep nigdy nie prosi o dostęp do banku."
+          },
+          {
+            "q": "Jak działa skan paragonu?",
+            "a": "W Pro robisz zdjęcie paragonu. Trafia ono na nasz serwer, a model AI odczytuje kwotę i proponuje kategorię. Potwierdzasz przed zapisaniem."
+          }
+        ]
+      },
+      "daily-planner": {
+        "nav": "Planer dnia",
+        "seoTitle": "Planer dnia z zadaniami, nawykami i tablicą tygodnia · Mindkeep",
+        "description": "Planuj każdy dzień zadaniami z minutami, dziel duże zadania na części, zaznaczaj kilka naraz na tablicy tygodnia i trzymaj nawyki i notatki obok.",
+        "eyebrow": "Planowanie",
+        "title": "Planer dnia, który pokazuje cały tydzień",
+        "lead": "Każdy dzień ma własną listę: widać, ile czasu zajmie, a zadania odhaczasz na bieżąco. Nawyki i notatki są obok, więc cały dzień jest w jednym miejscu.",
+        "points": [
+          {
+            "title": "Zadania z minutami",
+            "text": "Każde zadanie ma szacowany czas, więc widzisz, jak zajęty jest dzień, zanim się zacznie. Ważne zadania możesz oznaczyć, żeby były na górze."
+          },
+          {
+            "title": "Duże zadania w częściach",
+            "text": "Podziel zadanie na części, na przykład cztery bloki po 25 minut, i odhaczaj je po kolei."
+          },
+          {
+            "title": "Tablica tygodnia",
+            "text": "Na komputerze lub tablecie tydzień widać jako siedem kolumn z postępem każdego dnia, a kilka zadań zaznaczasz jednym ruchem."
+          },
+          {
+            "title": "Nawyki i notatki",
+            "text": "Śledź codzienne nawyki na siatce miesiąca i trzymaj notatki dla rzeczy, które nie są zadaniami."
+          }
+        ],
+        "steps": [
+          "Dodaj dzisiejsze zadania i ile zajmą.",
+          "Skopiuj dzień na inne dni albo wklej listę, gdy tydzień się powtarza.",
+          "Odhaczaj zadania i patrz, jak każdy dzień dochodzi do 100%."
+        ],
+        "plan": "Free obejmuje 45 zadań miesięcznie, 3 nawyki i 20 notatek. Plus i Pro znoszą limity.",
+        "faq": [
+          {
+            "q": "Czy mogę planować kilka dni naprzód?",
+            "a": "Tak. Wybierz dowolny dzień w kalendarzu lub na tablicy tygodnia i dodaj zadania. Możesz też skopiować jeden dzień na kilka innych."
+          },
+          {
+            "q": "Co dzieje się z niezrobionymi zadaniami?",
+            "a": "Zostają na swoim dniu i są pokazane jako zaległe, więc nic nie znika po cichu."
+          },
+          {
+            "q": "Czy są przypomnienia?",
+            "a": "Tak. Ważne zadania i dzisiejsze powtórki pojawiają się w powiadomieniach na stronie."
+          }
+        ]
+      }
+    }
   }
 }

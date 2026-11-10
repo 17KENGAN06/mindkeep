@@ -40,9 +40,14 @@ const locales = Object.fromEntries(
   ]),
 ) as Record<SeoLanguage, Dict>;
 
-function lookup(dict: Dict, key: string): string | undefined {
+function lookupValue(dict: Dict, key: string): unknown {
   let node: unknown = dict;
   for (const part of key.split('.')) node = (node as Dict | undefined)?.[part];
+  return node;
+}
+
+function lookup(dict: Dict, key: string): string | undefined {
+  const node = lookupValue(dict, key);
   return typeof node === 'string' ? node : undefined;
 }
 
@@ -60,7 +65,7 @@ const escapeHtml = (value: string) =>
 const jsonForScript = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 function headFor(pagePath: string, lang: SeoLanguage): string {
-  const seo = pageSeo(pagePath, lang, translator(lang));
+  const seo = pageSeo(pagePath, lang, translator(lang), (key) => lookupValue(locales[lang], key));
   if (!seo) throw new Error(`No SEO data for ${pagePath}`);
   const url = absoluteUrl(pagePath, lang);
   const title = escapeHtml(seo.title);

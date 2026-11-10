@@ -1373,7 +1373,7 @@
       "home": "Plan your day in one place: daily tasks, spaced repetition on days 3, 7 and 30, notes, habits, a calorie and water tracker and a multi-currency budget. Free to start.",
       "plans": "Compare Mindkeep plans: Free, Plus and Pro. See the limits of each plan, monthly and yearly prices, and what the AI food scan in Pro includes.",
       "guide": "How to use Mindkeep: choose your modules, plan daily tasks, review material on days 3, 7 and 30, and track calories, habits and your budget.",
-      "blog": "Articles on memory, focus and learning: spaced repetition, the Pomodoro technique, the 80/20 rule and how to put them into practice.",
+      "blog": "Practical articles on memory, focus, nutrition and money: spaced repetition, learning vocabulary, Pomodoro, the 80/20 rule, counting calories and tracking expenses.",
       "contact": "Contact the Mindkeep team about your account, subscription or payments, report a bug or share an idea. We reply by email.",
       "privacy": "How Mindkeep collects, uses and protects your data: account details, the content you add, payments through Stripe and photos for the food scan.",
       "terms": "The terms of using Mindkeep: accounts, free and paid plans, acceptable use, ownership of your content and liability.",
@@ -1789,7 +1789,7 @@
   "blog": {
     "eyebrow": "Journal",
     "title": "Review, focus, and what to keep",
-    "subtitle": "Three short notes: why 3·7·30, how Pomodoro helps you capture, and the 80/20 cut.",
+    "subtitle": "Practical notes on memory, focus, food and money: spaced repetition, Pomodoro, the 80/20 rule, counting calories and keeping a budget.",
     "viewAll": "Open blog",
     "back": "All articles",
     "byAuthor": "By {{author}}",
@@ -1807,43 +1807,202 @@
       "pareto": {
         "label": "80/20 results",
         "description": "Find the vital few inputs that move most of your progress."
+      },
+      "nutrition": {
+        "label": "Nutrition",
+        "description": "Eating with attention, without strict diets."
+      },
+      "budget": {
+        "label": "Budget",
+        "description": "Knowing where the money goes, in any currency."
       }
     },
     "articles": {
       "spaced-repetition-memory": {
         "title": "Why revisiting on day 3, 7 and 30 works",
-        "excerpt": "A calm guide to spaced repetition — and why Mindkeep keeps intervals fixed.",
+        "excerpt": "Why we forget, how spaced repetition fixes it, and why reviewing on day 3, 7 and 30 is a schedule you can actually keep. With a simple plan to start today.",
         "originNote": "Hermann Ebbinghaus mapped the forgetting curve in the 1880s. His work inspired spaced revisits that strengthen memory before it fades.",
         "body": [
-          "Learning is not a single moment — it is a series of returns. When you meet an idea once, the trace is fragile. When you meet it again at the right distance, the mind rebuilds the path with less effort and more clarity.",
-          "Spaced repetition grew from that insight: schedule reviews before forgetting wins. Classic systems adapt the gap after every answer. Mindkeep chooses a gentler contract — fixed revisits on day 3, day 7 and day 30 from the day you learned something.",
-          "Fixed intervals remove the noise of scoring yourself. You still revisit on purpose. You still protect long-term memory. You simply trust a clear rhythm instead of an ever-shifting algorithm.",
-          "Use this template whenever you write about memory: start with the feeling of forgetting, name the method, credit the originator, then connect it to how Mindkeep behaves in practice."
+          "You read something, understand it, and a week later it is gone. That is not a lack of talent. In the 1880s Hermann Ebbinghaus measured it on himself: without review, most new material fades within days, and fastest in the first hours.",
+          "## What the forgetting curve tells us",
+          "Forgetting is steep at first and then slows down. Every time you recall something just before it fades, the curve becomes flatter, and the next gap can be longer. That is the whole idea of spaced repetition: review less often, but at the right moments.",
+          "## Why day 3, 7 and 30",
+          "Many apps recalculate the gap after every answer. It works, but it turns learning into constant self-grading. Mindkeep uses a fixed rhythm instead: the first review three days after you learn something, the second on day seven and the third on day thirty. It is easy to remember, easy to plan, and it covers the moments when forgetting is strongest.",
+          "## How to review so it sticks",
+          "Do not just reread. Close your notes, try to recall the main points first, then check. Recalling is harder than recognising, and that effort is exactly what strengthens memory. Keep each review short: five to fifteen minutes is usually enough.",
+          "## A simple plan to start",
+          "Write down what you learned today as a short material: a topic, a few key points and a link if you have one. Mindkeep schedules the three reviews and shows them on the day they are due. When a review comes up, recall first, then check, then mark it done."
+        ],
+        "faq": [
+          {
+            "q": "What is spaced repetition?",
+            "a": "A way of learning where you review material at growing intervals, just before you would forget it, so it moves into long-term memory with less total effort."
+          },
+          {
+            "q": "Is a fixed 3, 7, 30 schedule as good as an adaptive one?",
+            "a": "For most everyday learning, yes. An adaptive schedule can be more precise, but a fixed rhythm is easier to keep, and consistency matters more than perfect intervals."
+          },
+          {
+            "q": "How long should one review take?",
+            "a": "Usually five to fifteen minutes. Try to recall the key points before looking, then fill in the gaps."
+          }
         ]
       },
       "pomodoro-focus": {
         "title": "Pomodoro: learn in bright, short windows",
-        "excerpt": "How 25-minute focus blocks help you study without burning out.",
+        "excerpt": "How the Pomodoro technique works, how long the breaks should be, the mistakes that break it, and how to combine 25-minute focus blocks with your study plan.",
         "originNote": "Francesco Cirillo created the Pomodoro Technique in the late 1980s, naming it after a tomato-shaped kitchen timer.",
         "body": [
-          "Deep learning needs attention — and attention loves edges. A short, protected block tells your mind: this window is for one thing only.",
-          "The Pomodoro pattern is simple: focus for about 25 minutes, then rest briefly. After a few cycles, take a longer pause. The point is not perfection. The point is a repeatable cadence that keeps energy available for the next return.",
-          "Pair Pomodoro with Mindkeep: use a focus block to capture what you learned, then let the 3 · 7 · 30 schedule bring you back later. Capture now. Revisit later. Protect both intensity and memory.",
-          "When you draft future articles on focus, keep this shape: problem of distraction → Cirillo’s method → practical pairing with Mindkeep → one gentle invitation to try today."
+          "Attention is not a tap you can leave running for hours. It holds best in short, clear windows with a pause in between. The Pomodoro technique turns that into a simple routine.",
+          "## How the technique works",
+          "Pick one task, set a timer for 25 minutes and work only on it. When the timer rings, take a five-minute break. After four rounds, rest longer, for 15 to 30 minutes. Francesco Cirillo came up with it as a student in the late 1980s, using a tomato-shaped kitchen timer.",
+          "## Why it helps",
+          "A fixed end makes starting easier: twenty-five minutes feels doable even for a task you have been avoiding. Breaks keep your energy steady, so the last hour of the day is not wasted. And counting rounds shows how much real focused time a task needs.",
+          "## Common mistakes",
+          "Checking messages during a round, skipping breaks because you are on a roll, and choosing tasks that are too big for one block. If a task needs more than four rounds, split it into smaller steps.",
+          "## Pomodoro with Mindkeep",
+          "Plan the day as tasks with minutes and split a long task into parts, for example four parts of 25 minutes. Tick off a part after each round and watch the day’s progress grow. When you finish studying something new, save it as a material so it comes back for review on day 3, 7 and 30."
+        ],
+        "faq": [
+          {
+            "q": "Do the rounds have to be 25 minutes?",
+            "a": "No. 25 minutes is a good start; some people prefer 50 minutes with a 10-minute break. Keep the balance of work and rest and stay consistent."
+          },
+          {
+            "q": "What should I do during a break?",
+            "a": "Step away from the screen: stand up, stretch, drink water, look out of the window. Avoid starting anything that is hard to stop."
+          },
+          {
+            "q": "What if I get interrupted?",
+            "a": "Write the interruption down and return to the task. If the round was broken for long, start a new one instead of counting it."
+          }
         ]
       },
       "pareto-learning-results": {
         "title": "The 80/20 rule in learning",
-        "excerpt": "How Vilfredo Pareto’s insight helps you choose what is worth remembering.",
+        "excerpt": "How the 80/20 rule applies to learning: find the small part of the material that gives most of the result, focus your reviews on it and skip the rest without guilt.",
         "originNote": "Economist Vilfredo Pareto observed that a minority of causes often drive a majority of outcomes — later popularized as the 80/20 principle.",
         "body": [
-          "Not every fact deserves the same space in your mind. Some ideas unlock many others. Some only decorate the surface.",
-          "The Pareto principle suggests a useful bias: look for the vital few. In language learning that may be high-frequency words. In coding it may be the patterns you reuse weekly. In work it may be the principles behind your best decisions.",
-          "Mindkeep helps you keep what you chose — not everything you touched. Capture the material that compounds. Review it on a fixed rhythm. Leave the rest outside the schedule so attention stays sharp.",
-          "Template for future 80/20 notes: name the overcrowded effort → introduce Pareto → give one concrete learning example → show how Mindkeep protects the vital few with 3 · 7 · 30 revisits."
+          "Not everything you study is equally useful. A small part of the material usually does most of the work: it explains the rest, comes up again and again, and unlocks the next step.",
+          "## Where the 80/20 rule comes from",
+          "The economist Vilfredo Pareto noticed that about 80% of the land in Italy belonged to about 20% of the people. The same uneven pattern was later found in many areas, and the idea became known as the 80/20 principle. The numbers are not exact; the point is the imbalance.",
+          "## What it looks like in learning",
+          "In a language, a few hundred of the most frequent words cover most everyday texts. In programming, a handful of patterns appears in almost every project. For an exam, a few key topics usually carry most of the marks. Find that core first and learn it well.",
+          "## How to find the vital few",
+          "Ask three questions about each piece of material: does it come up often, does it explain other things, and will I use it in the next month? If the answer is yes, keep it. If not, it can wait or go.",
+          "## The 80/20 rule with Mindkeep",
+          "Save only the material that passed the filter and let Mindkeep bring it back on day 3, 7 and 30. Short, focused materials are easier to review than long notes, so keep one idea per material. The rest stays out of your schedule, and your attention stays on what matters."
+        ],
+        "faq": [
+          {
+            "q": "Is the 80/20 rule always exactly 80 and 20?",
+            "a": "No. The proportions vary; the useful idea is that results are usually uneven, so a small share of the effort gives a large share of the outcome."
+          },
+          {
+            "q": "Does skipping material leave gaps?",
+            "a": "It can at first. Start with the core, then add details as you need them; they are easier to learn once the basics are solid."
+          },
+          {
+            "q": "How do I use it to prepare for an exam?",
+            "a": "Look at past papers or the syllabus, find the topics that carry most of the marks, and review them first and most often."
+          }
+        ]
+      },
+      "how-to-memorize-vocabulary": {
+        "title": "How to memorize vocabulary and actually keep it",
+        "excerpt": "A practical way to learn new words: pick frequent ones, learn them in context, recall instead of rereading and review on day 3, 7 and 30 so they stay.",
+        "originNote": "Linguist Paul Nation has spent decades studying how many words learners need and how to learn them efficiently.",
+        "body": [
+          "Most people do not forget words because their memory is bad. They forget because they meet a new word once, maybe twice, and then never again. The fix is not more hours, but a better order.",
+          "## Start with the words you will meet",
+          "A small set of frequent words covers most of what you read and hear. Learn those first: everyday verbs, common nouns, words from your work or hobby. A rare word you will not see for months does not need a place in your reviews yet.",
+          "## Learn words in context",
+          "Write each word with a short sentence you understand, not just a translation. Context gives the word a hook: you remember where it lives and how it is used, and you recall it faster later.",
+          "## Recall, do not reread",
+          "Cover the translation and try to remember it, or say the sentence before you look. Getting it wrong is part of the process; the effort of recalling is what makes a word stick.",
+          "## Small sets on a fixed rhythm",
+          "Learn ten to twenty words at a time and save each set as one material in Mindkeep. It comes back on day 3, 7 and 30, which is usually enough for a word to move into long-term memory. Add a new set every few days and the reviews take care of themselves."
+        ],
+        "faq": [
+          {
+            "q": "How many new words a day is realistic?",
+            "a": "Ten to twenty is a good pace for most people. It is better to learn fewer words and review them than to add many and forget them."
+          },
+          {
+            "q": "Should I learn single words or phrases?",
+            "a": "Phrases and short sentences work better. They show how a word is used and are easier to recall."
+          },
+          {
+            "q": "What if I keep forgetting the same word?",
+            "a": "Write a new example sentence with it, ideally about your own life, and put it in your next set."
+          }
+        ]
+      },
+      "how-to-count-calories": {
+        "title": "How to count calories without obsessing",
+        "excerpt": "What a calorie is, how to set a daily goal, how to log meals quickly and why the weekly trend matters more than one day. A calm, practical approach.",
+        "originNote": "Chemist Wilbur Atwater measured the energy in food in the late 19th century. His figures of about 4, 4 and 9 kcal per gram are still used on labels.",
+        "body": [
+          "Counting calories has a bad reputation: weighing every crumb, apps full of ads, guilt after dinner. It does not have to be like that. A rough, honest log for a few weeks teaches you more about your eating than any diet.",
+          "## What a calorie is",
+          "A calorie is a unit of energy. In the late 19th century the chemist Wilbur Atwater measured how much energy the body gets from food: about 4 kcal per gram of protein or carbohydrate and about 9 kcal per gram of fat. Food labels still use these numbers.",
+          "## Set a daily goal",
+          "Your goal depends on your body, activity and aim. Many calculators estimate it from age, height, weight and activity. Treat the result as a starting point and adjust it after two or three weeks, based on how your weight changes.",
+          "## Log quickly, not perfectly",
+          "Write down what you ate and an estimate of the calories as soon as you can. Use the label when there is one and a typical portion when there is not. A meal logged roughly is far more useful than a meal you forgot.",
+          "## Watch the trend",
+          "Weight jumps from day to day because of water and salt, so look at the weekly picture instead. In Mindkeep the day’s calories, water, steps and a weight trend sit side by side, so one heavy evening does not look like a failure."
+        ],
+        "faq": [
+          {
+            "q": "Do I need to weigh my food?",
+            "a": "Not at first. Labels and typical portions are enough to see patterns. Weighing helps later if you want more precision."
+          },
+          {
+            "q": "How many calories should I eat?",
+            "a": "It depends on your body and goals. Use a calculator for a first estimate and adjust it after a few weeks. With a medical condition, ask a doctor or dietitian."
+          },
+          {
+            "q": "Is it bad to go over my goal sometimes?",
+            "a": "No. What matters is the average over a week or two, not a single day."
+          }
+        ]
+      },
+      "how-to-track-expenses": {
+        "title": "How to track expenses and make a budget that works",
+        "excerpt": "A simple way to track spending: write down every expense for a month, sort it into a few categories, try the 50/30/20 rule and keep each currency separate.",
+        "originNote": "Elizabeth Warren and Amelia Warren Tyagi popularised the 50/30/20 budget in their 2005 book “All Your Worth”.",
+        "body": [
+          "Most budgets fail in the first week because they start with a plan instead of the facts. Before deciding how much to spend, find out how much you actually spend.",
+          "## Write down every expense for a month",
+          "Coffee, groceries, subscriptions, transport: note everything, right away if you can. After a month you have a real picture, and it usually holds a few surprises.",
+          "## Use a few clear categories",
+          "Five to eight categories are enough: housing, food, transport, subscriptions, fun, savings. Too many categories make logging slow; too few hide where the money goes.",
+          "## Try the 50/30/20 rule",
+          "Elizabeth Warren and Amelia Warren Tyagi popularised a simple split: about 50% of income for needs, 30% for wants and 20% for savings or paying off debt. It is a starting point, not a law, so adjust the numbers to your life.",
+          "## Keep each currency separate",
+          "If you are paid in one currency and spend in another, adding everything into one sum blurs the picture. Mindkeep keeps a balance and totals for each currency, so the numbers always match what is in each account."
+        ],
+        "faq": [
+          {
+            "q": "How long does it take to see results?",
+            "a": "One month of honest tracking already shows where the money goes. Two or three months show what is normal for you."
+          },
+          {
+            "q": "Should I track cash?",
+            "a": "Yes. Cash is the easiest to forget, so add it as soon as you spend it."
+          },
+          {
+            "q": "What if I miss a few expenses?",
+            "a": "Add them when you remember, or note an estimate. A nearly complete record is still very useful."
+          }
         ]
       }
-    }
+    },
+    "faqTitle": "Frequently asked questions",
+    "ctaTitle": "Try it on your own material",
+    "ctaText": "Mindkeep plans your reviews on day 3, 7 and 30, keeps the day’s tasks in one place and shows your progress. Free to start.",
+    "ctaButton": "Start free"
   },
   "billing": {
     "title": "MindKeep Pro",
@@ -2056,6 +2215,200 @@
         "Photo a meal — name and calories go into the diary",
         "Photo a receipt — amount goes to Budget; you pick cash or card"
       ]
+    }
+  },
+  "landing": {
+    "navLabel": "Features",
+    "start": "Start free",
+    "plans": "Compare plans",
+    "pointsTitle": "What you get",
+    "stepsTitle": "How it works",
+    "moreTitle": "More in Mindkeep",
+    "pages": {
+      "spaced-repetition": {
+        "nav": "Spaced repetition",
+        "seoTitle": "Spaced repetition app with day 3, 7 and 30 reviews · Mindkeep",
+        "description": "Save what you learn and Mindkeep schedules reviews on day 3, 7 and 30, shows what is due today and keeps a calendar of every review. Free to start.",
+        "eyebrow": "Spaced repetition",
+        "title": "Remember what you learn with reviews on day 3, 7 and 30",
+        "lead": "Save a topic once and Mindkeep brings it back at the moments you would otherwise forget it. No cards to grade and no schedule to calculate.",
+        "points": [
+          {
+            "title": "Reviews planned for you",
+            "text": "Each material gets three reviews: three, seven and thirty days after the day you learned it. The dates are set once and do not shift."
+          },
+          {
+            "title": "Today and overdue in one list",
+            "text": "The review page shows what is due today and what you missed, so you always know where to start."
+          },
+          {
+            "title": "A calendar of every review",
+            "text": "See the whole month at a glance: busy days, finished days and what is coming next."
+          },
+          {
+            "title": "Categories and notes",
+            "text": "Group materials by subject, add key points and links, and keep everything for one topic in one place."
+          }
+        ],
+        "steps": [
+          "Save what you learned today: a topic, a few key points, a link.",
+          "Open Mindkeep when a review is due and try to recall before you look.",
+          "Mark the review done and move on. The next one is already planned."
+        ],
+        "plan": "Free includes up to 20 materials and 3 categories. Plus and Pro remove the caps.",
+        "faq": [
+          {
+            "q": "Why fixed intervals instead of an algorithm?",
+            "a": "A fixed rhythm is easy to plan around and does not ask you to grade every answer. For everyday learning, regular reviews matter more than perfectly tuned gaps."
+          },
+          {
+            "q": "What happens if I miss a review?",
+            "a": "It stays in the overdue list until you do it. The next reviews keep their dates."
+          },
+          {
+            "q": "What can I save as a material?",
+            "a": "Anything you want to remember: a lesson, a chapter, a set of words, a work process. A title, notes and links are enough."
+          }
+        ]
+      },
+      "calorie-tracker": {
+        "nav": "Calorie tracker",
+        "seoTitle": "Calorie and water tracker with AI food photo scan · Mindkeep",
+        "description": "Track calories, meals, water, steps and weight in one place. Set a daily goal, add macros if you want, and in Pro fill a meal from a photo of your plate.",
+        "eyebrow": "Nutrition",
+        "title": "A calm calorie tracker for every day",
+        "lead": "Log what you eat in a few seconds, see how much is left for today and keep water, steps and weight next to it. No ads, no food database to scroll through.",
+        "points": [
+          {
+            "title": "A daily goal and what is left",
+            "text": "Set your calorie goal and see at a glance how much you have eaten and how much is left. Going over is shown clearly, without drama."
+          },
+          {
+            "title": "Meals your way",
+            "text": "Type a meal and its calories, add protein, fat and carbs if you track them, and keep a history of what you ate."
+          },
+          {
+            "title": "Water, steps and weight",
+            "text": "Tap glasses of water, note your steps and weigh in. Weight shows as a trend, so single days matter less."
+          },
+          {
+            "title": "Photo of a plate in Pro",
+            "text": "Take up to three photos and Mindkeep estimates calories and macros for the meal. You can always correct the numbers."
+          }
+        ],
+        "steps": [
+          "Set your daily calorie and water goals.",
+          "Add meals as you go, by typing or, in Pro, with a photo.",
+          "Check the day’s ring and history to see how the week went."
+        ],
+        "plan": "Free keeps 7 days of meal history. Plus keeps the full history. Pro adds the photo scan.",
+        "faq": [
+          {
+            "q": "How does the photo scan work?",
+            "a": "In Pro you take up to three photos of a meal. The photos are sent to our server and an AI model estimates calories and macros. You review the result before saving."
+          },
+          {
+            "q": "Do I have to track macros?",
+            "a": "No. Macros are optional. You can log just calories and turn macros on when you need them."
+          },
+          {
+            "q": "Can I track water and steps without meals?",
+            "a": "Yes. Every part of nutrition works on its own, so you can use only water, steps or weight."
+          }
+        ]
+      },
+      "budget-tracker": {
+        "nav": "Budget tracker",
+        "seoTitle": "Multi-currency budget and expense tracker · Mindkeep",
+        "description": "Track income and expenses in several currencies with separate totals for each, sort them into categories and, in Pro, add an expense from a photo of the receipt.",
+        "eyebrow": "Finance",
+        "title": "A simple budget, even with several currencies",
+        "lead": "Write down what comes in and what goes out, and see each currency on its own. Nothing is converted behind your back, so the totals always match your wallets.",
+        "points": [
+          {
+            "title": "Each currency on its own",
+            "text": "Euros, hryvnias, złoty or dollars: every currency keeps its own balance and totals, so you never mix money that lives in different places."
+          },
+          {
+            "title": "Categories that fit your life",
+            "text": "Create your own categories for spending and income and see where the month went."
+          },
+          {
+            "title": "A clear month",
+            "text": "Income, expenses and balance for the month at a glance, with the list of operations right below."
+          },
+          {
+            "title": "Receipt photo in Pro",
+            "text": "Photograph a receipt and Mindkeep fills in the amount and category for you. You check it before saving."
+          }
+        ],
+        "steps": [
+          "Choose the currencies you use.",
+          "Add income and expenses as they happen, or snap a receipt in Pro.",
+          "Look at the month by currency and category to see what to change."
+        ],
+        "plan": "Free includes 25 operations a month and 5 categories. Plus and Pro remove the caps; Pro adds the receipt scan.",
+        "faq": [
+          {
+            "q": "Does Mindkeep convert currencies?",
+            "a": "Each currency keeps its own totals, so you always see the real amounts. Nothing is mixed into one sum without you knowing."
+          },
+          {
+            "q": "Can I connect my bank?",
+            "a": "No. You add operations yourself or from a receipt photo. Mindkeep never asks for bank access."
+          },
+          {
+            "q": "How does the receipt scan work?",
+            "a": "In Pro you take a photo of a receipt. It is sent to our server and an AI model reads the amount and suggests a category. You confirm before saving."
+          }
+        ]
+      },
+      "daily-planner": {
+        "nav": "Daily planner",
+        "seoTitle": "Daily planner with tasks, habits and a week board · Mindkeep",
+        "description": "Plan each day with tasks and minutes, split big tasks into parts, tick several at once on the week board, and keep habits and notes in the same place.",
+        "eyebrow": "Planning",
+        "title": "A daily planner that shows the whole week",
+        "lead": "Give every day its own list, see how much time it takes and tick tasks off as you go. Habits and notes sit next to it, so the day stays in one place.",
+        "points": [
+          {
+            "title": "Tasks with minutes",
+            "text": "Each task has a time estimate, so you see how full a day is before it starts. Mark the important ones to keep them on top."
+          },
+          {
+            "title": "Big tasks in parts",
+            "text": "Split a task into parts, for example four blocks of 25 minutes, and tick them off one by one."
+          },
+          {
+            "title": "A week board",
+            "text": "On a computer or tablet, see the week as seven columns with progress for each day and tick several tasks in one drag."
+          },
+          {
+            "title": "Habits and notes",
+            "text": "Track daily habits on a monthly grid and keep notes for the things that are not tasks."
+          }
+        ],
+        "steps": [
+          "Add today’s tasks with how long they take.",
+          "Copy a day to other days or paste a list when the week repeats.",
+          "Tick tasks off and watch each day reach 100%."
+        ],
+        "plan": "Free includes 45 tasks a month, 3 habits and 20 notes. Plus and Pro remove the caps.",
+        "faq": [
+          {
+            "q": "Can I plan several days ahead?",
+            "a": "Yes. Pick any day in the calendar or the week board and add tasks to it. You can also copy one day to several others."
+          },
+          {
+            "q": "What happens to tasks I did not finish?",
+            "a": "They stay on their day and are shown as overdue, so nothing disappears quietly."
+          },
+          {
+            "q": "Do I get reminders?",
+            "a": "Yes. Important tasks and due reviews appear in the notifications on the website."
+          }
+        ]
+      }
     }
   }
 }

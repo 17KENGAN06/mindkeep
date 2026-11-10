@@ -76,7 +76,7 @@ export function BlogPreview({ animated = false }: BlogPreviewProps) {
       </div>
 
       <div className="mt-10 grid w-full grid-cols-1 gap-4 md:grid-cols-3">
-        {blogArticles.map((article, index) => (
+        {blogArticles.slice(0, 3).map((article, index) => (
           <ArticleCard
             key={article.slug}
             article={article}
