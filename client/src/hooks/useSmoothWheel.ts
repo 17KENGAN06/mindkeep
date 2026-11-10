@@ -74,7 +74,16 @@ export function useSmoothWheel(resetKey: string) {
       if (document.body.style.overflow === 'hidden' || scrollsOnItsOwn(event.target, event.deltaY)) return;
 
       const pixels = event.deltaMode === 1 ? event.deltaY * 40 : event.deltaY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
+      // The page's real scroll range: clientHeight is the visible part the browser scrolls by.
+      // innerHeight can be larger (zoom, scrollbars, browser bars), which stopped the wheel short
+      // of the footer.
+      const root = document.scrollingElement ?? document.documentElement;
+      const max = Math.max(0, root.scrollHeight - root.clientHeight);
+      // Resting at what we think is the end: let the browser take this notch. If the page can
+      // still move (anything our range missed), it does; if not, nothing happens either way.
+      // So the wheel can never get stuck short of the footer or the top.
+      const atEdge = pixels > 0 ? window.scrollY >= max - 1 : window.scrollY <= 1;
+      if (!frame && atEdge) return;
       if (!frame || Math.abs(window.scrollY - landed) > 2) {
         stop();
         current = window.scrollY;
