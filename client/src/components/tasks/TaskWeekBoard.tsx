@@ -335,9 +335,10 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
 
       <ErrorMessage message={error ?? undefined} />
 
-      {/* Columns follow the board's own width: 4 per row on tablets, all 7 from ~1024px. */}
+      {/* Columns follow the board's own width: Mon–Thu and Fri–Sun in two rows of wide cards,
+          all 7 in one row only when each still gets ~190px (large monitors). */}
       <div className="@container" onPointerMove={onPaintMove}>
-      <div className={`grid grid-cols-4 gap-2.5 @min-[64rem]:grid-cols-7 @min-[72rem]:gap-3 ${loading ? 'opacity-60' : ''}`}>
+      <div className={`grid grid-cols-4 gap-2.5 @min-[72rem]:gap-3 @min-[88rem]:grid-cols-7 ${loading ? 'opacity-60' : ''}`}>
         {byDay.map((day) => {
           const isToday = day.date === today;
           const complete = day.total > 0 && day.done === day.total;
@@ -383,7 +384,8 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         splitBusy === task.id ? 'opacity-60' : ''
                       }`}
                     >
-                      <div className="flex items-start gap-2">
+                      {/* Touch screens always show the split button: keep its corner free there. */}
+                      <div className="flex items-start gap-2 pointer-coarse:pr-7">
                         <span className="pt-px">
                           {box(
                             task.completed,
@@ -405,7 +407,15 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         >
                           {task.title}
                         </button>
-                        {task.important ? <Flag className="mt-0.5 h-3 w-3 shrink-0 fill-current text-brand-500" aria-hidden /> : null}
+                        {/* The split button takes this corner on hover: the flag steps aside meanwhile. */}
+                        {task.important ? (
+                          <Flag
+                            className={`mt-0.5 h-3 w-3 shrink-0 fill-current text-brand-500 transition-opacity pointer-fine:group-hover/task:opacity-0 ${
+                              picking ? 'pointer-fine:opacity-0' : ''
+                            }`}
+                            aria-hidden
+                          />
+                        ) : null}
                         {/* Floats over the row's corner, so it never takes width from the title.
                             Shown on hover, always on touch screens, and while its picker is open. */}
                         <button
@@ -532,6 +542,29 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
             </div>
           );
         })}
+        {/* In the two-row layout the 8th cell rounds the week off instead of staying empty. */}
+        <div className="flex min-w-0 flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line px-3 py-6 text-center @min-[88rem]:hidden">
+          <div className="relative">
+            <DayRing percent={weekPercent} />
+            <span className="absolute inset-0 grid place-items-center text-[10px] font-semibold text-ink tabular-nums">
+              {weekPercent}%
+            </span>
+          </div>
+          <div>
+            <p className="text-lg font-semibold text-ink tabular-nums">
+              {weekDone} / {weekTotal}
+            </p>
+            <p className="text-xs text-muted">{t('tasks.board.weekDone')}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onAnchorChange(shiftDateKey(monday, 7))}
+            className="inline-flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-semibold text-brand-500 ring-1 ring-line transition hover:bg-brand-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+          >
+            {t('tasks.board.nextWeek')}
+            <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+          </button>
+        </div>
       </div>
       </div>
       <p className="text-xs text-muted">{t('tasks.board.hint')}</p>
