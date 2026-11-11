@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent, type KeyboardEvent, type PointerEvent } from 'react';
-import { ChevronLeft, ChevronRight, Flag, Plus, Timer, Trophy } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Flag, Plus, Split, Timer, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
@@ -24,6 +24,9 @@ function weekStart(dateKey: string): string {
 }
 
 type Patch = { completed?: boolean; splitDone?: number };
+
+/** Part counts offered on the board: a 4×2 grid that fits a narrow day column. */
+const SPLIT_CHOICES = [2, 3, 4, 5, 6, 7, 8] as const;
 
 type TaskWeekBoardProps = {
   /** Any day of the week to show. */
@@ -142,6 +145,28 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
       window.removeEventListener('pointercancel', stop);
     };
   }, [paint]);
+
+  // Splitting right on the board: a small picker opens under the task.
+  const [splitOpen, setSplitOpen] = useState<string | null>(null);
+  const [splitBusy, setSplitBusy] = useState<string | null>(null);
+  const splitTask = async (task: DailyTask, splitCount: number) => {
+    setSplitOpen(null);
+    if (splitCount === Math.max(1, task.splitCount ?? 1)) return;
+    setError(null);
+    setSplitBusy(task.id);
+    setPatches((current) => {
+      const next = { ...current };
+      delete next[task.id];
+      return next;
+    });
+    try {
+      await updateTask.mutateAsync({ id: task.id, payload: { splitCount, splitDone: 0 } });
+    } catch {
+      setError(t('auth.errors.generic'));
+    } finally {
+      setSplitBusy(null);
+    }
+  };
 
   const setTask = (task: DailyTask, completed: boolean) => {
     if (task.completed !== completed) save(task, { completed });
@@ -350,8 +375,14 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                 {day.list.map((task) => {
                   const count = Math.max(1, task.splitCount ?? 1);
                   const partsDone = Math.min(count, Math.max(0, task.splitDone ?? 0));
+                  const picking = splitOpen === task.id;
                   return (
-                    <li key={task.id} className="rounded-lg px-1.5 py-1.5 transition hover:bg-brand-500/[0.05]">
+                    <li
+                      key={task.id}
+                      className={`group/task relative rounded-lg px-1.5 py-1.5 transition hover:bg-brand-500/[0.05] ${
+                        splitBusy === task.id ? 'opacity-60' : ''
+                      }`}
+                    >
                       <div className="flex items-start gap-2">
                         <span className="pt-px">
                           {box(
@@ -375,7 +406,60 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                           {task.title}
                         </button>
                         {task.important ? <Flag className="mt-0.5 h-3 w-3 shrink-0 fill-current text-brand-500" aria-hidden /> : null}
+                        {/* Floats over the row's corner, so it never takes width from the title.
+                            Shown on hover, always on touch screens, and while its picker is open. */}
+                        <button
+                          type="button"
+                          aria-expanded={picking}
+                          aria-label={`${t('tasks.split')} · ${task.title}`}
+                          title={t('tasks.split')}
+                          disabled={splitBusy === task.id}
+                          onClick={() => setSplitOpen(picking ? null : task.id)}
+                          className={`absolute top-1 right-1 inline-flex h-6 w-6 items-center justify-center rounded-md bg-panel shadow-sm ring-1 ring-line transition focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 pointer-coarse:opacity-100 ${
+                            picking
+                              ? 'text-brand-500 opacity-100'
+                              : 'text-muted opacity-0 group-hover/task:opacity-100 hover:text-brand-500 hover:ring-brand-500/50'
+                          }`}
+                        >
+                          <Split className="h-3 w-3" aria-hidden />
+                        </button>
                       </div>
+                      {picking ? (
+                        <div
+                          className="mt-2 ml-7 rounded-lg bg-brand-500/[0.06] p-1.5 ring-1 ring-line"
+                          onKeyDown={(event) => {
+                            if (event.key === 'Escape') setSplitOpen(null);
+                          }}
+                        >
+                          <p className="mb-1.5 px-0.5 text-[11px] font-medium text-muted">{t('tasks.splitHint')}</p>
+                          <div className="grid grid-cols-4 gap-1">
+                            {SPLIT_CHOICES.map((choice) => (
+                              <button
+                                key={choice}
+                                type="button"
+                                aria-pressed={choice === count}
+                                onClick={() => void splitTask(task, choice)}
+                                className={`h-6 rounded-md text-[11px] font-semibold tabular-nums transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
+                                  choice === count
+                                    ? 'bg-brand-500 text-on-brand'
+                                    : 'bg-panel text-ink ring-1 ring-line hover:bg-brand-500 hover:text-on-brand hover:ring-brand-500'
+                                }`}
+                              >
+                                {choice}
+                              </button>
+                            ))}
+                          </div>
+                          {count > 1 ? (
+                            <button
+                              type="button"
+                              onClick={() => void splitTask(task, 1)}
+                              className="mt-1.5 px-0.5 text-[11px] font-medium text-muted transition hover:text-ink"
+                            >
+                              {t('tasks.unsplit')}
+                            </button>
+                          ) : null}
+                        </div>
+                      ) : null}
                       {count > 1 ? (
                         <div className="mt-2 ml-7">
                           {/* One joined bar: done parts filled, the next one outlined. */}
@@ -411,9 +495,10 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                             <span className={partsDone === count ? 'font-semibold text-brand-500' : 'font-semibold text-ink'}>
                               {partsDone}/{count}
                             </span>
-                            <span className="inline-flex items-center gap-1">
-                              <Timer className="h-3 w-3" aria-hidden />
-                              {Math.max(1, Math.round(task.minutes / count))} {t('tasks.minShort')}
+                            {/* Time done of the task's total, as on the day page (not one part's time). */}
+                            <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                              <Timer className="hidden h-3 w-3 @min-[72rem]:block" aria-hidden />
+                              {Math.round((task.minutes * partsDone) / count)}/{task.minutes} {t('tasks.minShort')}
                             </span>
                           </div>
                         </div>

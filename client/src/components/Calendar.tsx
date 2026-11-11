@@ -240,9 +240,9 @@ export function Calendar({
                       })
                   : format(day, 'd MMMM', { locale })
               }
-              className={`relative flex flex-col items-center rounded-2xl px-1 py-1.5 transition ring-1 ring-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
-                weekOnly ? 'min-h-[3.75rem]' : 'min-h-[4.25rem] sm:min-h-[4.75rem]'
-              } ${
+              // Room for the day number, the status rail and the count, with a gap between them,
+              // in the week strip as well as in the month.
+              className={`relative flex min-h-[4.75rem] flex-col items-center gap-1.5 rounded-2xl px-1 py-1.5 transition ring-1 ring-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                 wash[status]
               } ${inMonth ? '' : 'opacity-55'} ${
                 isSelected
