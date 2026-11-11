@@ -336,9 +336,9 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
       <ErrorMessage message={error ?? undefined} />
 
       {/* Columns follow the board's own width: Mon–Thu and Fri–Sun in two rows of wide cards,
-          all 7 in one row only when each still gets ~190px (large monitors). */}
+          all 7 in one row only on very wide screens (2K and up); Full HD keeps the wide cards. */}
       <div className="@container" onPointerMove={onPaintMove}>
-      <div className={`grid grid-cols-4 gap-2.5 @min-[72rem]:gap-3 @min-[88rem]:grid-cols-7 ${loading ? 'opacity-60' : ''}`}>
+      <div className={`grid grid-cols-4 gap-2.5 @min-[72rem]:gap-3 @min-[112rem]:grid-cols-7 ${loading ? 'opacity-60' : ''}`}>
         {byDay.map((day) => {
           const isToday = day.date === today;
           const complete = day.total > 0 && day.done === day.total;
@@ -384,8 +384,7 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         splitBusy === task.id ? 'opacity-60' : ''
                       }`}
                     >
-                      {/* Touch screens always show the split button: keep its corner free there. */}
-                      <div className="flex items-start gap-2 pointer-coarse:pr-7">
+                      <div className="flex items-start gap-2">
                         <span className="pt-px">
                           {box(
                             task.completed,
@@ -407,17 +406,13 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         >
                           {task.title}
                         </button>
-                        {/* The split button takes this corner on hover: the flag steps aside meanwhile. */}
-                        {task.important ? (
-                          <Flag
-                            className={`mt-0.5 h-3 w-3 shrink-0 fill-current text-brand-500 transition-opacity pointer-fine:group-hover/task:opacity-0 ${
-                              picking ? 'pointer-fine:opacity-0' : ''
-                            }`}
-                            aria-hidden
-                          />
-                        ) : null}
-                        {/* Floats over the row's corner, so it never takes width from the title.
-                            Shown on hover, always on touch screens, and while its picker is open. */}
+                        {/* Flag and split button each have their own slot at the row's end, side by
+                            side, so neither ever covers the other or the title. The button shows on
+                            hover, always on touch screens, and while its picker is open. */}
+                        <span className="-my-0.5 flex shrink-0 items-center gap-1">
+                          {task.important ? (
+                            <Flag className="h-3 w-3 fill-current text-brand-500" aria-hidden />
+                          ) : null}
                         <button
                           type="button"
                           aria-expanded={picking}
@@ -425,14 +420,15 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                           title={t('tasks.split')}
                           disabled={splitBusy === task.id}
                           onClick={() => setSplitOpen(picking ? null : task.id)}
-                          className={`absolute top-1 right-1 inline-flex h-6 w-6 items-center justify-center rounded-md bg-panel shadow-sm ring-1 ring-line transition focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 pointer-coarse:opacity-100 ${
+                          className={`inline-flex h-6 w-6 items-center justify-center rounded-md ring-1 transition focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 pointer-coarse:opacity-100 ${
                             picking
-                              ? 'text-brand-500 opacity-100'
-                              : 'text-muted opacity-0 group-hover/task:opacity-100 hover:text-brand-500 hover:ring-brand-500/50'
+                              ? 'bg-brand-500/15 text-brand-500 opacity-100 ring-brand-500/40'
+                              : 'text-muted opacity-0 ring-line group-hover/task:opacity-100 hover:text-brand-500 hover:ring-brand-500/50'
                           }`}
                         >
                           <Split className="h-3 w-3" aria-hidden />
                         </button>
+                        </span>
                       </div>
                       {picking ? (
                         <div
@@ -543,7 +539,7 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
           );
         })}
         {/* In the two-row layout the 8th cell rounds the week off instead of staying empty. */}
-        <div className="flex min-w-0 flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line px-3 py-6 text-center @min-[88rem]:hidden">
+        <div className="flex min-w-0 flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line px-3 py-6 text-center @min-[112rem]:hidden">
           <div className="relative">
             <DayRing percent={weekPercent} />
             <span className="absolute inset-0 grid place-items-center text-[10px] font-semibold text-ink tabular-nums">
