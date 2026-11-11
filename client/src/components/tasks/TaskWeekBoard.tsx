@@ -201,14 +201,23 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
   const weekPercent = weekTotal ? Math.round((weekDone / weekTotal) * 100) : 0;
 
   const [drafts, setDrafts] = useState<Record<string, string>>({});
+  // Minutes per new task, per day; empty means the default 30.
+  const [draftMinutes, setDraftMinutes] = useState<Record<string, string>>({});
   const onAdd = async (event: FormEvent, date: string) => {
     event.preventDefault();
     const title = (drafts[date] ?? '').trim();
     if (!title) return;
+    const rawMinutes = (draftMinutes[date] ?? '').trim();
+    const minutes = rawMinutes === '' ? 30 : Number(rawMinutes);
+    if (!Number.isInteger(minutes) || minutes < 1 || minutes > 24 * 60) {
+      setError(t('tasks.errors.minutes'));
+      return;
+    }
     setError(null);
     try {
-      await createTask.mutateAsync({ title, minutes: 30, date });
+      await createTask.mutateAsync({ title, minutes, date });
       setDrafts((current) => ({ ...current, [date]: '' }));
+      setDraftMinutes((current) => ({ ...current, [date]: '' }));
     } catch (err) {
       setError(mutationErrorMessage(err, t));
     }
@@ -385,7 +394,8 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                       }`}
                     >
                       <div className="flex items-start gap-2">
-                        <span className="pt-px">
+                        {/* Box and title share one 20px first line, so they sit level. */}
+                        <span className="flex h-5 shrink-0 items-center">
                           {box(
                             task.completed,
                             task.title,
@@ -398,7 +408,7 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         </span>
                         <button
                           type="button"
-                          className={`min-w-0 flex-1 text-left text-[13px] leading-snug break-words transition [overflow-wrap:anywhere] ${
+                          className={`min-w-0 flex-1 text-left text-[13px] leading-5 break-words transition [overflow-wrap:anywhere] ${
                             task.completed ? 'text-muted line-through decoration-brand-500/60' : 'text-ink'
                           }`}
                           title={t('tasks.edit')}
@@ -515,7 +525,7 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
               </ul>
 
               <form className="px-2 pb-2" onSubmit={(event) => void onAdd(event, day.date)}>
-                <label className="flex items-center gap-2 rounded-lg px-1.5 py-1.5 text-muted ring-line transition focus-within:ring-1 hover:bg-brand-500/[0.05]">
+                <div className="flex items-center gap-2 rounded-lg px-1.5 py-1.5 text-muted ring-line transition focus-within:ring-1 hover:bg-brand-500/[0.05]">
                   <Plus className="h-4 w-4 shrink-0" aria-hidden />
                   <input
                     value={drafts[day.date] ?? ''}
@@ -524,7 +534,29 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                     aria-label={`${t('tasks.board.add')} · ${formatDayMonth(day.date, language)}`}
                     className="min-w-0 flex-1 bg-transparent text-[13px] text-ink outline-none placeholder:text-muted"
                   />
-                </label>
+                  {/* Time for the new task, right in the row (30 min when left empty). */}
+                  <label className="flex shrink-0 items-center gap-1 rounded-md bg-ink/[0.05] px-1.5 py-0.5 ring-1 ring-line transition focus-within:ring-brand-500/60">
+                    <Timer className="h-3 w-3" aria-hidden />
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      min={1}
+                      max={24 * 60}
+                      value={draftMinutes[day.date] ?? ''}
+                      onChange={(event) =>
+                        setDraftMinutes((current) => ({ ...current, [day.date]: event.target.value }))
+                      }
+                      placeholder="30"
+                      aria-label={`${t('tasks.minutes')} · ${formatDayMonth(day.date, language)}`}
+                      className="w-8 [appearance:textfield] bg-transparent text-right text-[12px] text-ink tabular-nums outline-none placeholder:text-muted [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                    />
+                    <span className="text-[11px]">{t('tasks.minShort')}</span>
+                  </label>
+                  {/* With two fields, Enter submits only when the form has a submit button. */}
+                  <button type="submit" tabIndex={-1} className="sr-only">
+                    {t('tasks.saveTask')}
+                  </button>
+                </div>
               </form>
 
               <div className="flex flex-wrap items-center justify-between gap-x-2 border-t border-line px-3 py-2 text-xs text-muted tabular-nums">
