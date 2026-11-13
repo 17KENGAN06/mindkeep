@@ -222,10 +222,13 @@ function BillingSection() {
   const status = statusQuery.data;
   const billed = Boolean(status?.hasStripeCustomer);
   const subscribed = Boolean(status?.subscribed);
+  // Bought in the App Store / Google Play: managed there, not through Stripe.
+  const storeSource =
+    status?.planSource === 'app_store' || status?.planSource === 'play_store' ? status.planSource : null;
   const isAdmin = user?.role === 'ADMIN';
   const isBeta = Boolean((user?.betaTester || status?.betaTester) && !isAdmin);
   const isPro = status?.plan === 'PRO' || status?.plan === 'PLUS';
-  const showSubscribe = Boolean(status?.configured && !subscribed && !isBeta);
+  const showSubscribe = Boolean(status?.configured && !subscribed && !storeSource && !isBeta);
   const showManage = Boolean(status?.configured && billed);
   const expires = status?.planExpiresAt
     ? new Date(status.planExpiresAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
@@ -235,13 +238,14 @@ function BillingSection() {
     ? t('billing.adminUnlimited')
     : status?.plan === 'PLUS'
       ? t('billing.plusLabel')
-      : subscribed
+      : subscribed || storeSource
         ? t('billing.proLabel')
         : isBeta
           ? t('billing.betaLabel')
           : t('billing.freeLabel');
-  const planCaption =
-    subscribed && expires
+  const planCaption = storeSource
+    ? t(`billing.storeManaged.${storeSource}`)
+    : subscribed && expires
       ? t(status?.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })
       : isBeta
         ? t('billing.betaHint')
@@ -295,7 +299,7 @@ function BillingSection() {
         <ErrorMessage message={error ?? undefined} />
         {statusQuery.isError ? <ErrorMessage message={t('auth.errors.generic')} /> : null}
 
-        {status?.cancelAtPeriodEnd ? (
+        {status?.cancelAtPeriodEnd && !storeSource ? (
           <p className="rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">{t('billing.cancelScheduled')}</p>
         ) : null}
 
@@ -361,13 +365,13 @@ function BillingSection() {
           </Button>
         ) : null}
 
-        {status && subscribed ? (
+        {status && (subscribed || storeSource) ? (
           <p className="rounded-3xl bg-brand-50/80 px-4 py-4 text-sm font-medium leading-relaxed text-ink ring-1 ring-brand-500/20">
             {t('billing.proUnlocked')}
           </p>
         ) : null}
 
-        {status && !subscribed && !isBeta ? <UsageGrid usage={status.usage} /> : null}
+        {status && !subscribed && !storeSource && !isBeta ? <UsageGrid usage={status.usage} /> : null}
       </div>
     </div>
       <ConfirmDialog

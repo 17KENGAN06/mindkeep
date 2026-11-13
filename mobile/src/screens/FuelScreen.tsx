@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -28,9 +29,11 @@ import { CalorieHelperModal } from '../features/nutrition/CalorieHelperModal';
 import { FoodScanMeal } from '../features/nutrition/FoodScanMeal';
 import { emptyMacroDraft, macroDraftFrom, parseMacroDraft, type MacroDraft } from '../features/nutrition/macros';
 import { MealKindPicker } from '../features/nutrition/MealKindPicker';
+import { NutritionSourcesCard } from '../features/nutrition/NutritionSources';
 import { isMealKind, suggestMealKind, type MealKind } from '../features/nutrition/mealKinds';
 import { hasAutomation } from '../features/billing/planLimit';
 import { env } from '../config/env';
+import { inAppPurchasesEnabled } from '../features/billing/purchases';
 import {
   useCreateMeal,
   useDeleteMeal,
@@ -38,6 +41,7 @@ import {
   useSetSteps,
   useSetWater,
   useSetWeight,
+  useWaterGlasses,
   useUpdateMeal,
   useUpdateNutritionSettings,
 } from '../features/nutrition/useNutrition';
@@ -91,7 +95,7 @@ export function FuelScreen() {
   const route = useRoute<RouteProp<MoreStackParamList, 'Fuel'>>();
   const openScanRequest = route.params?.openScan;
   // Plans live on Account; store builds have no purchase path (see config/env.ts).
-  const onNeedPro = env.storeBuild ? undefined : () => navigation.navigate('More', { screen: 'Account', initial: false });
+  const onNeedPro = env.storeBuild && !inAppPurchasesEnabled ? undefined : () => navigation.navigate('More', { screen: 'Account', initial: false });
   const { today, year: todayYear, month: todayMonth } = useAccountToday();
   const [year, setYear] = useState(todayYear);
   const [month, setMonth] = useState(todayMonth);
@@ -116,6 +120,9 @@ export function FuelScreen() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [helperOpen, setHelperOpen] = useState(false);
+  // "Sources" under the title jumps to the sources card at the end of the screen.
+  const scrollRef = useRef<ScrollView>(null);
+  const sourcesY = useRef(0);
   const [macroDraft, setMacroDraft] = useState<MacroDraft>(emptyMacroDraft);
   const [mealKind, setMealKind] = useState<MealKind | null>(() => (pro ? suggestMealKind() : null));
 
@@ -128,22 +135,25 @@ export function FuelScreen() {
   const setSteps = useSetSteps();
   const setWeight = useSetWeight();
 
+  // Fields follow the saved values only when those change (or the day does), so a background
+  // refetch — a water tap, returning to the screen — never wipes what is being typed.
+  const savedSettings = periodQuery.data?.settings;
+  const savedCalorieGoal = savedSettings?.calorieGoal;
+  const savedWaterGoal = savedSettings?.waterGoal;
+  const savedStepsGoal = savedSettings ? (savedSettings.stepsGoal ?? 10000) : undefined;
+  const savedWeightGoal = savedSettings?.weightGoal;
   useEffect(() => {
-    if (!periodQuery.data) return;
-    setCalorieGoalInput(String(periodQuery.data.settings.calorieGoal));
-    setWaterGoalInput(String(periodQuery.data.settings.waterGoal));
-    setStepsGoalInput(String(periodQuery.data.settings.stepsGoal ?? 10000));
-    setWeightGoalInput(
-      periodQuery.data.settings.weightGoal == null
-        ? ''
-        : formatKg(periodQuery.data.settings.weightGoal),
-    );
-  }, [periodQuery.data]);
+    if (savedCalorieGoal === undefined) return;
+    setCalorieGoalInput(String(savedCalorieGoal));
+    setWaterGoalInput(String(savedWaterGoal));
+    setStepsGoalInput(String(savedStepsGoal));
+    setWeightGoalInput(savedWeightGoal == null ? '' : formatKg(savedWeightGoal));
+  }, [savedCalorieGoal, savedWaterGoal, savedStepsGoal, savedWeightGoal]);
 
+  const loggedKg = periodQuery.data?.weight?.find((row) => row.date === selectedDate)?.kg ?? null;
   useEffect(() => {
-    const logged = periodQuery.data?.weight?.find((row) => row.date === selectedDate)?.kg;
-    setWeightInput(logged == null ? '' : formatKg(logged));
-  }, [periodQuery.data, selectedDate]);
+    setWeightInput(loggedKg == null ? '' : formatKg(loggedKg));
+  }, [loggedKg, selectedDate]);
 
   useEffect(() => {
     setEditingId(null);
@@ -160,7 +170,10 @@ export function FuelScreen() {
   const weightAvg = periodQuery.data?.weightAvg ?? null;
   const dayMeals = meals.filter((meal) => meal.date === selectedDate);
   const eaten = dayMeals.reduce((sum, meal) => sum + meal.calories, 0);
-  const glasses = water.find((row) => row.date === selectedDate)?.glasses ?? 0;
+  const glasses = useWaterGlasses(
+    selectedDate,
+    water.find((row) => row.date === selectedDate)?.glasses ?? 0,
+  );
   const dayWeight = weight.find((row) => row.date === selectedDate)?.kg ?? null;
   const weightGoal = settings?.weightGoal ?? null;
   const calorieGoal = settings?.calorieGoal ?? 2000;
@@ -446,6 +459,7 @@ export function FuelScreen() {
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]} edges={['left', 'right']}>
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <SectionScrollView
+          ref={scrollRef}
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
@@ -457,7 +471,16 @@ export function FuelScreen() {
             />
           }
         >
-          <Text style={[styles.title, { color: colors.ink }]}>{t('fuel.title')}</Text>
+          <View style={styles.titleRow}>
+            <Text style={[styles.title, { color: colors.ink }]}>{t('fuel.title')}</Text>
+            <Pressable
+              accessibilityRole="link"
+              hitSlop={8}
+              onPress={() => scrollRef.current?.scrollTo({ y: Math.max(0, sourcesY.current - 12), animated: true })}
+            >
+              <Text style={[styles.sourcesLink, { color: colors.brand }]}>{t('fuel.sources.jump')}</Text>
+            </Pressable>
+          </View>
 
           {periodQuery.isError ? (
             <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
@@ -866,6 +889,10 @@ export function FuelScreen() {
           </View>
 
           {formError ? <Text style={[styles.error, { color: colors.danger }]}>{formError}</Text> : null}
+
+          <View onLayout={(event) => (sourcesY.current = event.nativeEvent.layout.y)}>
+            <NutritionSourcesCard />
+          </View>
         </SectionScrollView>
       </KeyboardAvoidingView>
 
@@ -897,6 +924,8 @@ const styles = StyleSheet.create({
   centered: { alignItems: 'center', flex: 1, justifyContent: 'center' },
   content: { gap: 12, padding: 20, paddingBottom: 40 },
   title: { fontSize: 24, fontFamily: fonts.display },
+  titleRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'space-between' },
+  sourcesLink: { fontSize: 13, fontFamily: fonts.bold },
   subtitle: { fontFamily: fonts.regular, fontSize: 14 },
   dayHead: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   dayTitle: { flex: 1, fontSize: 18, fontFamily: fonts.bold },

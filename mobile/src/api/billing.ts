@@ -13,6 +13,8 @@ export type BillingStatus = {
   planInterval: 'MONTH' | 'YEAR' | null;
   planExpiresAt: string | null;
   cancelAtPeriodEnd: boolean;
+  /** Where the paid plan comes from: web (Stripe) or an app store. Older APIs omit it. */
+  planSource?: 'stripe' | 'app_store' | 'play_store' | null;
   /** Scheduled Plus↔Pro switch at the end of the paid period (older servers omit it). */
   pendingPlan?: 'PLUS' | 'PRO' | null;
   pendingChangeAt?: string | null;
@@ -40,4 +42,6 @@ export const billingApi = {
   sync: (sessionId: string) => apiClient.post<{ user: User }>('/api/billing/sync', { sessionId }),
   cancel: () => apiClient.post<{ ok: true }>('/api/billing/cancel'),
   resume: () => apiClient.post<{ ok: true }>('/api/billing/resume'),
+  /** After an App Store purchase or restore: the server re-reads the subscription from RevenueCat. */
+  storeSync: () => apiClient.post<{ user: User }>('/api/billing/store/sync'),
 };

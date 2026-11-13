@@ -40,6 +40,9 @@ export function PlansPage() {
   const subscribed =
     Boolean(status?.subscribed) ||
     ((current === 'PLUS' || current === 'PRO') && user?.role !== 'ADMIN' && !user?.betaTester);
+  // Bought in the App Store / Google Play: no Stripe checkout, portal or switch here.
+  const storeSource =
+    status?.planSource === 'app_store' || status?.planSource === 'play_store' ? status.planSource : null;
   const expiresAt = status?.planExpiresAt ? new Date(status.planExpiresAt) : null;
   const expiresLabel = expiresAt
     ? expiresAt.toLocaleDateString(i18n.language, { dateStyle: 'medium' })
@@ -106,6 +109,14 @@ export function PlansPage() {
   const paidCta = (plan: PaidPlan, label: string) => {
     const isCurrent = (plan === 'plus' && current === 'PLUS') || (plan === 'pro' && current === 'PRO');
     const pendingHere = pendingPlan === plan;
+
+    if (storeSource) {
+      return (
+        <p className="text-center text-sm font-medium text-muted">
+          {isCurrent ? t('billing.storeCurrent') : t('billing.storeShort')}
+        </p>
+      );
+    }
 
     if (pendingHere) {
       return (
@@ -223,7 +234,11 @@ export function PlansPage() {
           <ErrorMessage message={error ?? undefined} />
         </div>
 
-        {status?.cancelAtPeriodEnd ? (
+        {storeSource ? (
+          <p className="mt-4 max-w-2xl rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">
+            {t(`billing.storeManaged.${storeSource}`)}
+          </p>
+        ) : status?.cancelAtPeriodEnd ? (
           <p className="mt-4 max-w-2xl rounded-2xl bg-brand-50/80 px-4 py-3 text-sm text-ink">
             {t('billing.cancelScheduled')}
           </p>

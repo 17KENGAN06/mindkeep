@@ -1057,6 +1057,24 @@
       "dinner": "Cena",
       "snack": "Tentempié",
       "extra": "Otro"
+    },
+    "sources": {
+      "title": "Fuentes",
+      "lead": "Los cálculos y los objetivos predeterminados de esta sección se basan en estas publicaciones. Toca una para abrirla.",
+      "jump": "Fuentes",
+      "open": "Abrir la fuente",
+      "calculator": "En qué se basa este cálculo",
+      "notAdvice": "Mindkeep no es una app médica y no ofrece consejo médico. Para decidir sobre tu alimentación, tu peso o tu salud, consulta a un médico o a un dietista.",
+      "topics": {
+        "bmr": "Metabolismo basal (fórmula de Mifflin-St Jeor)",
+        "activity": "Niveles de actividad y necesidades diarias de energía",
+        "bmi": "Rangos de IMC para el peso objetivo",
+        "deficit": "Mínimo calórico seguro y ritmo de cambio de peso",
+        "dailyCalories": "Necesidades calóricas diarias medias",
+        "water": "Ingesta diaria de agua",
+        "activityGuidelines": "Recomendaciones de actividad física",
+        "steps": "Pasos diarios y salud"
+      }
     }
   },
   "dashboard": {
@@ -1898,7 +1916,13 @@
     "noSubscription": "No hay suscripción de pago en esta cuenta.",
     "samePlan": "Ya estás en este plan.",
     "cancelBeforeChange": "Mantén primero la suscripción y luego cambia de plan.",
-    "changeUnavailable": "No se pudo programar el cambio. Inténtalo más tarde."
+    "changeUnavailable": "No se pudo programar el cambio. Inténtalo más tarde.",
+    "storeManaged": {
+      "app_store": "Tu plan se compró en la App Store. Gestiónalo o cancélalo en tu iPhone: Ajustes → tu nombre → Suscripciones.",
+      "play_store": "Tu plan se compró en Google Play. Gestiónalo o cancélalo en Play Store: Perfil → Pagos y suscripciones."
+    },
+    "storeShort": "Tu plan se gestiona en la tienda de apps",
+    "storeCurrent": "Tu plan actual (tienda de apps)"
   },
   "onboarding": {
     "eyebrow": "Ajuste rápido",

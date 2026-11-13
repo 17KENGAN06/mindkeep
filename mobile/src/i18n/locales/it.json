@@ -375,6 +375,24 @@
       "dinner": "Cena",
       "snack": "Spuntino",
       "extra": "Altro"
+    },
+    "sources": {
+      "title": "Fonti",
+      "lead": "I calcoli e gli obiettivi predefiniti di questa sezione si basano su queste pubblicazioni. Tocca per aprirle.",
+      "jump": "Fonti",
+      "open": "Apri la fonte",
+      "calculator": "Su cosa si basa il calcolo",
+      "notAdvice": "Mindkeep non è un’app medica e non fornisce consigli medici. Per decisioni su alimentazione, peso o salute, parla con un medico o un dietista.",
+      "topics": {
+        "bmr": "Metabolismo basale (formula di Mifflin-St Jeor)",
+        "activity": "Livelli di attività e fabbisogno energetico giornaliero",
+        "bmi": "Intervalli di IMC per il peso desiderato",
+        "deficit": "Minimo calorico sicuro e ritmo di variazione del peso",
+        "dailyCalories": "Fabbisogno calorico medio giornaliero",
+        "water": "Assunzione giornaliera di acqua",
+        "activityGuidelines": "Raccomandazioni sull’attività fisica",
+        "steps": "Passi giornalieri e salute"
+      }
     }
   },
   "tasks": {
@@ -1373,5 +1391,53 @@
     "requiredBody": "Questa versione di MindKeep è obsoleta. Aggiorna l’app per continuare.",
     "update": "Aggiorna",
     "later": "Più tardi"
+  },
+  "iap": {
+    "title": "Piani",
+    "lead": "Plus rimuove i limiti. Pro compila anche pasti e scontrini da una foto. Il piano vale su ogni dispositivo in cui accedi.",
+    "month": "Mensile",
+    "year": "Annuale",
+    "perMonth": "{{price}} / mese",
+    "perYear": "{{price}} / anno",
+    "plus": {
+      "name": "Plus",
+      "tagline": "Tutta l’app senza limiti.",
+      "features": [
+        "Nessun limite a attività, note, abitudini e materiali",
+        "Cronologia completa di pasti e peso, più dispositivi"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Tutto Plus, con la scansione da foto.",
+      "features": [
+        "Tutto ciò che offre Plus",
+        "Foto di un pasto: nome e calorie finiscono nel diario",
+        "Foto di uno scontrino: l’importo finisce nel budget"
+      ]
+    },
+    "subscribe": "Abbonati",
+    "current": "Il tuo piano attuale",
+    "switchTo": "Passa a {{plan}}",
+    "restore": "Ripristina acquisti",
+    "restored": "Acquisti ripristinati.",
+    "nothingToRestore": "Nessun abbonamento App Store attivo trovato per questo ID Apple.",
+    "manage": "Gestisci abbonamento",
+    "done": "Fatto: {{plan}} è attivo.",
+    "webManaged": "Il tuo piano è stato acquistato sul sito. Funziona anche nell’app e si gestisce dove è stato acquistato.",
+    "unavailable": "Gli acquisti in-app non sono disponibili in questa versione.",
+    "loadFailed": "Impossibile caricare i prezzi dall’App Store.",
+    "retry": "Riprova",
+    "failed": "L’acquisto non è andato a buon fine. Riprova.",
+    "legal": "Il pagamento viene addebitato sul tuo ID Apple alla conferma dell’acquisto. L’abbonamento si rinnova automaticamente per lo stesso periodo e allo stesso prezzo, salvo disdetta almeno 24 ore prima della fine del periodo in corso. Gestiscilo o annullalo in Impostazioni → il tuo nome → Abbonamenti.",
+    "terms": "Condizioni d’uso (EULA)",
+    "privacy": "Informativa sulla privacy",
+    "storeManaged": "Acquistato sull’App Store. Gestiscilo o annullalo in Impostazioni → il tuo nome → Abbonamenti.",
+    "deleteHint": "Eliminare l’account non annulla un abbonamento App Store. Annullalo prima in Impostazioni → il tuo nome → Abbonamenti.",
+    "legalPlay": "Il pagamento viene addebitato sul tuo account Google Play alla conferma dell’acquisto. L’abbonamento si rinnova automaticamente per lo stesso periodo e allo stesso prezzo finché non lo annulli. Gestiscilo o annullalo nel Play Store → Profilo → Pagamenti e abbonamenti.",
+    "termsPlay": "Condizioni d’uso",
+    "storeManagedPlay": "Acquistato su Google Play. Gestiscilo o annullalo nel Play Store → Profilo → Pagamenti e abbonamenti.",
+    "deleteHintPlay": "Eliminare l’account non annulla un abbonamento Google Play. Annullalo prima nel Play Store → Profilo → Pagamenti e abbonamenti.",
+    "nothingToRestorePlay": "Nessun abbonamento Google Play attivo trovato per questo account Google."
   }
 }

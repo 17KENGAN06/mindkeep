@@ -375,6 +375,24 @@
       "dinner": "Kolacja",
       "snack": "Przekąska",
       "extra": "Inne"
+    },
+    "sources": {
+      "title": "Źródła",
+      "lead": "Obliczenia i domyślne cele w tej sekcji opierają się na tych publikacjach. Dotknij, aby otworzyć.",
+      "jump": "Źródła",
+      "open": "Otwórz źródło",
+      "calculator": "Na czym opiera się obliczenie",
+      "notAdvice": "Mindkeep nie jest aplikacją medyczną i nie udziela porad medycznych. Decyzje o diecie, wadze i zdrowiu podejmuj razem z lekarzem lub dietetykiem.",
+      "topics": {
+        "bmr": "Podstawowa przemiana materii (wzór Mifflina–St Jeora)",
+        "activity": "Poziomy aktywności i dzienne zapotrzebowanie na energię",
+        "bmi": "Zakresy BMI dla docelowej wagi",
+        "deficit": "Bezpieczne minimum kalorii i tempo zmiany wagi",
+        "dailyCalories": "Średnie dzienne zapotrzebowanie na kalorie",
+        "water": "Ile wody pić dziennie",
+        "activityGuidelines": "Zalecenia dotyczące aktywności fizycznej",
+        "steps": "Kroki dziennie a zdrowie"
+      }
     }
   },
   "tasks": {
@@ -1373,5 +1391,53 @@
     "requiredBody": "Ta wersja MindKeep jest nieaktualna. Zaktualizuj aplikację, aby kontynuować.",
     "update": "Aktualizuj",
     "later": "Później"
+  },
+  "iap": {
+    "title": "Plany",
+    "lead": "Plus znosi limity. Pro dodatkowo uzupełnia posiłki i paragony ze zdjęcia. Plan działa na każdym urządzeniu, na którym się logujesz.",
+    "month": "Miesięcznie",
+    "year": "Rocznie",
+    "perMonth": "{{price}} / miesiąc",
+    "perYear": "{{price}} / rok",
+    "plus": {
+      "name": "Plus",
+      "tagline": "Cała aplikacja bez limitów.",
+      "features": [
+        "Bez limitów zadań, notatek, nawyków i materiałów",
+        "Pełna historia posiłków i wagi, więcej urządzeń"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Wszystko z Plus i skan ze zdjęcia.",
+      "features": [
+        "Wszystko z Plus",
+        "Zdjęcie posiłku: nazwa i kalorie trafiają do dziennika",
+        "Zdjęcie paragonu: kwota trafia do budżetu"
+      ]
+    },
+    "subscribe": "Subskrybuj",
+    "current": "Twój obecny plan",
+    "switchTo": "Przejdź na {{plan}}",
+    "restore": "Przywróć zakupy",
+    "restored": "Zakupy przywrócone.",
+    "nothingToRestore": "Nie znaleziono aktywnej subskrypcji App Store dla tego Apple ID.",
+    "manage": "Zarządzaj subskrypcją",
+    "done": "Gotowe: {{plan}} jest aktywny.",
+    "webManaged": "Twój plan został kupiony na stronie. Działa też w aplikacji, a zarządzasz nim tam, gdzie go kupiono.",
+    "unavailable": "Zakupy w aplikacji nie są dostępne w tej wersji.",
+    "loadFailed": "Nie udało się pobrać cen z App Store.",
+    "retry": "Spróbuj ponownie",
+    "failed": "Zakup się nie powiódł. Spróbuj ponownie.",
+    "legal": "Płatność zostanie pobrana z Twojego Apple ID po potwierdzeniu zakupu. Subskrypcja odnawia się automatycznie na ten sam okres i w tej samej cenie, chyba że anulujesz ją co najmniej 24 godziny przed końcem bieżącego okresu. Zarządzaj nią lub anuluj w Ustawieniach → Twoje imię → Subskrypcje.",
+    "terms": "Warunki korzystania (EULA)",
+    "privacy": "Polityka prywatności",
+    "storeManaged": "Kupiono w App Store. Zarządzaj lub anuluj w Ustawieniach → Twoje imię → Subskrypcje.",
+    "deleteHint": "Usunięcie konta nie anuluje subskrypcji App Store. Najpierw anuluj ją w Ustawieniach → Twoje imię → Subskrypcje.",
+    "legalPlay": "Płatność zostanie pobrana z Twojego konta Google Play po potwierdzeniu zakupu. Subskrypcja odnawia się automatycznie na ten sam okres i w tej samej cenie, dopóki jej nie anulujesz. Zarządzaj nią lub anuluj w Sklepie Play → Profil → Płatności i subskrypcje.",
+    "termsPlay": "Warunki korzystania",
+    "storeManagedPlay": "Kupiono w Google Play. Zarządzaj lub anuluj w Sklepie Play → Profil → Płatności i subskrypcje.",
+    "deleteHintPlay": "Usunięcie konta nie anuluje subskrypcji Google Play. Najpierw anuluj ją w Sklepie Play → Profil → Płatności i subskrypcje.",
+    "nothingToRestorePlay": "Nie znaleziono aktywnej subskrypcji Google Play dla tego konta Google."
   }
 }

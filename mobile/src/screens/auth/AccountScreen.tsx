@@ -248,6 +248,11 @@ export function AccountScreen() {
           {t('auth.deleteAccount')}
         </Text>
         <Text style={[styles.hint, { color: colors.muted }]}>{t('auth.deleteAccountHint')}</Text>
+        {user?.planSource === 'app_store' || user?.planSource === 'play_store' ? (
+          <Text style={[styles.hint, { color: colors.danger }]}>
+            {t(user.planSource === 'play_store' ? 'iap.deleteHintPlay' : 'iap.deleteHint')}
+          </Text>
+        ) : null}
         {hasPassword ? (
           <View>
             <Text style={[styles.label, { color: colors.muted }]}>{t('auth.currentPassword')}</Text>

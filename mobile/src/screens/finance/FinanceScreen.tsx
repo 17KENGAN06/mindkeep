@@ -20,6 +20,7 @@ import { useAuth } from '../../features/auth/useAuth';
 import { hasAutomation } from '../../features/billing/planLimit';
 import { FinanceScanReceipt } from '../../features/finance/FinanceScanReceipt';
 import { env } from '../../config/env';
+import { inAppPurchasesEnabled } from '../../features/billing/purchases';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MoreStackParamList } from '../../navigation/types';
@@ -212,7 +213,7 @@ export function FinanceScreen() {
   const { user } = useAuth();
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
   // Plans live on Account; store builds have no purchase path (see config/env.ts).
-  const onNeedPro = env.storeBuild ? undefined : () => navigation.navigate('Account');
+  const onNeedPro = env.storeBuild && !inAppPurchasesEnabled ? undefined : () => navigation.navigate('Account');
   const deleteOperation = useDeleteFinanceOperation();
   const updateSettings = useUpdateFinanceSettings();
   const [savingLimit, setSavingLimit] = useState<string | null>(null);

@@ -1057,6 +1057,24 @@
       "dinner": "Illallinen",
       "snack": "Välipala",
       "extra": "Muu"
+    },
+    "sources": {
+      "title": "Lähteet",
+      "lead": "Tämän osion laskelmat ja oletustavoitteet perustuvat näihin julkaisuihin. Avaa lähde napauttamalla.",
+      "jump": "Lähteet",
+      "open": "Avaa lähde",
+      "calculator": "Mihin laskelma perustuu",
+      "notAdvice": "Mindkeep ei ole lääketieteellinen sovellus eikä anna lääketieteellisiä neuvoja. Tee ruokavaliota, painoa ja terveyttä koskevat päätökset yhdessä lääkärin tai ravitsemusterapeutin kanssa.",
+      "topics": {
+        "bmr": "Perusaineenvaihdunta (Mifflin–St Jeorin kaava)",
+        "activity": "Aktiivisuustasot ja päivittäinen energiantarve",
+        "bmi": "Painoindeksin rajat tavoitepainolle",
+        "deficit": "Turvallinen kalorien vähimmäismäärä ja painonmuutoksen tahti",
+        "dailyCalories": "Keskimääräinen päivittäinen kalorientarve",
+        "water": "Päivittäinen veden saanti",
+        "activityGuidelines": "Liikuntasuositukset",
+        "steps": "Päivän askeleet ja terveys"
+      }
     }
   },
   "dashboard": {
@@ -1898,7 +1916,13 @@
     "noSubscription": "Tällä tilillä ei ole maksullista tilausta.",
     "samePlan": "Olet jo tällä paketilla.",
     "cancelBeforeChange": "Pidä tilaus ensin, vaihda paketti sen jälkeen.",
-    "changeUnavailable": "Paketin vaihtoa ei voitu ajastaa. Yritä myöhemmin."
+    "changeUnavailable": "Paketin vaihtoa ei voitu ajastaa. Yritä myöhemmin.",
+    "storeManaged": {
+      "app_store": "Tilauksesi on ostettu App Storesta. Hallitse tai peru se iPhonessa: Asetukset → nimesi → Tilaukset.",
+      "play_store": "Tilauksesi on ostettu Google Playsta. Hallitse tai peru se Play Kaupassa: Profiili → Maksut ja tilaukset."
+    },
+    "storeShort": "Tilausta hallitaan sovelluskaupassa",
+    "storeCurrent": "Nykyinen tilauksesi (sovelluskauppa)"
   },
   "onboarding": {
     "eyebrow": "Pika-asetus",

@@ -12,6 +12,8 @@ import { AppButton } from '../../components/ui';
 import { mapAuthError } from '../auth/mapAuthError';
 import { useTheme } from '../theme/useTheme';
 import { useEstimateCalories } from './useNutrition';
+import { NutritionSourcesList } from './NutritionSources';
+import { calculatorSourceIds } from './sources';
 import type {
   BodyActivity,
   BodySex,
@@ -74,6 +76,7 @@ export function CalorieHelperModal({
   const [estimate, setEstimate] = useState<CalorieEstimate | null>(null);
   const [acknowledged, setAcknowledged] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sourcesOpen, setSourcesOpen] = useState(false);
 
   // Start from the saved profile each time the dialog opens — only then: a background refetch of
   // the nutrition data used to reset the picks (activity, sex…) while the user was choosing.
@@ -268,6 +271,19 @@ export function CalorieHelperModal({
               </Text>
             )}
 
+            {/* What the formula and its limits are based on, with links (App Store 1.4.1). */}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ expanded: sourcesOpen }}
+              onPress={() => setSourcesOpen((value) => !value)}
+              style={styles.sourcesToggle}
+            >
+              <Text style={[styles.sourcesToggleText, { color: colors.brand }]}>
+                {t('fuel.sources.calculator')} {sourcesOpen ? '▴' : '▾'}
+              </Text>
+            </Pressable>
+            {sourcesOpen ? <NutritionSourcesList only={calculatorSourceIds} /> : null}
+
             {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
 
             <AppButton
@@ -317,6 +333,8 @@ const styles = StyleSheet.create({
   resultValue: { fontSize: 26, fontFamily: fonts.display },
   note: { fontSize: 13, fontFamily: fonts.semibold },
   disclaimer: { fontFamily: fonts.regular, fontSize: 12, lineHeight: 17 },
+  sourcesToggle: { alignSelf: 'flex-start', paddingVertical: 4 },
+  sourcesToggleText: { fontSize: 13, fontFamily: fonts.bold },
   ackRow: { alignItems: 'flex-start', flexDirection: 'row', gap: 10, paddingTop: 4 },
   checkbox: { borderRadius: 6, borderWidth: 1, height: 20, marginTop: 1, width: 20 },
   ackText: { flex: 1, fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },

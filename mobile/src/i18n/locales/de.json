@@ -375,6 +375,24 @@
       "dinner": "Abendessen",
       "snack": "Snack",
       "extra": "Sonstiges"
+    },
+    "sources": {
+      "title": "Quellen",
+      "lead": "Die Berechnungen und Standardziele in diesem Bereich beruhen auf diesen Veröffentlichungen. Tippe darauf, um sie zu öffnen.",
+      "jump": "Quellen",
+      "open": "Quelle öffnen",
+      "calculator": "Worauf die Berechnung beruht",
+      "notAdvice": "Mindkeep ist keine medizinische App und gibt keine medizinischen Ratschläge. Entscheidungen über Ernährung, Gewicht und Gesundheit triff gemeinsam mit einem Arzt oder einer Ernährungsberatung.",
+      "topics": {
+        "bmr": "Grundumsatz (Mifflin-St-Jeor-Formel)",
+        "activity": "Aktivitätsstufen und täglicher Energiebedarf",
+        "bmi": "BMI-Bereiche für das Wunschgewicht",
+        "deficit": "Sicheres Kalorienminimum und Tempo der Gewichtsänderung",
+        "dailyCalories": "Durchschnittlicher täglicher Kalorienbedarf",
+        "water": "Tägliche Wasserzufuhr",
+        "activityGuidelines": "Empfehlungen zur körperlichen Aktivität",
+        "steps": "Tägliche Schritte und Gesundheit"
+      }
     }
   },
   "tasks": {
@@ -1373,5 +1391,53 @@
     "requiredBody": "Diese Version von MindKeep ist veraltet. Aktualisiere die App, um fortzufahren.",
     "update": "Aktualisieren",
     "later": "Später"
+  },
+  "iap": {
+    "title": "Pläne",
+    "lead": "Plus hebt die Limits auf. Pro füllt zusätzlich Mahlzeiten und Belege per Foto aus. Ein Plan gilt auf jedem Gerät, auf dem du dich anmeldest.",
+    "month": "Monatlich",
+    "year": "Jährlich",
+    "perMonth": "{{price}} / Monat",
+    "perYear": "{{price}} / Jahr",
+    "plus": {
+      "name": "Plus",
+      "tagline": "Die ganze App ohne Limits.",
+      "features": [
+        "Keine Limits für Aufgaben, Notizen, Gewohnheiten und Lernmaterial",
+        "Vollständiger Mahlzeiten- und Gewichtsverlauf, mehr Geräte"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Alles aus Plus und Foto-Scan.",
+      "features": [
+        "Alles aus Plus",
+        "Foto einer Mahlzeit: Name und Kalorien landen im Tagebuch",
+        "Foto eines Belegs: der Betrag landet im Budget"
+      ]
+    },
+    "subscribe": "Abonnieren",
+    "current": "Dein aktueller Plan",
+    "switchTo": "Zu {{plan}} wechseln",
+    "restore": "Käufe wiederherstellen",
+    "restored": "Käufe wiederhergestellt.",
+    "nothingToRestore": "Für diese Apple-ID wurde kein aktives App-Store-Abo gefunden.",
+    "manage": "Abo verwalten",
+    "done": "Fertig: {{plan}} ist aktiv.",
+    "webManaged": "Dein Plan wurde auf der Website gekauft. Er gilt auch in der App und wird dort verwaltet, wo er gekauft wurde.",
+    "unavailable": "In-App-Käufe sind in dieser Version nicht verfügbar.",
+    "loadFailed": "Preise aus dem App Store konnten nicht geladen werden.",
+    "retry": "Erneut versuchen",
+    "failed": "Der Kauf ist nicht durchgegangen. Bitte versuche es erneut.",
+    "legal": "Die Zahlung wird bei Bestätigung des Kaufs deiner Apple-ID belastet. Das Abo verlängert sich automatisch um denselben Zeitraum zum selben Preis, sofern es nicht mindestens 24 Stunden vor Ende des aktuellen Zeitraums gekündigt wird. Verwalten oder kündigen kannst du es unter Einstellungen → dein Name → Abonnements.",
+    "terms": "Nutzungsbedingungen (EULA)",
+    "privacy": "Datenschutzerklärung",
+    "storeManaged": "Im App Store gekauft. Verwalten oder kündigen unter Einstellungen → dein Name → Abonnements.",
+    "deleteHint": "Das Löschen des Kontos kündigt kein App-Store-Abo. Kündige es zuerst unter Einstellungen → dein Name → Abonnements.",
+    "legalPlay": "Die Zahlung wird bei Bestätigung des Kaufs deinem Google-Play-Konto belastet. Das Abo verlängert sich automatisch um denselben Zeitraum zum selben Preis, bis du es kündigst. Verwalten oder kündigen kannst du es im Play Store → Profil → Zahlungen und Abos.",
+    "termsPlay": "Nutzungsbedingungen",
+    "storeManagedPlay": "Bei Google Play gekauft. Verwalten oder kündigen im Play Store → Profil → Zahlungen und Abos.",
+    "deleteHintPlay": "Das Löschen des Kontos kündigt kein Google-Play-Abo. Kündige es zuerst im Play Store → Profil → Zahlungen und Abos.",
+    "nothingToRestorePlay": "Für dieses Google-Konto wurde kein aktives Google-Play-Abo gefunden."
   }
 }

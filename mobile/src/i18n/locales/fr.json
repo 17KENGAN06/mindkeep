@@ -375,6 +375,24 @@
       "dinner": "Dîner",
       "snack": "Collation",
       "extra": "Autre"
+    },
+    "sources": {
+      "title": "Sources",
+      "lead": "Les calculs et les objectifs par défaut de cette section s’appuient sur ces publications. Touche-en une pour l’ouvrir.",
+      "jump": "Sources",
+      "open": "Ouvrir la source",
+      "calculator": "Sur quoi repose ce calcul",
+      "notAdvice": "Mindkeep n’est pas une application médicale et ne donne pas de conseils médicaux. Pour toute décision sur ton alimentation, ton poids ou ta santé, parles-en à un médecin ou à un diététicien.",
+      "topics": {
+        "bmr": "Métabolisme de base (formule de Mifflin-St Jeor)",
+        "activity": "Niveaux d’activité et besoins énergétiques quotidiens",
+        "bmi": "Plages d’IMC pour le poids visé",
+        "deficit": "Minimum calorique sûr et rythme de variation du poids",
+        "dailyCalories": "Besoins caloriques quotidiens moyens",
+        "water": "Apport quotidien en eau",
+        "activityGuidelines": "Recommandations sur l’activité physique",
+        "steps": "Pas quotidiens et santé"
+      }
     }
   },
   "tasks": {
@@ -1373,5 +1391,53 @@
     "requiredBody": "Cette version de MindKeep est obsolète. Mettez l’app à jour pour continuer.",
     "update": "Mettre à jour",
     "later": "Plus tard"
+  },
+  "iap": {
+    "title": "Forfaits",
+    "lead": "Plus supprime les limites. Pro remplit aussi repas et tickets à partir d’une photo. Un forfait s’applique sur chaque appareil où tu te connectes.",
+    "month": "Mensuel",
+    "year": "Annuel",
+    "perMonth": "{{price}} / mois",
+    "perYear": "{{price}} / an",
+    "plus": {
+      "name": "Plus",
+      "tagline": "Toute l’app sans limites.",
+      "features": [
+        "Pas de limites sur les tâches, notes, habitudes et contenus à réviser",
+        "Historique complet des repas et du poids, plus d’appareils"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Tout Plus, avec le scan photo.",
+      "features": [
+        "Tout ce qu’offre Plus",
+        "Photo d’un repas : nom et calories vont dans le journal",
+        "Photo d’un ticket : le montant va dans le budget"
+      ]
+    },
+    "subscribe": "S’abonner",
+    "current": "Ton forfait actuel",
+    "switchTo": "Passer à {{plan}}",
+    "restore": "Restaurer les achats",
+    "restored": "Achats restaurés.",
+    "nothingToRestore": "Aucun abonnement App Store actif trouvé pour cet identifiant Apple.",
+    "manage": "Gérer l’abonnement",
+    "done": "C’est fait : {{plan}} est actif.",
+    "webManaged": "Ton forfait a été acheté sur le site. Il fonctionne aussi dans l’app et se gère là où il a été acheté.",
+    "unavailable": "Les achats intégrés ne sont pas disponibles dans cette version.",
+    "loadFailed": "Impossible de charger les prix depuis l’App Store.",
+    "retry": "Réessayer",
+    "failed": "L’achat n’a pas abouti. Réessaie.",
+    "legal": "Le paiement est débité de ton identifiant Apple à la confirmation de l’achat. L’abonnement se renouvelle automatiquement pour la même durée et au même prix, sauf résiliation au moins 24 heures avant la fin de la période en cours. Gère-le ou résilie-le dans Réglages → ton nom → Abonnements.",
+    "terms": "Conditions d’utilisation (EULA)",
+    "privacy": "Politique de confidentialité",
+    "storeManaged": "Acheté sur l’App Store. Gère-le ou résilie-le dans Réglages → ton nom → Abonnements.",
+    "deleteHint": "Supprimer le compte ne résilie pas un abonnement App Store. Résilie-le d’abord dans Réglages → ton nom → Abonnements.",
+    "legalPlay": "Le paiement est débité de ton compte Google Play à la confirmation de l’achat. L’abonnement se renouvelle automatiquement pour la même durée et au même prix jusqu’à ce que tu le résilies. Gère-le ou résilie-le dans le Play Store → Profil → Paiements et abonnements.",
+    "termsPlay": "Conditions d’utilisation",
+    "storeManagedPlay": "Acheté sur Google Play. Gère-le ou résilie-le dans le Play Store → Profil → Paiements et abonnements.",
+    "deleteHintPlay": "Supprimer le compte ne résilie pas un abonnement Google Play. Résilie-le d’abord dans le Play Store → Profil → Paiements et abonnements.",
+    "nothingToRestorePlay": "Aucun abonnement Google Play actif trouvé pour ce compte Google."
   }
 }

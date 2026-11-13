@@ -375,6 +375,24 @@
       "dinner": "Illallinen",
       "snack": "Välipala",
       "extra": "Muu"
+    },
+    "sources": {
+      "title": "Lähteet",
+      "lead": "Tämän osion laskelmat ja oletustavoitteet perustuvat näihin julkaisuihin. Avaa lähde napauttamalla.",
+      "jump": "Lähteet",
+      "open": "Avaa lähde",
+      "calculator": "Mihin laskelma perustuu",
+      "notAdvice": "Mindkeep ei ole lääketieteellinen sovellus eikä anna lääketieteellisiä neuvoja. Tee ruokavaliota, painoa ja terveyttä koskevat päätökset yhdessä lääkärin tai ravitsemusterapeutin kanssa.",
+      "topics": {
+        "bmr": "Perusaineenvaihdunta (Mifflin–St Jeorin kaava)",
+        "activity": "Aktiivisuustasot ja päivittäinen energiantarve",
+        "bmi": "Painoindeksin rajat tavoitepainolle",
+        "deficit": "Turvallinen kalorien vähimmäismäärä ja painonmuutoksen tahti",
+        "dailyCalories": "Keskimääräinen päivittäinen kalorientarve",
+        "water": "Päivittäinen veden saanti",
+        "activityGuidelines": "Liikuntasuositukset",
+        "steps": "Päivän askeleet ja terveys"
+      }
     }
   },
   "tasks": {
@@ -1373,5 +1391,53 @@
     "requiredBody": "Tämä MindKeep-versio on vanhentunut. Päivitä sovellus jatkaaksesi.",
     "update": "Päivitä",
     "later": "Myöhemmin"
+  },
+  "iap": {
+    "title": "Tilaukset",
+    "lead": "Plus poistaa rajat. Pro täyttää lisäksi ateriat ja kuitit kuvasta. Tilaus on voimassa kaikilla laitteilla, joilla kirjaudut sisään.",
+    "month": "Kuukausittain",
+    "year": "Vuosittain",
+    "perMonth": "{{price}} / kk",
+    "perYear": "{{price}} / vuosi",
+    "plus": {
+      "name": "Plus",
+      "tagline": "Koko sovellus ilman rajoja.",
+      "features": [
+        "Ei rajoja tehtäville, muistiinpanoille, tavoille ja kertausmateriaaleille",
+        "Koko ateria- ja painohistoria, enemmän laitteita"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Kaikki Plusista ja kuvaskannaus.",
+      "features": [
+        "Kaikki Plusista",
+        "Kuva ateriasta: nimi ja kalorit menevät päiväkirjaan",
+        "Kuva kuitista: summa menee budjettiin"
+      ]
+    },
+    "subscribe": "Tilaa",
+    "current": "Nykyinen tilauksesi",
+    "switchTo": "Vaihda {{plan}}-tilaukseen",
+    "restore": "Palauta ostokset",
+    "restored": "Ostokset palautettu.",
+    "nothingToRestore": "Tälle Apple ID:lle ei löytynyt aktiivista App Store -tilausta.",
+    "manage": "Hallitse tilausta",
+    "done": "Valmis: {{plan}} on käytössä.",
+    "webManaged": "Tilauksesi on ostettu verkkosivulta. Se toimii myös sovelluksessa, ja sitä hallitaan siellä, missä se ostettiin.",
+    "unavailable": "Sovelluksen sisäiset ostot eivät ole käytettävissä tässä versiossa.",
+    "loadFailed": "Hintoja ei voitu ladata App Storesta.",
+    "retry": "Yritä uudelleen",
+    "failed": "Osto ei onnistunut. Yritä uudelleen.",
+    "legal": "Maksu veloitetaan Apple ID:ltäsi, kun vahvistat oston. Tilaus uusiutuu automaattisesti samaksi jaksoksi ja samaan hintaan, ellei sitä peruta vähintään 24 tuntia ennen nykyisen jakson päättymistä. Hallitse tai peru tilaus kohdassa Asetukset → nimesi → Tilaukset.",
+    "terms": "Käyttöehdot (EULA)",
+    "privacy": "Tietosuojakäytäntö",
+    "storeManaged": "Ostettu App Storesta. Hallitse tai peru kohdassa Asetukset → nimesi → Tilaukset.",
+    "deleteHint": "Tilin poistaminen ei peru App Store -tilausta. Peru se ensin kohdassa Asetukset → nimesi → Tilaukset.",
+    "legalPlay": "Maksu veloitetaan Google Play -tililtäsi, kun vahvistat oston. Tilaus uusiutuu automaattisesti samaksi jaksoksi ja samaan hintaan, kunnes perut sen. Hallitse tai peru tilaus Play Kaupassa → Profiili → Maksut ja tilaukset.",
+    "termsPlay": "Käyttöehdot",
+    "storeManagedPlay": "Ostettu Google Playsta. Hallitse tai peru Play Kaupassa → Profiili → Maksut ja tilaukset.",
+    "deleteHintPlay": "Tilin poistaminen ei peru Google Play -tilausta. Peru se ensin Play Kaupassa → Profiili → Maksut ja tilaukset.",
+    "nothingToRestorePlay": "Tälle Google-tilille ei löytynyt aktiivista Google Play -tilausta."
   }
 }

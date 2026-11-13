@@ -1057,6 +1057,24 @@
         "badType": "Use a JPEG, PNG, or WebP photo.",
         "invalid": "Choose a photo of the meal first."
       }
+    },
+    "sources": {
+      "title": "Sources",
+      "lead": "The calculations and default goals in this section are based on these publications. Tap one to open it.",
+      "jump": "Sources",
+      "open": "Open source",
+      "calculator": "Sources behind this calculation",
+      "notAdvice": "Mindkeep is not a medical app and does not give medical advice. For decisions about your diet, weight or health, talk to a doctor or dietitian.",
+      "topics": {
+        "bmr": "Basal metabolic rate (Mifflin–St Jeor formula)",
+        "activity": "Activity levels and daily energy needs",
+        "bmi": "BMI ranges for the target weight",
+        "deficit": "Safe calorie minimum and pace of weight change",
+        "dailyCalories": "Average daily calorie needs",
+        "water": "Daily water intake",
+        "activityGuidelines": "Physical activity recommendations",
+        "steps": "Daily steps and health"
+      }
     }
   },
   "dashboard": {
@@ -2080,7 +2098,13 @@
     "returnPortal": "Subscription changes are saved. You can return to the app.",
     "openApp": "Open the app",
     "stayOnSite": "Continue on the website",
-    "plusLabel": "Plus"
+    "plusLabel": "Plus",
+    "storeManaged": {
+      "app_store": "Your plan was bought in the App Store. Manage or cancel it on your iPhone: Settings → your name → Subscriptions.",
+      "play_store": "Your plan was bought on Google Play. Manage or cancel it in the Play Store: Profile → Payments & subscriptions."
+    },
+    "storeShort": "Your plan is managed in the app store",
+    "storeCurrent": "Your current plan (app store)"
   },
   "onboarding": {
     "eyebrow": "Quick setup",

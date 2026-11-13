@@ -1057,6 +1057,24 @@
       "dinner": "Abendessen",
       "snack": "Snack",
       "extra": "Sonstiges"
+    },
+    "sources": {
+      "title": "Quellen",
+      "lead": "Die Berechnungen und Standardziele in diesem Bereich beruhen auf diesen Veröffentlichungen. Tippe darauf, um sie zu öffnen.",
+      "jump": "Quellen",
+      "open": "Quelle öffnen",
+      "calculator": "Worauf die Berechnung beruht",
+      "notAdvice": "Mindkeep ist keine medizinische App und gibt keine medizinischen Ratschläge. Entscheidungen über Ernährung, Gewicht und Gesundheit triff gemeinsam mit einem Arzt oder einer Ernährungsberatung.",
+      "topics": {
+        "bmr": "Grundumsatz (Mifflin-St-Jeor-Formel)",
+        "activity": "Aktivitätsstufen und täglicher Energiebedarf",
+        "bmi": "BMI-Bereiche für das Wunschgewicht",
+        "deficit": "Sicheres Kalorienminimum und Tempo der Gewichtsänderung",
+        "dailyCalories": "Durchschnittlicher täglicher Kalorienbedarf",
+        "water": "Tägliche Wasserzufuhr",
+        "activityGuidelines": "Empfehlungen zur körperlichen Aktivität",
+        "steps": "Tägliche Schritte und Gesundheit"
+      }
     }
   },
   "dashboard": {
@@ -1898,7 +1916,13 @@
     "noSubscription": "Kein bezahltes Abo auf diesem Konto.",
     "samePlan": "Sie sind bereits auf diesem Plan.",
     "cancelBeforeChange": "Zuerst das Abo behalten, dann den Plan wechseln.",
-    "changeUnavailable": "Planwechsel konnte nicht geplant werden. Später erneut versuchen."
+    "changeUnavailable": "Planwechsel konnte nicht geplant werden. Später erneut versuchen.",
+    "storeManaged": {
+      "app_store": "Dein Plan wurde im App Store gekauft. Verwalten oder kündigen kannst du ihn auf dem iPhone: Einstellungen → dein Name → Abonnements.",
+      "play_store": "Dein Plan wurde bei Google Play gekauft. Verwalten oder kündigen kannst du ihn im Play Store: Profil → Zahlungen und Abos."
+    },
+    "storeShort": "Dein Plan wird im App-Store verwaltet",
+    "storeCurrent": "Dein aktueller Plan (App-Store)"
   },
   "onboarding": {
     "eyebrow": "Kurzes Setup",

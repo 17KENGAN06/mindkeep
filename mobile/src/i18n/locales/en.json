@@ -375,6 +375,24 @@
       "dinner": "Dinner",
       "snack": "Snack",
       "extra": "Other"
+    },
+    "sources": {
+      "title": "Sources",
+      "lead": "The calculations and default goals in this section are based on these publications. Tap one to open it.",
+      "jump": "Sources",
+      "open": "Open source",
+      "calculator": "Sources behind this calculation",
+      "notAdvice": "Mindkeep is not a medical app and does not give medical advice. For decisions about your diet, weight or health, talk to a doctor or dietitian.",
+      "topics": {
+        "bmr": "Basal metabolic rate (Mifflin–St Jeor formula)",
+        "activity": "Activity levels and daily energy needs",
+        "bmi": "BMI ranges for the target weight",
+        "deficit": "Safe calorie minimum and pace of weight change",
+        "dailyCalories": "Average daily calorie needs",
+        "water": "Daily water intake",
+        "activityGuidelines": "Physical activity recommendations",
+        "steps": "Daily steps and health"
+      }
     }
   },
   "tasks": {
@@ -1373,5 +1391,53 @@
     "requiredBody": "This version of MindKeep is out of date. Update the app to continue.",
     "update": "Update",
     "later": "Later"
+  },
+  "iap": {
+    "title": "Plans",
+    "lead": "Plus removes the caps. Pro also fills meals and receipts from a photo. A plan applies on every device where you sign in.",
+    "month": "Monthly",
+    "year": "Yearly",
+    "perMonth": "{{price}} / month",
+    "perYear": "{{price}} / year",
+    "plus": {
+      "name": "Plus",
+      "tagline": "The whole app with no caps.",
+      "features": [
+        "No caps on tasks, notes, habits and review materials",
+        "Full meal and weight history, more signed-in devices"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Everything in Plus, plus photo scan.",
+      "features": [
+        "Everything in Plus",
+        "Photo a meal: name and calories go into the diary",
+        "Photo a receipt: the amount goes to Budget"
+      ]
+    },
+    "subscribe": "Subscribe",
+    "current": "Your current plan",
+    "switchTo": "Switch to {{plan}}",
+    "restore": "Restore purchases",
+    "restored": "Purchases restored.",
+    "nothingToRestore": "No active App Store subscription was found for this Apple ID.",
+    "manage": "Manage subscription",
+    "done": "Done: {{plan}} is active.",
+    "webManaged": "Your plan was bought on the website. It works in the app too and is managed where it was bought.",
+    "unavailable": "In-app purchases are not available in this version of the app.",
+    "loadFailed": "Could not load prices from the App Store.",
+    "retry": "Try again",
+    "failed": "The purchase did not go through. Please try again.",
+    "legal": "Payment is charged to your Apple ID when you confirm the purchase. The subscription renews automatically for the same period and price unless it is cancelled at least 24 hours before the end of the current period. Manage or cancel it in Settings → your name → Subscriptions.",
+    "terms": "Terms of Use (EULA)",
+    "privacy": "Privacy Policy",
+    "storeManaged": "Bought in the App Store. Manage or cancel it in Settings → your name → Subscriptions.",
+    "deleteHint": "Deleting the account does not cancel an App Store subscription. Cancel it first in Settings → your name → Subscriptions.",
+    "legalPlay": "Payment is charged to your Google Play account when you confirm the purchase. The subscription renews automatically for the same period and price until you cancel it. Manage or cancel it in the Play Store → Profile → Payments & subscriptions.",
+    "termsPlay": "Terms of Use",
+    "storeManagedPlay": "Bought on Google Play. Manage or cancel it in the Play Store → Profile → Payments & subscriptions.",
+    "deleteHintPlay": "Deleting the account does not cancel a Google Play subscription. Cancel it first in the Play Store → Profile → Payments & subscriptions.",
+    "nothingToRestorePlay": "No active Google Play subscription was found for this Google account."
   }
 }

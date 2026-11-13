@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import * as WebBrowser from 'expo-web-browser';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { billingApi, type BillingStatus } from '../../api/billing';
 import { AppButton } from '../../components/ui';
@@ -9,6 +11,8 @@ import { env } from '../../config/env';
 import { mapAuthError } from '../auth/mapAuthError';
 import { useAuth } from '../auth/useAuth';
 import { useTheme } from '../theme/useTheme';
+import type { MoreStackParamList } from '../../navigation/types';
+import { deviceStore, inAppPurchasesEnabled, openStoreSubscriptions } from './purchases';
 import { fonts } from '../../config/fonts';
 
 const USAGE_KEYS = [
@@ -34,6 +38,7 @@ export function BillingCard() {
   const { colors } = useTheme();
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState<'portal' | 'cancel' | 'resume' | null>(null);
@@ -99,13 +104,20 @@ export function BillingCard() {
   const status = statusQuery.data;
   const billed = Boolean(status?.hasStripeCustomer);
   const subscribed = Boolean(status?.subscribed);
+  // Bought in the App Store / Google Play: shown and managed through the store, never through Stripe.
+  const planSource = status?.planSource ?? user?.planSource;
+  const fromStore = planSource === 'app_store' || planSource === 'play_store';
+  // Only this device's store can open its own subscription management.
+  const manageHere = fromStore && planSource === deviceStore;
   const isAdmin = user?.role === 'ADMIN';
   const isBeta = Boolean((user?.betaTester || status?.betaTester) && !isAdmin);
   const isPro = status?.plan === 'PRO' || status?.plan === 'PLUS';
-  const showSubscribe = Boolean(status?.configured && !subscribed && !isBeta);
-  // Store builds: plan status only, no way out to buying or managing it (see config/env.ts).
-  const showPlansLink = !env.storeBuild;
-  const showManage = Boolean(!env.storeBuild && status?.configured && billed);
+  const showSubscribe = Boolean(status?.configured && !subscribed && !fromStore && !isBeta);
+  // iOS with in-app purchases: plans open in the app (App Store). Other store builds show the
+  // plan only, with no way out to buying elsewhere (see config/env.ts).
+  const showInAppPlans = inAppPurchasesEnabled;
+  const showPlansLink = !showInAppPlans && !env.storeBuild;
+  const showManage = Boolean(!env.storeBuild && status?.configured && billed && !fromStore);
   const expires = status?.planExpiresAt
     ? new Date(status.planExpiresAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' })
     : null;
@@ -114,13 +126,14 @@ export function BillingCard() {
     ? t('billing.adminUnlimited')
     : status?.plan === 'PLUS'
       ? t('billing.plusLabel')
-      : subscribed
+      : subscribed || fromStore
         ? t('billing.proLabel')
         : isBeta
           ? t('billing.betaLabel')
           : t('billing.freeLabel');
-  const planCaption =
-    subscribed && expires
+  const planCaption = fromStore
+    ? t(planSource === 'play_store' ? 'iap.storeManagedPlay' : 'iap.storeManaged')
+    : subscribed && expires
       ? t(status?.cancelAtPeriodEnd ? 'billing.ends' : 'billing.renews', { date: expires })
       : isBeta
         ? t('billing.betaHint')
@@ -164,7 +177,7 @@ export function BillingCard() {
       {statusQuery.isError ? (
         <Text style={[styles.error, { color: colors.danger }]}>{t('auth.errors.generic')}</Text>
       ) : null}
-      {status?.cancelAtPeriodEnd ? (
+      {status?.cancelAtPeriodEnd && !fromStore ? (
         <Text style={[styles.caption, { color: colors.ink }]}>{t('billing.cancelScheduled')}</Text>
       ) : null}
       {status?.pendingPlan ? (
@@ -179,6 +192,24 @@ export function BillingCard() {
       ) : null}
       {status && !status.configured ? (
         <Text style={[styles.caption, { color: colors.muted }]}>{t('billing.unavailable')}</Text>
+      ) : null}
+
+      {showInAppPlans && !fromStore ? (
+        <AppButton label={t('plans.viewPlans')} disabled={busy !== null} onPress={() => navigation.navigate('Plans')} />
+      ) : null}
+
+      {manageHere ? (
+        <>
+          <AppButton
+            variant="secondary"
+            label={t('iap.manage')}
+            disabled={busy !== null}
+            onPress={() => void openStoreSubscriptions()}
+          />
+          {showInAppPlans ? (
+            <AppButton variant="ghost" label={t('plans.viewPlans')} onPress={() => navigation.navigate('Plans')} />
+          ) : null}
+        </>
       ) : null}
 
       {showPlansLink ? (
@@ -227,11 +258,11 @@ export function BillingCard() {
         />
       ) : null}
 
-      {status && subscribed ? (
+      {status && (subscribed || fromStore) ? (
         <Text style={[styles.notice, { color: colors.ink }]}>{t('billing.proUnlocked')}</Text>
       ) : null}
 
-      {status && !subscribed && !isBeta ? <UsageGrid usage={status.usage} /> : null}
+      {status && !subscribed && !fromStore && !isBeta ? <UsageGrid usage={status.usage} /> : null}
     </View>
   );
 }

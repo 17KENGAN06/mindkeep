@@ -1057,6 +1057,24 @@
       "dinner": "Kolacja",
       "snack": "Przekąska",
       "extra": "Inne"
+    },
+    "sources": {
+      "title": "Źródła",
+      "lead": "Obliczenia i domyślne cele w tej sekcji opierają się na tych publikacjach. Dotknij, aby otworzyć.",
+      "jump": "Źródła",
+      "open": "Otwórz źródło",
+      "calculator": "Na czym opiera się obliczenie",
+      "notAdvice": "Mindkeep nie jest aplikacją medyczną i nie udziela porad medycznych. Decyzje o diecie, wadze i zdrowiu podejmuj razem z lekarzem lub dietetykiem.",
+      "topics": {
+        "bmr": "Podstawowa przemiana materii (wzór Mifflina–St Jeora)",
+        "activity": "Poziomy aktywności i dzienne zapotrzebowanie na energię",
+        "bmi": "Zakresy BMI dla docelowej wagi",
+        "deficit": "Bezpieczne minimum kalorii i tempo zmiany wagi",
+        "dailyCalories": "Średnie dzienne zapotrzebowanie na kalorie",
+        "water": "Ile wody pić dziennie",
+        "activityGuidelines": "Zalecenia dotyczące aktywności fizycznej",
+        "steps": "Kroki dziennie a zdrowie"
+      }
     }
   },
   "dashboard": {
@@ -1898,7 +1916,13 @@
     "noSubscription": "Na tym koncie nie ma płatnej subskrypcji.",
     "samePlan": "Jesteś już na tym planie.",
     "cancelBeforeChange": "Najpierw zostaw subskrypcję, potem zmień plan.",
-    "changeUnavailable": "Nie udało się zaplanować zmiany planu. Spróbuj później."
+    "changeUnavailable": "Nie udało się zaplanować zmiany planu. Spróbuj później.",
+    "storeManaged": {
+      "app_store": "Plan został kupiony w App Store. Zarządzaj subskrypcją lub anuluj ją na iPhonie: Ustawienia → Twoje imię → Subskrypcje.",
+      "play_store": "Plan został kupiony w Google Play. Zarządzaj subskrypcją lub anuluj ją w Sklepie Play: Profil → Płatności i subskrypcje."
+    },
+    "storeShort": "Planem zarządzasz w sklepie z aplikacjami",
+    "storeCurrent": "Twój obecny plan (sklep z aplikacjami)"
   },
   "onboarding": {
     "eyebrow": "Krótka konfiguracja",

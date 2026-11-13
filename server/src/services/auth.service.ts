@@ -40,7 +40,13 @@ import { USER_NAME_MAX } from '@/validations/auth.schemas.js';
 import { ALL_APP_MODULES, normalizeAppModules, type AppModule } from '@/config/appModules.js';
 import { issueAuthSession, revokeAuthSessionsForUser, type AuthSessionIssue } from '@/services/session.service.js';
 import { cancelStripeForDeletedUser } from '@/services/billing.service.js';
-import { isProUser } from '@/services/entitlements.service.js';
+import {
+  effectivePlan,
+  isProUser,
+  storePlanSelect,
+  type PlanSource,
+  type StorePlan,
+} from '@/services/entitlements.service.js';
 import { AppError } from '@/utils/AppError.js';
 import { hashPassword, verifyPassword } from '@/utils/password.js';
 
@@ -62,6 +68,7 @@ const userRecordSelect = {
   enabledModules: true,
   createdAt: true,
   updatedAt: true,
+  storeSubscription: { select: storePlanSelect },
 } as const;
 
 /** Valid bcrypt hash used only to keep login timing similar when the user is missing. */
@@ -84,6 +91,8 @@ export type PublicUser = {
   planInterval: PlanInterval | null;
   planExpiresAt: Date | null;
   cancelAtPeriodEnd: boolean;
+  /** Where the paid plan comes from (web Stripe or an app store); null when free. Additive. */
+  planSource: PlanSource | null;
   betaTester: boolean;
   onboardingCompleted: boolean;
   enabledModules: AppModule[];
@@ -109,10 +118,15 @@ type UserRecord = {
   enabledModules: string[];
   createdAt: Date;
   updatedAt: Date;
+  storeSubscription?: StorePlan | null;
 };
 
 function toPublicUser(user: UserRecord): PublicUser {
-  const paid = isProUser(user);
+  // The better of the web plan and an App Store / Play subscription.
+  const effective = effectivePlan(user, user.storeSubscription);
+  const store = effective.store;
+  const merged = { ...user, plan: effective.plan, planExpiresAt: effective.planExpiresAt };
+  const paid = isProUser(merged);
   return {
     id: user.id,
     name: user.name,
@@ -123,13 +137,14 @@ function toPublicUser(user: UserRecord): PublicUser {
     hasGoogle: Boolean(user.googleId),
     hasApple: Boolean(user.appleId),
     plan: paid
-      ? user.plan === UserPlan.FREE
+      ? merged.plan === UserPlan.FREE
         ? UserPlan.PRO
-        : user.plan
+        : merged.plan
       : UserPlan.FREE,
-    planInterval: paid ? user.planInterval : null,
-    planExpiresAt: paid ? user.planExpiresAt : null,
-    cancelAtPeriodEnd: paid ? user.cancelAtPeriodEnd : false,
+    planInterval: paid ? (store ? store.interval : user.planInterval) : null,
+    planExpiresAt: paid ? merged.planExpiresAt : null,
+    cancelAtPeriodEnd: paid ? (store ? !store.willRenew : user.cancelAtPeriodEnd) : false,
+    planSource: paid ? effective.source : null,
     betaTester: user.betaTester,
     onboardingCompleted: Boolean(user.onboardingCompletedAt),
     enabledModules: user.onboardingCompletedAt

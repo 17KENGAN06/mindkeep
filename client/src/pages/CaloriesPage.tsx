@@ -13,6 +13,7 @@ import { Loader } from '@/components/ui/Loader';
 import { mutationErrorMessage, isProAccount } from '@/features/billing/planLimit';
 import { PlanRemain } from '@/components/billing/PlanRemain';
 import { CalorieHelperDialog } from '@/features/nutrition/CalorieHelperDialog';
+import { NutritionSourcesSection } from '@/features/nutrition/NutritionSources';
 import { MacroTotals } from '@/features/nutrition/MacroTotals';
 import { MealMacrosFields, emptyMacroDraft, parseMacroDraft, type MacroDraft } from '@/features/nutrition/MealMacrosFields';
 import { FoodScanMeal } from '@/features/nutrition/FoodScanMeal';
@@ -338,7 +339,13 @@ export function CaloriesPage() {
   return (
     <div className="space-y-6">
       <section>
-        <h1 className="text-2xl font-semibold text-ink">{t('calories.title')}</h1>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h1 className="text-2xl font-semibold text-ink">{t('calories.title')}</h1>
+          {/* Health numbers need their sources within easy reach (App Store 1.4.1, same on the web). */}
+          <a href="#nutrition-sources" className="text-sm font-semibold text-brand-500 no-underline hover:text-brand-400">
+            {t('calories.sources.jump')}
+          </a>
+        </div>
         <PlanRemain feature="meals" />
       </section>
 
@@ -698,6 +705,8 @@ export function CaloriesPage() {
 
         <ErrorMessage message={formError ?? undefined} />
       </section>
+
+      <NutritionSourcesSection />
 
       <CalorieHelperDialog
         open={helperOpen}

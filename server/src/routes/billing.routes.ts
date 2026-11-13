@@ -48,6 +48,11 @@ billingRouter.post(
 );
 
 billingRouter.post(
+  '/store/sync',
+  asyncHandler((req, res) => billingController.storeSync(req, res)),
+);
+
+billingRouter.post(
   '/resume',
   asyncHandler((req, res) => billingController.resume(req, res)),
 );

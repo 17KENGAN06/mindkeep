@@ -1,4 +1,4 @@
-import { MaterialStatus, UserPlan, UserRole } from '@prisma/client';
+import { MaterialStatus, StoreKind, UserPlan, UserRole, type PlanInterval } from '@prisma/client';
 import {
   FREE_LIMITS,
   dateKeyFromInput,
@@ -22,6 +22,65 @@ export type EntitlementUser = {
   betaTester: boolean;
 };
 
+/** Where the plan in effect comes from. Additive API field: older clients ignore it. */
+export type PlanSource = 'stripe' | 'app_store' | 'play_store';
+
+/** The store subscription columns the effective plan needs. */
+export type StorePlan = {
+  store: StoreKind;
+  plan: UserPlan;
+  interval: PlanInterval | null;
+  expiresAt: Date | null;
+  willRenew: boolean;
+};
+
+export const storePlanSelect = {
+  store: true,
+  plan: true,
+  interval: true,
+  expiresAt: true,
+  willRenew: true,
+} as const;
+
+const PLAN_RANK: Record<UserPlan, number> = {
+  [UserPlan.FREE]: 0,
+  [UserPlan.PLUS]: 1,
+  [UserPlan.PRO]: 2,
+};
+
+function stillActive(expiresAt: Date | null, now: number): boolean {
+  return !expiresAt || expiresAt.getTime() > now;
+}
+
+/**
+ * The better of the web (Stripe) plan on User and an active App Store / Play subscription.
+ * Pro beats Plus; on a tie the web plan stays (it is the one with a portal). When the store
+ * does not win, the User values are returned untouched so existing behaviour is unchanged.
+ */
+export function effectivePlan(
+  web: { plan: UserPlan; planExpiresAt: Date | null },
+  store: StorePlan | null | undefined,
+  now: number = Date.now(),
+): { plan: UserPlan; planExpiresAt: Date | null; source: PlanSource | null; store: StorePlan | null } {
+  const webActive = web.plan !== UserPlan.FREE && stillActive(web.planExpiresAt, now);
+  const storeActive = Boolean(store && store.plan !== UserPlan.FREE && stillActive(store.expiresAt, now));
+
+  if (store && storeActive && (!webActive || PLAN_RANK[store.plan] > PLAN_RANK[web.plan])) {
+    return {
+      plan: store.plan,
+      planExpiresAt: store.expiresAt,
+      source: store.store === StoreKind.PLAY_STORE ? 'play_store' : 'app_store',
+      store,
+    };
+  }
+  return {
+    plan: web.plan,
+    planExpiresAt: web.planExpiresAt,
+    source: webActive ? 'stripe' : null,
+    store: null,
+  };
+}
+
 const entitlementSelect = {
   id: true,
   email: true,
@@ -30,6 +89,7 @@ const entitlementSelect = {
   plan: true,
   planExpiresAt: true,
   betaTester: true,
+  storeSubscription: { select: storePlanSelect },
 } as const;
 
 export function isPaidUser(
@@ -85,7 +145,10 @@ export async function getEntitlement(
     };
   }
 
-  return { ...user, pro: isPaidUser(user), automation: hasAutomation(user) };
+  const { storeSubscription, ...record } = user;
+  const effective = effectivePlan(record, storeSubscription);
+  const merged = { ...record, plan: effective.plan, planExpiresAt: effective.planExpiresAt };
+  return { ...merged, pro: isPaidUser(merged), automation: hasAutomation(merged) };
 }
 
 async function usedFor(

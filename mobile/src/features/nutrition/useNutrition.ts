@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useMutationState, useQuery, useQueryClient } from '@tanstack/react-query';
 import { nutritionApi } from '../../api/nutrition';
 import { touchPlanUsage } from '../billing/planLimit';
 import type {
@@ -10,6 +10,28 @@ import type {
 } from '../../types/nutrition';
 
 const nutritionKey = ['nutrition'] as const;
+const waterMutationKey = ['nutrition', 'water'] as const;
+
+type WaterVariables = { date: string; glasses: number };
+
+function patchWater(
+  current: NutritionPeriodResponse | undefined,
+  date: string,
+  glasses: number,
+): NutritionPeriodResponse | undefined {
+  if (!current) return current;
+  const exists = current.water.some((row) => row.date === date);
+  return {
+    ...current,
+    water: exists
+      ? current.water.map((row) => (row.date === date ? { ...row, glasses } : row))
+      : [...current.water, { date, glasses }],
+  };
+}
+
+function waterPeriodKey(date: string) {
+  return [...nutritionKey, Number(date.slice(0, 4)), Number(date.slice(5, 7))];
+}
 
 function invalidateNutrition(queryClient: ReturnType<typeof useQueryClient>) {
   return queryClient.invalidateQueries({ queryKey: nutritionKey });
@@ -87,24 +109,20 @@ export function useSetWater(_year?: number, _month?: number) {
   const queryClient = useQueryClient();
   return useMutation({
     scope: { id: 'nutrition-water' },
-    mutationFn: ({ date, glasses }: { date: string; glasses: number }) =>
-      nutritionApi.setWater(date, glasses),
+    mutationKey: waterMutationKey,
+    mutationFn: ({ date, glasses }: WaterVariables) => nutritionApi.setWater(date, glasses),
     onMutate: async ({ date, glasses }) => {
-      const year = Number(date.slice(0, 4));
-      const month = Number(date.slice(5, 7));
-      const periodKey = [...nutritionKey, year, month];
+      const periodKey = waterPeriodKey(date);
       await queryClient.cancelQueries({ queryKey: periodKey, exact: true });
       const previous = queryClient.getQueryData<NutritionPeriodResponse>(periodKey);
-      if (previous) {
-        const exists = previous.water.some((row) => row.date === date);
-        queryClient.setQueryData<NutritionPeriodResponse>(periodKey, {
-          ...previous,
-          water: exists
-            ? previous.water.map((row) => (row.date === date ? { ...row, glasses } : row))
-            : [...previous.water, { date, glasses }],
-        });
-      }
+      if (previous) queryClient.setQueryData(periodKey, patchWater(previous, date, glasses));
       return { periodKey, previous };
+    },
+    onSuccess: (_data, { date, glasses }) => {
+      // Saved: keep it on screen even if a refetch that started earlier brought back the old count.
+      queryClient.setQueryData<NutritionPeriodResponse>(waterPeriodKey(date), (current) =>
+        patchWater(current, date, glasses),
+      );
     },
     onError: (_error, _variables, context) => {
       if (context?.previous) queryClient.setQueryData(context.periodKey, context.previous);
@@ -118,6 +136,23 @@ export function useSetWater(_year?: number, _month?: number) {
       }
     },
   });
+}
+
+/**
+ * Glasses to show for a day: the newest tap still being saved (from any screen) wins over the
+ * cached period. A refetch that lands while taps are queued (opening Nutrition, adding a meal)
+ * would otherwise show the old count, and the next tap would save a number built on it.
+ */
+export function useWaterGlasses(date: string, saved: number): number {
+  const pending = useMutationState({
+    filters: { mutationKey: waterMutationKey, status: 'pending' },
+    select: (mutation) => mutation.state.variables as WaterVariables | undefined,
+  });
+  for (let index = pending.length - 1; index >= 0; index -= 1) {
+    const variables = pending[index];
+    if (variables?.date === date) return variables.glasses;
+  }
+  return saved;
 }
 
 export function useSetSteps() {

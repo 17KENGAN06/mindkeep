@@ -90,6 +90,12 @@ app.use((req, res, next) => {
 });
 app.use(cookieParser());
 app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+// RevenueCat (App Store / Play) webhook: authenticated by its Authorization secret, so it sits
+// before the rate limiter and the CSRF check, like the Stripe webhook.
+app.post(
+  '/api/billing/revenuecat/webhook',
+  asyncHandler((req, res) => billingController.revenueCatWebhook(req, res)),
+);
 
 app.use(
   rateLimit({

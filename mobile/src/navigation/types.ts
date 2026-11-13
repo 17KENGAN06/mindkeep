@@ -39,6 +39,7 @@ export type MoreStackParamList = {
   Finance: undefined;
   Contact: undefined;
   Account: undefined;
+  Plans: undefined;
   Settings: undefined;
   Guide: undefined;
   Statistics: undefined;

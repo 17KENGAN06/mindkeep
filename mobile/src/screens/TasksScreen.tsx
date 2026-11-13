@@ -427,6 +427,8 @@ export function TasksScreen() {
       >
         <SectionScrollView
           ref={scrollRef}
+          // Its add form has its own keyboard handling (see above).
+          keyboardAware={false}
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={[
             styles.content,

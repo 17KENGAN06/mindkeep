@@ -81,6 +81,18 @@ const envSchema = z.object({
   STRIPE_PRICE_PLUS_YEARLY: z.string().trim().min(1).optional(),
   STRIPE_PRICE_PRO_MONTHLY: z.string().trim().min(1).optional(),
   STRIPE_PRICE_PRO_YEARLY: z.string().trim().min(1).optional(),
+  /** RevenueCat secret API key (sk_…) — reads App Store / Play subscriptions. In-app purchase sync returns 503 until set. */
+  REVENUECAT_API_KEY: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => (value && value.length > 0 ? value : undefined)),
+  /** Value RevenueCat sends in the Authorization header of its webhook. */
+  REVENUECAT_WEBHOOK_SECRET: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => (value && value.length > 0 ? value : undefined)),
   /** Google AI Studio key. Food scan returns 503 until this is set. */
   GEMINI_API_KEY: z
     .string()

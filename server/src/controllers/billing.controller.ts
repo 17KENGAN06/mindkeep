@@ -13,6 +13,7 @@ import {
   syncCheckoutSession,
 } from '@/services/billing.service.js';
 import { getUsageSnapshot } from '@/services/entitlements.service.js';
+import { handleRevenueCatWebhook, syncStoreSubscription } from '@/services/revenuecat.service.js';
 import { AppError } from '@/utils/AppError.js';
 import type { ChangePlanInput, CheckoutInput, SyncCheckoutInput } from '@/validations/billing.schemas.js';
 
@@ -45,6 +46,7 @@ export class BillingController {
       planInterval: user.planInterval,
       planExpiresAt: user.planExpiresAt,
       cancelAtPeriodEnd: user.cancelAtPeriodEnd,
+      planSource: user.planSource,
       betaTester: user.betaTester,
       ...flags,
       ...usage,
@@ -53,6 +55,15 @@ export class BillingController {
 
   async checkout(req: Request, res: Response): Promise<void> {
     const input = req.body as CheckoutInput;
+    // Paid through the App Store / Play: a second (web) subscription would charge twice.
+    const current = await authService.me(requireUserId(req));
+    if (current.planSource === 'app_store' || current.planSource === 'play_store') {
+      throw new AppError('The plan is managed in the app store', {
+        statusCode: 409,
+        code: 'STORE_SUBSCRIPTION_ACTIVE',
+        details: { planSource: current.planSource },
+      });
+    }
     const result = await createCheckoutSession(
       requireUserId(req),
       input.interval,
@@ -95,6 +106,19 @@ export class BillingController {
   async resume(req: Request, res: Response): Promise<void> {
     await resumeSubscription(requireUserId(req));
     res.status(200).json({ ok: true });
+  }
+
+  /** After an in-app purchase or restore: re-read the store subscription now (the webhook may lag). */
+  async storeSync(req: Request, res: Response): Promise<void> {
+    const userId = requireUserId(req);
+    await syncStoreSubscription(userId);
+    const user = await authService.me(userId);
+    res.status(200).json({ user });
+  }
+
+  async revenueCatWebhook(req: Request, res: Response): Promise<void> {
+    const result = await handleRevenueCatWebhook(req.get('authorization') ?? undefined, req.body);
+    res.status(200).json({ received: true, ...result });
   }
 
   async webhook(req: Request, res: Response): Promise<void> {

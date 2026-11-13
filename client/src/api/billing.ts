@@ -13,6 +13,8 @@ export type BillingStatus = {
   planInterval: 'MONTH' | 'YEAR' | null;
   planExpiresAt: string | null;
   cancelAtPeriodEnd: boolean;
+  /** Where the paid plan comes from: web (Stripe) or an app store. Older APIs omit it. */
+  planSource?: 'stripe' | 'app_store' | 'play_store' | null;
   hasStripeCustomer: boolean;
   subscribed: boolean;
   betaTester: boolean;

@@ -11,6 +11,7 @@ import {
 } from '../../api/auth';
 import { ApiError, NetworkError, refreshAccessToken } from '../../api/client';
 import type { User } from '../../types/auth';
+import { syncPurchasesUser } from '../billing/purchases';
 import { cancelReminders } from '../notifications/localReminders';
 import { AuthContext } from './auth-context';
 import {
@@ -49,6 +50,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     retry: false,
     staleTime: 60_000,
   });
+
+  // In-app purchases belong to the signed-in account (RevenueCat app user id = our user id).
+  const signedInId = meQuery.data === undefined ? undefined : (meQuery.data?.id ?? null);
+  useEffect(() => {
+    if (signedInId !== undefined) void syncPurchasesUser(signedInId);
+  }, [signedInId]);
 
   const updateWorkspace = useCallback(
     async (payload: { timezone?: string; enabledModules?: string[] }) => {

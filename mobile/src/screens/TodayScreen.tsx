@@ -33,7 +33,7 @@ import { QuickActions, type QuickAction } from '../features/home/QuickActions';
 import { StarterCard, type StarterStep } from '../features/home/StarterCard';
 import { useReminderSettings } from '../features/notifications/useLocalReminders';
 import { useNotes } from '../features/notes/useNotes';
-import { useNutritionPeriod, useSetWater } from '../features/nutrition/useNutrition';
+import { useNutritionPeriod, useSetWater, useWaterGlasses } from '../features/nutrition/useNutrition';
 import { useOpenQuickAdd } from '../features/quickAdd/quickAddContext';
 import { useRhythmPeriod, useSetHabitCheck } from '../features/rhythm/useRhythm';
 import { useOverdueReminders, useTodayReminders } from '../features/reminders/useReminders';
@@ -140,7 +140,10 @@ export function TodayScreen() {
   const meals = (nutritionQuery.data?.meals ?? []).filter((meal) => meal.date === today);
   const calorieGoal = nutritionQuery.data?.settings.calorieGoal ?? 2000;
   const waterGoal = nutritionQuery.data?.settings.waterGoal ?? 8;
-  const glasses = nutritionQuery.data?.water.find((row) => row.date === today)?.glasses ?? 0;
+  const glasses = useWaterGlasses(
+    today,
+    nutritionQuery.data?.water.find((row) => row.date === today)?.glasses ?? 0,
+  );
   const eaten = meals.reduce((sum, meal) => sum + meal.calories, 0);
   const stats = dashboardQuery.data?.stats;
   const reviewsLeft = (stats?.todayReminders ?? 0) + (stats?.overdueReminders ?? 0);

@@ -375,6 +375,24 @@
       "dinner": "Cena",
       "snack": "Tentempié",
       "extra": "Otro"
+    },
+    "sources": {
+      "title": "Fuentes",
+      "lead": "Los cálculos y los objetivos predeterminados de esta sección se basan en estas publicaciones. Toca una para abrirla.",
+      "jump": "Fuentes",
+      "open": "Abrir la fuente",
+      "calculator": "En qué se basa este cálculo",
+      "notAdvice": "Mindkeep no es una app médica y no ofrece consejo médico. Para decidir sobre tu alimentación, tu peso o tu salud, consulta a un médico o a un dietista.",
+      "topics": {
+        "bmr": "Metabolismo basal (fórmula de Mifflin-St Jeor)",
+        "activity": "Niveles de actividad y necesidades diarias de energía",
+        "bmi": "Rangos de IMC para el peso objetivo",
+        "deficit": "Mínimo calórico seguro y ritmo de cambio de peso",
+        "dailyCalories": "Necesidades calóricas diarias medias",
+        "water": "Ingesta diaria de agua",
+        "activityGuidelines": "Recomendaciones de actividad física",
+        "steps": "Pasos diarios y salud"
+      }
     }
   },
   "tasks": {
@@ -1373,5 +1391,53 @@
     "requiredBody": "Esta versión de MindKeep está desactualizada. Actualiza la app para continuar.",
     "update": "Actualizar",
     "later": "Más tarde"
+  },
+  "iap": {
+    "title": "Planes",
+    "lead": "Plus quita los límites. Pro además rellena comidas y tickets a partir de una foto. El plan vale en todos los dispositivos donde inicies sesión.",
+    "month": "Mensual",
+    "year": "Anual",
+    "perMonth": "{{price}} / mes",
+    "perYear": "{{price}} / año",
+    "plus": {
+      "name": "Plus",
+      "tagline": "Toda la app sin límites.",
+      "features": [
+        "Sin límites en tareas, notas, hábitos y materiales",
+        "Historial completo de comidas y peso, más dispositivos"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "tagline": "Todo Plus, con escaneo por foto.",
+      "features": [
+        "Todo lo de Plus",
+        "Foto de una comida: nombre y calorías van al diario",
+        "Foto de un ticket: el importe va al presupuesto"
+      ]
+    },
+    "subscribe": "Suscribirse",
+    "current": "Tu plan actual",
+    "switchTo": "Cambiar a {{plan}}",
+    "restore": "Restaurar compras",
+    "restored": "Compras restauradas.",
+    "nothingToRestore": "No se encontró ninguna suscripción activa de App Store para este ID de Apple.",
+    "manage": "Gestionar suscripción",
+    "done": "Listo: {{plan}} está activo.",
+    "webManaged": "Tu plan se compró en la web. También funciona en la app y se gestiona donde se compró.",
+    "unavailable": "Las compras en la app no están disponibles en esta versión.",
+    "loadFailed": "No se pudieron cargar los precios de la App Store.",
+    "retry": "Reintentar",
+    "failed": "La compra no se completó. Inténtalo de nuevo.",
+    "legal": "El pago se carga a tu ID de Apple al confirmar la compra. La suscripción se renueva automáticamente por el mismo periodo y precio salvo que la canceles al menos 24 horas antes del final del periodo actual. Gestiónala o cancélala en Ajustes → tu nombre → Suscripciones.",
+    "terms": "Condiciones de uso (EULA)",
+    "privacy": "Política de privacidad",
+    "storeManaged": "Comprado en la App Store. Gestiónalo o cancélalo en Ajustes → tu nombre → Suscripciones.",
+    "deleteHint": "Eliminar la cuenta no cancela una suscripción de App Store. Cancélala antes en Ajustes → tu nombre → Suscripciones.",
+    "legalPlay": "El pago se carga a tu cuenta de Google Play al confirmar la compra. La suscripción se renueva automáticamente por el mismo periodo y precio hasta que la canceles. Gestiónala o cancélala en Play Store → Perfil → Pagos y suscripciones.",
+    "termsPlay": "Condiciones de uso",
+    "storeManagedPlay": "Comprado en Google Play. Gestiónalo o cancélalo en Play Store → Perfil → Pagos y suscripciones.",
+    "deleteHintPlay": "Eliminar la cuenta no cancela una suscripción de Google Play. Cancélala antes en Play Store → Perfil → Pagos y suscripciones.",
+    "nothingToRestorePlay": "No se encontró ninguna suscripción activa de Google Play para esta cuenta de Google."
   }
 }

@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { useEstimateCalories } from '@/features/nutrition/useNutrition';
+import { NutritionSourcesList } from '@/features/nutrition/NutritionSources';
+import { calculatorSourceIds } from '@/features/nutrition/sources';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 import type {
   BodyActivity,
@@ -295,6 +297,16 @@ export function CalorieHelperDialog({
           ) : (
             <p className="text-xs leading-relaxed text-muted">{t('calories.helper.disclaimer')}</p>
           )}
+
+          {/* What the formula and its limits are based on, with links (App Store 1.4.1). */}
+          <details className="group">
+            <summary className="cursor-pointer list-none text-sm font-semibold text-brand-500 hover:text-brand-400 [&::-webkit-details-marker]:hidden">
+              {t('calories.sources.calculator')} <span className="inline-block transition group-open:rotate-180">▾</span>
+            </summary>
+            <div className="mt-3">
+              <NutritionSourcesList only={calculatorSourceIds} />
+            </div>
+          </details>
 
           <ErrorMessage message={error ?? undefined} />
         </div>

@@ -1057,6 +1057,24 @@
       "dinner": "Dîner",
       "snack": "Collation",
       "extra": "Autre"
+    },
+    "sources": {
+      "title": "Sources",
+      "lead": "Les calculs et les objectifs par défaut de cette section s’appuient sur ces publications. Touche-en une pour l’ouvrir.",
+      "jump": "Sources",
+      "open": "Ouvrir la source",
+      "calculator": "Sur quoi repose ce calcul",
+      "notAdvice": "Mindkeep n’est pas une application médicale et ne donne pas de conseils médicaux. Pour toute décision sur ton alimentation, ton poids ou ta santé, parles-en à un médecin ou à un diététicien.",
+      "topics": {
+        "bmr": "Métabolisme de base (formule de Mifflin-St Jeor)",
+        "activity": "Niveaux d’activité et besoins énergétiques quotidiens",
+        "bmi": "Plages d’IMC pour le poids visé",
+        "deficit": "Minimum calorique sûr et rythme de variation du poids",
+        "dailyCalories": "Besoins caloriques quotidiens moyens",
+        "water": "Apport quotidien en eau",
+        "activityGuidelines": "Recommandations sur l’activité physique",
+        "steps": "Pas quotidiens et santé"
+      }
     }
   },
   "dashboard": {
@@ -1898,7 +1916,13 @@
     "noSubscription": "Pas d’abonnement payant sur ce compte.",
     "samePlan": "Vous êtes déjà sur cette offre.",
     "cancelBeforeChange": "Gardez d’abord l’abonnement, puis changez d’offre.",
-    "changeUnavailable": "Impossible de planifier le changement. Réessayez plus tard."
+    "changeUnavailable": "Impossible de planifier le changement. Réessayez plus tard.",
+    "storeManaged": {
+      "app_store": "Ton forfait a été acheté sur l’App Store. Gère-le ou résilie-le sur ton iPhone : Réglages → ton nom → Abonnements.",
+      "play_store": "Ton forfait a été acheté sur Google Play. Gère-le ou résilie-le dans le Play Store : Profil → Paiements et abonnements."
+    },
+    "storeShort": "Ton forfait est géré dans la boutique d’applications",
+    "storeCurrent": "Ton forfait actuel (boutique d’applications)"
   },
   "onboarding": {
     "eyebrow": "Réglage rapide",
