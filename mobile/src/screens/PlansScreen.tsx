@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Linking, StyleSheet, Text, View } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { SectionScrollView } from '../components/SectionScrollView';
@@ -39,6 +39,9 @@ export function PlansScreen() {
   const [busy, setBusy] = useState<StorePlanId | 'restore' | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Restore lives at the bottom of the screen, so its result is shown there, not in the top notice.
+  const [restoreNotice, setRestoreNotice] = useState<string | null>(null);
+  const [restoreError, setRestoreError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoadFailed(false);
@@ -85,16 +88,37 @@ export function PlansScreen() {
     if (!user) return;
     setError(null);
     setNotice(null);
+    setRestoreError(null);
+    setRestoreNotice(null);
     setBusy('restore');
     try {
       const next = await restoreStorePurchases(user.id);
       await applyUser(next);
-      setNotice(next.planSource === deviceStore ? t('iap.restored') : t(`iap.nothingToRestore${storeTextSuffix}`));
+      const restoredPlan = next.plan === 'PRO' ? 'pro' : next.plan === 'PLUS' ? 'plus' : null;
+      setRestoreNotice(
+        next.planSource === deviceStore && restoredPlan
+          ? t('iap.restoredPlan', { plan: t(`iap.${restoredPlan}.name`) })
+          : t(`iap.nothingToRestore${storeTextSuffix}`),
+      );
     } catch (caught) {
-      setError(errorText(caught));
+      setRestoreError(errorText(caught));
     } finally {
       setBusy(null);
     }
+  };
+
+  // The store subscription belongs to the Apple ID / Google account, not to the MindKeep account:
+  // restoring can move it here from another MindKeep account, so say so before doing it.
+  const confirmRestore = () => {
+    if (!user) return;
+    Alert.alert(
+      t('iap.restoreConfirmTitle'),
+      t(`iap.restoreConfirmBody${storeTextSuffix}`, { email: user.email }),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        { text: t('iap.restoreConfirmAction'), onPress: () => void restore() },
+      ],
+    );
   };
 
   const currentPlan = user?.plan === 'PRO' ? 'pro' : user?.plan === 'PLUS' ? 'plus' : null;
@@ -193,13 +217,29 @@ export function PlansScreen() {
                 onPress={() => void openStoreSubscriptions()}
               />
             ) : null}
-            <AppButton
-              variant="ghost"
-              label={t('iap.restore')}
-              loading={busy === 'restore'}
-              disabled={busy !== null}
-              onPress={() => void restore()}
-            />
+            {/* Restore is only useful without an active subscription from this store; Apple wants it
+                next to the plans for exactly those users. */}
+            {!fromStore ? (
+              <View style={[styles.restoreBlock, { borderColor: colors.line }]}>
+                <Text style={[styles.restoreTitle, { color: colors.ink }]}>{t('iap.restoreTitle')}</Text>
+                <Text style={[styles.body, { color: colors.muted }]}>{t(`iap.restoreHint${storeTextSuffix}`)}</Text>
+                {restoreNotice ? (
+                  <Text style={[styles.notice, { color: colors.brand }]}>{restoreNotice}</Text>
+                ) : null}
+                {restoreError ? (
+                  <Text style={[styles.error, { color: colors.danger }]}>{restoreError}</Text>
+                ) : null}
+                <AppButton
+                  variant="secondary"
+                  label={t('iap.restore')}
+                  loading={busy === 'restore'}
+                  disabled={busy !== null}
+                  onPress={confirmRestore}
+                />
+              </View>
+            ) : restoreNotice ? (
+              <Text style={[styles.notice, { color: colors.brand }]}>{restoreNotice}</Text>
+            ) : null}
 
             <Text style={[styles.legal, { color: colors.muted }]}>{t(`iap.legal${storeTextSuffix}`)}</Text>
           </>
@@ -239,6 +279,8 @@ const styles = StyleSheet.create({
   price: { fontFamily: fonts.bold, fontSize: 18, marginTop: 4 },
   notice: { fontFamily: fonts.semibold, fontSize: 14 },
   error: { fontFamily: fonts.regular, fontSize: 14 },
+  restoreBlock: { borderTopWidth: StyleSheet.hairlineWidth, gap: 8, marginTop: 8, paddingTop: 16 },
+  restoreTitle: { fontFamily: fonts.semibold, fontSize: 16 },
   legal: { fontFamily: fonts.regular, fontSize: 12, lineHeight: 17 },
   links: { flexDirection: 'row', flexWrap: 'wrap', gap: 18 },
   link: { fontFamily: fonts.semibold, fontSize: 14 },

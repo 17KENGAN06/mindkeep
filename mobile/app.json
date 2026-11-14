@@ -50,7 +50,7 @@
     },
     "android": {
       "package": "cloud.mindkeep.app",
-      "versionCode": 8,
+      "versionCode": 9,
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "backgroundColor": "#090c0e",

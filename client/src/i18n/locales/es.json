@@ -1483,7 +1483,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Política de privacidad",
-    "updated": "Actualizado: 15 de octubre de 2026",
+    "updated": "Actualizado: 14 de noviembre de 2026",
     "intro": "Esta política explica qué datos recoge Mindkeep en mindkeep.cloud y en las apps de Mindkeep para iPhone y Android, para qué los necesitamos, quién nos ayuda a tratarlos y qué puedes hacer con ellos. Mindkeep no tiene anuncios, no vende tus datos ni los usa para rastrearte.",
     "contactLabel": "Preguntas sobre datos:",
     "sections": [
@@ -1501,7 +1501,7 @@
           "Lo que añades: tareas, notas, materiales de estudio, categorías y fechas de repaso, hábitos y sus marcas, categorías de presupuesto, operaciones y monedas.",
           "Nutrición y cuerpo: objetivo de calorías, comidas con calorías y macros, agua, pasos y peso; si usas la calculadora del objetivo, también sexo, edad, altura y nivel de actividad. Son datos de salud que introduces tú y que solo ves tú.",
           "Fotos: la foto de una comida o de un recibo que añades se envía para una estimación y no se guarda (ver sección 5).",
-          "Suscripción: plan, periodo de facturación e IDs de cliente de Stripe si compras un plan en el sitio web. Los datos de la tarjeta los trata Stripe y nunca nos llegan.",
+          "Suscripción: plan, periodo de facturación e IDs de cliente de Stripe si compras un plan en el sitio web; si te suscribes en la app, la suscripción de App Store o Google Play (producto, tienda, vencimiento y estado de renovación). Los datos de la tarjeta los gestionan Stripe, Apple o Google y nunca nos llegan.",
           "Datos técnicos: sesiones iniciadas (puedes verlas y cerrarlas en Cuenta) y registros básicos del servidor necesarios para la seguridad y la estabilidad.",
           "No recogemos ubicación, contactos, identificadores publicitarios ni analítica, y las apps no incluyen SDK de anuncios ni de rastreo."
         ]
@@ -1533,6 +1533,7 @@
           "Google Gemini: las fotos de comidas y recibos se envían solo para estimar calorías o leer operaciones y después se descartan. No guardamos las fotos.",
           "Stripe: pagos de planes comprados en el sitio web; Stripe recibe tu email y tus datos de facturación.",
           "Google y Apple: solo si eliges iniciar sesión con ellos.",
+          "Apple, Google y RevenueCat: las suscripciones compradas en la app se pagan a través de App Store o Google Play. RevenueCat las gestiona por nosotros y recibe el ID de tu cuenta de Mindkeep y el registro de compra de la tienda, no tu nombre, correo ni tarjeta.",
           "Algunos proveedores están fuera de la UE/EEE (por ejemplo, en Estados Unidos); esas transferencias se basan en garantías como las cláusulas contractuales tipo de sus condiciones."
         ]
       },

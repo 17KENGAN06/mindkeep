@@ -1483,7 +1483,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "updated": "Updated: 15 October 2026",
+    "updated": "Updated: 14 November 2026",
     "intro": "This policy explains what data Mindkeep collects on mindkeep.cloud and in the Mindkeep apps for iPhone and Android, why we need it, who helps us process it, and what you can do with it. Mindkeep has no ads and does not sell your data or use it for tracking.",
     "contactLabel": "Data questions:",
     "sections": [
@@ -1501,7 +1501,7 @@
           "Content you add: tasks, notes, study materials, categories and review dates, habits and their check-ins, budget categories, operations and currencies.",
           "Nutrition and body: calorie goal, meals with calories and macros, water, steps and weight; if you use the calorie goal calculator, also sex, age, height and activity level. This is health-related data that you enter yourself, and only you see it.",
           "Photos: a meal or receipt photo you add is sent for an estimate and is not stored (see section 5).",
-          "Subscription: plan, billing period and Stripe customer IDs if you buy a plan on the website. Card details are handled by Stripe and never reach us.",
+          "Subscription: plan, billing period and Stripe customer IDs if you buy a plan on the website; if you subscribe in the app, the App Store or Google Play subscription (product, store, expiry and renewal status). Card details are handled by Stripe, Apple or Google and never reach us.",
           "Technical: sign-in sessions (you can see and end them in Account) and basic server logs needed for security and reliability.",
           "We do not collect location, contacts, advertising IDs or analytics, and the apps contain no ad or tracking SDKs."
         ]
@@ -1533,6 +1533,7 @@
           "Google Gemini: meal and receipt photos are sent only to estimate calories or read operations and are discarded afterwards. We do not store the photos.",
           "Stripe: payments for plans bought on the website; Stripe receives your email and billing details.",
           "Google and Apple: only if you choose to sign in with them.",
+          "Apple, Google and RevenueCat: subscriptions bought in the app are paid through the App Store or Google Play. RevenueCat manages them for us and receives your Mindkeep account ID and the store purchase record, not your name, email or card.",
           "Some providers are located outside the EU/EEA (for example in the United States); such transfers rely on safeguards like the standard contractual clauses in their terms."
         ]
       },

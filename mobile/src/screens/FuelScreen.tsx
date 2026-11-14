@@ -94,8 +94,13 @@ export function FuelScreen() {
   // Quick add "Scan food" passes a fresh timestamp; FoodScanMeal opens once per value.
   const route = useRoute<RouteProp<MoreStackParamList, 'Fuel'>>();
   const openScanRequest = route.params?.openScan;
-  // Plans live on Account; store builds have no purchase path (see config/env.ts).
-  const onNeedPro = env.storeBuild && !inAppPurchasesEnabled ? undefined : () => navigation.navigate('More', { screen: 'Account', initial: false });
+  // In-app purchases: straight to the plans. Otherwise plans live on Account; store builds
+  // without in-app purchases have no purchase path (see config/env.ts).
+  const onNeedPro = inAppPurchasesEnabled
+    ? () => navigation.navigate('More', { screen: 'Plans', initial: false })
+    : env.storeBuild
+      ? undefined
+      : () => navigation.navigate('More', { screen: 'Account', initial: false });
   const { today, year: todayYear, month: todayMonth } = useAccountToday();
   const [year, setYear] = useState(todayYear);
   const [month, setMonth] = useState(todayMonth);

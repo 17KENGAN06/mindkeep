@@ -212,8 +212,13 @@ export function FinanceScreen() {
   const bulkCreate = useBulkCreateFinanceOperations();
   const { user } = useAuth();
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList>>();
-  // Plans live on Account; store builds have no purchase path (see config/env.ts).
-  const onNeedPro = env.storeBuild && !inAppPurchasesEnabled ? undefined : () => navigation.navigate('Account');
+  // In-app purchases: straight to the plans. Otherwise plans live on Account; store builds
+  // without in-app purchases have no purchase path (see config/env.ts).
+  const onNeedPro = inAppPurchasesEnabled
+    ? () => navigation.navigate('Plans')
+    : env.storeBuild
+      ? undefined
+      : () => navigation.navigate('Account');
   const deleteOperation = useDeleteFinanceOperation();
   const updateSettings = useUpdateFinanceSettings();
   const [savingLimit, setSavingLimit] = useState<string | null>(null);

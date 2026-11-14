@@ -1483,7 +1483,7 @@
   "privacy": {
     "eyebrow": "Oikeudellinen",
     "title": "Tietosuojaseloste",
-    "updated": "Päivitetty: 15. lokakuuta 2026",
+    "updated": "Päivitetty: 14. marraskuuta 2026",
     "intro": "Tämä seloste kertoo, mitä tietoja Mindkeep kerää osoitteessa mindkeep.cloud ja Mindkeep-sovelluksissa iPhonelle ja Androidille, miksi tarvitsemme niitä, kuka auttaa niiden käsittelyssä ja mitä voit tehdä niille. Mindkeepissä ei ole mainoksia, emmekä myy tietojasi tai käytä niitä seurantaan.",
     "contactLabel": "Tietopyynnöt:",
     "sections": [
@@ -1501,7 +1501,7 @@
           "Lisäämäsi sisältö: tehtävät, muistiinpanot, opiskelumateriaalit, kategoriat ja kertauspäivät, tavat ja niiden merkinnät, budjetin kategoriat, tapahtumat ja valuutat.",
           "Ravinto ja keho: kaloritavoite, ateriat kaloreineen ja makroineen, vesi, askeleet ja paino; jos käytät kaloritavoitteen laskuria, myös sukupuoli, ikä, pituus ja aktiivisuustaso. Nämä ovat terveystietoja, jotka syötät itse ja jotka vain sinä näet.",
           "Kuvat: lisäämäsi ateria- tai kuittikuva lähetetään arviota varten eikä sitä tallenneta (katso kohta 5).",
-          "Tilaus: tilaus, laskutusjakso ja Stripen asiakastunnisteet, jos ostat tilauksen verkkosivustolta. Korttitiedot käsittelee Stripe, eivätkä ne koskaan tule meille.",
+          "Tilaus: tilaus, laskutusjakso ja Stripen asiakastunnukset, jos ostat tilauksen verkkosivustolta; jos tilaat sovelluksessa, App Store- tai Google Play -tilaus (tuote, kauppa, voimassaolo ja uusiutumisen tila). Korttitiedot käsittelee Stripe, Apple tai Google, eivätkä ne tule meille.",
           "Tekniset tiedot: kirjautumisistunnot (näet ja voit päättää ne Tili-osiossa) sekä turvallisuuden ja luotettavuuden vaatimat perustason palvelinlokit.",
           "Emme kerää sijaintia, yhteystietoja, mainostunnisteita tai analytiikkaa, eikä sovelluksissa ole mainos- tai seuranta-SDK:ita."
         ]
@@ -1533,6 +1533,7 @@
           "Google Gemini: ateria- ja kuittikuvat lähetetään vain kalorien arviointiin tai tapahtumien lukemiseen, ja ne hävitetään sen jälkeen. Emme tallenna kuvia.",
           "Stripe: verkkosivustolta ostettujen tilausten maksut; Stripe saa sähköpostisi ja laskutustietosi.",
           "Google ja Apple: vain jos valitset kirjautumisen niiden kautta.",
+          "Apple, Google ja RevenueCat: sovelluksessa ostetut tilaukset maksetaan App Storen tai Google Playn kautta. RevenueCat hallinnoi niitä puolestamme ja saa Mindkeep-tilisi tunnuksen ja kaupan ostotiedon, ei nimeäsi, sähköpostiasi tai korttiasi.",
           "Osa palveluntarjoajista sijaitsee EU:n/ETA:n ulkopuolella (esimerkiksi Yhdysvalloissa); siirrot perustuvat suojatoimiin, kuten niiden ehtojen vakiosopimuslausekkeisiin."
         ]
       },

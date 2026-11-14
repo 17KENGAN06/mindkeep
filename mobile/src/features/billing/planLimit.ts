@@ -3,6 +3,7 @@ import { ApiError } from '../../api/client';
 import { billingApi, type BillingStatus } from '../../api/billing';
 import { env } from '../../config/env';
 import type { User } from '../../types/auth';
+import { inAppPurchasesEnabled } from './purchases';
 
 type Translate = (key: string) => string;
 
@@ -39,8 +40,9 @@ function featureOf(error: ApiError): PlanLimitFeature | null {
 export function planLimitMessage(error: unknown, t: Translate): string | null {
   if (!(error instanceof ApiError) || error.code !== 'PLAN_LIMIT') return null;
   const feature = featureOf(error);
-  // Store builds state the limit without pointing to a subscription (see config/env.ts).
-  const prefix = env.storeBuild ? 'billing.store.' : 'billing.';
+  // Store builds without in-app purchases state the limit without pointing to a subscription
+  // (see config/env.ts). With in-app purchases the plans are in Account, so say so.
+  const prefix = env.storeBuild && !inAppPurchasesEnabled ? 'billing.store.' : 'billing.';
   if (feature) return t(`${prefix}limits.${feature}`);
   return t(`${prefix}limitReached`);
 }

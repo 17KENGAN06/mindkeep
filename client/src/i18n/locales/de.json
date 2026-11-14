@@ -1483,7 +1483,7 @@
   "privacy": {
     "eyebrow": "Rechtliches",
     "title": "Datenschutzerklärung",
-    "updated": "Aktualisiert: 15. Oktober 2026",
+    "updated": "Aktualisiert: 14. November 2026",
     "intro": "Diese Richtlinie erklärt, welche Daten Mindkeep auf mindkeep.cloud und in den Mindkeep-Apps für iPhone und Android erhebt, wozu wir sie brauchen, wer uns bei der Verarbeitung hilft und was du damit tun kannst. Mindkeep zeigt keine Werbung, verkauft deine Daten nicht und nutzt sie nicht zum Tracking.",
     "contactLabel": "Fragen zu Daten:",
     "sections": [
@@ -1501,7 +1501,7 @@
           "Deine Inhalte: Aufgaben, Notizen, Lernmaterialien, Kategorien und Wiederholungstermine, Gewohnheiten und ihre Abhaken, Budgetkategorien, Buchungen und Währungen.",
           "Ernährung und Körper: Kalorienziel, Mahlzeiten mit Kalorien und Makros, Wasser, Schritte und Gewicht; nutzt du den Kalorienrechner, auch Geschlecht, Alter, Größe und Aktivitätsniveau. Das sind Gesundheitsdaten, die du selbst eingibst und nur du siehst.",
           "Fotos: Ein Mahlzeit- oder Belegfoto, das du hinzufügst, wird zur Schätzung gesendet und nicht gespeichert (siehe Abschnitt 5).",
-          "Abo: Plan, Abrechnungszeitraum und Stripe-Kunden-IDs, wenn du einen Plan auf der Website kaufst. Kartendaten verarbeitet Stripe; sie erreichen uns nie.",
+          "Abo: Plan, Abrechnungszeitraum und Stripe-Kunden-IDs, wenn du einen Plan auf der Website kaufst; wenn du in der App abonnierst, das App-Store- oder Google-Play-Abo (Produkt, Store, Ablauf und Verlängerungsstatus). Kartendaten verarbeiten Stripe, Apple oder Google, sie erreichen uns nie.",
           "Technisches: Anmeldesitzungen (im Konto einsehbar und beendbar) und einfache Serverprotokolle für Sicherheit und Stabilität.",
           "Wir erheben keinen Standort, keine Kontakte, keine Werbe-IDs und keine Analysedaten; die Apps enthalten keine Werbe- oder Tracking-SDKs."
         ]
@@ -1533,6 +1533,7 @@
           "Google Gemini: Mahlzeit- und Belegfotos werden nur zur Kalorienschätzung oder zum Auslesen von Buchungen gesendet und danach verworfen. Wir speichern die Fotos nicht.",
           "Stripe: Zahlungen für auf der Website gekaufte Pläne; Stripe erhält deine E-Mail und Zahlungsdaten.",
           "Google und Apple: nur, wenn du dich damit anmeldest.",
+          "Apple, Google und RevenueCat: In der App gekaufte Abos werden über den App Store oder Google Play bezahlt. RevenueCat verwaltet sie für uns und erhält deine Mindkeep-Konto-ID und den Kaufnachweis des Stores, nicht deinen Namen, deine E-Mail oder Karte.",
           "Einige Dienstleister sitzen außerhalb der EU/des EWR (z. B. in den USA); solche Übermittlungen stützen sich auf Garantien wie die Standardvertragsklauseln in deren Bedingungen."
         ]
       },

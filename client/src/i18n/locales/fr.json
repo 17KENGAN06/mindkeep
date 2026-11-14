@@ -1483,7 +1483,7 @@
   "privacy": {
     "eyebrow": "Mentions légales",
     "title": "Politique de confidentialité",
-    "updated": "Mis à jour : 15 octobre 2026",
+    "updated": "Mis à jour : 14 novembre 2026",
     "intro": "Cette politique explique quelles données Mindkeep collecte sur mindkeep.cloud et dans les apps Mindkeep pour iPhone et Android, pourquoi nous en avons besoin, qui nous aide à les traiter et ce que vous pouvez en faire. Mindkeep n’affiche aucune publicité, ne vend pas vos données et ne les utilise pas pour du suivi.",
     "contactLabel": "Questions relatives aux données :",
     "sections": [
@@ -1501,7 +1501,7 @@
           "Ce que vous ajoutez : tâches, notes, fiches d’étude, catégories et dates de révision, habitudes et leurs coches, catégories de budget, opérations et devises.",
           "Nutrition et corps : objectif calorique, repas avec calories et macros, eau, pas et poids ; si vous utilisez le calcul de l’objectif, aussi le sexe, l’âge, la taille et le niveau d’activité. Ce sont des données de santé que vous saisissez vous-même et que vous seul voyez.",
           "Photos : une photo de repas ou de ticket que vous ajoutez est envoyée pour une estimation et n’est pas conservée (voir section 5).",
-          "Abonnement : formule, période de facturation et identifiants client Stripe si vous achetez une formule sur le site. Les données de carte sont traitées par Stripe et ne nous parviennent jamais.",
+          "Abonnement : formule, période de facturation et identifiants client Stripe si vous achetez une formule sur le site ; si vous vous abonnez dans l’app, l’abonnement App Store ou Google Play (produit, store, échéance et état du renouvellement). Les données de carte sont traitées par Stripe, Apple ou Google et ne nous parviennent jamais.",
           "Données techniques : sessions de connexion (visibles et révocables dans Compte) et journaux serveur de base nécessaires à la sécurité et à la fiabilité.",
           "Nous ne collectons ni localisation, ni contacts, ni identifiants publicitaires, ni statistiques d’usage, et les apps ne contiennent aucun SDK publicitaire ou de suivi."
         ]
@@ -1533,6 +1533,7 @@
           "Google Gemini : les photos de repas et de tickets sont envoyées uniquement pour estimer les calories ou lire les opérations, puis supprimées. Nous ne conservons pas les photos.",
           "Stripe : paiements des formules achetées sur le site ; Stripe reçoit votre e-mail et vos données de facturation.",
           "Google et Apple : seulement si vous choisissez de vous connecter avec eux.",
+          "Apple, Google et RevenueCat : les abonnements achetés dans l’app sont payés via l’App Store ou Google Play. RevenueCat les gère pour nous et reçoit l’identifiant de votre compte Mindkeep et la preuve d’achat du store, pas votre nom, votre e-mail ni votre carte.",
           "Certains prestataires sont situés hors de l’UE/EEE (par exemple aux États-Unis) ; ces transferts reposent sur des garanties comme les clauses contractuelles types de leurs conditions."
         ]
       },
