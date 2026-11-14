@@ -28,7 +28,7 @@
       "supportsTablet": false,
       "bundleIdentifier": "cloud.mindkeep.app",
       "usesAppleSignIn": true,
-      "buildNumber": "9",
+      "buildNumber": "10",
       "infoPlist": {
         "CFBundleDisplayName": "MindKeep",
         "ITSAppUsesNonExemptEncryption": false,
