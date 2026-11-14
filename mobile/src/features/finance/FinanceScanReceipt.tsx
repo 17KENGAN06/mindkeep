@@ -10,6 +10,7 @@ import { SheetModal } from '../../components/SheetModal';
 import { AppButton, Badge, ChoiceChip } from '../../components/ui';
 import { mapAuthError } from '../auth/mapAuthError';
 import { compressMealPhoto, MealPhotoError } from '../nutrition/compressMealPhoto';
+import { ensureAiScanConsent } from '../scan/aiScanConsent';
 import { useTheme } from '../theme/useTheme';
 import { useAccountToday } from '../time/useAccountToday';
 import { FINANCE_CURRENCIES, isFinanceCurrency, type FinanceCurrency } from './currencies';
@@ -117,6 +118,7 @@ export function FinanceScanReceipt({
 
   const fromCamera = async () => {
     setError(null);
+    if (!(await ensureAiScanConsent(t))) return;
     const permission = await ImagePicker.requestCameraPermissionsAsync();
     if (!permission.granted) {
       setError(t('fuel.scan.cameraDenied'));
@@ -128,6 +130,7 @@ export function FinanceScanReceipt({
 
   const fromGallery = async () => {
     setError(null);
+    if (!(await ensureAiScanConsent(t))) return;
     const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 1 });
     if (!result.canceled && result.assets[0]) void analyze(result.assets[0]);
   };

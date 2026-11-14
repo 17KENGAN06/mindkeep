@@ -354,7 +354,7 @@
       "add": "Lisää ateria",
       "cancel": "Hylkää",
       "pickPhoto": "Valitse kuva",
-      "privacy": "Jos lisäät kuvan, sitä käytetään vain kaloriarvioon, eikä sitä tallenneta.",
+      "privacy": "Kuvat ja muistiinpanosi lähetetään Google Geminille (tekoäly) vain kalorien arviointiin. MindKeep ei tallenna kuvia.",
       "errors": {
         "unavailable": "Ruokaskannausta ei ole vielä kytketty.",
         "proRequired": "Ruokaskannaus sisältyy Prohon.",
@@ -676,7 +676,7 @@
       "item": "Mitä ostettiin",
       "add": "Lisää tapahtumat",
       "cancel": "Hylkää",
-      "privacy": "Kuvaa käytetään vain tapahtumien lukemiseen, eikä sitä tallenneta.",
+      "privacy": "Kuva lähetetään Google Geminille (tekoäly) vain tapahtumien lukemiseen. MindKeep ei tallenna sitä.",
       "errors": {
         "unavailable": "Skannausta ei ole vielä kytketty.",
         "proRequired": "Kuitin skannaus sisältyy Prohon.",
@@ -1449,5 +1449,10 @@
     "storeManagedPlay": "Ostettu Google Playsta. Hallitse tai peru Play Kaupassa → Profiili → Maksut ja tilaukset.",
     "deleteHintPlay": "Tilin poistaminen ei peru Google Play -tilausta. Peru se ensin Play Kaupassa → Profiili → Maksut ja tilaukset.",
     "nothingToRestorePlay": "Tälle Google-tilille ei löytynyt aktiivista Google Play -tilausta."
+  },
+  "scanConsent": {
+    "title": "Kuva-analyysi Google Geminillä",
+    "body": "Arvioidakseen aterian tai lukeakseen kuitin MindKeep lähettää kuvan (ja mitä kirjoitit ateriasta) palvelimemme kautta Google Geminille, Googlen tekoälypalvelulle. Sitä käytetään vain tuloksen saamiseen. MindKeep ei tallenna kuvaa, eikä mitään lähetetä ennen kuin sallit sen.",
+    "allow": "Salli"
   }
 }

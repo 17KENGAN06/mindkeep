@@ -8,6 +8,7 @@ import { AppIcon } from '../../components/AppIcon';
 import { SheetModal } from '../../components/SheetModal';
 import { AppButton, Badge } from '../../components/ui';
 import { mapAuthError } from '../auth/mapAuthError';
+import { ensureAiScanConsent } from '../scan/aiScanConsent';
 import { useTheme } from '../theme/useTheme';
 import { compressMealPhoto, MealPhotoError, type PickedPhoto } from './compressMealPhoto';
 import { macroDraftFrom, parseMacroDraft, type MacroDraft } from './macros';
@@ -133,6 +134,7 @@ export function FoodScanMeal({ date, canScan, macrosEnabled = false, onNeedPro, 
       return;
     }
     setError(null);
+    if (!(await ensureAiScanConsent(t))) return;
     setAnalyzing(true);
     try {
       const images = await Promise.all(photos.map((photo) => compressMealPhoto(photo)));

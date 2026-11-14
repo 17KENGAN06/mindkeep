@@ -354,7 +354,7 @@
       "add": "Añadir comida",
       "cancel": "Descartar",
       "pickPhoto": "Elegir una foto",
-      "privacy": "Si añades una foto, solo se usa para estimar calorías y no se guarda.",
+      "privacy": "Las fotos y tu nota se envían a Google Gemini (IA) solo para estimar las calorías. MindKeep no guarda las fotos.",
       "errors": {
         "unavailable": "El escaneo de comida aún no está conectado.",
         "proRequired": "El escaneo de comida está en Pro.",
@@ -676,7 +676,7 @@
       "item": "Qué se compró",
       "add": "Añadir operaciones",
       "cancel": "Descartar",
-      "privacy": "La foto solo sirve para leer operaciones y no se guarda.",
+      "privacy": "La foto se envía a Google Gemini (IA) solo para leer las operaciones. MindKeep no la guarda.",
       "errors": {
         "unavailable": "El escaneo aún no está conectado.",
         "proRequired": "El escaneo de tickets está en Pro.",
@@ -1449,5 +1449,10 @@
     "storeManagedPlay": "Comprado en Google Play. Gestiónalo o cancélalo en Play Store → Perfil → Pagos y suscripciones.",
     "deleteHintPlay": "Eliminar la cuenta no cancela una suscripción de Google Play. Cancélala antes en Play Store → Perfil → Pagos y suscripciones.",
     "nothingToRestorePlay": "No se encontró ninguna suscripción activa de Google Play para esta cuenta de Google."
+  },
+  "scanConsent": {
+    "title": "Análisis de fotos con Google Gemini",
+    "body": "Para estimar una comida o leer un recibo, MindKeep envía tu foto (y lo que escribiste sobre la comida) a través de nuestro servidor a Google Gemini, un servicio de IA de Google. Se usa solo para obtener el resultado. MindKeep no guarda la foto y no se envía nada hasta que lo permitas.",
+    "allow": "Permitir"
   }
 }

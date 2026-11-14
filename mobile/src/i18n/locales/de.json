@@ -354,7 +354,7 @@
       "add": "Mahlzeit hinzufügen",
       "cancel": "Verwerfen",
       "pickPhoto": "Foto wählen",
-      "privacy": "Wenn du ein Foto hinzufügst, dient es nur der Kalorienschätzung und wird nicht gespeichert.",
+      "privacy": "Fotos und deine Notiz gehen nur zur Kalorienschätzung an Google Gemini (KI). MindKeep speichert die Fotos nicht.",
       "errors": {
         "unavailable": "Essensscan ist noch nicht verbunden.",
         "proRequired": "Essensscan ist in Pro enthalten.",
@@ -676,7 +676,7 @@
       "item": "Was gekauft wurde",
       "add": "Buchungen hinzufügen",
       "cancel": "Verwerfen",
-      "privacy": "Das Foto dient nur zum Auslesen der Buchungen und wird nicht gespeichert.",
+      "privacy": "Das Foto geht nur zum Lesen der Buchungen an Google Gemini (KI). MindKeep speichert es nicht.",
       "errors": {
         "unavailable": "Belegscan ist noch nicht verbunden.",
         "proRequired": "Belegscan ist in Pro enthalten.",
@@ -1449,5 +1449,10 @@
     "storeManagedPlay": "Bei Google Play gekauft. Verwalten oder kündigen im Play Store → Profil → Zahlungen und Abos.",
     "deleteHintPlay": "Das Löschen des Kontos kündigt kein Google-Play-Abo. Kündige es zuerst im Play Store → Profil → Zahlungen und Abos.",
     "nothingToRestorePlay": "Für dieses Google-Konto wurde kein aktives Google-Play-Abo gefunden."
+  },
+  "scanConsent": {
+    "title": "Fotoanalyse mit Google Gemini",
+    "body": "Um eine Mahlzeit zu schätzen oder einen Beleg zu lesen, sendet MindKeep dein Foto (und was du zur Mahlzeit geschrieben hast) über unseren Server an Google Gemini, einen KI-Dienst von Google. Es wird nur für das Ergebnis verwendet. MindKeep speichert das Foto nicht, und nichts wird gesendet, bevor du es erlaubst.",
+    "allow": "Erlauben"
   }
 }

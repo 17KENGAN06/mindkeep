@@ -354,7 +354,7 @@
       "add": "Dodaj posiłek",
       "cancel": "Odrzuć",
       "pickPhoto": "Wybierz zdjęcie",
-      "privacy": "Jeśli dodasz zdjęcie, służy tylko do oceny kalorii i nie jest zapisywane.",
+      "privacy": "Zdjęcia i Twoja notatka trafiają do Google Gemini (AI) tylko w celu oszacowania kalorii. MindKeep nie przechowuje zdjęć.",
       "errors": {
         "unavailable": "Skan jedzenia nie jest jeszcze podłączony.",
         "proRequired": "Skan jedzenia jest w Pro.",
@@ -676,7 +676,7 @@
       "item": "Co kupiono",
       "add": "Dodaj operacje",
       "cancel": "Odrzuć",
-      "privacy": "Zdjęcie służy tylko do odczytu operacji i nie jest zapisywane.",
+      "privacy": "Zdjęcie trafia do Google Gemini (AI) tylko w celu odczytania operacji. MindKeep go nie przechowuje.",
       "errors": {
         "unavailable": "Skan paragonu nie jest jeszcze podłączony.",
         "proRequired": "Skan paragonu jest w Pro.",
@@ -1449,5 +1449,10 @@
     "storeManagedPlay": "Kupiono w Google Play. Zarządzaj lub anuluj w Sklepie Play → Profil → Płatności i subskrypcje.",
     "deleteHintPlay": "Usunięcie konta nie anuluje subskrypcji Google Play. Najpierw anuluj ją w Sklepie Play → Profil → Płatności i subskrypcje.",
     "nothingToRestorePlay": "Nie znaleziono aktywnej subskrypcji Google Play dla tego konta Google."
+  },
+  "scanConsent": {
+    "title": "Analiza zdjęcia przez Google Gemini",
+    "body": "Aby oszacować posiłek lub odczytać paragon, MindKeep wysyła zdjęcie (i to, co napisałeś o posiłku) przez nasz serwer do Google Gemini — usługi AI od Google. Służy ono tylko do uzyskania wyniku. MindKeep nie przechowuje zdjęcia i nic nie jest wysyłane, dopóki na to nie pozwolisz.",
+    "allow": "Zezwól"
   }
 }
