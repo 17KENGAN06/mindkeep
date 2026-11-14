@@ -1,9 +1,6 @@
-import { useId } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { AppIcon, type AppIconName } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
-import { glow } from '../utils/glow';
 
 type GradientIconProps = {
   name: AppIconName;
@@ -11,36 +8,18 @@ type GradientIconProps = {
   size?: number;
 };
 
-/** An icon on a brand-gradient plate with a soft top highlight, like a small app icon. */
+/**
+ * An icon on a soft brand tile, like the site's icon tiles (bg-accent-soft + text-accent):
+ * flat, no gradient or glow. The name is kept so existing screens need no change.
+ */
 export function GradientIcon({ name, size = 48 }: GradientIconProps) {
   const { colors, theme } = useTheme();
-  const id = useId().replace(/:/g, '');
-  const radius = Math.round(size * 0.33);
-  // Darker end of the gradient: the site's brand-300 (dark) / brand-700 (light).
-  const deep = theme === 'dark' ? '#2a3b38' : '#075a3f';
+  const radius = Math.round(size * 0.28);
+  // The site's --app-accent-soft: brand at 16 % (dark) / 10 % (light).
+  const soft = `${colors.brand}${theme === 'dark' ? '29' : '1a'}`;
   return (
-    <View
-      style={[
-        styles.plate,
-        { width: size, height: size, borderRadius: radius, backgroundColor: deep },
-        glow(colors.brand, { y: 4, blur: 14, opacity: 0.4, spread: -3 }),
-      ]}
-    >
-      <Svg style={StyleSheet.absoluteFill} width={size} height={size}>
-        <Defs>
-          <LinearGradient id={`plate${id}`} x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor={colors.brand} />
-            <Stop offset="1" stopColor={deep} />
-          </LinearGradient>
-          <LinearGradient id={`shine${id}`} x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor="#ffffff" stopOpacity={0.35} />
-            <Stop offset="0.5" stopColor="#ffffff" stopOpacity={0} />
-          </LinearGradient>
-        </Defs>
-        <Rect width={size} height={size} rx={radius} fill={`url(#plate${id})`} />
-        <Rect width={size} height={size} rx={radius} fill={`url(#shine${id})`} />
-      </Svg>
-      <AppIcon name={name} color={colors.onBrand} size={Math.round(size * 0.48)} />
+    <View style={[styles.plate, { width: size, height: size, borderRadius: radius, backgroundColor: soft }]}>
+      <AppIcon name={name} color={colors.brand} size={Math.round(size * 0.48)} />
     </View>
   );
 }

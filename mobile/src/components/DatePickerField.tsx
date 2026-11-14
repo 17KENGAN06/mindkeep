@@ -90,7 +90,7 @@ function CalendarCard({ title, value, onClose, onPick }: CalendarCardProps) {
       <Animated.View
         style={[
           styles.card,
-          { backgroundColor: colors.bg, borderColor: colors.line, shadowColor: colors.brand },
+          { backgroundColor: colors.bg, borderColor: colors.line, shadowColor: '#000' },
           { opacity: appear, transform: [{ scale: appear.interpolate({ inputRange: [0, 1], outputRange: [0.94, 1] }) }] },
         ]}
       >

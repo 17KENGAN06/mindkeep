@@ -1,14 +1,11 @@
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useId } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { useTranslation } from 'react-i18next';
 import { AppIcon, type AppIconName } from '../components/AppIcon';
 import { fonts } from '../config/fonts';
 import { useTheme } from '../features/theme/useTheme';
-import { glow } from '../utils/glow';
 
 const TAB_ICONS: Record<string, AppIconName> = {
   Today: 'home-outline',
@@ -28,10 +25,9 @@ type AppTabBarProps = BottomTabBarProps & {
   badge?: string | number;
 };
 
-/** Quick-add button: dark glass with a thin brand ring and a soft glow, not a bright disc. */
+/** Quick-add button: a solid brand disc, like the site's primary button (no ring or glow). */
 function AddButton({ onPress, label }: { onPress: () => void; label: string }) {
   const { colors } = useTheme();
-  const id = useId().replace(/:/g, '');
   return (
     <Pressable
       accessibilityRole="button"
@@ -39,41 +35,18 @@ function AddButton({ onPress, label }: { onPress: () => void; label: string }) {
       onPress={onPress}
       style={({ pressed }) => [
         styles.add,
-        { backgroundColor: pressed ? `${colors.brand}26` : colors.panel },
-        glow(colors.brand, { y: 6, blur: 20, opacity: 0.4, spread: -4 }),
+        { backgroundColor: pressed ? `${colors.brand}d9` : colors.brand },
         pressed && styles.addPressed,
       ]}
     >
-      <Svg pointerEvents="none" style={StyleSheet.absoluteFill} width={ADD_SIZE} height={ADD_SIZE}>
-        <Defs>
-          <LinearGradient id={`ring${id}`} x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor={colors.brand} stopOpacity={0.95} />
-            <Stop offset="0.55" stopColor={colors.brand} stopOpacity={0.25} />
-            <Stop offset="1" stopColor={colors.brand} stopOpacity={0.6} />
-          </LinearGradient>
-          <LinearGradient id={`fill${id}`} x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor={colors.brand} stopOpacity={0.22} />
-            <Stop offset="1" stopColor={colors.brand} stopOpacity={0.04} />
-          </LinearGradient>
-        </Defs>
-        <Circle cx={ADD_SIZE / 2} cy={ADD_SIZE / 2} r={ADD_SIZE / 2 - 1} fill={`url(#fill${id})`} />
-        <Circle
-          cx={ADD_SIZE / 2}
-          cy={ADD_SIZE / 2}
-          r={ADD_SIZE / 2 - 1}
-          fill="none"
-          stroke={`url(#ring${id})`}
-          strokeWidth={1.5}
-        />
-      </Svg>
-      <AppIcon name="add" color={colors.brand} size={26} />
+      <AppIcon name="add" color={colors.onBrand} size={26} />
     </Pressable>
   );
 }
 
 /**
  * Bottom bar: a floating frosted pill. The active tab is told apart by a brand icon and a
- * glowing dot; the "+" in the middle opens quick add.
+ * brand dot; the "+" in the middle opens quick add.
  */
 export function AppTabBar({ state, descriptors, navigation, onAdd, badge }: AppTabBarProps) {
   const { t } = useTranslation();
@@ -160,12 +133,7 @@ export function AppTabBar({ state, descriptors, navigation, onAdd, badge }: AppT
                   <View
                     style={[
                       styles.dot,
-                      focused
-                        ? [
-                            { backgroundColor: colors.brand },
-                            glow(colors.brand, { y: 0, blur: 6, opacity: 0.9, spread: 0 }),
-                          ]
-                        : { backgroundColor: 'transparent' },
+                      { backgroundColor: focused ? colors.brand : 'transparent' },
                     ]}
                   />
                 </View>

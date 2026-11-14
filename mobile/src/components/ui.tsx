@@ -1,10 +1,7 @@
-import { useId, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { AppIcon, type AppIconName } from './AppIcon';
 import { useTheme } from '../features/theme/useTheme';
 import { fonts } from '../config/fonts';
-import { glow } from '../utils/glow';
 
 type Tone = 'brand' | 'danger' | 'warn' | 'neutral' | 'expense';
 
@@ -48,76 +45,13 @@ type ButtonProps = {
   size?: 'small' | 'regular' | 'large';
 };
 
-const BUTTON_RADIUS = 16;
-/** Native border of primary / secondary buttons; the painted fill sits inside it. */
-const BUTTON_BORDER = 1.5;
-
-type Size = { width: number; height: number };
+/** Same as the site's Button: rounded-xl (12 px). */
+const BUTTON_RADIUS = 12;
 
 /**
- * Painted fill of a button, drawn at the measured size inside the native border (so the fill
- * meets the edge exactly) — percentage-sized SVGs kept their first layout width on iOS.
- * Primary: brand gradient with a glass sheen on the top half. Secondary: dark glass, brand tint.
- */
-function ButtonSurface({ size, variant }: { size: Size; variant: 'primary' | 'secondary' }) {
-  const { colors, theme } = useTheme();
-  const id = useId().replace(/:/g, '');
-  const dark = theme === 'dark';
-  // The SVG fills the padding box: the measured size minus the border on both sides.
-  const width = Math.max(size.width - BUTTON_BORDER * 2, 0);
-  const height = Math.max(size.height - BUTTON_BORDER * 2, 0);
-  const r = Math.max(Math.min(BUTTON_RADIUS, size.height / 2) - BUTTON_BORDER, 0);
-
-  if (variant === 'secondary') {
-    // Same language as the bar's "+": dark glass with a brand tint inside and a glowing ring
-    // that is brightest at the top-left corner.
-    return (
-      <View pointerEvents="none" style={[styles.surface, { borderRadius: r }]}>
-        <Svg width={width} height={height}>
-          <Defs>
-            <LinearGradient id={`tint${id}`} x1="0" y1="0" x2="0" y2="1">
-              <Stop offset="0" stopColor={colors.brand} stopOpacity={dark ? 0.16 : 0.12} />
-              <Stop offset="1" stopColor={colors.brand} stopOpacity={dark ? 0.03 : 0.02} />
-            </LinearGradient>
-            <LinearGradient id={`sheen${id}`} x1="0" y1="0" x2="0" y2="1">
-              <Stop offset="0" stopColor="#ffffff" stopOpacity={dark ? 0.08 : 0.45} />
-              <Stop offset="0.5" stopColor="#ffffff" stopOpacity={0} />
-            </LinearGradient>
-          </Defs>
-          <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#tint${id})`} />
-          <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#sheen${id})`} />
-        </Svg>
-      </View>
-    );
-  }
-
-  // Ends of the gradient: a lit top-left and the site's brand-400 (dark) / brand-700 (light).
-  const lit = colors.brand;
-  const deep = colors.brand;
-  return (
-    <View pointerEvents="none" style={[styles.surface, { borderRadius: r }]}>
-      <Svg width={width} height={height}>
-        <Defs>
-          <LinearGradient id={`fill${id}`} x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor={lit} />
-            <Stop offset="0.45" stopColor={colors.brand} />
-            <Stop offset="1" stopColor={deep} />
-          </LinearGradient>
-          <LinearGradient id={`shine${id}`} x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor="#ffffff" stopOpacity={0} />
-            <Stop offset="0.6" stopColor="#ffffff" stopOpacity={0} />
-          </LinearGradient>
-        </Defs>
-        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#fill${id})`} />
-        <Rect x={0} y={0} width={width} height={height} rx={r} fill={`url(#shine${id})`} />
-      </Svg>
-    </View>
-  );
-}
-
-/**
- * The app's button. Primary: brand gradient with a soft glow; secondary: frosted glass with a
- * hairline; danger: red tint; ghost: text only. Presses shrink slightly.
+ * The app's button, drawn like the site's Button (client/src/components/ui/Button.tsx).
+ * Primary: flat brand fill. Secondary: panel with a hairline ring. Danger: red tint.
+ * Ghost / link: text only. Presses shrink slightly.
  */
 export function AppButton({
   label,
@@ -129,8 +63,7 @@ export function AppButton({
   trailingIcon,
   size: buttonSize = 'regular',
 }: ButtonProps) {
-  const { colors, theme } = useTheme();
-  const [size, setSize] = useState<Size | null>(null);
+  const { colors } = useTheme();
   const busy = disabled || loading;
   const textColor =
     variant === 'primary'
@@ -140,38 +73,22 @@ export function AppButton({
         : variant === 'link'
           ? colors.brand
           : colors.ink;
-  const painted = variant === 'primary' || variant === 'secondary';
 
-  const button = (
+  return (
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ disabled: busy, busy: loading }}
       disabled={busy}
       onPress={onPress}
-      onLayout={
-        painted
-          ? (event) => {
-              const { width, height } = event.nativeEvent.layout;
-              setSize((prev) =>
-                prev && prev.width === width && prev.height === height ? prev : { width, height },
-              );
-            }
-          : undefined
-      }
       style={({ pressed }) => [
         styles.button,
         buttonSize === 'large' && styles.buttonLarge,
         buttonSize === 'small' && styles.buttonSmall,
-        variant === 'primary' && {
-          backgroundColor: colors.brand,
-          borderWidth: BUTTON_BORDER,
-          // One colour all round: per-side colours meet at an angle on rounded corners.
-          borderColor: colors.brand,
-        },
+        variant === 'primary' && { backgroundColor: pressed ? `${colors.brand}d9` : colors.brand },
         variant === 'secondary' && {
           backgroundColor: pressed ? `${colors.brand}14` : colors.panel,
-          borderWidth: BUTTON_BORDER,
-          borderColor: colors.line,
+          borderWidth: 1,
+          borderColor: pressed ? colors.brand : colors.line,
         },
         variant === 'ghost' && { backgroundColor: pressed ? `${colors.brand}12` : 'transparent' },
         variant === 'link' && [
@@ -187,7 +104,6 @@ export function AppButton({
         busy && styles.disabled,
       ]}
     >
-      {painted && size ? <ButtonSurface size={size} variant={variant} /> : null}
       {loading ? (
         <ActivityIndicator color={textColor} />
       ) : (
@@ -216,32 +132,6 @@ export function AppButton({
         </View>
       )}
     </Pressable>
-  );
-
-  if (variant !== 'primary') return button;
-  // iOS drops shadows on views that clip (the gradient needs overflow: hidden), so the soft
-  // brand glow lives on a wrapper around the button.
-  return (
-    <View
-      style={[
-        styles.glow,
-        busy
-          ? styles.glowOff
-          : [
-              // No background on this wrapper: with a box-shadow Android painted it as a square
-              // behind the rounded button. The glow comes from the button itself (iOS: its layer).
-              // Light theme: the brand green is dark, so a deep offset glow read as a shifted copy.
-              glow(
-                colors.brand,
-                theme === 'dark'
-                  ? { y: 8, blur: 22, opacity: 0.38, spread: -6 }
-                  : { y: 3, blur: 12, opacity: 0.18, spread: -4 },
-              ),
-            ],
-      ]}
-    >
-      {button}
-    </View>
   );
 }
 
@@ -320,11 +210,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 12,
   },
-  // The painted fill clips itself to the rounded shape (not relying on the bordered button's clip).
-  surface: { bottom: 0, left: 0, overflow: 'hidden', position: 'absolute', right: 0, top: 0 },
-  glow: { borderRadius: BUTTON_RADIUS },
-  // Disabled: no glow and no solid wrapper showing through the dimmed button.
-  glowOff: { backgroundColor: 'transparent' },
   content: { alignItems: 'center', flexDirection: 'row', gap: 8, justifyContent: 'center' },
   pressed: { transform: [{ scale: 0.98 }] },
   disabled: { opacity: 0.55 },

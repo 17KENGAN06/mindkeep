@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { AppState, StyleSheet, Text, View } from 'react-native';
+import { AppState, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { detectDeviceTimezone } from '../config/timezones';
 import { mapAuthError } from '../features/auth/mapAuthError';
@@ -30,7 +31,7 @@ function useDeviceTimezone(): string {
 }
 
 type TimezoneSuggestionProps = {
-  /** `banner` (Today): dismissible suggestion. `settings`: account + phone lines, always offers the switch. */
+  /** `banner` (Today): popup over the screen. `settings`: account + phone lines, always offers the switch. */
   variant?: 'banner' | 'settings';
 };
 
@@ -47,6 +48,9 @@ export function TimezoneSuggestion({ variant = 'banner' }: TimezoneSuggestionPro
   const [kept, setKept] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Closed with the backdrop or Back: hidden until the app is opened again, nothing saved.
+  const [later, setLater] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const differs = Boolean(user) && !zonesShareClock(account, device, today);
 
@@ -97,25 +101,41 @@ export function TimezoneSuggestion({ variant = 'banner' }: TimezoneSuggestionPro
     );
   }
 
-  // Render nothing until the "Keep" choice is known, so the banner never flashes.
+  // Render nothing until the "Keep" choice is known, so the popup never flashes.
   if (!differs || kept !== false) return null;
 
   return (
-    <View style={[styles.banner, { backgroundColor: colors.panel, borderColor: colors.brand }]}>
-      <Text style={[styles.title, { color: colors.ink }]}>{t('timezone.title')}</Text>
-      <Text style={[styles.body, { color: colors.muted }]}>{t('timezone.body', { device, account })}</Text>
-      {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
-      <View style={styles.actions}>
-        <AppButton label={t('timezone.use')} loading={busy} onPress={() => void useDevice()} />
-        <AppButton label={t('timezone.keep')} variant="secondary" disabled={busy} onPress={keepAccount} />
+    <Modal transparent visible={!later} animationType="fade" statusBarTranslucent onRequestClose={() => setLater(true)}>
+      <View style={styles.overlay}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('common.close')}
+          style={StyleSheet.absoluteFill}
+          onPress={() => setLater(true)}
+        />
+        <View
+          style={[
+            styles.popup,
+            { backgroundColor: colors.panel, borderColor: colors.line, marginBottom: Math.max(insets.bottom, 16) },
+          ]}
+        >
+          <Text style={[styles.title, { color: colors.ink }]}>{t('timezone.title')}</Text>
+          <Text style={[styles.body, { color: colors.muted }]}>{t('timezone.body', { device, account })}</Text>
+          {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
+          <View style={styles.actions}>
+            <AppButton label={t('timezone.use')} loading={busy} onPress={() => void useDevice()} />
+            <AppButton label={t('timezone.keep')} variant="secondary" disabled={busy} onPress={keepAccount} />
+          </View>
+        </View>
       </View>
-    </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  banner: { borderRadius: 18, borderWidth: 1, gap: 8, padding: 14 },
-  title: { fontSize: 16, fontFamily: fonts.bold },
+  overlay: { backgroundColor: 'rgba(0,0,0,0.55)', flex: 1, justifyContent: 'flex-end', paddingHorizontal: 16 },
+  popup: { borderRadius: 16, borderWidth: 1, gap: 10, padding: 18 },
+  title: { fontSize: 18, fontFamily: fonts.bold },
   body: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 },
   actions: { gap: 8, marginTop: 4 },
   settings: { gap: 8 },

@@ -211,7 +211,7 @@ function QuickAddBody({ visible, startWithTask = false, onClose, onOpen }: Quick
       <Animated.View
         style={[
           styles.sheet,
-          { backgroundColor: colors.bg, borderColor: colors.line, shadowColor: colors.brand },
+          { backgroundColor: colors.bg, borderColor: colors.line, shadowColor: '#000' },
           {
             opacity: rise,
             transform: [
