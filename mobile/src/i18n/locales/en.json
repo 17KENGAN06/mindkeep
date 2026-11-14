@@ -1433,6 +1433,8 @@
     "manage": "Manage subscription",
     "done": "Done: {{plan}} is active.",
     "webManaged": "Your plan was bought on the website. It works in the app too and is managed where it was bought.",
+    "grantedAdmin": "Pro is open on this account because it is a team (admin) account. Nothing to buy here.",
+    "grantedBeta": "Pro is open on this account for beta testing. Nothing to buy here.",
     "unavailable": "In-app purchases are not available in this version of the app.",
     "loadFailed": "Could not load prices from the App Store.",
     "retry": "Try again",

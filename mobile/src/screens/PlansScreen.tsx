@@ -146,7 +146,10 @@ export function PlansScreen() {
             <Text style={[styles.body, { color: colors.muted }]}>
               {otherStore
                 ? t(user?.planSource === 'play_store' ? 'iap.storeManagedPlay' : 'iap.storeManaged')
-                : t('iap.webManaged')}
+                : user?.planSource === 'stripe'
+                  ? t('iap.webManaged')
+                  : // No purchase behind it: Pro opened by the team (admin or beta tester).
+                    t(user?.role === 'ADMIN' ? 'iap.grantedAdmin' : 'iap.grantedBeta')}
             </Text>
           </View>
         ) : (

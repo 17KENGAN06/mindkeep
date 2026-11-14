@@ -1433,6 +1433,8 @@
     "manage": "Gestionar suscripción",
     "done": "Listo: {{plan}} está activo.",
     "webManaged": "Tu plan se compró en la web. También funciona en la app y se gestiona donde se compró.",
+    "grantedAdmin": "Pro está activado en esta cuenta porque es una cuenta del equipo (administrador). No hay nada que comprar.",
+    "grantedBeta": "Pro está activado en esta cuenta para pruebas beta. No hay nada que comprar.",
     "unavailable": "Las compras en la app no están disponibles en esta versión.",
     "loadFailed": "No se pudieron cargar los precios de la App Store.",
     "retry": "Reintentar",

@@ -1433,6 +1433,8 @@
     "manage": "Abo verwalten",
     "done": "Fertig: {{plan}} ist aktiv.",
     "webManaged": "Dein Plan wurde auf der Website gekauft. Er gilt auch in der App und wird dort verwaltet, wo er gekauft wurde.",
+    "grantedAdmin": "Pro ist für dieses Konto freigeschaltet, weil es ein Team-Konto (Admin) ist. Hier muss nichts gekauft werden.",
+    "grantedBeta": "Pro ist für dieses Konto zum Betatesten freigeschaltet. Hier muss nichts gekauft werden.",
     "unavailable": "In-App-Käufe sind in dieser Version nicht verfügbar.",
     "loadFailed": "Preise aus dem App Store konnten nicht geladen werden.",
     "retry": "Erneut versuchen",

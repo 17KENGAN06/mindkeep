@@ -1433,6 +1433,8 @@
     "manage": "Hallitse tilausta",
     "done": "Valmis: {{plan}} on käytössä.",
     "webManaged": "Tilauksesi on ostettu verkkosivulta. Se toimii myös sovelluksessa, ja sitä hallitaan siellä, missä se ostettiin.",
+    "grantedAdmin": "Pro on avattu tälle tilille, koska se on tiimin (ylläpitäjän) tili. Mitään ei tarvitse ostaa.",
+    "grantedBeta": "Pro on avattu tälle tilille beetatestausta varten. Mitään ei tarvitse ostaa.",
     "unavailable": "Sovelluksen sisäiset ostot eivät ole käytettävissä tässä versiossa.",
     "loadFailed": "Hintoja ei voitu ladata App Storesta.",
     "retry": "Yritä uudelleen",
