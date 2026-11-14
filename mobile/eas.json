@@ -24,7 +24,8 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.mindkeep.cloud",
         "EXPO_PUBLIC_STORE_BUILD": "true",
-        "EXPO_PUBLIC_REVENUECAT_IOS_KEY": "appl_jfxpGrNmzPnmZBvTnOoBMXsQUnK"
+        "EXPO_PUBLIC_REVENUECAT_IOS_KEY": "appl_jfxpGrNmzPnmZBvTnOoBMXsQUnK",
+        "EXPO_PUBLIC_REVENUECAT_ANDROID_KEY": "goog_AzqblnUETlkCvGmvClDrDMZTPzu"
       }
     }
   },
