@@ -147,26 +147,30 @@ html[data-theme='light'] {
     cursor: none !important;
   }
 
-  html.has-brand-cursor
-    :is(
-      input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='button']):not([type='submit']),
-      textarea,
-      [contenteditable='true'],
-      [contenteditable='']
-    ) {
-    cursor: text !important;
-  }
-
-  .brand-cursor-dot,
-  .brand-cursor-ring {
+  /* One element under the pointer; ring and dot are centred inside it, so they never part. */
+  .brand-cursor {
     pointer-events: none;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 2147483647;
-    border-radius: 999px;
+    width: 0;
+    height: 0;
     opacity: 0;
     will-change: transform;
+    transition: opacity 0.3s ease;
+  }
+
+  .brand-cursor[data-visible='true'] {
+    opacity: 1;
+  }
+
+  .brand-cursor-dot,
+  .brand-cursor-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 999px;
   }
 
   .brand-cursor-dot {
@@ -179,8 +183,11 @@ html[data-theme='light'] {
       0 0 0 1.5px var(--app-surface),
       0 0 10px color-mix(in oklab, var(--app-accent) 55%, transparent);
     transition:
-      opacity 0.3s ease,
-      scale 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      scale 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      margin 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      border-radius 0.35s ease;
   }
 
   .brand-cursor-ring {
@@ -194,40 +201,40 @@ html[data-theme='light'] {
       inset 0 0 0 1px color-mix(in oklab, var(--app-surface) 70%, transparent);
     /* Shape and colour changes ease in smoothly (a soft ease-out, ~0.45 s). */
     transition:
-      opacity 0.3s ease,
       scale 0.45s cubic-bezier(0.22, 1, 0.36, 1),
       border-color 0.35s ease,
-      box-shadow 0.35s ease;
+      box-shadow 0.35s ease,
+      opacity 0.3s ease;
   }
 
-  .brand-cursor-dot[data-visible='true'],
-  .brand-cursor-ring[data-visible='true'] {
-    opacity: 1;
+  /* Over text fields: the dot stretches into a slim accent caret (the hot spot stays in its
+     middle, like the system I-beam) and the ring fades out. */
+  .brand-cursor[data-text='true'] .brand-cursor-dot {
+    width: 2px;
+    height: 22px;
+    margin: -11px 0 0 -1px;
+    border-radius: 2px;
+  }
+
+  .brand-cursor[data-text='true'] .brand-cursor-ring {
+    scale: 0.4;
+    opacity: 0;
   }
 
   /* Over something clickable the ring tightens around the dot and brightens — no fill, so the
      text under the pointer stays readable. */
-  .brand-cursor-ring[data-hover='true'] {
+  .brand-cursor[data-hover='true'] .brand-cursor-ring {
     scale: 0.62;
     border-color: var(--app-accent);
   }
 
-  .brand-cursor-dot[data-hover='true'] {
+  .brand-cursor[data-hover='true'] .brand-cursor-dot {
     scale: 1.25;
   }
 
-  .brand-cursor-ring[data-pressed='true'] {
+  .brand-cursor[data-pressed='true'] .brand-cursor-ring {
     scale: 0.5;
-    transition-duration: 0.3s, 0.18s, 0.35s, 0.35s;
-  }
-
-  /* Reduced motion only drops the ring's trailing inertia (set in the component); the short
-     shape and colour fades stay, they do not move anything across the screen. */
-
-  /* Over text fields the system I-beam is used instead. */
-  .brand-cursor-dot[data-text='true'],
-  .brand-cursor-ring[data-text='true'] {
-    opacity: 0;
+    transition-duration: 0.18s, 0.35s, 0.35s;
   }
 
   .home-snap {
