@@ -209,10 +209,11 @@ export function TasksScreen() {
 
   const dayTasks = [...(periodQuery.data?.tasks ?? [])]
     .filter((task) => task.date === selectedDate)
-    // The API lists completed tasks last; ticking one must not move it from under the finger.
+    // Ticking a task must not move it from under the finger, so completion plays no part.
+    // Tasks added together (list import, copy day) share createdAt; the id keeps their order.
     .sort((left, right) => {
       if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
-      return (left.createdAt ?? '').localeCompare(right.createdAt ?? '');
+      return (left.createdAt ?? '').localeCompare(right.createdAt ?? '') || left.id.localeCompare(right.id);
     });
 
   // Cards that are new since the last render of the same day fade in; switching days does not.

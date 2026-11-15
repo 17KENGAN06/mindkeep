@@ -82,7 +82,9 @@ export class DailyTaskService {
       FREE_LIMITS.tasksPerMonth,
       await prisma.dailyTask.findMany({
         where: { userId, date: { gte: from, lt: to } },
-        orderBy: [{ date: 'asc' }, { completed: 'asc' }, { important: 'desc' }, { createdAt: 'asc' }],
+        // Ticking a task must not move it: no `completed` here. Tasks added together (list import,
+        // copy day) share createdAt, so the id (cuid, increasing in creation order) breaks ties.
+        orderBy: [{ date: 'asc' }, { important: 'desc' }, { createdAt: 'asc' }, { id: 'asc' }],
       }),
       (task) => task.date,
       (task) => task.createdAt.getTime(),
@@ -195,7 +197,7 @@ export class DailyTaskService {
     const visibleIds = await freeVisibleIds(userId, 'tasks', { dateKey: date });
     const tasks = await prisma.dailyTask.findMany({
       where: { userId, date: { gte: day, lt: next }, ...idIn(visibleIds) },
-      orderBy: [{ completed: 'asc' }, { important: 'desc' }, { createdAt: 'asc' }],
+      orderBy: [{ important: 'desc' }, { createdAt: 'asc' }, { id: 'asc' }],
     });
 
     return {

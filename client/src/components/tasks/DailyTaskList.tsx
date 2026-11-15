@@ -35,9 +35,10 @@ function splitOf(task: DailyTask) {
 
 export function sortDailyTasks(tasks: DailyTask[]) {
   return [...tasks].sort((left, right) => {
-    // The API lists completed tasks last; ticking one must not move it from under the cursor.
+    // Ticking a task must not move it from under the cursor, so completion plays no part.
+    // Tasks added together (list import, copy day) share createdAt; the id keeps their order.
     if (Boolean(left.important) !== Boolean(right.important)) return left.important ? -1 : 1;
-    return left.createdAt.localeCompare(right.createdAt);
+    return left.createdAt.localeCompare(right.createdAt) || left.id.localeCompare(right.id);
   });
 }
 
