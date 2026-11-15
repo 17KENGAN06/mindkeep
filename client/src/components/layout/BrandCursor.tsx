@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react';
  * Site cursor in the app's accent colour: a dot that sits exactly under the pointer and a ring
  * that follows it with a little inertia. Over links and buttons the ring grows and fills; over
  * text fields the system I-beam comes back. Only for a mouse (hover + fine pointer); touch
- * devices keep the system cursor. With reduced motion the ring sits on the dot, without inertia
- * or animations.
+ * devices keep the system cursor. With reduced motion the ring sits on the dot without inertia;
+ * the short hover fades stay.
  */
 const QUERY = '(hover: hover) and (pointer: fine)';
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
@@ -16,7 +16,9 @@ const INTERACTIVE =
 const TEXT_FIELD =
   'input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]), textarea, [contenteditable="true"], [contenteditable=""]';
 /** How quickly the ring catches up per frame (0–1). */
-const FOLLOW = 0.2;
+const FOLLOW = 0.35;
+/** The ring never trails the dot by more than this, so the two always read as one cursor. */
+const MAX_LAG = 6;
 
 export function BrandCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
@@ -53,6 +55,13 @@ export function BrandCursor() {
       const tick = () => {
         ringX += (x - ringX) * follow;
         ringY += (y - ringY) * follow;
+        const dx = ringX - x;
+        const dy = ringY - y;
+        const lag = Math.hypot(dx, dy);
+        if (lag > MAX_LAG) {
+          ringX = x + (dx / lag) * MAX_LAG;
+          ringY = y + (dy / lag) * MAX_LAG;
+        }
         dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
         ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
         if (Math.abs(x - ringX) > 0.1 || Math.abs(y - ringY) > 0.1) {
