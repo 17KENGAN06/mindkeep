@@ -1,8 +1,8 @@
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
-  type DragEvent,
   type FormEvent,
   type KeyboardEvent,
   type PointerEvent,
@@ -33,8 +33,8 @@ function weekStart(dateKey: string): string {
 
 type Patch = { completed?: boolean; splitDone?: number; date?: string };
 
-/** Drag-and-drop payload type for moving a task to another day. */
-const DRAG_TYPE = 'application/x-mindkeep-task';
+/** How far (px) the mouse must travel with the button held before a task starts moving. */
+const DRAG_START = 5;
 
 /** Part counts offered on the board: a 4×2 grid that fits a narrow day column. */
 const SPLIT_CHOICES = [2, 3, 4, 5, 6, 7, 8] as const;
@@ -144,45 +144,80 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
     });
   };
 
-  // Moving a task to another day: drag its row onto a day card (mouse; touch keeps the day view).
-  const [dragId, setDragId] = useState<string | null>(null);
-  const [dropDay, setDropDay] = useState<string | null>(null);
-  const endDrag = () => {
-    setDragId(null);
-    setDropDay(null);
+  // Moving a task to another day: press its row with the mouse, move, drop on a day card. Our own
+  // pointer handling (not the browser's drag-and-drop) so the site's hand cursor stays on and a
+  // small card follows the pointer. Touch keeps the day view for moving.
+  const [drag, setDrag] = useState<{ task: DailyTask; x: number; y: number; day: string | null } | null>(null);
+  const pending = useRef<{ task: DailyTask; x: number; y: number } | null>(null);
+  const saveRef = useRef(save);
+  useEffect(() => {
+    saveRef.current = save;
+  });
+
+  const onTaskPointerDown = (event: PointerEvent<HTMLLIElement>, task: DailyTask) => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    // Ticks are painted by pressing a box and sweeping; the split controls have their own clicks.
+    if ((event.target as HTMLElement).closest('[data-paint-task], [data-no-drag]')) return;
+    pending.current = { task, x: event.clientX, y: event.clientY };
   };
-  const onDragStartTask = (event: DragEvent<HTMLLIElement>, task: DailyTask) => {
-    // Ticks are painted by pressing a box and sweeping; that must not start a move.
-    if ((event.target as HTMLElement).closest('[data-paint-task]')) {
-      event.preventDefault();
-      return;
-    }
-    event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData(DRAG_TYPE, task.id);
-    event.dataTransfer.setData('text/plain', task.title);
-    setSplitOpen(null);
-    setDragId(task.id);
-  };
-  const onDragOverDay = (event: DragEvent<HTMLDivElement>, date: string) => {
-    if (!dragId) return;
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
-    if (dropDay !== date) setDropDay(date);
-  };
-  const onDragLeaveDay = (event: DragEvent<HTMLDivElement>, date: string) => {
-    const next = event.relatedTarget as Node | null;
-    if (next && event.currentTarget.contains(next)) return;
-    if (dropDay === date) setDropDay(null);
-  };
-  const onDropDay = (event: DragEvent<HTMLDivElement>, date: string) => {
-    event.preventDefault();
-    const id = event.dataTransfer.getData(DRAG_TYPE) || dragId;
-    const task = tasks.find((item) => item.id === id);
-    endDrag();
-    if (!task || task.date === date) return;
-    setError(null);
-    save(task, { date });
-  };
+
+  useEffect(() => {
+    const root = document.documentElement;
+    let active: { task: DailyTask; day: string | null } | null = null;
+    const dayAt = (x: number, y: number) =>
+      document.elementFromPoint(x, y)?.closest<HTMLElement>('[data-drop-day]')?.dataset.dropDay ?? null;
+    const finish = () => {
+      active = null;
+      pending.current = null;
+      root.classList.remove('task-dragging');
+      setDrag(null);
+    };
+    const onMove = (event: globalThis.PointerEvent) => {
+      const start = pending.current;
+      if (!start) return;
+      if (!active) {
+        if (Math.hypot(event.clientX - start.x, event.clientY - start.y) < DRAG_START) return;
+        active = { task: start.task, day: null };
+        root.classList.add('task-dragging');
+        window.getSelection()?.removeAllRanges();
+      }
+      active.day = dayAt(event.clientX, event.clientY);
+      setDrag({ task: active.task, x: event.clientX, y: event.clientY, day: active.day });
+    };
+    const onUp = () => {
+      const moved = active;
+      finish();
+      if (!moved) return;
+      // The press ended a move, not a click: keep the title from opening the editor.
+      const swallow = (click: MouseEvent) => {
+        click.preventDefault();
+        click.stopPropagation();
+      };
+      window.addEventListener('click', swallow, { capture: true, once: true });
+      window.setTimeout(() => window.removeEventListener('click', swallow, { capture: true }), 0);
+      if (moved.day && moved.day !== moved.task.date) {
+        setError(null);
+        saveRef.current(moved.task, { date: moved.day });
+      }
+    };
+    const onKey = (event: globalThis.KeyboardEvent) => {
+      if (event.key === 'Escape' && active) finish();
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', finish);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', finish);
+      window.removeEventListener('keydown', onKey);
+      root.classList.remove('task-dragging');
+    };
+  }, []);
+
+  const dragId = drag?.task.id ?? null;
+  const dropDay = drag?.day ?? null;
 
   // Painting: the first box decides tick or untick; boxes the pointer passes over follow.
   // A plain mutable holder (not state): changing it must not re-render.
@@ -407,9 +442,7 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
           return (
             <div
               key={day.date}
-              onDragOver={(event) => onDragOverDay(event, day.date)}
-              onDragLeave={(event) => onDragLeaveDay(event, day.date)}
-              onDrop={(event) => onDropDay(event, day.date)}
+              data-drop-day={day.date}
               className={`dash-card flex min-w-0 flex-col rounded-2xl bg-panel shadow-sm transition ${
                 dropDay === day.date
                   ? 'bg-brand-500/[0.06] ring-2 ring-brand-500'
@@ -449,9 +482,8 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                   return (
                     <li
                       key={task.id}
-                      draggable={!picking}
-                      onDragStart={(event) => onDragStartTask(event, task)}
-                      onDragEnd={endDrag}
+                      data-task-drag={picking ? undefined : ''}
+                      onPointerDown={picking ? undefined : (event) => onTaskPointerDown(event, task)}
                       className={`group/task relative rounded-lg px-1.5 py-1.5 transition hover:bg-brand-500/[0.05] ${
                         splitBusy === task.id || dragId === task.id ? 'opacity-50' : ''
                       }`}
@@ -471,6 +503,7 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         </span>
                         <button
                           type="button"
+                          data-drag-handle=""
                           className={`min-w-0 flex-1 text-left text-[13px] leading-5 break-words transition [overflow-wrap:anywhere] ${
                             task.completed ? 'text-muted line-through decoration-brand-500/60' : 'text-ink'
                           }`}
@@ -482,7 +515,7 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                         {/* Flag and split button each have their own slot at the row's end, side by
                             side, so neither ever covers the other or the title. The button shows on
                             hover, always on touch screens, and while its picker is open. */}
-                        <span className="-my-0.5 flex shrink-0 items-center gap-1">
+                        <span data-no-drag="" className="-my-0.5 flex shrink-0 items-center gap-1">
                           {task.important ? (
                             <Flag className="h-3 w-3 fill-current text-brand-500" aria-hidden />
                           ) : null}
@@ -659,6 +692,17 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
       </div>
       </div>
       <p className="text-xs text-muted">{t('tasks.board.hint')}</p>
+
+      {/* The task being moved follows the pointer as a small card. */}
+      {drag ? (
+        <div
+          aria-hidden
+          className="pointer-events-none fixed top-0 left-0 z-[100] max-w-[16rem] rounded-xl bg-panel px-3 py-2 text-[13px] leading-5 text-ink shadow-[0_18px_40px_-16px_rgba(0,0,0,0.6)] ring-1 ring-brand-500/70"
+          style={{ transform: `translate3d(${drag.x + 14}px, ${drag.y + 10}px, 0) rotate(-2deg)` }}
+        >
+          <span className="line-clamp-2 break-words">{drag.task.title}</span>
+        </div>
+      ) : null}
     </section>
   );
 }
