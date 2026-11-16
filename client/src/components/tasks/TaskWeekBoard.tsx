@@ -432,10 +432,11 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
 
       <ErrorMessage message={error ?? undefined} />
 
-      {/* Columns follow the board's own width: Mon–Thu and Fri–Sun in two rows of wide cards,
-          all 7 in one row only on very wide screens (2K and up); Full HD keeps the wide cards. */}
+      {/* Columns follow the board's own width: two wide columns on a tablet in portrait (the 8th
+          cell, the week summary, closes the 4th row), Mon–Thu and Fri–Sun in two rows on laptops,
+          all 7 in one row only on very wide screens (2K and up). */}
       <div className="@container" onPointerMove={onPaintMove}>
-      <div className={`grid grid-cols-4 gap-2.5 @min-[72rem]:gap-3 @min-[112rem]:grid-cols-7 ${loading ? 'opacity-60' : ''}`}>
+      <div className={`grid grid-cols-2 gap-3 @min-[60rem]:grid-cols-4 @min-[60rem]:gap-2.5 @min-[72rem]:gap-3 @min-[112rem]:grid-cols-7 ${loading ? 'opacity-60' : ''}`}>
         {byDay.map((day) => {
           const isToday = day.date === today;
           const complete = day.total > 0 && day.done === day.total;

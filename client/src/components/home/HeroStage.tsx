@@ -9,9 +9,10 @@ export function HeroStage() {
 
   return (
     <>
-      {/* Phones and tablets: full-width product strip so header menus never cover a right column */}
+      {/* Phones: a stack. Tablets in portrait (md): the three cards side by side across the full
+          width, under the text and on its left edge. Small laptops (lg): a stack in the right column. */}
       <div className="relative mt-2 xl:hidden">
-        <div className="mx-auto grid w-full max-w-md gap-3 lg:ml-auto lg:mr-0">
+        <div className="mx-auto grid w-full max-w-md gap-3 md:max-w-none md:grid-cols-3 md:gap-4 lg:ml-auto lg:mr-0 lg:max-w-md lg:grid-cols-1 lg:gap-3">
           <article className="rounded-2xl border border-line/80 bg-panel/80 p-4 backdrop-blur-md">
             <div className="flex items-center gap-2 text-brand-500">
               <CheckSquare className="h-4 w-4 shrink-0" aria-hidden />

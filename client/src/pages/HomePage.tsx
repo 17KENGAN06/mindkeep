@@ -87,13 +87,13 @@ export function HomePage() {
                 </SnapReveal>
 
                 <SnapReveal direction="scale" delay={0.16}>
-                  <h1 className="font-display mt-3 max-w-[16ch] text-[2.5rem] leading-[1.08] font-semibold tracking-tight text-ink md:mt-4 md:text-[2.35rem] lg:text-[2.5rem] xl:mt-5 xl:max-w-5xl xl:text-[4.25rem]">
+                  <h1 className="font-display mt-3 max-w-[16ch] text-[2.5rem] leading-[1.08] font-semibold tracking-tight text-ink md:mt-4 md:max-w-[20ch] md:text-[3.25rem] lg:max-w-[16ch] lg:text-[2.5rem] xl:mt-5 xl:max-w-5xl xl:text-[4.25rem]">
                     {t('home.title')}
                   </h1>
                 </SnapReveal>
 
                 <SnapReveal direction="right" delay={0.26}>
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted sm:mt-5 sm:text-base xl:mt-6 xl:max-w-3xl xl:text-xl">
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted sm:mt-5 sm:text-base md:max-w-2xl md:text-lg lg:max-w-xl lg:text-base xl:mt-6 xl:max-w-3xl xl:text-xl">
                     {t('home.subtitle')}
                   </p>
                 </SnapReveal>
