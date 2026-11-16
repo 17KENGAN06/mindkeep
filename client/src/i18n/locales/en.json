@@ -331,7 +331,7 @@
       "add": "New task",
       "done": "Done",
       "left": "Left",
-      "hint": "Press on a box and drag across the others to tick several at once. Click a day to open it with all actions."
+      "hint": "Press on a box and drag across the others to tick several at once. Drag a task onto another day to move it. Click a day to open it with all actions."
     }
   },
   "notes": {

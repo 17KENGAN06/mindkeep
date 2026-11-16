@@ -331,9 +331,16 @@ export class DailyTaskService {
       }
     }
 
+    // Moving to another month counts against that month's free cap, like a new task there.
+    const movedDate = input.date !== undefined && input.date !== toDateKey(existing.date) ? input.date : null;
+    if (movedDate && movedDate.slice(0, 7) !== toDateKey(existing.date).slice(0, 7)) {
+      await assertCreateCount(userId, 'tasks', 1, { dateKey: movedDate });
+    }
+
     const task = await prisma.dailyTask.update({
       where: { id },
       data: {
+        ...(movedDate ? { date: parseDateOnly(movedDate) } : {}),
         ...(input.title !== undefined ? { title: input.title } : {}),
         ...(input.minutes !== undefined ? { minutes: input.minutes } : {}),
         ...(input.note !== undefined ? { note: input.note } : {}),

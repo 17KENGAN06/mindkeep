@@ -331,7 +331,7 @@
       "add": "Nueva tarea",
       "done": "Hechas",
       "left": "Quedan",
-      "hint": "Pulsa una casilla y arrastra sobre las demás para marcar varias a la vez. Haz clic en un día para abrirlo con todas las acciones."
+      "hint": "Pulsa una casilla y arrastra sobre las demás para marcar varias a la vez. Arrastra una tarea a otro día para moverla. Haz clic en un día para abrirlo con todas las acciones."
     }
   },
   "notes": {

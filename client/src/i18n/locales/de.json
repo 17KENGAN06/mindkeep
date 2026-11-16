@@ -331,7 +331,7 @@
       "add": "Neue Aufgabe",
       "done": "Erledigt",
       "left": "Offen",
-      "hint": "Drück auf ein Kästchen und zieh über die anderen, um mehrere auf einmal abzuhaken. Klick auf einen Tag, um ihn mit allen Aktionen zu öffnen."
+      "hint": "Drück auf ein Kästchen und zieh über die anderen, um mehrere auf einmal abzuhaken. Zieh eine Aufgabe auf einen anderen Tag, um sie zu verschieben. Klick auf einen Tag, um ihn mit allen Aktionen zu öffnen."
     }
   },
   "notes": {

@@ -32,6 +32,8 @@ export type UpdateDailyTaskPayload = {
   important?: boolean;
   splitCount?: number;
   splitDone?: number;
+  /** Move the task to another day (YYYY-MM-DD). */
+  date?: string;
 };
 
 export const dailyTasksApi = {

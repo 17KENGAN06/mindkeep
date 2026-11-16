@@ -331,7 +331,7 @@
       "add": "Nuova attività",
       "done": "Fatte",
       "left": "Restano",
-      "hint": "Premi su una casella e trascina sulle altre per spuntarne diverse insieme. Fai clic su un giorno per aprirlo con tutte le azioni."
+      "hint": "Premi su una casella e trascina sulle altre per spuntarne diverse insieme. Trascina un’attività su un altro giorno per spostarla. Fai clic su un giorno per aprirlo con tutte le azioni."
     }
   },
   "notes": {

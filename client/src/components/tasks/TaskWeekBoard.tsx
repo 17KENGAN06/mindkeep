@@ -1,4 +1,12 @@
-import { useEffect, useMemo, useState, type FormEvent, type KeyboardEvent, type PointerEvent } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type DragEvent,
+  type FormEvent,
+  type KeyboardEvent,
+  type PointerEvent,
+} from 'react';
 import { ChevronLeft, ChevronRight, Flag, Plus, Split, Timer, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -23,7 +31,10 @@ function weekStart(dateKey: string): string {
   return shiftDateKey(dateKey, -((weekday + 6) % 7));
 }
 
-type Patch = { completed?: boolean; splitDone?: number };
+type Patch = { completed?: boolean; splitDone?: number; date?: string };
+
+/** Drag-and-drop payload type for moving a task to another day. */
+const DRAG_TYPE = 'application/x-mindkeep-task';
 
 /** Part counts offered on the board: a 4×2 grid that fits a narrow day column. */
 const SPLIT_CHOICES = [2, 3, 4, 5, 6, 7, 8] as const;
@@ -100,7 +111,8 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
       if (!patch) continue;
       const matches =
         (patch.completed === undefined || patch.completed === task.completed) &&
-        (patch.splitDone === undefined || patch.splitDone === task.splitDone);
+        (patch.splitDone === undefined || patch.splitDone === task.splitDone) &&
+        (patch.date === undefined || patch.date === task.date);
       if (matches) {
         delete next[task.id];
         changed = true;
@@ -121,14 +133,55 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
 
   const save = (task: DailyTask, patch: Patch) => {
     setPatches((current) => ({ ...current, [task.id]: { ...current[task.id], ...patch } }));
-    updateTask.mutateAsync({ id: task.id, payload: patch }).catch(() => {
+    updateTask.mutateAsync({ id: task.id, payload: patch }).catch((err: unknown) => {
       setPatches((current) => {
         const next = { ...current };
         delete next[task.id];
         return next;
       });
-      setError(t('auth.errors.generic'));
+      // A move can hit the free monthly cap of the target month; say so instead of "error".
+      setError(patch.date ? mutationErrorMessage(err, t) : t('auth.errors.generic'));
     });
+  };
+
+  // Moving a task to another day: drag its row onto a day card (mouse; touch keeps the day view).
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [dropDay, setDropDay] = useState<string | null>(null);
+  const endDrag = () => {
+    setDragId(null);
+    setDropDay(null);
+  };
+  const onDragStartTask = (event: DragEvent<HTMLLIElement>, task: DailyTask) => {
+    // Ticks are painted by pressing a box and sweeping; that must not start a move.
+    if ((event.target as HTMLElement).closest('[data-paint-task]')) {
+      event.preventDefault();
+      return;
+    }
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData(DRAG_TYPE, task.id);
+    event.dataTransfer.setData('text/plain', task.title);
+    setSplitOpen(null);
+    setDragId(task.id);
+  };
+  const onDragOverDay = (event: DragEvent<HTMLDivElement>, date: string) => {
+    if (!dragId) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    if (dropDay !== date) setDropDay(date);
+  };
+  const onDragLeaveDay = (event: DragEvent<HTMLDivElement>, date: string) => {
+    const next = event.relatedTarget as Node | null;
+    if (next && event.currentTarget.contains(next)) return;
+    if (dropDay === date) setDropDay(null);
+  };
+  const onDropDay = (event: DragEvent<HTMLDivElement>, date: string) => {
+    event.preventDefault();
+    const id = event.dataTransfer.getData(DRAG_TYPE) || dragId;
+    const task = tasks.find((item) => item.id === id);
+    endDrag();
+    if (!task || task.date === date) return;
+    setError(null);
+    save(task, { date });
   };
 
   // Painting: the first box decides tick or untick; boxes the pointer passes over follow.
@@ -354,8 +407,15 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
           return (
             <div
               key={day.date}
-              className={`dash-card flex min-w-0 flex-col rounded-2xl bg-panel shadow-sm ring-1 transition ${
-                isToday ? 'ring-brand-500/60' : 'ring-line'
+              onDragOver={(event) => onDragOverDay(event, day.date)}
+              onDragLeave={(event) => onDragLeaveDay(event, day.date)}
+              onDrop={(event) => onDropDay(event, day.date)}
+              className={`dash-card flex min-w-0 flex-col rounded-2xl bg-panel shadow-sm transition ${
+                dropDay === day.date
+                  ? 'bg-brand-500/[0.06] ring-2 ring-brand-500'
+                  : isToday
+                    ? 'ring-1 ring-brand-500/60'
+                    : 'ring-1 ring-line'
               }`}
             >
               <button
@@ -389,8 +449,11 @@ export function TaskWeekBoard({ anchorDate, today, onAnchorChange, onOpenDay, on
                   return (
                     <li
                       key={task.id}
+                      draggable={!picking}
+                      onDragStart={(event) => onDragStartTask(event, task)}
+                      onDragEnd={endDrag}
                       className={`group/task relative rounded-lg px-1.5 py-1.5 transition hover:bg-brand-500/[0.05] ${
-                        splitBusy === task.id ? 'opacity-60' : ''
+                        splitBusy === task.id || dragId === task.id ? 'opacity-50' : ''
                       }`}
                     >
                       <div className="flex items-start gap-2">

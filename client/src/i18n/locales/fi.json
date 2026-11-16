@@ -331,7 +331,7 @@
       "add": "Uusi tehtävä",
       "done": "Tehty",
       "left": "Jäljellä",
-      "hint": "Paina ruutua ja vedä muiden yli merkitäksesi useita kerralla. Avaa päivä kaikkine toimintoineen klikkaamalla sitä."
+      "hint": "Paina ruutua ja vedä muiden yli merkitäksesi useita kerralla. Siirrä tehtävä toiseen päivään vetämällä se sen päälle. Avaa päivä kaikkine toimintoineen klikkaamalla sitä."
     }
   },
   "notes": {

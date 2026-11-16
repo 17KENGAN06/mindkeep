@@ -33,6 +33,8 @@ export const updateDailyTaskSchema = z
     important: z.boolean().optional(),
     splitCount: z.coerce.number().int().min(1).max(8).optional(),
     splitDone: z.coerce.number().int().min(0).max(8).optional(),
+    /** Move the task to another day (drag on the web week board). Additive: older clients omit it. */
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: 'At least one field is required',

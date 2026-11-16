@@ -1,7 +1,6 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { AmbientBackdrop } from '@/components/layout/AmbientBackdrop';
-import { BrandCursor } from '@/components/layout/BrandCursor';
 import { Preloader } from '@/components/layout/Preloader';
 import { ScrollManager } from '@/components/layout/ScrollManager';
 import { SeoHead } from '@/components/seo/SeoHead';
@@ -16,7 +15,6 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AmbientBackdrop />
-          <BrandCursor />
           <Preloader />
           <AuthProvider>
             <ScrollManager />

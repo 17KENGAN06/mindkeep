@@ -331,7 +331,7 @@
       "add": "Nowe zadanie",
       "done": "Zrobione",
       "left": "Zostało",
-      "hint": "Przytrzymaj pole i przeciągnij po pozostałych, aby zaznaczyć kilka naraz. Kliknij dzień, aby otworzyć go ze wszystkimi akcjami."
+      "hint": "Przytrzymaj pole i przeciągnij po pozostałych, aby zaznaczyć kilka naraz. Przeciągnij zadanie na inny dzień, aby je przenieść. Kliknij dzień, aby otworzyć go ze wszystkimi akcjami."
     }
   },
   "notes": {

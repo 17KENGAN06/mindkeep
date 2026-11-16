@@ -331,7 +331,7 @@
       "add": "Nouvelle tâche",
       "done": "Fait",
       "left": "Reste",
-      "hint": "Appuyez sur une case et glissez sur les autres pour en cocher plusieurs à la fois. Cliquez sur un jour pour l’ouvrir avec toutes les actions."
+      "hint": "Appuyez sur une case et glissez sur les autres pour en cocher plusieurs à la fois. Faites glisser une tâche sur un autre jour pour la déplacer. Cliquez sur un jour pour l’ouvrir avec toutes les actions."
     }
   },
   "notes": {
