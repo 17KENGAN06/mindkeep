@@ -323,6 +323,31 @@
     "layoutDay": "Dzień",
     "layoutWeek": "Tydzień",
     "layoutMonth": "Miesiąc",
+    "demo": {
+      "button": "Demo",
+      "title": "Auto-odhaczanie do wideo",
+      "hint": "Otwarte zadania wybranych dni zostaną odhaczone po kolei — od góry do dołu, jedno na sekundę.",
+      "from": "Od",
+      "to": "Do",
+      "start": "Uruchom",
+      "loading": "Ładowanie…",
+      "stop": "Stop",
+      "close": "Zamknij",
+      "escHint": "Esc — zatrzymaj",
+      "empty": "W tych dniach nie ma otwartych zadań.",
+      "badRange": "Data początku jest późniejsza niż data końca.",
+      "tooLong": "Maksymalnie 12 miesięcy naraz.",
+      "finished": "Gotowe: {{count}}"
+    },
+    "stats": {
+      "done": "zadań zrobionych",
+      "minutes": "minut zrobionych",
+      "streak": "najlepsza seria",
+      "byDay": "Według dni",
+      "legendDone": "Zrobione",
+      "legendPlanned": "Zaplanowane",
+      "legendLine": "Postęp miesiąca"
+    },
     "day": {
       "prev": "Poprzedni dzień",
       "next": "Następny dzień",

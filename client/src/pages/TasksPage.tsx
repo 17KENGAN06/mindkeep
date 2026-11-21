@@ -17,6 +17,8 @@ import { PlanRemain } from '@/components/billing/PlanRemain';
 import { TaskCopyDialog } from '@/features/tasks/TaskCopyDialog';
 import { TaskEditDialog } from '@/features/tasks/TaskEditDialog';
 import { TaskImportDialog } from '@/features/tasks/TaskImportDialog';
+import { TaskDemoPlayer } from '@/features/tasks/TaskDemoPlayer';
+import { useAuth } from '@/features/auth/useAuth';
 import {
   useBulkCreateDailyTasks,
   useCopyDailyTasks,
@@ -53,6 +55,7 @@ export function TasksPage() {
   const location = useLocation();
   const navState = location.state as LocationState;
   const { today, year: todayYear, month: todayMonth } = useAccountToday();
+  const { user } = useAuth();
 
   const [view, setView] = useState<DailyTaskView>('month');
   const [year, setYear] = useState(
@@ -365,6 +368,18 @@ export function TasksPage() {
           <h1 className="text-2xl font-semibold text-ink">{t('tasks.title')}</h1>
           <PlanRemain feature="tasks" />
         </div>
+        <div className="flex flex-wrap items-center gap-3">
+        {isDesktop && user?.role === 'ADMIN' ? (
+          <TaskDemoPlayer
+            today={today}
+            onFocusDay={(date) => {
+              setView('month');
+              setSelectedDate(date);
+              setYear(Number(date.slice(0, 4)));
+              setMonth(Number(date.slice(5, 7)));
+            }}
+          />
+        ) : null}
         {isDesktop && view === 'month' ? (
           <div className="inline-flex rounded-full bg-brand-500/[0.07] p-1 ring-1 ring-line/50" role="group">
             {(isWide ? (['month', 'week', 'day'] as const) : (['week', 'day'] as const)).map((option) => (
@@ -388,6 +403,7 @@ export function TasksPage() {
             ))}
           </div>
         ) : null}
+        </div>
       </section>
 
       {showMonth ? (

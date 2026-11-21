@@ -323,6 +323,31 @@
     "layoutDay": "Día",
     "layoutWeek": "Semana",
     "layoutMonth": "Mes",
+    "demo": {
+      "button": "Demo",
+      "title": "Marcado automático para vídeos",
+      "hint": "Las tareas pendientes de los días elegidos se marcan en orden: de arriba abajo, una por segundo.",
+      "from": "Desde",
+      "to": "Hasta",
+      "start": "Iniciar",
+      "loading": "Cargando…",
+      "stop": "Detener",
+      "close": "Cerrar",
+      "escHint": "Esc para detener",
+      "empty": "No hay tareas pendientes en estos días.",
+      "badRange": "La fecha de inicio es posterior a la de fin.",
+      "tooLong": "Hasta 12 meses a la vez.",
+      "finished": "Hecho: {{count}}"
+    },
+    "stats": {
+      "done": "tareas hechas",
+      "minutes": "minutos hechos",
+      "streak": "mejor racha",
+      "byDay": "Por día",
+      "legendDone": "Hecho",
+      "legendPlanned": "Planificado",
+      "legendLine": "Progreso del mes"
+    },
     "day": {
       "prev": "Día anterior",
       "next": "Día siguiente",

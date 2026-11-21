@@ -323,6 +323,31 @@
     "layoutDay": "Tag",
     "layoutWeek": "Woche",
     "layoutMonth": "Monat",
+    "demo": {
+      "button": "Demo",
+      "title": "Auto-Abhaken fürs Video",
+      "hint": "Offene Aufgaben der gewählten Tage werden der Reihe nach abgehakt — von oben nach unten, eine pro Sekunde.",
+      "from": "Von",
+      "to": "Bis",
+      "start": "Starten",
+      "loading": "Lädt…",
+      "stop": "Stopp",
+      "close": "Schließen",
+      "escHint": "Esc zum Stoppen",
+      "empty": "An diesen Tagen gibt es keine offenen Aufgaben.",
+      "badRange": "Das Startdatum liegt nach dem Enddatum.",
+      "tooLong": "Höchstens 12 Monate auf einmal.",
+      "finished": "Fertig: {{count}}"
+    },
+    "stats": {
+      "done": "Aufgaben erledigt",
+      "minutes": "Minuten geschafft",
+      "streak": "beste Serie",
+      "byDay": "Nach Tagen",
+      "legendDone": "Erledigt",
+      "legendPlanned": "Geplant",
+      "legendLine": "Monatsfortschritt"
+    },
     "day": {
       "prev": "Vorheriger Tag",
       "next": "Nächster Tag",

@@ -323,6 +323,31 @@
     "layoutDay": "Day",
     "layoutWeek": "Week",
     "layoutMonth": "Month",
+    "demo": {
+      "button": "Demo",
+      "title": "Auto-tick for videos",
+      "hint": "Open tasks of the chosen days are ticked in order — top to bottom, one per second.",
+      "from": "From",
+      "to": "To",
+      "start": "Start",
+      "loading": "Loading…",
+      "stop": "Stop",
+      "close": "Close",
+      "escHint": "Esc to stop",
+      "empty": "No open tasks on these days.",
+      "badRange": "The start date is after the end date.",
+      "tooLong": "Up to 12 months at a time.",
+      "finished": "Done: {{count}}"
+    },
+    "stats": {
+      "done": "tasks done",
+      "minutes": "minutes done",
+      "streak": "best streak",
+      "byDay": "By day",
+      "legendDone": "Done",
+      "legendPlanned": "Planned",
+      "legendLine": "Month progress"
+    },
     "day": {
       "prev": "Previous day",
       "next": "Next day",

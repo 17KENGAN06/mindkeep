@@ -323,6 +323,31 @@
     "layoutDay": "Giorno",
     "layoutWeek": "Settimana",
     "layoutMonth": "Mese",
+    "demo": {
+      "button": "Demo",
+      "title": "Spunta automatica per video",
+      "hint": "Le attività aperte dei giorni scelti vengono spuntate in ordine — dall’alto in basso, una al secondo.",
+      "from": "Dal",
+      "to": "Al",
+      "start": "Avvia",
+      "loading": "Caricamento…",
+      "stop": "Ferma",
+      "close": "Chiudi",
+      "escHint": "Esc per fermare",
+      "empty": "Nessuna attività aperta in questi giorni.",
+      "badRange": "La data di inizio è dopo quella di fine.",
+      "tooLong": "Al massimo 12 mesi alla volta.",
+      "finished": "Fatto: {{count}}"
+    },
+    "stats": {
+      "done": "attività fatte",
+      "minutes": "minuti fatti",
+      "streak": "serie migliore",
+      "byDay": "Per giorno",
+      "legendDone": "Fatto",
+      "legendPlanned": "Pianificato",
+      "legendLine": "Avanzamento del mese"
+    },
     "day": {
       "prev": "Giorno precedente",
       "next": "Giorno successivo",

@@ -440,6 +440,36 @@ html[data-theme='light'] {
   }
 }
 
+/* Admin video demo: countdown digits. */
+@keyframes demo-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+/* Month stats: a day bar that just reached 100%. */
+@keyframes bar-glow {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-brand-500) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
 @keyframes rise-in {
   from {
     opacity: 0;

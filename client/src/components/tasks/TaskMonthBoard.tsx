@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Flag, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
+import { TaskMonthStats } from '@/components/tasks/TaskMonthStats';
 import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { useDailyTasksPeriod, useUpdateDailyTask } from '@/features/tasks/useDailyTasks';
 import type { AppLanguage } from '@/i18n';
@@ -111,7 +112,6 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
   const monthDone = all.filter((task) => task.completed).length;
   const monthPercent = monthTotal ? Math.round((monthDone / monthTotal) * 100) : 0;
   const activeDays = Array.from(byDate.values()).filter((list) => list.length > 0).length;
-  const totals = query.data?.totals;
 
   const currentMonth = today.slice(0, 7) === `${year}-${String(month).padStart(2, '0')}`;
   const go = (delta: number) => {
@@ -158,12 +158,6 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
             <p className="text-sm font-semibold text-ink tabular-nums">{activeDays}</p>
             <p className="text-xs text-muted">{t('tasks.board.activeDays')}</p>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-ink tabular-nums">
-              {totals?.minutesDone ?? 0}/{totals?.minutes ?? 0} {t('tasks.minShort')}
-            </p>
-            <p className="text-xs text-muted">{t('tasks.statMinutes')}</p>
-          </div>
           <div className="flex items-center gap-3">
             <div className="relative">
               <Ring percent={monthPercent} className="h-11 w-11" />
@@ -180,6 +174,8 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
           </div>
         </div>
       </div>
+
+      <TaskMonthStats year={year} month={month} today={today} byDate={byDate} />
 
       <ErrorMessage message={error ?? undefined} />
 
