@@ -558,7 +558,8 @@ export function TaskDayBoard({
       </div>
 
       {/* Side: month calendar and month stats. */}
-      <aside className="space-y-5">
+      {/* Beside the list on wide screens; below it, calendar and stats sit side by side. */}
+      <aside className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-1">
         <section className="dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line">
           <div className="flex items-center justify-between gap-2">
             <button type="button" className={iconButton} aria-label={t('tasks.board.prevMonth')} onClick={() => goMonth(-1)}>
@@ -588,7 +589,7 @@ export function TaskDayBoard({
                   onClick={() => onDateChange(cell.date)}
                   aria-pressed={selected}
                   title={stats.total ? `${stats.done}/${stats.total}` : undefined}
-                  className={`relative flex aspect-square flex-col items-center justify-center rounded-xl text-xs font-medium tabular-nums transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
+                  className={`relative flex h-9 flex-col items-center justify-center rounded-xl text-xs font-medium tabular-nums transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
                     selected
                       ? 'bg-brand-500 text-on-brand'
                       : complete
