@@ -5,6 +5,7 @@ import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
 import { DailyTaskList } from '@/components/tasks/DailyTaskList';
 import { TaskPeriodControls } from '@/components/tasks/TaskPeriodControls';
+import { TaskMonthBoard } from '@/components/tasks/TaskMonthBoard';
 import { TaskWeekBoard } from '@/components/tasks/TaskWeekBoard';
 import { Button } from '@/components/ui/Button';
 import { ErrorMessage } from '@/components/ui/ErrorMessage';
@@ -30,12 +31,13 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 // date + taskId: opened from the bell / notifications — show that day and the task on it.
 type LocationState = { year?: number; month?: number; date?: string; taskId?: string } | null;
 
-type Layout = 'day' | 'week';
+type Layout = 'day' | 'week' | 'month';
 const LAYOUT_KEY = 'lr_tasks_layout';
 
 function savedLayout(): Layout {
   try {
-    return localStorage.getItem(LAYOUT_KEY) === 'day' ? 'day' : 'week';
+    const saved = localStorage.getItem(LAYOUT_KEY);
+    return saved === 'day' || saved === 'month' ? saved : 'week';
   } catch {
     return 'week';
   }
@@ -85,6 +87,8 @@ export function TasksPage() {
   const [boardEditing, setBoardEditing] = useState<DailyTask | null>(null);
   // Week board: tablets and desktops; phones keep the day view.
   const isDesktop = useMediaQuery('(min-width: 768px)');
+  // Month board: desktop widths only; tablets keep Week / Day.
+  const isWide = useMediaQuery('(min-width: 1024px)');
   const [layout, setLayoutState] = useState<Layout>(savedLayout);
   const setLayout = (next: Layout) => {
     setLayoutState(next);
@@ -153,7 +157,11 @@ export function TasksPage() {
   }
 
   const data = periodQuery.data;
-  const showBoard = isDesktop && layout === 'week' && view === 'month';
+  // A saved "month" on a narrower screen falls back to the week board.
+  const shownLayout: Layout = layout === 'month' && !isWide ? 'week' : layout;
+  const showWeek = isDesktop && shownLayout === 'week' && view === 'month';
+  const showMonth = isWide && shownLayout === 'month' && view === 'month';
+  const showBoard = showWeek || showMonth;
   const dayTasks =
     view === 'month' && selectedDate
       ? data.tasks.filter((task) => task.date === selectedDate)
@@ -333,24 +341,48 @@ export function TasksPage() {
         </div>
         {isDesktop && view === 'month' ? (
           <div className="inline-flex rounded-full bg-brand-500/[0.07] p-1 ring-1 ring-line/50" role="group">
-            {(['week', 'day'] as const).map((option) => (
+            {(isWide ? (['month', 'week', 'day'] as const) : (['week', 'day'] as const)).map((option) => (
               <button
                 key={option}
                 type="button"
-                aria-pressed={layout === option}
+                aria-pressed={shownLayout === option}
                 className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
-                  layout === option ? 'bg-brand-500 text-on-brand shadow-sm' : 'text-muted hover:text-ink'
+                  shownLayout === option ? 'bg-brand-500 text-on-brand shadow-sm' : 'text-muted hover:text-ink'
                 }`}
                 onClick={() => setLayout(option)}
               >
-                {t(option === 'week' ? 'tasks.layoutWeek' : 'tasks.layoutDay')}
+                {t(
+                  option === 'month'
+                    ? 'tasks.layoutMonth'
+                    : option === 'week'
+                      ? 'tasks.layoutWeek'
+                      : 'tasks.layoutDay',
+                )}
               </button>
             ))}
           </div>
         ) : null}
       </section>
 
-      {showBoard ? (
+      {showMonth ? (
+        <TaskMonthBoard
+          year={year}
+          month={month}
+          today={today}
+          onMonthChange={(nextYear, nextMonth) => {
+            setYear(nextYear);
+            setMonth(nextMonth);
+          }}
+          onOpenDay={(date) => {
+            setSelectedDate(date);
+            setYear(Number(date.slice(0, 4)));
+            setMonth(Number(date.slice(5, 7)));
+            setLayout('day');
+          }}
+        />
+      ) : null}
+
+      {showWeek ? (
         <>
           <TaskWeekBoard
             anchorDate={selectedDate ?? today}
