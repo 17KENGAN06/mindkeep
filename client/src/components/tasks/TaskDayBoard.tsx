@@ -464,9 +464,12 @@ export function TaskDayBoard({
                         ) : null}
                       </div>
 
-                      <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg bg-ink/[0.05] px-2 py-1 text-xs font-medium text-muted tabular-nums">
-                        <Timer className="h-3.5 w-3.5" aria-hidden />
-                        {formatMinutes(task.minutes, t)}
+                      {/* Fixed-width slot, chip at its right edge: times line up in one column. */}
+                      <span className="mt-0.5 flex w-28 shrink-0 justify-end">
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-ink/[0.05] px-2 py-1 text-xs font-medium whitespace-nowrap text-muted tabular-nums">
+                          <Timer className="h-3.5 w-3.5" aria-hidden />
+                          {formatMinutes(task.minutes, t)}
+                        </span>
                       </span>
 
                       <div className="flex shrink-0 items-center gap-0.5 opacity-0 transition group-focus-within/task:opacity-100 group-hover/task:opacity-100 pointer-coarse:opacity-100">
@@ -481,7 +484,8 @@ export function TaskDayBoard({
                         >
                           <Flag className={`h-4 w-4 ${task.important ? 'fill-current' : ''}`} aria-hidden />
                         </button>
-                        {count > 1 ? null : (
+                        {/* A split task keeps an empty slot here, so the row's actions keep their width. */}
+                        {count > 1 ? <span className="h-8 w-8" aria-hidden /> : (
                           <button
                             type="button"
                             aria-expanded={picking}
