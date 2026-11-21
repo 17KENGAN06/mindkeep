@@ -326,7 +326,9 @@
     "demo": {
       "button": "Demo",
       "title": "Marcado automático para vídeos",
-      "hint": "Las tareas pendientes de los días elegidos se marcan en orden: de arriba abajo, una por segundo.",
+      "hint": "Las tareas pendientes de los días elegidos se marcan en orden: de arriba abajo, al ritmo elegido.",
+      "speed": "Velocidad",
+      "perSecond": "{{count}}/s",
       "from": "Desde",
       "to": "Hasta",
       "start": "Iniciar",

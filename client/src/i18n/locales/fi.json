@@ -326,7 +326,9 @@
     "demo": {
       "button": "Demo",
       "title": "Automaattinen kuittaus videoon",
-      "hint": "Valittujen päivien avoimet tehtävät kuitataan järjestyksessä — ylhäältä alas, yksi sekunnissa.",
+      "hint": "Valittujen päivien avoimet tehtävät kuitataan järjestyksessä — ylhäältä alas, valitulla tahdilla.",
+      "speed": "Nopeus",
+      "perSecond": "{{count}}/s",
       "from": "Alkaen",
       "to": "Asti",
       "start": "Aloita",

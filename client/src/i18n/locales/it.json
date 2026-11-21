@@ -326,7 +326,9 @@
     "demo": {
       "button": "Demo",
       "title": "Spunta automatica per video",
-      "hint": "Le attività aperte dei giorni scelti vengono spuntate in ordine — dall’alto in basso, una al secondo.",
+      "hint": "Le attività aperte dei giorni scelti vengono spuntate in ordine — dall’alto in basso, al ritmo scelto.",
+      "speed": "Velocità",
+      "perSecond": "{{count}}/s",
       "from": "Dal",
       "to": "Al",
       "start": "Avvia",

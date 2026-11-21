@@ -326,7 +326,9 @@
     "demo": {
       "button": "Demo",
       "title": "Auto-odhaczanie do wideo",
-      "hint": "Otwarte zadania wybranych dni zostaną odhaczone po kolei — od góry do dołu, jedno na sekundę.",
+      "hint": "Otwarte zadania wybranych dni zostaną odhaczone po kolei — od góry do dołu, w wybranym tempie.",
+      "speed": "Tempo",
+      "perSecond": "{{count}}/s",
       "from": "Od",
       "to": "Do",
       "start": "Uruchom",

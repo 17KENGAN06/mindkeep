@@ -7,8 +7,21 @@ import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
 import type { DailyTask } from '@/types/dailyTask';
 
 const tasksKey = ['daily-tasks'] as const;
-const STEP_MS = 1000;
+const COUNTDOWN_MS = 1000;
 const MAX_MONTHS = 12;
+/** Ticks per second the admin can pick; remembered in this browser. */
+const SPEEDS = [1, 2, 3, 5] as const;
+type Speed = (typeof SPEEDS)[number];
+const SPEED_KEY = 'lr_demo_speed';
+
+function savedSpeed(): Speed {
+  try {
+    const value = Number(localStorage.getItem(SPEED_KEY));
+    return (SPEEDS as readonly number[]).includes(value) ? (value as Speed) : 3;
+  } catch {
+    return 3;
+  }
+}
 
 type Phase = 'idle' | 'loading' | 'countdown' | 'running' | 'done';
 
@@ -58,6 +71,15 @@ export function TaskDemoPlayer({ today, onFocusDay }: TaskDemoPlayerProps) {
   const [done, setDone] = useState(0);
   const [total, setTotal] = useState(0);
   const [message, setMessage] = useState<string | null>(null);
+  const [speed, setSpeedState] = useState<Speed>(savedSpeed);
+  const setSpeed = (next: Speed) => {
+    setSpeedState(next);
+    try {
+      localStorage.setItem(SPEED_KEY, String(next));
+    } catch {
+      // Private mode: the choice lasts for this visit only.
+    }
+  };
   const stopRef = useRef(false);
   const focusRef = useRef(onFocusDay);
   useEffect(() => {
@@ -130,38 +152,60 @@ export function TaskDemoPlayer({ today, onFocusDay }: TaskDemoPlayerProps) {
     for (let n = 3; n > 0; n -= 1) {
       if (stopRef.current) break;
       setCountdown(n);
-      await sleep(STEP_MS);
+      await sleep(COUNTDOWN_MS);
     }
 
     setPhase('running');
+    const step = 1000 / speed;
+    const ticked = new Set<string>();
+    // Saves run in the background so fast speeds are not held up by the network. A day or month
+    // loaded meanwhile could still show some of them unticked, so ticks are put back on new data.
+    const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
+      if (event.type !== 'updated' || event.action.type !== 'success' || ticked.size === 0) return;
+      const key = event.query.queryKey;
+      if (key[0] !== tasksKey[0]) return;
+      const data = event.query.state.data as { tasks?: DailyTask[] } | undefined;
+      if (!data?.tasks?.some((task) => ticked.has(task.id) && !task.completed)) return;
+      queryClient.setQueryData(key, (old: unknown) => {
+        let next = old;
+        for (const id of ticked) next = markDone(next, id);
+        return next;
+      });
+    });
+    const saves: Promise<unknown>[] = [];
+    let failed = false;
     let count = 0;
     let shownDate = queue[0]!.date;
-    for (const task of queue) {
-      if (stopRef.current) break;
-      const started = Date.now();
-      if (task.date !== shownDate) {
-        shownDate = task.date;
-        focusRef.current(task.date);
-        // Let the new day appear before its first tick.
-        await sleep(STEP_MS / 2);
-        if (stopRef.current) break;
-      }
-      // A refetch in flight would bring back the task unticked.
+    try {
       await queryClient.cancelQueries({ queryKey: tasksKey });
-      queryClient.setQueriesData({ queryKey: tasksKey }, (old: unknown) => markDone(old, task.id));
-      document.getElementById(`task-${task.id}`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-      count += 1;
-      setDone(count);
-      try {
-        await dailyTasksApi.update(task.id, { completed: true });
-      } catch {
-        setMessage(t('auth.errors.generic'));
-        break;
+      for (const task of queue) {
+        if (stopRef.current || failed) break;
+        const started = Date.now();
+        if (task.date !== shownDate) {
+          shownDate = task.date;
+          focusRef.current(task.date);
+          // Let the new day appear before its first tick.
+          await sleep(Math.max(250, step / 2));
+          if (stopRef.current) break;
+        }
+        ticked.add(task.id);
+        queryClient.setQueriesData({ queryKey: tasksKey }, (old: unknown) => markDone(old, task.id));
+        document.getElementById(`task-${task.id}`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        count += 1;
+        setDone(count);
+        saves.push(
+          dailyTasksApi.update(task.id, { completed: true }).catch(() => {
+            failed = true;
+          }),
+        );
+        const left = step - (Date.now() - started);
+        if (left > 0) await sleep(left);
       }
-      void queryClient.invalidateQueries({ queryKey: tasksKey });
-      const left = STEP_MS - (Date.now() - started);
-      if (left > 0) await sleep(left);
+      await Promise.all(saves);
+    } finally {
+      unsubscribe();
     }
+    if (failed) setMessage(t('auth.errors.generic'));
 
     void queryClient.invalidateQueries({ queryKey: tasksKey });
     void queryClient.invalidateQueries({ queryKey: ['notifications'] });
@@ -222,6 +266,24 @@ export function TaskDemoPlayer({ today, onFocusDay }: TaskDemoPlayerProps) {
                   onChange={(event) => setTo(event.target.value)}
                 />
               </label>
+            </div>
+            <div className="mt-4">
+              <p className="text-xs font-medium text-muted">{t('tasks.demo.speed')}</p>
+              <div className="mt-1 grid grid-cols-4 gap-1 rounded-xl bg-ink/[0.04] p-1 ring-1 ring-line/60" role="group">
+                {SPEEDS.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    aria-pressed={speed === option}
+                    className={`rounded-lg py-1.5 text-xs font-semibold tabular-nums transition ${
+                      speed === option ? 'bg-brand-500 text-on-brand shadow-sm' : 'text-muted hover:text-ink'
+                    }`}
+                    onClick={() => setSpeed(option)}
+                  >
+                    {t('tasks.demo.perSecond', { count: option })}
+                  </button>
+                ))}
+              </div>
             </div>
             {message ? <p className="mt-3 text-xs text-amber-600 dark:text-amber-400">{message}</p> : null}
             <button

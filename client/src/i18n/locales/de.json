@@ -326,7 +326,9 @@
     "demo": {
       "button": "Demo",
       "title": "Auto-Abhaken fürs Video",
-      "hint": "Offene Aufgaben der gewählten Tage werden der Reihe nach abgehakt — von oben nach unten, eine pro Sekunde.",
+      "hint": "Offene Aufgaben der gewählten Tage werden der Reihe nach abgehakt — von oben nach unten, im gewählten Tempo.",
+      "speed": "Tempo",
+      "perSecond": "{{count}}/s",
       "from": "Von",
       "to": "Bis",
       "start": "Starten",

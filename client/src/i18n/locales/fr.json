@@ -326,7 +326,9 @@
     "demo": {
       "button": "Démo",
       "title": "Cochage auto pour vidéo",
-      "hint": "Les tâches ouvertes des jours choisis sont cochées dans l’ordre — de haut en bas, une par seconde.",
+      "hint": "Les tâches ouvertes des jours choisis sont cochées dans l’ordre — de haut en bas, au rythme choisi.",
+      "speed": "Vitesse",
+      "perSecond": "{{count}}/s",
       "from": "Du",
       "to": "Au",
       "start": "Lancer",

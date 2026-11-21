@@ -326,7 +326,9 @@
     "demo": {
       "button": "Demo",
       "title": "Auto-tick for videos",
-      "hint": "Open tasks of the chosen days are ticked in order — top to bottom, one per second.",
+      "hint": "Open tasks of the chosen days are ticked in order — top to bottom, at the chosen pace.",
+      "speed": "Speed",
+      "perSecond": "{{count}}/s",
       "from": "From",
       "to": "To",
       "start": "Start",
