@@ -9,9 +9,6 @@ import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
 import { formatMonthShort, formatMonthTitle, monthCells, weekdayLabels } from '@/utils/date';
 
-/** Tasks listed in one day card before the rest folds into "+N more". */
-const VISIBLE_TASKS = 4;
-
 const RING = 2 * Math.PI * 15;
 
 type TaskMonthBoardProps = {
@@ -212,7 +209,6 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
             const done = list.filter((task) => task.completed).length;
             const complete = list.length > 0 && done === list.length;
             const percent = list.length ? Math.round((done / list.length) * 100) : 0;
-            const hidden = list.length - VISIBLE_TASKS;
             return (
               <div
                 key={cell.date}
@@ -245,7 +241,7 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
                 </button>
 
                 <ul className="flex-1 space-y-0.5 px-2 py-2">
-                  {list.slice(0, VISIBLE_TASKS).map((task) => (
+                  {list.map((task) => (
                     <li key={task.id} className="flex items-start gap-2 rounded-lg px-1.5 py-1.5 transition hover:bg-brand-500/[0.05]">
                       <span className="flex h-5 shrink-0 items-center">
                         <button
@@ -273,10 +269,9 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
                         </button>
                       </span>
                       <span
-                        className={`min-w-0 flex-1 truncate text-[13px] leading-5 ${
+                        className={`min-w-0 flex-1 text-[13px] leading-5 break-words [overflow-wrap:anywhere] ${
                           task.completed ? 'text-muted line-through decoration-brand-500/60' : 'text-ink'
                         }`}
-                        title={task.title}
                       >
                         {task.title}
                       </span>
@@ -285,11 +280,6 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
                       ) : null}
                     </li>
                   ))}
-                  {hidden > 0 ? (
-                    <li className="px-1.5 pt-0.5 text-xs font-medium text-brand-500">
-                      {t('tasks.board.more', { count: hidden })}
-                    </li>
-                  ) : null}
                 </ul>
 
                 <div className="flex flex-wrap items-center justify-between gap-x-2 border-t border-line px-3 py-2 text-xs text-muted tabular-nums">

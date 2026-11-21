@@ -323,6 +323,20 @@
     "layoutDay": "Tag",
     "layoutWeek": "Woche",
     "layoutMonth": "Monat",
+    "day": {
+      "prev": "Vorheriger Tag",
+      "next": "Nächster Tag",
+      "today": "Heute",
+      "time": "Zeit",
+      "load": "{{percent}} % eines 8-Stunden-Tags",
+      "overloaded": "Über 8 Stunden geplant — der Tag ist überladen",
+      "done": "heute erledigt",
+      "tasks": "Aufgaben",
+      "move": "{{count}} offene auf {{date}} verschieben",
+      "emptyHint": "Gib unten eine Aufgabe ein und drücke Enter.",
+      "yearView": "Jahresübersicht",
+      "perfectDays": "Tage mit 100 %"
+    },
     "board": {
       "prevWeek": "Vorherige Woche",
       "nextWeek": "Nächste Woche",
@@ -1108,6 +1122,18 @@
       "ofPlanned": "{{done}} von {{total}} geplant"
     },
     "upcomingTasks": "Anstehende Aufgaben",
+    "dayLine": "Offene Aufgaben: {{left}} · etwa {{time}}",
+    "dayLineDone": "Alle {{total}} Aufgaben für heute erledigt — starker Tag!",
+    "dayLineEmpty": "Für heute gibt es noch keine Aufgaben — füge unten die erste hinzu.",
+    "quickAddToday": "Aufgabe für heute hinzufügen (30 Min.)",
+    "tomorrow": "Morgen",
+    "quick": {
+      "task": "Aufgabe",
+      "note": "Notiz",
+      "meal": "Mahlzeit",
+      "material": "Material",
+      "operation": "Buchung"
+    },
     "allTasks": "Alle Aufgaben",
     "fuelTitle": "Ernährung",
     "allFuel": "Ernährung öffnen",

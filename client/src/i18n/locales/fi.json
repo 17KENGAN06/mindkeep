@@ -323,6 +323,20 @@
     "layoutDay": "Päivä",
     "layoutWeek": "Viikko",
     "layoutMonth": "Kuukausi",
+    "day": {
+      "prev": "Edellinen päivä",
+      "next": "Seuraava päivä",
+      "today": "Tänään",
+      "time": "Aika",
+      "load": "{{percent}} % 8 tunnin päivästä",
+      "overloaded": "Yli 8 tuntia suunniteltu — päivä on ylikuormitettu",
+      "done": "tehty tänään",
+      "tasks": "Tehtävät",
+      "move": "Siirrä {{count}} keskeneräistä: {{date}}",
+      "emptyHint": "Kirjoita tehtävä alla olevalle riville ja paina Enter.",
+      "yearView": "Vuoden yhteenveto",
+      "perfectDays": "päivää 100 %"
+    },
     "board": {
       "prevWeek": "Edellinen viikko",
       "nextWeek": "Seuraava viikko",
@@ -1108,6 +1122,18 @@
       "ofPlanned": "{{done}} / {{total}} suunniteltu"
     },
     "upcomingTasks": "Seuraavat tehtävät",
+    "dayLine": "Tehtäviä jäljellä: {{left}} · noin {{time}}",
+    "dayLineDone": "Kaikki tämän päivän {{total}} tehtävää tehty — hieno päivä!",
+    "dayLineEmpty": "Tälle päivälle ei vielä ole tehtäviä — lisää ensimmäinen alla.",
+    "quickAddToday": "Lisää tehtävä tälle päivälle (30 min)",
+    "tomorrow": "Huomenna",
+    "quick": {
+      "task": "Tehtävä",
+      "note": "Muistiinpano",
+      "meal": "Ateria",
+      "material": "Materiaali",
+      "operation": "Tapahtuma"
+    },
     "allTasks": "Kaikki tehtävät",
     "fuelTitle": "Ravinto",
     "allFuel": "Avaa ravinto",

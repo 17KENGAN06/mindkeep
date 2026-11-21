@@ -5,6 +5,7 @@ import { ApiError } from '@/api/client';
 import { Calendar } from '@/components/Calendar';
 import { DailyTaskList } from '@/components/tasks/DailyTaskList';
 import { TaskPeriodControls } from '@/components/tasks/TaskPeriodControls';
+import { TaskDayBoard } from '@/components/tasks/TaskDayBoard';
 import { TaskMonthBoard } from '@/components/tasks/TaskMonthBoard';
 import { TaskWeekBoard } from '@/components/tasks/TaskWeekBoard';
 import { Button } from '@/components/ui/Button';
@@ -162,6 +163,8 @@ export function TasksPage() {
   const showWeek = isDesktop && shownLayout === 'week' && view === 'month';
   const showMonth = isWide && shownLayout === 'month' && view === 'month';
   const showBoard = showWeek || showMonth;
+  // Desktop day view: its own layout; phones keep the list below.
+  const showDayBoard = isDesktop && shownLayout === 'day' && view === 'month';
   const dayTasks =
     view === 'month' && selectedDate
       ? data.tasks.filter((task) => task.date === selectedDate)
@@ -179,6 +182,29 @@ export function TasksPage() {
     },
     { total: 0, completed: 0, minutes: 0, minutesDone: 0 },
   );
+
+  const createFor = async (rawTitle: string, rawMinutes: number): Promise<boolean> => {
+    setFormError(null);
+    if (!selectedDate) {
+      setFormError(t('tasks.pickDayFirst'));
+      return false;
+    }
+    if (!rawTitle.trim()) {
+      setFormError(t('tasks.errors.title'));
+      return false;
+    }
+    if (!Number.isFinite(rawMinutes) || rawMinutes < 1) {
+      setFormError(t('tasks.errors.minutes'));
+      return false;
+    }
+    try {
+      await createTask.mutateAsync({ title: rawTitle.trim(), minutes: rawMinutes, date: selectedDate });
+      return true;
+    } catch (error) {
+      setFormError(mutationErrorMessage(error, t));
+      return false;
+    }
+  };
 
   const onCreate = async (event: FormEvent) => {
     event.preventDefault();
@@ -420,7 +446,7 @@ export function TasksPage() {
         </>
       ) : null}
 
-      {showBoard ? null : (
+      {showBoard || showDayBoard ? null : (
       <TaskPeriodControls
         view={view}
         year={year}
@@ -468,6 +494,42 @@ export function TasksPage() {
         </section>
       ) : (
         <>
+          {showDayBoard && selectedDate ? (
+            <TaskDayBoard
+              date={selectedDate}
+              today={today}
+              monthTasks={data.tasks}
+              busyId={busyId}
+              highlightId={highlightId}
+              formError={formError}
+              isCreating={createTask.isPending}
+              onDateChange={(date) => {
+                setSelectedDate(date);
+                setYear(Number(date.slice(0, 4)));
+                setMonth(Number(date.slice(5, 7)));
+              }}
+              onCreate={createFor}
+              onToggle={(task) => void onToggle(task)}
+              onImportant={(task) => void onImportant(task)}
+              onDelete={(id) => void onDelete(id)}
+              onEdit={(task) => {
+                setEditError(null);
+                setEditingId(task.id);
+              }}
+              onSplit={(task, count) => void onSplit(task, count)}
+              onSetPart={(task, done) => void onSetPart(task, done)}
+              onImport={() => {
+                setImportError(null);
+                setImportOpen(true);
+              }}
+              onCopy={() => {
+                setCopyError(null);
+                setCopyOpen(true);
+              }}
+              onYearView={() => setView('year')}
+            />
+          ) : (
+          <>
           <Calendar
             compact
             year={year}
@@ -574,6 +636,8 @@ export function TasksPage() {
           </section>
 
           {statsBlock}
+          </>
+          )}
 
           <TaskEditDialog
             task={dayTasks.find((task) => task.id === editingId) ?? null}

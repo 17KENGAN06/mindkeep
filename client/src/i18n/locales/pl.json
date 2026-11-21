@@ -323,6 +323,20 @@
     "layoutDay": "Dzień",
     "layoutWeek": "Tydzień",
     "layoutMonth": "Miesiąc",
+    "day": {
+      "prev": "Poprzedni dzień",
+      "next": "Następny dzień",
+      "today": "Dziś",
+      "time": "Czas",
+      "load": "{{percent}}% 8-godzinnego dnia",
+      "overloaded": "Zaplanowano ponad 8 godzin — dzień jest przeciążony",
+      "done": "zrobione dziś",
+      "tasks": "Zadania",
+      "move": "Przenieś niewykonane ({{count}}) na {{date}}",
+      "emptyHint": "Wpisz zadanie w wierszu poniżej i naciśnij Enter.",
+      "yearView": "Przegląd roku",
+      "perfectDays": "dni na 100%"
+    },
     "board": {
       "prevWeek": "Poprzedni tydzień",
       "nextWeek": "Następny tydzień",
@@ -1108,6 +1122,18 @@
       "ofPlanned": "{{done}} z {{total}} zaplanowanych"
     },
     "upcomingTasks": "Nadchodzące zadania",
+    "dayLine": "Pozostało zadań: {{left}} · około {{time}}",
+    "dayLineDone": "Wszystkie zadania na dziś zrobione ({{total}}) — świetny dzień!",
+    "dayLineEmpty": "Na dziś nie ma jeszcze zadań — dodaj pierwsze poniżej.",
+    "quickAddToday": "Dodaj zadanie na dziś (30 min)",
+    "tomorrow": "Jutro",
+    "quick": {
+      "task": "Zadanie",
+      "note": "Notatka",
+      "meal": "Posiłek",
+      "material": "Materiał",
+      "operation": "Operacja"
+    },
     "allTasks": "Wszystkie zadania",
     "fuelTitle": "Odżywianie",
     "allFuel": "Otwórz odżywianie",

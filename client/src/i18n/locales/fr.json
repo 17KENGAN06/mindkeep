@@ -323,6 +323,20 @@
     "layoutDay": "Jour",
     "layoutWeek": "Semaine",
     "layoutMonth": "Mois",
+    "day": {
+      "prev": "Jour précédent",
+      "next": "Jour suivant",
+      "today": "Aujourd’hui",
+      "time": "Temps",
+      "load": "{{percent}} % d’une journée de 8 heures",
+      "overloaded": "Plus de 8 heures prévues — la journée est surchargée",
+      "done": "faites aujourd’hui",
+      "tasks": "Tâches",
+      "move": "Reporter {{count}} tâches au {{date}}",
+      "emptyHint": "Saisissez une tâche dans la ligne ci-dessous et appuyez sur Entrée.",
+      "yearView": "Vue de l’année",
+      "perfectDays": "jours à 100 %"
+    },
     "board": {
       "prevWeek": "Semaine précédente",
       "nextWeek": "Semaine suivante",
@@ -1108,6 +1122,18 @@
       "ofPlanned": "{{done}} sur {{total}} prévues"
     },
     "upcomingTasks": "Tâches à venir",
+    "dayLine": "Tâches restantes : {{left}} · environ {{time}}",
+    "dayLineDone": "Les {{total}} tâches du jour sont faites — belle journée !",
+    "dayLineEmpty": "Pas encore de tâches aujourd’hui — ajoutez la première ci-dessous.",
+    "quickAddToday": "Ajouter une tâche pour aujourd’hui (30 min)",
+    "tomorrow": "Demain",
+    "quick": {
+      "task": "Tâche",
+      "note": "Note",
+      "meal": "Repas",
+      "material": "Support",
+      "operation": "Opération"
+    },
     "allTasks": "Toutes les tâches",
     "fuelTitle": "Nutrition",
     "allFuel": "Ouvrir la nutrition",

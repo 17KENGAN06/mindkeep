@@ -323,6 +323,20 @@
     "layoutDay": "Day",
     "layoutWeek": "Week",
     "layoutMonth": "Month",
+    "day": {
+      "prev": "Previous day",
+      "next": "Next day",
+      "today": "Today",
+      "time": "Time",
+      "load": "{{percent}}% of an 8-hour day",
+      "overloaded": "Over 8 hours planned — the day is overloaded",
+      "done": "done today",
+      "tasks": "Tasks",
+      "move": "Move {{count}} unfinished to {{date}}",
+      "emptyHint": "Type a task in the row below and press Enter.",
+      "yearView": "Year overview",
+      "perfectDays": "days at 100%"
+    },
     "board": {
       "prevWeek": "Previous week",
       "nextWeek": "Next week",
@@ -1108,6 +1122,18 @@
       "ofPlanned": "{{done}} of {{total}} planned"
     },
     "upcomingTasks": "Upcoming tasks",
+    "dayLine": "Tasks left: {{left}} · about {{time}}",
+    "dayLineDone": "All {{total}} tasks for today are done — great day!",
+    "dayLineEmpty": "No tasks for today yet — add the first one below.",
+    "quickAddToday": "Add a task for today (30 min)",
+    "tomorrow": "Tomorrow",
+    "quick": {
+      "task": "Task",
+      "note": "Note",
+      "meal": "Meal",
+      "material": "Material",
+      "operation": "Operation"
+    },
     "allTasks": "All tasks",
     "fuelTitle": "Nutrition",
     "allFuel": "Open nutrition",

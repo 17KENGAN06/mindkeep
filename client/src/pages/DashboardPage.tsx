@@ -5,20 +5,24 @@
   ChartColumn,
   Check,
   CheckCircle2,
+  ChevronRight,
   Coffee,
   Cookie,
   Droplets,
   Flag,
   Flame,
+  NotebookPen,
+  Plus,
   GraduationCap,
   Repeat,
   Soup,
+  Timer,
   Utensils,
   UtensilsCrossed,
   Wallet,
   type LucideIcon,
 } from 'lucide-react';
-import { useId, useMemo, useState, type ReactNode } from 'react';
+import { useId, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PlanChip } from '@/components/billing/PlanChip';
@@ -43,16 +47,18 @@ import {
   useDashboardStatistics,
 } from '@/features/statistics/useStatistics';
 import {
+  useCreateDailyTask,
   useDailyTasksPeriod,
   useUpdateDailyTask,
 } from '@/features/tasks/useDailyTasks';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
 import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
 import type { Meal } from '@/types/nutrition';
 import { TimezoneSuggestion } from '@/components/TimezoneSuggestion';
 import { useAccountToday } from '@/features/time/useAccountToday';
-import { formatDate, lastNKeysFrom } from '@/utils/date';
+import { formatDate, lastNKeysFrom, shiftDateKey } from '@/utils/date';
 import { firstName } from '@/utils/name';
 
 type WeekTab = 'tasks' | 'reviews';
@@ -136,15 +142,21 @@ function TodayProgressRow({
   title,
   valueText,
   percent,
+  to,
 }: {
   icon: ReactNode;
   title: string;
   valueText: string;
   percent: number;
+  /** The section the row opens. */
+  to: string;
 }) {
   const safe = clampPercent(percent);
   return (
-    <div className="flex items-center gap-3.5 py-3.5 first:pt-0 last:pb-0">
+    <Link
+      to={to}
+      className="group/row -mx-2 flex items-center gap-3.5 rounded-2xl px-2 py-3.5 no-underline transition hover:bg-brand-500/[0.05]"
+    >
       <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-muted ring-1 ring-line">
         {icon}
       </div>
@@ -161,8 +173,20 @@ function TodayProgressRow({
         </div>
       </div>
       <p className="w-11 shrink-0 text-right text-sm font-semibold tabular-nums text-ink">{safe}%</p>
-    </div>
+      <ChevronRight
+        className="-ml-1 hidden h-4 w-4 shrink-0 text-muted opacity-0 transition group-hover/row:opacity-100 lg:block"
+        aria-hidden
+      />
+    </Link>
   );
+}
+
+function minutesLabel(minutes: number, t: (key: string, opts?: Record<string, unknown>) => string) {
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  if (hours > 0 && rest > 0) return t('tasks.durationHoursMinutes', { hours, minutes: rest });
+  if (hours > 0) return t('tasks.durationHours', { hours });
+  return t('tasks.durationMinutes', { minutes });
 }
 
 
@@ -204,6 +228,9 @@ export function DashboardPage() {
   const rhythmQuery = useRhythmPeriod(period.year, period.month, showHabits);
   const setWater = useSetWater();
   const updateTask = useUpdateDailyTask();
+  const createTask = useCreateDailyTask();
+  const [quickTitle, setQuickTitle] = useState('');
+  const [quickError, setQuickError] = useState<string | null>(null);
 
   const loading =
     dashboardQuery.isLoading ||
@@ -232,6 +259,14 @@ export function DashboardPage() {
   const todayDone = todayTasks.filter((task) => task.completed).length;
   const todayTotal = todayTasks.length;
   const tasksPercent = todayTotal > 0 ? (todayDone / todayTotal) * 100 : 0;
+  const todayMinutes = todayTasks.reduce((sum, task) => sum + task.minutes, 0);
+  const todayMinutesLeft = todayTasks
+    .filter((task) => !task.completed)
+    .reduce((sum, task) => sum + task.minutes, 0);
+  const tomorrow = shiftDateKey(today, 1);
+  const tomorrowTasks = sortDailyTasks(
+    (tasksQuery.data?.tasks ?? []).filter((task) => task.date === tomorrow),
+  );
 
   const nutrition = nutritionQuery.data;
   const todayMeals = (nutrition?.meals ?? []).filter((meal) => meal.date === today);
@@ -287,6 +322,19 @@ export function DashboardPage() {
     }
   };
 
+  const onQuickAdd = async (event: FormEvent) => {
+    event.preventDefault();
+    const title = quickTitle.trim();
+    if (!title) return;
+    setQuickError(null);
+    try {
+      await createTask.mutateAsync({ title, minutes: 30, date: today });
+      setQuickTitle('');
+    } catch (error) {
+      setQuickError(mutationErrorMessage(error, t));
+    }
+  };
+
   const onImportantTask = async (task: DailyTask) => {
     setBusyTaskId(task.id);
     try {
@@ -307,11 +355,50 @@ export function DashboardPage() {
           <CalendarDays className="h-3.5 w-3.5" aria-hidden />
           {formatDate(today, language)}
         </p>
-        <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
-          <h1 className="min-w-0 max-w-full truncate text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
-            {t('dashboard.welcome', { name: firstName(user?.name) })}
-          </h1>
-          <PlanChip user={user} />
+        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+          <div className="min-w-0">
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+              <h1 className="min-w-0 max-w-full truncate text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+                {t('dashboard.welcome', { name: firstName(user?.name) })}
+              </h1>
+              <PlanChip user={user} />
+            </div>
+            {showTasks ? (
+              <p className="mt-1 text-sm text-muted">
+                {todayTotal === 0
+                  ? t('dashboard.dayLineEmpty')
+                  : todayDone === todayTotal
+                    ? t('dashboard.dayLineDone', { total: todayTotal })
+                    : t('dashboard.dayLine', {
+                        left: todayTotal - todayDone,
+                        time: minutesLabel(todayMinutesLeft, t),
+                      })}
+              </p>
+            ) : null}
+          </div>
+          <div className="hidden flex-wrap items-center gap-2 lg:flex">
+            {(
+              [
+                showTasks ? { to: '/tasks', label: t('dashboard.quick.task'), Icon: CalendarCheck } : null,
+                { to: '/notes/new', label: t('dashboard.quick.note'), Icon: NotebookPen },
+                showNutrition ? { to: '/nutrition', label: t('dashboard.quick.meal'), Icon: Utensils } : null,
+                showReview ? { to: '/materials/new', label: t('dashboard.quick.material'), Icon: BookOpen } : null,
+                showFinance
+                  ? { to: '/finance/transactions', label: t('dashboard.quick.operation'), Icon: Wallet }
+                  : null,
+              ].filter(Boolean) as { to: string; label: string; Icon: LucideIcon }[]
+            ).map(({ to, label, Icon }) => (
+              <Link
+                key={to}
+                to={to}
+                className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-panel px-3 text-sm font-medium text-ink no-underline ring-1 ring-line transition hover:bg-brand-500/[0.08] hover:ring-brand-500/40"
+              >
+                <Plus className="h-3.5 w-3.5 text-brand-500" aria-hidden />
+                <Icon className="h-4 w-4 text-muted" aria-hidden />
+                {label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -329,6 +416,7 @@ export function DashboardPage() {
             title={t('dashboard.cards.tasksToday')}
             valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
             percent={tasksPercent}
+            to="/tasks"
           />
           ) : null}
           {showReview ? (
@@ -340,6 +428,7 @@ export function DashboardPage() {
               total: reviewsPlanned,
             })}
             percent={reviewsPercent}
+            to="/review"
           />
           ) : null}
           {showHabits ? (
@@ -352,6 +441,7 @@ export function DashboardPage() {
                 : t('dashboard.cards.of', { done: rhythmDone, total: rhythmTotal })
             }
             percent={rhythmTotal === 0 ? 0 : (rhythmDone / rhythmTotal) * 100}
+            to="/habits"
           />
           ) : null}
         </div>
@@ -451,31 +541,39 @@ export function DashboardPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
             <h2 className="min-w-0 dash-title"><CalendarCheck className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
               {t('dashboard.upcomingTasks')}</h2>
-            <Link to="/tasks" className="shrink-0 text-sm font-medium text-brand-500 no-underline">
-              {t('dashboard.allTasks')} →
-            </Link>
+            <div className="flex shrink-0 items-center gap-3">
+              {todayTotal > 0 ? (
+                <span className="inline-flex items-center gap-1 rounded-lg bg-ink/[0.05] px-2 py-1 text-xs font-medium text-muted tabular-nums">
+                  <Timer className="h-3.5 w-3.5" aria-hidden />
+                  {minutesLabel(todayMinutes, t)}
+                </span>
+              ) : null}
+              <Link to="/tasks" className="text-sm font-medium text-brand-500 no-underline">
+                {t('dashboard.allTasks')} →
+              </Link>
+            </div>
           </div>
-          <ul className="mt-4 space-y-1.5">
+          <ul className="mt-4 space-y-1">
             {todayTasks.length === 0 ? (
               <li className="rounded-2xl border border-dashed border-line px-4 py-8 text-center text-sm text-muted">
                 {t('dashboard.modules.noTasksToday')}
               </li>
             ) : (
-              todayTasks.slice(0, 6).map((task) => (
+              todayTasks.map((task) => {
+                const count = Math.max(1, task.splitCount ?? 1);
+                const partsDone = Math.min(count, Math.max(0, task.splitDone ?? 0));
+                return (
                 <li
                   key={task.id}
-                  className={`flex items-center gap-2 rounded-xl py-1.5 pr-2 pl-1 ring-1 transition ${
-                    task.completed
-                      ? 'bg-brand-500/[0.06] ring-transparent'
-                      : task.important
-                        ? 'bg-brand-500/[0.09] ring-brand-500/25 hover:ring-brand-500/40'
-                        : 'ring-transparent hover:bg-brand-500/[0.06]'
+                  className={`group/task flex items-center gap-2 rounded-xl py-1 pr-1.5 pl-1 transition hover:bg-brand-500/[0.05] ${
+                    busyTaskId === task.id ? 'opacity-60' : ''
                   }`}
                 >
                   <button
                     type="button"
                     className="group/check inline-flex h-10 w-10 shrink-0 items-center justify-center"
                     aria-pressed={task.completed}
+                    aria-label={task.completed ? t('tasks.markIncomplete') : t('tasks.markComplete')}
                     disabled={busyTaskId === task.id}
                     onClick={() => void onToggleTask(task)}
                   >
@@ -483,58 +581,101 @@ export function DashboardPage() {
                       className={`inline-flex h-[22px] w-[22px] items-center justify-center rounded-md border transition ${
                         task.completed
                           ? 'border-brand-500 bg-brand-500 text-on-brand'
-                          : 'border-line text-transparent group-hover/check:border-brand-400'
+                          : 'border-muted/45 text-transparent group-hover/check:border-brand-400'
                       }`}
                     >
                       <Check className="h-3.5 w-3.5" aria-hidden />
                     </span>
                   </button>
-                  <div className="min-w-0 flex-1">
+                  <div className="min-w-0 flex-1 py-1.5">
                     <p
                       className={`break-words text-sm leading-snug font-medium ${
-                        task.completed ? 'text-muted line-through' : 'text-ink'
+                        task.completed ? 'text-muted line-through decoration-brand-500/60' : 'text-ink'
                       }`}
                     >
                       {task.title}
                     </p>
-                    {(task.splitCount ?? 1) > 1 ? (
-                      <span className="mt-1 inline-flex rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-500">
-                        {t('tasks.splitProgress', {
-                          done: task.splitDone ?? 0,
-                          count: task.splitCount,
-                        })}
-                      </span>
+                    {count > 1 ? (
+                      <div className="mt-1.5 flex max-w-48 items-center gap-2">
+                        <div className="flex flex-1 gap-0.5">
+                          {Array.from({ length: count }, (_, index) => (
+                            <span
+                              key={index}
+                              className={`h-1.5 flex-1 rounded-full ${index < partsDone ? 'bg-brand-500' : 'bg-ink/[0.09]'}`}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-[11px] font-semibold text-brand-500 tabular-nums">
+                          {t('tasks.splitProgress', { done: partsDone, count })}
+                        </span>
+                      </div>
                     ) : null}
                   </div>
-                  <span
-                    className={`min-w-[3.25rem] shrink-0 text-right text-xs font-semibold whitespace-nowrap tabular-nums ${
-                      task.completed || !task.important ? 'text-muted' : 'text-brand-500'
-                    }`}
-                  >
-                    {task.minutes} {t('tasks.minShort')}
+                  <span className="shrink-0 text-xs font-medium whitespace-nowrap text-muted tabular-nums">
+                    {minutesLabel(task.minutes, t)}
                   </span>
                   <button
                     type="button"
                     aria-pressed={Boolean(task.important)}
                     aria-label={task.important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
-                    title={t('tasks.importantHint')}
+                    title={task.important ? t('tasks.unmarkImportant') : t('tasks.markImportant')}
                     disabled={busyTaskId === task.id}
                     onClick={() => void onImportantTask(task)}
-                    className={`inline-flex h-8 shrink-0 items-center justify-center gap-1 rounded-lg px-2 transition ${
+                    className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition ${
                       task.important
-                        ? 'bg-brand-500/15 text-brand-500 ring-1 ring-brand-500/30'
-                        : 'text-muted ring-1 ring-line/60 hover:bg-brand-500/[0.08] hover:text-ink'
+                        ? 'text-brand-500'
+                        : 'text-muted opacity-0 group-hover/task:opacity-100 hover:bg-brand-500/[0.08] hover:text-ink focus-visible:opacity-100 pointer-coarse:opacity-100'
                     }`}
                   >
-                    <Flag className={`h-3.5 w-3.5 ${task.important ? 'fill-current' : ''}`} aria-hidden />
-                    <span className="hidden text-[11px] font-bold tracking-wide whitespace-nowrap sm:inline">
-                      {t('tasks.important')}
-                    </span>
+                    <Flag className={`h-4 w-4 ${task.important ? 'fill-current' : ''}`} aria-hidden />
                   </button>
                 </li>
-              ))
+                );
+              })
             )}
           </ul>
+
+          <form
+            className="mt-3 flex items-center gap-2 rounded-xl px-3 py-1 ring-1 ring-line/70 transition focus-within:ring-brand-500/60"
+            onSubmit={(event) => void onQuickAdd(event)}
+          >
+            <Plus className="h-4 w-4 shrink-0 text-brand-500" aria-hidden />
+            <input
+              value={quickTitle}
+              onChange={(event) => setQuickTitle(event.target.value)}
+              placeholder={t('dashboard.quickAddToday')}
+              aria-label={t('dashboard.quickAddToday')}
+              disabled={createTask.isPending}
+              className="min-w-0 flex-1 bg-transparent py-2 text-sm text-ink outline-none placeholder:text-muted"
+            />
+            {quickTitle.trim() ? (
+              <button
+                type="submit"
+                disabled={createTask.isPending}
+                className="shrink-0 rounded-lg bg-brand-500 px-3 py-1.5 text-xs font-semibold text-on-brand transition hover:brightness-110"
+              >
+                {t('tasks.saveTask')}
+              </button>
+            ) : null}
+          </form>
+          <ErrorMessage message={quickError ?? undefined} />
+
+          {tomorrowTasks.length > 0 && todayTasks.length < 5 ? (
+            <div className="mt-4 border-t border-line/60 pt-3">
+              <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+                {t('dashboard.tomorrow')} · {tomorrowTasks.length}
+              </p>
+              <ul className="mt-2 space-y-1">
+                {tomorrowTasks.slice(0, 4).map((task) => (
+                  <li key={task.id} className="flex items-center gap-2.5 px-1 py-1 text-sm text-muted">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500/50" aria-hidden />
+                    <span className="min-w-0 flex-1 truncate">{task.title}</span>
+                    <span className="shrink-0 text-xs tabular-nums">{minutesLabel(task.minutes, t)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </article>
         ) : null}
 
@@ -671,6 +812,20 @@ export function DashboardPage() {
               {t('dashboard.viewAllMaterials')} →
             </Link>
           </div>
+          <dl className="mt-4 grid grid-cols-3 gap-2">
+            {(
+              [
+                ['activeMaterials', stats.activeMaterials, 'text-ink'],
+                ['todayReminders', stats.todayReminders, 'text-brand-500'],
+                ['overdueReminders', stats.overdueReminders, stats.overdueReminders > 0 ? 'text-amber-400' : 'text-ink'],
+              ] as const
+            ).map(([key, value, tone]) => (
+              <div key={key} className="rounded-2xl bg-ink/[0.04] px-3 py-2.5">
+                <dt className="truncate text-[11px] text-muted">{t(`dashboard.stats.${key}`)}</dt>
+                <dd className={`mt-0.5 text-lg font-semibold tabular-nums ${tone}`}>{value}</dd>
+              </div>
+            ))}
+          </dl>
           {recentMaterials.length === 0 ? (
             <div className="mt-4">
               <EmptyState
@@ -680,8 +835,7 @@ export function DashboardPage() {
             </div>
           ) : (
             <ul className="mt-3 space-y-1">
-              {recentMaterials.slice(0, 4).map((material, index) => {
-                const progress = material.status === 'ARCHIVED' ? 100 : 28 + ((index * 17) % 55);
+              {recentMaterials.slice(0, 4).map((material) => {
                 return (
                   <li key={material.id}>
                     <Link
@@ -697,16 +851,8 @@ export function DashboardPage() {
                           {material.category?.name ?? t('materials.fields.noCategory')} ·{' '}
                           {formatDate(material.learnedAt, language)}
                         </p>
-                        <div className="mt-2 h-1 overflow-hidden rounded-full bg-line">
-                          <div
-                            className="h-full rounded-full bg-brand-500"
-                            style={{ width: `${progress}%` }}
-                          />
-                        </div>
                       </div>
-                      <span className="shrink-0 text-xs font-semibold tabular-nums text-muted">
-                        {progress}%
-                      </span>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-muted" aria-hidden />
                     </Link>
                   </li>
                 );
@@ -732,6 +878,13 @@ export function DashboardPage() {
                 <Wallet className="h-5 w-5" aria-hidden />
               </span>
               <p className="text-sm text-muted">{t('dashboard.modules.noFinance')}</p>
+              <Link
+                to="/finance/transactions"
+                className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-brand-500 no-underline ring-1 ring-line transition hover:bg-brand-500/[0.08]"
+              >
+                <Plus className="h-4 w-4" aria-hidden />
+                {t('dashboard.quick.operation')}
+              </Link>
             </div>
           ) : (
             <ul className="mt-4 space-y-3">

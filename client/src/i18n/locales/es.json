@@ -323,6 +323,20 @@
     "layoutDay": "Día",
     "layoutWeek": "Semana",
     "layoutMonth": "Mes",
+    "day": {
+      "prev": "Día anterior",
+      "next": "Día siguiente",
+      "today": "Hoy",
+      "time": "Tiempo",
+      "load": "{{percent}} % de una jornada de 8 horas",
+      "overloaded": "Más de 8 horas planificadas: el día está sobrecargado",
+      "done": "hechas hoy",
+      "tasks": "Tareas",
+      "move": "Mover {{count}} pendientes al {{date}}",
+      "emptyHint": "Escribe una tarea en la fila de abajo y pulsa Enter.",
+      "yearView": "Resumen del año",
+      "perfectDays": "días al 100 %"
+    },
     "board": {
       "prevWeek": "Semana anterior",
       "nextWeek": "Semana siguiente",
@@ -1108,6 +1122,18 @@
       "ofPlanned": "{{done}} de {{total}} previstas"
     },
     "upcomingTasks": "Próximas tareas",
+    "dayLine": "Tareas pendientes: {{left}} · unos {{time}}",
+    "dayLineDone": "Has hecho las {{total}} tareas de hoy. ¡Gran día!",
+    "dayLineEmpty": "Aún no hay tareas para hoy: añade la primera abajo.",
+    "quickAddToday": "Añadir una tarea para hoy (30 min)",
+    "tomorrow": "Mañana",
+    "quick": {
+      "task": "Tarea",
+      "note": "Nota",
+      "meal": "Comida",
+      "material": "Material",
+      "operation": "Operación"
+    },
     "allTasks": "Todas las tareas",
     "fuelTitle": "Nutrición",
     "allFuel": "Abrir nutrición",
