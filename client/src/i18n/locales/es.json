@@ -334,7 +334,7 @@
       "monthDone": "hechas este mes",
       "activeDays": "días con tareas",
       "more": "+{{count}} más",
-      "monthHint": "Haz clic en un día para abrirlo con todas sus tareas y acciones.",
+      "monthHint": "Marca la casilla para completar una tarea. Haz clic en un día para abrirlo con todas sus tareas y acciones.",
       "openDay": "Abrir este día",
       "add": "Nueva tarea",
       "done": "Hechas",

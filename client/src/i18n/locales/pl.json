@@ -334,7 +334,7 @@
       "monthDone": "zrobione w tym miesiącu",
       "activeDays": "dni z zadaniami",
       "more": "+{{count}} więcej",
-      "monthHint": "Kliknij dzień, aby otworzyć go ze wszystkimi zadaniami i akcjami.",
+      "monthHint": "Zaznacz pole, aby wykonać zadanie. Kliknij dzień, aby otworzyć go ze wszystkimi zadaniami i akcjami.",
       "openDay": "Otwórz ten dzień",
       "add": "Nowe zadanie",
       "done": "Zrobione",

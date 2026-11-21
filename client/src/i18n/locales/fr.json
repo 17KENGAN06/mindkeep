@@ -334,7 +334,7 @@
       "monthDone": "faites ce mois-ci",
       "activeDays": "jours avec des tâches",
       "more": "+{{count}} de plus",
-      "monthHint": "Cliquez sur un jour pour l’ouvrir avec toutes ses tâches et actions.",
+      "monthHint": "Cochez une case pour terminer une tâche. Cliquez sur un jour pour l’ouvrir avec toutes ses tâches et actions.",
       "openDay": "Ouvrir ce jour",
       "add": "Nouvelle tâche",
       "done": "Fait",

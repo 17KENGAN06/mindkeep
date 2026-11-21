@@ -334,7 +334,7 @@
       "monthDone": "tehty tässä kuussa",
       "activeDays": "päivää tehtävillä",
       "more": "+{{count}} lisää",
-      "monthHint": "Avaa päivä kaikkine tehtävineen ja toimintoineen napsauttamalla sitä.",
+      "monthHint": "Merkitse tehtävä tehdyksi ruudusta. Avaa päivä kaikkine tehtävineen ja toimintoineen napsauttamalla sitä.",
       "openDay": "Avaa tämä päivä",
       "add": "Uusi tehtävä",
       "done": "Tehty",

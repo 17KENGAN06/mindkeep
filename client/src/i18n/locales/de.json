@@ -334,7 +334,7 @@
       "monthDone": "diesen Monat erledigt",
       "activeDays": "Tage mit Aufgaben",
       "more": "+{{count}} weitere",
-      "monthHint": "Klicke auf einen Tag, um ihn mit allen Aufgaben und Aktionen zu öffnen.",
+      "monthHint": "Hake ein Kästchen ab, um eine Aufgabe zu erledigen. Klicke auf einen Tag, um ihn mit allen Aufgaben und Aktionen zu öffnen.",
       "openDay": "Diesen Tag öffnen",
       "add": "Neue Aufgabe",
       "done": "Erledigt",

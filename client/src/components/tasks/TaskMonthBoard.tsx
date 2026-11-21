@@ -1,14 +1,16 @@
-import { useMemo } from 'react';
-import { Check, ChevronLeft, ChevronRight, Flag } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight, Flag, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { ErrorMessage } from '@/components/ui/ErrorMessage';
 import { sortDailyTasks } from '@/components/tasks/DailyTaskList';
-import { useDailyTasksPeriod } from '@/features/tasks/useDailyTasks';
+import { mutationErrorMessage } from '@/features/billing/planLimit';
+import { useDailyTasksPeriod, useUpdateDailyTask } from '@/features/tasks/useDailyTasks';
 import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
-import { formatMonthTitle, monthCells, weekdayLabels } from '@/utils/date';
+import { formatMonthShort, formatMonthTitle, monthCells, weekdayLabels } from '@/utils/date';
 
-/** Task titles shown in one day cell before the rest folds into "+N". */
-const VISIBLE_TASKS = 3;
+/** Tasks listed in one day card before the rest folds into "+N more". */
+const VISIBLE_TASKS = 4;
 
 const RING = 2 * Math.PI * 15;
 
@@ -26,14 +28,66 @@ function shiftMonth(year: number, month: number, delta: number) {
   return { year: Math.floor(index / 12), month: (index % 12) + 1 };
 }
 
+function Ring({ percent, className }: { percent: number; className: string }) {
+  return (
+    <svg viewBox="0 0 36 36" className={`-rotate-90 ${className}`} aria-hidden>
+      <circle cx="18" cy="18" r="15" fill="none" strokeWidth="3.5" className="stroke-brand-500/15" />
+      <circle
+        cx="18"
+        cy="18"
+        r="15"
+        fill="none"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        className="stroke-brand-500 transition-[stroke-dashoffset] duration-500 ease-out"
+        strokeDasharray={RING}
+        strokeDashoffset={RING * (1 - percent / 100)}
+      />
+    </svg>
+  );
+}
+
 /**
- * Desktop month board: a Monday-first calendar of the month, each day with its tasks in
- * short form and a done/total count. A click on a day opens it in the Day view.
+ * Desktop month board: a Monday-first calendar of the month. Each day is a card in the week
+ * board's style — its tasks with tick boxes, progress ring and Done / Left. Ticks show at once
+ * and are saved in the background; a click elsewhere on a day opens it in the Day view.
  */
 export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }: TaskMonthBoardProps) {
   const { t, i18n } = useTranslation();
   const language = (i18n.resolvedLanguage ?? 'en') as AppLanguage;
   const query = useDailyTasksPeriod({ view: 'month', year, month });
+  const updateTask = useUpdateDailyTask();
+  const [ticks, setTicks] = useState<Record<string, boolean>>({});
+  const [error, setError] = useState<string | null>(null);
+
+  // Server data that already matches a pending tick replaces it (adjusted during render).
+  const serverTasks = query.data?.tasks;
+  const [seenTasks, setSeenTasks] = useState(serverTasks);
+  if (seenTasks !== serverTasks) {
+    setSeenTasks(serverTasks);
+    const next = { ...ticks };
+    let changed = false;
+    for (const task of serverTasks ?? []) {
+      if (task.id in next && next[task.id] === task.completed) {
+        delete next[task.id];
+        changed = true;
+      }
+    }
+    if (changed) setTicks(next);
+  }
+
+  const toggle = (task: DailyTask, completed: boolean) => {
+    setError(null);
+    setTicks((current) => ({ ...current, [task.id]: !completed }));
+    updateTask.mutateAsync({ id: task.id, payload: { completed: !completed } }).catch((err: unknown) => {
+      setTicks((current) => {
+        const next = { ...current };
+        delete next[task.id];
+        return next;
+      });
+      setError(mutationErrorMessage(err, t));
+    });
+  };
 
   // Drop the 6th row when the month fits in five weeks.
   const cells = useMemo(() => {
@@ -41,23 +95,26 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
     return all.slice(35).some((cell) => cell.inMonth) ? all : all.slice(0, 35);
   }, [year, month]);
   const labels = useMemo(() => weekdayLabels(language), [language]);
+  const monthShort = formatMonthShort(year, month, language);
 
   const byDate = useMemo(() => {
     const map = new Map<string, DailyTask[]>();
-    for (const task of query.data?.tasks ?? []) {
+    for (const task of serverTasks ?? []) {
+      const merged = task.id in ticks ? { ...task, completed: ticks[task.id]! } : task;
       const list = map.get(task.date);
-      if (list) list.push(task);
-      else map.set(task.date, [task]);
+      if (list) list.push(merged);
+      else map.set(task.date, [merged]);
     }
     for (const [date, list] of map) map.set(date, sortDailyTasks(list));
     return map;
-  }, [query.data]);
+  }, [serverTasks, ticks]);
 
-  const totals = query.data?.totals;
-  const monthTotal = totals?.total ?? 0;
-  const monthDone = totals?.completed ?? 0;
+  const all = Array.from(byDate.values()).flat();
+  const monthTotal = all.length;
+  const monthDone = all.filter((task) => task.completed).length;
   const monthPercent = monthTotal ? Math.round((monthDone / monthTotal) * 100) : 0;
   const activeDays = Array.from(byDate.values()).filter((list) => list.length > 0).length;
+  const totals = query.data?.totals;
 
   const currentMonth = today.slice(0, 7) === `${year}-${String(month).padStart(2, '0')}`;
   const go = (delta: number) => {
@@ -112,20 +169,7 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
           </div>
           <div className="flex items-center gap-3">
             <div className="relative">
-              <svg viewBox="0 0 36 36" className="h-11 w-11 -rotate-90" aria-hidden>
-                <circle cx="18" cy="18" r="15" fill="none" strokeWidth="3.5" className="stroke-brand-500/15" />
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="15"
-                  fill="none"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  className="stroke-brand-500 transition-[stroke-dashoffset] duration-500 ease-out"
-                  strokeDasharray={RING}
-                  strokeDashoffset={RING * (1 - monthPercent / 100)}
-                />
-              </svg>
+              <Ring percent={monthPercent} className="h-11 w-11" />
               <span className="absolute inset-0 grid place-items-center text-[11px] font-semibold text-ink tabular-nums">
                 {monthPercent}%
               </span>
@@ -140,82 +184,123 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
         </div>
       </div>
 
-      <div className={`dash-card rounded-3xl bg-panel p-3 shadow-sm ring-1 ring-line ${query.isLoading ? 'opacity-60' : ''}`}>
-        <div className="grid grid-cols-7 gap-1.5 pb-2">
+      <ErrorMessage message={error ?? undefined} />
+
+      <div className={query.isLoading ? 'opacity-60' : ''}>
+        <div className="grid grid-cols-7 gap-3 pb-2">
           {labels.map((label) => (
-            <p key={label} className="px-2 text-xs font-medium text-muted capitalize">
+            <p key={label} className="px-3 text-sm font-semibold text-muted capitalize">
               {label}
             </p>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-1.5">
+        <div className="grid grid-cols-7 gap-3">
           {cells.map((cell) => {
             const isToday = cell.date === today;
-            const list = cell.inMonth ? (byDate.get(cell.date) ?? []) : [];
+            if (!cell.inMonth) {
+              return (
+                <div
+                  key={cell.date}
+                  className="min-h-[14rem] rounded-2xl px-3 py-3 text-sm font-semibold text-muted/50 ring-1 ring-line/40 tabular-nums"
+                  aria-hidden
+                >
+                  {cell.day}
+                </div>
+              );
+            }
+            const list = byDate.get(cell.date) ?? [];
             const done = list.filter((task) => task.completed).length;
             const complete = list.length > 0 && done === list.length;
             const percent = list.length ? Math.round((done / list.length) * 100) : 0;
             const hidden = list.length - VISIBLE_TASKS;
             return (
-              <button
+              <div
                 key={cell.date}
-                type="button"
-                title={t('tasks.board.openDay')}
-                className={`flex min-h-[7.5rem] min-w-0 flex-col rounded-2xl p-2 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
-                  cell.inMonth ? 'hover:bg-brand-500/[0.06]' : 'opacity-40 hover:opacity-70'
-                } ${
-                  isToday
-                    ? 'bg-brand-500/[0.07] ring-1 ring-brand-500/60'
-                    : 'ring-1 ring-line/60'
+                className={`dash-card flex min-h-[14rem] min-w-0 cursor-pointer flex-col rounded-2xl bg-panel shadow-sm transition hover:ring-brand-500/50 ${
+                  isToday ? 'ring-1 ring-brand-500/60' : 'ring-1 ring-line'
                 }`}
                 onClick={() => onOpenDay(cell.date)}
               >
-                <span className="flex items-center justify-between gap-1">
-                  <span
-                    className={`inline-flex h-6 min-w-6 items-center justify-center rounded-full px-1 text-xs font-semibold tabular-nums ${
-                      isToday ? 'bg-brand-500 text-on-brand' : cell.inMonth ? 'text-ink' : 'text-muted'
-                    }`}
-                  >
-                    {cell.day}
+                <button
+                  type="button"
+                  className={`flex items-center justify-between gap-2 rounded-t-2xl border-b px-3 py-2.5 text-left transition hover:bg-brand-500/[0.05] ${
+                    isToday ? 'border-brand-500/30 bg-brand-500/[0.07]' : 'border-line'
+                  }`}
+                  title={t('tasks.board.openDay')}
+                >
+                  <span className="min-w-0">
+                    <span className={`block text-sm font-semibold tabular-nums ${isToday ? 'text-brand-500' : 'text-ink'}`}>
+                      {cell.day}
+                    </span>
+                    <span className="block text-xs text-muted capitalize">{monthShort}</span>
                   </span>
                   {list.length ? (
-                    <span className={`text-[11px] tabular-nums ${complete ? 'font-semibold text-brand-500' : 'text-muted'}`}>
-                      {done}/{list.length}
-                    </span>
-                  ) : null}
-                </span>
-
-                {list.length ? (
-                  <span className="mt-1.5 block h-1 overflow-hidden rounded-full bg-ink/[0.07]">
-                    <span
-                      className="block h-full rounded-full bg-brand-500 transition-[width] duration-500 ease-out"
-                      style={{ width: `${percent}%` }}
-                    />
-                  </span>
-                ) : null}
-
-                <span className="mt-1.5 block space-y-0.5">
-                  {list.slice(0, VISIBLE_TASKS).map((task) => (
-                    <span key={task.id} className="flex min-w-0 items-center gap-1 text-[11px] leading-4">
-                      {task.completed ? (
-                        <Check className="h-3 w-3 shrink-0 text-brand-500" aria-hidden />
-                      ) : task.important ? (
-                        <Flag className="h-3 w-3 shrink-0 fill-current text-brand-500" aria-hidden />
-                      ) : (
-                        <span className="mx-[3px] h-1.5 w-1.5 shrink-0 rounded-full bg-muted/50" aria-hidden />
-                      )}
-                      <span className={`truncate ${task.completed ? 'text-muted line-through' : 'text-ink'}`}>
-                        {task.title}
+                    <span className="relative shrink-0">
+                      <Ring percent={percent} className="h-9 w-9" />
+                      <span className="absolute inset-0 grid place-items-center text-[9px] font-semibold text-ink tabular-nums">
+                        {complete ? <Trophy className="h-4 w-4 text-brand-500" aria-hidden /> : `${percent}%`}
                       </span>
                     </span>
+                  ) : null}
+                </button>
+
+                <ul className="flex-1 space-y-0.5 px-2 py-2">
+                  {list.slice(0, VISIBLE_TASKS).map((task) => (
+                    <li key={task.id} className="flex items-start gap-2 rounded-lg px-1.5 py-1.5 transition hover:bg-brand-500/[0.05]">
+                      <span className="flex h-5 shrink-0 items-center">
+                        <button
+                          type="button"
+                          role="checkbox"
+                          aria-checked={task.completed}
+                          aria-label={task.title}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            toggle(task, task.completed);
+                          }}
+                          className={`inline-flex h-5 w-5 items-center justify-center rounded-md border transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 ${
+                            task.completed
+                              ? 'border-brand-500 bg-brand-500 text-on-brand'
+                              : 'border-muted/45 bg-panel hover:border-brand-400 active:scale-90'
+                          }`}
+                        >
+                          <svg
+                            viewBox="0 0 12 12"
+                            className={`h-3 w-3 transition ${task.completed ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`}
+                            aria-hidden
+                          >
+                            <path d="M2.5 6.2 5 8.6l4.5-5" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                      </span>
+                      <span
+                        className={`min-w-0 flex-1 truncate text-[13px] leading-5 ${
+                          task.completed ? 'text-muted line-through decoration-brand-500/60' : 'text-ink'
+                        }`}
+                        title={task.title}
+                      >
+                        {task.title}
+                      </span>
+                      {task.important ? (
+                        <Flag className="mt-1 h-3 w-3 shrink-0 fill-current text-brand-500" aria-hidden />
+                      ) : null}
+                    </li>
                   ))}
                   {hidden > 0 ? (
-                    <span className="block pl-4 text-[11px] font-medium text-brand-500">
+                    <li className="px-1.5 pt-0.5 text-xs font-medium text-brand-500">
                       {t('tasks.board.more', { count: hidden })}
-                    </span>
+                    </li>
                   ) : null}
-                </span>
-              </button>
+                </ul>
+
+                <div className="flex flex-wrap items-center justify-between gap-x-2 border-t border-line px-3 py-2 text-xs text-muted tabular-nums">
+                  <span>
+                    {t('tasks.board.done')} <span className="font-semibold text-ink">{done}</span>
+                  </span>
+                  <span>
+                    {t('tasks.board.left')} <span className="font-semibold text-ink">{list.length - done}</span>
+                  </span>
+                </div>
+              </div>
             );
           })}
         </div>

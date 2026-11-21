@@ -334,7 +334,7 @@
       "monthDone": "fatte questo mese",
       "activeDays": "giorni con attività",
       "more": "+{{count}} altre",
-      "monthHint": "Fai clic su un giorno per aprirlo con tutte le attività e le azioni.",
+      "monthHint": "Spunta la casella per completare un’attività. Fai clic su un giorno per aprirlo con tutte le attività e le azioni.",
       "openDay": "Apri questo giorno",
       "add": "Nuova attività",
       "done": "Fatte",

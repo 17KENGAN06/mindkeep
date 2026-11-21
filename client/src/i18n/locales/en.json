@@ -334,7 +334,7 @@
       "monthDone": "done this month",
       "activeDays": "days with tasks",
       "more": "+{{count}} more",
-      "monthHint": "Click a day to open it with all its tasks and actions.",
+      "monthHint": "Tick a box to mark a task done. Click a day to open it with all its tasks and actions.",
       "openDay": "Open this day",
       "add": "New task",
       "done": "Done",
