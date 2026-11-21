@@ -58,7 +58,7 @@ import type { DailyTask } from '@/types/dailyTask';
 import type { Meal } from '@/types/nutrition';
 import { TimezoneSuggestion } from '@/components/TimezoneSuggestion';
 import { useAccountToday } from '@/features/time/useAccountToday';
-import { formatDate, lastNKeysFrom, shiftDateKey } from '@/utils/date';
+import { formatDate, lastNKeysFrom } from '@/utils/date';
 import { firstName } from '@/utils/name';
 
 type WeekTab = 'tasks' | 'reviews';
@@ -263,10 +263,6 @@ export function DashboardPage() {
   const todayMinutesLeft = todayTasks
     .filter((task) => !task.completed)
     .reduce((sum, task) => sum + task.minutes, 0);
-  const tomorrow = shiftDateKey(today, 1);
-  const tomorrowTasks = sortDailyTasks(
-    (tasksQuery.data?.tasks ?? []).filter((task) => task.date === tomorrow),
-  );
 
   const nutrition = nutritionQuery.data;
   const todayMeals = (nutrition?.meals ?? []).filter((meal) => meal.date === today);
@@ -402,140 +398,11 @@ export function DashboardPage() {
         </div>
       </section>
 
-      <div className="grid min-w-0 gap-4 sm:gap-5 min-[1400px]:grid-cols-12">
-      {(showTasks || showReview || showHabits) && (
-      <section
-        className={`dash-card rounded-3xl bg-panel px-4 py-4 shadow-sm ring-1 ring-line sm:px-5 ${
-          showNutrition ? 'min-[1400px]:col-span-5' : 'min-[1400px]:col-span-12'
-        }`}
-      >
-        <div className="divide-y divide-line/80">
-          {showTasks ? (
-          <TodayProgressRow
-            icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
-            title={t('dashboard.cards.tasksToday')}
-            valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
-            percent={tasksPercent}
-            to="/tasks"
-          />
-          ) : null}
-          {showReview ? (
-          <TodayProgressRow
-            icon={<GraduationCap className="h-5 w-5" aria-hidden />}
-            title={t('dashboard.cards.reviews')}
-            valueText={t('dashboard.cards.ofPlanned', {
-              done: stats.completedReviews,
-              total: reviewsPlanned,
-            })}
-            percent={reviewsPercent}
-            to="/review"
-          />
-          ) : null}
-          {showHabits ? (
-          <TodayProgressRow
-            icon={<Repeat className="h-5 w-5" aria-hidden />}
-            title={t('dashboard.cards.rhythmToday')}
-            valueText={
-              rhythmTotal === 0
-                ? t('dashboard.cards.rhythmEmpty')
-                : t('dashboard.cards.of', { done: rhythmDone, total: rhythmTotal })
-            }
-            percent={rhythmTotal === 0 ? 0 : (rhythmDone / rhythmTotal) * 100}
-            to="/habits"
-          />
-          ) : null}
-        </div>
-      </section>
-      )}
-
-      {showNutrition ? (
-      <section
-        className={`dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5 ${
-          showTasks || showReview || showHabits ? 'min-[1400px]:col-span-7' : 'min-[1400px]:col-span-12'
-        }`}
-      >
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <h2 className="dash-title"><Utensils className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
-              {t('dashboard.fuelTitle')}</h2>
-            {overeating ? <Badge tone="danger">{t('calories.overeating')}</Badge> : null}
-          </div>
-          <Link to="/nutrition" className="text-sm font-medium text-brand-500 no-underline">
-            {t('dashboard.allFuel')} →
-          </Link>
-        </div>
-        <div className="mt-3 grid items-center gap-x-6 gap-y-4 sm:grid-cols-[auto_minmax(0,1fr)]">
-          <div className="justify-self-center">
-            <CalorieGauge
-              value={todayCalories}
-              goal={calorieGoal}
-              unit={t('calories.kcal')}
-              over={overeating}
-            />
-          </div>
-          <div className="min-w-0 space-y-3 sm:border-l sm:border-line/50 sm:pl-6">
-            <p className="flex items-center gap-2 text-sm text-ink">
-              <Droplets className="h-4 w-4 shrink-0 text-muted" aria-hidden />
-              {todayWater} / {waterGoal} {t('calories.glasses')}
-            </p>
-            <WaterGlasses
-              variant="round"
-              glasses={todayWater}
-              goal={waterGoal}
-              disabled={setWater.isPending}
-              onChange={(glasses) => {
-                void setWater.mutateAsync({ date: today, glasses });
-              }}
-            />
-            {todayMeals.length === 0 ? (
-              <p className="flex items-center justify-center gap-2 rounded-xl border border-dashed border-line/70 px-3 py-2.5 text-sm text-muted">
-                <Utensils className="h-4 w-4 shrink-0" aria-hidden />
-                {t('dashboard.noMealsToday')}
-              </p>
-            ) : (
-              <ul className="grid gap-2 border-t border-line/50 pt-3 md:grid-cols-2">
-                {todayMeals.slice(0, 4).map((meal) => {
-                  const KindIcon = MEAL_ICONS[meal.kind ?? 'extra'];
-                  return (
-                    <li
-                      key={meal.id}
-                      className="flex min-w-0 items-center gap-3 rounded-xl bg-surface/60 px-3 py-2 ring-1 ring-line/60"
-                    >
-                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-panel text-muted ring-1 ring-line/60">
-                        <KindIcon className="h-4 w-4" aria-hidden />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm text-ink" title={meal.title}>
-                          {meal.title}
-                        </span>
-                        {meal.kind ? (
-                          <span className="block text-xs text-muted">{t(`calories.kinds.${meal.kind}`)}</span>
-                        ) : null}
-                      </span>
-                      <span className="shrink-0 text-right tabular-nums">
-                        <span className="text-sm font-semibold text-ink">{meal.calories}</span>
-                        <span className="ml-1 text-xs text-muted">{t('calories.kcal')}</span>
-                      </span>
-                    </li>
-                  );
-                })}
-                {todayMeals.length > 4 ? (
-                  <li className="md:col-span-2">
-                    <Link to="/nutrition" className="text-xs font-medium text-muted no-underline hover:text-ink">
-                      +{todayMeals.length - 4} →
-                    </Link>
-                  </li>
-                ) : null}
-              </ul>
-            )}
-          </div>
-        </div>
-      </section>
-      ) : null}
-      </div>
-
-      {(showTasks || showReview) && (
-      <section className="grid min-w-0 gap-4 sm:gap-5 lg:grid-cols-2">
+      {/* Desktop: today's tasks and the week on the left, the rest in a side column.
+          Phones: one column in the order below (the column wrappers drop out). */}
+      <div className="grid min-w-0 gap-4 sm:gap-5 lg:grid-cols-12 lg:items-start">
+        <div className="contents lg:col-span-8 lg:block lg:space-y-5">
+          <div className="min-w-0 max-lg:order-3">
         {showTasks ? (
         <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
@@ -553,7 +420,20 @@ export function DashboardPage() {
               </Link>
             </div>
           </div>
-          <ul className="mt-4 space-y-1">
+          {todayTotal > 0 ? (
+            <div className="mt-4 flex items-center gap-3">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink/[0.07]">
+                <div
+                  className="h-full rounded-full bg-brand-500 transition-[width] duration-500 ease-out"
+                  style={{ width: `${clampPercent(tasksPercent)}%` }}
+                />
+              </div>
+              <span className="shrink-0 text-xs font-semibold text-ink tabular-nums">
+                {todayDone} / {todayTotal}
+              </span>
+            </div>
+          ) : null}
+          <ul className="mt-3 space-y-1">
             {todayTasks.length === 0 ? (
               <li className="rounded-2xl border border-dashed border-line px-4 py-8 text-center text-sm text-muted">
                 {t('dashboard.modules.noTasksToday')}
@@ -660,25 +540,10 @@ export function DashboardPage() {
           </form>
           <ErrorMessage message={quickError ?? undefined} />
 
-          {tomorrowTasks.length > 0 && todayTasks.length < 5 ? (
-            <div className="mt-4 border-t border-line/60 pt-3">
-              <p className="text-xs font-semibold tracking-wide text-muted uppercase">
-                {t('dashboard.tomorrow')} · {tomorrowTasks.length}
-              </p>
-              <ul className="mt-2 space-y-1">
-                {tomorrowTasks.slice(0, 4).map((task) => (
-                  <li key={task.id} className="flex items-center gap-2.5 px-1 py-1 text-sm text-muted">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500/50" aria-hidden />
-                    <span className="min-w-0 flex-1 truncate">{task.title}</span>
-                    <span className="shrink-0 text-xs tabular-nums">{minutesLabel(task.minutes, t)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
         </article>
         ) : null}
-
+          </div>
+          <div className="min-w-0 max-lg:order-4">
         {(showTasks || showReview) && (
         <article className="min-w-0 overflow-hidden dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
@@ -798,11 +663,8 @@ export function DashboardPage() {
           </div>
         </article>
         )}
-      </section>
-      )}
-
-      {(showReview || showFinance) && (
-      <section className="grid min-w-0 gap-4 sm:gap-5 lg:grid-cols-2">
+          </div>
+          <div className="min-w-0 max-lg:order-5">
         {showReview ? (
         <article className="dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex items-center justify-between gap-3">
@@ -861,7 +723,142 @@ export function DashboardPage() {
           )}
         </article>
         ) : null}
-
+          </div>
+        </div>
+        <div className="contents lg:col-span-4 lg:block lg:space-y-5">
+          <div className="min-w-0 max-lg:order-1">
+      {(showTasks || showReview || showHabits) && (
+      <section
+        className={`dash-card rounded-3xl bg-panel px-4 py-4 shadow-sm ring-1 ring-line sm:px-5 ${
+          showNutrition ? 'min-[1400px]:col-span-5' : 'min-[1400px]:col-span-12'
+        }`}
+      >
+        <div className="divide-y divide-line/80">
+          {showTasks ? (
+          <TodayProgressRow
+            icon={<CheckCircle2 className="h-5 w-5" aria-hidden />}
+            title={t('dashboard.cards.tasksToday')}
+            valueText={t('dashboard.cards.of', { done: todayDone, total: todayTotal })}
+            percent={tasksPercent}
+            to="/tasks"
+          />
+          ) : null}
+          {showReview ? (
+          <TodayProgressRow
+            icon={<GraduationCap className="h-5 w-5" aria-hidden />}
+            title={t('dashboard.cards.reviews')}
+            valueText={t('dashboard.cards.ofPlanned', {
+              done: stats.completedReviews,
+              total: reviewsPlanned,
+            })}
+            percent={reviewsPercent}
+            to="/review"
+          />
+          ) : null}
+          {showHabits ? (
+          <TodayProgressRow
+            icon={<Repeat className="h-5 w-5" aria-hidden />}
+            title={t('dashboard.cards.rhythmToday')}
+            valueText={
+              rhythmTotal === 0
+                ? t('dashboard.cards.rhythmEmpty')
+                : t('dashboard.cards.of', { done: rhythmDone, total: rhythmTotal })
+            }
+            percent={rhythmTotal === 0 ? 0 : (rhythmDone / rhythmTotal) * 100}
+            to="/habits"
+          />
+          ) : null}
+        </div>
+      </section>
+      )}
+          </div>
+          <div className="min-w-0 max-lg:order-2">
+      {showNutrition ? (
+      <section
+        className={`dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5 ${
+          showTasks || showReview || showHabits ? 'min-[1400px]:col-span-7' : 'min-[1400px]:col-span-12'
+        }`}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="dash-title"><Utensils className="h-5 w-5 shrink-0 text-brand-500" aria-hidden />
+              {t('dashboard.fuelTitle')}</h2>
+            {overeating ? <Badge tone="danger">{t('calories.overeating')}</Badge> : null}
+          </div>
+          <Link to="/nutrition" className="text-sm font-medium text-brand-500 no-underline">
+            {t('dashboard.allFuel')} →
+          </Link>
+        </div>
+        <div className="mt-3 grid items-center gap-x-6 gap-y-4 sm:grid-cols-[auto_minmax(0,1fr)] lg:grid-cols-1">
+          <div className="justify-self-center">
+            <CalorieGauge
+              value={todayCalories}
+              goal={calorieGoal}
+              unit={t('calories.kcal')}
+              over={overeating}
+            />
+          </div>
+          <div className="min-w-0 space-y-3 sm:border-l sm:border-line/50 sm:pl-6 lg:border-l-0 lg:pl-0">
+            <p className="flex items-center gap-2 text-sm text-ink">
+              <Droplets className="h-4 w-4 shrink-0 text-muted" aria-hidden />
+              {todayWater} / {waterGoal} {t('calories.glasses')}
+            </p>
+            <WaterGlasses
+              variant="round"
+              glasses={todayWater}
+              goal={waterGoal}
+              disabled={setWater.isPending}
+              onChange={(glasses) => {
+                void setWater.mutateAsync({ date: today, glasses });
+              }}
+            />
+            {todayMeals.length === 0 ? (
+              <p className="flex items-center justify-center gap-2 rounded-xl border border-dashed border-line/70 px-3 py-2.5 text-sm text-muted">
+                <Utensils className="h-4 w-4 shrink-0" aria-hidden />
+                {t('dashboard.noMealsToday')}
+              </p>
+            ) : (
+              <ul className="grid gap-2 border-t border-line/50 pt-3 md:grid-cols-2 lg:grid-cols-1">
+                {todayMeals.slice(0, 4).map((meal) => {
+                  const KindIcon = MEAL_ICONS[meal.kind ?? 'extra'];
+                  return (
+                    <li
+                      key={meal.id}
+                      className="flex min-w-0 items-center gap-3 rounded-xl bg-surface/60 px-3 py-2 ring-1 ring-line/60"
+                    >
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-panel text-muted ring-1 ring-line/60">
+                        <KindIcon className="h-4 w-4" aria-hidden />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm text-ink" title={meal.title}>
+                          {meal.title}
+                        </span>
+                        {meal.kind ? (
+                          <span className="block text-xs text-muted">{t(`calories.kinds.${meal.kind}`)}</span>
+                        ) : null}
+                      </span>
+                      <span className="shrink-0 text-right tabular-nums">
+                        <span className="text-sm font-semibold text-ink">{meal.calories}</span>
+                        <span className="ml-1 text-xs text-muted">{t('calories.kcal')}</span>
+                      </span>
+                    </li>
+                  );
+                })}
+                {todayMeals.length > 4 ? (
+                  <li className="md:col-span-2 lg:col-span-1">
+                    <Link to="/nutrition" className="text-xs font-medium text-muted no-underline hover:text-ink">
+                      +{todayMeals.length - 4} →
+                    </Link>
+                  </li>
+                ) : null}
+              </ul>
+            )}
+          </div>
+        </div>
+      </section>
+      ) : null}
+          </div>
+          <div className="min-w-0 max-lg:order-6">
         {showFinance ? (
         <article className="dash-card rounded-3xl bg-panel p-4 shadow-sm ring-1 ring-line sm:p-5">
           <div className="flex items-center justify-between gap-3">
@@ -912,8 +909,9 @@ export function DashboardPage() {
           )}
         </article>
         ) : null}
-      </section>
-      )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
