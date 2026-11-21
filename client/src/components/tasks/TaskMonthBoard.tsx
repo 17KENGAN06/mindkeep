@@ -8,7 +8,7 @@ import { mutationErrorMessage } from '@/features/billing/planLimit';
 import { useDailyTasksPeriod, useUpdateDailyTask } from '@/features/tasks/useDailyTasks';
 import type { AppLanguage } from '@/i18n';
 import type { DailyTask } from '@/types/dailyTask';
-import { formatMonthShort, formatMonthTitle, monthCells, weekdayLabels } from '@/utils/date';
+import { formatMonthTitle, weekdayShort } from '@/utils/date';
 
 const RING = 2 * Math.PI * 15;
 
@@ -87,17 +87,21 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
     });
   };
 
-  // Drop the 6th row when the month fits in five weeks.
-  const cells = useMemo(() => {
-    const all = monthCells(year, month);
-    return all.slice(35).some((cell) => cell.inMonth) ? all : all.slice(0, 35);
-  }, [year, month]);
-  const lead = cells.findIndex((cell) => cell.inMonth);
-  const monthName = new Intl.DateTimeFormat(language, { month: 'long', timeZone: 'UTC' }).format(
-    new Date(Date.UTC(year, month - 1, 1)),
-  );
-  const labels = useMemo(() => weekdayLabels(language), [language]);
-  const monthShort = formatMonthShort(year, month, language);
+  // Days run from the 1st without empty slots, so more of them fit on screen;
+  // each card names its weekday instead of a weekday column header.
+  const days = useMemo(() => {
+    const count = new Date(Date.UTC(year, month, 0)).getUTCDate();
+    return Array.from({ length: count }, (_, index) => {
+      const day = index + 1;
+      const weekday = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+      return {
+        date: `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+        day,
+        weekday: weekdayShort(year, month, day, language),
+        weekend: weekday === 0 || weekday === 6,
+      };
+    });
+  }, [year, month, language]);
 
   const byDate = useMemo(() => {
     const map = new Map<string, DailyTask[]>();
@@ -184,41 +188,9 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
       <ErrorMessage message={error ?? undefined} />
 
       <div className={query.isLoading ? 'opacity-60' : ''}>
-        <div className="grid grid-cols-7 gap-3 pb-2">
-          {labels.map((label) => (
-            <p key={label} className="px-3 text-sm font-semibold text-muted capitalize">
-              {label}
-            </p>
-          ))}
-        </div>
         <div className="grid grid-cols-7 gap-3">
-          {/* The slots before day 1 become one month cover instead of empty days. */}
-          {lead > 0 ? (
-            <div
-              className={`relative overflow-hidden rounded-2xl ${
-                lead > 1
-                  ? 'bg-gradient-to-br from-brand-500/[0.14] via-brand-500/[0.05] to-transparent p-5 ring-1 ring-brand-500/15'
-                  : ''
-              }`}
-              style={{ gridColumn: `span ${lead}` }}
-              aria-hidden
-            >
-              {lead > 1 ? (
-                <>
-                  <div className="absolute -right-10 -bottom-16 h-48 w-48 rounded-full bg-brand-500/10 blur-2xl" />
-                  <p className="relative text-4xl font-bold text-ink capitalize">{monthName}</p>
-                  <p className="relative mt-1 text-lg font-semibold text-brand-500 tabular-nums">{year}</p>
-                  {lead > 2 ? (
-                    <p className="relative mt-6 max-w-sm text-sm leading-6 text-muted">{t('tasks.board.monthHint')}</p>
-                  ) : null}
-                </>
-              ) : null}
-            </div>
-          ) : null}
-          {cells.slice(lead).map((cell) => {
+          {days.map((cell) => {
             const isToday = cell.date === today;
-            // Days after the month's end are left out; the grid simply ends.
-            if (!cell.inMonth) return null;
             const list = byDate.get(cell.date) ?? [];
             const done = list.filter((task) => task.completed).length;
             const complete = list.length > 0 && done === list.length;
@@ -242,7 +214,9 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
                     <span className={`block text-sm font-semibold tabular-nums ${isToday ? 'text-brand-500' : 'text-ink'}`}>
                       {cell.day}
                     </span>
-                    <span className="block text-xs text-muted capitalize">{monthShort}</span>
+                    <span className={`block text-xs capitalize ${cell.weekend ? 'font-medium text-brand-500/80' : 'text-muted'}`}>
+                      {cell.weekday}
+                    </span>
                   </span>
                   {list.length ? (
                     <span className="relative shrink-0">
@@ -310,7 +284,7 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
         </div>
       </div>
 
-      {lead > 2 ? null : <p className="text-xs text-muted">{t('tasks.board.monthHint')}</p>}
+      <p className="text-xs text-muted">{t('tasks.board.monthHint')}</p>
     </section>
   );
 }
