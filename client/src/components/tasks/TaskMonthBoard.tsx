@@ -92,6 +92,10 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
     const all = monthCells(year, month);
     return all.slice(35).some((cell) => cell.inMonth) ? all : all.slice(0, 35);
   }, [year, month]);
+  const lead = cells.findIndex((cell) => cell.inMonth);
+  const monthName = new Intl.DateTimeFormat(language, { month: 'long', timeZone: 'UTC' }).format(
+    new Date(Date.UTC(year, month - 1, 1)),
+  );
   const labels = useMemo(() => weekdayLabels(language), [language]);
   const monthShort = formatMonthShort(year, month, language);
 
@@ -188,19 +192,33 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
           ))}
         </div>
         <div className="grid grid-cols-7 gap-3">
-          {cells.map((cell) => {
+          {/* The slots before day 1 become one month cover instead of empty days. */}
+          {lead > 0 ? (
+            <div
+              className={`relative overflow-hidden rounded-2xl ${
+                lead > 1
+                  ? 'bg-gradient-to-br from-brand-500/[0.14] via-brand-500/[0.05] to-transparent p-5 ring-1 ring-brand-500/15'
+                  : ''
+              }`}
+              style={{ gridColumn: `span ${lead}` }}
+              aria-hidden
+            >
+              {lead > 1 ? (
+                <>
+                  <div className="absolute -right-10 -bottom-16 h-48 w-48 rounded-full bg-brand-500/10 blur-2xl" />
+                  <p className="relative text-4xl font-bold text-ink capitalize">{monthName}</p>
+                  <p className="relative mt-1 text-lg font-semibold text-brand-500 tabular-nums">{year}</p>
+                  {lead > 2 ? (
+                    <p className="relative mt-6 max-w-sm text-sm leading-6 text-muted">{t('tasks.board.monthHint')}</p>
+                  ) : null}
+                </>
+              ) : null}
+            </div>
+          ) : null}
+          {cells.slice(lead).map((cell) => {
             const isToday = cell.date === today;
-            if (!cell.inMonth) {
-              return (
-                <div
-                  key={cell.date}
-                  className="min-h-[14rem] rounded-2xl px-3 py-3 text-sm font-semibold text-muted/50 ring-1 ring-line/40 tabular-nums"
-                  aria-hidden
-                >
-                  {cell.day}
-                </div>
-              );
-            }
+            // Days after the month's end are left out; the grid simply ends.
+            if (!cell.inMonth) return null;
             const list = byDate.get(cell.date) ?? [];
             const done = list.filter((task) => task.completed).length;
             const complete = list.length > 0 && done === list.length;
@@ -292,7 +310,7 @@ export function TaskMonthBoard({ year, month, today, onMonthChange, onOpenDay }:
         </div>
       </div>
 
-      <p className="text-xs text-muted">{t('tasks.board.monthHint')}</p>
+      {lead > 2 ? null : <p className="text-xs text-muted">{t('tasks.board.monthHint')}</p>}
     </section>
   );
 }

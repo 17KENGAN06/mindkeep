@@ -181,7 +181,7 @@ export function TaskMonthStats({ year, month, today, byDate }: TaskMonthStatsPro
               {t('tasks.stats.legendPlanned')}
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="h-0.5 w-4 rounded-full bg-amber-500" aria-hidden />
+              <span className="h-0.5 w-4 rounded-full bg-brand-300" aria-hidden />
               {t('tasks.stats.legendLine')}
             </span>
           </div>
@@ -218,7 +218,7 @@ export function TaskMonthStats({ year, month, today, byDate }: TaskMonthStatsPro
                       key={day.perfect ? 'perfect' : 'open'}
                       className={`absolute inset-x-0 bottom-0 rounded-t-md transition-[height] duration-500 ease-out ${
                         day.perfect
-                          ? 'animate-[bar-glow_900ms_ease-out] bg-gradient-to-t from-brand-500 to-amber-400'
+                          ? 'animate-[bar-glow_900ms_ease-out] bg-gradient-to-t from-brand-500 to-brand-300'
                           : 'bg-gradient-to-t from-brand-500/80 to-brand-500'
                       }`}
                       style={{ height: `${filled}%` }}
@@ -236,16 +236,27 @@ export function TaskMonthStats({ year, month, today, byDate }: TaskMonthStatsPro
           >
             <defs>
               <linearGradient id="month-line-fill" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="rgb(245 158 11)" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="rgb(245 158 11)" stopOpacity="0" />
+                <stop offset="0%" stopColor="var(--color-brand-300)" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="var(--color-brand-300)" stopOpacity="0" />
               </linearGradient>
             </defs>
             <path d={area} style={animated(area)} fill="url(#month-line-fill)" />
+            {/* A panel-coloured halo keeps the line readable over the bars. */}
             <path
               d={path}
               style={animated(path)}
               fill="none"
-              stroke="rgb(245 158 11)"
+              stroke="var(--color-panel)"
+              strokeWidth="6"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d={path}
+              style={animated(path)}
+              fill="none"
+              stroke="var(--color-brand-300)"
               strokeWidth="2.5"
               strokeLinejoin="round"
               strokeLinecap="round"
