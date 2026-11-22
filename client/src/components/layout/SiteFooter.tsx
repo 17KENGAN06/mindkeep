@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom';
 import { featureSlugs } from '@/content/features';
 import { useLocalePath } from '@/seo/useLocalePath';
 import { Trans, useTranslation } from 'react-i18next';
-import { GooglePlayMark } from '@/components/app/GooglePlayMark';
+import { GooglePlayBadge } from '@/components/app/GooglePlayBadge';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { PaymentMarks } from '@/components/layout/PaymentMarks';
 import { PAGE_SHELL } from '@/config/layout';
-import { googlePlayUrl } from '@/config/mobileApp';
 import { useAuth } from '@/features/auth/useAuth';
 
 const STUDIO_URL = 'https://weisezahoy.com/';
@@ -79,7 +78,7 @@ type SiteFooterProps = {
 
 export function SiteFooter({ compact = false, embedded = false, screen = false }: SiteFooterProps) {
   const { t } = useTranslation();
-  const { localize, basePath, lang } = useLocalePath();
+  const { localize, basePath } = useLocalePath();
   const { isAuthenticated } = useAuth();
   const year = new Date().getFullYear();
   const tight = compact || screen;
@@ -154,14 +153,14 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
             {tight ? null : (
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{t('footer.about')}</p>
             )}
-            <div className={`${screen ? 'mt-6' : 'mt-5'} flex flex-wrap gap-3`}>
-              <SocialLink
-                href={googlePlayUrl('footer', lang)}
-                label={t('app.eyebrow')}
-                handle="Google Play"
-                compact={tight}
-                icon={<GooglePlayMark className="h-[18px] w-[18px]" />}
-              />
+            <p className={`${screen ? 'mt-7' : 'mt-6'} text-[11px] tracking-[0.24em] text-muted uppercase`}>
+              {t('app.eyebrow')}
+            </p>
+            <div className="mt-3">
+              <GooglePlayBadge placement="footer" className="w-40" />
+            </div>
+            <p className="mt-7 text-[11px] tracking-[0.24em] text-muted uppercase">{t('footer.socialLabel')}</p>
+            <div className="mt-3 flex flex-wrap gap-3">
               <SocialLink
                 href={INSTAGRAM_URL}
                 label={t('footer.instagram')}

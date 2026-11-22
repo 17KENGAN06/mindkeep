@@ -1477,7 +1477,8 @@
     "paymentsStripe": "Stripe",
     "terms": "Ehdot",
     "cookies": "Evästeet",
-    "refund": "Palautukset"
+    "refund": "Palautukset",
+    "socialLabel": "Sosiaalinen media"
   },
   "contact": {
     "eyebrow": "Studio",

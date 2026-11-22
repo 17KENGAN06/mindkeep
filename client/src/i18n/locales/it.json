@@ -1477,7 +1477,8 @@
     "paymentsStripe": "Stripe",
     "terms": "Termini",
     "cookies": "Cookie",
-    "refund": "Rimborsi"
+    "refund": "Rimborsi",
+    "socialLabel": "Social"
   },
   "contact": {
     "eyebrow": "Studio",

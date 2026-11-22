@@ -1477,7 +1477,8 @@
     "paymentsStripe": "Stripe",
     "terms": "Условия",
     "cookies": "Cookies",
-    "refund": "Возвраты"
+    "refund": "Возвраты",
+    "socialLabel": "Соцсети"
   },
   "contact": {
     "eyebrow": "Студия",

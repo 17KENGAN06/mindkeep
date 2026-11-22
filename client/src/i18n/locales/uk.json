@@ -1477,7 +1477,8 @@
     "paymentsStripe": "Stripe",
     "terms": "Умови",
     "cookies": "Cookies",
-    "refund": "Повернення"
+    "refund": "Повернення",
+    "socialLabel": "Соцмережі"
   },
   "contact": {
     "eyebrow": "Студія",

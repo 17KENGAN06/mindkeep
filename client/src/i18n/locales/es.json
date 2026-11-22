@@ -1477,7 +1477,8 @@
     "paymentsStripe": "Stripe",
     "terms": "Términos",
     "cookies": "Cookies",
-    "refund": "Reembolsos"
+    "refund": "Reembolsos",
+    "socialLabel": "Redes sociales"
   },
   "contact": {
     "eyebrow": "Estudio",

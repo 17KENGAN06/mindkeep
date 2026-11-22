@@ -1477,7 +1477,8 @@
     "paymentsLabel": "Payments",
     "paymentsVia": "Card checkout through Stripe.",
     "paymentsAria": "Accepted cards: Visa, Mastercard, American Express. Payments processed by Stripe.",
-    "paymentsStripe": "Stripe"
+    "paymentsStripe": "Stripe",
+    "socialLabel": "Social"
   },
   "contact": {
     "eyebrow": "Studio",
