@@ -101,7 +101,7 @@ export function DailyTaskList({
           <li
             key={task.id}
             id={`task-${task.id}`}
-            className={`flex scroll-mt-24 flex-col gap-3 rounded-2xl p-3 transition duration-500 sm:p-4 ${
+            className={`flex scroll-mt-24 flex-col gap-3 rounded-2xl p-3 transition duration-150 sm:p-4 ${
               highlightId === task.id
                 ? 'bg-brand-50 ring-2 ring-brand-400 shadow-[0_0_28px_color-mix(in_srgb,var(--color-brand-400)_35%,transparent)]'
                 : task.completed

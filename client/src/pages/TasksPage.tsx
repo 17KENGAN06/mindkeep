@@ -270,8 +270,8 @@ export function TasksPage() {
     }
   };
 
+  // Ticks show at once (see useUpdateDailyTask), so the row is not locked while it saves.
   const onToggle = async (task: DailyTask) => {
-    setBusyId(task.id);
     setFormError(null);
     try {
       await updateTask.mutateAsync({
@@ -280,8 +280,6 @@ export function TasksPage() {
       });
     } catch {
       setFormError(t('auth.errors.generic'));
-    } finally {
-      setBusyId(null);
     }
   };
 
@@ -316,7 +314,6 @@ export function TasksPage() {
   };
 
   const onSetPart = async (task: DailyTask, splitDone: number) => {
-    setBusyId(task.id);
     setFormError(null);
     try {
       await updateTask.mutateAsync({
@@ -325,8 +322,6 @@ export function TasksPage() {
       });
     } catch {
       setFormError(t('auth.errors.generic'));
-    } finally {
-      setBusyId(null);
     }
   };
 

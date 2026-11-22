@@ -67,7 +67,7 @@ function Ring({ percent, className }: { percent: number; className: string }) {
         fill="none"
         strokeWidth="3.5"
         strokeLinecap="round"
-        className="stroke-brand-500 transition-[stroke-dashoffset] duration-500 ease-out"
+        className="stroke-brand-500 transition-[stroke-dashoffset] duration-200 ease-out"
         strokeDasharray={RING}
         strokeDashoffset={RING * (1 - percent / 100)}
       />
@@ -272,7 +272,7 @@ export function TaskDayBoard({
                 </div>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/[0.07]">
                   <div
-                    className="h-full rounded-full bg-brand-500 transition-[width] duration-500 ease-out"
+                    className="h-full rounded-full bg-brand-500 transition-[width] duration-200 ease-out"
                     style={{ width: `${minutesTotal ? Math.round((minutesDone / minutesTotal) * 100) : 0}%` }}
                   />
                 </div>
@@ -322,7 +322,7 @@ export function TaskDayBoard({
                     {Number(key.slice(8, 10))}
                   </span>
                   <span className="mt-1.5 block h-1 overflow-hidden rounded-full bg-ink/[0.07]">
-                    <span className="block h-full rounded-full bg-brand-500 transition-[width] duration-500" style={{ width: `${stats.percent}%` }} />
+                    <span className="block h-full rounded-full bg-brand-500 transition-[width] duration-200" style={{ width: `${stats.percent}%` }} />
                   </span>
                 </button>
               );
@@ -372,7 +372,7 @@ export function TaskDayBoard({
                   <li
                     key={task.id}
                     id={`task-${task.id}`}
-                    className={`group/task scroll-mt-24 px-5 py-3.5 transition duration-500 ${
+                    className={`group/task scroll-mt-24 px-5 py-3.5 transition duration-150 ${
                       highlighted ? 'bg-brand-500/[0.08] ring-2 ring-brand-400 ring-inset' : 'hover:bg-brand-500/[0.03]'
                     } ${busy ? 'opacity-60' : ''}`}
                   >
