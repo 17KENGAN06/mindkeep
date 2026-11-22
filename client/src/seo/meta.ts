@@ -2,6 +2,7 @@
  * Search and social metadata for the public pages, shared by the runtime <SeoHead>
  * and the build-time prerender (scripts/prerender.ts). Pure module, relative imports.
  */
+import { GOOGLE_PLAY_URL } from '../config/mobileApp';
 import { getArticleBySlug } from '../content/blog/articles';
 import { isFeatureSlug } from '../content/features';
 import { absoluteUrl, DEFAULT_LANGUAGE, SEO_LANGUAGES, SITE_URL, type SeoLanguage } from './locale';
@@ -47,12 +48,17 @@ export const OG_LOCALES: Record<SeoLanguage, string> = {
   fi: 'fi_FI',
 };
 
-const SAME_AS = ['https://www.instagram.com/mindkeep.cloud/', 'https://www.tiktok.com/@mindkeep.cloud'];
+const SAME_AS = [
+  'https://www.instagram.com/mindkeep.cloud/',
+  'https://www.tiktok.com/@mindkeep.cloud',
+  GOOGLE_PLAY_URL,
+];
 
 const PAGE_KEYS: Record<string, string> = {
   '/': 'home',
   '/plans': 'plans',
   '/guide': 'guide',
+  '/app': 'app',
   '/blog': 'blog',
   '/contact': 'contact',
   '/privacy': 'privacy',
@@ -187,7 +193,8 @@ export function pageSeo(path: string, lang: SeoLanguage, t: Translate, list?: Tr
           url,
           description,
           applicationCategory: 'ProductivityApplication',
-          operatingSystem: 'Web, Android, iOS',
+          operatingSystem: 'Web, Android',
+          installUrl: GOOGLE_PLAY_URL,
           inLanguage: lang,
           image: OG_IMAGE,
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
@@ -198,10 +205,24 @@ export function pageSeo(path: string, lang: SeoLanguage, t: Translate, list?: Tr
   }
 
   const name = title.replace(/\s*·\s*Mindkeep$/, '');
+  const mobileApp = {
+    '@context': 'https://schema.org',
+    '@type': 'MobileApplication',
+    name: 'MindKeep: Planner & Habits',
+    url,
+    description,
+    applicationCategory: 'ProductivityApplication',
+    operatingSystem: 'Android',
+    installUrl: GOOGLE_PLAY_URL,
+    inLanguage: lang,
+    image: OG_IMAGE,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    publisher: organization,
+  };
   return {
     title,
     description,
     ogType: 'website',
-    jsonLd: [breadcrumbs([home, { name, url }])],
+    jsonLd: [...(path === '/app' ? [mobileApp] : []), breadcrumbs([home, { name, url }])],
   };
 }

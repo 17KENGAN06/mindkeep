@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { featureSlugs } from '@/content/features';
 import { useLocalePath } from '@/seo/useLocalePath';
 import { Trans, useTranslation } from 'react-i18next';
+import { GooglePlayMark } from '@/components/app/GooglePlayMark';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { PaymentMarks } from '@/components/layout/PaymentMarks';
 import { PAGE_SHELL } from '@/config/layout';
+import { googlePlayUrl } from '@/config/mobileApp';
 import { useAuth } from '@/features/auth/useAuth';
 
 const STUDIO_URL = 'https://weisezahoy.com/';
@@ -77,7 +79,7 @@ type SiteFooterProps = {
 
 export function SiteFooter({ compact = false, embedded = false, screen = false }: SiteFooterProps) {
   const { t } = useTranslation();
-  const { localize, basePath } = useLocalePath();
+  const { localize, basePath, lang } = useLocalePath();
   const { isAuthenticated } = useAuth();
   const year = new Date().getFullYear();
   const tight = compact || screen;
@@ -86,6 +88,7 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
     { to: '/', label: t('nav.home'), match: (path: string) => path === '/' },
     { to: '/plans', label: t('nav.plansShort'), match: (path: string) => path === '/plans' },
     { to: '/guide', label: t('nav.guide'), match: (path: string) => path === '/guide' },
+    { to: '/app', label: t('nav.app'), match: (path: string) => path === '/app' },
     { to: '/blog', label: t('nav.blog'), match: (path: string) => path === '/blog' || path.startsWith('/blog/') },
     { to: '/login', label: t('nav.login'), match: (path: string) => path === '/login' || isAuthenticated },
     { to: '/contact', label: t('nav.contact'), match: (path: string) => path === '/contact' },
@@ -152,6 +155,13 @@ export function SiteFooter({ compact = false, embedded = false, screen = false }
               <p className="mt-3 text-sm leading-relaxed text-ink/80">{t('footer.about')}</p>
             )}
             <div className={`${screen ? 'mt-6' : 'mt-5'} flex flex-wrap gap-3`}>
+              <SocialLink
+                href={googlePlayUrl('footer', lang)}
+                label={t('app.eyebrow')}
+                handle="Google Play"
+                compact={tight}
+                icon={<GooglePlayMark className="h-[18px] w-[18px]" />}
+              />
               <SocialLink
                 href={INSTAGRAM_URL}
                 label={t('footer.instagram')}

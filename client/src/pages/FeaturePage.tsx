@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { AppStrip } from '@/components/app/AppStrip';
 import { PublicHeader } from '@/components/layout/PublicHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
@@ -147,6 +148,8 @@ export function FeaturePage() {
               })}
           </div>
         </section>
+
+        <AppStrip placement="strip" className="mt-16" />
 
         <SiteFooter embedded />
       </div>

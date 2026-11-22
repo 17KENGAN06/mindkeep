@@ -7,6 +7,14 @@
   "background_color": "#07110d",
   "theme_color": "#07110d",
   "lang": "en",
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "cloud.mindkeep.app",
+      "url": "https://play.google.com/store/apps/details?id=cloud.mindkeep.app"
+    }
+  ],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicon.png",

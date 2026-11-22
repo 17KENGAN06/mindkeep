@@ -59,7 +59,8 @@
     "menu": "Menu",
     "account": "Account",
     "plans": "Compare plans",
-    "plansShort": "Plans"
+    "plansShort": "Plans",
+    "app": "App"
   },
   "placeholders": {
     "comingSoon": "This section is under development",
@@ -512,26 +513,18 @@
     },
     "ctaTitle": "Start a steadier week",
     "ctaSubtitle": "One account. Tasks, learning that returns, and a clear budget.",
-    "apps": {
-      "eyebrow": "Mobile",
-      "title": "Apps for iPhone and Android",
-      "subtitle": "Native Mindkeep apps are in the works. The same workspace for tasks, review, and finance — soon in your pocket.",
-      "badge": "Soon",
-      "note": "Store buttons are a preview. The web app is already live at mindkeep.cloud.",
-      "readBlog": "Read learning notes"
-    },
     "sections": {
       "hero": "Start",
       "pillars": "Foundation",
       "how": "How it works",
       "rhythm": "Steady return",
       "features": "Inside",
-      "apps": "Apps",
       "blog": "Blog",
       "cta": "Try it",
       "services": "Services",
       "pricing": "Plans",
-      "footer": "About"
+      "footer": "About",
+      "app": "App"
     },
     "footerTitle": "A personal app for one person.",
     "footerLead": "You sign in, switch on only what you use, and the rest stays out of the menu. One account on the website — the day, money, notes, and habits in one place.",
@@ -1446,7 +1439,8 @@
       "onboarding": "Quick setup · Mindkeep",
       "settings": "Settings · Mindkeep",
       "billingReturn": "Back to MindKeep · Mindkeep",
-      "deleteAccount": "Delete account · Mindkeep"
+      "deleteAccount": "Delete account · Mindkeep",
+      "app": "MindKeep app for Android: planner, habits and budget · Mindkeep"
     },
     "descriptions": {
       "home": "Plan your day in one place: daily tasks, spaced repetition on days 3, 7 and 30, notes, habits, a calorie and water tracker and a multi-currency budget. Free to start.",
@@ -1458,7 +1452,8 @@
       "terms": "The terms of using Mindkeep: accounts, free and paid plans, acceptable use, ownership of your content and liability.",
       "cookies": "Which cookies and local storage Mindkeep uses for sign-in, language and theme, what they are for and how to control them.",
       "refund": "How Mindkeep subscriptions renew, how to cancel in the Stripe customer portal and when a refund is possible.",
-      "deleteAccount": "How to delete your Mindkeep account and all its data on the website or in the mobile app, and what happens after deletion."
+      "deleteAccount": "How to delete your Mindkeep account and all its data on the website or in the mobile app, and what happens after deletion.",
+      "app": "Install MindKeep from Google Play: daily tasks, spaced reviews, habits, calories, notes and a budget on your phone. Same account as the website, free to start."
     }
   },
   "footer": {
@@ -2495,6 +2490,47 @@
           }
         ]
       }
+    }
+  },
+  "app": {
+    "eyebrow": "Android app",
+    "title": "Your whole day, in your pocket",
+    "subtitle": "Tasks, reviews, habits, food and money in one app. Sign in with the same account and everything is already there.",
+    "getOnPlay": "Get MindKeep on Google Play",
+    "free": "Free to install.",
+    "heroNote": "Now on Android. Same account.",
+    "qrHint": "Point your phone camera here to open the app page.",
+    "more": "What the app can do",
+    "iphone": "On iPhone, use MindKeep in the browser for now.",
+    "stripTitle": "MindKeep on your phone",
+    "stripText": "The Android app uses the same account. Your tasks, notes and budget are already in it.",
+    "bannerText": "Open your day in the app",
+    "bannerCta": "Install",
+    "bannerClose": "Hide the app banner",
+    "pointsTitle": "Why put it on your phone",
+    "points": {
+      "sync": {
+        "title": "One account",
+        "text": "Tick a task on the phone and it is done on the website too."
+      },
+      "add": {
+        "title": "Added in seconds",
+        "text": "The + button is always there: a task, a meal, a note or an expense."
+      },
+      "reminders": {
+        "title": "Reminders you choose",
+        "text": "Mark a task as important and the phone reminds you the day before or on the day."
+      },
+      "scan": {
+        "title": "A photo instead of typing",
+        "text": "With Pro, photograph a meal and the app estimates the calories."
+      }
+    },
+    "stepsTitle": "Three steps to start",
+    "steps": {
+      "install": "Install MindKeep from Google Play.",
+      "signIn": "Sign in with your mindkeep.cloud account, or create one in the app.",
+      "choose": "Keep the sections you need. The rest stays out of sight."
     }
   }
 }

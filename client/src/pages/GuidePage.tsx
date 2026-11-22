@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { AppStrip } from '@/components/app/AppStrip';
 import { PublicHeader } from '@/components/layout/PublicHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
@@ -105,6 +106,7 @@ export function GuidePage() {
             <Button>{t(isAuthenticated ? 'guide.ctaUser' : 'guide.ctaGuest')}</Button>
           </Link>
         </Reveal>
+        <AppStrip placement="strip" />
         <SiteFooter embedded />
       </div>
     </div>

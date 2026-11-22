@@ -23,6 +23,7 @@ export const PUBLIC_PATHS = [
   '/',
   '/plans',
   '/guide',
+  '/app',
   ...featureSlugs.map((slug) => `/features/${slug}`),
   '/blog',
   ...blogArticles.map((article) => `/blog/${article.slug}`),
@@ -39,7 +40,7 @@ export function isSeoLanguage(value: string | undefined): value is SeoLanguage {
 }
 
 /** Routes that exist in every language, as React Router patterns. */
-const PUBLIC_PATTERNS = [/^\/$/, /^\/plans$/, /^\/guide$/, /^\/blog$/, /^\/blog\/[^/]+$/, /^\/features\/[^/]+$/, /^\/contact$/, /^\/privacy$/, /^\/terms$/, /^\/cookies$/, /^\/refund$/, /^\/delete-account$/];
+const PUBLIC_PATTERNS = [/^\/$/, /^\/plans$/, /^\/guide$/, /^\/app$/, /^\/blog$/, /^\/blog\/[^/]+$/, /^\/features\/[^/]+$/, /^\/contact$/, /^\/privacy$/, /^\/terms$/, /^\/cookies$/, /^\/refund$/, /^\/delete-account$/];
 
 export function isPublicPath(path: string): boolean {
   return PUBLIC_PATTERNS.some((pattern) => pattern.test(path));

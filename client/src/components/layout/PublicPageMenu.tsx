@@ -11,6 +11,7 @@ const PAGE_LINKS = [
   { to: '/', labelKey: 'nav.home', match: (path: string) => path === '/' },
   { to: '/plans', labelKey: 'nav.plansShort', match: (path: string) => path === '/plans' },
   { to: '/guide', labelKey: 'nav.guide', match: (path: string) => path === '/guide' },
+  { to: '/app', labelKey: 'nav.app', match: (path: string) => path === '/app' },
   { to: '/blog', labelKey: 'nav.blog', match: (path: string) => path === '/blog' || path.startsWith('/blog/') },
   { to: '/contact', labelKey: 'nav.contact', match: (path: string) => path === '/contact' },
 ] as const;

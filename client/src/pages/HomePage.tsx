@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { ArrowRight, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { GooglePlayBadge } from '@/components/app/GooglePlayBadge';
 import { AnimatedSnapSection } from '@/components/home/AnimatedSnapSection';
 import { HeroStage } from '@/components/home/HeroStage';
+import { HomeApp } from '@/components/home/HomeApp';
 import { HomeFooter } from '@/components/home/HomeFooter';
 import { HomePricing } from '@/components/home/HomePricing';
 import { HomeServices } from '@/components/home/HomeServices';
@@ -17,7 +19,7 @@ import { useAuth } from '@/features/auth/useAuth';
 import { PAGE_SHELL, PAGE_SHELL_Y, HOME_SIDE_NAV_PAD } from '@/config/layout';
 import { useLocalePath } from '@/seo/useLocalePath';
 
-const SECTION_IDS = ['hero', 'services', 'pricing', 'footer'] as const;
+const SECTION_IDS = ['hero', 'services', 'app', 'pricing', 'footer'] as const;
 
 export function HomePage() {
   const { localize } = useLocalePath();
@@ -30,6 +32,7 @@ export function HomePage() {
   const labels = [
     t('home.sections.hero'),
     t('home.sections.services'),
+    t('home.sections.app'),
     t('home.sections.pricing'),
     t('home.sections.footer'),
   ];
@@ -129,6 +132,10 @@ export function HomePage() {
                       {t('nav.guide')}
                     </Link>
                   </div>
+                  <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2.5 xl:mt-6">
+                    <GooglePlayBadge placement="home" className="w-40" />
+                    <p className="text-sm text-muted">{t('app.heroNote')}</p>
+                  </div>
                 </SnapReveal>
               </div>
 
@@ -141,6 +148,10 @@ export function HomePage() {
 
         <AnimatedSnapSection id="services" activeId={activeId} className="border-t border-line/70">
           <HomeServices />
+        </AnimatedSnapSection>
+
+        <AnimatedSnapSection id="app" activeId={activeId} className="border-t border-line/70">
+          <HomeApp />
         </AnimatedSnapSection>
 
         <AnimatedSnapSection id="pricing" activeId={activeId} className="border-t border-line/70">

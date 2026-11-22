@@ -1,6 +1,7 @@
 import { Check } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AppStrip } from '@/components/app/AppStrip';
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { BrowserTimezoneHint } from '@/components/TimezoneSuggestion';
@@ -182,6 +183,8 @@ export function SettingsPage() {
       <Button type="button" isLoading={busy} onClick={() => void onSave()}>
         {t('common.save')}
       </Button>
+
+      <AppStrip placement="settings" />
     </section>
   );
 }

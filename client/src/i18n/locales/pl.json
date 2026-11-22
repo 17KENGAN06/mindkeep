@@ -59,7 +59,8 @@
     "menu": "Menu",
     "account": "Konto",
     "plans": "Porównaj plany",
-    "plansShort": "Plany"
+    "plansShort": "Plany",
+    "app": "Aplikacja"
   },
   "placeholders": {
     "comingSoon": "Ta sekcja jest w trakcie rozwoju",
@@ -512,26 +513,18 @@
     },
     "ctaTitle": "Zacznij równiejszy tydzień",
     "ctaSubtitle": "Jedno konto. Zadania, nauka, która wraca, i czytelny budżet.",
-    "apps": {
-      "eyebrow": "Mobile",
-      "title": "Aplikacje na iPhone’a i Androida",
-      "subtitle": "Natywne aplikacje Mindkeep są w przygotowaniu. To samo miejsce na zadania, powtórki i finanse — wkrótce w kieszeni.",
-      "badge": "Wkrótce",
-      "note": "Przyciski sklepów to podgląd. Aplikacja webowa działa już na mindkeep.cloud.",
-      "readBlog": "Czytaj notatki o nauce"
-    },
     "sections": {
       "hero": "Start",
       "pillars": "Fundament",
       "how": "Jak to działa",
       "rhythm": "Równy powrót",
       "features": "W środku",
-      "apps": "Aplikacje",
       "blog": "Blog",
       "cta": "Wypróbuj",
       "services": "Usługi",
       "pricing": "Plany",
-      "footer": "O nas"
+      "footer": "O nas",
+      "app": "Aplikacja"
     },
     "footerTitle": "Aplikacja osobista — dla jednej osoby.",
     "footerLead": "Logujesz się i włączasz tylko to, czego potrzebujesz — reszta nie wchodzi do menu. Jedno konto na stronie: dzień, pieniądze, notatki i nawyki w jednym miejscu.",
@@ -1446,7 +1439,8 @@
       "cookies": "Polityka cookies · Mindkeep",
       "refund": "Subskrypcja i zwroty · Mindkeep",
       "plans": "Plany · Mindkeep",
-      "deleteAccount": "Usuwanie konta · Mindkeep"
+      "deleteAccount": "Usuwanie konta · Mindkeep",
+      "app": "Aplikacja MindKeep na Androida: planer, nawyki i budżet · Mindkeep"
     },
     "descriptions": {
       "home": "Cały dzień w jednym miejscu: zadania, powtórki w 3., 7. i 30. dniu, notatki, nawyki, licznik kalorii i wody oraz budżet w wielu walutach. Start za darmo.",
@@ -1458,7 +1452,8 @@
       "terms": "Warunki korzystania z Mindkeep: konto, plan darmowy i płatne, dozwolone użycie, prawa do Twoich treści i odpowiedzialność.",
       "cookies": "Jakich plików cookie i pamięci lokalnej Mindkeep używa do logowania, języka i motywu, do czego służą i jak nimi zarządzać.",
       "refund": "Jak odnawia się subskrypcja Mindkeep, jak ją anulować w portalu Stripe i kiedy możliwy jest zwrot pieniędzy.",
-      "deleteAccount": "Jak usunąć konto Mindkeep i wszystkie dane na stronie lub w aplikacji mobilnej oraz co dzieje się po usunięciu."
+      "deleteAccount": "Jak usunąć konto Mindkeep i wszystkie dane na stronie lub w aplikacji mobilnej oraz co dzieje się po usunięciu.",
+      "app": "Zainstaluj MindKeep z Google Play: zadania na dzień, powtórki, nawyki, kalorie, notatki i budżet w telefonie. To samo konto co na stronie, start za darmo."
     }
   },
   "footer": {
@@ -2495,6 +2490,47 @@
           }
         ]
       }
+    }
+  },
+  "app": {
+    "eyebrow": "Aplikacja na Androida",
+    "title": "Cały Twój dzień w kieszeni",
+    "subtitle": "Zadania, powtórki, nawyki, jedzenie i pieniądze w jednej aplikacji. Zaloguj się na to samo konto, a wszystko już tam będzie.",
+    "getOnPlay": "Pobierz MindKeep z Google Play",
+    "free": "Instalacja za darmo.",
+    "heroNote": "Teraz na Androidzie. To samo konto.",
+    "qrHint": "Skieruj aparat telefonu, aby otworzyć stronę aplikacji.",
+    "more": "Co potrafi aplikacja",
+    "iphone": "Na iPhonie na razie używaj MindKeep w przeglądarce.",
+    "stripTitle": "MindKeep w telefonie",
+    "stripText": "Aplikacja na Androida używa tego samego konta. Twoje zadania, notatki i budżet już tam są.",
+    "bannerText": "Otwórz swój dzień w aplikacji",
+    "bannerCta": "Zainstaluj",
+    "bannerClose": "Ukryj baner aplikacji",
+    "pointsTitle": "Dlaczego warto mieć ją w telefonie",
+    "points": {
+      "sync": {
+        "title": "Jedno konto",
+        "text": "Odhacz zadanie w telefonie, a będzie zrobione także na stronie."
+      },
+      "add": {
+        "title": "Zapis w kilka sekund",
+        "text": "Przycisk + jest zawsze pod ręką: zadanie, posiłek, notatka lub wydatek."
+      },
+      "reminders": {
+        "title": "Przypomnienia z wyboru",
+        "text": "Oznacz zadanie jako ważne, a telefon przypomni dzień wcześniej lub tego samego dnia."
+      },
+      "scan": {
+        "title": "Zdjęcie zamiast pisania",
+        "text": "W planie Pro zrób zdjęcie posiłku, a aplikacja oszacuje kalorie."
+      }
+    },
+    "stepsTitle": "Trzy kroki na start",
+    "steps": {
+      "install": "Zainstaluj MindKeep z Google Play.",
+      "signIn": "Zaloguj się na konto mindkeep.cloud lub załóż je w aplikacji.",
+      "choose": "Zostaw potrzebne sekcje. Reszta nie będzie widoczna."
     }
   }
 }

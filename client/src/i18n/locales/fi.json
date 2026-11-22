@@ -59,7 +59,8 @@
     "menu": "Valikko",
     "account": "Tili",
     "plans": "Vertaa suunnitelmia",
-    "plansShort": "Tilaukset"
+    "plansShort": "Tilaukset",
+    "app": "Sovellus"
   },
   "placeholders": {
     "comingSoon": "Osio on kehitteillä",
@@ -512,26 +513,18 @@
     },
     "ctaTitle": "Aloita tasaisempi viikko",
     "ctaSubtitle": "Yksi tili. Tehtävät, oppiminen joka palaa, ja selkeä budjetti.",
-    "apps": {
-      "eyebrow": "Mobiili",
-      "title": "Sovellukset iPhonelle ja Androidille",
-      "subtitle": "Natiivisovellukset ovat työn alla. Sama työtila tehtäville, kertaukselle ja taloudelle — pian taskussa.",
-      "badge": "Tulossa",
-      "note": "Kauppapainikkeet ovat esikatselu. Verkkoversio on jo käytössä osoitteessa mindkeep.cloud.",
-      "readBlog": "Lue oppimisesta"
-    },
     "sections": {
       "hero": "Alku",
       "pillars": "Perusta",
       "how": "Miten toimii",
       "rhythm": "Tasaiseen paluuseen",
       "features": "Sisällä",
-      "apps": "Sovellukset",
       "blog": "Blogi",
       "cta": "Kokeile",
       "services": "Palvelut",
       "pricing": "Paketit",
-      "footer": "Meistä"
+      "footer": "Meistä",
+      "app": "Sovellus"
     },
     "footerTitle": "Henkilökohtainen sovellus yhdelle ihmiselle.",
     "footerLead": "Kirjaudut sisään ja kytket päälle vain tarvitsemasi — muu pysyy poissa valikosta. Sama tili sivustolla: päivä, raha, muistiinpanot ja tavat yhdessä paikassa.",
@@ -1446,7 +1439,8 @@
       "cookies": "Evästekäytäntö · Mindkeep",
       "refund": "Tilaus ja palautukset · Mindkeep",
       "plans": "Paketit · Mindkeep",
-      "deleteAccount": "Tilin poistaminen · Mindkeep"
+      "deleteAccount": "Tilin poistaminen · Mindkeep",
+      "app": "MindKeep-sovellus Androidille: suunnittelu, tavat ja budjetti · Mindkeep"
     },
     "descriptions": {
       "home": "Koko päivä yhdessä paikassa: tehtävät, kertaus päivinä 3, 7 ja 30, muistiinpanot, tavat, kalori- ja vesilaskuri sekä budjetti useassa valuutassa. Aloita ilmaiseksi.",
@@ -1458,7 +1452,8 @@
       "terms": "Mindkeepin käyttöehdot: tili, ilmainen ja maksulliset tilaukset, sallittu käyttö, sisältösi omistus ja vastuu.",
       "cookies": "Mitä evästeitä ja paikallista tallennustilaa Mindkeep käyttää kirjautumiseen, kieleen ja teemaan, mihin niitä tarvitaan ja miten niitä hallitaan.",
       "refund": "Miten Mindkeep-tilaus uusiutuu, miten sen voi perua Stripen asiakasportaalissa ja milloin palautus on mahdollinen.",
-      "deleteAccount": "Miten poistat Mindkeep-tilisi ja kaikki tiedot verkkosivulla tai mobiilisovelluksessa ja mitä poiston jälkeen tapahtuu."
+      "deleteAccount": "Miten poistat Mindkeep-tilisi ja kaikki tiedot verkkosivulla tai mobiilisovelluksessa ja mitä poiston jälkeen tapahtuu.",
+      "app": "Asenna MindKeep Google Playsta: päivän tehtävät, kertaukset, tavat, kalorit, muistiinpanot ja budjetti puhelimessa. Sama tili kuin sivustolla, aloitus ilmaiseksi."
     }
   },
   "footer": {
@@ -2495,6 +2490,47 @@
           }
         ]
       }
+    }
+  },
+  "app": {
+    "eyebrow": "Android-sovellus",
+    "title": "Koko päiväsi taskussa",
+    "subtitle": "Tehtävät, kertaukset, tavat, ruoka ja raha yhdessä sovelluksessa. Kirjaudu samalla tilillä, niin kaikki on jo valmiina.",
+    "getOnPlay": "Lataa MindKeep Google Playsta",
+    "free": "Asennus on ilmainen.",
+    "heroNote": "Nyt Androidille. Sama tili.",
+    "qrHint": "Osoita puhelimen kameralla, niin sovelluksen sivu aukeaa.",
+    "more": "Mitä sovellus osaa",
+    "iphone": "iPhonessa MindKeep toimii toistaiseksi selaimessa.",
+    "stripTitle": "MindKeep puhelimessa",
+    "stripText": "Android-sovellus käyttää samaa tiliä. Tehtäväsi, muistiinpanosi ja budjettisi ovat siellä jo.",
+    "bannerText": "Avaa päiväsi sovelluksessa",
+    "bannerCta": "Asenna",
+    "bannerClose": "Piilota sovellusilmoitus",
+    "pointsTitle": "Miksi puhelimeen",
+    "points": {
+      "sync": {
+        "title": "Yksi tili",
+        "text": "Merkitse tehtävä tehdyksi puhelimessa, niin se on tehty myös sivustolla."
+      },
+      "add": {
+        "title": "Muistiin sekunneissa",
+        "text": "Plus-painike on aina käsillä: tehtävä, ateria, muistiinpano tai kulu."
+      },
+      "reminders": {
+        "title": "Muistutukset, jotka valitset",
+        "text": "Merkitse tehtävä tärkeäksi, niin puhelin muistuttaa edellisenä tai samana päivänä."
+      },
+      "scan": {
+        "title": "Kuva kirjoittamisen sijaan",
+        "text": "Pro-tilauksella kuvaat aterian ja sovellus arvioi kalorit."
+      }
+    },
+    "stepsTitle": "Kolme askelta alkuun",
+    "steps": {
+      "install": "Asenna MindKeep Google Playsta.",
+      "signIn": "Kirjaudu mindkeep.cloud-tililläsi tai luo tili sovelluksessa.",
+      "choose": "Pidä tarvitsemasi osiot. Muut pysyvät poissa näkyvistä."
     }
   }
 }

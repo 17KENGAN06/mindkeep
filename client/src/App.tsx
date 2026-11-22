@@ -1,5 +1,6 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
+import { AndroidAppBanner } from '@/components/app/AndroidAppBanner';
 import { AmbientBackdrop } from '@/components/layout/AmbientBackdrop';
 import { Preloader } from '@/components/layout/Preloader';
 import { ScrollManager } from '@/components/layout/ScrollManager';
@@ -19,6 +20,7 @@ export default function App() {
           <AuthProvider>
             <ScrollManager />
             <SeoHead />
+            <AndroidAppBanner />
             <AppRoutes />
           </AuthProvider>
         </BrowserRouter>

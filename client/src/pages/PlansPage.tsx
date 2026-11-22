@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { billingApi } from '@/api/billing';
 import { PlanCards } from '@/components/billing/PlanCards';
+import { AppStrip } from '@/components/app/AppStrip';
 import { PublicHeader } from '@/components/layout/PublicHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Reveal } from '@/components/motion/Reveal';
@@ -287,6 +288,7 @@ export function PlansPage() {
             {t('footer.refund')}
           </Link>
         </p>
+        <AppStrip placement="strip" className="mt-12" />
         <SiteFooter embedded />
       </div>
 
